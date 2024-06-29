@@ -1,5 +1,4 @@
-#include "pch.h"
-// or #include "stdafx.h" for previous Visual Studio versions
+#include "SADXModLoader.h"
 
 extern "C" {
 short given_upgrades = false;
@@ -17,7 +16,7 @@ __declspec(dllexport) void __cdecl OnInitEnd()
 
 __declspec(dllexport) void __cdecl OnFrame()
 {
-    Rings = 123;
+    Rings = 456;
     // Executed every running frame of SADX
 }
 
