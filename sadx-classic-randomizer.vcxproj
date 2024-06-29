@@ -176,7 +176,27 @@
     <Content Include="Debug\vc143.pdb" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="lib\" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\AudioFile.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\d3d8types.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\FunctionHook.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\MemAccess.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\ninja.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\njdef.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXEnums.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXEnumsNew.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXFunctions.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXFunctionsNew.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXModelsNew.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXModInfo.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXModLoader.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXMotionsNew.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXStructs.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXStructsNew.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXVariables.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXVariablesNew.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\ScaleInfo.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\UsercallFunctionHandler.h" />
+    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\WeightInfo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
