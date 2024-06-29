@@ -1,12 +1,13 @@
 #include "SADXModLoader.h"
 
 extern "C" {
-short given_upgrades = false;
+bool check_jet_anklet = false;
 
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
 {
     // Executed at startup, contains helperFunctions and the path to your mod (useful for getting the config file.)
     // This is where we override functions, replace static data, etc.
+    SetEventFlag(EventFlags_Tails_JetAnklet);
 }
 
 __declspec(dllexport) void __cdecl OnInitEnd()
@@ -17,7 +18,43 @@ __declspec(dllexport) void __cdecl OnInitEnd()
 __declspec(dllexport) void __cdecl OnFrame()
 {
     Rings = 456;
-    // Executed every running frame of SADX
+    if (Current_CharObj2 != nullptr)
+    {
+        // Executed every running frame of SADX
+        if (!check_jet_anklet && GetEventFlag(EventFlags_Tails_JetAnklet))
+        {
+            check_jet_anklet = true;
+            PrintDebug("Tails got the jet ankles check!\n");
+            if (Current_CharObj2->Upgrades & Upgrades_JetAnklet)
+                PrintDebug("And he got the upgrade too!\n");
+            else
+                PrintDebug("But still didn't get the upgrade....\n");
+
+            Current_CharObj2->Upgrades &= ~Upgrades_JetAnklet;
+            if (!(Current_CharObj2->Upgrades & Upgrades_JetAnklet))
+                PrintDebug("Now he doesn't have it!!\n");
+        }
+
+        if (!PressedButtons.empty())
+        {
+            for (const auto& button : PressedButtons)
+
+                if (button & WhistleButtons)
+                {
+                    if (Current_CharObj2 != nullptr)
+                    {
+                        PrintDebug("Tails has the Rhythm Badge!\n");
+                        Current_CharObj2->Upgrades = 0;
+                        Current_CharObj2->Upgrades = Upgrades_RhythmBadge;
+
+                        if (GetEventFlag(EventFlags_Tails_JetAnklet))
+                            PrintDebug("...and he already did the jet anklet upgrade!\n");
+                        else
+                            PrintDebug("...and he didn't do the jet anklet upgrade!\n");
+                    }
+                }
+        }
+    }
 }
 
 __declspec(dllexport) void __cdecl OnInput()
