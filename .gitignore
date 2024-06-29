@@ -42,6 +42,10 @@
 # User-specific stuff
 .idea/
 
+# DLL build folders
+Debug
+Release
+
 # CMake
 cmake-build-*/
 
