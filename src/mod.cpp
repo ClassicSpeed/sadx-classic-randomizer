@@ -43,6 +43,10 @@ __declspec(dllexport) void __cdecl OnFrame()
                 {
                     if (Current_CharObj2 != nullptr)
                     {
+                        SetDebugFontSize(13.0f * (unsigned short)VerticalResolution / 480.0f);
+                        SetDebugFontColor(0x8e8e8e);
+                        DisplayDebugStringFormatted(NJM_LOCATION(2, 1), "   Tails has the Rhythm Badge from Bob!\n");
+
                         PrintDebug("Tails has the Rhythm Badge!\n");
                         Current_CharObj2->Upgrades = 0;
                         Current_CharObj2->Upgrades = Upgrades_RhythmBadge;
