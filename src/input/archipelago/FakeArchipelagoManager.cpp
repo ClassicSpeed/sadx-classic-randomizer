@@ -1,7 +1,7 @@
-#include "ItemReceiver.h"
+#include "FakeArchipelagoManager.h"
 #include "SADXModLoader.h"
 
-void ItemReceiver::OnPlayingFrame() const
+void FakeArchipelagoManager::OnPlayingFrame() const
 {
 
     if (PressedButtons.empty())
@@ -12,6 +12,6 @@ void ItemReceiver::OnPlayingFrame() const
         if (button & WhistleButtons && Current_CharObj2 != nullptr)
         {
             //TODO: remove hardcode
-            _randomizer.OnItemReceived(Upgrades_RhythmBadge, "Tails' Rhythm Badge");
+            _randomizer.OnItemReceived(1);
         }
 }

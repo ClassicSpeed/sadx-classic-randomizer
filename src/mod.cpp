@@ -1,17 +1,20 @@
+#include "FunctionHook.h"
 #include "SADXModLoader.h"
 #include "application/Randomizer.h"
-#include "input/external/itemReceiver/ItemReceiver.h"
-#include "input/game/upgrade/UpgradeDetector.h"
+#include "input/archipelago/FakeArchipelagoManager.h"
+#include "input/upgrade/UpgradeDetector.h"
+#include "input/characterLoading/CharacterLoadingDetector.h"
 
 extern "C" {
 DisplayManager displayManager = DisplayManager();
 UpgradeManager upgradeManager = UpgradeManager();
+ItemRepository itemRepository = ItemRepository();
 
-Randomizer randomizer = Randomizer(displayManager, upgradeManager);
+Randomizer randomizer = Randomizer(displayManager, upgradeManager, itemRepository);
 
-ItemReceiver itemReceiver = ItemReceiver(randomizer);
+FakeArchipelagoManager archipelagoManager = FakeArchipelagoManager(randomizer);
 UpgradeDetector upgradeDetector = UpgradeDetector(randomizer);
-
+CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(randomizer);
 
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
 {
@@ -30,7 +33,8 @@ __declspec(dllexport) void __cdecl OnFrame()
     if (Current_CharObj2 != nullptr)
     {
         upgradeDetector.OnPlayingFrame();
-        itemReceiver.OnPlayingFrame();
+        archipelagoManager.OnPlayingFrame();
+        characterLoadingDetector.OnPlayingFrame();
     }
 }
 
@@ -70,4 +74,13 @@ __declspec(dllexport) void __cdecl OnExit()
 }
 
 __declspec(dllexport) ModInfo SADXModInfo = {ModLoaderVer}; // This is needed for the Mod Loader to recognize the DLL.
+}
+
+void OnCharacterLoad();
+FunctionHook<void> loadCharacterHook((intptr_t)0x4157C0, OnCharacterLoad);
+
+void OnCharacterLoad()
+{
+    loadCharacterHook.Original();
+    characterLoadingDetector.OnCharacterLoaded();
 }

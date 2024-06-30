@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "../../../application/Randomizer.h"
+#include "../../application/Randomizer.h"
 #include "SADXModLoader.h"
 
 struct UpgradeData

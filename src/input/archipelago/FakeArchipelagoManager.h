@@ -1,10 +1,10 @@
 #pragma once
-#include "../../../application/Randomizer.h"
+#include "../../application/Randomizer.h"
 
-class ItemReceiver
+class FakeArchipelagoManager
 {
 public:
-    explicit ItemReceiver(Randomizer& randomizer)
+    explicit FakeArchipelagoManager(Randomizer& randomizer)
         : _randomizer(randomizer)
     {
     }

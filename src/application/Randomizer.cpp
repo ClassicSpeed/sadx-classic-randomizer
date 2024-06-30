@@ -4,10 +4,25 @@
 void Randomizer::OnUpgradeFound(std::string name) const
 {
     _displayManager.FoundItem(name);
+    //save check state
 }
 
-void Randomizer::OnItemReceived(const Upgrades upgrade, std::string name) const
+void Randomizer::OnItemReceived(const int itemId) const
 {
-    _displayManager.ReceiveItem(name);
-    _upgradeManager.GiveUpgrade(upgrade);
+    const ItemData item = _itemRepository.SaveItem(itemId);
+    _displayManager.ReceiveItem(item.displayName);
+    _upgradeManager.GiveUpgrade(item.upgrade);
+
+}
+
+void Randomizer::OnCharacterLoaded() const
+{
+    std::map<int, ItemData> items = _itemRepository.GetItems();
+    for (auto item : items)
+    {
+        if (item.second.obtained)
+        {
+            _upgradeManager.GiveUpgrade(item.second.upgrade);
+        }
+    }
 }
