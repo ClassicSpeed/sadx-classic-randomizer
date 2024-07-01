@@ -4,6 +4,8 @@
 #include "input/archipelago/FakeArchipelagoManager.h"
 #include "input/upgrade/UpgradeDetector.h"
 #include "input/characterLoading/CharacterLoadingDetector.h"
+#define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hook_##address.Original(); hookFunction(); })
+
 
 extern "C" {
 DisplayManager displayManager = DisplayManager();
@@ -39,24 +41,12 @@ __declspec(dllexport) void __cdecl OnFrame()
         characterLoadingDetector.OnPlayingFrame();
     }
 }
-
-void OnCharacterLoad();
-FunctionHook<void> loadCharacterHook(0x4157C0, OnCharacterLoad);
-
-void OnCharacterLoad()
-{
-    loadCharacterHook.Original();
-    characterLoadingDetector.OnCharacterLoaded();
-}
-
-void OnCharacterSelectLoad();
-FunctionHook<void> CharacterSelectLoadHook(0x512BC0, OnCharacterSelectLoad);
-
-void OnCharacterSelectLoad()
-{
-    CharacterSelectLoadHook.Original();
-    characterLoadingDetector.OnCharacterLoaded();
-}
+    
+//Character loaded
+FunctionHookAdd(0x4157C0, characterLoadingDetector.OnCharacterLoaded);
+    
+//Character selection screen loaded
+FunctionHookAdd(0x512BC0, characterLoadingDetector.OnCharacterLoaded);
 
 __declspec(dllexport) ModInfo SADXModInfo = {ModLoaderVer}; // This is needed for the Mod Loader to recognize the DLL.
 }
