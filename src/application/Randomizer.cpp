@@ -22,6 +22,7 @@ void Randomizer::OnCharacterLoaded() const
     {
         if (item.second.obtained)
         {
+            //TODO: Remove upgrades that has the check but not the item
             _upgradeManager.GiveUpgrade(item.second.upgrade);
         }
     }

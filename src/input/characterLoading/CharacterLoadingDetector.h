@@ -8,7 +8,11 @@
 class CharacterLoadingDetector
 {
 public:
-    explicit CharacterLoadingDetector(Randomizer& randomizer);
+    explicit CharacterLoadingDetector(Randomizer& randomizer)
+        : _randomizer(randomizer)
+    {
+    }
+
     void OnCharacterLoaded();
     void OnPlayingFrame();
 

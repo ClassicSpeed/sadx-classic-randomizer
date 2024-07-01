@@ -1,11 +1,6 @@
 #include "CharacterLoadingDetector.h"
 
 
-CharacterLoadingDetector::CharacterLoadingDetector(Randomizer& randomizer) : _randomizer(randomizer)
-{
-}
-
-
 void CharacterLoadingDetector::OnCharacterLoaded()
 {
     //Workaround to load the upgrades after the event flag logics was applied
