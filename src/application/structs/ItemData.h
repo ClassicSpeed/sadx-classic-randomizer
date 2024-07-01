@@ -2,20 +2,29 @@
 #include <string>
 #include "SADXModLoader.h"
 
+enum ItemType
+{
+    ItemUpgrade,
+    ItemCharacter,
+    ItemEmblem,
+    ItemUnknown
+};
 
 struct ItemData
 {
-    ItemData() : upgrade(static_cast<Upgrades>(0x00)), obtained(false),
+    ItemData() : adress(0), obtained(false), type(ItemUnknown),
                  displayName(std::string("Unknown"))
     {
     }
 
-    ItemData(const Upgrades upgrade, std::string displayName) : upgrade(upgrade), obtained(false),
+    ItemData(const int adress, ItemType type, std::string displayName) : adress(adress), type(type), obtained(false),
                                                                 displayName(displayName)
     {
     }
 
-    Upgrades upgrade;
+    
+    int adress;
+    ItemType type;
     bool obtained;
     std::string displayName;
 };

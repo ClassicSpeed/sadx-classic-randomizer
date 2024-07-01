@@ -4,16 +4,18 @@
 #include "input/archipelago/FakeArchipelagoManager.h"
 #include "input/upgrade/UpgradeDetector.h"
 #include "input/characterLoading/CharacterLoadingDetector.h"
-#define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hook_##address.Original(); hookFunction(); })
+#define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
 
 
 extern "C" {
 DisplayManager displayManager = DisplayManager();
 UpgradeManager upgradeManager = UpgradeManager();
+CharacterSelectionManager characterSelectionManager = CharacterSelectionManager();
 ItemRepository itemRepository = ItemRepository();
 CheckRepository checkRepository = CheckRepository();
 
-Randomizer randomizer = Randomizer(displayManager, upgradeManager, itemRepository, checkRepository);
+Randomizer randomizer = Randomizer(displayManager, upgradeManager, characterSelectionManager, itemRepository,
+                                   checkRepository);
 
 FakeArchipelagoManager archipelagoManager = FakeArchipelagoManager(randomizer);
 UpgradeDetector upgradeDetector = UpgradeDetector(randomizer);
@@ -41,12 +43,21 @@ __declspec(dllexport) void __cdecl OnFrame()
         characterLoadingDetector.OnPlayingFrame();
     }
 }
-    
+
 //Character loaded
 FunctionHookAdd(0x4157C0, characterLoadingDetector.OnCharacterLoaded);
-    
+
 //Character selection screen loaded
-FunctionHookAdd(0x512BC0, characterLoadingDetector.OnCharacterLoaded);
+// FunctionHookAdd(0x512BC0, characterLoadingDetector.OnCharacterLoaded);
+FunctionHookAdd(0x512BC0, []
+                {
+                characterLoadingDetector.OnCharacterLoaded();
+                randomizer.OnCharacterSelectScreenLoaded();
+
+                // SetEventFlag(EventFlags_GammaUnlockedAdventure);
+                // ClearEventFlag(EventFlags_SonicUnlockedAdventure);
+                });
+
 
 __declspec(dllexport) ModInfo SADXModInfo = {ModLoaderVer}; // This is needed for the Mod Loader to recognize the DLL.
 }
