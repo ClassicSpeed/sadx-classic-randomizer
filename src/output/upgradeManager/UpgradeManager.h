@@ -4,6 +4,6 @@
 class UpgradeManager
 {
 public:
-    void GiveUpgrade(Upgrades upgrades);
-    void RemoveUpgrade(Upgrades upgrades);
+    void GiveUpgrade(Upgrades upgrade);
+    void RemoveUpgrade(Upgrades upgrade);
 };

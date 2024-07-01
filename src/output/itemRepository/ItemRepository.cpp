@@ -8,11 +8,17 @@ ItemRepository::ItemRepository()
 }
 
 
-ItemData ItemRepository::SaveItem(int itemId)
+ItemData ItemRepository::SetObtained(const int itemId)
 {
     _itemData[itemId].obtained = true;
     return _itemData[itemId];
 }
+
+ItemData ItemRepository::GetItem(const int itemId)
+{
+    return _itemData[itemId];
+}
+
 
 std::map<int, ItemData> ItemRepository::GetItems()
 {

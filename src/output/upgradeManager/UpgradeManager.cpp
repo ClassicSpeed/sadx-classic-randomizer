@@ -2,11 +2,13 @@
 
 void UpgradeManager::GiveUpgrade(const Upgrades upgrade)
 {
-    Current_CharObj2->Upgrades |= upgrade;
+     if (Current_CharObj2 != nullptr)
+         Current_CharObj2->Upgrades |= upgrade;
 }
 
 
 void UpgradeManager::RemoveUpgrade(const Upgrades upgrade)
 {
-    Current_CharObj2->Upgrades &= ~upgrade;
+    if (Current_CharObj2 != nullptr)
+        Current_CharObj2->Upgrades &= ~upgrade;
 }

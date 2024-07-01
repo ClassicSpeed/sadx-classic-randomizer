@@ -1,15 +1,21 @@
 #include "Randomizer.h"
-#include "SADXModLoader.h"
 
-void Randomizer::OnUpgradeFound(std::string name) const
+void Randomizer::OnUpgradeFound(const int checkId) const
 {
-    _displayManager.FoundItem(name);
-    //save check state
+    const CheckData check = _checkRepository.GetCheck(checkId);
+
+    _displayManager.FoundItem(check.displayName);
+
+    const ItemData item = _itemRepository.GetItem(check.originalItemId);
+    if (!item.obtained)
+        _upgradeManager.RemoveUpgrade(item.upgrade);
+
+    _checkRepository.SetChecked(checkId);
 }
 
 void Randomizer::OnItemReceived(const int itemId) const
 {
-    const ItemData item = _itemRepository.SaveItem(itemId);
+    const ItemData item = _itemRepository.SetObtained(itemId);
     _displayManager.ReceiveItem(item.displayName);
     _upgradeManager.GiveUpgrade(item.upgrade);
 }
@@ -23,4 +29,9 @@ void Randomizer::OnCharacterLoaded() const
         else
             _upgradeManager.RemoveUpgrade(item.second.upgrade);
     }
+}
+
+std::map<int, CheckData> Randomizer::GetCheckData() const
+{
+    return _checkRepository.GetChecks();
 }

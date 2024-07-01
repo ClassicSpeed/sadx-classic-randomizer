@@ -1,33 +1,25 @@
 #include "UpgradeDetector.h"
 
-#include <iostream>
-#include <vector>
-
 #include "SADXModLoader.h"
 
 
 UpgradeDetector::UpgradeDetector(Randomizer& randomizer) : _randomizer(randomizer)
 {
-    _upgrades = {
-        {"Tails's Jet Anklet", EventFlags_Tails_JetAnklet, Upgrades_JetAnklet, false, false},
-        {"Tails's Rhythm Badge", EventFlags_Tails_RhythmBadge, Upgrades_RhythmBadge, false, false},
-    };
+    _checkData = _randomizer.GetCheckData();
 }
 
 
 void UpgradeDetector::OnPlayingFrame() const
 {
-    for (const auto& upgrade : _upgrades)
+    bool checksFound = false;
+    for (const auto& check : _checkData)
     {
-        if (!upgrade.gotCheck && GetEventFlag(upgrade.eventFlag))
+        if (!check.second.checked && GetEventFlag(check.second.eventFlag))
         {
-            upgrade.gotCheck = true;
-            if (!upgrade.gotUpgrade)
-            {
-                Current_CharObj2->Upgrades &= ~upgrade.upgradeFlag;
-            }
-
-            _randomizer.OnUpgradeFound(upgrade.displayName);
+            _randomizer.OnUpgradeFound(check.first);
+            checksFound = true;
         }
     }
+    if (checksFound)
+        _checkData = _randomizer.GetCheckData();
 }

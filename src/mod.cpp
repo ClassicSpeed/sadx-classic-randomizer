@@ -9,8 +9,9 @@ extern "C" {
 DisplayManager displayManager = DisplayManager();
 UpgradeManager upgradeManager = UpgradeManager();
 ItemRepository itemRepository = ItemRepository();
+CheckRepository checkRepository = CheckRepository();
 
-Randomizer randomizer = Randomizer(displayManager, upgradeManager, itemRepository);
+Randomizer randomizer = Randomizer(displayManager, upgradeManager, itemRepository,checkRepository);
 
 FakeArchipelagoManager archipelagoManager = FakeArchipelagoManager(randomizer);
 UpgradeDetector upgradeDetector = UpgradeDetector(randomizer);

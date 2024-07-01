@@ -3,15 +3,8 @@
 
 #include "../../application/Randomizer.h"
 #include "SADXModLoader.h"
+#include "../../application/structs/CheckData.h"
 
-struct UpgradeData
-{
-    std::string displayName;
-    EventFlags eventFlag;
-    Upgrades upgradeFlag;
-    mutable bool gotCheck;
-    bool gotUpgrade;
-};
 
 class UpgradeDetector
 {
@@ -21,5 +14,5 @@ public:
 
 private:
     Randomizer& _randomizer;
-    std::vector<UpgradeData> _upgrades;
+    mutable std::map<int, CheckData> _checkData;
 };
