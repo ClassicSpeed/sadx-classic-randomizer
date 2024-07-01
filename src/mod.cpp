@@ -42,6 +42,7 @@ __declspec(dllexport) void __cdecl OnFrame()
         archipelagoManager.OnPlayingFrame();
         characterLoadingDetector.OnPlayingFrame();
     }
+    displayManager.OnFrame();
 }
 
 //Character loaded

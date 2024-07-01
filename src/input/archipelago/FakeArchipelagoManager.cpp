@@ -1,6 +1,8 @@
 #include "FakeArchipelagoManager.h"
 #include "SADXModLoader.h"
 
+bool test = false;
+
 void FakeArchipelagoManager::OnPlayingFrame() const
 {
     if (PressedButtons.empty())
@@ -17,6 +19,15 @@ void FakeArchipelagoManager::OnPlayingFrame() const
             //     LoadLevelResults();
             // }
             //Receive item
-            _randomizer.OnItemReceived(1);
+            if (test)
+            {
+                _randomizer.OnItemReceived(1);
+                test = false;
+            }
+            else
+            {
+                _randomizer.OnItemReceived(3);
+                test = true;
+            }
         }
 }

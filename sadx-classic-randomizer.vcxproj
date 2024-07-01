@@ -411,6 +411,7 @@
     <Content Include="Debug\sadx-classic-randomizer.vcxproj.FileListAbsolute.txt" />
     <Content Include="Debug\vc143.idb" />
     <Content Include="Debug\vc143.pdb" />
+    <ClInclude Include="src\application\structs\Message.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\AudioFile.h" />
