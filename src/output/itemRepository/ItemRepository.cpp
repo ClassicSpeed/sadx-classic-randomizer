@@ -11,7 +11,6 @@ ItemRepository::ItemRepository()
     _itemData[5] = ItemData(EventFlags_TailsUnlockedAdventure, ItemCharacter, "Tails's Story");
 
     _itemData[2].obtained = true;
-    _itemData[4].obtained = true;
 }
 
 

@@ -94,11 +94,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)/lib/sadx-mod-loader/SADXModLoader/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
+       <AdditionalIncludeDirectories>$(ProjectDir)/lib/sadx-mod-loader/SADXModLoader/include;$(ProjectDir)/lib/APCpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)/lib/APCpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>APCpp.lib;"$(ProjectDir)/lib/APCpp/ixwebsocket.lib";"$(ProjectDir)/lib/APCpp/jsoncpp.lib";%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -156,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\application\Randomizer.cpp" />
+    <ClCompile Include="src\input\archipelago\ArchipelagoManager.cpp" />
     <ClCompile Include="src\input\archipelago\FakeArchipelagoManager.cpp" />
     <ClCompile Include="src\input\characterLoading\CharacterLoadingDetector.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -231,7 +234,7 @@
       <EnablePREfast>false</EnablePREfast>
       <OmitFramePointers>false</OmitFramePointers>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\development\workspaces\sadx-classic-randomizer\/lib/sadx-mod-loader/SADXModLoader/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/lib/sadx-mod-loader/SADXModLoader/include;</AdditionalIncludeDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="src\input\eventDetector\EventDetector.cpp" />
@@ -310,7 +313,7 @@
       <EnablePREfast>false</EnablePREfast>
       <OmitFramePointers>false</OmitFramePointers>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\development\workspaces\sadx-classic-randomizer\/lib/sadx-mod-loader/SADXModLoader/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/lib/sadx-mod-loader/SADXModLoader/include;</AdditionalIncludeDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="src\output\checkRepository\CheckRepository.cpp">
@@ -387,7 +390,7 @@
       <EnablePREfast>false</EnablePREfast>
       <OmitFramePointers>false</OmitFramePointers>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\development\workspaces\sadx-classic-randomizer\/lib/sadx-mod-loader/SADXModLoader/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/lib/sadx-mod-loader/SADXModLoader/include;</AdditionalIncludeDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="src\output\displayManager\DisplayManager.cpp" />
@@ -411,7 +414,32 @@
     <Content Include="Debug\sadx-classic-randomizer.vcxproj.FileListAbsolute.txt" />
     <Content Include="Debug\vc143.idb" />
     <Content Include="Debug\vc143.pdb" />
+    <ClInclude Include="lib\APCpp\Archipelago.h" />
+    <ClInclude Include="lib\APCpp\json\allocator.h" />
+    <ClInclude Include="lib\APCpp\json\assertions.h" />
+    <ClInclude Include="lib\APCpp\json\config.h" />
+    <ClInclude Include="lib\APCpp\json\forwards.h" />
+    <ClInclude Include="lib\APCpp\json\json.h" />
+    <ClInclude Include="lib\APCpp\json\json_features.h" />
+    <ClInclude Include="lib\APCpp\json\reader.h" />
+    <ClInclude Include="lib\APCpp\json\value.h" />
+    <ClInclude Include="lib\APCpp\json\version.h" />
+    <ClInclude Include="lib\APCpp\json\writer.h" />
     <ClInclude Include="src\application\structs\Message.h" />
+    <Content Include="lib\APCpp\APCpp.dll" />
+    <Content Include="lib\APCpp\APCpp.exp" />
+    <Content Include="lib\APCpp\APCpp.lib" />
+    <Content Include="lib\APCpp\APCpp.pdb" />
+    <Content Include="lib\APCpp\ixwebsocket.lib" />
+    <Content Include="lib\APCpp\ixwebsocket.pdb" />
+    <Content Include="lib\APCpp\jsoncpp.lib" />
+    <Content Include="lib\APCpp\jsoncpp.pdb" />
+    <Content Include="lib\APCpp\mbedcrypto.lib" />
+    <Content Include="lib\APCpp\mbedcrypto.pdb" />
+    <Content Include="lib\APCpp\mbedtls.lib" />
+    <Content Include="lib\APCpp\mbedtls.pdb" />
+    <Content Include="lib\APCpp\mbedx509.lib" />
+    <Content Include="lib\APCpp\mbedx509.pdb" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\AudioFile.h" />
@@ -438,6 +466,7 @@
     <ClInclude Include="src\application\Randomizer.h" />
     <ClInclude Include="src\application\structs\CheckData.h" />
     <ClInclude Include="src\application\structs\ItemData.h" />
+    <ClInclude Include="src\input\archipelago\ArchipelagoManager.h" />
     <ClInclude Include="src\input\archipelago\FakeArchipelagoManager.h" />
     <ClInclude Include="src\input\characterLoading\CharacterLoadingDetector.h" />
     <ClInclude Include="src\input\eventDetector\EventDetector.h" />
