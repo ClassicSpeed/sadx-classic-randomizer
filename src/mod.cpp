@@ -2,7 +2,7 @@
 #include "SADXModLoader.h"
 #include "application/Randomizer.h"
 #include "input/archipelago/FakeArchipelagoManager.h"
-#include "input/upgrade/UpgradeDetector.h"
+#include "input/eventDetector/EventDetector.h"
 #include "input/characterLoading/CharacterLoadingDetector.h"
 #define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
 
@@ -18,7 +18,7 @@ Randomizer randomizer = Randomizer(displayManager, upgradeManager, characterSele
                                    checkRepository);
 
 FakeArchipelagoManager archipelagoManager = FakeArchipelagoManager(randomizer);
-UpgradeDetector upgradeDetector = UpgradeDetector(randomizer);
+EventDetector eventDetector = EventDetector(randomizer);
 CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(randomizer);
 
 
@@ -38,7 +38,7 @@ __declspec(dllexport) void __cdecl OnFrame()
     // Executed every running frame of SADX
     if (Current_CharObj2 != nullptr)
     {
-        upgradeDetector.OnPlayingFrame();
+        eventDetector.OnPlayingFrame();
         archipelagoManager.OnPlayingFrame();
         characterLoadingDetector.OnPlayingFrame();
     }
@@ -48,14 +48,10 @@ __declspec(dllexport) void __cdecl OnFrame()
 FunctionHookAdd(0x4157C0, characterLoadingDetector.OnCharacterLoaded);
 
 //Character selection screen loaded
-// FunctionHookAdd(0x512BC0, characterLoadingDetector.OnCharacterLoaded);
 FunctionHookAdd(0x512BC0, []
                 {
                 characterLoadingDetector.OnCharacterLoaded();
                 randomizer.OnCharacterSelectScreenLoaded();
-
-                // SetEventFlag(EventFlags_GammaUnlockedAdventure);
-                // ClearEventFlag(EventFlags_SonicUnlockedAdventure);
                 });
 
 

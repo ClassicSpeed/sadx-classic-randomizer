@@ -8,7 +8,9 @@ ItemRepository::ItemRepository()
     _itemData[2] = ItemData(EventFlags_SonicUnlockedAdventure, ItemCharacter, "Sonic's Story");
     _itemData[3] = ItemData(EventFlags_GammaUnlockedAdventure, ItemCharacter, "Gamma's Story");
     _itemData[4] = ItemData(EventFlags_BigUnlockedAdventure, ItemCharacter, "Big's Story");
+    _itemData[5] = ItemData(EventFlags_TailsUnlockedAdventure, ItemCharacter, "Tails's Story");
 
+    _itemData[2].obtained = true;
     _itemData[4].obtained = true;
 }
 

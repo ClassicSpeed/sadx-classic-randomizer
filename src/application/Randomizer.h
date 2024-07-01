@@ -20,7 +20,7 @@ public:
     {
     }
 
-    void OnUpgradeFound(int checkId) const;
+    void OnCheckFound(int checkId) const;
     void OnItemReceived(int itemId) const;
     void OnCharacterLoaded() const;
     void OnCharacterSelectScreenLoaded() const;

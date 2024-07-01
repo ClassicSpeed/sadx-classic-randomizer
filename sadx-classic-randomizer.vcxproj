@@ -234,7 +234,7 @@
       <AdditionalIncludeDirectories>C:\development\workspaces\sadx-classic-randomizer\/lib/sadx-mod-loader/SADXModLoader/include;</AdditionalIncludeDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
-    <ClCompile Include="src\input\upgrade\UpgradeDetector.cpp" />
+    <ClCompile Include="src\input\eventDetector\EventDetector.cpp" />
     <ClCompile Include="src\mod.cpp" />
     <ClCompile Include="src\output\characterSelectionManager\CharacterSelectionManager.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -439,7 +439,7 @@
     <ClInclude Include="src\application\structs\ItemData.h" />
     <ClInclude Include="src\input\archipelago\FakeArchipelagoManager.h" />
     <ClInclude Include="src\input\characterLoading\CharacterLoadingDetector.h" />
-    <ClInclude Include="src\input\upgrade\UpgradeDetector.h" />
+    <ClInclude Include="src\input\eventDetector\EventDetector.h" />
     <ClInclude Include="src\output\characterSelectionManager\CharacterSelectionManager.h" />
     <ClInclude Include="src\output\checkRepository\CheckRepository.h" />
     <ClInclude Include="src\output\displayManager\DisplayManager.h" />

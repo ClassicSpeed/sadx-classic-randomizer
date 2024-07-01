@@ -6,10 +6,10 @@
 #include "../../application/structs/CheckData.h"
 
 
-class UpgradeDetector
+class EventDetector
 {
 public:
-    explicit UpgradeDetector(Randomizer& randomizer);
+    explicit EventDetector(Randomizer& randomizer);
     void OnPlayingFrame() const;
 
 private:

@@ -1,6 +1,6 @@
 #include "Randomizer.h"
 
-void Randomizer::OnUpgradeFound(const int checkId) const
+void Randomizer::OnCheckFound(const int checkId) const
 {
     const CheckData check = _checkRepository.GetCheck(checkId);
 
