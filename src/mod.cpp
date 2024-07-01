@@ -11,7 +11,7 @@ UpgradeManager upgradeManager = UpgradeManager();
 ItemRepository itemRepository = ItemRepository();
 CheckRepository checkRepository = CheckRepository();
 
-Randomizer randomizer = Randomizer(displayManager, upgradeManager, itemRepository,checkRepository);
+Randomizer randomizer = Randomizer(displayManager, upgradeManager, itemRepository, checkRepository);
 
 FakeArchipelagoManager archipelagoManager = FakeArchipelagoManager(randomizer);
 UpgradeDetector upgradeDetector = UpgradeDetector(randomizer);
@@ -23,7 +23,6 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     // Executed at startup, contains helperFunctions and the path to your mod (useful for getting the config file.)
     // This is where we override functions, replace static data, etc.
 }
-
 
 __declspec(dllexport) void __cdecl OnInitEnd()
 {
@@ -41,7 +40,6 @@ __declspec(dllexport) void __cdecl OnFrame()
     }
 }
 
-
 void OnCharacterLoad();
 FunctionHook<void> loadCharacterHook(0x4157C0, OnCharacterLoad);
 
@@ -51,6 +49,14 @@ void OnCharacterLoad()
     characterLoadingDetector.OnCharacterLoaded();
 }
 
+void OnCharacterSelectLoad();
+FunctionHook<void> CharacterSelectLoadHook(0x512BC0, OnCharacterSelectLoad);
+
+void OnCharacterSelectLoad()
+{
+    CharacterSelectLoadHook.Original();
+    characterLoadingDetector.OnCharacterLoaded();
+}
 
 __declspec(dllexport) ModInfo SADXModInfo = {ModLoaderVer}; // This is needed for the Mod Loader to recognize the DLL.
 }
