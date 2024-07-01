@@ -1,15 +1,9 @@
 #include "DisplayManager.h"
 #include "SADXModLoader.h"
 
-
-void DisplayManager::FoundItem(std::string displayName)
+void DisplayManager::QueueMessage(const std::string& message)
 {
-    _messagesQueue.push("Checked: " + displayName);
-}
-
-void DisplayManager::ReceiveItem(std::string displayName)
-{
-    _messagesQueue.push("Got: " + displayName);
+    _messagesQueue.push(message);
 }
 
 
@@ -45,10 +39,10 @@ void DisplayManager::AddNewMessages()
 
 void DisplayManager::DisplayMessages() const
 {
-    for (size_t  i = 0; i < this->_currentMessages.size(); i++)
+    for (size_t i = 0; i < this->_currentMessages.size(); i++)
     {
         SetDebugFontSize(this->_debugFontSize);
         SetDebugFontColor(this->_displayColor);
-        DisplayDebugString(NJM_LOCATION(0, this->_startLine + i), _currentMessages[i].message.c_str());
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + i), _currentMessages[i].message.c_str());
     }
 }

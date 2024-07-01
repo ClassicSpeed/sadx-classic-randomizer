@@ -4,7 +4,7 @@ void Randomizer::OnCheckFound(const int checkId) const
 {
     const CheckData check = _checkRepository.GetCheck(checkId);
 
-    _displayManager.FoundItem(check.displayName);
+    _displayManager.QueueMessage("Checked: " +check.displayName);
 
     const ItemData item = _itemRepository.GetItem(check.originalItemId);
     if (!item.obtained)
@@ -16,7 +16,7 @@ void Randomizer::OnCheckFound(const int checkId) const
 void Randomizer::OnItemReceived(const int itemId) const
 {
     const ItemData item = _itemRepository.SetObtained(itemId);
-    _displayManager.ReceiveItem(item.displayName);
+    _displayManager.QueueMessage("Got: " + item.displayName);
     _upgradeManager.GiveUpgrade(item.adress);
 }
 
