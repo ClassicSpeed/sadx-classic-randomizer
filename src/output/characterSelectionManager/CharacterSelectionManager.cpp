@@ -3,10 +3,12 @@
 
 void CharacterSelectionManager::Unlock(int eventAddress)
 {
-    SetEventFlag(static_cast<EventFlags>(eventAddress));
+    if (GameMode == GameModes_CharSel)
+        SetEventFlag(static_cast<EventFlags>(eventAddress));
 }
 
 void CharacterSelectionManager::Lock(int eventAddress)
 {
-    ClearEventFlag(static_cast<EventFlags>(eventAddress));
+    if (GameMode == GameModes_CharSel)
+        ClearEventFlag(static_cast<EventFlags>(eventAddress));
 }

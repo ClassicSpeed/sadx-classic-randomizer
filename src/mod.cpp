@@ -23,11 +23,11 @@ Randomizer randomizer = Randomizer(displayManager,
                                    checkRepository,
                                    archipelagoMessenger);
 
-AutoWinManager fakeArchipelagoManager = AutoWinManager(randomizer);
+AutoWinManager autoWinManager = AutoWinManager(randomizer);
 ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer);
 EventDetector eventDetector = EventDetector(randomizer);
 CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(randomizer);
-    
+
 
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
 {
@@ -39,10 +39,10 @@ __declspec(dllexport) void __cdecl OnFrame()
 {
     archipelagoManager.OnFrame();
     displayManager.OnFrame();
+    autoWinManager.OnPlayingFrame();
     if (Current_CharObj2 != nullptr)
     {
         eventDetector.OnPlayingFrame();
-        fakeArchipelagoManager.OnPlayingFrame();
         characterLoadingDetector.OnPlayingFrame();
     }
 }

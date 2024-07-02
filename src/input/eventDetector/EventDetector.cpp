@@ -11,6 +11,9 @@ EventDetector::EventDetector(Randomizer& randomizer) : _randomizer(randomizer)
 
 void EventDetector::OnPlayingFrame() const
 {
+    if(GameMode == GameModes_CharSel)
+        return;
+    
     bool checksFound = false;
     for (const auto& check : _checkData)
     {

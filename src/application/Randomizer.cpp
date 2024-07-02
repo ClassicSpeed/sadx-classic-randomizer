@@ -18,7 +18,10 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
 {
     const ItemData item = _itemRepository.SetObtained(itemId);
     _displayManager.QueueMessage("Got: " + item.displayName);
-    _upgradeManager.GiveUpgrade(item.adress);
+    if (item.type == ItemUpgrade)
+        _upgradeManager.GiveUpgrade(item.adress);
+    else if (item.type == ItemCharacter)
+        _characterSelectionManager.Unlock(item.adress);
 }
 
 void Randomizer::OnCharacterLoaded() const
@@ -27,7 +30,7 @@ void Randomizer::OnCharacterLoaded() const
     {
         if (item.second.type != ItemUpgrade)
             continue;
-        
+
         if (item.second.obtained)
             _upgradeManager.GiveUpgrade(item.second.adress);
         else
@@ -49,7 +52,6 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
             _characterSelectionManager.Lock(item.second.adress);
     }
 }
-
 
 
 std::map<int, LocationData> Randomizer::GetCheckData() const
