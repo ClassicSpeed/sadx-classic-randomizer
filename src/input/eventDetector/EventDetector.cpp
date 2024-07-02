@@ -11,7 +11,8 @@ EventDetector::EventDetector(Randomizer& randomizer) : _randomizer(randomizer)
 
 void EventDetector::OnPlayingFrame() const
 {
-    if(GameMode == GameModes_CharSel)
+    //Ignore events given by the mod itself
+    if(GameMode != GameModes_Adventure_Field)
         return;
     
     bool checksFound = false;

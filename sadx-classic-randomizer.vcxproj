@@ -480,6 +480,7 @@
     <ClCompile Include="src\output\upgradeManager\UpgradeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\SADX Classic Randomizer\sadx-classic-randomizer.dll" />
     <Content Include="Debug\dllmain.obj" />
     <Content Include="Debug\sadx-cla.B38A1B9C.tlog\CL.command.1.tlog" />
     <Content Include="Debug\sadx-cla.B38A1B9C.tlog\Cl.items.tlog" />
