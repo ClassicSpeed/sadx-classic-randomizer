@@ -58,3 +58,8 @@ std::map<int, LocationData> Randomizer::GetCheckData() const
 {
     return _checkRepository.GetChecks();
 }
+
+void Randomizer::OnConnected()
+{
+    _displayManager.QueueMessage("Connected to Archipelago");
+}

@@ -28,6 +28,7 @@ public:
     void OnCharacterLoaded() const;
     void OnCharacterSelectScreenLoaded() const;
     std::map<int, LocationData> GetCheckData() const;
+    void OnConnected();
 
 private:
     DisplayManager& _displayManager;

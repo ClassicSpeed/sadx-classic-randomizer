@@ -64,5 +64,6 @@ void ArchipelagoManager::Connect()
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_Start();
+    _randomizer.OnConnected();
     _connected = true;
 }
