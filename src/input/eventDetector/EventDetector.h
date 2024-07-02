@@ -3,7 +3,7 @@
 
 #include "../../application/Randomizer.h"
 #include "SADXModLoader.h"
-#include "../../application/structs/CheckData.h"
+#include "../../application/structs/LocationData.h"
 
 
 class EventDetector
@@ -14,5 +14,5 @@ public:
 
 private:
     Randomizer& _randomizer;
-    mutable std::map<int, CheckData> _checkData;
+    mutable std::map<int, LocationData> _checkData;
 };

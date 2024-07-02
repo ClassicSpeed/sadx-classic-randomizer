@@ -3,10 +3,10 @@
 
 void CharacterSelectionManager::Unlock(int eventAddress)
 {
-SetEventFlag(static_cast<EventFlags>(eventAddress));
+    SetEventFlag(static_cast<EventFlags>(eventAddress));
 }
 
 void CharacterSelectionManager::Lock(int eventAddress)
 {
- ClearEventFlag(static_cast<EventFlags>(eventAddress));
+    ClearEventFlag(static_cast<EventFlags>(eventAddress));
 }

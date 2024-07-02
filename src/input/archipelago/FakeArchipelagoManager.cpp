@@ -12,22 +12,22 @@ void FakeArchipelagoManager::OnPlayingFrame() const
 
         if (button & WhistleButtons && Current_CharObj2 != nullptr)
         {
-            //Insta win item
-            // if (CurrentLevel < LevelIDs_StationSquare || CurrentLevel == LevelIDs_SandHill)
+            //Insta win 
+            if (CurrentLevel < LevelIDs_StationSquare || CurrentLevel == LevelIDs_SandHill)
+            {
+                SetTailsRaceVictory();
+                LoadLevelResults();
+            }
+            // //Receive item
+            // if (test)
             // {
-            //     SetTailsRaceVictory();
-            //     LoadLevelResults();
+            //     _randomizer.OnItemReceived(1);
+            //     test = false;
             // }
-            //Receive item
-            if (test)
-            {
-                _randomizer.OnItemReceived(1);
-                test = false;
-            }
-            else
-            {
-                _randomizer.OnItemReceived(3);
-                test = true;
-            }
+            // else
+            // {
+            //     _randomizer.OnItemReceived(3);
+            //     test = true;
+            // }
         }
 }

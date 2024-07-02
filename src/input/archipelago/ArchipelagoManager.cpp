@@ -1,14 +1,23 @@
 ﻿#include "ArchipelagoManager.h"
 #include "Archipelago.h"
 
+constexpr int64_t BASE_ID = 5438000;
+Randomizer* randomizerPtr = nullptr;
 
-void ArchipelagoManager::OnFrame() const
+ArchipelagoManager::ArchipelagoManager(Randomizer& randomizer)
+    : _randomizer(randomizer)
 {
-    //Check savefile
+    randomizerPtr = &this->_randomizer;
+}
 
-    //Check mod version
+void ArchipelagoManager::OnFrame()
+{
+    //TODO: Check savefile
 
-    //Connect?
+    //TODO: Check mod version
+
+    //TODO: Check connection lost
+
     if (!_connected)
     {
         this->Connect();
@@ -16,29 +25,31 @@ void ArchipelagoManager::OnFrame() const
 }
 
 
-void SADX_ResetItems()
+void SADX_RecvItem(const int64_t itemId, bool notify)
 {
-    //apm->ResetItems();
-    PrintDebug("Reset items\n");
+    randomizerPtr->OnItemReceived(itemId - BASE_ID);
+    
 }
 
-void SADX_RecvItem(int64_t item_id, bool notify)
+void SADX_ResetItems()
 {
-    // apm->ReceiveItem(item_id, notify);
-    PrintDebug("Recived item %d\n", item_id);
+    //TODO: Do something?
+    PrintDebug("Reset items\n");
 }
 
 void SADX_CheckLocation(int64_t loc_id)
 {
-    // apm->CheckLocation(loc_id);
+    //TODO: Do something?
     PrintDebug("Checked location %d\n", loc_id);
 }
 
-void ArchipelagoManager::Connect() const
+void ArchipelagoManager::Connect()
 {
-    AP_Init("localhost", "Sonic Adventure DX", "Classic", "");
+    //TODO: Get settings from configuration
+    AP_Init("archipelago.gg:54554", "Sonic Adventure DX", "Classic", "");
     AP_SetItemClearCallback(&SADX_ResetItems);
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_Start();
+    _connected = true;
 }

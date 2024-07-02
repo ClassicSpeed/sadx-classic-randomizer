@@ -1,9 +1,12 @@
 #include "FunctionHook.h"
 #include "SADXModLoader.h"
 #include "application/Randomizer.h"
+#include "input/archipelago/ArchipelagoManager.h"
 #include "input/archipelago/FakeArchipelagoManager.h"
 #include "input/eventDetector/EventDetector.h"
 #include "input/characterLoading/CharacterLoadingDetector.h"
+#include "output/archipelagoMessenger/ArchipelagoMessenger.h"
+#include "output/locationRepository/LocationRepository.h"
 #define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
 
 
@@ -12,12 +15,15 @@ DisplayManager displayManager = DisplayManager();
 UpgradeManager upgradeManager = UpgradeManager();
 CharacterSelectionManager characterSelectionManager = CharacterSelectionManager();
 ItemRepository itemRepository = ItemRepository();
-CheckRepository checkRepository = CheckRepository();
+LocationRepository checkRepository = LocationRepository();
+    ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger();    
 
 Randomizer randomizer = Randomizer(displayManager, upgradeManager, characterSelectionManager, itemRepository,
-                                   checkRepository);
+                                   checkRepository,archipelagoMessenger);
 
-FakeArchipelagoManager archipelagoManager = FakeArchipelagoManager(randomizer);
+FakeArchipelagoManager fakeArchipelagoManager = FakeArchipelagoManager(randomizer);
+ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer);
+    
 EventDetector eventDetector = EventDetector(randomizer);
 CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(randomizer);
 
@@ -39,10 +45,11 @@ __declspec(dllexport) void __cdecl OnFrame()
     if (Current_CharObj2 != nullptr)
     {
         eventDetector.OnPlayingFrame();
-        archipelagoManager.OnPlayingFrame();
+        fakeArchipelagoManager.OnPlayingFrame();
         characterLoadingDetector.OnPlayingFrame();
     }
     displayManager.OnFrame();
+    archipelagoManager.OnFrame();
 }
 
 //Character loaded

@@ -2,7 +2,7 @@
 
 void Randomizer::OnCheckFound(const int checkId) const
 {
-    const CheckData check = _checkRepository.GetCheck(checkId);
+    const LocationData check = _checkRepository.GetCheck(checkId);
 
     _displayManager.QueueMessage("Checked: " +check.displayName);
 
@@ -11,9 +11,10 @@ void Randomizer::OnCheckFound(const int checkId) const
         _upgradeManager.RemoveUpgrade(item.adress);
 
     _checkRepository.SetChecked(checkId);
+    _archipelagoMessenger.CheckLocation(checkId);
 }
 
-void Randomizer::OnItemReceived(const int itemId) const
+void Randomizer::OnItemReceived(const int64_t itemId) const
 {
     const ItemData item = _itemRepository.SetObtained(itemId);
     _displayManager.QueueMessage("Got: " + item.displayName);
@@ -51,7 +52,7 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
 
 
 
-std::map<int, CheckData> Randomizer::GetCheckData() const
+std::map<int, LocationData> Randomizer::GetCheckData() const
 {
     return _checkRepository.GetChecks();
 }

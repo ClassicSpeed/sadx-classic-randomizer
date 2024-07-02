@@ -239,6 +239,7 @@
     </ClCompile>
     <ClCompile Include="src\input\eventDetector\EventDetector.cpp" />
     <ClCompile Include="src\mod.cpp" />
+    <ClCompile Include="src\output\archipelagoMessenger\ArchipelagoMessenger.cpp" />
     <ClCompile Include="src\output\characterSelectionManager\CharacterSelectionManager.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -316,7 +317,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)/lib/sadx-mod-loader/SADXModLoader/include;</AdditionalIncludeDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
-    <ClCompile Include="src\output\checkRepository\CheckRepository.cpp">
+    <ClCompile Include="src\output\locationRepository\LocationRepository.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
@@ -464,14 +465,15 @@
     <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\UsercallFunctionHandler.h" />
     <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\WeightInfo.h" />
     <ClInclude Include="src\application\Randomizer.h" />
-    <ClInclude Include="src\application\structs\CheckData.h" />
+    <ClInclude Include="src\application\structs\LocationData.h" />
     <ClInclude Include="src\application\structs\ItemData.h" />
     <ClInclude Include="src\input\archipelago\ArchipelagoManager.h" />
     <ClInclude Include="src\input\archipelago\FakeArchipelagoManager.h" />
     <ClInclude Include="src\input\characterLoading\CharacterLoadingDetector.h" />
     <ClInclude Include="src\input\eventDetector\EventDetector.h" />
+    <ClInclude Include="src\output\archipelagoMessenger\ArchipelagoMessenger.h" />
     <ClInclude Include="src\output\characterSelectionManager\CharacterSelectionManager.h" />
-    <ClInclude Include="src\output\checkRepository\CheckRepository.h" />
+    <ClInclude Include="src\output\locationRepository\LocationRepository.h" />
     <ClInclude Include="src\output\displayManager\DisplayManager.h" />
     <ClInclude Include="src\output\itemRepository\ItemRepository.h" />
     <ClInclude Include="src\output\upgradeManager\UpgradeManager.h" />

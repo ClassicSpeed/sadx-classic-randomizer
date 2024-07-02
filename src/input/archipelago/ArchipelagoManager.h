@@ -4,13 +4,10 @@
 class ArchipelagoManager
 {
 public:
-    explicit ArchipelagoManager(Randomizer& randomizer)
-        : _randomizer(randomizer)
-    {
-    }
+    explicit ArchipelagoManager(Randomizer& randomizer);
 
-    void Connect() const;
-    void OnFrame() const;
+    void Connect();
+    void OnFrame();
 
 private:
     Randomizer& _randomizer;

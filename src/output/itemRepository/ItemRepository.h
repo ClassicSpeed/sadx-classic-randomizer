@@ -7,10 +7,10 @@ class ItemRepository
 {
 public:
     ItemRepository();
-    ItemData SetObtained(int itemId);
+    ItemData SetObtained(int64_t itemId);
     ItemData GetItem(int itemId);
-    std::map<int, ItemData> GetItems();
+    std::map<int64_t, ItemData> GetItems();
 
 private:
-    std::map<int, ItemData> _itemData;
+    std::map<int64_t, ItemData> _itemData;
 };
