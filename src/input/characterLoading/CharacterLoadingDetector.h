@@ -1,18 +1,14 @@
 #pragma once
-#include <vector>
 
 #include "../../application/Randomizer.h"
-#include "SADXModLoader.h"
 
 
 class CharacterLoadingDetector
 {
 public:
-    explicit CharacterLoadingDetector(Randomizer& randomizer)
-        : _randomizer(randomizer)
-    {
-    }
+    explicit CharacterLoadingDetector(Randomizer& randomizer);
 
+    void OnCharacterSelectScreenLoaded() const;
     void OnCharacterLoaded();
     void OnPlayingFrame();
 
