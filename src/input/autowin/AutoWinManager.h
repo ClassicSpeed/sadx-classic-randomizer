@@ -1,10 +1,10 @@
 #pragma once
 #include "../../application/Randomizer.h"
 
-class FakeArchipelagoManager
+class AutoWinManager
 {
 public:
-    explicit FakeArchipelagoManager(Randomizer& randomizer)
+    explicit AutoWinManager(Randomizer& randomizer)
         : _randomizer(randomizer)
     {
     }

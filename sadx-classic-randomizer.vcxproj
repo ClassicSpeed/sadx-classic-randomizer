@@ -91,15 +91,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-       <AdditionalIncludeDirectories>$(ProjectDir)/lib/sadx-mod-loader/SADXModLoader/include;$(ProjectDir)/lib/APCpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+       <AdditionalIncludeDirectories>$(ProjectDir)/lib/sadx-mod-loader/SADXModLoader/include;$(ProjectDir)/lib/sadx-mod-loader/mod-loader-common/ModLoaderCommon;$(ProjectDir)/lib/APCpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
      </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)/lib/APCpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)/lib/APCpp;$(ProjectDir)/lib/sadx-mod-loader/mod-loader-common/ModLoaderCommon;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>APCpp.lib;"$(ProjectDir)/lib/APCpp/ixwebsocket.lib";"$(ProjectDir)/lib/APCpp/jsoncpp.lib";%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -157,9 +157,90 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\CodeParser.cpp" />
+    <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\FileSystem.cpp" />
+    <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\IniFile.cpp" />
+    <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\stdafx.cpp" />
+    <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\TextConv.cpp" />
     <ClCompile Include="src\application\Randomizer.cpp" />
     <ClCompile Include="src\input\archipelago\ArchipelagoManager.cpp" />
-    <ClCompile Include="src\input\archipelago\FakeArchipelagoManager.cpp" />
+    <ClCompile Include="src\input\autowin\AutoWinManager.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformation>false</BrowseInformation>
+      <BrowseInformationFile>Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>true</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExpandAttributedSource>false</ExpandAttributedSource>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFuzzer>false</EnableFuzzer>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <GenerateModuleDependencies>false</GenerateModuleDependencies>
+      <GenerateSourceDependencies>false</GenerateSourceDependencies>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ModuleDependenciesFile>Debug\</ModuleDependenciesFile>
+      <ModuleOutputFile>Debug\</ModuleOutputFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ObjectFileName>Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <ProgramDataBaseFileName>Debug\vc143.pdb</ProgramDataBaseFileName>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Debug\sadx-classic-randomizer.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <SpectreMitigation>false</SpectreMitigation>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>Debug\sadx-cla.B38A1B9C.tlog\</TrackerLogDirectory>
+      <TranslateIncludes>false</TranslateIncludes>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <UseFullPaths>true</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
+      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
+      <PreprocessorDefinitions>WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_WINDLL;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <EnablePREfast>false</EnablePREfast>
+      <OmitFramePointers>false</OmitFramePointers>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\development\workspaces\sadx-classic-randomizer\/lib/sadx-mod-loader/SADXModLoader/include;C:\development\workspaces\sadx-classic-randomizer\/lib/sadx-mod-loader/mod-loader-common/ModLoaderCommon;C:\development\workspaces\sadx-classic-randomizer\/lib/APCpp;</AdditionalIncludeDirectories>
+      <LinkCompiled>true</LinkCompiled>
+    </ClCompile>
     <ClCompile Include="src\input\characterLoading\CharacterLoadingDetector.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -426,6 +507,13 @@
     <ClInclude Include="lib\APCpp\json\value.h" />
     <ClInclude Include="lib\APCpp\json\version.h" />
     <ClInclude Include="lib\APCpp\json\writer.h" />
+    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\CodeParser.hpp" />
+    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\FileSystem.h" />
+    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\IniFile.hpp" />
+    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\stdafx.h" />
+    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\targetver.h" />
+    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\TextConv.hpp" />
+    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\Utils.hpp" />
     <ClInclude Include="src\application\structs\Message.h" />
     <Content Include="lib\APCpp\APCpp.dll" />
     <Content Include="lib\APCpp\APCpp.exp" />
@@ -441,6 +529,9 @@
     <Content Include="lib\APCpp\mbedtls.pdb" />
     <Content Include="lib\APCpp\mbedx509.lib" />
     <Content Include="lib\APCpp\mbedx509.pdb" />
+    <Content Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\ModLoaderCommon.vcxproj" />
+    <Content Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\ModLoaderCommon.vcxproj.filters" />
+    <Content Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\AudioFile.h" />
@@ -468,7 +559,7 @@
     <ClInclude Include="src\application\structs\LocationData.h" />
     <ClInclude Include="src\application\structs\ItemData.h" />
     <ClInclude Include="src\input\archipelago\ArchipelagoManager.h" />
-    <ClInclude Include="src\input\archipelago\FakeArchipelagoManager.h" />
+    <ClInclude Include="src\input\autowin\AutoWinManager.h" />
     <ClInclude Include="src\input\characterLoading\CharacterLoadingDetector.h" />
     <ClInclude Include="src\input\eventDetector\EventDetector.h" />
     <ClInclude Include="src\output\archipelagoMessenger\ArchipelagoMessenger.h" />

@@ -8,9 +8,10 @@ public:
 
     void Connect();
     void OnFrame();
+    void SetConfigPath(std::string configPath) const;
 
 private:
     Randomizer& _randomizer;
-
+    mutable std::string _configPath;
     bool _connected;
 };

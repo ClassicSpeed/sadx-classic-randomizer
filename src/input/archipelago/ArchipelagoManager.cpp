@@ -1,11 +1,13 @@
 ﻿#include "ArchipelagoManager.h"
 #include "Archipelago.h"
+#include "IniFile.hpp"
 
 constexpr int64_t BASE_ID = 5438000;
 Randomizer* randomizerPtr = nullptr;
 
+
 ArchipelagoManager::ArchipelagoManager(Randomizer& randomizer)
-    : _randomizer(randomizer)
+    : _randomizer(randomizer), _connected(false)
 {
     randomizerPtr = &this->_randomizer;
 }
@@ -24,11 +26,15 @@ void ArchipelagoManager::OnFrame()
     }
 }
 
+void ArchipelagoManager::SetConfigPath(std::string configPath) const
+{
+    _configPath = configPath;
+}
+
 
 void SADX_RecvItem(const int64_t itemId, bool notify)
 {
     randomizerPtr->OnItemReceived(itemId - BASE_ID);
-    
 }
 
 void SADX_ResetItems()
@@ -46,7 +52,14 @@ void SADX_CheckLocation(int64_t loc_id)
 void ArchipelagoManager::Connect()
 {
     //TODO: Get settings from configuration
-    AP_Init("archipelago.gg:49288", "Sonic Adventure DX", "Classic", "");
+    if (_configPath.empty())
+        return;
+
+    const IniFile* settingsINI = new IniFile(_configPath);
+    std::string serverIP = settingsINI->getString("AP", "IP");
+    std::string playerName = settingsINI->getString("AP", "PlayerName");
+    std::string serverPassword = settingsINI->getString("AP", "Password");
+    AP_Init(serverIP.c_str(), "Sonic Adventure DX", playerName.c_str(), serverPassword.c_str());
     AP_SetItemClearCallback(&SADX_ResetItems);
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);

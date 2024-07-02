@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ConfigSchema>
+    <Groups>
+        <Group name="AP" display="AP Settings">
+            <Property name="IP" type="string" defaultvalue="archipelago.gg:123456" display="Server IP">
+                <HelpText>Enter the IP and Port of the Multiworld Host</HelpText>
+            </Property>
+            <Property name="PlayerName" type="string" defaultvalue="Sonic" display="Player Name">
+                <HelpText>Enter your Slot Name</HelpText>
+            </Property>
+            <Property name="Password" type="string" defaultvalue="" display="Server Password">
+                <HelpText>Enter the Password for the Multiworld Host</HelpText>
+            </Property>
+        </Group>
+    </Groups>
+</ConfigSchema>
