@@ -5,7 +5,7 @@
 ItemRepository::ItemRepository()
 {
     _itemData = {
-        {1, ItemData(EventFlags_SonicUnlockedAdventure, ItemCharacter, "Story unlock (Sonic)")},
+        // {1, ItemData(EventFlags_SonicUnlockedAdventure, ItemCharacter, "Story unlock (Sonic)")},
         {2, ItemData(EventFlags_TailsUnlockedAdventure, ItemCharacter, "Story unlock (Tails)")},
         {3, ItemData(EventFlags_KnucklesUnlockedAdventure, ItemCharacter, "Story unlock (Knuckles)")},
         {4, ItemData(EventFlags_AmyUnlockedAdventure, ItemCharacter, "Story unlock (Amy)")},
@@ -32,7 +32,6 @@ ItemRepository::ItemRepository()
         {60, ItemData(Upgrades_LifeRing, ItemUpgrade, "Life belt (Big)")},
         {61, ItemData(Upgrades_PowerRod, ItemUpgrade, "Power rod (Big)")},
     };
-    _itemData[4].obtained = true;
 }
 
 

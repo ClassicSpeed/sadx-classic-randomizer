@@ -46,7 +46,7 @@ void SADX_CheckLocation(int64_t loc_id)
 void ArchipelagoManager::Connect()
 {
     //TODO: Get settings from configuration
-    AP_Init("archipelago.gg:54554", "Sonic Adventure DX", "Classic", "");
+    AP_Init("archipelago.gg:49288", "Sonic Adventure DX", "Classic", "");
     AP_SetItemClearCallback(&SADX_ResetItems);
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);

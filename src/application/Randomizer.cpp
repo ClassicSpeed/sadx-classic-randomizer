@@ -4,7 +4,7 @@ void Randomizer::OnCheckFound(const int checkId) const
 {
     const LocationData check = _checkRepository.GetCheck(checkId);
 
-    _displayManager.QueueMessage("Checked: " +check.displayName);
+    // _displayManager.QueueMessage("Checked: " +check.displayName);
 
     const ItemData item = _itemRepository.GetItem(check.originalItemId);
     if (!item.obtained)

@@ -6,11 +6,11 @@ LocationRepository::LocationRepository()
     _checkData = {
 
         // {1, LocationData(EventFlags_SonicUnlockedAdventure, "Unlock Sonic's Story", 1)},
-        {2, LocationData(EventFlags_TailsUnlockedAdventure, "Unlocked Tails' Story", 2)},
-        {3, LocationData(EventFlags_TailsUnlockedAdventure, "Unlocked Knuckles' Story", 3)},
-        {4, LocationData(EventFlags_TailsUnlockedAdventure, "Unlocked Amy' Story", 4)},
-        {5, LocationData(EventFlags_TailsUnlockedAdventure, "Unlocked Gamma' Story", 5)},
-        {6, LocationData(EventFlags_TailsUnlockedAdventure, "Unlocked Big' Story", 6)},
+        {2, LocationData(EventFlags_TailsUnlockedAdventure, "Unlock Tails' Story", 2)},
+        {3, LocationData(EventFlags_KnucklesUnlockedAdventure, "Unlock Knuckles' Story", 3)},
+        {4, LocationData(EventFlags_AmyUnlockedAdventure, "Unlock Amy's Story", 4)},
+        {5, LocationData(EventFlags_GammaUnlockedAdventure, "Unlock Gamma's Story", 5)},
+        {6, LocationData(EventFlags_BigUnlockedAdventure, "Unlock Big's Story", 6)},
 
         {10, LocationData(EventFlags_Sonic_LightShoes, "Light shoes upgrade (Sonic)", 10)},
         {11, LocationData(EventFlags_Sonic_CrystalRing, "Crystal ring upgrade (Sonic)", 11)},
@@ -33,6 +33,7 @@ LocationRepository::LocationRepository()
 
     };
 }
+
 
 
 LocationData LocationRepository::SetChecked(const int checkId)
