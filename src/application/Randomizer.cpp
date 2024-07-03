@@ -21,7 +21,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     if (item.type == ItemUpgrade)
         _upgradeManager.GiveUpgrade(item.adress);
     else if (item.type == ItemCharacter)
-        _characterSelectionManager.Unlock(item.adress);
+        _menuManager.UnlockCharacterSelection(item.adress);
 }
 
 void Randomizer::OnCharacterLoaded() const
@@ -47,9 +47,9 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
             continue;
         
         if (item.second.obtained)
-            _characterSelectionManager.Unlock(item.second.adress);
+            _menuManager.UnlockCharacterSelection(item.second.adress);
         else
-            _characterSelectionManager.Lock(item.second.adress);
+            _menuManager.LockCharacterSelection(item.second.adress);
     }
 }
 

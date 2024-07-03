@@ -1,3 +1,4 @@
+#include "FunctionHook.h"
 #include "IniFile.hpp"
 #include "SADXModLoader.h"
 #include "application/Randomizer.h"
@@ -11,14 +12,14 @@
 extern "C" {
 DisplayManager displayManager = DisplayManager();
 UpgradeManager upgradeManager = UpgradeManager();
-CharacterSelectionManager characterSelectionManager = CharacterSelectionManager();
+MenuManager menuManager = MenuManager();
 ItemRepository itemRepository = ItemRepository();
 LocationRepository checkRepository = LocationRepository();
 ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger();
 
 Randomizer randomizer = Randomizer(displayManager,
                                    upgradeManager,
-                                   characterSelectionManager,
+                                   menuManager,
                                    itemRepository,
                                    checkRepository,
                                    archipelagoMessenger);
@@ -50,3 +51,4 @@ __declspec(dllexport) void __cdecl OnFrame()
 
 __declspec(dllexport) ModInfo SADXModInfo = {ModLoaderVer}; // This is needed for the Mod Loader to recognize the DLL.
 }
+

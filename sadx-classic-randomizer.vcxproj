@@ -321,7 +321,7 @@
     <ClCompile Include="src\input\eventDetector\EventDetector.cpp" />
     <ClCompile Include="src\mod.cpp" />
     <ClCompile Include="src\output\archipelagoMessenger\ArchipelagoMessenger.cpp" />
-    <ClCompile Include="src\output\characterSelectionManager\CharacterSelectionManager.cpp">
+    <ClCompile Include="src\output\menuManager\MenuManager.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
@@ -564,7 +564,7 @@
     <ClInclude Include="src\input\characterLoading\CharacterLoadingDetector.h" />
     <ClInclude Include="src\input\eventDetector\EventDetector.h" />
     <ClInclude Include="src\output\archipelagoMessenger\ArchipelagoMessenger.h" />
-    <ClInclude Include="src\output\characterSelectionManager\CharacterSelectionManager.h" />
+    <ClInclude Include="src\output\menuManager\MenuManager.h" />
     <ClInclude Include="src\output\locationRepository\LocationRepository.h" />
     <ClInclude Include="src\output\displayManager\DisplayManager.h" />
     <ClInclude Include="src\output\itemRepository\ItemRepository.h" />
