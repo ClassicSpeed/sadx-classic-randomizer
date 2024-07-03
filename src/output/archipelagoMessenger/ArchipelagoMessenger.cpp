@@ -6,3 +6,8 @@ void ArchipelagoMessenger::CheckLocation(const int locationId)
 {
     AP_SendItem(BASE_ID + locationId);
 }
+
+void ArchipelagoMessenger::GameCompleted()
+{
+    AP_StoryComplete();
+}

@@ -63,3 +63,9 @@ void Randomizer::OnConnected()
 {
     _displayManager.QueueMessage("Connected to Archipelago");
 }
+
+void Randomizer::OnGameCompleted()
+{
+    _displayManager.QueueMessage("Victory!");
+    _archipelagoMessenger.GameCompleted();
+}
