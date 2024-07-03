@@ -45,7 +45,7 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
     {
         if (item.second.type != ItemCharacter)
             continue;
-        
+
         if (item.second.obtained)
             _menuManager.UnlockCharacterSelection(item.second.adress);
         else

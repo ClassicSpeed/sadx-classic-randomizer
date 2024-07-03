@@ -1,6 +1,6 @@
 #include "EventDetector.h"
 
-#include "SADXModLoader.h"
+#include "../../pch.h"
 
 
 EventDetector::EventDetector(Randomizer& randomizer) : _randomizer(randomizer)
@@ -11,17 +11,15 @@ EventDetector::EventDetector(Randomizer& randomizer) : _randomizer(randomizer)
 
 void EventDetector::OnPlayingFrame() const
 {
-
-    if(GameMode == GameModes_StartCredits && GetEventFlag(EventFlags_SuperSonicAdventureComplete))
+    if (GameMode == GameModes_StartCredits && GetEventFlag(EventFlags_SuperSonicAdventureComplete))
     {
         _randomizer.OnGameCompleted();
     }
     //Ignore events given by the mod itself
-    if(GameMode != GameModes_Adventure_Field)
+    if (GameMode != GameModes_Adventure_Field)
         return;
 
-    
-    
+
     bool checksFound = false;
     for (const auto& check : _checkData)
     {

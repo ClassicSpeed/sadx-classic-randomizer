@@ -1,5 +1,6 @@
 #include "DisplayManager.h"
-#include "SADXModLoader.h"
+
+#include "../../pch.h"
 
 void DisplayManager::QueueMessage(const std::string& message)
 {

@@ -1,26 +1,26 @@
 #pragma once
-#include <string>
-#include "SADXModLoader.h"
+#include "../pch.h"
 #include "../output/locationRepository/LocationRepository.h"
 #include "../output/displayManager/DisplayManager.h"
 #include "../output/itemRepository/ItemRepository.h"
 #include "../output/upgradeManager/UpgradeManager.h"
 #include "../output/menuManager/MenuManager.h"
 #include "../output/archipelagoMessenger/ArchipelagoMessenger.h"
-#include "../output/menuManager/MenuManager.h"
 #include "structs/LocationData.h"
 
 class Randomizer
 {
 public:
-    Randomizer(DisplayManager& displayManager, UpgradeManager& upgradeManager, MenuManager& menuManager,ItemRepository& itemRepository, LocationRepository& checkRepository, ArchipelagoMessenger archipelagoMessenger)
+    Randomizer(DisplayManager& displayManager, UpgradeManager& upgradeManager, MenuManager& menuManager,
+               ItemRepository& itemRepository, LocationRepository& checkRepository,
+               ArchipelagoMessenger archipelagoMessenger)
         : _displayManager(displayManager),
           _upgradeManager(upgradeManager),
           _menuManager(menuManager),
           _itemRepository(itemRepository),
           _checkRepository(checkRepository),
           _archipelagoMessenger(archipelagoMessenger)
-    
+
     {
     }
 

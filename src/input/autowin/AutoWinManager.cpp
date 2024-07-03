@@ -1,5 +1,5 @@
 #include "AutoWinManager.h"
-#include "SADXModLoader.h"
+#include "../../pch.h"
 
 bool test = false;
 

@@ -1,7 +1,6 @@
 #include "MenuManager.h"
 
-#include "FunctionHook.h"
-#include "SADXModLoader.h"
+#include "../../pch.h"
 
 
 MenuManager::MenuManager()

@@ -1,5 +1,5 @@
 ﻿#include "LocationRepository.h"
-#include "SADXModLoader.h"
+#include "../../pch.h"
 
 LocationRepository::LocationRepository()
 {
@@ -33,7 +33,6 @@ LocationRepository::LocationRepository()
 
     };
 }
-
 
 
 LocationData LocationRepository::SetChecked(const int checkId)

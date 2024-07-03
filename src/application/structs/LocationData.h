@@ -1,13 +1,13 @@
 ﻿#pragma once
 #include <string>
-#include "SADXModLoader.h"
+#include "../../pch.h"
 
 struct LocationData
 {
     LocationData() : eventFlag(static_cast<EventFlags>(0x00)),
-                  checked(false),
-                  displayName(std::string("Unknown")),
-                  originalItemId(-1)
+                     checked(false),
+                     displayName(std::string("Unknown")),
+                     originalItemId(-1)
     {
     }
 

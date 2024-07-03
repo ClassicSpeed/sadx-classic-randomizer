@@ -1,6 +1,5 @@
 ﻿#include "ArchipelagoManager.h"
-#include "Archipelago.h"
-#include "IniFile.hpp"
+#include "../../pch.h"
 
 constexpr int64_t BASE_ID = 5438000;
 Randomizer* randomizerPtr = nullptr;

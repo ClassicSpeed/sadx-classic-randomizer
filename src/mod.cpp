@@ -1,6 +1,5 @@
-#include "FunctionHook.h"
-#include "IniFile.hpp"
-#include "SADXModLoader.h"
+#include "pch.h"
+
 #include "application/Randomizer.h"
 #include "input/archipelago/ArchipelagoManager.h"
 #include "input/autowin/AutoWinManager.h"
@@ -51,4 +50,3 @@ __declspec(dllexport) void __cdecl OnFrame()
 
 __declspec(dllexport) ModInfo SADXModInfo = {ModLoaderVer}; // This is needed for the Mod Loader to recognize the DLL.
 }
-

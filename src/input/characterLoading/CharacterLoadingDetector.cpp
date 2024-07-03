@@ -1,11 +1,12 @@
 #include "CharacterLoadingDetector.h"
-#include "FunctionHook.h"
+#include "../../pch.h"
 
 
 #define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
 
 
 CharacterLoadingDetector* characterLoadingDetectorPtr = nullptr;
+
 CharacterLoadingDetector::CharacterLoadingDetector(Randomizer& randomizer)
     : _randomizer(randomizer)
 {
@@ -14,16 +15,16 @@ CharacterLoadingDetector::CharacterLoadingDetector(Randomizer& randomizer)
 
 //Character loaded
 FunctionHookAdd(0x4157C0, []
-{
-    characterLoadingDetectorPtr->OnCharacterLoaded();
-});
+                {
+                characterLoadingDetectorPtr->OnCharacterLoaded();
+                });
 
 //Character selection screen loaded
 FunctionHookAdd(0x512BC0, []
-{
-    characterLoadingDetectorPtr->OnCharacterLoaded();
-    characterLoadingDetectorPtr->OnCharacterSelectScreenLoaded();
-});
+                {
+                characterLoadingDetectorPtr->OnCharacterLoaded();
+                characterLoadingDetectorPtr->OnCharacterSelectScreenLoaded();
+                });
 
 
 void CharacterLoadingDetector::OnCharacterSelectScreenLoaded() const

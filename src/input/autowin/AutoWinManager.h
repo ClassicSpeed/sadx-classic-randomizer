@@ -10,8 +10,7 @@ public:
     }
 
     void OnPlayingFrame() const;
-    
+
 private:
     Randomizer& _randomizer;
-    
 };

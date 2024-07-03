@@ -1,5 +1,5 @@
 #include "UpgradeManager.h"
-#include "SADXModLoader.h"
+#include "../../pch.h"
 
 void UpgradeManager::GiveUpgrade(const int upgrade)
 {

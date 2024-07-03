@@ -1,6 +1,6 @@
 #pragma once
+#include "../../pch.h"
 #include <string>
-#include "SADXModLoader.h"
 
 enum ItemType
 {
@@ -18,11 +18,11 @@ struct ItemData
     }
 
     ItemData(const int adress, ItemType type, std::string displayName) : adress(adress), type(type), obtained(false),
-                                                                displayName(displayName)
+                                                                         displayName(displayName)
     {
     }
 
-    
+
     int adress;
     ItemType type;
     bool obtained;
