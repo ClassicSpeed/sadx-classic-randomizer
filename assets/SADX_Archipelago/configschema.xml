@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<ConfigSchema>
+<ConfigSchema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonicretro.org">
     <Groups>
         <Group name="AP" display="AP Settings">
-            <Property name="IP" type="string" defaultvalue="archipelago.gg:123456" display="Server IP">
+            <Property name="IP" type="string" defaultvalue="archipelago.gg" display="Server IP">
                 <HelpText>Enter the IP and Port of the Multiworld Host</HelpText>
             </Property>
-            <Property name="PlayerName" type="string" defaultvalue="Sonic" display="Player Name">
+            <Property name="PlayerName" type="string" defaultvalue="" display="Player Name">
                 <HelpText>Enter your Slot Name</HelpText>
             </Property>
             <Property name="Password" type="string" defaultvalue="" display="Server Password">

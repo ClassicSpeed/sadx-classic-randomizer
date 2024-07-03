@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Improving the project build with release configuration
+- Fixed mod configuration schema
 
 ## [v0.0.2] - 2024-07-02
 
