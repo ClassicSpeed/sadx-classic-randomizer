@@ -29,10 +29,6 @@ void ArchipelagoManager::OnFrame()
     if (_status == BadSaveFile)
         return _randomizer.ShowStatusInformation("Incorrect Save File. Relaunch game and load the correct save.");
 
-    //TODO: Print both versions
-    if (_status == BadSaveFile)
-        return _randomizer.ShowStatusInformation("Incorrect Mod Version.");
-
     if (_status == ReadyForConnection)
         return _randomizer.ShowStatusInformation("Load a Save File to Connect");
 
@@ -46,7 +42,10 @@ void ArchipelagoManager::OnFrame()
 
         const bool validSaveFile = this->IsValidSaveFile();
         if (!validSaveFile)
+        {
             _status = BadSaveFile;
+            return;
+        }
 
         _status = Connected;
         _randomizer.OnConnected();
@@ -107,15 +106,7 @@ void ArchipelagoManager::Connect()
     std::string serverPassword = settingsINI->getString("AP", "Password");
     AP_Init(serverIP.c_str(), "Sonic Adventure DX", playerName.c_str(), serverPassword.c_str());
 
-    //TODO: check version
-    AP_NetworkVersion net_ver;
-    net_ver.major = 0;
-    net_ver.minor = 3;
-    net_ver.build = 7;
-
-    AP_SetClientVersion(&net_ver);
-
-    this->ap_player_name = playerName;
+    this->_playerName = playerName;
 
     AP_SetItemClearCallback(&SADX_ResetItems);
     AP_SetItemRecvCallback(&SADX_RecvItem);
@@ -125,8 +116,38 @@ void ArchipelagoManager::Connect()
     _status = AttemptedConnection;
 }
 
+char CalculateHash(const std::string& input)
+{
+    unsigned int hashValue = 0;
+
+    for (char c : input)
+    {
+        hashValue += static_cast<unsigned char>(c);
+    }
+
+    return static_cast<char>(hashValue % 256);
+}
+
 bool ArchipelagoManager::IsValidSaveFile()
 {
-    //TODO: check savefile
-    return true;
+    AP_RoomInfo roomInfo;
+    AP_GetRoomInfo(&roomInfo);
+    if (this->_seedName.length() != 0)
+        return true;
+    if (roomInfo.seed_name.length() == 0)
+        return true;
+    this->_seedName = roomInfo.seed_name;
+
+    char seedHash = CalculateHash(this->_seedName);
+    if (SaveFile.gap_25b[0] == 0 && SaveFile.PlayTime < 10)
+    {
+        SaveFile.gap_25b[0] = seedHash;
+        WriteSaveFile();
+        return true;
+    }
+
+    if (SaveFile.gap_25b[0] == seedHash)
+        return true;
+    
+    return false;
 }
