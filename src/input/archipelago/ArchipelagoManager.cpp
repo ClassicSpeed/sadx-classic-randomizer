@@ -157,7 +157,7 @@ void ArchipelagoManager::ManageMessages()
 {
     if (!AP_IsMessagePending())
         return;
-    
+
     AP_Message* msg = AP_GetLatestMessage();
 
     EnqueueMessage(msg);
@@ -195,7 +195,10 @@ void ArchipelagoManager::EnqueueMessage(AP_Message* msg)
             _randomizer.QueueNewMessage(hintMsg->recvPlayer + "'s " + hintMsg->item + " can be found at");
             _randomizer.QueueNewMessage("  " + hintMsg->location + " in " + hintMsg->sendPlayer + "'s world." +
                 foundText);
+            return;
         }
+    case AP_MessageType::Plaintext:
+    case AP_MessageType::Countdown:
     default:
         {
             // Do nothing, avoid spam
