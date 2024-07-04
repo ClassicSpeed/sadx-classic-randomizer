@@ -5,7 +5,7 @@
 
 MenuManager::MenuManager()
 {
-    FunctionHook<BOOL> blockTrialMenu(0x506780, []() -> BOOL { return false; });
+    // FunctionHook<BOOL> blockTrialMenu(0x506780, []() -> BOOL { return false; });
     FunctionHook<BOOL> blockMissionMenu(0x506410, []() -> BOOL { return false; });
 }
 

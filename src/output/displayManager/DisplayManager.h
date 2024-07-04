@@ -10,13 +10,14 @@ class DisplayManager
 public:
     void QueueMessage(const std::string& message);
     void OnFrame();
+    void ShowStatusInformation(std::string information);
 
 private:
     void RemoveExpiredMessages();
     void AddNewMessages();
     void DisplayMessages() const;
 
-    int _startLine = 7;
+    int _startLine = 1;
     size_t _displayCount = 5;
     int _displayColor = 0xFF33FF33;
     float _displayDuration = 6.0f;

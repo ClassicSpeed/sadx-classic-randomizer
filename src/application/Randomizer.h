@@ -31,6 +31,7 @@ public:
     std::map<int, LocationData> GetCheckData() const;
     void OnConnected();
     void OnGameCompleted();
+    void ShowStatusInformation(std::string information);
 
 private:
     DisplayManager& _displayManager;
