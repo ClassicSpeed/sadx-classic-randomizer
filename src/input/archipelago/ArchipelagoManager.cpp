@@ -54,6 +54,8 @@ void ArchipelagoManager::OnFrame()
 
     if (_status == Connected && AP_GetConnectionStatus() != AP_ConnectionStatus::Authenticated)
         return _randomizer.ShowStatusInformation("Connection to Archipelago lost. Reconnecting...");
+
+    this->ManageMessages();
 }
 
 
@@ -146,6 +148,57 @@ bool ArchipelagoManager::IsValidSaveFile()
 
     if (SaveFile.gap_25b[0] == seedHash)
         return true;
-    
+
     return false;
+}
+
+
+void ArchipelagoManager::ManageMessages()
+{
+    if (!AP_IsMessagePending())
+        return;
+    
+    AP_Message* msg = AP_GetLatestMessage();
+
+    EnqueueMessage(msg);
+    AP_ClearLatestMessage();
+}
+
+void ArchipelagoManager::EnqueueMessage(AP_Message* msg)
+{
+    if (!msg)
+        return;
+    switch (msg->type)
+    {
+    case AP_MessageType::ItemSend:
+        {
+            AP_ItemSendMessage* sendMsg = static_cast<AP_ItemSendMessage*>(msg);
+            if (!sendMsg)
+                return;
+            return _randomizer.QueueNewMessage("Sent " + sendMsg->item + " to " + sendMsg->recvPlayer);
+        }
+    case AP_MessageType::ItemRecv:
+        {
+            AP_ItemRecvMessage* recvMsg = static_cast<AP_ItemRecvMessage*>(msg);
+            if (!recvMsg)
+                return;
+            return _randomizer.QueueNewMessage("Received " + recvMsg->item + " from " + recvMsg->sendPlayer);
+        }
+    case AP_MessageType::Hint:
+        {
+            AP_HintMessage* hintMsg = static_cast<AP_HintMessage*>(msg);
+
+            if (!hintMsg)
+                return;
+            std::string foundText = hintMsg->checked ? " (found)" : " (not found)";
+
+            _randomizer.QueueNewMessage(hintMsg->recvPlayer + "'s " + hintMsg->item + " can be found at");
+            _randomizer.QueueNewMessage("  " + hintMsg->location + " in " + hintMsg->sendPlayer + "'s world." +
+                foundText);
+        }
+    default:
+        {
+            // Do nothing, avoid spam
+        }
+    }
 }

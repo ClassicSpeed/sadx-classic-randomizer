@@ -24,6 +24,9 @@ public:
     void OnSaveFileLoaded();
 
 private:
+    void ManageMessages();
+    void EnqueueMessage(AP_Message* msg);
+    
     Randomizer& _randomizer;
     mutable std::string _configPath;
     ConnectionStatus _status = ReadyForConnection;
