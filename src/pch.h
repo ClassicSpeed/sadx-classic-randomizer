@@ -14,4 +14,8 @@
 #include "../lib/sadx-mod-loader/mod-loader-common/ModLoaderCommon/IniFile.hpp"
 #include "../lib/APCpp/Archipelago.h"
 
+
+
+
 #endif //PCH_H
+#define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })

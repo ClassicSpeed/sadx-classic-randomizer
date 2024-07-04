@@ -2,8 +2,6 @@
 #include "../../pch.h"
 
 
-#define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
-
 
 CharacterLoadingDetector* characterLoadingDetectorPtr = nullptr;
 

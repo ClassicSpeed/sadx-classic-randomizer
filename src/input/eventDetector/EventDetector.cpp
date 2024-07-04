@@ -1,7 +1,5 @@
 #include "EventDetector.h"
 
-#include "../../pch.h"
-
 
 EventDetector::EventDetector(Randomizer& randomizer) : _randomizer(randomizer)
 {

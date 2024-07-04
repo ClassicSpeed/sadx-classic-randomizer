@@ -1,5 +1,4 @@
 #include "AutoWinManager.h"
-#include "../../pch.h"
 
 bool test = false;
 

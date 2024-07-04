@@ -69,3 +69,9 @@ void Randomizer::OnGameCompleted()
     _displayManager.QueueMessage("Victory!");
     _archipelagoMessenger.GameCompleted();
 }
+
+void Randomizer::ShowStatusInformation(std::string information)
+{
+    _displayManager.ShowStatusInformation(information);
+}
+
