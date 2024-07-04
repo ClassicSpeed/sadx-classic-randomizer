@@ -80,13 +80,11 @@ void SADX_RecvItem(const int64_t itemId, bool notify)
 
 void SADX_ResetItems()
 {
-    //TODO: Do something?
     PrintDebug("Reset items\n");
 }
 
 void SADX_CheckLocation(int64_t loc_id)
 {
-    //TODO: Do something?
     PrintDebug("Checked location %d\n", loc_id);
 }
 
@@ -138,7 +136,7 @@ bool ArchipelagoManager::IsValidSaveFile()
         return true;
     this->_seedName = roomInfo.seed_name;
 
-    char seedHash = CalculateHash(this->_seedName);
+    char seedHash = CalculateHash(this->_seedName + this->_playerName);
     if (SaveFile.gap_25b[0] == 0 && SaveFile.PlayTime < 10)
     {
         SaveFile.gap_25b[0] = seedHash;
