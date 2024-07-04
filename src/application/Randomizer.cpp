@@ -4,8 +4,6 @@ void Randomizer::OnCheckFound(const int checkId) const
 {
     const LocationData check = _checkRepository.GetCheck(checkId);
 
-    // _displayManager.QueueMessage("Checked: " +check.displayName);
-
     const ItemData item = _itemRepository.GetItem(check.originalItemId);
     if (!item.obtained)
         _upgradeManager.RemoveUpgrade(item.adress);
@@ -17,7 +15,6 @@ void Randomizer::OnCheckFound(const int checkId) const
 void Randomizer::OnItemReceived(const int64_t itemId) const
 {
     const ItemData item = _itemRepository.SetObtained(itemId);
-    _displayManager.QueueMessage("Got: " + item.displayName);
     if (item.type == ItemUpgrade)
         _upgradeManager.GiveUpgrade(item.adress);
     else if (item.type == ItemCharacter)
@@ -69,3 +66,14 @@ void Randomizer::OnGameCompleted()
     _displayManager.QueueMessage("Victory!");
     _archipelagoMessenger.GameCompleted();
 }
+
+void Randomizer::ShowStatusInformation(std::string information)
+{
+    _displayManager.ShowStatusInformation(information);
+}
+
+void Randomizer::QueueNewMessage(std::string information)
+{
+    _displayManager.QueueMessage(information);
+}
+

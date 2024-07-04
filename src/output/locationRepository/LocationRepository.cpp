@@ -1,5 +1,4 @@
 ﻿#include "LocationRepository.h"
-#include "../../pch.h"
 
 LocationRepository::LocationRepository()
 {

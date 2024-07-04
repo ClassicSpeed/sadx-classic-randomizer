@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.0.4] - 2024-07-04
+
+### Added
+
+- Added hash on the savefile.
+- Archipelago item received, sent and hint messages.
+
+### Changed
+
+- Improved the connection handling with archipelago.
+
 ## [v0.0.3] - 2024-07-03
 
 ### Added

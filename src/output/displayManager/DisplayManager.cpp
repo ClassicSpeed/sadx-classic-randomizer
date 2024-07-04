@@ -1,6 +1,5 @@
 #include "DisplayManager.h"
 
-#include "../../pch.h"
 
 void DisplayManager::QueueMessage(const std::string& message)
 {
@@ -15,6 +14,13 @@ void DisplayManager::OnFrame()
     AddNewMessages();
 
     DisplayMessages();
+}
+
+void DisplayManager::ShowStatusInformation(std::string information)
+{
+    SetDebugFontSize(this->_debugFontSize);
+    SetDebugFontColor(0xFF00FFFF);
+    DisplayDebugString(NJM_LOCATION(1, 1), ("> " + information).c_str());
 }
 
 
@@ -44,6 +50,6 @@ void DisplayManager::DisplayMessages() const
     {
         SetDebugFontSize(this->_debugFontSize);
         SetDebugFontColor(this->_displayColor);
-        DisplayDebugString(NJM_LOCATION(2, this->_startLine + i), _currentMessages[i].message.c_str());
+        DisplayDebugString(NJM_LOCATION(1, this->_startLine + i), _currentMessages[i].message.c_str());
     }
 }
