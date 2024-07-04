@@ -14,11 +14,6 @@
 #include "../lib/sadx-mod-loader/mod-loader-common/ModLoaderCommon/IniFile.hpp"
 #include "../lib/APCpp/Archipelago.h"
 
-#define SADX_AP_VERSION_MAJOR 0
-#define SADX_AP_VERSION_MINOR 0
-#define SADX_AP_VERSION_BUILD 4
-
-
 
 
 #endif //PCH_H
