@@ -5,8 +5,6 @@ REM Set variables
 set OUTPUT_DIR=.\Output
 set VERSION_FILE=.\src\pch.h
 
-del /Q /S %OUTPUT_DIR%
-
 REM Read version and construct version string
 for /F "tokens=3 delims= " %%A in ('findstr /R /C:"^#define SADX_AP_VERSION_MAJOR" %VERSION_FILE%') do set VERSION_MAJOR=%%A
 for /F "tokens=3 delims= " %%A in ('findstr /R /C:"^#define SADX_AP_VERSION_MINOR" %VERSION_FILE%') do set VERSION_MINOR=%%A

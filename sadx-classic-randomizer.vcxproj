@@ -60,7 +60,6 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-<!--      <AdditionalIncludeDirectories>lib/APCpp/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>-->
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -69,6 +68,9 @@
       <AdditionalLibraryDirectories>lib/APCpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>APCpp.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>call ./scripts/debug_install.bat</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -91,8 +93,11 @@
       <AdditionalDependencies>APCpp.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
 
     </Link>
+    <PreBuildEvent>
+      <Command>call ./scripts/release-clean.bat</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call "$(ProjectDir)make_release.bat"</Command>
+      <Command>call ./scripts/release_zip.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
