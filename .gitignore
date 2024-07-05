@@ -45,6 +45,7 @@
 # DLL build folders
 Debug
 Release
+Output
 
 # CMake
 cmake-build-*/

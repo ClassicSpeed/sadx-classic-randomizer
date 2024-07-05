@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.0.5] - ?
+
+### Added
+- Automated the release files generation
+
 ## [v0.0.4] - 2024-07-04
 
 ### Added

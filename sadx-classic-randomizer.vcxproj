@@ -91,6 +91,9 @@
       <AdditionalDependencies>APCpp.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
 
     </Link>
+    <PostBuildEvent>
+      <Command>call "$(ProjectDir)make_release.bat"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\CodeParser.cpp" />
