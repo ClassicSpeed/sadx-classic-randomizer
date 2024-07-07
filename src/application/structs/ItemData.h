@@ -12,18 +12,18 @@ enum ItemType
 
 struct ItemData
 {
-    ItemData() : adress(0), obtained(false), type(ItemUnknown),
+    ItemData() : address(0), type(ItemUnknown), obtained(false),
                  displayName(std::string("Unknown"))
     {
     }
 
-    ItemData(const int adress, ItemType type, std::string displayName) : adress(adress), type(type), obtained(false),
+    ItemData(const int adress, ItemType type, std::string displayName) : address(adress), type(type), obtained(false),
                                                                          displayName(displayName)
     {
     }
 
 
-    int adress;
+    int address;
     ItemType type;
     bool obtained;
     std::string displayName;

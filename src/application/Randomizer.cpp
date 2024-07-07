@@ -2,23 +2,28 @@
 
 void Randomizer::OnCheckFound(const int checkId) const
 {
-    const LocationData check = _checkRepository.GetCheck(checkId);
+    const LocationData check = _locationRepository.GetLocation(checkId);
 
-    const ItemData item = _itemRepository.GetItem(check.originalItemId);
-    if (!item.obtained)
-        _upgradeManager.RemoveUpgrade(item.adress);
+    //TODO: improve this, maybe separate locations from upgrades/levels/etc
+    if (LocationUpgrade == check.type)
+    {
+        const ItemData item = _itemRepository.GetItem(check.originalItemId);
+        if (!item.obtained)
+            _upgradeManager.RemoveUpgrade(item.address);
+    }
 
-    _checkRepository.SetChecked(checkId);
+    _locationRepository.SetLocationChecked(checkId);
     _archipelagoMessenger.CheckLocation(checkId);
 }
+
 
 void Randomizer::OnItemReceived(const int64_t itemId) const
 {
     const ItemData item = _itemRepository.SetObtained(itemId);
     if (item.type == ItemUpgrade)
-        _upgradeManager.GiveUpgrade(item.adress);
+        _upgradeManager.GiveUpgrade(item.address);
     else if (item.type == ItemCharacter)
-        _menuManager.UnlockCharacterSelection(item.adress);
+        _menuManager.UnlockCharacterSelection(item.address);
 }
 
 void Randomizer::OnCharacterLoaded() const
@@ -29,9 +34,9 @@ void Randomizer::OnCharacterLoaded() const
             continue;
 
         if (item.second.obtained)
-            _upgradeManager.GiveUpgrade(item.second.adress);
+            _upgradeManager.GiveUpgrade(item.second.address);
         else
-            _upgradeManager.RemoveUpgrade(item.second.adress);
+            _upgradeManager.RemoveUpgrade(item.second.address);
     }
 }
 
@@ -44,16 +49,16 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
             continue;
 
         if (item.second.obtained)
-            _menuManager.UnlockCharacterSelection(item.second.adress);
+            _menuManager.UnlockCharacterSelection(item.second.address);
         else
-            _menuManager.LockCharacterSelection(item.second.adress);
+            _menuManager.LockCharacterSelection(item.second.address);
     }
 }
 
 
 std::map<int, LocationData> Randomizer::GetCheckData() const
 {
-    return _checkRepository.GetChecks();
+    return _locationRepository.GetLocations();
 }
 
 void Randomizer::OnConnected()
@@ -76,4 +81,3 @@ void Randomizer::QueueNewMessage(std::string information)
 {
     _displayManager.QueueMessage(information);
 }
-

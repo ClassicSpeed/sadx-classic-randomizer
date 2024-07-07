@@ -10,6 +10,7 @@ class EventDetector
 public:
     explicit EventDetector(Randomizer& randomizer);
     void OnPlayingFrame() const;
+    void OnLevelEmblem(int character, int level, int mission);
 
 private:
     Randomizer& _randomizer;
