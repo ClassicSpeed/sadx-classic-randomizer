@@ -24,6 +24,11 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
         _upgradeManager.GiveUpgrade(item.address);
     else if (item.type == ItemCharacter)
         _menuManager.UnlockCharacterSelection(item.address);
+    else if (item.type == ItemEmblem)
+    {
+        const int emblemCount = _itemRepository.AddEmblem();
+        _displayManager.ShowEmblemCount(emblemCount);
+    }
 }
 
 void Randomizer::OnCharacterLoaded() const

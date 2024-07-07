@@ -52,3 +52,9 @@ std::map<int64_t, ItemData> ItemRepository::GetItems()
 {
     return _itemData;
 }
+
+int ItemRepository::AddEmblem()
+{
+    _emblemCount++;
+    return _emblemCount;
+}
