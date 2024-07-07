@@ -45,14 +45,12 @@ void EventDetector::OnPlayingFrame() const
 
 void EventDetector::OnLevelEmblem(int character, int level, int mission)
 {
-    PrintDebug("Character: %d, Level: %d, Mission: %d\n", character, level, mission);
     bool checksFound = false;
     for (const auto& check : _checkData)
     {
         if (!check.second.checked && check.second.type == LocationLevel
             && check.second.address == Combine(character, level, mission))
         {
-            PrintDebug("And we mark it as check");
             _randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
