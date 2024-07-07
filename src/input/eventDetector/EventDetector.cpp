@@ -22,6 +22,9 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
 
 void EventDetector::OnPlayingFrame() const
 {
+    if(DemoPlaying>0)
+        return;
+    
     if (GameMode == GameModes_StartCredits && GetEventFlag(EventFlags_SuperSonicAdventureComplete))
         _randomizer.OnGameCompleted();
 
