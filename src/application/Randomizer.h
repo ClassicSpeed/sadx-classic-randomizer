@@ -12,13 +12,13 @@ class Randomizer
 {
 public:
     Randomizer(DisplayManager& displayManager, UpgradeManager& upgradeManager, MenuManager& menuManager,
-               ItemRepository& itemRepository, LocationRepository& checkRepository,
+               ItemRepository& itemRepository, LocationRepository& locationRepository,
                ArchipelagoMessenger archipelagoMessenger)
         : _displayManager(displayManager),
           _upgradeManager(upgradeManager),
           _menuManager(menuManager),
           _itemRepository(itemRepository),
-          _checkRepository(checkRepository),
+          _locationRepository(locationRepository),
           _archipelagoMessenger(archipelagoMessenger)
 
     {
@@ -33,12 +33,14 @@ public:
     void OnGameCompleted();
     void ShowStatusInformation(std::string information);
     void QueueNewMessage(std::string information);
+    void OnEmblemGoalSet(int emblemGoal);
 
 private:
     DisplayManager& _displayManager;
     UpgradeManager& _upgradeManager;
     MenuManager& _menuManager;
     ItemRepository& _itemRepository;
-    LocationRepository& _checkRepository;
+    LocationRepository& _locationRepository;
     ArchipelagoMessenger& _archipelagoMessenger;
+    int _emblemGoal = -1; 
 };

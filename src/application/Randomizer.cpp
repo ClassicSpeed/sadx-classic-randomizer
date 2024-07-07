@@ -2,23 +2,35 @@
 
 void Randomizer::OnCheckFound(const int checkId) const
 {
-    const LocationData check = _checkRepository.GetCheck(checkId);
+    const LocationData check = _locationRepository.GetLocation(checkId);
 
-    const ItemData item = _itemRepository.GetItem(check.originalItemId);
-    if (!item.obtained)
-        _upgradeManager.RemoveUpgrade(item.adress);
+    //TODO: improve this, maybe separate locations from upgrades/levels/etc
+    if (LocationUpgrade == check.type)
+    {
+        const ItemData item = _itemRepository.GetItem(check.originalItemId);
+        if (!item.obtained)
+            _upgradeManager.RemoveUpgrade(item.address);
+    }
 
-    _checkRepository.SetChecked(checkId);
+    _locationRepository.SetLocationChecked(checkId);
     _archipelagoMessenger.CheckLocation(checkId);
 }
+
 
 void Randomizer::OnItemReceived(const int64_t itemId) const
 {
     const ItemData item = _itemRepository.SetObtained(itemId);
     if (item.type == ItemUpgrade)
-        _upgradeManager.GiveUpgrade(item.adress);
+        _upgradeManager.GiveUpgrade(item.address);
     else if (item.type == ItemCharacter)
-        _menuManager.UnlockCharacterSelection(item.adress);
+        _menuManager.UnlockCharacterSelection(item.address);
+    else if (item.type == ItemEmblem)
+    {
+        const int emblemCount = _itemRepository.AddEmblem();
+        _displayManager.ShowEmblemCount(emblemCount);
+        if (emblemCount == _emblemGoal)
+            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+    }
 }
 
 void Randomizer::OnCharacterLoaded() const
@@ -29,9 +41,9 @@ void Randomizer::OnCharacterLoaded() const
             continue;
 
         if (item.second.obtained)
-            _upgradeManager.GiveUpgrade(item.second.adress);
+            _upgradeManager.GiveUpgrade(item.second.address);
         else
-            _upgradeManager.RemoveUpgrade(item.second.adress);
+            _upgradeManager.RemoveUpgrade(item.second.address);
     }
 }
 
@@ -40,20 +52,28 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
 {
     for (const auto& item : _itemRepository.GetItems())
     {
-        if (item.second.type != ItemCharacter)
-            continue;
+        if (item.second.type == ItemEmblem)
+        {
+            if (_itemRepository.GetEmblemCount() >= _emblemGoal)
+                _menuManager.UnlockCharacterSelection(EventFlags_SuperSonicUnlockedAdventure);
+            else
+                _menuManager.LockCharacterSelection(EventFlags_SuperSonicUnlockedAdventure);
+        }
 
-        if (item.second.obtained)
-            _menuManager.UnlockCharacterSelection(item.second.adress);
-        else
-            _menuManager.LockCharacterSelection(item.second.adress);
+        if (item.second.type == ItemCharacter)
+        {
+            if (item.second.obtained)
+                _menuManager.UnlockCharacterSelection(item.second.address);
+            else
+                _menuManager.LockCharacterSelection(item.second.address);
+        }
     }
 }
 
 
 std::map<int, LocationData> Randomizer::GetCheckData() const
 {
-    return _checkRepository.GetChecks();
+    return _locationRepository.GetLocations();
 }
 
 void Randomizer::OnConnected()
@@ -77,3 +97,7 @@ void Randomizer::QueueNewMessage(std::string information)
     _displayManager.QueueMessage(information);
 }
 
+void Randomizer::OnEmblemGoalSet(const int emblemGoal)
+{
+    _emblemGoal = emblemGoal;
+}

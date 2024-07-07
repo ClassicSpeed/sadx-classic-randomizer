@@ -30,6 +30,8 @@ ItemRepository::ItemRepository()
 
         {60, ItemData(Upgrades_LifeRing, ItemUpgrade, "Life belt (Big)")},
         {61, ItemData(Upgrades_PowerRod, ItemUpgrade, "Power rod (Big)")},
+        
+        {90, ItemData(0, ItemEmblem, "Emblem)")},
     };
 }
 
@@ -49,4 +51,15 @@ ItemData ItemRepository::GetItem(const int itemId)
 std::map<int64_t, ItemData> ItemRepository::GetItems()
 {
     return _itemData;
+}
+
+int ItemRepository::AddEmblem()
+{
+    _emblemCount++;
+    return _emblemCount;
+}
+
+int ItemRepository::GetEmblemCount()
+{
+    return _emblemCount;
 }

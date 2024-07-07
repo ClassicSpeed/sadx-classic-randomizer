@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.0.5] - 2024-07-07
+
+### Added
+
+- Added level emblems as locations
+    - You can configure how many missions types for each character
+    - You can choose 0 (except for sonic)
+- Added emblem requirement for Perfect Chaos
+    - You can select the percentage of emblems needed to fight Perfect Chaos
+- Automated the release files generation
+
 ## [v0.0.4] - 2024-07-04
 
 ### Added

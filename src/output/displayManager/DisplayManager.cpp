@@ -14,13 +14,21 @@ void DisplayManager::OnFrame()
     AddNewMessages();
 
     DisplayMessages();
+
+    DisplayEmblemCount();
 }
 
 void DisplayManager::ShowStatusInformation(std::string information)
 {
     SetDebugFontSize(this->_debugFontSize);
-    SetDebugFontColor(0xFF00FFFF);
+    SetDebugFontColor(_displayStatusColor);
     DisplayDebugString(NJM_LOCATION(1, 1), ("> " + information).c_str());
+}
+
+void DisplayManager::ShowEmblemCount(const int emblemCount)
+{
+    _emblemCount = emblemCount;
+    _emblemTimer = std::clock();
 }
 
 
@@ -49,7 +57,25 @@ void DisplayManager::DisplayMessages() const
     for (size_t i = 0; i < this->_currentMessages.size(); i++)
     {
         SetDebugFontSize(this->_debugFontSize);
-        SetDebugFontColor(this->_displayColor);
+        SetDebugFontColor(this->_displayMessageColor);
         DisplayDebugString(NJM_LOCATION(1, this->_startLine + i), _currentMessages[i].message.c_str());
     }
+}
+
+void DisplayManager::DisplayEmblemCount()
+{
+    if (_emblemCount < 0)
+        return;
+
+    const double timePassed = (std::clock() - this->_emblemTimer) / static_cast<double>(CLOCKS_PER_SEC);
+    if (timePassed > _displayDuration)
+    {
+        _emblemCount = -1;
+        return;
+    }
+
+    SetDebugFontSize(this->_debugFontSize);
+    SetDebugFontColor(this->_displayEmblemColor);
+    DisplayDebugString(
+        NJM_LOCATION(1, this->_startLine - 1), ("Emblems: " + std::to_string(_emblemCount)).c_str());
 }

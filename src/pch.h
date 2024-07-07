@@ -7,6 +7,10 @@
 #ifndef PCH_H
 #define PCH_H
 
+#define SADX_AP_VERSION_MAJOR 0
+#define SADX_AP_VERSION_MINOR 0
+#define SADX_AP_VERSION_PATCH 5
+
 // add headers that you want to pre-compile here
 #include "framework.h"
 #include "../lib/sadx-mod-loader/SADXModLoader/include/SADXModLoader.h"

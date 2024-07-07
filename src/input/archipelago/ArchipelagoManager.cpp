@@ -90,6 +90,11 @@ void SADX_CheckLocation(int64_t loc_id)
     PrintDebug("Checked location %d\n", loc_id);
 }
 
+void SADX_EmblemsForPerfectChaos(const int emblemGoal)
+{
+    randomizerPtr->OnEmblemGoalSet(emblemGoal);
+}
+
 void ArchipelagoManager::Connect()
 {
     if (_configPath.empty())
@@ -111,6 +116,7 @@ void ArchipelagoManager::Connect()
     AP_SetItemClearCallback(&SADX_ResetItems);
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
+    AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_Start();
 
     _status = AttemptedConnection;

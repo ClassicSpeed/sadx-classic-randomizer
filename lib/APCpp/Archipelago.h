@@ -4,7 +4,6 @@
 #include <vector>
 #include <map>
 #include <cstdint>
-#include <set>
 
 void AP_Init(const char*, const char*, const char*, const char*);
 void AP_Init(const char*);
@@ -65,15 +64,14 @@ void AP_RegisterSlotDataMapIntIntCallback(std::string, void (*f_slotdata)(std::m
 void AP_RegisterSlotDataRawCallback(std::string, void (*f_slotdata)(std::string));
 
 // Send LocationScouts packet
-void AP_SendLocationScouts(std::set<int64_t> const& locations, int create_as_hint);
+void AP_SendLocationScouts(std::vector<int64_t> const& locations, int create_as_hint);
 // Receive Function for LocationInfo
 void AP_SetLocationInfoCallback(void (*f_locrecv)(std::vector<AP_NetworkItem>));
 
 /* Game Management Functions */
 
 // Sends LocationCheck for given index
-void AP_SendItem(int64_t location);
-void AP_SendItem(std::set<int64_t> const& locations);
+void AP_SendItem(int64_t);
 
 // Called when Story completed, sends StatusUpdate
 void AP_StoryComplete();
@@ -193,6 +191,13 @@ struct AP_SetReply {
     void* value;
 };
 
+struct AP_Bounce {
+    std::vector<std::string>* games = nullptr; // Can be nullptr or empty, but must be set to either
+    std::vector<std::string>* slots = nullptr; // Can be nullptr or empty, but must be set to either
+    std::vector<std::string>* tags  = nullptr; // Can be nullptr or empty, but must be set to either
+    std::string data; // Valid JSON Data. Can also be primitive (Numbers or literals)
+};
+
 /* Serverside Data Functions */
 
 // Set and Receive Data
@@ -213,3 +218,11 @@ void AP_RegisterSetReplyCallback(void (*f_setreply)(AP_SetReply));
 void AP_SetNotify(std::map<std::string,AP_DataType>);
 // Single Key version of above for convenience
 void AP_SetNotify(std::string, AP_DataType);
+
+void AP_SetTags(std::vector<std::string> tags);
+
+// Send Bounce package
+void AP_SendBounce(AP_Bounce);
+
+// Receive Bounced packages. Disables automatic DeathLink management
+void AP_RegisterBouncedCallback(void (*f_bounced)(AP_Bounce));

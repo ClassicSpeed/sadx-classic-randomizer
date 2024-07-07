@@ -1,5 +1,12 @@
-name: PlayerName
+name: PlayerExample
 game: Sonic Adventure DX
 description: Generated manually for Sonic Adventure DX
 Sonic Adventure DX:
   story_unlock_randomized: 'true'
+  sonic_missions: 1
+  tails_missions: 1
+  knuckles_missions: 1
+  amy_missions: 1
+  gamma_missions: 1
+  big_missions: 1
+  emblems_percentage: 50
