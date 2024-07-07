@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.0.6] - ?
+
+### Changed
+- Re-enabled mission/trial options on the menu
+- Last Story takes the player directly to the Perfect Chaos fight
+
 ## [v0.0.5] - 2024-07-07
 
 ### Added

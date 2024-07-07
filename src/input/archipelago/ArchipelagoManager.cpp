@@ -12,16 +12,13 @@ ArchipelagoManager::ArchipelagoManager(Randomizer& randomizer)
 }
 
 
-BOOL OnFileSelect();
-FunctionHook<BOOL> blockTrialMenu(0x506780, OnFileSelect);
-
-BOOL OnFileSelect()
+FunctionHook<BOOL> onTrialMenu(0x506780, []()-> BOOL
 {
     if (GameMode == GameModes_Menu && archipelagoManagerPtr->IsWaitingForSaveFile())
         archipelagoManagerPtr->OnSaveFileLoaded();
 
-    return false;
-}
+    return onTrialMenu.Original();
+});
 
 
 void ArchipelagoManager::OnFrame()

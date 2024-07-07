@@ -31,7 +31,6 @@ CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(ran
 
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
 {
-    // const IniFile* config = new IniFile(std::string(path) + "\\config.ini");
     archipelagoManager.SetConfigPath(std::string(path) + "\\config.ini");
 }
 

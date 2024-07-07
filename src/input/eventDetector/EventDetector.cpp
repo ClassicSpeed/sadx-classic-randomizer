@@ -58,3 +58,36 @@ void EventDetector::OnLevelEmblem(int character, int level, int mission)
     if (checksFound)
         _checkData = _randomizer.GetCheckData();
 }
+
+
+FunctionHook<SEQ_SECTIONTBL*, int> SeqGetSectionListHook(0x44EAF0, [](int playerno)-> SEQ_SECTIONTBL* {
+    SEQ_SECTIONTBL* ptr = SeqGetSectionListHook.Original(playerno);
+    if (LastStoryFlag == 1 && eventDetector->lastStoryState == LastStoryNotStarted)
+    {
+        //Start Perfect Chaos fight as soon as we load the story
+        ptr->stg = LevelIDs_PerfectChaos;
+        ptr->act = 0;
+        eventDetector->lastStoryState = LastStoryStarted;
+    }
+    return ptr;
+});
+
+
+FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](__int16 a1) -> void
+{
+    if (LastStoryFlag == 1 && eventDetector->lastStoryState == LastStoryStarted)
+    {
+        //We start the credits as soon as the fight is won
+        startLevelCutsceneHook.Original(a1);
+        EventFlagArray[EventFlags_SuperSonicAdventureComplete] = 1;
+        WriteSaveFile();
+        GameState = 14;
+        eventDetector->lastStoryState = LastStoryCompleted;
+    }
+});
+
+FunctionHook<BOOL> onMissionMenuRenderHook(0x506410, []()-> BOOL
+{
+    eventDetector->lastStoryState = LastStoryNotStarted;
+    return onMissionMenuRenderHook.Original();
+});
