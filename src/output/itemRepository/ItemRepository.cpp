@@ -58,3 +58,8 @@ int ItemRepository::AddEmblem()
     _emblemCount++;
     return _emblemCount;
 }
+
+int ItemRepository::GetEmblemCount()
+{
+    return _emblemCount;
+}

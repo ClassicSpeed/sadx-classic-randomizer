@@ -11,6 +11,7 @@ public:
     ItemData GetItem(int itemId);
     std::map<int64_t, ItemData> GetItems();
     int AddEmblem();
+    int GetEmblemCount();
 
 private:
     std::map<int64_t, ItemData> _itemData;

@@ -25,7 +25,7 @@ void DisplayManager::ShowStatusInformation(std::string information)
     DisplayDebugString(NJM_LOCATION(1, 1), ("> " + information).c_str());
 }
 
-void DisplayManager::ShowEmblemCount(int emblemCount)
+void DisplayManager::ShowEmblemCount(const int emblemCount)
 {
     _emblemCount = emblemCount;
     _emblemTimer = std::clock();
