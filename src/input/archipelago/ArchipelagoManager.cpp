@@ -92,6 +92,36 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
 
+void SADX_SonicMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Sonic, missions);
+}
+
+void SADX_TailsMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Tails, missions);
+}
+
+void SADX_KnucklesMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Knuckles, missions);
+}
+
+void SADX_AmyMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Amy, missions);
+}
+
+void SADX_GammaMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Gamma, missions);
+}
+
+void SADX_BigMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Big, missions);
+}
+
 void ArchipelagoManager::Connect()
 {
     if (_configPath.empty())
@@ -114,6 +144,12 @@ void ArchipelagoManager::Connect()
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("SonicMissions", &SADX_SonicMissions);
+    AP_RegisterSlotDataIntCallback("TailsMissions", &SADX_TailsMissions);
+    AP_RegisterSlotDataIntCallback("KnucklesMissions", &SADX_KnucklesMissions);
+    AP_RegisterSlotDataIntCallback("AmyMissions", &SADX_AmyMissions);
+    AP_RegisterSlotDataIntCallback("GammaMissions", &SADX_GammaMissions);
+    AP_RegisterSlotDataIntCallback("BigMissions", &SADX_BigMissions);
     AP_Start();
 
     _status = AttemptedConnection;

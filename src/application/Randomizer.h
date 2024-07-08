@@ -34,6 +34,7 @@ public:
     void ShowStatusInformation(std::string information);
     void QueueNewMessage(std::string information);
     void OnEmblemGoalSet(int emblemGoal);
+    void SetMissions(Characters characters, int missions);
 
 private:
     DisplayManager& _displayManager;
@@ -42,5 +43,4 @@ private:
     ItemRepository& _itemRepository;
     LocationRepository& _locationRepository;
     ArchipelagoMessenger& _archipelagoMessenger;
-    int _emblemGoal = -1; 
 };

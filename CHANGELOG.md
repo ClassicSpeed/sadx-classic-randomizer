@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 - Re-enabled mission/trial options on the menu
 - Last Story takes the player directly to the Perfect Chaos fight
 - The demo cutscenes no longer give checks
+- Unlocks are shown on the character select screen and pause menu.
+  - It only shows the characters that are playable in the randomizer
 
 ## [v0.0.5] - 2024-07-07
 
