@@ -86,7 +86,9 @@ FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](__int16 a1) -> v
         WriteSaveFile();
         GameState = 14;
         eventDetector->lastStoryState = LastStoryCompleted;
+        return;
     }
+    startLevelCutsceneHook.Original(a1);
 });
 
 FunctionHook<BOOL> onMissionMenuRenderHook(0x506410, []()-> BOOL
