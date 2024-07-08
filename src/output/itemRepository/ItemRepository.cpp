@@ -100,7 +100,7 @@ UnlockStatus ItemRepository::GetUnlockStatus()
 
     unlockStatus.amyUnlocked = _itemData[4].obtained;
     unlockStatus.amyLongHammerUnlocked = _itemData[40].obtained;
-    unlockStatus.amyWarriorFeatherUnlocked = _itemData[54].obtained;
+    unlockStatus.amyWarriorFeatherUnlocked = _itemData[41].obtained;
 
     unlockStatus.gammaUnlocked = _itemData[5].obtained;
     unlockStatus.gammaLaserBlasterUnlocked = _itemData[50].obtained;
