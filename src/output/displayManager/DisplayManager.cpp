@@ -122,7 +122,6 @@ void DisplayManager::OnEnterCharacterSelectScreen()
 
 void DisplayManager::OnExitCharacterSelectScreen()
 {
-    //TODO: Remove when story is selected
     this->_inCharacterSelectScreen = false;
 }
 

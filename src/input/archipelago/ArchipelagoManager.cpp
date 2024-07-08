@@ -61,10 +61,14 @@ void ArchipelagoManager::OnFrame()
 }
 
 
-void ArchipelagoManager::SetConfigPath(std::string configPath) const
+void ArchipelagoManager::SetServerConfiguration(const std::string& serverIP, const std::string& playerName,
+                                                const std::string& serverPassword)
 {
-    _configPath = configPath;
+    _serverIP = serverIP;
+    _playerName = playerName;
+    _serverPassword = serverPassword;
 }
+
 
 bool ArchipelagoManager::IsWaitingForSaveFile()
 {
@@ -129,21 +133,7 @@ void SADX_BigMissions(const int missions)
 
 void ArchipelagoManager::Connect()
 {
-    if (_configPath.empty())
-        return _randomizer.ShowStatusInformation("Invalid Config Path");
-
-    const IniFile* settingsINI = new IniFile(_configPath);
-
-    if (!settingsINI)
-        return _randomizer.ShowStatusInformation("Invalid Settings INI");
-
-    //TODO: Improve configuration
-    std::string serverIP = settingsINI->getString("AP", "IP");
-    std::string playerName = settingsINI->getString("AP", "PlayerName");
-    std::string serverPassword = settingsINI->getString("AP", "Password");
-    AP_Init(serverIP.c_str(), "Sonic Adventure DX", playerName.c_str(), serverPassword.c_str());
-
-    this->_playerName = playerName;
+    AP_Init(_serverIP.c_str(), "Sonic Adventure DX", _playerName.c_str(), _serverPassword.c_str());
 
     AP_SetItemClearCallback(&SADX_ResetItems);
     AP_SetItemRecvCallback(&SADX_RecvItem);

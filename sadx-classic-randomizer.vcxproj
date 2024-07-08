@@ -109,13 +109,13 @@
     <ClCompile Include="src\application\Randomizer.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\input\archipelago\ArchipelagoManager.cpp" />
-    <ClCompile Include="src\input\autowin\AutoWinManager.cpp"/>
-    <ClCompile Include="src\input\characterLoading\CharacterLoadingDetector.cpp"/>
+    <ClCompile Include="src\input\cheatsManager\CheatsManager.cpp" />
+    <ClCompile Include="src\input\characterLoading\CharacterLoadingDetector.cpp" />
     <ClCompile Include="src\input\eventDetector\EventDetector.cpp" />
     <ClCompile Include="src\mod.cpp" />
     <ClCompile Include="src\output\archipelagoMessenger\ArchipelagoMessenger.cpp" />
-    <ClCompile Include="src\output\menuManager\MenuManager.cpp"/>
-    <ClCompile Include="src\output\locationRepository\LocationRepository.cpp"/>
+    <ClCompile Include="src\output\menuManager\MenuManager.cpp" />
+    <ClCompile Include="src\output\locationRepository\LocationRepository.cpp" />
     <ClCompile Include="src\output\displayManager\DisplayManager.cpp" />
     <ClCompile Include="src\output\itemRepository\ItemRepository.cpp" />
     <ClCompile Include="src\output\upgradeManager\UpgradeManager.cpp" />
@@ -190,7 +190,7 @@
     <ClInclude Include="src\application\structs\LocationData.h" />
     <ClInclude Include="src\application\structs\ItemData.h" />
     <ClInclude Include="src\input\archipelago\ArchipelagoManager.h" />
-    <ClInclude Include="src\input\autowin\AutoWinManager.h" />
+    <ClInclude Include="src\input\cheatsManager\CheatsManager.h" />
     <ClInclude Include="src\input\characterLoading\CharacterLoadingDetector.h" />
     <ClInclude Include="src\input\eventDetector\EventDetector.h" />
     <ClInclude Include="src\output\archipelagoMessenger\ArchipelagoMessenger.h" />

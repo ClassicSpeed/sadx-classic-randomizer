@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.0.6] - ?
+## [v0.1.0] - 2024-07-08
 
 ### Changed
 
@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Added message to check your configs if the connection takes too long.
 - Cutscenes are skipped automatically.
 - Skipping credits is enabled.
+- Configuration for skipping scenes/credits and auto-win button.
 
 ## [v0.0.5] - 2024-07-07
 
