@@ -22,6 +22,12 @@ FunctionHook<void, AdvaModeEnum> CmnAdvaModeProcedureHook(0x505B40, [](AdvaModeE
     CmnAdvaModeProcedureHook.Original(mode);
 });
 
+FunctionHook<SEQ_SECTIONTBL*, int> storySelectedHook(0x44EAF0, [](int playerno)-> SEQ_SECTIONTBL* {
+    SEQ_SECTIONTBL* ptr = storySelectedHook.Original(playerno);
+    displayManagerPtr->OnExitCharacterSelectScreen();
+    return ptr;
+});
+
 void DisplayManager::QueueMessage(const std::string& message)
 {
     _messagesQueue.push(message);
@@ -178,14 +184,14 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.sonicLightShoesUnlocked ? "LS " : "   ");
         buffer.append(_unlockStatus.sonicCrystalRingUnlocked ? "CR " : "   ");
         buffer.append(_unlockStatus.sonicAncientLightUnlocked ? "AL" : "  ");
-        SetDebugFontColor(this->_SonicColor);
+        SetDebugFontColor(this->_sonicColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.sonicUnlocked ? "S: " : " : ");
         buffer.append(!_unlockStatus.sonicLightShoesUnlocked ? "LS " : "   ");
         buffer.append(!_unlockStatus.sonicCrystalRingUnlocked ? "CR " : "   ");
         buffer.append(!_unlockStatus.sonicAncientLightUnlocked ? "AL" : "  ");
-        SetDebugFontColor(this->_SonicColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(this->_sonicColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
@@ -196,13 +202,13 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.tailsUnlocked ? "T  " : "   ");
         buffer.append(_unlockStatus.tailsJetAnkletUnlocked ? "JA " : "   ");
         buffer.append(_unlockStatus.tailsRhythmBadgeUnlocked ? "RB" : "  ");
-        SetDebugFontColor(this->_TailsColor);
+        SetDebugFontColor(this->_tailsColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.tailsUnlocked ? "T: " : " : ");
         buffer.append(!_unlockStatus.tailsJetAnkletUnlocked ? "JA " : "   ");
         buffer.append(!_unlockStatus.tailsRhythmBadgeUnlocked ? "RB" : "  ");
-        SetDebugFontColor(this->_TailsColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(this->_tailsColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
@@ -213,13 +219,13 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.knucklesUnlocked ? "K  " : "   ");
         buffer.append(_unlockStatus.knucklesShovelClawUnlocked ? "SC " : "   ");
         buffer.append(_unlockStatus.knucklesFightingGlovesUnlocked ? "FG" : "  ");
-        SetDebugFontColor(this->_KnucklesColor);
+        SetDebugFontColor(this->_knucklesColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.knucklesUnlocked ? "K: " : " : ");
         buffer.append(!_unlockStatus.knucklesShovelClawUnlocked ? "SC " : "   ");
         buffer.append(!_unlockStatus.knucklesFightingGlovesUnlocked ? "FG" : "  ");
-        SetDebugFontColor(this->_KnucklesColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(this->_knucklesColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
@@ -230,13 +236,13 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.amyUnlocked ? "A  " : "   ");
         buffer.append(_unlockStatus.amyLongHammerUnlocked ? "LH " : "   ");
         buffer.append(_unlockStatus.amyWarriorFeatherUnlocked ? "WF" : "  ");
-        SetDebugFontColor(this->_AmyColor);
+        SetDebugFontColor(this->_amyColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.amyUnlocked ? "A: " : " : ");
         buffer.append(!_unlockStatus.amyLongHammerUnlocked ? "LH " : "   ");
         buffer.append(!_unlockStatus.amyWarriorFeatherUnlocked ? "WF" : "  ");
-        SetDebugFontColor(this->_AmyColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(this->_amyColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
@@ -247,13 +253,13 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.bigUnlocked ? "B  " : "   ");
         buffer.append(_unlockStatus.bigLifeRingUnlocked ? "LR " : "   ");
         buffer.append(_unlockStatus.bigPowerRodUnlocked ? "PR" : "  ");
-        SetDebugFontColor(this->_BigColor);
+        SetDebugFontColor(this->_bigColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.bigUnlocked ? "B: " : " : ");
         buffer.append(!_unlockStatus.bigLifeRingUnlocked ? "LR " : "   ");
         buffer.append(!_unlockStatus.bigPowerRodUnlocked ? "PR" : "  ");
-        SetDebugFontColor(this->_BigColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(this->_bigColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
     if (_gammaMissions > 0)
@@ -263,13 +269,13 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.gammaUnlocked ? "G  " : "   ");
         buffer.append(_unlockStatus.gammaJetBoosterUnlocked ? "JB " : "   ");
         buffer.append(_unlockStatus.gammaLaserBlasterUnlocked ? "LB" : "  ");
-        SetDebugFontColor(this->_GamnmaColor);
+        SetDebugFontColor(this->_gammaColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.gammaUnlocked ? "G: " : " : ");
         buffer.append(!_unlockStatus.gammaJetBoosterUnlocked ? "JB " : "   ");
         buffer.append(!_unlockStatus.gammaLaserBlasterUnlocked ? "LB" : "  ");
-        SetDebugFontColor(this->_GamnmaColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(this->_gammaColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 }

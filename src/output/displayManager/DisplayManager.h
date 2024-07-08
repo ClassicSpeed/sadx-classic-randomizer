@@ -36,12 +36,6 @@ private:
     bool _inCharacterSelectScreen;
 
     
-    int _SonicColor = 0xFF1A50BC;
-    int _TailsColor = 0xFFF1B000; 
-    int _KnucklesColor = 0xFFFF1400; 
-    int _AmyColor = 0xFFFD95C6; 
-    int _BigColor = 0xFF7505f5; 
-    int _GamnmaColor = 0xFF827f80; 
     float _displayDuration = 6.0f;
     unsigned __int16 _debugFontSize = 21;
     std::queue<std::string> _messagesQueue;
@@ -55,6 +49,13 @@ private:
 
     UnlockStatus _unlockStatus;
 
+    int _sonicColor = 0xFF0D7ADF;
+    int _tailsColor = 0xFFF1B000; 
+    int _knucklesColor = 0xFFFF1400; 
+    int _amyColor = 0xFFFD95C6; 
+    int _bigColor = 0xFF7505f5; 
+    int _gammaColor = 0xFF827f80;
+    
     int _sonicMissions;
     int _tailsMissions;
     int _knucklesMissions;

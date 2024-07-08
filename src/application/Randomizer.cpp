@@ -101,7 +101,7 @@ void Randomizer::QueueNewMessage(std::string information)
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
 {
-    _itemRepository.SetEmblemGoal(emblemGoal);
+    _itemRepository.SetEmblemGoal(max(1, emblemGoal));
     const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
     _displayManager.UpdateUnlockStatus(unlockStatus);
 }
