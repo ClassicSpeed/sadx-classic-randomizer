@@ -32,6 +32,11 @@ CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(ran
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
 {
     archipelagoManager.SetConfigPath(std::string(path) + "\\config.ini");
+    //Auto Skip All Cutscenes by MainMemory
+    WriteData<2>((void*)0x00431521, 0x90);
+    //"Can Always Skip Credits"
+    WriteData<2>((void*)0x00641232, 0x90);
+    
 }
 
 __declspec(dllexport) void __cdecl OnFrame()
