@@ -12,16 +12,13 @@ ArchipelagoManager::ArchipelagoManager(Randomizer& randomizer)
 }
 
 
-BOOL OnFileSelect();
-FunctionHook<BOOL> blockTrialMenu(0x506780, OnFileSelect);
-
-BOOL OnFileSelect()
+FunctionHook<BOOL> onTrialMenu(0x506780, []()-> BOOL
 {
     if (GameMode == GameModes_Menu && archipelagoManagerPtr->IsWaitingForSaveFile())
         archipelagoManagerPtr->OnSaveFileLoaded();
 
-    return false;
-}
+    return onTrialMenu.Original();
+});
 
 
 void ArchipelagoManager::OnFrame()
@@ -30,7 +27,7 @@ void ArchipelagoManager::OnFrame()
         return _randomizer.ShowStatusInformation("Incorrect Save File. Relaunch game and load the correct save.");
 
     if (_status == ReadyForConnection)
-        return _randomizer.ShowStatusInformation("Load a Save File to Connect");
+        return _randomizer.ShowStatusInformation("Load a Save File to Connect.");
 
     if (_status == SaveFileSelected)
         return this->Connect();
@@ -38,7 +35,12 @@ void ArchipelagoManager::OnFrame()
     if (_status == AttemptedConnection)
     {
         if (AP_GetConnectionStatus() != AP_ConnectionStatus::Authenticated)
+        {
+            const double timePassed = (std::clock() - this->_connectedAt) / static_cast<double>(CLOCKS_PER_SEC);
+            if (timePassed > _suggestChangingConfigWaitTime)
+                return _randomizer.ShowStatusInformation("Still connecting, check your configs...");
             return _randomizer.ShowStatusInformation("Connecting...");
+        }
 
         const bool validSaveFile = this->IsValidSaveFile();
         if (!validSaveFile)
@@ -59,10 +61,14 @@ void ArchipelagoManager::OnFrame()
 }
 
 
-void ArchipelagoManager::SetConfigPath(std::string configPath) const
+void ArchipelagoManager::SetServerConfiguration(const std::string& serverIP, const std::string& playerName,
+                                                const std::string& serverPassword)
 {
-    _configPath = configPath;
+    _serverIP = serverIP;
+    _playerName = playerName;
+    _serverPassword = serverPassword;
 }
+
 
 bool ArchipelagoManager::IsWaitingForSaveFile()
 {
@@ -95,30 +101,53 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
 
+void SADX_SonicMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Sonic, missions);
+}
+
+void SADX_TailsMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Tails, missions);
+}
+
+void SADX_KnucklesMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Knuckles, missions);
+}
+
+void SADX_AmyMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Amy, missions);
+}
+
+void SADX_GammaMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Gamma, missions);
+}
+
+void SADX_BigMissions(const int missions)
+{
+    randomizerPtr->SetMissions(Characters_Big, missions);
+}
+
 void ArchipelagoManager::Connect()
 {
-    if (_configPath.empty())
-        return _randomizer.ShowStatusInformation("Invalid Config Path");
-
-    const IniFile* settingsINI = new IniFile(_configPath);
-
-    if (!settingsINI)
-        return _randomizer.ShowStatusInformation("Invalid Settings INI");
-
-    //TODO: Improve configuration
-    std::string serverIP = settingsINI->getString("AP", "IP");
-    std::string playerName = settingsINI->getString("AP", "PlayerName");
-    std::string serverPassword = settingsINI->getString("AP", "Password");
-    AP_Init(serverIP.c_str(), "Sonic Adventure DX", playerName.c_str(), serverPassword.c_str());
-
-    this->_playerName = playerName;
+    AP_Init(_serverIP.c_str(), "Sonic Adventure DX", _playerName.c_str(), _serverPassword.c_str());
 
     AP_SetItemClearCallback(&SADX_ResetItems);
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("SonicMissions", &SADX_SonicMissions);
+    AP_RegisterSlotDataIntCallback("TailsMissions", &SADX_TailsMissions);
+    AP_RegisterSlotDataIntCallback("KnucklesMissions", &SADX_KnucklesMissions);
+    AP_RegisterSlotDataIntCallback("AmyMissions", &SADX_AmyMissions);
+    AP_RegisterSlotDataIntCallback("GammaMissions", &SADX_GammaMissions);
+    AP_RegisterSlotDataIntCallback("BigMissions", &SADX_BigMissions);
     AP_Start();
 
+    _connectedAt = std::clock();
     _status = AttemptedConnection;
 }
 

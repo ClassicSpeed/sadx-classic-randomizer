@@ -30,7 +30,7 @@ ItemRepository::ItemRepository()
 
         {60, ItemData(Upgrades_LifeRing, ItemUpgrade, "Life belt (Big)")},
         {61, ItemData(Upgrades_PowerRod, ItemUpgrade, "Power rod (Big)")},
-        
+
         {90, ItemData(0, ItemEmblem, "Emblem)")},
     };
 }
@@ -53,13 +53,61 @@ std::map<int64_t, ItemData> ItemRepository::GetItems()
     return _itemData;
 }
 
+
+int ItemRepository::GetEmblemCount()
+{
+    return _emblemCount;
+}
+
 int ItemRepository::AddEmblem()
 {
     _emblemCount++;
     return _emblemCount;
 }
 
-int ItemRepository::GetEmblemCount()
+
+
+int ItemRepository::GetEmblemGoal() const
 {
-    return _emblemCount;
+    return _emblemGoal;
+}
+
+void ItemRepository::SetEmblemGoal(int emblemGoal)
+{
+    _emblemGoal = emblemGoal;
+}
+
+
+UnlockStatus ItemRepository::GetUnlockStatus()
+{
+    auto unlockStatus = UnlockStatus();
+
+    unlockStatus.currentEmblems = _emblemCount;
+    unlockStatus.emblemGoal = _emblemGoal;
+    
+    unlockStatus.sonicUnlocked = true;
+    unlockStatus.sonicLightShoesUnlocked = _itemData[10].obtained;
+    unlockStatus.sonicCrystalRingUnlocked = _itemData[11].obtained;
+    unlockStatus.sonicAncientLightUnlocked = _itemData[12].obtained;
+
+    unlockStatus.tailsUnlocked = _itemData[2].obtained;
+    unlockStatus.tailsJetAnkletUnlocked = _itemData[20].obtained;
+    unlockStatus.tailsRhythmBadgeUnlocked = _itemData[21].obtained;
+
+    unlockStatus.knucklesUnlocked = _itemData[3].obtained;
+    unlockStatus.knucklesShovelClawUnlocked = _itemData[30].obtained;
+    unlockStatus.knucklesFightingGlovesUnlocked = _itemData[31].obtained;
+
+    unlockStatus.amyUnlocked = _itemData[4].obtained;
+    unlockStatus.amyLongHammerUnlocked = _itemData[40].obtained;
+    unlockStatus.amyWarriorFeatherUnlocked = _itemData[54].obtained;
+
+    unlockStatus.gammaUnlocked = _itemData[5].obtained;
+    unlockStatus.gammaLaserBlasterUnlocked = _itemData[50].obtained;
+    unlockStatus.gammaJetBoosterUnlocked = _itemData[51].obtained;
+
+    unlockStatus.bigUnlocked = _itemData[6].obtained;
+    unlockStatus.bigLifeRingUnlocked = _itemData[60].obtained;
+    unlockStatus.bigPowerRodUnlocked = _itemData[61].obtained;
+    return unlockStatus;
 }

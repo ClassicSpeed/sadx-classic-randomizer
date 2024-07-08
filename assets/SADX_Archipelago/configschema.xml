@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ConfigSchema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonicretro.org">
     <Groups>
-        <Group name="AP" display="AP Settings">
+        <Group name="AP" display="Archipelago Settings">
             <Property name="IP" type="string" defaultvalue="archipelago.gg" display="Server IP">
                 <HelpText>Enter the IP and Port of the Multiworld Host</HelpText>
             </Property>
@@ -10,6 +10,18 @@
             </Property>
             <Property name="Password" type="string" defaultvalue="" display="Server Password">
                 <HelpText>Enter the Password for the Multiworld Host</HelpText>
+            </Property>
+        </Group>
+
+        <Group name="GameSettings" display="Game Settings">
+            <Property name="AutoSkipCutscenes" type="bool" defaultvalue="True" display="Auto Skip Cutscenes">
+                <HelpText>Automatically skip every cutscene as soon as it starts.</HelpText>
+            </Property>
+            <Property name="SkippeableCredits" type="bool" defaultvalue="True" display="Skippeable Credits">
+                <HelpText>Allow skipping credits.</HelpText>
+            </Property>
+            <Property name="AutoWinButton" type="bool" defaultvalue="False" display="Auto-Win Button">
+                <HelpText>For debuggin purposes. Win the current level/boss by pressing the whistle button</HelpText>
             </Property>
         </Group>
     </Groups>

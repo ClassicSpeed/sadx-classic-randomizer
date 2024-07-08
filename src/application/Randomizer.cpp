@@ -28,9 +28,11 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     {
         const int emblemCount = _itemRepository.AddEmblem();
         _displayManager.ShowEmblemCount(emblemCount);
-        if (emblemCount == _emblemGoal)
+        if (emblemCount == _itemRepository.GetEmblemGoal())
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
+    const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
+    _displayManager.UpdateUnlockStatus(unlockStatus);
 }
 
 void Randomizer::OnCharacterLoaded() const
@@ -54,7 +56,8 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
     {
         if (item.second.type == ItemEmblem)
         {
-            if (_itemRepository.GetEmblemCount() >= _emblemGoal)
+            if (_itemRepository.GetEmblemGoal() >= 0 &&
+                _itemRepository.GetEmblemCount() >= _itemRepository.GetEmblemGoal())
                 _menuManager.UnlockCharacterSelection(EventFlags_SuperSonicUnlockedAdventure);
             else
                 _menuManager.LockCharacterSelection(EventFlags_SuperSonicUnlockedAdventure);
@@ -99,5 +102,12 @@ void Randomizer::QueueNewMessage(std::string information)
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
 {
-    _emblemGoal = emblemGoal;
+    _itemRepository.SetEmblemGoal(max(1, emblemGoal));
+    const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
+    _displayManager.UpdateUnlockStatus(unlockStatus);
+}
+
+void Randomizer::SetMissions(Characters characters, int missions)
+{
+    _displayManager.SetMissions(characters, missions);
 }
