@@ -34,4 +34,7 @@ private:
 
     std::string _playerName;
     std::string _seedName;
+
+    const float _suggestChangingConfigWaitTime = 2.5f;
+    std::clock_t _connectedAt;
 };

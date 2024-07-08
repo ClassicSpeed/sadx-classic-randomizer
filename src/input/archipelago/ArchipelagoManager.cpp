@@ -27,7 +27,7 @@ void ArchipelagoManager::OnFrame()
         return _randomizer.ShowStatusInformation("Incorrect Save File. Relaunch game and load the correct save.");
 
     if (_status == ReadyForConnection)
-        return _randomizer.ShowStatusInformation("Load a Save File to Connect");
+        return _randomizer.ShowStatusInformation("Load a Save File to Connect.");
 
     if (_status == SaveFileSelected)
         return this->Connect();
@@ -35,7 +35,12 @@ void ArchipelagoManager::OnFrame()
     if (_status == AttemptedConnection)
     {
         if (AP_GetConnectionStatus() != AP_ConnectionStatus::Authenticated)
+        {
+            const double timePassed = (std::clock() - this->_connectedAt) / static_cast<double>(CLOCKS_PER_SEC);
+            if (timePassed > _suggestChangingConfigWaitTime)
+                return _randomizer.ShowStatusInformation("Still connecting, check your configs...");
             return _randomizer.ShowStatusInformation("Connecting...");
+        }
 
         const bool validSaveFile = this->IsValidSaveFile();
         if (!validSaveFile)
@@ -152,6 +157,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("BigMissions", &SADX_BigMissions);
     AP_Start();
 
+    _connectedAt = std::clock();
     _status = AttemptedConnection;
 }
 
