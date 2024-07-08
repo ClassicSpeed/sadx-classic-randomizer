@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Unlocks are shown on the character select screen and pause menu.
     - It only shows the characters that are playable in the randomizer.
 - Prevent Supersonic for being selected early.
+- Fixed logic issue with missions A/B not being accessible after C
 
 ### Added
 
