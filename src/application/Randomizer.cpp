@@ -56,7 +56,8 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
     {
         if (item.second.type == ItemEmblem)
         {
-            if (_itemRepository.GetEmblemCount() >= _itemRepository.GetEmblemGoal())
+            if (_itemRepository.GetEmblemGoal() >= 0 &&
+                _itemRepository.GetEmblemCount() >= _itemRepository.GetEmblemGoal())
                 _menuManager.UnlockCharacterSelection(EventFlags_SuperSonicUnlockedAdventure);
             else
                 _menuManager.LockCharacterSelection(EventFlags_SuperSonicUnlockedAdventure);
