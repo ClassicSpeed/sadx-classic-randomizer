@@ -7,23 +7,50 @@ enum ItemType
     ItemUpgrade,
     ItemCharacter,
     ItemEmblem,
+    ItemKey,
     ItemUnknown
 };
 
 struct ItemData
 {
-    ItemData() : address(0), type(ItemUnknown), obtained(false),
+    ItemData() : upgrade(static_cast<Upgrades>(0)), eventFlags({}), type(ItemUnknown), obtained(false),
                  displayName(std::string("Unknown"))
     {
     }
 
-    ItemData(const int adress, ItemType type, std::string displayName) : address(adress), type(type), obtained(false),
-                                                                         displayName(displayName)
+    ItemData(const Upgrades upgrade, const std::vector<StoryFlags>& eventFlags, const ItemType type,
+             const bool obtained, const std::string& displayName)
+        : upgrade(upgrade),
+          eventFlags(eventFlags),
+          type(type),
+          obtained(obtained),
+          displayName(displayName)
     {
     }
 
+    static ItemData CharacterItem(const StoryFlags unlockFlag, const std::string& displayName)
+    {
+        return ItemData(static_cast<Upgrades>(0), {unlockFlag}, ItemCharacter, false, displayName);
+    }
 
-    int address;
+    static ItemData UpgradeItem(const Upgrades upgrade, const std::string& displayName)
+    {
+        return ItemData(upgrade, {}, ItemUpgrade, false, displayName);
+    }
+
+    static ItemData KeyItem(const std::vector<StoryFlags>& eventFlags, const std::string& displayName)
+    {
+        return ItemData(static_cast<Upgrades>(0), {eventFlags}, ItemKey, false, displayName);
+    }
+
+    static ItemData EmblemItem(const std::string& displayName)
+    {
+        return ItemData(static_cast<Upgrades>(0), {}, ItemEmblem, false, displayName);
+    }
+
+
+    Upgrades upgrade;
+    std::vector<StoryFlags> eventFlags;
     ItemType type;
     bool obtained;
     std::string displayName;

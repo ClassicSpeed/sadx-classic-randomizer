@@ -114,16 +114,18 @@
     <ClCompile Include="src\input\eventDetector\EventDetector.cpp" />
     <ClCompile Include="src\mod.cpp" />
     <ClCompile Include="src\output\archipelagoMessenger\ArchipelagoMessenger.cpp" />
-    <ClCompile Include="src\output\menuManager\MenuManager.cpp" />
+    <ClCompile Include="src\output\worldStateManager\WorldStateManager.cpp" />
     <ClCompile Include="src\output\locationRepository\LocationRepository.cpp" />
     <ClCompile Include="src\output\displayManager\DisplayManager.cpp" />
     <ClCompile Include="src\output\itemRepository\ItemRepository.cpp" />
     <ClCompile Include="src\output\upgradeManager\UpgradeManager.cpp" />
+    <ClCompile Include="src\output\saveFileManager\SaveFileManager.cpp" />
     <ClCompile Include="src\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application\structs\UnlockStatus.h" />
     <ClInclude Include="src\framework.h" />
+    <ClInclude Include="src\output\saveFileManager\SaveFileManager.h" />
     <ClInclude Include="src\pch.h" />
     <Content Include="assets\sadx.apworld" />
     <Content Include="assets\SADX_Archipelago\CopyAPCppDLL.bat" />
@@ -194,7 +196,7 @@
     <ClInclude Include="src\input\characterLoading\CharacterLoadingDetector.h" />
     <ClInclude Include="src\input\eventDetector\EventDetector.h" />
     <ClInclude Include="src\output\archipelagoMessenger\ArchipelagoMessenger.h" />
-    <ClInclude Include="src\output\menuManager\MenuManager.h" />
+    <ClInclude Include="src\output\worldStateManager\WorldStateManager.h" />
     <ClInclude Include="src\output\locationRepository\LocationRepository.h" />
     <ClInclude Include="src\output\displayManager\DisplayManager.h" />
     <ClInclude Include="src\output\itemRepository\ItemRepository.h" />

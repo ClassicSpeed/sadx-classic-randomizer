@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.2.0] - 2024-07-08
+
+### Added
+
+- The whole game is now "open" from the start.
+- You'll get a random character when starting the game.
+- Added key items to open up the adventure fields.
+- Key items will show on the unlocked items menu.
+- Emblems as checks.
+- Sub levels as checks.
+
 ## [v0.1.0] - 2024-07-08
 
 ### Changed

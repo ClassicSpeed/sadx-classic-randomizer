@@ -49,6 +49,9 @@ private:
 
     UnlockStatus _unlockStatus;
 
+    
+    int _keyItemColor = 0xFFF2C600;
+
     int _sonicColor = 0xFF0D7ADF;
     int _tailsColor = 0xFFF1B000; 
     int _knucklesColor = 0xFFFF1400; 

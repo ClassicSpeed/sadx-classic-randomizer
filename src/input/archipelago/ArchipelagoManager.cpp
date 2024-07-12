@@ -1,24 +1,13 @@
 ﻿#include "ArchipelagoManager.h"
 
-constexpr int64_t BASE_ID = 5438000;
+constexpr int64_t BASE_ID = 543800000;
 Randomizer* randomizerPtr = nullptr;
-ArchipelagoManager* archipelagoManagerPtr = nullptr;
 
 ArchipelagoManager::ArchipelagoManager(Randomizer& randomizer)
     : _randomizer(randomizer)
 {
     randomizerPtr = &this->_randomizer;
-    archipelagoManagerPtr = this;
 }
-
-
-FunctionHook<BOOL> onTrialMenu(0x506780, []()-> BOOL
-{
-    if (GameMode == GameModes_Menu && archipelagoManagerPtr->IsWaitingForSaveFile())
-        archipelagoManagerPtr->OnSaveFileLoaded();
-
-    return onTrialMenu.Original();
-});
 
 
 void ArchipelagoManager::OnFrame()
@@ -42,12 +31,12 @@ void ArchipelagoManager::OnFrame()
             return _randomizer.ShowStatusInformation("Connecting...");
         }
 
-        const bool validSaveFile = this->IsValidSaveFile();
-        if (!validSaveFile)
-        {
-            _status = BadSaveFile;
-            return;
-        }
+         const bool validSaveFile = this->IsValidSaveFile();
+         if (!validSaveFile)
+         {
+             _status = BadSaveFile;
+             return;
+         }
 
         _status = Connected;
         _randomizer.OnConnected();
@@ -83,6 +72,7 @@ void ArchipelagoManager::OnSaveFileLoaded()
 
 void SADX_RecvItem(const int64_t itemId, bool notify)
 {
+    PrintDebug(" --- Item received: %d\n", itemId);
     randomizerPtr->OnItemReceived(itemId - BASE_ID);
 }
 
@@ -174,7 +164,7 @@ bool ArchipelagoManager::IsValidSaveFile()
     this->_seedName = roomInfo.seed_name;
 
     char seedHash = CalculateHash(this->_seedName + this->_playerName);
-    if (SaveFile.gap_25b[0] == 0 && SaveFile.PlayTime < 10)
+    if (SaveFile.gap_25b[0] == 0 && SaveFile.PlayTime < 50)
     {
         SaveFile.gap_25b[0] = seedHash;
         WriteSaveFile();

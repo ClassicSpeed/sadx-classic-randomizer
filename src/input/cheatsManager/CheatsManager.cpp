@@ -11,7 +11,7 @@ void CheatsManager::OnPlayingFrame() const
 
         if (button & WhistleButtons && Current_CharObj2 != nullptr)
         {
-            //Insta win 
+            // Insta win 
             if (CurrentLevel < LevelIDs_StationSquare || CurrentLevel == LevelIDs_SandHill)
             {
                 SetTailsRaceVictory();

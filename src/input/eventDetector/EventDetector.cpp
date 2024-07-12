@@ -7,10 +7,6 @@ EventDetector::EventDetector(Randomizer& randomizer) : _randomizer(randomizer)
     eventDetector = this;
 }
 
-static int Combine(const int character, const int level, const int mission)
-{
-    return (character << 16) | (level << 8) | mission;
-}
 
 FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
     0x4B4640, [](SaveFileData* savefile, int character, signed int level, int mission)-> void
@@ -19,12 +15,20 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
         eventDetector->OnLevelEmblem(character, level, mission);
     });
 
+//FunctionPointer(void, SetEmblemCollected, (SaveFileData *savefile, signed int index), 0x4B3F30);
+FunctionHook<void, SaveFileData*, signed int> OnGenericEmblemCollected(
+    0x4B3F30, [](SaveFileData* savefile, signed int index)-> void
+    {
+        OnGenericEmblemCollected.Original(savefile, index);
+        eventDetector->OnGenericEmblem(index);
+    });
+
 
 void EventDetector::OnPlayingFrame() const
 {
-    if(DemoPlaying>0)
+    if (DemoPlaying > 0)
         return;
-    
+
     if (GameMode == GameModes_StartCredits && GetEventFlag(EventFlags_SuperSonicAdventureComplete))
         _randomizer.OnGameCompleted();
 
@@ -35,8 +39,8 @@ void EventDetector::OnPlayingFrame() const
     bool checksFound = false;
     for (const auto& check : _checkData)
     {
-        if (!check.second.checked && GetEventFlag(static_cast<EventFlags>(check.second.address))
-            && (check.second.type == LocationUpgrade || check.second.type == LocationCharacter))
+        if (check.second.type == LocationUpgrade && !check.second.checked
+            && GetEventFlag(static_cast<EventFlags>(check.second.eventFlag)))
         {
             _randomizer.OnCheckFound(check.first);
             checksFound = true;
@@ -51,8 +55,26 @@ void EventDetector::OnLevelEmblem(int character, int level, int mission)
     bool checksFound = false;
     for (const auto& check : _checkData)
     {
-        if (!check.second.checked && check.second.type == LocationLevel
-            && check.second.address == Combine(character, level, mission))
+        if (check.second.type == LocationLevel && !check.second.checked
+            && check.second.character == character
+            && check.second.level == level
+            && check.second.mission == mission)
+        {
+            _randomizer.OnCheckFound(check.first);
+            checksFound = true;
+        }
+    }
+    if (checksFound)
+        _checkData = _randomizer.GetCheckData();
+}
+
+void EventDetector::OnGenericEmblem(signed int index)
+{
+    bool checksFound = false;
+    for (const auto& check : _checkData)
+    {
+        if (check.second.type == LocationFieldEmblem && !check.second.checked
+            && check.second.emblemId == index)
         {
             _randomizer.OnCheckFound(check.first);
             checksFound = true;

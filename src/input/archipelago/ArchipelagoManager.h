@@ -21,12 +21,13 @@ public:
     void OnFrame();
     bool IsWaitingForSaveFile();
     void OnSaveFileLoaded();
-    void SetServerConfiguration(const std::string& serverIP, const std::string& playerName, const std::string& serverPassword);
+    void SetServerConfiguration(const std::string& serverIP, const std::string& playerName,
+                                const std::string& serverPassword);
 
 private:
     void ManageMessages();
     void EnqueueMessage(AP_Message* msg);
-    
+
     Randomizer& _randomizer;
     mutable std::string _configPath;
     ConnectionStatus _status = ReadyForConnection;
@@ -38,5 +39,5 @@ private:
     std::string _seedName;
 
     const float _suggestChangingConfigWaitTime = 2.5f;
-    std::clock_t _connectedAt;
+    std::clock_t _connectedAt = -1;
 };

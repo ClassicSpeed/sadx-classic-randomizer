@@ -13,9 +13,11 @@ public:
 
 private:
     std::string GetLocationName(Characters character, LevelIDs levelId, int mission);
-    LocationData GetLocationFromLevel(Characters character, LevelIDs levelId, int mission);
-    LocationData GetLocationFromCharacter(EventFlags eventFlags, const char* str, int i);
     LocationData GetLocationFromUpgrade(EventFlags eventFlags, const char* str, int i);
+    LocationData GetLocationFromLevel(Characters character, LevelIDs levelId, int mission);
+    LocationData GetLocationFromSubLevel(EventFlags eventFlags, const char* str, int i);
+    LocationData GetLocationFromFieldEmblem(EventFlags eventFlags, const char* str, int i);
+    LocationData GetLocationFromEvent(EventFlags eventFlags, const char* str, int i);
     std::map<int, LocationData> _checkData;
     std::unordered_map<int, std::string> _charactersMap;
     std::unordered_map<int, std::string> _levelsMap;

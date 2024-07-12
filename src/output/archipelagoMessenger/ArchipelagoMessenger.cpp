@@ -1,6 +1,6 @@
 #include "ArchipelagoMessenger.h"
 #include "../../pch.h"
-constexpr int64_t BASE_ID = 5438000;
+constexpr int64_t BASE_ID = 543800000;
 
 void ArchipelagoMessenger::CheckLocation(const int locationId)
 {
