@@ -13,6 +13,11 @@ All notable changes to this project will be documented in this file.
 - Emblems as checks.
 - Sub levels as checks.
 
+### Changed
+
+- Fixed chao related crash
+- Added Big's pool door to the hotel keys item
+
 ## [v0.1.0] - 2024-07-08
 
 ### Changed
