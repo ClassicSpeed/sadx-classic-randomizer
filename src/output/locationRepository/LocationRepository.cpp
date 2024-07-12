@@ -169,26 +169,27 @@ LocationRepository::LocationRepository()
         {6302, LocationData::LevelLocation(Characters_Big, LevelIDs_HotShelter, MISSION_C)},
 
         //Sub levels
-        {15, LocationData::LevelLocation(Characters_Sonic, LevelIDs_SandHill, MISSION_B)},
-        {15, LocationData::LevelLocation(Characters_Tails, LevelIDs_SandHill, MISSION_B)},
 
-        {16, LocationData::LevelLocation(Characters_Sonic, LevelIDs_SandHill, MISSION_B)},
-        {16, LocationData::LevelLocation(Characters_Tails, LevelIDs_SandHill, MISSION_A)},
+        {15, LocationData::LevelLocation(Characters_Sonic, LevelIDs_TwinkleCircuit, MISSION_B)},
+        {15, LocationData::LevelLocation(Characters_Tails, LevelIDs_TwinkleCircuit, MISSION_B)},
+        {15, LocationData::LevelLocation(Characters_Knuckles, LevelIDs_TwinkleCircuit, MISSION_B)},
+        {15, LocationData::LevelLocation(Characters_Amy, LevelIDs_TwinkleCircuit, MISSION_B)},
+        {15, LocationData::LevelLocation(Characters_Big, LevelIDs_TwinkleCircuit, MISSION_B)},
+        {15, LocationData::LevelLocation(Characters_Gamma, LevelIDs_TwinkleCircuit, MISSION_B)},
 
-        {25, LocationData::LevelLocation(Characters_Sonic, LevelIDs_TwinkleCircuit, MISSION_B)},
-        {25, LocationData::LevelLocation(Characters_Tails, LevelIDs_TwinkleCircuit, MISSION_B)},
-        {25, LocationData::LevelLocation(Characters_Knuckles, LevelIDs_TwinkleCircuit, MISSION_B)},
-        {25, LocationData::LevelLocation(Characters_Amy, LevelIDs_TwinkleCircuit, MISSION_B)},
-        {25, LocationData::LevelLocation(Characters_Big, LevelIDs_TwinkleCircuit, MISSION_B)},
-        {25, LocationData::LevelLocation(Characters_Gamma, LevelIDs_TwinkleCircuit, MISSION_B)},
+        {16, LocationData::LevelLocation(Characters_Sonic, LevelIDs_TwinkleCircuit, MISSION_A)},
+        {16, LocationData::LevelLocation(Characters_Tails, LevelIDs_TwinkleCircuit, MISSION_A)},
+        {16, LocationData::LevelLocation(Characters_Knuckles, LevelIDs_TwinkleCircuit, MISSION_A)},
+        {16, LocationData::LevelLocation(Characters_Amy, LevelIDs_TwinkleCircuit, MISSION_A)},
+        {16, LocationData::LevelLocation(Characters_Big, LevelIDs_TwinkleCircuit, MISSION_A)},
+        {16, LocationData::LevelLocation(Characters_Gamma, LevelIDs_TwinkleCircuit, MISSION_A)},
 
-        {26, LocationData::LevelLocation(Characters_Sonic, LevelIDs_TwinkleCircuit, MISSION_A)},
-        {26, LocationData::LevelLocation(Characters_Tails, LevelIDs_TwinkleCircuit, MISSION_A)},
-        {26, LocationData::LevelLocation(Characters_Knuckles, LevelIDs_TwinkleCircuit, MISSION_A)},
-        {26, LocationData::LevelLocation(Characters_Amy, LevelIDs_TwinkleCircuit, MISSION_A)},
-        {26, LocationData::LevelLocation(Characters_Big, LevelIDs_TwinkleCircuit, MISSION_A)},
-        {26, LocationData::LevelLocation(Characters_Gamma, LevelIDs_TwinkleCircuit, MISSION_A)},
+        {25, LocationData::LevelLocation(Characters_Sonic, LevelIDs_SandHill, MISSION_B)},
+        {25, LocationData::LevelLocation(Characters_Tails, LevelIDs_SandHill, MISSION_B)},
 
+        {26, LocationData::LevelLocation(Characters_Sonic, LevelIDs_SandHill, MISSION_B)},
+        {26, LocationData::LevelLocation(Characters_Tails, LevelIDs_SandHill, MISSION_A)},
+        
         // Field Emblems
         {10, LocationData::FieldEmblemLocation(119, "Station Emblem")},
         {11, LocationData::FieldEmblemLocation(121, "Burger Shop Emblem")},
@@ -202,7 +203,7 @@ LocationRepository::LocationRepository()
         {31, LocationData::FieldEmblemLocation(123, "Spinning Platform Emblem")},
         {32, LocationData::FieldEmblemLocation(124, "Hidden Bed Emblem")},
         {33, LocationData::FieldEmblemLocation(122, "Main Platform Emblem")},
-        
+
     };
 }
 
