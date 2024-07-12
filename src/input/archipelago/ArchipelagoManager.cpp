@@ -31,13 +31,12 @@ void ArchipelagoManager::OnFrame()
             return _randomizer.ShowStatusInformation("Connecting...");
         }
 
-        //TODO: Fix
-        // const bool validSaveFile = this->IsValidSaveFile();
-        // if (!validSaveFile)
-        // {
-        //     _status = BadSaveFile;
-        //     return;
-        // }
+         const bool validSaveFile = this->IsValidSaveFile();
+         if (!validSaveFile)
+         {
+             _status = BadSaveFile;
+             return;
+         }
 
         _status = Connected;
         _randomizer.OnConnected();
@@ -165,7 +164,7 @@ bool ArchipelagoManager::IsValidSaveFile()
     this->_seedName = roomInfo.seed_name;
 
     char seedHash = CalculateHash(this->_seedName + this->_playerName);
-    if (SaveFile.gap_25b[0] == 0 && SaveFile.PlayTime < 10)
+    if (SaveFile.gap_25b[0] == 0 && SaveFile.PlayTime < 50)
     {
         SaveFile.gap_25b[0] = seedHash;
         WriteSaveFile();

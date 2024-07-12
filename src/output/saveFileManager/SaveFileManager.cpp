@@ -36,7 +36,7 @@ void SaveFileManager::OnSaveFileLoaded()
     SetEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_BARRICADE));
 
     //Removes car on top on sewer
-    SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_SEWER));
+    // SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_SEWER));
     
     //Sonic & Tails sand hill 
     SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_SANDBOARD));
