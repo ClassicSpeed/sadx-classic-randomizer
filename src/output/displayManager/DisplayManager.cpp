@@ -277,4 +277,49 @@ void DisplayManager::DisplayItemsUnlocked()
         SetDebugFontColor(this->_gammaColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
+
+
+    const int disabledKeyItemColor = _keyItemColor & 0x00FFFFFF | 0x66000000;
+
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.keyTrain ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Train");
+
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.keyBoat ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Boat");
+
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.keyRaft ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Raft");
+
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.keyHotelKeys ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Hotel Keys");
+
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.keyCasinoKeys ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Casino District Keys");
+    
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.keyTwinkleParkTicket ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Twinkle Park Ticket");
+
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.keyEmployeeCard ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Employee card");
+
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.keyDynamite ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Dynamite");
+
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.keyIceStone ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Ice Stone");
+
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.jungleKart ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Jungle Kart");
+
+
 }
