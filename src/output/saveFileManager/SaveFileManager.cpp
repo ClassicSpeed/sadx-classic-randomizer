@@ -13,8 +13,7 @@ void SaveFileManager::OnSaveFileLoaded()
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_PLAYABLE));
     ClearEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_PLAYABLE));
 
-
-
+    
     SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_COMPLETE));
     SetEventFlag(static_cast<EventFlags>(FLAG_MILES_COMPLETE));
     SetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_COMPLETE));
@@ -36,9 +35,12 @@ void SaveFileManager::OnSaveFileLoaded()
     SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_BARRICADE));
     SetEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_BARRICADE));
 
-    //Sonic & Tails sand hill Maybe not needed
-    // SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_SANDBOARD));
-    // SetEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_SANDBOARD));
+    //Removes car on top on sewer
+    SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_SEWER));
+    
+    //Sonic & Tails sand hill 
+    SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_SANDBOARD));
+    SetEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_SANDBOARD));
 
     //TODO: Check if it's needed
     SetEventFlag(static_cast<EventFlags>(FLAG_BIG_SS_TPARK_ELEVATOR));

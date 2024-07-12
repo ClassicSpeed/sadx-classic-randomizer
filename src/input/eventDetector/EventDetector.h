@@ -18,6 +18,7 @@ public:
     explicit EventDetector(Randomizer& randomizer);
     void OnPlayingFrame() const;
     void OnLevelEmblem(int character, int level, int mission);
+    void OnGenericEmblem(int index);
     LastStoryState lastStoryState = LastStoryNotStarted;
 
 private:
