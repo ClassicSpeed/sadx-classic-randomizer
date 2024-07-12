@@ -4,19 +4,19 @@
 #include "../output/displayManager/DisplayManager.h"
 #include "../output/itemRepository/ItemRepository.h"
 #include "../output/upgradeManager/UpgradeManager.h"
-#include "../output/menuManager/MenuManager.h"
+#include "../output/worldStateManager/WorldStateManager.h"
 #include "../output/archipelagoMessenger/ArchipelagoMessenger.h"
 #include "structs/LocationData.h"
 
 class Randomizer
 {
 public:
-    Randomizer(DisplayManager& displayManager, UpgradeManager& upgradeManager, MenuManager& menuManager,
+    Randomizer(DisplayManager& displayManager, UpgradeManager& upgradeManager, WorldStateManager& menuManager,
                ItemRepository& itemRepository, LocationRepository& locationRepository,
                ArchipelagoMessenger archipelagoMessenger)
         : _displayManager(displayManager),
           _upgradeManager(upgradeManager),
-          _menuManager(menuManager),
+          _worldStateManager(menuManager),
           _itemRepository(itemRepository),
           _locationRepository(locationRepository),
           _archipelagoMessenger(archipelagoMessenger)
@@ -39,7 +39,7 @@ public:
 private:
     DisplayManager& _displayManager;
     UpgradeManager& _upgradeManager;
-    MenuManager& _menuManager;
+    WorldStateManager& _worldStateManager;
     ItemRepository& _itemRepository;
     LocationRepository& _locationRepository;
     ArchipelagoMessenger& _archipelagoMessenger;

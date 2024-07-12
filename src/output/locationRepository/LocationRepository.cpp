@@ -34,31 +34,30 @@ LocationRepository::LocationRepository()
 
     _checkData = {
 
-        // {1, LocationData(EventFlags_SonicUnlockedAdventure, "Unlock Sonic's Story", 1)},
-        {2, GetLocationFromCharacter(EventFlags_TailsUnlockedAdventure, "Meet Tails", 2)},
-        {3, GetLocationFromCharacter(EventFlags_KnucklesUnlockedAdventure, "Meet Knuckles", 3)},
-        {4, GetLocationFromCharacter(EventFlags_AmyUnlockedAdventure, "Meet Amy", 4)},
-        {5, GetLocationFromCharacter(EventFlags_GammaUnlockedAdventure, "Meet Gamma", 5)},
-        {6, GetLocationFromCharacter(EventFlags_BigUnlockedAdventure, "Meet Big", 6)},
 
-        {10, GetLocationFromUpgrade(EventFlags_Sonic_LightShoes, "Light shoes upgrade (Sonic)", 10)},
-        {11, GetLocationFromUpgrade(EventFlags_Sonic_CrystalRing, "Crystal ring upgrade (Sonic)", 11)},
-        {12, GetLocationFromUpgrade(EventFlags_Sonic_AncientLight, "Ancient light upgrade (Sonic)", 12)},
+        {100, GetLocationFromUpgrade(EventFlags_Sonic_LightShoes, "Light shoes upgrade (Sonic)", 10)},
+        {101, GetLocationFromUpgrade(EventFlags_Sonic_CrystalRing, "Crystal ring upgrade (Sonic)", 11)},
+        {102, GetLocationFromUpgrade(EventFlags_Sonic_AncientLight, "Ancient light upgrade (Sonic)", 12)},
 
-        {20, GetLocationFromUpgrade(EventFlags_Tails_JetAnklet, "Jet Ankle upgrade (Tails)", 20)},
-        {21, GetLocationFromUpgrade(EventFlags_Tails_RhythmBadge, "Rhythm Badge upgrade (Tails)", 21)},
+        {200, GetLocationFromUpgrade(EventFlags_Tails_JetAnklet, "Jet Ankle upgrade (Tails)", 20)},
+        // {201, GetLocationFromUpgrade(EventFlags_Tails_RhythmBadge, "Rhythm Badge upgrade (Tails)", 21)},
 
-        {30, GetLocationFromUpgrade(EventFlags_Knuckles_ShovelClaw, "Shovel claw upgrade (Knuckles)", 30)},
-        {31, GetLocationFromUpgrade(EventFlags_Knuckles_FightingGloves, "Fighting gloves upgrade (Knuckles)", 31)},
+        {300, GetLocationFromUpgrade(EventFlags_Knuckles_ShovelClaw, "Shovel claw upgrade (Knuckles)", 30)},
+        {301, GetLocationFromUpgrade(EventFlags_Knuckles_FightingGloves, "Fighting gloves upgrade (Knuckles)", 31)},
 
-        {40, GetLocationFromUpgrade(EventFlags_Amy_LongHammer, "Long Hammer upgrade (Amy)", 40)},
-        {41, GetLocationFromUpgrade(EventFlags_Amy_WarriorFeather, "Warrior feather upgrade (Amy)", 41)},
+        {400, GetLocationFromUpgrade(EventFlags_Amy_WarriorFeather, "Warrior feather upgrade (Amy)", 41)},
+        {401, GetLocationFromUpgrade(EventFlags_Amy_LongHammer, "Long Hammer upgrade (Amy)", 41)},
 
-        {50, GetLocationFromUpgrade(EventFlags_Gamma_LaserBlaster, "Laser Blaster upgrade (Gamma)", 50)},
-        {51, GetLocationFromUpgrade(EventFlags_Gamma_JetBooster, "Jet booster upgrade (Gamma)", 51)},
+        {500, GetLocationFromUpgrade(EventFlags_Gamma_JetBooster, "Jet booster upgrade (Gamma)", 50)},
+        {501, GetLocationFromUpgrade(EventFlags_Gamma_LaserBlaster, "Laser Blaster upgrade (Gamma)", 51)},
 
-        {60, GetLocationFromUpgrade(EventFlags_Big_LifeRing, "Life belt upgrade (Big)", 60)},
-        {61, GetLocationFromUpgrade(EventFlags_Big_PowerRod, "Power rod upgrade (Big)", 61)},
+        {600, GetLocationFromUpgrade(EventFlags_Big_LifeRing, "Life belt upgrade (Big)", 60)},
+        {601, GetLocationFromUpgrade(EventFlags_Big_PowerRod, "Power rod upgrade (Big)", 61)},
+        // //Check if the check works
+        // {62, GetLocationFromUpgrade(static_cast<EventFlags>(FLAG_BIG_RUAR_BLUE), "Lure 1 upgrade (Big)", 61)},
+        // {63, GetLocationFromUpgrade(static_cast<EventFlags>(FLAG_BIG_RUAR_GOLD), "Lure 2 upgrade (Big)", 61)},
+        // {64, GetLocationFromUpgrade(static_cast<EventFlags>(FLAG_BIG_RUAR_RED), "Lure 3 upgrade (Big)", 61)},
+        // {65, GetLocationFromUpgrade(static_cast<EventFlags>(FLAG_BIG_RUAR_SILVER), "Lure 4 upgrade (Big)", 61)},
 
         //Level id: ABXX where A is the character, B is the level in the story order, and XX is the check in that level 
 
@@ -165,6 +164,27 @@ LocationRepository::LocationRepository()
         {6301, this->GetLocationFromLevel(Characters_Big, LevelIDs_HotShelter, MISSION_B)},
         {6302, this->GetLocationFromLevel(Characters_Big, LevelIDs_HotShelter, MISSION_C)},
 
+        // //TODO: Check sub-levels
+        // {15, this->GetLocationFromSubLevel(static_cast<EventFlags>(LevelIDs_SandHill), "Sand Hill A", -1)},
+        // {16, this->GetLocationFromSubLevel(static_cast<EventFlags>(LevelIDs_SandHill), "Sand Hill B", -1)},
+        // {25, this->GetLocationFromSubLevel(static_cast<EventFlags>(LevelIDs_SandHill), "Twinkle Circuit A", -1)},
+        // {26, this->GetLocationFromSubLevel(static_cast<EventFlags>(LevelIDs_SandHill), "Twinkle Circuit B", -1)},
+
+        // //TODO: Check for emblems
+        // {10, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "Station Emblem", -1)},
+        // {11, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "Burger Shop Emblem", -1)},
+        // {12, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "City Hall Emblem", -1)},
+        // {13, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "Casino Emblem", -1)},
+        // {20, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "Tails' Workshop Emblem", -1)},
+        // {21, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "Shrine Emblem", -1)},
+        // {22, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "Jungle Path Emblem", -1)},
+        // {23, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "Tree Stump Emblem", -1)},
+        // {30, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "Pool Emblem", -1)},
+        // {31, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "Spinning Platform Emblem", -1)},
+        // {32, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "Hidden Bed Emblem", -1)},
+        // {3, this->GetLocationFromFieldEmblem(static_cast<EventFlags>(0), "Main Platform Emblem", -1)},
+
+
     };
 }
 
@@ -202,6 +222,10 @@ std::string LocationRepository::GetLocationName(const Characters character, cons
     return levelName + " (" + characterName + " - " + missionName + ")";
 }
 
+LocationData LocationRepository::GetLocationFromUpgrade(EventFlags eventFlags, const char* str, int i)
+{
+    return LocationData(eventFlags, LocationUpgrade, str, i);
+}
 
 LocationData LocationRepository::GetLocationFromLevel(const Characters character, const LevelIDs levelId,
                                                       const int mission)
@@ -210,14 +234,15 @@ LocationData LocationRepository::GetLocationFromLevel(const Characters character
                         GetLocationName(character, levelId, mission), -1);
 }
 
-LocationData LocationRepository::GetLocationFromCharacter(const EventFlags eventFlags, const char* str, const int i)
+
+LocationData LocationRepository::GetLocationFromSubLevel(const EventFlags eventFlags, const char* str, const int i)
 {
     return LocationData(eventFlags, LocationCharacter, str, i);
 }
 
-LocationData LocationRepository::GetLocationFromUpgrade(EventFlags eventFlags, const char* str, int i)
+LocationData LocationRepository::GetLocationFromFieldEmblem(const EventFlags eventFlags, const char* str, const int i)
 {
-    return LocationData(eventFlags, LocationUpgrade, str, i);
+    return LocationData(eventFlags, LocationCharacter, str, i);
 }
 
 

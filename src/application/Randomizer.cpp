@@ -9,7 +9,7 @@ void Randomizer::OnCheckFound(const int checkId) const
     {
         const ItemData item = _itemRepository.GetItem(check.originalItemId);
         if (!item.obtained)
-            _upgradeManager.RemoveUpgrade(item.address);
+            _upgradeManager.RemoveUpgrade(item.upgrade);
     }
 
     _locationRepository.SetLocationChecked(checkId);
@@ -21,9 +21,9 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
 {
     const ItemData item = _itemRepository.SetObtained(itemId);
     if (item.type == ItemUpgrade)
-        _upgradeManager.GiveUpgrade(item.address);
-    else if (item.type == ItemCharacter)
-        _menuManager.UnlockCharacterSelection(item.address);
+        _upgradeManager.GiveUpgrade(item.upgrade);
+    else if (item.type == ItemCharacter || item.type == ItemKey)
+        _worldStateManager.SetEventFlags(item.eventFlags);
     else if (item.type == ItemEmblem)
     {
         const int emblemCount = _itemRepository.AddEmblem();
@@ -43,9 +43,9 @@ void Randomizer::OnCharacterLoaded() const
             continue;
 
         if (item.second.obtained)
-            _upgradeManager.GiveUpgrade(item.second.address);
+            _upgradeManager.GiveUpgrade(item.second.upgrade);
         else
-            _upgradeManager.RemoveUpgrade(item.second.address);
+            _upgradeManager.RemoveUpgrade(item.second.upgrade);
     }
 }
 
@@ -58,18 +58,11 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
         {
             if (_itemRepository.GetEmblemGoal() >= 0 &&
                 _itemRepository.GetEmblemCount() >= _itemRepository.GetEmblemGoal())
-                _menuManager.UnlockCharacterSelection(EventFlags_SuperSonicUnlockedAdventure);
-            else
-                _menuManager.LockCharacterSelection(EventFlags_SuperSonicUnlockedAdventure);
+                _worldStateManager.UnlockSuperSonic();
         }
 
-        if (item.second.type == ItemCharacter)
-        {
-            if (item.second.obtained)
-                _menuManager.UnlockCharacterSelection(item.second.address);
-            else
-                _menuManager.LockCharacterSelection(item.second.address);
-        }
+        if (item.second.type == ItemCharacter && item.second.obtained)
+            _worldStateManager.SetEventFlags(item.second.eventFlags);
     }
 }
 

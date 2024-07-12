@@ -29,4 +29,15 @@ struct UnlockStatus
     bool bigUnlocked;
     bool bigLifeRingUnlocked;
     bool bigPowerRodUnlocked;
+    
+    bool keyTrain;
+    bool keyBoat;
+    bool keyRaft;
+    bool keyHotelKeys;
+    bool keyCasinoKeys;
+    bool keyTwinkleParkTicket;
+    bool keyEmployeeCard;
+    bool keyDynamite;
+    bool keyIceStone;
+    bool jungleKart;
 };
