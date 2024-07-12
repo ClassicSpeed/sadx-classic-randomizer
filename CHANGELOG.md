@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.1.0] - 2024-07-08
 
+### Added
+- The whole game is now "open" from the start.
+- Added key items to open up the adventure fields.
+- Key items will show on the unlocked items menu.
+- Emblems as checks
+- Sub levels as checks
+
+
+## [v0.1.0] - 2024-07-08
+
 ### Changed
 
 - Re-enabled mission/trial options on the menu.

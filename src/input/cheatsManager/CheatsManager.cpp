@@ -11,18 +11,6 @@ void CheatsManager::OnPlayingFrame() const
 
         if (button & WhistleButtons && Current_CharObj2 != nullptr)
         {
-            // DataPointer(int, slSeqRunning, 0x90A0A8); // Story running if 1
-            // DataPointer(short, ssSceneNo, 0x3B18A24); // Story ID
-            // DataArray(SEQUENCE, seqTable, 0x03B183A8, 8); // Character story data array
-            // DataPointer(SEQUENCE*, pCurSequence, 0x3B0EF4C); // Current character story data
-            // DataPointer(SEQ_SECTIONTBL*, pCurSectionList, 0x3B18A08); // Character story sections array
-            // DataPointer(SEQ_SECTION*, pCurSection, 0x3B18DB0); // Current story section
-            // DataArray(char, seqVars, 0x3B18808, 512); // Story flags
-
-            PrintDebug("r?: %d, sn: %d, s: %d, cs: %d, cssa: %d , css: %d\n",slSeqRunning,  ssSceneNo, seqTable.size(), pCurSequence->sec,
-                       pCurSectionList->entrance);
-
-            //TODO: CHECK 03C4E468	4 Bytes	Pointer to first object in object list
             // Insta win 
             if (CurrentLevel < LevelIDs_StationSquare || CurrentLevel == LevelIDs_SandHill)
             {

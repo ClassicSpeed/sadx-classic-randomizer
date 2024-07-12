@@ -43,7 +43,7 @@ struct LocationData
 
     static LocationData LevelLocation(int character, int level, int mission)
     {
-        return LocationData(static_cast<StoryFlags>(0x0), character, level, -1, mission, LocationLevel, false,
+        return LocationData(static_cast<StoryFlags>(0x0), character, level, mission, -1, LocationLevel, false,
                             std::to_string(character) + std::to_string(level) + std::to_string(mission), -1);
     }
 

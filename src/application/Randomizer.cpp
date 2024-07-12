@@ -4,7 +4,6 @@ void Randomizer::OnCheckFound(const int checkId) const
 {
     const LocationData check = _locationRepository.GetLocation(checkId);
 
-    //TODO: improve this, maybe separate locations from upgrades/levels/etc
     if (LocationUpgrade == check.type)
     {
         const ItemData item = _itemRepository.GetItem(check.originalItemId);

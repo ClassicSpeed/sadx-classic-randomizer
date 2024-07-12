@@ -51,6 +51,9 @@ void SaveFileManager::OnSaveFileLoaded()
     // SetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_REDCUBE));
     // SetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_BLUECUBE));
 
+    //Knuckles monkey cage
+    SetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_MONKEYCAGEA_BOMB));
+
     //Final Egg
     SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_APPEAR_FINALEGG));
     SetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_APPEAR_FINALEGG));
@@ -84,8 +87,6 @@ void SaveFileManager::OnSaveFileLoaded()
     SetEventFlag(static_cast<EventFlags>(FLAG_E102_EC_EGGLIFT));
     SetEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));
     SetEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TORNADO2_LOST));
-    SetEventFlag(static_cast<EventFlags>(FLAG_E102_EC_BOOSTER));
-    SetEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TYPE3LASER));
     SetEventFlag(static_cast<EventFlags>(FLAG_E102_EC_SINK));
     SetEventFlag(static_cast<EventFlags>(FLAG_E102_EC_HOTSHELTER));
     SetEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_MONORAIL));
