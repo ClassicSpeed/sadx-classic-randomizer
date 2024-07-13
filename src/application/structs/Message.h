@@ -20,6 +20,11 @@ struct Message
         return timePassed > displayDuration;
     }
 
+    double TimePassed() const
+    {
+        return (std::clock() - this->_start) / static_cast<double>(CLOCKS_PER_SEC);
+    }
+
 
     std::string message;
 

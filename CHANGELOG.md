@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Added more information in the player configuration file
+- Fade out effect on new messages
 
 ### Changed
 

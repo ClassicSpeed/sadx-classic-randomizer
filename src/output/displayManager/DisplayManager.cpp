@@ -89,8 +89,21 @@ void DisplayManager::DisplayMessages() const
 {
     for (size_t i = 0; i < this->_currentMessages.size(); i++)
     {
+        const double timePassed = _currentMessages[i].TimePassed();
+        const double timeRemaining = _displayDuration - timePassed;
+        if (timeRemaining < 1)
+        {
+            int alpha = static_cast<int>(timeRemaining * 255);
+            //Fix for alpha value being too low and SADX showing it as solid color
+            if (alpha < 15)
+                continue;
+            const int fadedColor = _displayMessageColor & 0x00FFFFFF | alpha << 24;
+            SetDebugFontColor(fadedColor);
+        }
+        else
+            SetDebugFontColor(this->_displayMessageColor);
+
         SetDebugFontSize(this->_debugFontSize);
-        SetDebugFontColor(this->_displayMessageColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + i), _currentMessages[i].message.c_str());
     }
 }
@@ -300,7 +313,7 @@ void DisplayManager::DisplayItemsUnlocked()
     displayOffset++;
     SetDebugFontColor(_unlockStatus.keyCasinoKeys ? _keyItemColor : disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Casino District Keys");
-    
+
     displayOffset++;
     SetDebugFontColor(_unlockStatus.keyTwinkleParkTicket ? _keyItemColor : disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Twinkle Park Ticket");
@@ -320,6 +333,4 @@ void DisplayManager::DisplayItemsUnlocked()
     displayOffset++;
     SetDebugFontColor(_unlockStatus.jungleKart ? _keyItemColor : disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Jungle Kart");
-
-
 }
