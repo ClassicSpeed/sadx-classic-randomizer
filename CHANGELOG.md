@@ -6,18 +6,25 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- The whole game is now "open" from the start.
-- You'll get a random character when starting the game.
-- Added key items to open up the adventure fields.
-- Key items will show on the unlocked items menu.
-- Emblems as checks.
-- Sub levels as checks.
+- Added more information in the player configuration file
 
 ### Changed
 
 - Fixed chao related crash
 - Added Big's pool door to the hotel keys item
 - Fixed Twinkle Circuit not giving a check
+- Removed some out of logic checks for gamma
+
+## [v0.2.0] - 2024-07-12
+
+### Added
+
+- The whole game is now "open" from the start.
+- You'll get a random character when starting the game.
+- Added key items to open up the adventure fields.
+- Key items will show on the unlocked items menu.
+- Emblems as checks.
+- Sub levels as checks.
 
 ## [v0.1.0] - 2024-07-08
 
