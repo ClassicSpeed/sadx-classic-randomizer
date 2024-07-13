@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 
 - Fixed chao related crash
 - Added Big's pool door to the hotel keys item
-- Fixed Twinkle Circuit not giving a check
+- Fixed Twinkle Circuit and Sand hill not giving a check
 - Removed some out of logic checks for gamma
 - Disabled warrior's feather from logic (Long Hammer is still accessible)
 - Disabled trial menu (since allows you to skip logic)
