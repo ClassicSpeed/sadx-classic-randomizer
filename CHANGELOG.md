@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.2.0] - 2024-07-12
+## [v0.2.1] - 2024-07-13
 
 ### Added
 
@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
 - Added Big's pool door to the hotel keys item
 - Fixed Twinkle Circuit not giving a check
 - Removed some out of logic checks for gamma
+- Disabled warrior's feather from logic (Long Hammer is still accessible)
+- Disabled trial menu (since allows you to skip logic)
 
 ## [v0.2.0] - 2024-07-12
 

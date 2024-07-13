@@ -83,6 +83,7 @@ void SaveFileManager::OnSaveFileLoaded()
     SetEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_MOGURATATAKI));
     SetEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_TORNADO2_LOST));
     SetEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_SINK));
+    SetEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_FIGHTERSFEATHER));
     SetEventFlag(static_cast<EventFlags>(FLAG_E102_EC_MONORAIL));
     SetEventFlag(static_cast<EventFlags>(FLAG_E102_EC_EGGLIFT));
     SetEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));

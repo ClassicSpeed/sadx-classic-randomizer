@@ -75,8 +75,8 @@ FunctionHook<BOOL> onTrialMenuLoaded(0x506780, []()-> BOOL
         saveFileSelected = true;
     }
         
-
-    return onTrialMenuLoaded.Original();
+    //Blocks trial menu
+    return false;
 });
 
 

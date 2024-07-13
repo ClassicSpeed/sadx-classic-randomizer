@@ -49,7 +49,7 @@ LocationRepository::LocationRepository()
         {300, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_SHOVELCLAW, "Shovel claw upgrade (Knuckles)", 30)},
         {301, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_FIGHTINGGROVE, "Fighting gloves upgrade (Knuckles)", 31)},
 
-        {400, LocationData::UpgradeLocation(FLAG_AMY_MR_FIGHTERSFEATHER, "Warrior feather upgrade (Amy)", 41)},
+        // {400, LocationData::UpgradeLocation(FLAG_AMY_MR_FIGHTERSFEATHER, "Warrior feather upgrade (Amy)", 41)},
         {401, LocationData::UpgradeLocation(FLAG_AMY_EC_LONGHAMMER, "Long Hammer upgrade (Amy)", 41)},
 
         {500, LocationData::UpgradeLocation(FLAG_E102_EC_BOOSTER, "Jet booster upgrade (Gamma)", 50)},
