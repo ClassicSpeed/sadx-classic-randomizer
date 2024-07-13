@@ -164,7 +164,7 @@ bool ArchipelagoManager::IsValidSaveFile()
     this->_seedName = roomInfo.seed_name;
 
     char seedHash = CalculateHash(this->_seedName + this->_playerName);
-    if (SaveFile.gap_25b[0] == 0 && SaveFile.PlayTime < 50)
+    if (SaveFile.gap_25b[0] == 0)
     {
         SaveFile.gap_25b[0] = seedHash;
         WriteSaveFile();

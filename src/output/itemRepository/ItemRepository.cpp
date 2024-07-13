@@ -58,8 +58,8 @@ ItemRepository::ItemRepository()
         {
             83, ItemData::KeyItem({
                                       FLAG_SONIC_SS_HOTEL_FRONT, FLAG_MILES_SS_HOTEL_FRONT,
-                                      FLAG_KNUCKLES_SS_HOTEL_FRONT,
-                                      FLAG_AMY_SS_HOTEL_FRONT, FLAG_E102_SS_HOTEL_FRONT, FLAG_BIG_SS_HOTEL_FRONT
+                                      FLAG_KNUCKLES_SS_HOTEL_FRONT, FLAG_AMY_SS_HOTEL_FRONT,
+                                      FLAG_E102_SS_HOTEL_FRONT, FLAG_BIG_SS_HOTEL_FRONT, FLAG_BIG_SS_HOTEL_POOL
                                   }, "Hotel Keys")
         },
         {

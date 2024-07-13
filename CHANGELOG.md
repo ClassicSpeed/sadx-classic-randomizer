@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.2.1] - 2024-07-13
+
+### Added
+
+- Added more information in the player configuration file
+- Fade out effect on new messages
+
+### Changed
+
+- Fixed chao related crash
+- Added Big's pool door to the hotel keys item
+- Fixed Twinkle Circuit and Sand hill not giving a check
+- Removed Gamma's upgrades from logic
+- Disabled warrior's feather from logic (Long Hammer is still accessible)
+- Disabled trial menu (since allows you to skip logic)
+
 ## [v0.2.0] - 2024-07-12
 
 ### Added

@@ -49,7 +49,7 @@ LocationRepository::LocationRepository()
         {300, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_SHOVELCLAW, "Shovel claw upgrade (Knuckles)", 30)},
         {301, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_FIGHTINGGROVE, "Fighting gloves upgrade (Knuckles)", 31)},
 
-        {400, LocationData::UpgradeLocation(FLAG_AMY_MR_FIGHTERSFEATHER, "Warrior feather upgrade (Amy)", 41)},
+        // {400, LocationData::UpgradeLocation(FLAG_AMY_MR_FIGHTERSFEATHER, "Warrior feather upgrade (Amy)", 41)},
         {401, LocationData::UpgradeLocation(FLAG_AMY_EC_LONGHAMMER, "Long Hammer upgrade (Amy)", 41)},
 
         {500, LocationData::UpgradeLocation(FLAG_E102_EC_BOOSTER, "Jet booster upgrade (Gamma)", 50)},
@@ -169,25 +169,11 @@ LocationRepository::LocationRepository()
         {6302, LocationData::LevelLocation(Characters_Big, LevelIDs_HotShelter, MISSION_C)},
 
         //Sub levels
-        {15, LocationData::LevelLocation(Characters_Sonic, LevelIDs_SandHill, MISSION_B)},
-        {15, LocationData::LevelLocation(Characters_Tails, LevelIDs_SandHill, MISSION_B)},
+        {15, LocationData::SubLevelLocation(LevelIDs_TwinkleCircuit, MISSION_B)},
+        {16, LocationData::SubLevelLocation(LevelIDs_TwinkleCircuit, MISSION_A)},
 
-        {16, LocationData::LevelLocation(Characters_Sonic, LevelIDs_SandHill, MISSION_B)},
-        {16, LocationData::LevelLocation(Characters_Tails, LevelIDs_SandHill, MISSION_A)},
-
-        {25, LocationData::LevelLocation(Characters_Sonic, LevelIDs_TwinkleCircuit, MISSION_B)},
-        {25, LocationData::LevelLocation(Characters_Tails, LevelIDs_TwinkleCircuit, MISSION_B)},
-        {25, LocationData::LevelLocation(Characters_Knuckles, LevelIDs_TwinkleCircuit, MISSION_B)},
-        {25, LocationData::LevelLocation(Characters_Amy, LevelIDs_TwinkleCircuit, MISSION_B)},
-        {25, LocationData::LevelLocation(Characters_Big, LevelIDs_TwinkleCircuit, MISSION_B)},
-        {25, LocationData::LevelLocation(Characters_Gamma, LevelIDs_TwinkleCircuit, MISSION_B)},
-
-        {26, LocationData::LevelLocation(Characters_Sonic, LevelIDs_TwinkleCircuit, MISSION_A)},
-        {26, LocationData::LevelLocation(Characters_Tails, LevelIDs_TwinkleCircuit, MISSION_A)},
-        {26, LocationData::LevelLocation(Characters_Knuckles, LevelIDs_TwinkleCircuit, MISSION_A)},
-        {26, LocationData::LevelLocation(Characters_Amy, LevelIDs_TwinkleCircuit, MISSION_A)},
-        {26, LocationData::LevelLocation(Characters_Big, LevelIDs_TwinkleCircuit, MISSION_A)},
-        {26, LocationData::LevelLocation(Characters_Gamma, LevelIDs_TwinkleCircuit, MISSION_A)},
+        {25, LocationData::SubLevelLocation(LevelIDs_SandHill, MISSION_B)},
+        {26, LocationData::SubLevelLocation(LevelIDs_SandHill, MISSION_A)},
 
         // Field Emblems
         {10, LocationData::FieldEmblemLocation(119, "Station Emblem")},
@@ -202,7 +188,7 @@ LocationRepository::LocationRepository()
         {31, LocationData::FieldEmblemLocation(123, "Spinning Platform Emblem")},
         {32, LocationData::FieldEmblemLocation(124, "Hidden Bed Emblem")},
         {33, LocationData::FieldEmblemLocation(122, "Main Platform Emblem")},
-        
+
     };
 }
 
