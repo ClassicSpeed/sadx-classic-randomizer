@@ -63,6 +63,13 @@ void EventDetector::OnLevelEmblem(int character, int level, int mission)
             _randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
+        if (check.second.type == LocationSubLevel && !check.second.checked
+            && check.second.level == level
+            && check.second.mission == mission)
+        {
+            _randomizer.OnCheckFound(check.first);
+            checksFound = true;
+        }
     }
     if (checksFound)
         _checkData = _randomizer.GetCheckData();

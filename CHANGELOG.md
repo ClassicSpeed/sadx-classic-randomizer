@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 
 - Fixed chao related crash
 - Added Big's pool door to the hotel keys item
+- Fixed Twinkle Circuit not giving a check
 
 ## [v0.1.0] - 2024-07-08
 
