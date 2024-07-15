@@ -3,30 +3,22 @@
 #include "../../pch.h"
 
 
-
-
 void SaveFileManager::OnSaveFileLoaded()
 {
-    if(LevelClearCounts[0] == 0)
+    if (LevelClearCounts[0] == 0)
         OnSaveFileCreated();
+
     
-    //This doesn't save for some reason, so we set it manually
+    // These doesn't save for some reason, so we set it manually
     SaveFile.AdventureData[Characters_Sonic].field_4 = -1;
     SaveFile.AdventureData[Characters_Tails].field_4 = -1;
     SaveFile.AdventureData[Characters_Knuckles].field_4 = -1;
     SaveFile.AdventureData[Characters_Amy].field_4 = -1;
     SaveFile.AdventureData[Characters_Big].field_4 = -1;
     SaveFile.AdventureData[Characters_Gamma].field_4 = -1;
-    
-    SaveFile.AdventureData[Characters_Sonic].LevelAct = LevelAndActIDs_StationSquare1;
-    SaveFile.AdventureData[Characters_Tails].LevelAct = LevelAndActIDs_StationSquare1;
-    SaveFile.AdventureData[Characters_Knuckles].LevelAct = LevelAndActIDs_StationSquare1;
-    SaveFile.AdventureData[Characters_Amy].LevelAct = LevelAndActIDs_StationSquare1;
-    SaveFile.AdventureData[Characters_Big].LevelAct = LevelAndActIDs_StationSquare1;
-    SaveFile.AdventureData[Characters_Gamma].LevelAct = LevelAndActIDs_StationSquare1;
 }
 
-void SaveFileManager:: OnSaveFileCreated()
+void SaveFileManager::OnSaveFileCreated()
 {
     for (unsigned int i = 0; i < LevelClearCounts.size(); i++)
         LevelClearCounts[i] = 1;
@@ -192,13 +184,6 @@ void SaveFileManager:: OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_SS));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_MR));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_EC));
-    
-    SaveFile.AdventureData[Characters_Sonic].LevelAct = LevelAndActIDs_StationSquare1;
-    SaveFile.AdventureData[Characters_Tails].LevelAct = LevelAndActIDs_StationSquare1;
-    SaveFile.AdventureData[Characters_Knuckles].LevelAct = LevelAndActIDs_StationSquare1;
-    SaveFile.AdventureData[Characters_Amy].LevelAct = LevelAndActIDs_StationSquare1;
-    SaveFile.AdventureData[Characters_Big].LevelAct = LevelAndActIDs_StationSquare1;
-    SaveFile.AdventureData[Characters_Gamma].LevelAct = LevelAndActIDs_StationSquare1;
     WriteSaveFile();
 }
 

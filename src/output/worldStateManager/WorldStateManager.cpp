@@ -5,6 +5,7 @@ void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
 {
     for (StoryFlags storyFlag : storyFlags)
         SetEventFlag(static_cast<EventFlags>(storyFlag));
+    
     WriteSaveFile();
     SaveFile.AdventureData[Characters_Sonic].field_4 = -1;
     SaveFile.AdventureData[Characters_Tails].field_4 = -1;
@@ -17,6 +18,7 @@ void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
 void WorldStateManager::UnlockSuperSonic()
 {
     SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_PLAYABLE));
+    
     WriteSaveFile();
     SaveFile.AdventureData[Characters_Sonic].field_4 = -1;
     SaveFile.AdventureData[Characters_Tails].field_4 = -1;
@@ -63,8 +65,6 @@ FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
 
 
 FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
-
-
 FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
 {
     if (CurrentCharacter == Characters_Knuckles)
