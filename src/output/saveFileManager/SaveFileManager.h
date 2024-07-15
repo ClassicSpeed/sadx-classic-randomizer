@@ -4,4 +4,5 @@ class SaveFileManager
 {
 public:
     void OnSaveFileLoaded();
+    void OnSaveFileCreated();
 };

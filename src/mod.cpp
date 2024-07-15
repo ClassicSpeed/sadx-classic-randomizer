@@ -65,7 +65,6 @@ __declspec(dllexport) void __cdecl OnFrame()
 }
 
 bool saveFileSelected = false;
-
 FunctionHook<BOOL> onTrialMenuLoaded(0x506780, []()-> BOOL
 {
     if (GameMode == GameModes_Menu && !saveFileSelected)
@@ -78,6 +77,8 @@ FunctionHook<BOOL> onTrialMenuLoaded(0x506780, []()-> BOOL
     //Blocks trial menu
     return false;
 });
+//Blocks mission menu
+FunctionHook<BOOL> blockMissionMenu(0x506410, []() -> BOOL { return false; });
 
 
 __declspec(dllexport) ModInfo SADXModInfo = {ModLoaderVer}; // This is needed for the Mod Loader to recognize the DLL.

@@ -3,7 +3,23 @@
 #include "../../pch.h"
 
 
+
+
 void SaveFileManager::OnSaveFileLoaded()
+{
+    if(LevelClearCounts[0] == 0)
+        OnSaveFileCreated();
+    
+    //This doesn't save for some reason, so we set it manually
+    SaveFile.AdventureData[Characters_Sonic].field_4 = -1;
+    SaveFile.AdventureData[Characters_Tails].field_4 = -1;
+    SaveFile.AdventureData[Characters_Knuckles].field_4 = -1;
+    SaveFile.AdventureData[Characters_Amy].field_4 = -1;
+    SaveFile.AdventureData[Characters_Big].field_4 = -1;
+    SaveFile.AdventureData[Characters_Gamma].field_4 = -1;
+}
+
+void SaveFileManager:: OnSaveFileCreated()
 {
     for (unsigned int i = 0; i < LevelClearCounts.size(); i++)
         LevelClearCounts[i] = 1;
@@ -137,8 +153,7 @@ void SaveFileManager::OnSaveFileLoaded()
 
     //FinalEgg
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_FINALEGG));
-
-
+    
     SaveFile.AdventureData[Characters_Sonic].LevelAct = LevelAndActIDs_StationSquare1;
     SaveFile.AdventureData[Characters_Tails].LevelAct = LevelAndActIDs_StationSquare1;
     SaveFile.AdventureData[Characters_Knuckles].LevelAct = LevelAndActIDs_StationSquare1;
@@ -146,11 +161,5 @@ void SaveFileManager::OnSaveFileLoaded()
     SaveFile.AdventureData[Characters_Big].LevelAct = LevelAndActIDs_StationSquare1;
     SaveFile.AdventureData[Characters_Gamma].LevelAct = LevelAndActIDs_StationSquare1;
     WriteSaveFile();
-    //This doesn't save for some reason, so we set it manually
-    SaveFile.AdventureData[Characters_Sonic].field_4 = -1;
-    SaveFile.AdventureData[Characters_Tails].field_4 = -1;
-    SaveFile.AdventureData[Characters_Knuckles].field_4 = -1;
-    SaveFile.AdventureData[Characters_Amy].field_4 = -1;
-    SaveFile.AdventureData[Characters_Big].field_4 = -1;
-    SaveFile.AdventureData[Characters_Gamma].field_4 = -1;
 }
+
