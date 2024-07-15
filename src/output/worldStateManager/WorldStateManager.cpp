@@ -53,3 +53,10 @@ FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
         return EventFlagArray[FLAG_E102_MR_WINDYSTONE];
     return false;
 });
+
+FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
+{
+    if (CurrentCharacter == Characters_Knuckles)
+        return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[FLAG_KNUCKLES_MR_BLUECUBE];
+    return false;
+});

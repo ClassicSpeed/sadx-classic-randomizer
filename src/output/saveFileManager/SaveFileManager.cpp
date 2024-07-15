@@ -165,6 +165,10 @@ void SaveFileManager:: OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_TRUCK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_TRUCK));
 
+    //Lost World
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_REDCUBE));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_BLUECUBE));
+
     //FinalEgg
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_FINALEGG));
 

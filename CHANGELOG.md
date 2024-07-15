@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Amy stuck after Hedgehog Hammer.
 - Fixed Chao garden's warp gates not working.
 - Windy Valley now requires the wind stone again.
+- Knuckles' lost worlds requires the silver and gold key again.
 
 ## [v0.2.1] - 2024-07-13
 
