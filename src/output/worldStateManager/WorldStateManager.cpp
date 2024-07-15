@@ -40,3 +40,16 @@ FunctionHook<void, char> OnAddSetStage(0x46BF70, [](char Gap)-> void
     }
     OnAddSetStage.Original(Gap);
 });
+
+FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
+{
+    if (CurrentCharacter == Characters_Sonic)
+        return EventFlagArray[FLAG_SONIC_MR_WINDYSTONE];
+
+    if (CurrentCharacter == Characters_Tails)
+        return EventFlagArray[FLAG_MILES_MR_WINDYSTONE];
+
+    if (CurrentCharacter == Characters_Gamma)
+        return EventFlagArray[FLAG_E102_MR_WINDYSTONE];
+    return false;
+});

@@ -130,6 +130,10 @@ void SaveFileManager:: OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_HIGHWAY));
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ENTRANCE_HIGHWAY));
 
+    //Windy Valley
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_WINDY));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_WINDYSTONE));
+
     //Ice Cap Stone
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ICESTONE));
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ICESTONE));
