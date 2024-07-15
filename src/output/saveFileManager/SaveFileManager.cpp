@@ -17,6 +17,13 @@ void SaveFileManager::OnSaveFileLoaded()
     SaveFile.AdventureData[Characters_Amy].field_4 = -1;
     SaveFile.AdventureData[Characters_Big].field_4 = -1;
     SaveFile.AdventureData[Characters_Gamma].field_4 = -1;
+    
+    SaveFile.AdventureData[Characters_Sonic].LevelAct = LevelAndActIDs_StationSquare1;
+    SaveFile.AdventureData[Characters_Tails].LevelAct = LevelAndActIDs_StationSquare1;
+    SaveFile.AdventureData[Characters_Knuckles].LevelAct = LevelAndActIDs_StationSquare1;
+    SaveFile.AdventureData[Characters_Amy].LevelAct = LevelAndActIDs_StationSquare1;
+    SaveFile.AdventureData[Characters_Big].LevelAct = LevelAndActIDs_StationSquare1;
+    SaveFile.AdventureData[Characters_Gamma].LevelAct = LevelAndActIDs_StationSquare1;
 }
 
 void SaveFileManager:: OnSaveFileCreated()
@@ -142,6 +149,9 @@ void SaveFileManager:: OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_WESTROCK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_WESTROCK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_ISLANDDOOR));
+
+    //Red Mountain
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_MOUNTAIN));
 
     //Jungle Kart
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_TRUCK));
