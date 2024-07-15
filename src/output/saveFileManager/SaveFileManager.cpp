@@ -34,7 +34,7 @@ void SaveFileManager::OnSaveFileLoaded()
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_SHOVELCLAW));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_FIGHTINGGROVE));
 
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_FIGHTERSFEATHER));
+    // ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_FIGHTERSFEATHER));
     ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_LONGHAMMER));
 
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_BOOSTER));

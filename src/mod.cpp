@@ -74,7 +74,7 @@ FunctionHook<BOOL> onTrialMenuLoaded(0x506780, []()-> BOOL
         archipelagoManager.OnSaveFileLoaded();
         saveFileSelected = true;
     }
-        
+
     //Blocks trial menu
     return false;
 });
