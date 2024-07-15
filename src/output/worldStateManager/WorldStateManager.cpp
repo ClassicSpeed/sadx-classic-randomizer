@@ -25,3 +25,18 @@ void WorldStateManager::UnlockSuperSonic()
     SaveFile.AdventureData[Characters_Big].field_4 = -1;
     SaveFile.AdventureData[Characters_Gamma].field_4 = -1;
 }
+
+//Creates a spring for sonic in the sewers
+FunctionHook<void, char> OnAddSetStage(0x46BF70, [](char Gap)-> void
+{
+    if (CurrentCharacter == Characters_Sonic && CurrentLevel == LevelIDs_StationSquare && CurrentAct == 0)
+    {
+        FunctionPointer(task*, CreateElementalTask, (unsigned __int16 im, int level, void(__cdecl* exec)(task*)),
+                        0x40B860);
+        const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
+        spring->twp->pos.x = 505;
+        spring->twp->pos.y = -89;
+        spring->twp->pos.z = 635;
+    }
+    OnAddSetStage.Original(Gap);
+});
