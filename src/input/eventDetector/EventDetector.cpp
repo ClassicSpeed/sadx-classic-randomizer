@@ -113,7 +113,8 @@ FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](__int16 a1) -> v
         startLevelCutsceneHook.Original(a1);
         EventFlagArray[EventFlags_SuperSonicAdventureComplete] = 1;
         WriteSaveFile();
-        GameState = 14;
+        GameState = MD_GAME_FADEOUT_STAFFROLL;
+        GameMode = GameModes_StartCredits;
         eventDetector->lastStoryState = LastStoryCompleted;
         return;
     }
