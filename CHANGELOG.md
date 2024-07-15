@@ -2,21 +2,43 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.2.2] - 2024-07-15
+
+### Added
+
+- Added Archipelago model replacing the field emblem.
+- Added Archipelago textures replacing emblems in UI.
+- Added spring on the sewer for Sonic (and removed the car).
+- Re-added Knuckles' Red Mountain as a location again.
+- Re-added Gamma's upgrades locations check
+
+### Changed
+
+- Fixed weird state for NPCs (like duplicated or nonsensical dialogues).
+- Removed cutscenes from the super sonic fight.
+- Fixed Amy/Gamma's upgrades being inverted on the status information.
+- Fixed Gamma stuck after Final Egg.
+- Fixed Amy stuck after Hedgehog Hammer.
+- Fixed Chao garden's warp gates not working.
+- Windy Valley now requires the wind stone again.
+- Knuckles' lost worlds requires the silver and gold key again.
+- Sonic and Gamma's Red Mountains require the monkey to be destroyed again.
+
 ## [v0.2.1] - 2024-07-13
 
 ### Added
 
-- Added more information in the player configuration file
-- Fade out effect on new messages
+- Added more information in the player configuration file.
+- Fade out effect on new messages.
 
 ### Changed
 
-- Fixed chao related crash
-- Added Big's pool door to the hotel keys item
-- Fixed Twinkle Circuit and Sand hill not giving a check
-- Removed Gamma's upgrades from logic
-- Disabled warrior's feather from logic (Long Hammer is still accessible)
-- Disabled trial menu (since allows you to skip logic)
+- Fixed chao related crash.
+- Added Big's pool door to the hotel keys item.
+- Fixed Twinkle Circuit and Sand hill not giving a check.
+- Removed Gamma's upgrades from logic.
+- Disabled warrior's feather from logic (Long Hammer is still accessible).
+- Disabled trial menu (since allows you to skip logic).
 
 ## [v0.2.0] - 2024-07-12
 

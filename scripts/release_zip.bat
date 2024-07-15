@@ -20,7 +20,7 @@ if not exist %OUTPUT_DIR%\SADX_Archipelago  mkdir %OUTPUT_DIR%\SADX_Archipelago
 
 
 REM Copy other required files (example: readme.txt, config files)
-copy .\assets\SADX_Archipelago\ %OUTPUT_DIR%\SADX_Archipelago\ 
+xcopy .\assets\SADX_Archipelago\ %OUTPUT_DIR%\SADX_Archipelago\ /E /I
 
 REM Update the mod.ini version
 echo.>>%OUTPUT_DIR%\SADX_Archipelago\mod.ini

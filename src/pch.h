@@ -9,7 +9,7 @@
 
 #define SADX_AP_VERSION_MAJOR 0
 #define SADX_AP_VERSION_MINOR 2
-#define SADX_AP_VERSION_PATCH 1
+#define SADX_AP_VERSION_PATCH 2
 
 // add headers that you want to pre-compile here
 #include "framework.h"

@@ -162,12 +162,12 @@ UnlockStatus ItemRepository::GetUnlockStatus()
     unlockStatus.knucklesFightingGlovesUnlocked = _itemData[31].obtained;
 
     unlockStatus.amyUnlocked = _itemData[4].obtained;
-    unlockStatus.amyLongHammerUnlocked = _itemData[40].obtained;
-    unlockStatus.amyWarriorFeatherUnlocked = _itemData[41].obtained;
+    unlockStatus.amyWarriorFeatherUnlocked = _itemData[40].obtained;
+    unlockStatus.amyLongHammerUnlocked = _itemData[41].obtained;
 
     unlockStatus.gammaUnlocked = _itemData[5].obtained;
-    unlockStatus.gammaLaserBlasterUnlocked = _itemData[50].obtained;
-    unlockStatus.gammaJetBoosterUnlocked = _itemData[51].obtained;
+    unlockStatus.gammaJetBoosterUnlocked = _itemData[50].obtained;
+    unlockStatus.gammaLaserBlasterUnlocked = _itemData[51].obtained;
 
     unlockStatus.bigUnlocked = _itemData[6].obtained;
     unlockStatus.bigLifeRingUnlocked = _itemData[60].obtained;
