@@ -153,6 +153,26 @@ void SaveFileManager:: OnSaveFileCreated()
 
     //FinalEgg
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_FINALEGG));
+
+    //Chao Garden
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_SS));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_MR));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_EC));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_ARRIVE_IN_SS));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_ARRIVE_IN_MR));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_ARRIVE_IN_EC));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_ARRIVE_IN_SS));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_ARRIVE_IN_MR));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_ARRIVE_IN_EC));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_ARRIVE_IN_SS));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_ARRIVE_IN_MR));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_ARRIVE_IN_EC));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_ARRIVE_IN_SS));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_ARRIVE_IN_MR));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_ARRIVE_IN_EC));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_SS));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_MR));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_EC));
     
     SaveFile.AdventureData[Characters_Sonic].LevelAct = LevelAndActIDs_StationSquare1;
     SaveFile.AdventureData[Characters_Tails].LevelAct = LevelAndActIDs_StationSquare1;

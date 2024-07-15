@@ -16,7 +16,9 @@ All notable changes to this project will be documented in this file.
 - Fixed weird state for NPCs (like duplicated or nonsensical dialogues).
 - Removed cutscenes from the super sonic fight.
 - Fixed Amy/Gamma's upgrades being inverted on the status information.
-- Fixed Gamma stuck on after Final Egg
+- Fixed Gamma stuck after Final Egg.
+- Fixed Amy stuck after Hedgehog Hammer.
+- Fixed Chao garden's warp gates not working.
 
 ## [v0.2.1] - 2024-07-13
 
