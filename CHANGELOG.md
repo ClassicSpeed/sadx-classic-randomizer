@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Added Archipelago model replacing the field emblem.
+- Added Archipelago textures replacing emblems in UI.
 - Added spring on the sewer for Sonic (and removed the car).
 - Re-added Knuckles' Red Mountain as a location again.
 - Re-added Gamma's upgrades locations check

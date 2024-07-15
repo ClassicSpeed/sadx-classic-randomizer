@@ -2,14 +2,17 @@
 
 #include "../../pch.h"
 
-
 void SaveFileManager::OnSaveFileLoaded()
 {
     if (LevelClearCounts[0] == 0)
         OnSaveFileCreated();
+}
 
-    
+void SaveFileManager::OnFrame()
+{
     // These doesn't save for some reason, so we set it manually
+    // For some reason, some functions override these fields, we force them off
+    // Maybe I'll search for a better way later
     SaveFile.AdventureData[Characters_Sonic].field_4 = -1;
     SaveFile.AdventureData[Characters_Tails].field_4 = -1;
     SaveFile.AdventureData[Characters_Knuckles].field_4 = -1;
@@ -186,4 +189,3 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_EC));
     WriteSaveFile();
 }
-
