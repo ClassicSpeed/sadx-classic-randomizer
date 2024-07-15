@@ -60,3 +60,16 @@ FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
         return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[FLAG_KNUCKLES_MR_BLUECUBE];
     return false;
 });
+
+
+FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
+
+
+FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
+{
+    if (CurrentCharacter == Characters_Knuckles)
+        return true;
+    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma)
+        return isMonkeyDead(1);
+    return false;
+});

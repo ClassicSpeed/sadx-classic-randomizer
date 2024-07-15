@@ -156,6 +156,7 @@ void SaveFileManager:: OnSaveFileCreated()
 
     //Red Mountain
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_MOUNTAIN));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_MOUNTAIN));
 
     //Jungle Kart
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_TRUCK));
