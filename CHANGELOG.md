@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.2.3] - 2024-07-16
+
+### Added
+- The mod will check for the requirements of other missions after finishing the level and give you the extra location checks.
+
+
 ## [v0.2.2] - 2024-07-15
 
 ### Added

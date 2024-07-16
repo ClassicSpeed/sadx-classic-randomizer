@@ -1,13 +1,5 @@
 ﻿#include "LocationRepository.h"
-#include "../../pch.h"
 
-#define MISSION_C  2
-#define MISSION_B  1
-#define MISSION_A  0
-
-
-#define SUB_LEVEL_MISSION_B  1
-#define SUB_LEVEL_MISSION_A  0
 
 LocationRepository::LocationRepository()
 {

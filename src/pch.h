@@ -9,8 +9,15 @@
 
 #define SADX_AP_VERSION_MAJOR 0
 #define SADX_AP_VERSION_MINOR 2
-#define SADX_AP_VERSION_PATCH 2
+#define SADX_AP_VERSION_PATCH 3
 
+#define MISSION_C  2
+#define MISSION_B  1
+#define MISSION_A  0
+
+
+#define SUB_LEVEL_MISSION_B  1
+#define SUB_LEVEL_MISSION_A  0
 // add headers that you want to pre-compile here
 #include "framework.h"
 #include "../lib/sadx-mod-loader/SADXModLoader/include/SADXModLoader.h"
