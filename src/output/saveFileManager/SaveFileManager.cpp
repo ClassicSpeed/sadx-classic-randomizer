@@ -118,7 +118,8 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_TPARK_ELEVATOR));
     ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_SS_TPARK_ELEVATOR));
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_SS_TPARK_ELEVATOR));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_SS_TPARK_ELEVATOR));
+    // ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_SS_TPARK_ELEVATOR));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_SS_ENTRANCE_CIRCUIT));
 
     //Speed Highway
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_CARD));

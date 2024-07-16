@@ -70,11 +70,11 @@ ItemRepository::ItemRepository()
         },
         {
             85, ItemData::KeyItem({
-                                      FLAG_SONIC_SS_TPARK_ELEVATOR, FLAG_SONIC_SS_ENTRANCE_CIRCUIT,
-                                      FLAG_MILES_SS_CARTPASSPORT,
-                                      FLAG_KNUCKLES_SS_CARTPASSPORT,
-                                      FLAG_AMY_SS_TPARK_ELEVATOR, FLAG_AMY_SS_ENTRANCE_CIRCUIT,
-                                      FLAG_E102_SS_CARTPASSPORT,
+                                      FLAG_SONIC_SS_TPARK_ELEVATOR,
+                                      FLAG_MILES_SS_TPARK_ELEVATOR,
+                                      FLAG_KNUCKLES_SS_TPARK_ELEVATOR,
+                                      FLAG_AMY_SS_TPARK_ELEVATOR,
+                                      FLAG_E102_SS_TPARK_ELEVATOR,
                                       /*FLAG_BIG_SS_TPARK_ELEVATOR,*/ FLAG_BIG_SS_ENTRANCE_CIRCUIT,
                                   }, "Twinkle Park Ticket")
         },
