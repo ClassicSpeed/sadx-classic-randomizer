@@ -14,7 +14,7 @@ the [Archipelago guide](https://github.com/ClassicSpeed/Archipelago/blob/sadx_in
 
 ## Known Issues (Probably won't fix)
 
-- Amy only has a check of the long hammer (3000 points in hedgehog hammer), but not for the warrior feather.
+- Amy only has a check for the long hammer (3000 points in hedgehog hammer), but not for the warrior feather.
 - Tails' Rhythm badge is not a check (it's in the past).
 - Knuckles can freely enter Red Mountain, there is no monkey to destroy.
 

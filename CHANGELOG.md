@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 - Windy Valley now requires the wind stone again.
 - Knuckles' lost worlds requires the silver and gold key again.
 - Sonic and Gamma's Red Mountains require the monkey to be destroyed again.
+- Fixed Twinkle park elevator not working for Tails, knuckles and Gamma.
 
 ## [v0.2.1] - 2024-07-13
 
