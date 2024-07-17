@@ -19,7 +19,9 @@ public:
     void OnPlayingFrame() const;
     void OnLevelEmblem(int character, int level, int mission);
     void OnGenericEmblem(int index);
+    void SetMultipleMissions(bool completeMultipleMissions);
     LastStoryState lastStoryState = LastStoryNotStarted;
+    bool completeMultipleLevelMissions = true;
 
 private:
     Randomizer& _randomizer;

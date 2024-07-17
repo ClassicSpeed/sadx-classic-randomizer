@@ -96,6 +96,9 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
         OnLevelEmblemCollected.Original(savefile, character, level, mission);
         eventDetector->OnLevelEmblem(character, level, mission);
 
+        if(!eventDetector->completeMultipleLevelMissions)
+            return;
+        
         //We check all other missions that were completed
         if (level <= LevelIDs_HotShelter)
         {
@@ -208,6 +211,11 @@ void EventDetector::OnGenericEmblem(signed int index)
     }
     if (checksFound)
         _checkData = _randomizer.GetCheckData();
+}
+
+void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
+{
+    this->completeMultipleLevelMissions = completeMultipleMissions;
 }
 
 

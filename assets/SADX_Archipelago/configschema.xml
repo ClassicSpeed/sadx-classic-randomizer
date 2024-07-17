@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<ConfigSchema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonicretro.org">
+<ConfigSchema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns="http://www.sonicretro.org">
     <Groups>
         <Group name="AP" display="Archipelago Settings">
             <Property name="IP" type="string" defaultvalue="archipelago.gg:" display="Server IP:port">
@@ -14,6 +15,10 @@
         </Group>
 
         <Group name="GameSettings" display="Game Settings">
+            <Property name="CompleteMultipleLevelMissions" type="bool" defaultvalue="True"
+                      display="Complete multiple level missions">
+                <HelpText>Collects more than one check from levels if you beat the other requirements.</HelpText>
+            </Property>
             <Property name="AutoSkipCutscenes" type="bool" defaultvalue="True" display="Auto Skip Cutscenes">
                 <HelpText>Automatically skip every cutscene as soon as it starts.</HelpText>
             </Property>

@@ -8,8 +8,12 @@ All notable changes to this project will be documented in this file.
 
 - The mod will check for the requirements of other missions after finishing the level and give you the extra location
   checks.
-- Getting 3000 points on hedgehog hammer will give you both the check for Warrior's Feather and Long Hammer.
+- This option can be disabled in the mod configuration.
 - Added error message if the steam achievement mod is loaded.
+
+### Changed
+
+- Getting 3000 points on hedgehog hammer will give you both the check for Warrior's Feather and Long Hammer.
 - The door between the hotel and the casino area will be open after getting both keys.
 
 ## [v0.2.2] - 2024-07-15
