@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - The mod will check for the requirements of other missions after finishing the level and give you the extra location
   checks.
+- Also works on twinkle circuit and sand hill.
 - This option can be disabled in the mod configuration.
 - Added error message if the steam achievement mod is loaded.
 

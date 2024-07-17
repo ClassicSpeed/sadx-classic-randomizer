@@ -53,13 +53,26 @@ const std::unordered_map<int, int> gamma_target_times = {
 };
 
 
-FunctionPointer(BOOL, ActualCheckMissionRequirements, (int mission, int character, int level), 0x426AA0);
-FunctionPointer(BOOL, ActualCheckSublevelMissionRequirements, (int level, int character, int mission), 0x4282D0);
+FunctionPointer(BOOL, TestTwinkleParkRequierement, (int character, int mission), 0x427AE0);
+DataPointer(int, NumberOfHintsUsed, 0x3B0F138);
 
+bool ManualMissionBCheck(const int character)
+{
+    switch (character)
+    {
+    case Characters_Knuckles:
+        return NumberOfHintsUsed == 0;
+
+    case Characters_Big:
+        return BigWeightRecord >= 1000;
+
+    default: return Rings >= 50;
+    }
+}
 
 bool ManualMissionACheck(const int character, const int level)
 {
-    int time = TimeFrames + 60 * (TimeSeconds + 60 * TimeMinutes);
+    const int time = TimeFrames + 60 * (TimeSeconds + 60 * TimeMinutes);
     switch (character)
     {
     case Characters_Sonic:
@@ -90,22 +103,38 @@ bool ManualMissionACheck(const int character, const int level)
     return false;
 }
 
+
+bool ManualSubLevelMissionACheck(const int character, const int level)
+{
+    if (level == LevelIDs_TwinkleCircuit)
+    {
+        return TestTwinkleParkRequierement(character, MISSION_A);
+    }
+
+    if (level == LevelIDs_SandHill)
+    {
+        return Score >= 10000;
+    }
+
+    return false;
+}
+
 FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
     0x4B4640, [](SaveFileData* savefile, int character, signed int level, int mission)-> void
     {
         OnLevelEmblemCollected.Original(savefile, character, level, mission);
         eventDetector->OnLevelEmblem(character, level, mission);
 
-        if(!eventDetector->completeMultipleLevelMissions)
+        if (!eventDetector->completeMultipleLevelMissions)
             return;
-        
+
         //We check all other missions that were completed
         if (level <= LevelIDs_HotShelter)
         {
             //level - mission B
             if (mission == MISSION_C)
             {
-                if (ActualCheckMissionRequirements(MISSION_B, character, level))
+                if (ManualMissionBCheck(character))
                 {
                     OnLevelEmblemCollected.Original(savefile, character, level, MISSION_B);
                     eventDetector->OnLevelEmblem(character, level, MISSION_B);
@@ -127,10 +156,10 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
             //sublevel - mission A
             if (mission == SUB_LEVEL_MISSION_B)
             {
-                if (ActualCheckSublevelMissionRequirements(level, character, SUB_LEVEL_MISSION_A))
+                if (ManualSubLevelMissionACheck(character, level))
                 {
-                    OnLevelEmblemCollected.Original(savefile, character, level, MISSION_A);
-                    eventDetector->OnLevelEmblem(character, level, MISSION_A);
+                    OnLevelEmblemCollected.Original(savefile, character, level, SUB_LEVEL_MISSION_A);
+                    eventDetector->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
                 }
             }
         }
