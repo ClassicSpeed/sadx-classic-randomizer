@@ -8,12 +8,163 @@ EventDetector::EventDetector(Randomizer& randomizer) : _randomizer(randomizer)
 }
 
 
+const std::unordered_map<int, int> sonic_target_times = {
+    {LevelIDs_EmeraldCoast, 7200},
+    {LevelIDs_WindyValley, 10800},
+    {LevelIDs_Casinopolis, 18000},
+    {LevelIDs_IceCap, 14400},
+    {LevelIDs_TwinklePark, 10800},
+    {LevelIDs_SpeedHighway, 9000},
+    {LevelIDs_RedMountain, 10800},
+    {LevelIDs_SkyDeck, 18000},
+    {LevelIDs_LostWorld, 16200},
+    {LevelIDs_FinalEgg, 16200}
+};
+
+const std::unordered_map<int, int> tails_target_times = {
+    {LevelIDs_WindyValley, 5400}, //1 min 30 sec
+    {LevelIDs_Casinopolis, 3600}, //1 min
+    {LevelIDs_IceCap, 7200}, // 2 min
+    {LevelIDs_SkyDeck, 3600}, //1 min
+    {LevelIDs_SpeedHighway, 7200}, //2 min
+};
+
+
+const std::unordered_map<int, int> knuckles_target_times = {
+    {LevelIDs_SpeedHighway, 3600},
+    {LevelIDs_Casinopolis, 3600},
+    {LevelIDs_RedMountain, 3600},
+    {LevelIDs_LostWorld, 3600},
+    {LevelIDs_SkyDeck, 7200},
+};
+
+const std::unordered_map<int, int> amy_target_times = {
+    {LevelIDs_TwinklePark, 7200},
+    {LevelIDs_HotShelter, 23400},
+    {LevelIDs_FinalEgg, 9000},
+};
+
+const std::unordered_map<int, int> gamma_target_times = {
+    {LevelIDs_FinalEgg, 9000},
+    {LevelIDs_EmeraldCoast, 10800},
+    {LevelIDs_WindyValley, 10800},
+    {LevelIDs_RedMountain, 10800},
+    {LevelIDs_HotShelter, 7200},
+};
+
+
+FunctionPointer(BOOL, TestTwinkleParkRequierement, (int character, int mission), 0x427AE0);
+DataPointer(int, NumberOfHintsUsed, 0x3B0F138);
+
+bool ManualMissionBCheck(const int character)
+{
+    switch (character)
+    {
+    case Characters_Knuckles:
+        return NumberOfHintsUsed == 0;
+
+    case Characters_Big:
+        return BigWeightRecord >= 1000;
+
+    default: return Rings >= 50;
+    }
+}
+
+bool ManualMissionACheck(const int character, const int level)
+{
+    const int time = TimeFrames + 60 * (TimeSeconds + 60 * TimeMinutes);
+    switch (character)
+    {
+    case Characters_Sonic:
+        if (sonic_target_times.find(level) != sonic_target_times.end())
+            return time <= sonic_target_times.at(level);
+        break;
+    case Characters_Tails:
+        if (tails_target_times.find(level) != tails_target_times.end())
+            return time <= tails_target_times.at(level);
+        break;
+    case Characters_Knuckles:
+        if (knuckles_target_times.find(level) != knuckles_target_times.end())
+            return time <= knuckles_target_times.at(level);
+        break;
+    case Characters_Amy:
+        if (amy_target_times.find(level) != amy_target_times.end())
+            return time <= amy_target_times.at(level);
+        break;
+    case Characters_Gamma:
+        if (gamma_target_times.find(level) != gamma_target_times.end())
+            return time > gamma_target_times.at(level);
+        break;
+    case Characters_Big:
+        return BigWeightRecord >= 2000;
+
+    default: return false;
+    }
+    return false;
+}
+
+
+bool ManualSubLevelMissionACheck(const int character, const int level)
+{
+    if (level == LevelIDs_TwinkleCircuit)
+    {
+        return TestTwinkleParkRequierement(character, MISSION_A);
+    }
+
+    if (level == LevelIDs_SandHill)
+    {
+        return Score >= 10000;
+    }
+
+    return false;
+}
+
 FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
     0x4B4640, [](SaveFileData* savefile, int character, signed int level, int mission)-> void
     {
         OnLevelEmblemCollected.Original(savefile, character, level, mission);
         eventDetector->OnLevelEmblem(character, level, mission);
+
+        if (!eventDetector->completeMultipleLevelMissions)
+            return;
+
+        //We check all other missions that were completed
+        if (level <= LevelIDs_HotShelter)
+        {
+            //level - mission B
+            if (mission == MISSION_C)
+            {
+                if (ManualMissionBCheck(character))
+                {
+                    OnLevelEmblemCollected.Original(savefile, character, level, MISSION_B);
+                    eventDetector->OnLevelEmblem(character, level, MISSION_B);
+                }
+            }
+
+            //level - mission A
+            if (mission == MISSION_C || mission == MISSION_B)
+            {
+                if (ManualMissionACheck(character, level))
+                {
+                    OnLevelEmblemCollected.Original(savefile, character, level, MISSION_A);
+                    eventDetector->OnLevelEmblem(character, level, MISSION_A);
+                }
+            }
+        }
+        if (level == LevelIDs_TwinkleCircuit || level == LevelIDs_SandHill)
+        {
+            //sublevel - mission A
+            if (mission == SUB_LEVEL_MISSION_B)
+            {
+                if (ManualSubLevelMissionACheck(character, level))
+                {
+                    OnLevelEmblemCollected.Original(savefile, character, level, SUB_LEVEL_MISSION_A);
+                    eventDetector->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
+                }
+            }
+        }
     });
+
 
 //FunctionPointer(void, SetEmblemCollected, (SaveFileData *savefile, signed int index), 0x4B3F30);
 FunctionHook<void, SaveFileData*, signed int> OnGenericEmblemCollected(
@@ -89,6 +240,11 @@ void EventDetector::OnGenericEmblem(signed int index)
     }
     if (checksFound)
         _checkData = _randomizer.GetCheckData();
+}
+
+void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
+{
+    this->completeMultipleLevelMissions = completeMultipleMissions;
 }
 
 

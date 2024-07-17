@@ -39,6 +39,14 @@ SaveFileManager saveFileManager = SaveFileManager();
 
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
 {
+    if (helperFunctions.Mods->find_by_name("Steam Achievements Mod"))
+    {
+        MessageBox(WindowHandle,
+                   L"The Steam Achievements Mod is not compatible with the SADX Archipelago Randomizer.\n\nPlease disable it and try again.",
+                   L"SADX Archipelago Error: Incompatible Mod", MB_OK | MB_ICONERROR);
+        exit(0);
+    }
+
     const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");
 
     if (!settingsIni)
@@ -50,11 +58,13 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
 
     archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword);
 
+    const bool completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions", true);
     const bool autoSkipCutscenes = settingsIni->getBool("GameSettings", "AutoSkipCutscenes", true);
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippeableCredits", true);
     const bool winButtonEnabled = settingsIni->getBool("GameSettings", "AutoWinButton", false);
 
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, winButtonEnabled);
+    eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
 
     char pathbuf[MAX_PATH];
     ReplacePNG_Common("HYOJI_EMBLEM0");

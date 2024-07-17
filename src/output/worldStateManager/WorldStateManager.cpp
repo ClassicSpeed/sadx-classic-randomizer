@@ -4,7 +4,19 @@
 void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
 {
     for (StoryFlags storyFlag : storyFlags)
+    {
         SetEventFlag(static_cast<EventFlags>(storyFlag));
+        //We open the door between the hotel and the casino if you have both keys
+        if((storyFlag == FLAG_SONIC_SS_STATION_BACK && GetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_HOTEL_FRONT))) ||
+        (storyFlag == FLAG_SONIC_SS_HOTEL_FRONT && GetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_STATION_BACK))))
+        {
+            SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_HOTEL_BACK));
+            SetEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_HOTEL_BACK));
+            SetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_HOTEL_BACK));
+            SetEventFlag(static_cast<EventFlags>(FLAG_AMY_SS_HOTEL_BACK));
+            SetEventFlag(static_cast<EventFlags>(FLAG_BIG_SS_HOTEL_BACK));
+        }
+    }
     WriteSaveFile();
 }
 

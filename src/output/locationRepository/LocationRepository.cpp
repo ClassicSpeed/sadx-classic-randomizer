@@ -1,13 +1,5 @@
 ﻿#include "LocationRepository.h"
-#include "../../pch.h"
 
-#define MISSION_C  2
-#define MISSION_B  1
-#define MISSION_A  0
-
-
-#define SUB_LEVEL_MISSION_B  1
-#define SUB_LEVEL_MISSION_A  0
 
 LocationRepository::LocationRepository()
 {
@@ -49,7 +41,8 @@ LocationRepository::LocationRepository()
         {300, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_SHOVELCLAW, "Shovel claw upgrade (Knuckles)", 30)},
         {301, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_FIGHTINGGROVE, "Fighting gloves upgrade (Knuckles)", 31)},
 
-        // {400, LocationData::UpgradeLocation(FLAG_AMY_MR_FIGHTERSFEATHER, "Warrior feather upgrade (Amy)", 40)},
+        //We grant amy the warrior's feather upgrade when getting the long hammer as well
+        {400, LocationData::UpgradeLocation(FLAG_AMY_EC_LONGHAMMER, "Warrior feather upgrade (Amy)", 41)},
         {401, LocationData::UpgradeLocation(FLAG_AMY_EC_LONGHAMMER, "Long Hammer upgrade (Amy)", 41)},
 
         {500, LocationData::UpgradeLocation(FLAG_E102_EC_BOOSTER, "Jet booster upgrade (Gamma)", 50)},
