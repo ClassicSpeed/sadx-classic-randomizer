@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.3.0] - ?
+
+### Added
+
+- Added life capsules as a check
+  - The option is off by default
+
+### Changed
+
+- Big starts with all the lures
+
 ## [v0.2.3] - 2024-07-16
 
 ### Added
