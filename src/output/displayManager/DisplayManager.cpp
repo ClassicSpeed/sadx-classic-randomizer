@@ -223,35 +223,27 @@ void DisplayManager::DisplayItemsUnlocked()
     {
         int missionsEnabled = -1;
         int currentColor = -1;
-        if (CurrentCharacter == Characters_Sonic)
+        switch (CurrentCharacter)
         {
-            missionsEnabled = _sonicMissions;
+        case Characters_Sonic: missionsEnabled = _sonicMissions;
             currentColor = _sonicColor;
-        }
-        else if (CurrentCharacter == Characters_Tails)
-        {
-            missionsEnabled = _tailsMissions;
+            break;
+        case Characters_Tails: missionsEnabled = _tailsMissions;
             currentColor = _tailsColor;
-        }
-        else if (CurrentCharacter == Characters_Knuckles)
-        {
-            missionsEnabled = _knucklesMissions;
+            break;
+        case Characters_Knuckles: missionsEnabled = _knucklesMissions;
             currentColor = _knucklesColor;
-        }
-        else if (CurrentCharacter == Characters_Amy)
-        {
-            missionsEnabled = _amyMissions;
+            break;
+        case Characters_Amy: missionsEnabled = _amyMissions;
             currentColor = _amyColor;
-        }
-        else if (CurrentCharacter == Characters_Big)
-        {
-            missionsEnabled = _bigMissions;
+            break;
+        case Characters_Big: missionsEnabled = _bigMissions;
             currentColor = _bigColor;
-        }
-        else if (CurrentCharacter == Characters_Gamma)
-        {
-            missionsEnabled = _gammaMissions;
+            break;
+        case Characters_Gamma: missionsEnabled = _gammaMissions;
             currentColor = _gammaColor;
+            break;
+        default: break;
         }
 
         // Show current level name
