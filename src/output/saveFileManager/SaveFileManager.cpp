@@ -129,6 +129,10 @@ void SaveFileManager::OnSaveFileCreated()
     //Windy Valley
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_WINDY));
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_WINDYSTONE));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_WINDY));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_WINDYSTONE));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_WINDY));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_WINDYSTONE));
 
     //Ice Cap Stone
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ICESTONE));
