@@ -105,11 +105,12 @@ bool ManualMissionACheck(const int character, const int level)
 }
 
 
-bool ManualSubLevelMissionACheck(const int character, const int level)
+bool ManualSubLevelMissionACheck(const int level)
 {
     if (level == LevelIDs_TwinkleCircuit)
     {
-        return TestTwinkleParkRequierement(character, MISSION_A);
+        //You can't fail the Twinkle Circuit mission A 
+        return true;
     }
 
     if (level == LevelIDs_SandHill)
@@ -157,7 +158,7 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
             //sublevel - mission A
             if (mission == SUB_LEVEL_MISSION_B)
             {
-                if (ManualSubLevelMissionACheck(character, level))
+                if (ManualSubLevelMissionACheck(level))
                 {
                     OnLevelEmblemCollected.Original(savefile, character, level, SUB_LEVEL_MISSION_A);
                     eventDetector->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
@@ -289,12 +290,12 @@ FunctionHook<void, EntityData1*> OnExtraLife(0x4D6D40, [](EntityData1* entity)->
 {
     for (const auto& lifeCapsule : eventDetector->lifeCapsules)
     {
-        if(lifeCapsule.character != CurrentCharacter)
+        if (lifeCapsule.character != CurrentCharacter)
             continue;
-        
-        if(lifeCapsule.level != CurrentStageAndAct)
+
+        if (lifeCapsule.level != CurrentStageAndAct)
             continue;
-        
+
         const float dx = entity->Position.x - lifeCapsule.x;
         const float dy = entity->Position.y - lifeCapsule.y;
         const float dz = entity->Position.z - lifeCapsule.z;

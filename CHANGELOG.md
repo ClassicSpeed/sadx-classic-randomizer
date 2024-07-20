@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Fixed watching credits granting a victory.
 - Fixed losing the final boss fight granting a victory.
 - Knuckles now requires the shovel claw for the city hall emblem
+- Fixed the mission A check for twinkle circuit
 
 ## [v0.2.3] - 2024-07-16
 
