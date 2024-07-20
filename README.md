@@ -9,12 +9,10 @@ the [Archipelago guide](https://github.com/ClassicSpeed/Archipelago/blob/sadx_in
 
 ## Known Issues
 
-- The door between the casino and hotel won't open.
 - Big's lure are not randomized yet.
 
 ## Known Issues (Probably won't fix)
 
-- Amy only has a check for the long hammer (3000 points in hedgehog hammer), but not for the warrior feather.
 - Tails' Rhythm badge is not a check (it's in the past).
 - Knuckles can freely enter Red Mountain, there is no monkey to destroy.
 

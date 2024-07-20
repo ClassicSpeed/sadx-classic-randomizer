@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - Gamma and tails have to open the wind vally entrances with the wind stone.
 - Fixed watching credits granting a victory.
 - Fixed losing the final boss fight granting a victory.
+- Knuckles now requires the shovel claw for the city hall emblem
 
 ## [v0.2.3] - 2024-07-16
 
