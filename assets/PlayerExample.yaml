@@ -5,7 +5,7 @@ Sonic Adventure DX:
   # Determines whether collecting field emblems grants checks (12 Locations)
   field_emblems_checks: 'true'
   # Determines whether collecting life capsules grants checks (100 Locations)
-  life_capsule_checks: 'true'
+  life_capsule_checks: 'false'
   # Determines whether beating a sublevel grants checks (4 Locations)
   sub_level_checks: 'true'
   # Determines whether the upgrades are randomized and sent to the item pool

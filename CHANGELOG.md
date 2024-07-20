@@ -6,13 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Added life capsules as a check
-    - The option is off by default
+- Added life capsules as a check.
+    - The option is off by default.
 
 ### Changed
 
-- Big starts with all the lures
-- Gamma and tails have to open the wind vally entrances with the wind stone
+- Big starts with all the lures.
+- Gamma and tails have to open the wind vally entrances with the wind stone.
+- Fixed watching credits granting a victory.
 
 ## [v0.2.3] - 2024-07-16
 

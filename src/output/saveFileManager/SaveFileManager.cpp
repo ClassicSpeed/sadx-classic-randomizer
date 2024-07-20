@@ -40,6 +40,7 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_PLAYABLE));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_PLAYABLE));
     ClearEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_PLAYABLE));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
 
     //Upgrades
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_LIGHTSHOOSE));
