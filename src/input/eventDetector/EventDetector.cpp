@@ -1,9 +1,10 @@
 #include "EventDetector.h"
 EventDetector* eventDetector;
 
-EventDetector::EventDetector(Randomizer& randomizer) : _randomizer(randomizer)
+EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
 {
-    _checkData = _randomizer.GetCheckData();
+    _checkData = randomizer.GetCheckData();
+    lifeCapsules = randomizer.GetLifeCapsules();
     eventDetector = this;
 }
 
@@ -53,7 +54,6 @@ const std::unordered_map<int, int> gamma_target_times = {
 };
 
 
-FunctionPointer(BOOL, TestTwinkleParkRequierement, (int character, int mission), 0x427AE0);
 DataPointer(int, NumberOfHintsUsed, 0x3B0F138);
 
 bool ManualMissionBCheck(const int character)
@@ -104,11 +104,12 @@ bool ManualMissionACheck(const int character, const int level)
 }
 
 
-bool ManualSubLevelMissionACheck(const int character, const int level)
+bool ManualSubLevelMissionACheck(const int level)
 {
     if (level == LevelIDs_TwinkleCircuit)
     {
-        return TestTwinkleParkRequierement(character, MISSION_A);
+        //You can't fail the Twinkle Circuit mission A 
+        return true;
     }
 
     if (level == LevelIDs_SandHill)
@@ -156,7 +157,7 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
             //sublevel - mission A
             if (mission == SUB_LEVEL_MISSION_B)
             {
-                if (ManualSubLevelMissionACheck(character, level))
+                if (ManualSubLevelMissionACheck(level))
                 {
                     OnLevelEmblemCollected.Original(savefile, character, level, SUB_LEVEL_MISSION_A);
                     eventDetector->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
@@ -181,7 +182,7 @@ void EventDetector::OnPlayingFrame() const
         return;
 
     if (GameMode == GameModes_StartCredits && GetEventFlag(EventFlags_SuperSonicAdventureComplete))
-        _randomizer.OnGameCompleted();
+        randomizer.OnGameCompleted();
 
     //Ignore events given by the mod itself
     if (GameMode != GameModes_Adventure_Field)
@@ -193,12 +194,12 @@ void EventDetector::OnPlayingFrame() const
         if (check.second.type == LocationUpgrade && !check.second.checked
             && GetEventFlag(static_cast<EventFlags>(check.second.eventFlag)))
         {
-            _randomizer.OnCheckFound(check.first);
+            randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        _checkData = _randomizer.GetCheckData();
+        _checkData = randomizer.GetCheckData();
 }
 
 void EventDetector::OnLevelEmblem(int character, int level, int mission)
@@ -211,19 +212,19 @@ void EventDetector::OnLevelEmblem(int character, int level, int mission)
             && check.second.level == level
             && check.second.mission == mission)
         {
-            _randomizer.OnCheckFound(check.first);
+            randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
         if (check.second.type == LocationSubLevel && !check.second.checked
             && check.second.level == level
             && check.second.mission == mission)
         {
-            _randomizer.OnCheckFound(check.first);
+            randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        _checkData = _randomizer.GetCheckData();
+        _checkData = randomizer.GetCheckData();
 }
 
 void EventDetector::OnGenericEmblem(signed int index)
@@ -234,12 +235,12 @@ void EventDetector::OnGenericEmblem(signed int index)
         if (check.second.type == LocationFieldEmblem && !check.second.checked
             && check.second.emblemId == index)
         {
-            _randomizer.OnCheckFound(check.first);
+            randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        _checkData = _randomizer.GetCheckData();
+        _checkData = randomizer.GetCheckData();
 }
 
 void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
@@ -261,12 +262,12 @@ FunctionHook<SEQ_SECTIONTBL*, int> SeqGetSectionListHook(0x44EAF0, [](int player
 });
 
 
-FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](__int16 a1) -> void
+FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](const __int16 scene) -> void
 {
-    if (LastStoryFlag == 1 && eventDetector->lastStoryState == LastStoryStarted)
+    if (LastStoryFlag == 1 && eventDetector->lastStoryState == LastStoryStarted && scene == 1)
     {
         //We start the credits as soon as the fight is won
-        startLevelCutsceneHook.Original(a1);
+        startLevelCutsceneHook.Original(scene);
         EventFlagArray[EventFlags_SuperSonicAdventureComplete] = 1;
         WriteSaveFile();
         GameState = MD_GAME_FADEOUT_STAFFROLL;
@@ -274,11 +275,37 @@ FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](__int16 a1) -> v
         eventDetector->lastStoryState = LastStoryCompleted;
         return;
     }
-    startLevelCutsceneHook.Original(a1);
+    startLevelCutsceneHook.Original(scene);
 });
 
 FunctionHook<BOOL> onMissionMenuRenderHook(0x506410, []()-> BOOL
 {
     eventDetector->lastStoryState = LastStoryNotStarted;
     return onMissionMenuRenderHook.Original();
+});
+
+
+FunctionHook<void, EntityData1*> OnExtraLife(0x4D6D40, [](EntityData1* entity)-> void
+{
+    for (const auto& lifeCapsule : eventDetector->lifeCapsules)
+    {
+        if (lifeCapsule.character != CurrentCharacter)
+            continue;
+
+        if (lifeCapsule.level != CurrentStageAndAct)
+            continue;
+
+        const float dx = entity->Position.x - lifeCapsule.x;
+        const float dy = entity->Position.y - lifeCapsule.y;
+        const float dz = entity->Position.z - lifeCapsule.z;
+        const float distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (distance <= 5.0)
+        {
+            eventDetector->randomizer.OnCheckFound(lifeCapsule.locationId);
+            break; // Entity is near a capsule, no need to check further
+        }
+    }
+
+    return OnExtraLife.Original(entity);
 });

@@ -5,6 +5,31 @@ DisplayManager* displayManagerPtr;
 DisplayManager::DisplayManager()
 {
     displayManagerPtr = this;
+    _charactersMap = {
+        {Characters_Sonic, "Sonic"},
+        {Characters_Tails, "Tails"},
+        {Characters_Knuckles, "Knuckles"},
+        {Characters_Amy, "Amy"},
+        {Characters_Gamma, "Gamma"},
+        {Characters_Big, "Big"}
+    };
+
+
+    _levelsMap = {
+        {LevelIDs_EmeraldCoast, "Emerald Coast"},
+        {LevelIDs_WindyValley, "Windy Valley"},
+        {LevelIDs_TwinklePark, "Twinkle Park"},
+        {LevelIDs_SpeedHighway, "Speed Highway"},
+        {LevelIDs_RedMountain, "Red Mountain"},
+        {LevelIDs_SkyDeck, "Sky Deck"},
+        {LevelIDs_LostWorld, "Lost World"},
+        {LevelIDs_IceCap, "Ice Cap"},
+        {LevelIDs_Casinopolis, "Casinopolis"},
+        {LevelIDs_FinalEgg, "Final Egg"},
+        {LevelIDs_HotShelter, "Hot Shelter"},
+        {LevelIDs_TwinkleCircuit, "Twinkle Circuit"},
+        {LevelIDs_SandHill, "Sand Hill"},
+    };
 }
 
 
@@ -165,6 +190,11 @@ void DisplayManager::SetMissions(Characters characters, int missions)
     }
 }
 
+void DisplayManager::SetLifeSanity(bool lifeSanity)
+{
+    _lifeSanity = lifeSanity;
+}
+
 
 void DisplayManager::DisplayItemsUnlocked()
 {
@@ -188,6 +218,86 @@ void DisplayManager::DisplayItemsUnlocked()
     int displayOffset = 1;
 
     std::string buffer;
+    //Show Level information
+    if (CurrentLevel > LevelIDs_HedgehogHammer && CurrentLevel <= LevelIDs_HotShelter)
+    {
+        int missionsEnabled = -1;
+        int currentColor = -1;
+        switch (CurrentCharacter)
+        {
+        case Characters_Sonic: missionsEnabled = _sonicMissions;
+            currentColor = _sonicColor;
+            break;
+        case Characters_Tails: missionsEnabled = _tailsMissions;
+            currentColor = _tailsColor;
+            break;
+        case Characters_Knuckles: missionsEnabled = _knucklesMissions;
+            currentColor = _knucklesColor;
+            break;
+        case Characters_Amy: missionsEnabled = _amyMissions;
+            currentColor = _amyColor;
+            break;
+        case Characters_Big: missionsEnabled = _bigMissions;
+            currentColor = _bigColor;
+            break;
+        case Characters_Gamma: missionsEnabled = _gammaMissions;
+            currentColor = _gammaColor;
+            break;
+        default: break;
+        }
+
+        // Show current level name
+        displayOffset++;
+        const std::string levelName = _levelsMap.at(CurrentLevel);
+        // Show current character
+        const std::string characterName = _charactersMap.at(CurrentCharacter);
+        // Show current mission
+
+        std::string missionName;
+        if (GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C))
+            if (GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B))
+                missionName = "A";
+            else
+                missionName = "B";
+        else
+            missionName = "C";
+
+        const std::string levelInfo = levelName + " (" + characterName + " - " + missionName + ")";
+        SetDebugFontColor(currentColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), levelInfo.c_str());
+
+
+        // Show missions checked
+        displayOffset++;
+        buffer.clear();
+        buffer.append(" ");
+        if (missionsEnabled > 0)
+            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
+        if (missionsEnabled > 1)
+            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B) ? " B" : "  ");
+        if (missionsEnabled > 2)
+            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A) ? " A" : "  ");
+        buffer.append(" ");
+
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+        buffer.clear();
+        buffer.append("[");
+        if (missionsEnabled > 0)
+            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
+        if (missionsEnabled > 1)
+            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B) ? "-B" : "- ");
+        if (missionsEnabled > 2)
+            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A) ? "-A" : "- ");
+        buffer.append("]");
+
+        SetDebugFontColor(currentColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+
+        displayOffset++;
+    }
+
     if (_sonicMissions > 0)
     {
         displayOffset++;

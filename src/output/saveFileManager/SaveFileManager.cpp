@@ -40,6 +40,7 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_PLAYABLE));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_PLAYABLE));
     ClearEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_PLAYABLE));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
 
     //Upgrades
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_LIGHTSHOOSE));
@@ -60,10 +61,10 @@ void SaveFileManager::OnSaveFileCreated()
 
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_LIFEBELT));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_POWERROD));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_BLUE));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_GOLD));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_RED));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_SILVER));
+    // ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_BLUE));
+    // ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_GOLD));
+    // ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_RED));
+    // ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_SILVER));
 
     //Train
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_TRAIN));
@@ -129,6 +130,10 @@ void SaveFileManager::OnSaveFileCreated()
     //Windy Valley
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_WINDY));
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_WINDYSTONE));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_WINDY));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_WINDYSTONE));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_WINDY));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_WINDYSTONE));
 
     //Ice Cap Stone
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ICESTONE));

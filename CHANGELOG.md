@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.3.0] - 2024-07-20
+
+### Added
+
+- Added life capsules as a check.
+    - The option is off by default.
+- Added current level information on the pause screen
+    - It shows the current level and mission.
+    - Also what missions you have completed.
+
+### Changed
+
+- Big starts with all the lures.
+- Gamma and tails have to open the wind vally entrances with the wind stone.
+- Fixed watching credits granting a victory.
+- Fixed losing the final boss fight granting a victory.
+- Knuckles now requires the shovel claw for the city hall emblem
+- Fixed the mission A check for twinkle circuit
+
 ## [v0.2.3] - 2024-07-16
 
 ### Added
