@@ -262,12 +262,12 @@ FunctionHook<SEQ_SECTIONTBL*, int> SeqGetSectionListHook(0x44EAF0, [](int player
 });
 
 
-FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](__int16 a1) -> void
+FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](const __int16 scene) -> void
 {
-    if (LastStoryFlag == 1 && eventDetector->lastStoryState == LastStoryStarted)
+    if (LastStoryFlag == 1 && eventDetector->lastStoryState == LastStoryStarted && scene == 1)
     {
         //We start the credits as soon as the fight is won
-        startLevelCutsceneHook.Original(a1);
+        startLevelCutsceneHook.Original(scene);
         EventFlagArray[EventFlags_SuperSonicAdventureComplete] = 1;
         WriteSaveFile();
         GameState = MD_GAME_FADEOUT_STAFFROLL;
@@ -275,7 +275,7 @@ FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](__int16 a1) -> v
         eventDetector->lastStoryState = LastStoryCompleted;
         return;
     }
-    startLevelCutsceneHook.Original(a1);
+    startLevelCutsceneHook.Original(scene);
 });
 
 FunctionHook<BOOL> onMissionMenuRenderHook(0x506410, []()-> BOOL
