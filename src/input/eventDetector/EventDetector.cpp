@@ -1,9 +1,10 @@
 #include "EventDetector.h"
 EventDetector* eventDetector;
 
-EventDetector::EventDetector(Randomizer& randomizer) : _randomizer(randomizer)
+EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
 {
-    _checkData = _randomizer.GetCheckData();
+    _checkData = randomizer.GetCheckData();
+    lifeCapsules = randomizer.GetLifeCapsules();
     eventDetector = this;
 }
 
@@ -181,7 +182,7 @@ void EventDetector::OnPlayingFrame() const
         return;
 
     if (GameMode == GameModes_StartCredits && GetEventFlag(EventFlags_SuperSonicAdventureComplete))
-        _randomizer.OnGameCompleted();
+        randomizer.OnGameCompleted();
 
     //Ignore events given by the mod itself
     if (GameMode != GameModes_Adventure_Field)
@@ -193,12 +194,12 @@ void EventDetector::OnPlayingFrame() const
         if (check.second.type == LocationUpgrade && !check.second.checked
             && GetEventFlag(static_cast<EventFlags>(check.second.eventFlag)))
         {
-            _randomizer.OnCheckFound(check.first);
+            randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        _checkData = _randomizer.GetCheckData();
+        _checkData = randomizer.GetCheckData();
 }
 
 void EventDetector::OnLevelEmblem(int character, int level, int mission)
@@ -211,19 +212,19 @@ void EventDetector::OnLevelEmblem(int character, int level, int mission)
             && check.second.level == level
             && check.second.mission == mission)
         {
-            _randomizer.OnCheckFound(check.first);
+            randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
         if (check.second.type == LocationSubLevel && !check.second.checked
             && check.second.level == level
             && check.second.mission == mission)
         {
-            _randomizer.OnCheckFound(check.first);
+            randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        _checkData = _randomizer.GetCheckData();
+        _checkData = randomizer.GetCheckData();
 }
 
 void EventDetector::OnGenericEmblem(signed int index)
@@ -234,12 +235,12 @@ void EventDetector::OnGenericEmblem(signed int index)
         if (check.second.type == LocationFieldEmblem && !check.second.checked
             && check.second.emblemId == index)
         {
-            _randomizer.OnCheckFound(check.first);
+            randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        _checkData = _randomizer.GetCheckData();
+        _checkData = randomizer.GetCheckData();
 }
 
 void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
@@ -281,4 +282,30 @@ FunctionHook<BOOL> onMissionMenuRenderHook(0x506410, []()-> BOOL
 {
     eventDetector->lastStoryState = LastStoryNotStarted;
     return onMissionMenuRenderHook.Original();
+});
+
+
+FunctionHook<void, EntityData1*> OnExtraLife(0x4D6D40, [](EntityData1* entity)-> void
+{
+    for (const auto& lifeCapsule : eventDetector->lifeCapsules)
+    {
+        if(lifeCapsule.character != CurrentCharacter)
+            continue;
+        
+        if(lifeCapsule.level != CurrentStageAndAct)
+            continue;
+        
+        const float dx = entity->Position.x - lifeCapsule.x;
+        const float dy = entity->Position.y - lifeCapsule.y;
+        const float dz = entity->Position.z - lifeCapsule.z;
+        const float distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (distance <= 5.0)
+        {
+            eventDetector->randomizer.OnCheckFound(lifeCapsule.locationId);
+            break; // Entity is near a capsule, no need to check further
+        }
+    }
+
+    return OnExtraLife.Original(entity);
 });

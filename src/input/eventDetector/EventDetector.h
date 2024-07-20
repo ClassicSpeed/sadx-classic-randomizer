@@ -22,8 +22,9 @@ public:
     void SetMultipleMissions(bool completeMultipleMissions);
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
+    std::vector<LifeBoxLocationData> lifeCapsules;
+    Randomizer& randomizer;
 
 private:
-    Randomizer& _randomizer;
     mutable std::map<int, LocationData> _checkData;
 };

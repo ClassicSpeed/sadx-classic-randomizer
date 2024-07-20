@@ -9,7 +9,18 @@ enum LocationType
     LocationLevel,
     LocationSubLevel,
     LocationFieldEmblem,
+    LocationLifeCapsule,
     LocationUnknown
+};
+
+struct LifeBoxLocationData
+{
+    float x;
+    float y;
+    float z;
+    LevelAndActIDs level;
+    Characters character;
+    int locationId;
 };
 
 struct LocationData
@@ -60,6 +71,12 @@ struct LocationData
                             -1);
     }
 
+    static LocationData LifeCapsuleLocation(const LifeBoxLocationData& lifeCapsule)
+    {
+        return LocationData(static_cast<StoryFlags>(0x0), -1, -1, -1, -1, LocationLifeCapsule, false,
+                            "Life Capsule " + std::to_string(lifeCapsule.character) + " - " + std::to_string(
+                                lifeCapsule.level), -1);
+    }
 
     StoryFlags eventFlag;
 

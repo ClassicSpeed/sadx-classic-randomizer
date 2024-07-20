@@ -71,6 +71,12 @@ std::map<int, LocationData> Randomizer::GetCheckData() const
     return _locationRepository.GetLocations();
 }
 
+std::vector<LifeBoxLocationData> Randomizer::GetLifeCapsules()
+{
+    
+    return _locationRepository.GetLifeCapsules();
+}
+
 void Randomizer::OnConnected()
 {
     _displayManager.QueueMessage("Connected to Archipelago");
@@ -103,3 +109,4 @@ void Randomizer::SetMissions(Characters characters, int missions)
 {
     _displayManager.SetMissions(characters, missions);
 }
+

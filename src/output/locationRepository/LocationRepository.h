@@ -10,6 +10,7 @@ public:
     LocationData SetLocationChecked(int checkId);
     LocationData GetLocation(int checkId);
     std::map<int, LocationData> GetLocations();
+    std::vector<LifeBoxLocationData> GetLifeCapsules();
 
 private:
     std::string GetLocationName(Characters character, LevelIDs levelId, int mission);
@@ -19,6 +20,5 @@ private:
     LocationData GetLocationFromFieldEmblem(EventFlags eventFlags, const char* str, int i);
     LocationData GetLocationFromEvent(EventFlags eventFlags, const char* str, int i);
     std::map<int, LocationData> _checkData;
-    std::unordered_map<int, std::string> _charactersMap;
-    std::unordered_map<int, std::string> _levelsMap;
+    std::vector<LifeBoxLocationData> _lifeCapsules;
 };

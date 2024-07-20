@@ -1,0 +1,7 @@
+4000,1upknuck.png,64x64
+4001,1upamy.png,64x64
+4002,1upbig.png,64x64
+4003,1up102.png,64x64
+4004,1uptails.png,64x64
+4031,item_1up.png,64x64
+710226,1upmetal.png,64x64

@@ -35,6 +35,7 @@ public:
     void QueueNewMessage(std::string information);
     void OnEmblemGoalSet(int emblemGoal);
     void SetMissions(Characters characters, int missions);
+    std::vector<LifeBoxLocationData> GetLifeCapsules();
 
 private:
     DisplayManager& _displayManager;
