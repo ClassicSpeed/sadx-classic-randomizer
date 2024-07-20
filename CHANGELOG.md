@@ -8,6 +8,9 @@ All notable changes to this project will be documented in this file.
 
 - Added life capsules as a check.
     - The option is off by default.
+- Added current level information on the pause screen
+    - It shows the current level and mission.
+    - Also what missions you have completed.
 
 ### Changed
 

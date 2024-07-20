@@ -31,12 +31,12 @@ void ArchipelagoManager::OnFrame()
             return _randomizer.ShowStatusInformation("Connecting...");
         }
 
-         const bool validSaveFile = this->IsValidSaveFile();
-         if (!validSaveFile)
-         {
-             _status = BadSaveFile;
-             return;
-         }
+        const bool validSaveFile = this->IsValidSaveFile();
+        if (!validSaveFile)
+        {
+            _status = BadSaveFile;
+            return;
+        }
 
         _status = Connected;
         _randomizer.OnConnected();
@@ -91,6 +91,11 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
 
+void SADX_LifeSanity(const int lifeSanity)
+{
+    randomizerPtr->OnLifeSanitySet(lifeSanity);
+}
+
 void SADX_SonicMissions(const int missions)
 {
     randomizerPtr->SetMissions(Characters_Sonic, missions);
@@ -129,6 +134,7 @@ void ArchipelagoManager::Connect()
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("LifeSanity", &SADX_LifeSanity);
     AP_RegisterSlotDataIntCallback("SonicMissions", &SADX_SonicMissions);
     AP_RegisterSlotDataIntCallback("TailsMissions", &SADX_TailsMissions);
     AP_RegisterSlotDataIntCallback("KnucklesMissions", &SADX_KnucklesMissions);

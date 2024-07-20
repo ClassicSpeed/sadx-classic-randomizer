@@ -54,7 +54,6 @@ const std::unordered_map<int, int> gamma_target_times = {
 };
 
 
-FunctionPointer(BOOL, TestTwinkleParkRequierement, (int character, int mission), 0x427AE0);
 DataPointer(int, NumberOfHintsUsed, 0x3B0F138);
 
 bool ManualMissionBCheck(const int character)

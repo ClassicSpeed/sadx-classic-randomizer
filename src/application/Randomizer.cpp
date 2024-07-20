@@ -77,6 +77,11 @@ std::vector<LifeBoxLocationData> Randomizer::GetLifeCapsules()
     return _locationRepository.GetLifeCapsules();
 }
 
+void Randomizer::OnLifeSanitySet(bool lifeSanity)
+{
+    _displayManager.SetLifeSanity(lifeSanity);
+}
+
 void Randomizer::OnConnected()
 {
     _displayManager.QueueMessage("Connected to Archipelago");

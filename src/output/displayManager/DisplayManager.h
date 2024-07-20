@@ -19,6 +19,7 @@ public:
     void OnEnterCharacterSelectScreen();
     void OnExitCharacterSelectScreen();
     void SetMissions(Characters characters, int missions);
+    void SetLifeSanity(bool lifeSanity);
 
 private:
     void RemoveExpiredMessages();
@@ -59,10 +60,14 @@ private:
     int _bigColor = 0xFF7505f5; 
     int _gammaColor = 0xFF827f80;
     
+    bool _lifeSanity = false;
     int _sonicMissions;
     int _tailsMissions;
     int _knucklesMissions;
     int _amyMissions;
     int _bigMissions;
     int _gammaMissions;
+
+    std::unordered_map<int, std::string> _charactersMap;
+    std::unordered_map<int, std::string> _levelsMap;
 };
