@@ -12,6 +12,10 @@ All notable changes to this project will be documented in this file.
 - Fixed Amy's last hot shelter life capsule not working correctly.
 - Default emblem percentage for Perfect Chaos is now 80%.
 
+### Added
+
+- Added error message if the fixes, adds and beta restores mod is loaded.
+
 ## [v0.3.0] - 2024-07-20
 
 ### Added
