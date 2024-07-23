@@ -268,9 +268,10 @@ LocationRepository::LocationRepository()
 
         {267.4f, 306.02f, -297.65f, LevelAndActIDs_TwinklePark2, Characters_Amy, 4010},
         {-320.14f, 250.0f, -248.29f, LevelAndActIDs_HotShelter2, Characters_Amy, 4110},
-        {-320.14f, 253.95f, -248.29f, LevelAndActIDs_HotShelter2, Characters_Amy, 4111}, //No fixed edition
-        {-29.18f, 50.78f, -437.51f, LevelAndActIDs_HotShelter2, Characters_Amy, 4112},
-        {538.82f, 1040.0f, -2092.6f, LevelAndActIDs_HotShelter2, Characters_Amy, 4113},
+        {-320.14f, 253.95f, -248.29f, LevelAndActIDs_HotShelter2, Characters_Amy, 4110}, //No fixed edition
+        {-29.18f, 50.78f, -437.51f, LevelAndActIDs_HotShelter2, Characters_Amy, 4111},
+        {538.82f, 1040.0f, -2092.6f, LevelAndActIDs_HotShelter2, Characters_Amy, 4112},
+        {841.84f, 428.24f, -3295.21f, LevelAndActIDs_HotShelter2, Characters_Amy, 4113},
         {548.45f, -232.0f, -1552.75f, LevelAndActIDs_FinalEgg1, Characters_Amy, 4210},
         {1629.58f, 240.0f, -1319.99f, LevelAndActIDs_FinalEgg1, Characters_Amy, 4211},
 

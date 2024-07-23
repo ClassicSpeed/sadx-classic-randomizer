@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Fixed zip file generation that messed up the folder on linux systems.
 - Fixed Big's hot shelter life capsule not working correctly.
 - Removed Big's hot shelter locations life belt requirement.
+- Fixed Ami's last hot shelter life capsule not working correctly.
 
 ## [v0.3.0] - 2024-07-20
 
