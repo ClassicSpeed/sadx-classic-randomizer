@@ -7,8 +7,10 @@ void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
     {
         SetEventFlag(static_cast<EventFlags>(storyFlag));
         //We open the door between the hotel and the casino if you have both keys
-        if((storyFlag == FLAG_SONIC_SS_STATION_BACK && GetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_HOTEL_FRONT))) ||
-        (storyFlag == FLAG_SONIC_SS_HOTEL_FRONT && GetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_STATION_BACK))))
+        if ((storyFlag == FLAG_SONIC_SS_STATION_BACK &&
+                GetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_HOTEL_FRONT))) ||
+            (storyFlag == FLAG_SONIC_SS_HOTEL_FRONT &&
+                GetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_STATION_BACK))))
         {
             SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_HOTEL_BACK));
             SetEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_HOTEL_BACK));
@@ -26,19 +28,27 @@ void WorldStateManager::UnlockSuperSonic()
     WriteSaveFile();
 }
 
-//Creates a spring for sonic in the sewers
-FunctionHook<void, char> OnAddSetStage(0x46BF70, [](char Gap)-> void
+
+FunctionHook<void> onSetRoundMaster(0x4143C0, []()-> void
 {
-    if (CurrentCharacter == Characters_Sonic && CurrentLevel == LevelIDs_StationSquare && CurrentAct == 0)
+    //Creates a spring for sonic in the sewers
+    if (CurrentCharacter == Characters_Sonic && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3)
     {
-        FunctionPointer(task*, CreateElementalTask, (unsigned __int16 im, int level, void(__cdecl* exec)(task*)),
-                        0x40B860);
         const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
         spring->twp->pos.x = 505;
         spring->twp->pos.y = -89;
         spring->twp->pos.z = 635;
     }
-    OnAddSetStage.Original(Gap);
+
+    //Creates a spring for sonic in final egg for the 4 life capsules room
+    if (CurrentCharacter == Characters_Sonic && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_FinalEgg3)
+    {
+        const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
+        spring->twp->pos.x = -52.21f;
+        spring->twp->pos.y = -3240.81f;
+        spring->twp->pos.z = -190.0f;
+    }
+    onSetRoundMaster.Original();
 });
 
 //Makes Sonic, Tails and Gamma use the winds stone
@@ -79,4 +89,3 @@ FunctionHook<int, int> showRecap(0x643C00, [](int _)-> int
 {
     return -1;
 });
-

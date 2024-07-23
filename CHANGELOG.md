@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Added error message if the fixes, adds and beta restores mod is loaded.
+- Added spring on Sonic's Final Egg for the last 4 life capsules.
 
 ## [v0.3.0] - 2024-07-20
 
