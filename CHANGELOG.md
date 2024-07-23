@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 - Removed Big's hot shelter locations life belt requirement.
 - Fixed Amy's last hot shelter life capsule not working correctly.
 - Default emblem percentage for Perfect Chaos is now 80%.
+- Removed light shoes requirement for sky deck (and its life capsules).
+- Removed light shoes requirement final egg life capsules (and one from Lost world).
 
 ### Added
 
