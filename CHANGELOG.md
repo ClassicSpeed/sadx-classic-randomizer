@@ -2,13 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.3.1] - ?
+
+### Changed
+
+- Fixed zip file generation that messed up the folder on linux systems.
+- Fixed Big's hot shelter life capsule not working correctly.
+- Removed Big's hot shelter locations life belt requirement.
+
 ## [v0.3.0] - 2024-07-20
 
 ### Added
 
 - Added life capsules as a check.
     - The option is off by default.
-- Added current level information on the pause screen
+- Added current level information on the pause screen.
     - It shows the current level and mission.
     - Also what missions you have completed.
 
