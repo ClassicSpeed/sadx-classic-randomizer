@@ -28,4 +28,4 @@ Sonic Adventure DX:
   # Choose what missions will be a location check for Big.
   big_missions: 1
   # What percentage of the available emblems do you need to unlock the final story
-  emblems_percentage: 50
+  emblems_percentage: 80
