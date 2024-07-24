@@ -6,6 +6,8 @@ Sonic Adventure DX:
   field_emblems_checks: 'true'
   # Determines whether collecting life capsules grants checks (102 Locations)
   life_sanity: 'false'
+  # Determines whether casinopolis life capsules grant checks (2 Locations)
+  pinball_life_capsules: 'false'
   # Determines whether beating a sublevel grants checks (4 Locations)
   sub_level_checks: 'true'
   # Determines whether the upgrades are randomized and sent to the item pool
