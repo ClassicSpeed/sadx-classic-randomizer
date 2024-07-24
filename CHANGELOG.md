@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.3.1] - 2024-07-21
+## [v0.3.2] - 2024-07-24
+
+### Added
+
+- Replaced Super Sonic "Hmph" with "I'll show you what the Chaos Emeralds can really do!" in the character select
+  screen.
+
+## [v0.3.1] - 2024-07-23
 
 ### Changed
 

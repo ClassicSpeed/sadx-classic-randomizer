@@ -67,7 +67,6 @@ void WorldStateManager::OnPlayingFrame()
             if (distance <= 300.0)
             {
                 //Creates a spring for sonic in final egg for the 4 life capsules room
-                PrintDebug("Final Egg 3\n");
                 const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
                 spring->twp->pos.x = -52.21f;
                 spring->twp->pos.y = -3240.81f;
@@ -77,8 +76,6 @@ void WorldStateManager::OnPlayingFrame()
         }
     }
 }
-
-
 
 
 //Makes Sonic, Tails and Gamma use the winds stone
@@ -119,3 +116,13 @@ FunctionHook<int, int> showRecap(0x643C00, [](int _)-> int
 {
     return -1;
 });
+
+// Replace Super Sonic "Hmph" with "I'll show you what the Chaos Emeralds can really do."
+FunctionHook<void, int> onPlayVoice(0x425710, [](int a1)-> void
+{
+    if (a1 == 396)
+        return onPlayVoice.Original(388);
+
+    return onPlayVoice.Original(a1);
+});
+
