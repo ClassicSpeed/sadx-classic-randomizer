@@ -126,3 +126,11 @@ FunctionHook<void, int> onPlayVoice(0x425710, [](int a1)-> void
     return onPlayVoice.Original(a1);
 });
 
+//Prevents adding extra 10 seconds for Sonic and Tails
+FunctionHook<void, int> onAddSeconds(0x426640, [](int seconds)-> void
+{
+    if (seconds == 10 && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
+        return;
+
+    return onAddSeconds.Original(seconds);
+});
