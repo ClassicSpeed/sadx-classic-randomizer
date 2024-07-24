@@ -29,27 +29,57 @@ void WorldStateManager::UnlockSuperSonic()
 }
 
 
-FunctionHook<void> onSetRoundMaster(0x4143C0, []()-> void
+FunctionHook<void, char> OnAddSetStage(0x46BF70, [](char Gap)-> void
 {
+    OnAddSetStage.Original(Gap);
     //Creates a spring for sonic in the sewers
-    if (CurrentCharacter == Characters_Sonic && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3)
+    if (CurrentCharacter == Characters_Sonic && levelact(NextLevel, NextAct) == LevelAndActIDs_StationSquare3)
     {
+        PrintDebug("sewers\n");
         const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
         spring->twp->pos.x = 505;
         spring->twp->pos.y = -89;
         spring->twp->pos.z = 635;
     }
+});
 
-    //Creates a spring for sonic in final egg for the 4 life capsules room
+bool createdFinalEggSpring = false;
+FunctionHook<void> onSetRoundMaster(0x4143C0, []()-> void
+{
+    onSetRoundMaster.Original();
+    createdFinalEggSpring = false;
+});
+
+//This is a temporal hack to make the final egg spring appear for the 4 life capsules room
+//We reset the boolean when spawning and if we get close enough, we spawn the spring
+void WorldStateManager::OnPlayingFrame()
+{
     if (CurrentCharacter == Characters_Sonic && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_FinalEgg3)
     {
-        const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
-        spring->twp->pos.x = -52.21f;
-        spring->twp->pos.y = -3240.81f;
-        spring->twp->pos.z = -190.0f;
+        if (!createdFinalEggSpring)
+        {
+            auto position = EntityData1Ptrs[0]->Position;
+            const float dx = position.x - 10;
+            const float dy = position.y - -3160;
+            const float dz = position.z - -171;
+            const float distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (distance <= 300.0)
+            {
+                //Creates a spring for sonic in final egg for the 4 life capsules room
+                PrintDebug("Final Egg 3\n");
+                const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
+                spring->twp->pos.x = -52.21f;
+                spring->twp->pos.y = -3240.81f;
+                spring->twp->pos.z = -190.0f;
+                createdFinalEggSpring = true;
+            }
+        }
     }
-    onSetRoundMaster.Original();
-});
+}
+
+
+
 
 //Makes Sonic, Tails and Gamma use the winds stone
 FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL

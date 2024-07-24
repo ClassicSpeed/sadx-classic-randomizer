@@ -7,4 +7,5 @@ public:
 
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
+    void OnPlayingFrame();
 };
