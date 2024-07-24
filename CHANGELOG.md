@@ -2,13 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.3.1] - 2024-07-21
+
+### Changed
+
+- Fixed zip file generation that messed up the folder on linux systems.
+- Fixed Big's hot shelter life capsule not working correctly.
+- Removed Big's hot shelter locations life belt requirement.
+- Fixed Amy's last hot shelter life capsule not working correctly.
+- Default emblem percentage for Perfect Chaos is now 80%.
+- Removed light shoes requirement for sky deck (and its life capsules).
+- Removed light shoes requirement final egg life capsules (and one from Lost world).
+
+### Added
+
+- Added error message if the fixes, adds and beta restores mod is loaded.
+- Added spring on Sonic's Final Egg for the last 4 life capsules.
+- Added option to disable the pinball's life capsules.
+
 ## [v0.3.0] - 2024-07-20
 
 ### Added
 
 - Added life capsules as a check.
     - The option is off by default.
-- Added current level information on the pause screen
+- Added current level information on the pause screen.
     - It shows the current level and mission.
     - Also what missions you have completed.
 

@@ -166,7 +166,6 @@ LocationRepository::LocationRepository()
         {1086.19f, 650.54f, -753.55f, LevelAndActIDs_EmeraldCoast2, Characters_Sonic, 1012}, //DC
         {3161.46f, -0.28f, -2630.8f, LevelAndActIDs_EmeraldCoast2, Characters_Sonic, 1013},
         {3161.46f, 0.44f, -2630.8f, LevelAndActIDs_EmeraldCoast2, Characters_Sonic, 1013}, //DC
-        
         {2212.05f, -567.0f, -16.74f, LevelAndActIDs_WindyValley1, Characters_Sonic, 1110}, // R:Light Shoes
         {2996.38f, -434.8972f, -1504.0f, LevelAndActIDs_WindyValley1, Characters_Sonic, 1111},
         {1147.72f, -2209.17f, 1260.16f, LevelAndActIDs_WindyValley3, Characters_Sonic, 1112},
@@ -174,10 +173,10 @@ LocationRepository::LocationRepository()
         {4159.61f, -4484.5f, -1826.59f, LevelAndActIDs_WindyValley3, Characters_Sonic, 1114},
         {-2.18f, -8.14f, 104.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1210}, //evil tower bypass lol
         {-2.18f, -3.0f, 104.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1210}, //evil tower bypass but DX
+        {-161.4f, 55.0f, 2.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1210},
+        {-161.4f, 50.0f, 12.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1210}, //m
         {-1.93f, -3.0f, 39.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1211}, //bumper tower bypass
-        {-161.4f, 55.0f, 2.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1212},
-        {-161.4f, 50.0f, 12.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1212}, //m
-        {166.62f, 50.0f, 14.55f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1213},
+        {166.62f, 50.0f, 14.55f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1211},
         {487.79f, 250.67f, 1149.06f, LevelAndActIDs_IceCap1, Characters_Sonic, 1310},
         {487.79f, 249.67f, 1149.06f, LevelAndActIDs_IceCap1, Characters_Sonic, 1310}, //DX
         {-2537.78f, -208.31f, 7597.23f, LevelAndActIDs_TwinklePark1, Characters_Sonic, 1410},
@@ -268,9 +267,10 @@ LocationRepository::LocationRepository()
 
         {267.4f, 306.02f, -297.65f, LevelAndActIDs_TwinklePark2, Characters_Amy, 4010},
         {-320.14f, 250.0f, -248.29f, LevelAndActIDs_HotShelter2, Characters_Amy, 4110},
-        {-320.14f, 253.95f, -248.29f, LevelAndActIDs_HotShelter2, Characters_Amy, 4111}, //No fixed edition
-        {-29.18f, 50.78f, -437.51f, LevelAndActIDs_HotShelter2, Characters_Amy, 4112},
-        {538.82f, 1040.0f, -2092.6f, LevelAndActIDs_HotShelter2, Characters_Amy, 4113},
+        {-320.14f, 253.95f, -248.29f, LevelAndActIDs_HotShelter2, Characters_Amy, 4110}, //No fixed edition
+        {-29.18f, 50.78f, -437.51f, LevelAndActIDs_HotShelter2, Characters_Amy, 4111},
+        {538.82f, 1040.0f, -2092.6f, LevelAndActIDs_HotShelter2, Characters_Amy, 4112},
+        {841.84f, 428.24f, -3295.21f, LevelAndActIDs_HotShelter2, Characters_Amy, 4113},
         {548.45f, -232.0f, -1552.75f, LevelAndActIDs_FinalEgg1, Characters_Amy, 4210},
         {1629.58f, 240.0f, -1319.99f, LevelAndActIDs_FinalEgg1, Characters_Amy, 4211},
 

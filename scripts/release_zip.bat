@@ -31,7 +31,7 @@ copy .\Release\sadx-classic-randomizer.dll %OUTPUT_DIR%\SADX_Archipelago\sadx-cl
 copy .\lib\APCpp\APCpp.dll %OUTPUT_DIR%\SADX_Archipelago\APCpp.dll
 
 REM Create the zip file
-powershell Compress-Archive -Path %OUTPUT_DIR%\* -DestinationPath %ZIP_PATH% -Force
+"C:\Program Files\7-Zip\7z.exe" a -tzip "%ZIP_PATH%" "%OUTPUT_DIR%\*" -mx=9 -aoa
 
 
 copy .\assets\sadx.apworld %OUTPUT_DIR%

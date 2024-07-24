@@ -6,6 +6,8 @@ Sonic Adventure DX:
   field_emblems_checks: 'true'
   # Determines whether collecting life capsules grants checks (102 Locations)
   life_sanity: 'false'
+  # Determines whether casinopolis life capsules grant checks (2 Locations)
+  pinball_life_capsules: 'false'
   # Determines whether beating a sublevel grants checks (4 Locations)
   sub_level_checks: 'true'
   # Determines whether the upgrades are randomized and sent to the item pool
@@ -28,4 +30,4 @@ Sonic Adventure DX:
   # Choose what missions will be a location check for Big.
   big_missions: 1
   # What percentage of the available emblems do you need to unlock the final story
-  emblems_percentage: 50
+  emblems_percentage: 80
