@@ -3,7 +3,7 @@
 struct UnlockStatus
 {
     int currentEmblems;
-    int emblemGoal;
+    // int emblemGoal;
 
     bool sonicUnlocked;
     bool sonicLightShoesUnlocked;

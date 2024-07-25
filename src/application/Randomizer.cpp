@@ -27,7 +27,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     {
         const int emblemCount = _itemRepository.AddEmblem();
         _displayManager.ShowEmblemCount(emblemCount);
-        if (emblemCount == _itemRepository.GetEmblemGoal())
+        if (emblemCount == _options.emblemGoal)
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
     const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
@@ -55,8 +55,8 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
     {
         if (item.second.type == ItemEmblem)
         {
-            if (_itemRepository.GetEmblemGoal() >= 0 &&
-                _itemRepository.GetEmblemCount() >= _itemRepository.GetEmblemGoal())
+            if (_options.emblemGoal >= 0 &&
+                _itemRepository.GetEmblemCount() >= _options.emblemGoal)
                 _worldStateManager.UnlockSuperSonic();
         }
 
@@ -73,14 +73,9 @@ std::map<int, LocationData> Randomizer::GetCheckData() const
 
 std::vector<LifeBoxLocationData> Randomizer::GetLifeCapsules()
 {
-    
     return _locationRepository.GetLifeCapsules();
 }
 
-void Randomizer::OnLifeSanitySet(bool lifeSanity)
-{
-    _displayManager.SetLifeSanity(lifeSanity);
-}
 
 void Randomizer::OnConnected()
 {
@@ -105,13 +100,12 @@ void Randomizer::QueueNewMessage(std::string information)
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
 {
-    _itemRepository.SetEmblemGoal(max(1, emblemGoal));
-    const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
-    _displayManager.UpdateUnlockStatus(unlockStatus);
+    _options.emblemGoal = max(1, emblemGoal);
+    _displayManager.UpdateOptions(_options);
 }
 
 void Randomizer::SetMissions(Characters characters, int missions)
 {
-    _displayManager.SetMissions(characters, missions);
+    _options.SetMissions(characters, missions);
+    _displayManager.UpdateOptions(_options);
 }
-

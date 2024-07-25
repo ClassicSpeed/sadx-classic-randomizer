@@ -7,6 +7,7 @@
 #include "../output/worldStateManager/WorldStateManager.h"
 #include "../output/archipelagoMessenger/ArchipelagoMessenger.h"
 #include "structs/LocationData.h"
+#include "structs/Options.h"
 
 class Randomizer
 {
@@ -36,7 +37,6 @@ public:
     void OnEmblemGoalSet(int emblemGoal);
     void SetMissions(Characters characters, int missions);
     std::vector<LifeBoxLocationData> GetLifeCapsules();
-    void OnLifeSanitySet(bool lifeSanity);
 
 private:
     DisplayManager& _displayManager;
@@ -45,4 +45,6 @@ private:
     ItemRepository& _itemRepository;
     LocationRepository& _locationRepository;
     ArchipelagoMessenger& _archipelagoMessenger;
+
+    Options _options;
 };

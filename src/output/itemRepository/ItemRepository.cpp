@@ -130,23 +130,11 @@ int ItemRepository::AddEmblem()
 }
 
 
-int ItemRepository::GetEmblemGoal() const
-{
-    return _emblemGoal;
-}
-
-void ItemRepository::SetEmblemGoal(int emblemGoal)
-{
-    _emblemGoal = emblemGoal;
-}
-
-
 UnlockStatus ItemRepository::GetUnlockStatus()
 {
     auto unlockStatus = UnlockStatus();
 
     unlockStatus.currentEmblems = _emblemCount;
-    unlockStatus.emblemGoal = _emblemGoal;
 
     unlockStatus.sonicUnlocked = _itemData[1].obtained;
     unlockStatus.sonicLightShoesUnlocked = _itemData[10].obtained;
