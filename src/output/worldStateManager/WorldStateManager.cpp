@@ -56,23 +56,26 @@ void WorldStateManager::OnPlayingFrame()
 {
     if (CurrentCharacter == Characters_Sonic && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_FinalEgg3)
     {
-        if (!createdFinalEggSpring)
-        {
-            auto position = EntityData1Ptrs[0]->Position;
-            const float dx = position.x - 10;
-            const float dy = position.y - -3160;
-            const float dz = position.z - -171;
-            const float distance = sqrt(dx * dx + dy * dy + dz * dz);
+        if (EntityData1Ptrs[0] == nullptr)
+            return;
 
-            if (distance <= 300.0)
-            {
-                //Creates a spring for sonic in final egg for the 4 life capsules room
-                const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
-                spring->twp->pos.x = -52.21f;
-                spring->twp->pos.y = -3240.81f;
-                spring->twp->pos.z = -190.0f;
-                createdFinalEggSpring = true;
-            }
+        if (createdFinalEggSpring)
+            return;
+
+        const auto position = EntityData1Ptrs[0]->Position;
+        const float dx = position.x - 10;
+        const float dy = position.y - -3160;
+        const float dz = position.z - -171;
+        const float distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (distance <= 300.0)
+        {
+            //Creates a spring for sonic in final egg for the 4 life capsules room
+            const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
+            spring->twp->pos.x = -52.21f;
+            spring->twp->pos.y = -3240.81f;
+            spring->twp->pos.z = -190.0f;
+            createdFinalEggSpring = true;
         }
     }
 }

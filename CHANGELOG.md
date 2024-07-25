@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file.
   screen.
 - Removed 10 second penalty at the end of Sonic and Tails levels.
 
+### Changed
+
+- Fixed crash when dying in the last act of final egg.
+
 ## [v0.3.1] - 2024-07-23
 
 ### Changed
