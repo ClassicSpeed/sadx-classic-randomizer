@@ -9,10 +9,13 @@ All notable changes to this project will be documented in this file.
 - Replaced Super Sonic "Hmph" with "I'll show you what the Chaos Emeralds can really do!" in the character select
   screen.
 - Removed 10 second penalty at the end of Sonic and Tails levels.
+- Added options to randomize each character's upgrades.
 
 ### Changed
 
 - Fixed crash when dying in the last act of final egg.
+- Removed the character name from the upgrade items.
+- Not needed emblems are marked as filler in the logic.
 
 ## [v0.3.1] - 2024-07-23
 

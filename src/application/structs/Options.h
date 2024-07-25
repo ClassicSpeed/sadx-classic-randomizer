@@ -8,13 +8,6 @@ struct Options
     // bool pinballCapsules = false;
     // bool subLevelChecks = false;
 
-    bool randomizeSonicUpgrades = true;
-    bool randomizeTailsUpgrades = true;
-    bool randomizeKnucklesUpgrades = true;
-    bool randomizeAmyUpgrades = true;
-    bool randomizeBigUpgrades = true;
-    bool randomizeGammaUpgrades = true;
-
     int sonicMissions = 0;
     int tailsMissions = 0;
     int knucklesMissions = 0;
@@ -50,34 +43,5 @@ struct Options
             break;
         }
     }
-
-
-    void SetRandomizedUpgrades(const Characters character, const bool randomizeUpgrade)
-    {
-        switch (character)
-        {
-        case Characters_Sonic:
-            this->randomizeSonicUpgrades = randomizeUpgrade;
-            break;
-        case Characters_Tails:
-            this->randomizeTailsUpgrades = randomizeUpgrade;
-            break;
-        case Characters_Knuckles:
-            this->randomizeKnucklesUpgrades = randomizeUpgrade;
-            break;
-        case Characters_Amy:
-            this->randomizeAmyUpgrades = randomizeUpgrade;
-            break;
-        case Characters_Big:
-            this->randomizeBigUpgrades = randomizeUpgrade;
-            break;
-        case Characters_Gamma:
-            this->randomizeGammaUpgrades = randomizeUpgrade;
-            break;
-        case Characters_Eggman:
-        case Characters_Tikal:
-        case Characters_MetalSonic:
-            break;
-        }
-    }
+    
 };
