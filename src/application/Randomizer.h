@@ -3,7 +3,7 @@
 #include "../output/locationRepository/LocationRepository.h"
 #include "../output/displayManager/DisplayManager.h"
 #include "../output/itemRepository/ItemRepository.h"
-#include "../output/upgradeManager/UpgradeManager.h"
+#include "../output/characterManager/CharacterManager.h"
 #include "../output/worldStateManager/WorldStateManager.h"
 #include "../output/archipelagoMessenger/ArchipelagoMessenger.h"
 #include "structs/LocationData.h"
@@ -12,11 +12,11 @@
 class Randomizer
 {
 public:
-    Randomizer(DisplayManager& displayManager, UpgradeManager& upgradeManager, WorldStateManager& menuManager,
+    Randomizer(DisplayManager& displayManager, CharacterManager& characterManager, WorldStateManager& menuManager,
                ItemRepository& itemRepository, LocationRepository& locationRepository,
-               ArchipelagoMessenger archipelagoMessenger)
+               ArchipelagoMessenger& archipelagoMessenger)
         : _displayManager(displayManager),
-          _upgradeManager(upgradeManager),
+          _characterManager(characterManager),
           _worldStateManager(menuManager),
           _itemRepository(itemRepository),
           _locationRepository(locationRepository),
@@ -36,11 +36,12 @@ public:
     void QueueNewMessage(std::string information);
     void OnEmblemGoalSet(int emblemGoal);
     void SetMissions(Characters characters, int missions);
+    void SetRingLoss(RingLoss ringLoss);
     std::vector<LifeBoxLocationData> GetLifeCapsules();
 
 private:
     DisplayManager& _displayManager;
-    UpgradeManager& _upgradeManager;
+    CharacterManager& _characterManager;
     WorldStateManager& _worldStateManager;
     ItemRepository& _itemRepository;
     LocationRepository& _locationRepository;

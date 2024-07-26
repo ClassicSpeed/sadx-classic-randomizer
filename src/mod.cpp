@@ -17,14 +17,14 @@ helperFunctions.ReplaceFile("system\\" a ".PVR", pathbuf); \
 
 extern "C" {
 DisplayManager displayManager = DisplayManager();
-UpgradeManager upgradeManager = UpgradeManager();
+CharacterManager characterManager = CharacterManager();
 WorldStateManager worldStateManager = WorldStateManager();
 ItemRepository itemRepository = ItemRepository();
 LocationRepository checkRepository = LocationRepository();
 ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger();
 
 Randomizer randomizer = Randomizer(displayManager,
-                                   upgradeManager,
+                                   characterManager,
                                    worldStateManager,
                                    itemRepository,
                                    checkRepository,

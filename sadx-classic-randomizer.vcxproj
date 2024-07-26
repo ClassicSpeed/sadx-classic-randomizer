@@ -118,7 +118,7 @@
     <ClCompile Include="src\output\locationRepository\LocationRepository.cpp" />
     <ClCompile Include="src\output\displayManager\DisplayManager.cpp" />
     <ClCompile Include="src\output\itemRepository\ItemRepository.cpp" />
-    <ClCompile Include="src\output\upgradeManager\UpgradeManager.cpp" />
+    <ClCompile Include="src\output\characterManager\CharacterManager.cpp" />
     <ClCompile Include="src\output\saveFileManager\SaveFileManager.cpp" />
     <ClCompile Include="src\pch.cpp" />
   </ItemGroup>
@@ -217,7 +217,7 @@
     <ClInclude Include="src\output\locationRepository\LocationRepository.h" />
     <ClInclude Include="src\output\displayManager\DisplayManager.h" />
     <ClInclude Include="src\output\itemRepository\ItemRepository.h" />
-    <ClInclude Include="src\output\upgradeManager\UpgradeManager.h" />
+    <ClInclude Include="src\output\characterManager\CharacterManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

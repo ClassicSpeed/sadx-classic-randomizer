@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.3.2] - 2024-07-24
+## [v0.3.2] - 2024-07-?
 
 ### Added
 
@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
   screen.
 - Removed 10 second penalty at the end of Sonic and Tails levels.
 - Added options to randomize each character's upgrades.
+- Added option to handle ring loss: Classic (lose all rings), Modern (lose 20 rings) and One Hit K.O.
 
 ### Changed
 

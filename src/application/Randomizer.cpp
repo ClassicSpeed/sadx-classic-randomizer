@@ -8,7 +8,7 @@ void Randomizer::OnCheckFound(const int checkId) const
     {
         const ItemData item = _itemRepository.GetItem(check.originalItemId);
         if (!item.obtained)
-            _upgradeManager.RemoveUpgrade(item.upgrade);
+            _characterManager.RemoveUpgrade(item.upgrade);
     }
 
     _locationRepository.SetLocationChecked(checkId);
@@ -20,7 +20,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
 {
     const ItemData item = _itemRepository.SetObtained(itemId);
     if (item.type == ItemUpgrade)
-        _upgradeManager.GiveUpgrade(item.upgrade);
+        _characterManager.GiveUpgrade(item.upgrade);
     else if (item.type == ItemCharacter || item.type == ItemKey)
         _worldStateManager.SetEventFlags(item.eventFlags);
     else if (item.type == ItemEmblem)
@@ -42,9 +42,9 @@ void Randomizer::OnCharacterLoaded() const
             continue;
 
         if (item.second.obtained)
-            _upgradeManager.GiveUpgrade(item.second.upgrade);
+            _characterManager.GiveUpgrade(item.second.upgrade);
         else
-            _upgradeManager.RemoveUpgrade(item.second.upgrade);
+            _characterManager.RemoveUpgrade(item.second.upgrade);
     }
 }
 
@@ -108,4 +108,10 @@ void Randomizer::SetMissions(Characters characters, int missions)
 {
     _options.SetMissions(characters, missions);
     _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetRingLoss(const RingLoss ringLoss)
+{
+    _options.ringLoss = ringLoss;
+    _characterManager.UpdateOptions(_options);
 }

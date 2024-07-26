@@ -91,6 +91,11 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
 
+void SADX_RingLoss(const int ringLoss)
+{
+    randomizerPtr->SetRingLoss(static_cast<RingLoss>(ringLoss));
+}
+
 void SADX_SonicMissions(const int missions)
 {
     randomizerPtr->SetMissions(Characters_Sonic, missions);
@@ -129,6 +134,7 @@ void ArchipelagoManager::Connect()
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
     AP_RegisterSlotDataIntCallback("SonicMissions", &SADX_SonicMissions);
     AP_RegisterSlotDataIntCallback("TailsMissions", &SADX_TailsMissions);
     AP_RegisterSlotDataIntCallback("KnucklesMissions", &SADX_KnucklesMissions);

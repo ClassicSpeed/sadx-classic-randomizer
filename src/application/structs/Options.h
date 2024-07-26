@@ -1,5 +1,12 @@
 ﻿#pragma once
 
+enum RingLoss
+{
+    Classic,
+    Modern,
+    OneHitKnockOut
+};
+
 struct Options
 {
     int emblemGoal;
@@ -7,6 +14,7 @@ struct Options
     // bool lifeSanity = false;
     // bool pinballCapsules = false;
     // bool subLevelChecks = false;
+    RingLoss ringLoss = Classic;
 
     int sonicMissions = 0;
     int tailsMissions = 0;
@@ -43,5 +51,4 @@ struct Options
             break;
         }
     }
-    
 };

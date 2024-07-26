@@ -20,7 +20,6 @@ public:
     void ShowEmblemCount(int emblemCount);
     void OnEnterCharacterSelectScreen();
     void OnExitCharacterSelectScreen();
-    void SetMissions(Characters characters, int missions);
 
 private:
     void RemoveExpiredMessages();
