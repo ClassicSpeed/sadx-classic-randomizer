@@ -1,5 +1,11 @@
 #include "WorldStateManager.h"
 
+WorldStateManager* worldStateManagerPtr;
+
+WorldStateManager::WorldStateManager()
+{
+    worldStateManagerPtr = this;
+}
 
 void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
 {
@@ -28,6 +34,10 @@ void WorldStateManager::UnlockSuperSonic()
     WriteSaveFile();
 }
 
+void WorldStateManager::UpdateOptions(const Options newOptions)
+{
+    this->options = newOptions;
+}
 
 FunctionHook<void, char> OnAddSetStage(0x46BF70, [](char Gap)-> void
 {
@@ -136,4 +146,37 @@ FunctionHook<void, int> onAddSeconds(0x426640, [](int seconds)-> void
         return;
 
     return onAddSeconds.Original(seconds);
+});
+
+
+//Set starting location
+FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
+{
+    onAdventureSetLevelAndAct.Original();
+    if (LastStoryFlag == 1)
+        return;
+    switch (worldStateManagerPtr->options.startingArea)
+    {
+    case StationSquareMain:
+        SetLevelAndAct(LevelIDs_StationSquare, 3);
+        break;
+    case HotelArea:
+        SetLevelAndAct(LevelIDs_StationSquare, 4);
+        break;
+    case CasinoArea:
+        SetLevelAndAct(LevelIDs_StationSquare, 1);
+        SetEntranceNumber(2);
+        break;
+    case MysticRuinsMain:
+        SetLevelAndAct(LevelIDs_MysticRuins, 0);
+        break;
+    case Jungle:
+        SetLevelAndAct(LevelIDs_MysticRuins, 2);
+        break;
+    case EggCarrier:
+        SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
+        break;
+    case None:
+        break;
+    }
 });

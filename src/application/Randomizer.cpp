@@ -157,6 +157,12 @@ void Randomizer::OnEmblemGoalSet(const int emblemGoal)
     _displayManager.UpdateOptions(_options);
 }
 
+void Randomizer::SetStatingArea(const StartingArea startingArea)
+{
+    _options.startingArea = startingArea;
+    _worldStateManager.UpdateOptions(_options);
+}
+
 void Randomizer::SetMissions(Characters characters, int missions)
 {
     _options.SetMissions(characters, missions);

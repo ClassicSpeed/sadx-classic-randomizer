@@ -87,6 +87,7 @@ void SADX_ResetItems()
 void SADX_CheckLocation(int64_t loc_id)
 {
     PrintDebug("Checked location %d\n", loc_id);
+    randomizerPtr->OnCheckFound(loc_id - archipelagoManagerPtr->baseId);
 }
 
 void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
@@ -143,6 +144,11 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
 
+void SADX_StartingArea(const int startingArea)
+{
+    randomizerPtr->SetStatingArea(static_cast<StartingArea>(startingArea));
+}
+
 void SADX_SetDeathLink(const int deathLinkActive)
 {
     randomizerPtr->SetDeathLink(deathLinkActive);
@@ -150,7 +156,6 @@ void SADX_SetDeathLink(const int deathLinkActive)
 
 void SADX_SetRingLink(const int ringLinkActive)
 {
-    PrintDebug("RingLink: %d\n", ringLinkActive);
     randomizerPtr->SetRingLink(ringLinkActive);
 }
 
@@ -199,6 +204,7 @@ void ArchipelagoManager::Connect()
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("StartingArea", &SADX_StartingArea);
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
     AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);
     AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);

@@ -7,9 +7,21 @@ enum RingLoss
     OneHitKnockOut
 };
 
+enum StartingArea
+{
+    StationSquareMain,
+    HotelArea,
+    CasinoArea,
+    MysticRuinsMain,
+    Jungle,
+    EggCarrier,
+    None
+};
+
 struct Options
 {
     int emblemGoal = -1;
+    StartingArea startingArea = None;
     // bool fieldEmblems = true;
     // bool lifeSanity = false;
     // bool pinballCapsules = false;

@@ -35,6 +35,7 @@ public:
     void ShowStatusInformation(std::string information);
     void QueueNewMessage(std::string information);
     void OnEmblemGoalSet(int emblemGoal);
+    void SetStatingArea(StartingArea startingArea);
     void SetMissions(Characters characters, int missions);
     void SetDeathLink(bool deathLinkActive);
     void SetRingLink(bool ringLinkActive);
