@@ -61,10 +61,11 @@ void SaveFileManager::OnSaveFileCreated()
 
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_LIFEBELT));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_POWERROD));
-    // ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_BLUE));
-    // ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_GOLD));
-    // ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_RED));
-    // ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_SILVER));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_BLUE));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_GOLD));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_NORMAL));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_RED));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_SILVER));
 
     //Train
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_TRAIN));

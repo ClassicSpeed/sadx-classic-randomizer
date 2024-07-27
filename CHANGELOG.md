@@ -11,6 +11,10 @@ All notable changes to this project will be documented in this file.
 - Removed 10 second penalty at the end of Sonic and Tails levels.
 - Added options to randomize each character's upgrades.
 - Added option to handle ring loss: Classic (lose all rings), Modern (lose 20 rings) and One Hit K.O.
+- Big's lure upgrades are now randomized.
+  - Keep in mind that if you get the lure during a level, the fish won't change, you have to re-enter the level for the fish
+    to change.
+  - When graving the ice cap lure, you won't get the check until you leave the level (by either exiting or winning).
 
 ### Changed
 

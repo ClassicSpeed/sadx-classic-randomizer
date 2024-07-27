@@ -29,6 +29,7 @@ struct UnlockStatus
     bool bigUnlocked;
     bool bigLifeRingUnlocked;
     bool bigPowerRodUnlocked;
+    int bigLureQuantity = 0;
     
     bool keyTrain;
     bool keyBoat;

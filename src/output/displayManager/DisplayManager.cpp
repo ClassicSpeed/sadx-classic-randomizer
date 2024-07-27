@@ -169,7 +169,6 @@ void DisplayManager::OnExitCharacterSelectScreen()
 }
 
 
-
 void DisplayManager::DisplayItemsUnlocked()
 {
     //Show Items Unlock on Pause menu or Character select screen
@@ -348,13 +347,15 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.clear();
         buffer.append(_unlockStatus.bigUnlocked ? "B  " : "   ");
         buffer.append(_unlockStatus.bigLifeRingUnlocked ? "LR " : "   ");
-        buffer.append(_unlockStatus.bigPowerRodUnlocked ? "PR" : "  ");
+        buffer.append(_unlockStatus.bigPowerRodUnlocked ? "PR " : "   ");
+        buffer.append(_unlockStatus.bigLureQuantity > 0 ? "L" + std::to_string(_unlockStatus.bigLureQuantity) : "  ");
         SetDebugFontColor(this->_bigColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.bigUnlocked ? "B: " : " : ");
         buffer.append(!_unlockStatus.bigLifeRingUnlocked ? "LR " : "   ");
-        buffer.append(!_unlockStatus.bigPowerRodUnlocked ? "PR" : "  ");
+        buffer.append(!_unlockStatus.bigPowerRodUnlocked ? "PR " : "   ");
+        buffer.append(_unlockStatus.bigLureQuantity == 0 ? "L0" : "  ");
         SetDebugFontColor(this->_bigColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }

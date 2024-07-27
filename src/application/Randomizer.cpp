@@ -31,6 +31,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
     const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
+    _characterManager.UpdateUnlockStatus(unlockStatus);
     _displayManager.UpdateUnlockStatus(unlockStatus);
 }
 

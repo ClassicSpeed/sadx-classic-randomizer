@@ -61,3 +61,13 @@ void CharacterManager::UpdateOptions(const Options newOptions)
     //We override the Set0Rings call inside the HurtPlayer function;
     WriteCall(reinterpret_cast<void*>(0x45072D), &HandleRingLoss);
 }
+
+void CharacterManager::UpdateUnlockStatus(const UnlockStatus newUnlockStatus)
+{
+    this->unlockStatus = newUnlockStatus;
+}
+
+FunctionHook<int> getLureQuantity(0x46C870, []()-> int
+{
+    return characterManagerPtr->unlockStatus.bigLureQuantity;
+});

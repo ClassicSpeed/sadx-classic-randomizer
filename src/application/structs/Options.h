@@ -9,7 +9,7 @@ enum RingLoss
 
 struct Options
 {
-    int emblemGoal;
+    int emblemGoal = -1;
     // bool fieldEmblems = true;
     // bool lifeSanity = false;
     // bool pinballCapsules = false;

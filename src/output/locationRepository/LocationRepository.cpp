@@ -23,11 +23,11 @@ LocationRepository::LocationRepository()
 
         {600, LocationData::UpgradeLocation(FLAG_BIG_MR_LIFEBELT, "Life belt upgrade (Big)", 60)},
         {601, LocationData::UpgradeLocation(FLAG_BIG_MR_POWERROD, "Power rod upgrade (Big)", 61)},
-        // //Check if the check works
-        // {62, LocationData::UpgradeLocation(FLAG_BIG_RUAR_BLUE), "Lure 1 upgrade (Big)", 61)},
-        // {63, LocationData::UpgradeLocation(FLAG_BIG_RUAR_GOLD), "Lure 2 upgrade (Big)", 61)},
-        // {64, LocationData::UpgradeLocation(FLAG_BIG_RUAR_RED), "Lure 3 upgrade (Big)", 61)},
-        // {65, LocationData::UpgradeLocation(FLAG_BIG_RUAR_SILVER), "Lure 4 upgrade (Big)", 61)},
+
+        {602, LocationData::UpgradeLocation(FLAG_BIG_RUAR_NORMAL, "Lure 1 upgrade (Big)", -1)},
+        {603, LocationData::UpgradeLocation(FLAG_BIG_RUAR_RED, "Lure 2 upgrade (Big)", -1)},
+        {604, LocationData::UpgradeLocation(FLAG_BIG_RUAR_GOLD, "Lure 3 upgrade (Big)", -1)},
+        {605, LocationData::UpgradeLocation(FLAG_BIG_RUAR_BLUE, "Lure 4 upgrade (Big)", -1)},
 
         //Level id: ABXX where A is the character, B is the level in the story order, and XX is the check in that level 
 
