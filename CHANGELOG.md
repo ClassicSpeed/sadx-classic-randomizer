@@ -22,6 +22,10 @@ All notable changes to this project will be documented in this file.
 - Fixed crash when dying in the last act of final egg.
 - Removed the character name from the upgrade items.
 - Not needed emblems are marked as filler in the logic.
+- Twinkle Park's elevator is no longer open from the start for Big.
+    - You have to enter using the sewer entrance.
+    - It will open after getting the Twinkle Park C mission.
+    - You still need the Twinkle Park Ticket for Twinkle circuit.
 
 ## [v0.3.1] - 2024-07-23
 
