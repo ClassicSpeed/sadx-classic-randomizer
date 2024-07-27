@@ -36,8 +36,13 @@ public:
     void QueueNewMessage(std::string information);
     void OnEmblemGoalSet(int emblemGoal);
     void SetMissions(Characters characters, int missions);
+    void SetDeathLink(bool deathLinkActive);
     void SetRingLoss(RingLoss ringLoss);
+    Options GetOptions() const;
     std::vector<LifeBoxLocationData> GetLifeCapsules();
+    void ProcessDeath(const std::string& deathCause);
+    void OnPlayingFrame();
+    void OnDeath();
 
 private:
     DisplayManager& _displayManager;
@@ -48,4 +53,7 @@ private:
     ArchipelagoMessenger& _archipelagoMessenger;
 
     Options _options;
+    std::string _pendingDeathCause;
+    bool _deathPending;
+    bool _ignoreNextDeath = false;
 };

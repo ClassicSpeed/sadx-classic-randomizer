@@ -77,6 +77,39 @@ std::vector<LifeBoxLocationData> Randomizer::GetLifeCapsules()
     return _locationRepository.GetLifeCapsules();
 }
 
+void Randomizer::ProcessDeath(const std::string& deathCause)
+{
+    _pendingDeathCause = deathCause;
+    _deathPending = true;
+}
+
+void Randomizer::OnPlayingFrame()
+{
+    if (!_deathPending)
+        return;
+    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+        return;
+
+    _characterManager.KillPlayer();
+    _displayManager.QueueMessage(_pendingDeathCause);
+    _pendingDeathCause.clear();
+    _deathPending = false;
+    _ignoreNextDeath = true;
+}
+
+void Randomizer::OnDeath()
+{
+    if (!_options.deathLinkActive)
+        return;
+    if(_ignoreNextDeath)
+    {
+        _ignoreNextDeath = false;
+        return;
+    }
+
+    _displayManager.QueueMessage("Death Sent");
+    _archipelagoMessenger.SendDeath();
+}
 
 void Randomizer::OnConnected()
 {
@@ -111,8 +144,25 @@ void Randomizer::SetMissions(Characters characters, int missions)
     _displayManager.UpdateOptions(_options);
 }
 
+void Randomizer::SetDeathLink(bool deathLinkActive)
+{
+    _options.deathLinkActive = deathLinkActive;
+
+
+    std::vector<std::string> tags;
+    if (_options.deathLinkActive)
+        tags.push_back(std::string("DeathLink"));
+
+    AP_SetTags(tags);
+}
+
 void Randomizer::SetRingLoss(const RingLoss ringLoss)
 {
     _options.ringLoss = ringLoss;
     _characterManager.UpdateOptions(_options);
+}
+
+Options Randomizer::GetOptions() const
+{
+    return _options;
 }

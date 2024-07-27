@@ -11,3 +11,10 @@ void ArchipelagoMessenger::GameCompleted()
 {
     AP_StoryComplete();
 }
+
+void ArchipelagoMessenger::SendDeath()
+{
+    
+    PrintDebug("-----DeathLink packet sent\n");
+    AP_DeathLinkSend();
+}

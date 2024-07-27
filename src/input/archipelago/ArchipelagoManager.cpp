@@ -2,11 +2,13 @@
 
 constexpr int64_t BASE_ID = 543800000;
 Randomizer* randomizerPtr = nullptr;
+ArchipelagoManager* archipelagoManagerPtr = nullptr;
 
 ArchipelagoManager::ArchipelagoManager(Randomizer& randomizer)
     : _randomizer(randomizer)
 {
     randomizerPtr = &this->_randomizer;
+    archipelagoManagerPtr = this;
 }
 
 
@@ -50,12 +52,12 @@ void ArchipelagoManager::OnFrame()
 }
 
 
-void ArchipelagoManager::SetServerConfiguration(const std::string& serverIP, const std::string& playerName,
+void ArchipelagoManager::SetServerConfiguration(const std::string& serverIP, const std::string& playerNameConfig,
                                                 const std::string& serverPassword)
 {
-    _serverIP = serverIP;
-    _playerName = playerName;
-    _serverPassword = serverPassword;
+    this->_serverIP = serverIP;
+    this->playerName = playerNameConfig;
+    this->_serverPassword = serverPassword;
 }
 
 
@@ -86,10 +88,53 @@ void SADX_CheckLocation(int64_t loc_id)
     PrintDebug("Checked location %d\n", loc_id);
 }
 
+void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
+{
+    Json::Value bounceData;
+    Json::Reader reader;
+    reader.parse(bouncePacket.data, bounceData);
+    
+    if (bouncePacket.tags == nullptr)
+        return;
+
+    for (const auto& tag : *bouncePacket.tags)
+    {
+        if (tag.length() == 0)
+            return;
+
+        PrintDebug("-----DeathLink packet received\n");
+        if (!strcmp(tag.c_str(), "DeathLink"))
+        {
+            
+            if (!randomizerPtr->GetOptions().deathLinkActive)
+                return;
+
+            //Ignore our own death link    
+            if (!strcmp(bounceData["source"].asCString(), archipelagoManagerPtr->playerName.c_str()))
+                break;
+
+            std::string deathCause;
+            if (!bounceData["cause"].isNull())
+                deathCause = std::string(bounceData["cause"].asCString());
+            else
+                deathCause = std::string("You were killed by ") + bounceData["source"].asCString();
+            randomizerPtr->ProcessDeath(deathCause);
+            break;
+        }
+    }
+}
+
+
 void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 {
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
+
+void SADX_SetDeathLink(const int deathLinkActive)
+{
+    randomizerPtr->SetDeathLink(deathLinkActive);
+}
+
 
 void SADX_RingLoss(const int ringLoss)
 {
@@ -128,12 +173,15 @@ void SADX_BigMissions(const int missions)
 
 void ArchipelagoManager::Connect()
 {
-    AP_Init(_serverIP.c_str(), "Sonic Adventure DX", _playerName.c_str(), _serverPassword.c_str());
+    AP_Init(_serverIP.c_str(), "Sonic Adventure DX", playerName.c_str(), _serverPassword.c_str());
 
+    AP_SetDeathLinkSupported(true);
     AP_SetItemClearCallback(&SADX_ResetItems);
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
+    AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
     AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
     AP_RegisterSlotDataIntCallback("SonicMissions", &SADX_SonicMissions);
     AP_RegisterSlotDataIntCallback("TailsMissions", &SADX_TailsMissions);
@@ -169,7 +217,7 @@ bool ArchipelagoManager::IsValidSaveFile()
         return true;
     this->_seedName = roomInfo.seed_name;
 
-    char seedHash = CalculateHash(this->_seedName + this->_playerName);
+    char seedHash = CalculateHash(this->_seedName + this->playerName);
     if (SaveFile.gap_25b[0] == 0)
     {
         SaveFile.gap_25b[0] = seedHash;

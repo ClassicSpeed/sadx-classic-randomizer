@@ -309,3 +309,11 @@ FunctionHook<void, EntityData1*> OnExtraLife(0x4D6D40, [](EntityData1* entity)->
 
     return OnExtraLife.Original(entity);
 });
+
+
+FunctionHook<void, int> onGiveLives(0x425B60, [](int lives)-> void
+{
+    if (lives == -1 && GameState == MD_GAME_FADEOUT_MISS)
+        eventDetector->randomizer.OnDeath();
+    onGiveLives.Original(lives);
+});

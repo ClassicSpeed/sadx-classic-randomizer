@@ -24,6 +24,7 @@ public:
     void SetServerConfiguration(const std::string& serverIP, const std::string& playerName,
                                 const std::string& serverPassword);
 
+    std::string playerName;
 private:
     void ManageMessages();
     void EnqueueMessage(AP_Message* msg);
@@ -35,7 +36,6 @@ private:
 
     std::string _serverIP;
     std::string _serverPassword;
-    std::string _playerName;
     std::string _seedName;
 
     const float _suggestChangingConfigWaitTime = 2.5f;

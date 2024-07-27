@@ -5,4 +5,5 @@ class ArchipelagoMessenger
 public:
     void CheckLocation(int locationId);
     void GameCompleted();
+    void SendDeath();
 };

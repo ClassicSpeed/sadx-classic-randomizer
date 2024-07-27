@@ -67,6 +67,12 @@ void CharacterManager::UpdateUnlockStatus(const UnlockStatus newUnlockStatus)
     this->unlockStatus = newUnlockStatus;
 }
 
+void CharacterManager::KillPlayer()
+{
+    KillHimP(0);
+}
+
+
 FunctionHook<int> getLureQuantity(0x46C870, []()-> int
 {
     return characterManagerPtr->unlockStatus.bigLureQuantity;

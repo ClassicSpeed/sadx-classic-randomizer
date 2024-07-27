@@ -14,6 +14,7 @@ struct Options
     // bool lifeSanity = false;
     // bool pinballCapsules = false;
     // bool subLevelChecks = false;
+    bool deathLinkActive = false;
     RingLoss ringLoss = Classic;
 
     int sonicMissions = 0;

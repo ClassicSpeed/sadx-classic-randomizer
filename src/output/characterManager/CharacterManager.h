@@ -12,6 +12,8 @@ public:
     void RemoveUpgrade(Upgrades upgrade);
     void UpdateOptions(Options newOptions);
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
+    void KillPlayer();
     Options options;
     UnlockStatus unlockStatus;
+
 };
