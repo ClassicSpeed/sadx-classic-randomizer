@@ -1,3 +1,5 @@
+#include <chrono>
+
 #include "pch.h"
 
 #include "application/Randomizer.h"
@@ -15,13 +17,22 @@ _snprintf_s(pathbuf, LengthOfArray(pathbuf), "%s\\textures\\pvr_common\\index.tx
 helperFunctions.ReplaceFile("system\\" a ".PVR", pathbuf); \
 } while (0)
 
+constexpr int SYNC_RATE = 10;
+
 extern "C" {
+    
+std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
+const int instance_id = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
+constexpr int64_t base_id = 543800000;
+int syncTimer = 0;
+    
+
 DisplayManager displayManager = DisplayManager();
 CharacterManager characterManager = CharacterManager();
 WorldStateManager worldStateManager = WorldStateManager();
 ItemRepository itemRepository = ItemRepository();
 LocationRepository checkRepository = LocationRepository();
-ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger();
+ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger(instance_id, base_id);
 
 Randomizer randomizer = Randomizer(displayManager,
                                    characterManager,
@@ -31,7 +42,7 @@ Randomizer randomizer = Randomizer(displayManager,
                                    archipelagoMessenger);
 
 CheatsManager cheatsManager = CheatsManager(randomizer);
-ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer);
+ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer,instance_id, base_id);
 EventDetector eventDetector = EventDetector(randomizer);
 CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(randomizer);
 SaveFileManager saveFileManager = SaveFileManager();
@@ -66,7 +77,8 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
 
     archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword);
 
-    const bool completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions", true);
+    const bool completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions",
+                                                                    true);
     const bool autoSkipCutscenes = settingsIni->getBool("GameSettings", "AutoSkipCutscenes", true);
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippeableCredits", true);
     const bool winButtonEnabled = settingsIni->getBool("GameSettings", "AutoWinButton", false);
@@ -92,6 +104,13 @@ __declspec(dllexport) void __cdecl OnFrame()
         worldStateManager.OnPlayingFrame();
         randomizer.OnPlayingFrame();
     }
+    if(syncTimer == 0)
+    {
+        randomizer.OnSync();
+        syncTimer = SYNC_RATE;
+    }
+    else
+        syncTimer--;
 }
 
 bool saveFileSelected = false;

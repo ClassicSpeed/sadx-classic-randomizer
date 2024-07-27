@@ -35,8 +35,19 @@ void CharacterManager::RemoveUpgrade(const Upgrades upgrade)
     }
 }
 
+//We don't send ring updates when set to zero
+FunctionHook<void> onSet0Rings(0x425AB0, []()-> void
+{
+    onSet0Rings.Original();
+    characterManagerPtr->lastRingAmount = Rings;
+});
+
+
 static void __cdecl HandleRingLoss()
 {
+    //We preserve the last ring amount when the player is hurt
+    //In practice, every set0ring call won't be synced except for this one
+    const int lastRingAmountBuffer = characterManagerPtr->lastRingAmount;
     switch (characterManagerPtr->options.ringLoss)
     {
     case Classic:
@@ -53,6 +64,7 @@ static void __cdecl HandleRingLoss()
         KillHimP(0);
         break;
     }
+    characterManagerPtr->lastRingAmount = lastRingAmountBuffer;
 }
 
 void CharacterManager::UpdateOptions(const Options newOptions)
@@ -70,6 +82,43 @@ void CharacterManager::UpdateUnlockStatus(const UnlockStatus newUnlockStatus)
 void CharacterManager::KillPlayer()
 {
     KillHimP(0);
+}
+
+void CharacterManager::ProcessRings(const Sint16 amount)
+{
+    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+        return;
+
+    if (CurrentLevel == LevelIDs_PerfectChaos)
+        return;
+
+    if (amount == 0)
+        return;
+
+    if (amount < 0 && Rings > 0)
+    {
+        const Sint16 newRingAmount = max(Rings + amount, 0);
+        PlaySound(RING_LOSS_SOUND_ID, nullptr, 0, nullptr);
+        Rings = newRingAmount;
+    }
+
+    if (amount > 0 && Rings < 999)
+    {
+        AddRings(amount);
+        PlaySound(RING_GAIN_SOUND_ID, nullptr, 0, nullptr);
+    }
+
+    lastRingAmount = Rings;
+}
+
+int CharacterManager::GetRingDifference()
+{
+    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+        return lastRingAmount = 0;
+
+    const int ringDifference = Rings - lastRingAmount;
+    lastRingAmount = Rings;
+    return ringDifference;
 }
 
 

@@ -15,6 +15,7 @@ struct Options
     // bool pinballCapsules = false;
     // bool subLevelChecks = false;
     bool deathLinkActive = false;
+    bool ringLinkActive = false;
     RingLoss ringLoss = Classic;
 
     int sonicMissions = 0;
@@ -24,7 +25,7 @@ struct Options
     int bigMissions = 0;
     int gammaMissions = 0;
 
-    void SetMissions(const Characters character, int missions)
+    void SetMissions(const Characters character, const int missions)
     {
         switch (character)
         {

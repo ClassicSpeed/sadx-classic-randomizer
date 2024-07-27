@@ -97,15 +97,15 @@
 
     </Link>
 
+    <PreBuildEvent>
+      <Command>call ./scripts/release-clean.bat</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>call ./scripts/release_zip.bat</Command>
+    </PostBuildEvent>
     <PostBuildEvent>
       <Command>call ./scripts/release_install.bat</Command>
     </PostBuildEvent>
-<!--    <PreBuildEvent>-->
-<!--      <Command>call ./scripts/release-clean.bat</Command>-->
-<!--    </PreBuildEvent>-->
-<!--    <PostBuildEvent>-->
-<!--      <Command>call ./scripts/release_zip.bat</Command>-->
-<!--    </PostBuildEvent>-->
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\CodeParser.cpp" />

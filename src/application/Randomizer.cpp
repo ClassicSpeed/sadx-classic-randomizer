@@ -85,6 +85,8 @@ void Randomizer::ProcessDeath(const std::string& deathCause)
 
 void Randomizer::OnPlayingFrame()
 {
+    if (!_options.deathLinkActive)
+        return;
     if (!_deathPending)
         return;
     if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
@@ -97,11 +99,21 @@ void Randomizer::OnPlayingFrame()
     _ignoreNextDeath = true;
 }
 
+void Randomizer::OnSync()
+{
+    if (!_options.ringLinkActive)
+        return;
+    const int ringDifference = _characterManager.GetRingDifference();
+    if (ringDifference == 0)
+        return;
+    _archipelagoMessenger.SendRingUpdate(ringDifference);
+}
+
 void Randomizer::OnDeath()
 {
     if (!_options.deathLinkActive)
         return;
-    if(_ignoreNextDeath)
+    if (_ignoreNextDeath)
     {
         _ignoreNextDeath = false;
         return;
@@ -109,6 +121,11 @@ void Randomizer::OnDeath()
 
     _displayManager.QueueMessage("Death Sent");
     _archipelagoMessenger.SendDeath();
+}
+
+void Randomizer::ProcessRings(const Sint16 amount)
+{
+    _characterManager.ProcessRings(amount);
 }
 
 void Randomizer::OnConnected()
@@ -144,16 +161,16 @@ void Randomizer::SetMissions(Characters characters, int missions)
     _displayManager.UpdateOptions(_options);
 }
 
-void Randomizer::SetDeathLink(bool deathLinkActive)
+void Randomizer::SetDeathLink(const bool deathLinkActive)
 {
     _options.deathLinkActive = deathLinkActive;
+    _archipelagoMessenger.UpdateTags(_options);
+}
 
-
-    std::vector<std::string> tags;
-    if (_options.deathLinkActive)
-        tags.push_back(std::string("DeathLink"));
-
-    AP_SetTags(tags);
+void Randomizer::SetRingLink(const bool ringLinkActive)
+{
+    _options.ringLinkActive = ringLinkActive;
+    _archipelagoMessenger.UpdateTags(_options);
 }
 
 void Randomizer::SetRingLoss(const RingLoss ringLoss)

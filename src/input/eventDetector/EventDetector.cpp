@@ -185,7 +185,7 @@ void EventDetector::OnPlayingFrame() const
         randomizer.OnGameCompleted();
 
     //Ignore events given by the mod itself
-    if (GameMode != GameModes_Adventure_Field)
+    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
         return;
 
     bool checksFound = false;

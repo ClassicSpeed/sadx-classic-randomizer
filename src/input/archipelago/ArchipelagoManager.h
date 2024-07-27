@@ -14,7 +14,7 @@ enum ConnectionStatus
 class ArchipelagoManager
 {
 public:
-    explicit ArchipelagoManager(Randomizer& randomizer);
+    explicit ArchipelagoManager(Randomizer& randomizer, int instanceId, int64_t baseId);
 
     void Connect();
     bool IsValidSaveFile();
@@ -25,6 +25,9 @@ public:
                                 const std::string& serverPassword);
 
     std::string playerName;
+    int instanceId = 0;
+    int64_t baseId;
+
 private:
     void ManageMessages();
     void EnqueueMessage(AP_Message* msg);
@@ -40,4 +43,5 @@ private:
 
     const float _suggestChangingConfigWaitTime = 2.5f;
     std::clock_t _connectedAt = -1;
+
 };

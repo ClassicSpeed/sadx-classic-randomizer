@@ -37,12 +37,15 @@ public:
     void OnEmblemGoalSet(int emblemGoal);
     void SetMissions(Characters characters, int missions);
     void SetDeathLink(bool deathLinkActive);
+    void SetRingLink(bool ringLinkActive);
     void SetRingLoss(RingLoss ringLoss);
     Options GetOptions() const;
     std::vector<LifeBoxLocationData> GetLifeCapsules();
     void ProcessDeath(const std::string& deathCause);
     void OnPlayingFrame();
+    void OnSync();
     void OnDeath();
+    void ProcessRings(Sint16 amount);
 
 private:
     DisplayManager& _displayManager;

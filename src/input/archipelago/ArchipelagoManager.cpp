@@ -1,14 +1,15 @@
 ﻿#include "ArchipelagoManager.h"
 
-constexpr int64_t BASE_ID = 543800000;
 Randomizer* randomizerPtr = nullptr;
 ArchipelagoManager* archipelagoManagerPtr = nullptr;
 
-ArchipelagoManager::ArchipelagoManager(Randomizer& randomizer)
+ArchipelagoManager::ArchipelagoManager(Randomizer& randomizer, const int instanceId, const int64_t baseId)
     : _randomizer(randomizer)
 {
     randomizerPtr = &this->_randomizer;
     archipelagoManagerPtr = this;
+    this->instanceId = instanceId;
+    this->baseId = baseId;
 }
 
 
@@ -75,7 +76,7 @@ void ArchipelagoManager::OnSaveFileLoaded()
 void SADX_RecvItem(const int64_t itemId, bool notify)
 {
     PrintDebug(" --- Item received: %d\n", itemId);
-    randomizerPtr->OnItemReceived(itemId - BASE_ID);
+    randomizerPtr->OnItemReceived(itemId - archipelagoManagerPtr->baseId);
 }
 
 void SADX_ResetItems()
@@ -93,7 +94,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
     Json::Value bounceData;
     Json::Reader reader;
     reader.parse(bouncePacket.data, bounceData);
-    
+
     if (bouncePacket.tags == nullptr)
         return;
 
@@ -102,10 +103,8 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
         if (tag.length() == 0)
             return;
 
-        PrintDebug("-----DeathLink packet received\n");
         if (!strcmp(tag.c_str(), "DeathLink"))
         {
-            
             if (!randomizerPtr->GetOptions().deathLinkActive)
                 return;
 
@@ -119,6 +118,20 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
             else
                 deathCause = std::string("You were killed by ") + bounceData["source"].asCString();
             randomizerPtr->ProcessDeath(deathCause);
+            break;
+        }
+        if (!strcmp(tag.c_str(), "RingLink"))
+        {
+            if (!randomizerPtr->GetOptions().ringLinkActive)
+                return;
+
+            //Ignore our own death link    
+            if (bounceData["source"].asInt() == archipelagoManagerPtr->instanceId)
+                break;
+
+            const int amount = bounceData["amount"].asInt();
+
+            randomizerPtr->ProcessRings(amount);
             break;
         }
     }
@@ -135,6 +148,11 @@ void SADX_SetDeathLink(const int deathLinkActive)
     randomizerPtr->SetDeathLink(deathLinkActive);
 }
 
+void SADX_SetRingLink(const int ringLinkActive)
+{
+    PrintDebug("RingLink: %d\n", ringLinkActive);
+    randomizerPtr->SetRingLink(ringLinkActive);
+}
 
 void SADX_RingLoss(const int ringLoss)
 {
@@ -182,6 +200,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
+    AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);
     AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
     AP_RegisterSlotDataIntCallback("SonicMissions", &SADX_SonicMissions);
     AP_RegisterSlotDataIntCallback("TailsMissions", &SADX_TailsMissions);
