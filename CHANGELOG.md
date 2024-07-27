@@ -6,16 +6,16 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Added Death Link
+- Added Ring Link
+- Added option to handle ring loss: Classic (lose all rings), Modern (lose 20 rings) and One Hit K.O.
+- Big's lure upgrades are now randomized.
+    - Keep in mind that if you get the lure during a level, the fish won't change.
+    - You have to reenter/restart the level for the fish to respawn.
 - Replaced Super Sonic "Hmph" with "I'll show you what the Chaos Emeralds can really do!" in the character select
   screen.
 - Removed 10 second penalty at the end of Sonic and Tails levels.
 - Added options to randomize each character's upgrades.
-- Big's lure upgrades are now randomized.
-    - Keep in mind that if you get the lure during a level, the fish won't change.
-    - You have to reenter/restart the level for the fish to respawn.
-- Added Death Link
-- Added Ring Link
-- Added option to handle ring loss: Classic (lose all rings), Modern (lose 20 rings) and One Hit K.O.
 
 ### Changed
 
