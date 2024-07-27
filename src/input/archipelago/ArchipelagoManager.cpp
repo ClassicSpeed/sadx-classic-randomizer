@@ -1,12 +1,15 @@
 ﻿#include "ArchipelagoManager.h"
 
-constexpr int64_t BASE_ID = 543800000;
 Randomizer* randomizerPtr = nullptr;
+ArchipelagoManager* archipelagoManagerPtr = nullptr;
 
-ArchipelagoManager::ArchipelagoManager(Randomizer& randomizer)
+ArchipelagoManager::ArchipelagoManager(Randomizer& randomizer, const int instanceId, const int64_t baseId)
     : _randomizer(randomizer)
 {
     randomizerPtr = &this->_randomizer;
+    archipelagoManagerPtr = this;
+    this->instanceId = instanceId;
+    this->baseId = baseId;
 }
 
 
@@ -50,12 +53,12 @@ void ArchipelagoManager::OnFrame()
 }
 
 
-void ArchipelagoManager::SetServerConfiguration(const std::string& serverIP, const std::string& playerName,
+void ArchipelagoManager::SetServerConfiguration(const std::string& serverIP, const std::string& playerNameConfig,
                                                 const std::string& serverPassword)
 {
-    _serverIP = serverIP;
-    _playerName = playerName;
-    _serverPassword = serverPassword;
+    this->_serverIP = serverIP;
+    this->playerName = playerNameConfig;
+    this->_serverPassword = serverPassword;
 }
 
 
@@ -73,7 +76,7 @@ void ArchipelagoManager::OnSaveFileLoaded()
 void SADX_RecvItem(const int64_t itemId, bool notify)
 {
     PrintDebug(" --- Item received: %d\n", itemId);
-    randomizerPtr->OnItemReceived(itemId - BASE_ID);
+    randomizerPtr->OnItemReceived(itemId - archipelagoManagerPtr->baseId);
 }
 
 void SADX_ResetItems()
@@ -84,16 +87,81 @@ void SADX_ResetItems()
 void SADX_CheckLocation(int64_t loc_id)
 {
     PrintDebug("Checked location %d\n", loc_id);
+    randomizerPtr->OnCheckFound(loc_id - archipelagoManagerPtr->baseId);
 }
+
+void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
+{
+    Json::Value bounceData;
+    Json::Reader reader;
+    reader.parse(bouncePacket.data, bounceData);
+
+    if (bouncePacket.tags == nullptr)
+        return;
+
+    for (const auto& tag : *bouncePacket.tags)
+    {
+        if (tag.length() == 0)
+            return;
+
+        if (!strcmp(tag.c_str(), "DeathLink"))
+        {
+            if (!randomizerPtr->GetOptions().deathLinkActive)
+                return;
+
+            //Ignore our own death link    
+            if (!strcmp(bounceData["source"].asCString(), archipelagoManagerPtr->playerName.c_str()))
+                break;
+
+            std::string deathCause;
+            if (!bounceData["cause"].isNull())
+                deathCause = std::string(bounceData["cause"].asCString());
+            else
+                deathCause = std::string("You were killed by ") + bounceData["source"].asCString();
+            randomizerPtr->ProcessDeath(deathCause);
+            break;
+        }
+        if (!strcmp(tag.c_str(), "RingLink"))
+        {
+            if (!randomizerPtr->GetOptions().ringLinkActive)
+                return;
+
+            //Ignore our own death link    
+            if (bounceData["source"].asInt() == archipelagoManagerPtr->instanceId)
+                break;
+
+            const int amount = bounceData["amount"].asInt();
+
+            randomizerPtr->ProcessRings(amount);
+            break;
+        }
+    }
+}
+
 
 void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 {
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
 
-void SADX_LifeSanity(const int lifeSanity)
+void SADX_StartingArea(const int startingArea)
 {
-    randomizerPtr->OnLifeSanitySet(lifeSanity);
+    randomizerPtr->SetStatingArea(static_cast<StartingArea>(startingArea));
+}
+
+void SADX_SetDeathLink(const int deathLinkActive)
+{
+    randomizerPtr->SetDeathLink(deathLinkActive);
+}
+
+void SADX_SetRingLink(const int ringLinkActive)
+{
+    randomizerPtr->SetRingLink(ringLinkActive);
+}
+
+void SADX_RingLoss(const int ringLoss)
+{
+    randomizerPtr->SetRingLoss(static_cast<RingLoss>(ringLoss));
 }
 
 void SADX_SonicMissions(const int missions)
@@ -128,13 +196,18 @@ void SADX_BigMissions(const int missions)
 
 void ArchipelagoManager::Connect()
 {
-    AP_Init(_serverIP.c_str(), "Sonic Adventure DX", _playerName.c_str(), _serverPassword.c_str());
+    AP_Init(_serverIP.c_str(), "Sonic Adventure DX", playerName.c_str(), _serverPassword.c_str());
 
+    AP_SetDeathLinkSupported(true);
     AP_SetItemClearCallback(&SADX_ResetItems);
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
+    AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
-    AP_RegisterSlotDataIntCallback("LifeSanity", &SADX_LifeSanity);
+    AP_RegisterSlotDataIntCallback("StartingArea", &SADX_StartingArea);
+    AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
+    AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);
+    AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
     AP_RegisterSlotDataIntCallback("SonicMissions", &SADX_SonicMissions);
     AP_RegisterSlotDataIntCallback("TailsMissions", &SADX_TailsMissions);
     AP_RegisterSlotDataIntCallback("KnucklesMissions", &SADX_KnucklesMissions);
@@ -169,7 +242,7 @@ bool ArchipelagoManager::IsValidSaveFile()
         return true;
     this->_seedName = roomInfo.seed_name;
 
-    char seedHash = CalculateHash(this->_seedName + this->_playerName);
+    char seedHash = CalculateHash(this->_seedName + this->playerName);
     if (SaveFile.gap_25b[0] == 0)
     {
         SaveFile.gap_25b[0] = seedHash;

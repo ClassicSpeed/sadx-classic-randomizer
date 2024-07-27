@@ -8,11 +8,13 @@ void Randomizer::OnCheckFound(const int checkId) const
     {
         const ItemData item = _itemRepository.GetItem(check.originalItemId);
         if (!item.obtained)
-            _upgradeManager.RemoveUpgrade(item.upgrade);
+            _characterManager.RemoveUpgrade(item.upgrade);
     }
 
     _locationRepository.SetLocationChecked(checkId);
     _archipelagoMessenger.CheckLocation(checkId);
+    if (check.character == Characters_Big && check.level == LevelIDs_TwinklePark && check.mission == MISSION_C)
+        _worldStateManager.SetEventFlags({FLAG_BIG_SS_TPARK_ELEVATOR});
 }
 
 
@@ -20,17 +22,18 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
 {
     const ItemData item = _itemRepository.SetObtained(itemId);
     if (item.type == ItemUpgrade)
-        _upgradeManager.GiveUpgrade(item.upgrade);
+        _characterManager.GiveUpgrade(item.upgrade);
     else if (item.type == ItemCharacter || item.type == ItemKey)
         _worldStateManager.SetEventFlags(item.eventFlags);
     else if (item.type == ItemEmblem)
     {
         const int emblemCount = _itemRepository.AddEmblem();
         _displayManager.ShowEmblemCount(emblemCount);
-        if (emblemCount == _itemRepository.GetEmblemGoal())
+        if (emblemCount == _options.emblemGoal)
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
     const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
+    _characterManager.UpdateUnlockStatus(unlockStatus);
     _displayManager.UpdateUnlockStatus(unlockStatus);
 }
 
@@ -42,9 +45,9 @@ void Randomizer::OnCharacterLoaded() const
             continue;
 
         if (item.second.obtained)
-            _upgradeManager.GiveUpgrade(item.second.upgrade);
+            _characterManager.GiveUpgrade(item.second.upgrade);
         else
-            _upgradeManager.RemoveUpgrade(item.second.upgrade);
+            _characterManager.RemoveUpgrade(item.second.upgrade);
     }
 }
 
@@ -55,8 +58,8 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
     {
         if (item.second.type == ItemEmblem)
         {
-            if (_itemRepository.GetEmblemGoal() >= 0 &&
-                _itemRepository.GetEmblemCount() >= _itemRepository.GetEmblemGoal())
+            if (_options.emblemGoal >= 0 &&
+                _itemRepository.GetEmblemCount() >= _options.emblemGoal)
                 _worldStateManager.UnlockSuperSonic();
         }
 
@@ -73,13 +76,58 @@ std::map<int, LocationData> Randomizer::GetCheckData() const
 
 std::vector<LifeBoxLocationData> Randomizer::GetLifeCapsules()
 {
-    
     return _locationRepository.GetLifeCapsules();
 }
 
-void Randomizer::OnLifeSanitySet(bool lifeSanity)
+void Randomizer::ProcessDeath(const std::string& deathCause)
 {
-    _displayManager.SetLifeSanity(lifeSanity);
+    _pendingDeathCause = deathCause;
+    _deathPending = true;
+}
+
+void Randomizer::OnPlayingFrame()
+{
+    if (!_options.deathLinkActive)
+        return;
+    if (!_deathPending)
+        return;
+    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+        return;
+
+    _characterManager.KillPlayer();
+    _displayManager.QueueMessage(_pendingDeathCause);
+    _pendingDeathCause.clear();
+    _deathPending = false;
+    _ignoreNextDeath = true;
+}
+
+void Randomizer::OnSync()
+{
+    if (!_options.ringLinkActive)
+        return;
+    const int ringDifference = _characterManager.GetRingDifference();
+    if (ringDifference == 0)
+        return;
+    _archipelagoMessenger.SendRingUpdate(ringDifference);
+}
+
+void Randomizer::OnDeath()
+{
+    if (!_options.deathLinkActive)
+        return;
+    if (_ignoreNextDeath)
+    {
+        _ignoreNextDeath = false;
+        return;
+    }
+
+    _displayManager.QueueMessage("Death Sent");
+    _archipelagoMessenger.SendDeath();
+}
+
+void Randomizer::ProcessRings(const Sint16 amount)
+{
+    _characterManager.ProcessRings(amount);
 }
 
 void Randomizer::OnConnected()
@@ -105,13 +153,41 @@ void Randomizer::QueueNewMessage(std::string information)
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
 {
-    _itemRepository.SetEmblemGoal(max(1, emblemGoal));
-    const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
-    _displayManager.UpdateUnlockStatus(unlockStatus);
+    _options.emblemGoal = max(1, emblemGoal);
+    _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetStatingArea(const StartingArea startingArea)
+{
+    _options.startingArea = startingArea;
+    _worldStateManager.UpdateOptions(_options);
 }
 
 void Randomizer::SetMissions(Characters characters, int missions)
 {
-    _displayManager.SetMissions(characters, missions);
+    _options.SetMissions(characters, missions);
+    _displayManager.UpdateOptions(_options);
 }
 
+void Randomizer::SetDeathLink(const bool deathLinkActive)
+{
+    _options.deathLinkActive = deathLinkActive;
+    _archipelagoMessenger.UpdateTags(_options);
+}
+
+void Randomizer::SetRingLink(const bool ringLinkActive)
+{
+    _options.ringLinkActive = ringLinkActive;
+    _archipelagoMessenger.UpdateTags(_options);
+}
+
+void Randomizer::SetRingLoss(const RingLoss ringLoss)
+{
+    _options.ringLoss = ringLoss;
+    _characterManager.UpdateOptions(_options);
+}
+
+Options Randomizer::GetOptions() const
+{
+    return _options;
+}

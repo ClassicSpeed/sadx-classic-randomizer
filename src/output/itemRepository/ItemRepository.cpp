@@ -30,11 +30,11 @@ ItemRepository::ItemRepository()
 
         {60, ItemData::UpgradeItem(Upgrades_LifeRing, "Life belt (Big)")},
         {61, ItemData::UpgradeItem(Upgrades_PowerRod, "Power rod (Big)")},
-        //TODO: Add lures
-        // {62, ItemData::UpgradeItem(static_cast<Upgrades>(0), "Lure 1 (Big)")},
-        // {63, ItemData::UpgradeItem(static_cast<Upgrades>(0), "Lure 2 (Big)")},
-        // {64, ItemData::UpgradeItem(static_cast<Upgrades>(0), "Lure 3 (Big)")},
-        // {65, ItemData::UpgradeItem(static_cast<Upgrades>(0), "Lure 4 (Big)")},
+
+        {62, ItemData::LureItem("Lure 1 (Big)")},
+        {63, ItemData::LureItem("Lure 2 (Big)")},
+        {64, ItemData::LureItem("Lure 3 (Big)")},
+        {65, ItemData::LureItem("Lure 4 (Big)")},
 \
         {
             80,
@@ -130,23 +130,11 @@ int ItemRepository::AddEmblem()
 }
 
 
-int ItemRepository::GetEmblemGoal() const
-{
-    return _emblemGoal;
-}
-
-void ItemRepository::SetEmblemGoal(int emblemGoal)
-{
-    _emblemGoal = emblemGoal;
-}
-
-
 UnlockStatus ItemRepository::GetUnlockStatus()
 {
     auto unlockStatus = UnlockStatus();
 
     unlockStatus.currentEmblems = _emblemCount;
-    unlockStatus.emblemGoal = _emblemGoal;
 
     unlockStatus.sonicUnlocked = _itemData[1].obtained;
     unlockStatus.sonicLightShoesUnlocked = _itemData[10].obtained;
@@ -172,6 +160,7 @@ UnlockStatus ItemRepository::GetUnlockStatus()
     unlockStatus.bigUnlocked = _itemData[6].obtained;
     unlockStatus.bigLifeRingUnlocked = _itemData[60].obtained;
     unlockStatus.bigPowerRodUnlocked = _itemData[61].obtained;
+    unlockStatus.bigLureQuantity = _itemData[62].obtained + _itemData[63].obtained + _itemData[64].obtained + _itemData[65].obtained;
 
 
     unlockStatus.keyTrain = _itemData[80].obtained;

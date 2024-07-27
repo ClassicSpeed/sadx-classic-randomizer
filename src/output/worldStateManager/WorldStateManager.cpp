@@ -1,5 +1,11 @@
 #include "WorldStateManager.h"
 
+WorldStateManager* worldStateManagerPtr;
+
+WorldStateManager::WorldStateManager()
+{
+    worldStateManagerPtr = this;
+}
 
 void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
 {
@@ -28,6 +34,10 @@ void WorldStateManager::UnlockSuperSonic()
     WriteSaveFile();
 }
 
+void WorldStateManager::UpdateOptions(const Options newOptions)
+{
+    this->options = newOptions;
+}
 
 FunctionHook<void, char> OnAddSetStage(0x46BF70, [](char Gap)-> void
 {
@@ -56,29 +66,29 @@ void WorldStateManager::OnPlayingFrame()
 {
     if (CurrentCharacter == Characters_Sonic && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_FinalEgg3)
     {
-        if (!createdFinalEggSpring)
-        {
-            auto position = EntityData1Ptrs[0]->Position;
-            const float dx = position.x - 10;
-            const float dy = position.y - -3160;
-            const float dz = position.z - -171;
-            const float distance = sqrt(dx * dx + dy * dy + dz * dz);
+        if (EntityData1Ptrs[0] == nullptr)
+            return;
 
-            if (distance <= 300.0)
-            {
-                //Creates a spring for sonic in final egg for the 4 life capsules room
-                PrintDebug("Final Egg 3\n");
-                const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
-                spring->twp->pos.x = -52.21f;
-                spring->twp->pos.y = -3240.81f;
-                spring->twp->pos.z = -190.0f;
-                createdFinalEggSpring = true;
-            }
+        if (createdFinalEggSpring)
+            return;
+
+        const auto position = EntityData1Ptrs[0]->Position;
+        const float dx = position.x - 10;
+        const float dy = position.y - -3160;
+        const float dz = position.z - -171;
+        const float distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (distance <= 300.0)
+        {
+            //Creates a spring for sonic in final egg for the 4 life capsules room
+            const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
+            spring->twp->pos.x = -52.21f;
+            spring->twp->pos.y = -3240.81f;
+            spring->twp->pos.z = -190.0f;
+            createdFinalEggSpring = true;
         }
     }
 }
-
-
 
 
 //Makes Sonic, Tails and Gamma use the winds stone
@@ -118,4 +128,55 @@ FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
 FunctionHook<int, int> showRecap(0x643C00, [](int _)-> int
 {
     return -1;
+});
+
+// Replace Super Sonic "Hmph" with "I'll show you what the Chaos Emeralds can really do."
+FunctionHook<void, int> onPlayVoice(0x425710, [](int a1)-> void
+{
+    if (a1 == 396)
+        return onPlayVoice.Original(388);
+
+    return onPlayVoice.Original(a1);
+});
+
+//Prevents adding extra 10 seconds for Sonic and Tails
+FunctionHook<void, int> onAddSeconds(0x426640, [](int seconds)-> void
+{
+    if (seconds == 10 && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
+        return;
+
+    return onAddSeconds.Original(seconds);
+});
+
+
+//Set starting location
+FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
+{
+    onAdventureSetLevelAndAct.Original();
+    if (LastStoryFlag == 1)
+        return;
+    switch (worldStateManagerPtr->options.startingArea)
+    {
+    case StationSquareMain:
+        SetLevelAndAct(LevelIDs_StationSquare, 3);
+        break;
+    case HotelArea:
+        SetLevelAndAct(LevelIDs_StationSquare, 4);
+        break;
+    case CasinoArea:
+        SetLevelAndAct(LevelIDs_StationSquare, 1);
+        SetEntranceNumber(2);
+        break;
+    case MysticRuinsMain:
+        SetLevelAndAct(LevelIDs_MysticRuins, 0);
+        break;
+    case Jungle:
+        SetLevelAndAct(LevelIDs_MysticRuins, 2);
+        break;
+    case EggCarrier:
+        SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
+        break;
+    case None:
+        break;
+    }
 });

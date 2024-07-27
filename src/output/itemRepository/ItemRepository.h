@@ -13,13 +13,10 @@ public:
     ItemData GetItem(int itemId);
     std::map<int64_t, ItemData> GetItems();
     int AddEmblem();
-    int GetEmblemGoal() const;
-    void SetEmblemGoal(int emblemGoal);
     int GetEmblemCount();
     UnlockStatus GetUnlockStatus();
 
 private:
     std::map<int64_t, ItemData> _itemData;
     int _emblemCount = 0;
-    int _emblemGoal = -1; 
 };

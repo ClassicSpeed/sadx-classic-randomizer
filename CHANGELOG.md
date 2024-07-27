@@ -2,7 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.3.1] - 2024-07-21
+## [v0.3.2] - 2024-07-27
+
+### Added
+
+- Randomized starting locations.
+    - You will start in a random location with a guaranteed action level access.
+    - To ensure the access to that level, sometimes you'll receive a key item.
+- Added Death Link
+- Added Ring Link
+- Added option to handle ring loss: Classic (lose all rings), Modern (lose 20 rings) and One Hit K.O.
+- Big's lure upgrades are now randomized.
+    - Keep in mind that if you get the lure during a level, the fish won't change.
+    - You have to reenter/restart the level for the fish to respawn.
+- Replaced Super Sonic "Hmph" with "I'll show you what the Chaos Emeralds can really do!" in the character select
+  screen.
+- Removed 10 second penalty at the end of Sonic and Tails levels.
+- Added options to randomize each character's upgrades.
+
+### Changed
+
+- Fixed crash when dying in the last act of final egg.
+- Removed the character name from the upgrade items.
+- Not needed emblems are marked as filler in the logic.
+- Twinkle Park's elevator is no longer open from the start for Big.
+    - You have to enter using the sewer entrance.
+    - It will open after getting the Twinkle Park C mission.
+    - You still need the Twinkle Park Ticket for Twinkle circuit.
+- Improved logic for the area access and the emblems
+    - This should improve the Universal Tracker compatibility
+
+## [v0.3.1] - 2024-07-23
 
 ### Changed
 
@@ -28,7 +58,7 @@ All notable changes to this project will be documented in this file.
     - The option is off by default.
 - Added current level information on the pause screen.
     - It shows the current level and mission.
-    - Also what missions you have completed.
+    - Also, what missions you have completed.
 
 ### Changed
 
@@ -60,14 +90,14 @@ All notable changes to this project will be documented in this file.
 
 - Added Archipelago model replacing the field emblem.
 - Added Archipelago textures replacing emblems in UI.
-- Added spring on the sewer for Sonic (and removed the car).
+- Added spring in the sewer for Sonic (and removed the car).
 - Re-added Knuckles' Red Mountain as a location again.
 - Re-added Gamma's upgrades locations check
 
 ### Changed
 
 - Fixed weird state for NPCs (like duplicated or nonsensical dialogues).
-- Removed cutscenes from the super sonic fight.
+- Removed cutscenes from the supersonic fight.
 - Fixed Amy/Gamma's upgrades being inverted on the status information.
 - Fixed Gamma stuck after Final Egg.
 - Fixed Amy stuck after Hedgehog Hammer.
@@ -100,9 +130,9 @@ All notable changes to this project will be documented in this file.
 - The whole game is now "open" from the start.
 - You'll get a random character when starting the game.
 - Added key items to open up the adventure fields.
-- Key items will show on the unlocked items menu.
+- Key items will show on the unlocked items' menu.
 - Emblems as checks.
-- Sub levels as checks.
+- Sublevels as checks.
 
 ## [v0.1.0] - 2024-07-08
 
@@ -139,7 +169,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Added hash on the savefile.
+- Added hash on the save file.
 - Archipelago item received, sent and hint messages.
 
 ### Changed
