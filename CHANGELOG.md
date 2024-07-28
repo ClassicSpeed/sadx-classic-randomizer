@@ -19,6 +19,8 @@ All notable changes to this project will be documented in this file.
   screen.
 - Removed 10 second penalty at the end of Sonic and Tails levels.
 - Added options to randomize each character's upgrades.
+- Added Universal tracker Support.
+- Added starting setup info to the spoilers.
 
 ### Changed
 
