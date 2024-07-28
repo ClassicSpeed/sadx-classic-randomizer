@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.3.3] - 2024-07-?
+
+### Changed
+
+- Fix Big and Gamma being stuck on the Casino Area
+
 ## [v0.3.2] - 2024-07-27
 
 ### Added

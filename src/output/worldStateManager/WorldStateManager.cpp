@@ -124,6 +124,13 @@ FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
     return false;
 });
 
+//Opens the Casino for all the characters
+FunctionHook<int> isStationToCasinoDoorOpen(0x638880, []()-> int
+{
+    return EventFlagArray[FLAG_SONIC_SS_STATION_BACK];
+});
+
+
 //Prevents the recap screen from showing on the last story
 FunctionHook<int, int> showRecap(0x643C00, [](int _)-> int
 {
