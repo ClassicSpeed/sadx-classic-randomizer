@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.3.3] - 2024-07-?
+## [v0.3.3] - 2024-07-28
+
+### Added
+
+- Graving a field emblem no longer prevents you from moving.
 
 ### Changed
 

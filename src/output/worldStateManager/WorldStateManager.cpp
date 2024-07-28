@@ -5,6 +5,9 @@ WorldStateManager* worldStateManagerPtr;
 WorldStateManager::WorldStateManager()
 {
     worldStateManagerPtr = this;
+    //Re-enable control after graving an emblem
+    WriteCall((void*)0x4B4891, EnableControl);
+    WriteCall((void*)0x4B46C5, EnableControl);
 }
 
 void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
