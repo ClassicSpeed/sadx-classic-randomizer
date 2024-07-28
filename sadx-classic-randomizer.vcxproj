@@ -101,7 +101,7 @@
       <Command>call ./scripts/release-clean.bat</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call ./scripts/release_zip.bat; call ./scripts/release_install.bat</Command>
+      <Command>call ./scripts/release_install.bat &amp;&amp; call ./scripts/release_zip.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
