@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.3.3] - 2024-07-28
+
+### Added
+
+- Graving a field emblem no longer prevents you from moving.
+
+### Changed
+
+- Fix Big and Gamma being stuck on the Casino Area
+- Amy's Final Egg entrance no longer open from the start.
+- Added Jet Anklet for Tails' A missions logic
+- Removed Shovel Claw requirements for knuckles' life capsules
+
 ## [v0.3.2] - 2024-07-27
 
 ### Added
@@ -19,6 +32,8 @@ All notable changes to this project will be documented in this file.
   screen.
 - Removed 10 second penalty at the end of Sonic and Tails levels.
 - Added options to randomize each character's upgrades.
+- Added Universal tracker Support.
+- Added starting setup info to the spoilers.
 
 ### Changed
 

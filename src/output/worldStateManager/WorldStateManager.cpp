@@ -5,6 +5,9 @@ WorldStateManager* worldStateManagerPtr;
 WorldStateManager::WorldStateManager()
 {
     worldStateManagerPtr = this;
+    //Re-enable control after graving an emblem
+    WriteCall((void*)0x4B4891, EnableControl);
+    WriteCall((void*)0x4B46C5, EnableControl);
 }
 
 void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
@@ -123,6 +126,13 @@ FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
         return isMonkeyDead(1);
     return false;
 });
+
+//Opens the Casino for all the characters
+FunctionHook<int> isStationToCasinoDoorOpen(0x638880, []()-> int
+{
+    return EventFlagArray[FLAG_SONIC_SS_STATION_BACK];
+});
+
 
 //Prevents the recap screen from showing on the last story
 FunctionHook<int, int> showRecap(0x643C00, [](int _)-> int

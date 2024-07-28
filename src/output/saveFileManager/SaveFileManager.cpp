@@ -174,6 +174,7 @@ void SaveFileManager::OnSaveFileCreated()
 
     //FinalEgg
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_FINALEGG));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_ENTRANCE_FINALEGG));
 
     //Chao Garden
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_SS));
