@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Fix Big and Gamma being stuck on the Casino Area
+- Amy's Final Egg entrance no longer open from the start.
 
 ## [v0.3.2] - 2024-07-27
 
