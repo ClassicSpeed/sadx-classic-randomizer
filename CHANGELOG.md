@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - Fix Big and Gamma being stuck on the Casino Area
 - Amy's Final Egg entrance no longer open from the start.
+- Added Jet Anklet for Tails' A missions logic
+- Removed Shovel Claw requirements for knuckles' life capsules
 
 ## [v0.3.2] - 2024-07-27
 
