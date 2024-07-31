@@ -12,24 +12,24 @@ ItemRepository::ItemRepository()
         {6, ItemData::CharacterItem(FLAG_BIG_PLAYABLE, "Playable Big")},
 
 
-        {10, ItemData::UpgradeItem(Upgrades_LightShoes, "Light shoes (Sonic)")},
-        {11, ItemData::UpgradeItem(Upgrades_CrystalRing, "Crystal ring (Sonic)")},
-        {12, ItemData::UpgradeItem(Upgrades_AncientLight, "Ancient light (Sonic)")},
+        {10, ItemData::UpgradeItem(Upgrades_LightShoes, "Light Shoes (Sonic)")},
+        {11, ItemData::UpgradeItem(Upgrades_CrystalRing, "Crystal Ring (Sonic)")},
+        {12, ItemData::UpgradeItem(Upgrades_AncientLight, "Ancient Light (Sonic)")},
 
         {20, ItemData::UpgradeItem(Upgrades_JetAnklet, "Jet Ankle (Tails)")},
         {21, ItemData::UpgradeItem(Upgrades_RhythmBadge, "Rhythm Badge (Tails)")},
 
-        {30, ItemData::UpgradeItem(Upgrades_ShovelClaw, "Shovel claw (Knuckles)")},
-        {31, ItemData::UpgradeItem(Upgrades_FightingGloves, "Fighting gloves (Knuckles)")},
+        {30, ItemData::UpgradeItem(Upgrades_ShovelClaw, "Shovel Claw (Knuckles)")},
+        {31, ItemData::UpgradeItem(Upgrades_FightingGloves, "Fighting Gloves (Knuckles)")},
 
-        {40, ItemData::UpgradeItem(Upgrades_WarriorFeather, "Warrior feather (Amy)")},
+        {40, ItemData::UpgradeItem(Upgrades_WarriorFeather, "Warrior Feather (Amy)")},
         {41, ItemData::UpgradeItem(Upgrades_LongHammer, "Long Hammer (Amy)")},
 
-        {50, ItemData::UpgradeItem(Upgrades_JetBooster, "Jet booster (Gamma)")},
+        {50, ItemData::UpgradeItem(Upgrades_JetBooster, "Jet Booster (Gamma)")},
         {51, ItemData::UpgradeItem(Upgrades_LaserBlaster, "Laser Blaster (Gamma)")},
 
-        {60, ItemData::UpgradeItem(Upgrades_LifeRing, "Life belt (Big)")},
-        {61, ItemData::UpgradeItem(Upgrades_PowerRod, "Power rod (Big)")},
+        {60, ItemData::UpgradeItem(Upgrades_LifeRing, "Life Belt (Big)")},
+        {61, ItemData::UpgradeItem(Upgrades_PowerRod, "Power Rod (Big)")},
 
         {62, ItemData::LureItem("Lure 1 (Big)")},
         {63, ItemData::LureItem("Lure 2 (Big)")},
