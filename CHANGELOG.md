@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## [v0.3.4] - ?
+
+### Changed
+- Improved handling of the spawned objects in the levels.
+
 ## [v0.3.3] - 2024-07-28
 
 ### Added

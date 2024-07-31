@@ -6,6 +6,9 @@ CharacterManager* characterManagerPtr;
 CharacterManager::CharacterManager()
 {
     characterManagerPtr = this;
+    //Re-enable control after graving an emblem
+    WriteCall((void*)0x4B4891, EnableControl);
+    WriteCall((void*)0x4B46C5, EnableControl);
 }
 
 void CharacterManager::GiveUpgrade(const Upgrades upgrade)
