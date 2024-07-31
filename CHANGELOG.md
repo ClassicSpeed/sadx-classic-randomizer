@@ -2,11 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-
-## [v0.3.4] - ?
+## [v0.4.0] - ?
 
 ### Changed
+
 - Improved handling of the spawned objects in the levels.
+- Updated capitalization for upgrade names.
 
 ## [v0.3.3] - 2024-07-28
 
@@ -16,10 +17,10 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Fix Big and Gamma being stuck on the Casino Area
+- Fix Big and Gamma being stuck on the Casino Area.
 - Amy's Final Egg entrance no longer open from the start.
-- Added Jet Anklet for Tails' A missions logic
-- Removed Shovel Claw requirements for knuckles' life capsules
+- Added Jet Anklet for Tails' A missions logic.
+- Removed Shovel Claw requirements for knuckles' life capsules.
 
 ## [v0.3.2] - 2024-07-27
 
