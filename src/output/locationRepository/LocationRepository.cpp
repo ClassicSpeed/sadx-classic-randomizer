@@ -4,30 +4,30 @@
 LocationRepository::LocationRepository()
 {
     _checkData = {
-        {100, LocationData::UpgradeLocation(FLAG_SONIC_SS_LIGHTSHOOSE, "Light shoes upgrade (Sonic)", 10)},
-        {101, LocationData::UpgradeLocation(FLAG_SONIC_SS_CRYSTALRING, "Crystal ring upgrade (Sonic)", 11)},
-        {102, LocationData::UpgradeLocation(FLAG_SONIC_MR_ANCIENT_LIGHT, "Ancient light upgrade (Sonic)", 12)},
+        {100, LocationData::UpgradeLocation(FLAG_SONIC_SS_LIGHTSHOOSE, "Light Shoes Upgrade (Sonic)", 10)},
+        {101, LocationData::UpgradeLocation(FLAG_SONIC_SS_CRYSTALRING, "Crystal Ring Upgrade (Sonic)", 11)},
+        {102, LocationData::UpgradeLocation(FLAG_SONIC_MR_ANCIENT_LIGHT, "Ancient Light Upgrade (Sonic)", 12)},
 
-        {200, LocationData::UpgradeLocation(FLAG_MILES_SS_JETANKLET, "Jet Ankle upgrade (Tails)", 20)},
-        // {201, LocationData::UpgradeLocation(FLAG_MILES_MR_RHYTHMBROOCH, "Rhythm Badge upgrade (Tails)", 21)},
+        {200, LocationData::UpgradeLocation(FLAG_MILES_SS_JETANKLET, "Jet Ankle Upgrade (Tails)", 20)},
+        // {201, LocationData::UpgradeLocation(FLAG_MILES_MR_RHYTHMBROOCH, "Rhythm Badge Upgrade (Tails)", 21)},
 
-        {300, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_SHOVELCLAW, "Shovel claw upgrade (Knuckles)", 30)},
-        {301, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_FIGHTINGGROVE, "Fighting gloves upgrade (Knuckles)", 31)},
+        {300, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_SHOVELCLAW, "Shovel Claw Upgrade (Knuckles)", 30)},
+        {301, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_FIGHTINGGROVE, "Fighting Gloves Upgrade (Knuckles)", 31)},
 
         //We grant amy the warrior's feather upgrade when getting the long hammer as well
-        {400, LocationData::UpgradeLocation(FLAG_AMY_EC_LONGHAMMER, "Warrior feather upgrade (Amy)", 41)},
-        {401, LocationData::UpgradeLocation(FLAG_AMY_EC_LONGHAMMER, "Long Hammer upgrade (Amy)", 41)},
+        {400, LocationData::UpgradeLocation(FLAG_AMY_EC_LONGHAMMER, "Warrior Feather Upgrade (Amy)", 41)},
+        {401, LocationData::UpgradeLocation(FLAG_AMY_EC_LONGHAMMER, "Long Hammer Upgrade (Amy)", 41)},
 
-        {500, LocationData::UpgradeLocation(FLAG_E102_EC_BOOSTER, "Jet booster upgrade (Gamma)", 50)},
-        {501, LocationData::UpgradeLocation(FLAG_E102_EC_TYPE3LASER, "Laser Blaster upgrade (Gamma)", 51)},
+        {500, LocationData::UpgradeLocation(FLAG_E102_EC_BOOSTER, "Jet Booster Upgrade (Gamma)", 50)},
+        {501, LocationData::UpgradeLocation(FLAG_E102_EC_TYPE3LASER, "Laser Blaster Upgrade (Gamma)", 51)},
 
-        {600, LocationData::UpgradeLocation(FLAG_BIG_MR_LIFEBELT, "Life belt upgrade (Big)", 60)},
-        {601, LocationData::UpgradeLocation(FLAG_BIG_MR_POWERROD, "Power rod upgrade (Big)", 61)},
+        {600, LocationData::UpgradeLocation(FLAG_BIG_MR_LIFEBELT, "Life Belt Upgrade (Big)", 60)},
+        {601, LocationData::UpgradeLocation(FLAG_BIG_MR_POWERROD, "Power Rod Upgrade (Big)", 61)},
 
-        {602, LocationData::UpgradeLocation(FLAG_BIG_RUAR_NORMAL, "Lure 1 upgrade (Big)", -1)},
-        {603, LocationData::UpgradeLocation(FLAG_BIG_RUAR_RED, "Lure 2 upgrade (Big)", -1)},
-        {604, LocationData::UpgradeLocation(FLAG_BIG_RUAR_GOLD, "Lure 3 upgrade (Big)", -1)},
-        {605, LocationData::UpgradeLocation(FLAG_BIG_RUAR_BLUE, "Lure 4 upgrade (Big)", -1)},
+        {602, LocationData::UpgradeLocation(FLAG_BIG_RUAR_NORMAL, "Lure 1 Upgrade (Big)", -1)},
+        {603, LocationData::UpgradeLocation(FLAG_BIG_RUAR_RED, "Lure 2 Upgrade (Big)", -1)},
+        {604, LocationData::UpgradeLocation(FLAG_BIG_RUAR_GOLD, "Lure 3 Upgrade (Big)", -1)},
+        {605, LocationData::UpgradeLocation(FLAG_BIG_RUAR_BLUE, "Lure 4 Upgrade (Big)", -1)},
 
         //Level id: ABXX where A is the character, B is the level in the story order, and XX is the check in that level 
 
