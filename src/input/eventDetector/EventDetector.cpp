@@ -1,11 +1,11 @@
 #include "EventDetector.h"
-EventDetector* eventDetector;
+EventDetector* eventDetectorPtr;
 
 EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
 {
-    _checkData = randomizer.GetCheckData();
+    checkData = randomizer.GetCheckData();
     lifeCapsules = randomizer.GetLifeCapsules();
-    eventDetector = this;
+    eventDetectorPtr = this;
 }
 
 
@@ -124,9 +124,9 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
     0x4B4640, [](SaveFileData* savefile, int character, signed int level, int mission)-> void
     {
         OnLevelEmblemCollected.Original(savefile, character, level, mission);
-        eventDetector->OnLevelEmblem(character, level, mission);
+        eventDetectorPtr->OnLevelEmblem(character, level, mission);
 
-        if (!eventDetector->completeMultipleLevelMissions)
+        if (!eventDetectorPtr->completeMultipleLevelMissions)
             return;
 
         //We check all other missions that were completed
@@ -138,7 +138,7 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
                 if (ManualMissionBCheck(character))
                 {
                     OnLevelEmblemCollected.Original(savefile, character, level, MISSION_B);
-                    eventDetector->OnLevelEmblem(character, level, MISSION_B);
+                    eventDetectorPtr->OnLevelEmblem(character, level, MISSION_B);
                 }
             }
 
@@ -148,7 +148,7 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
                 if (ManualMissionACheck(character, level))
                 {
                     OnLevelEmblemCollected.Original(savefile, character, level, MISSION_A);
-                    eventDetector->OnLevelEmblem(character, level, MISSION_A);
+                    eventDetectorPtr->OnLevelEmblem(character, level, MISSION_A);
                 }
             }
         }
@@ -160,7 +160,7 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
                 if (ManualSubLevelMissionACheck(level))
                 {
                     OnLevelEmblemCollected.Original(savefile, character, level, SUB_LEVEL_MISSION_A);
-                    eventDetector->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
+                    eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
                 }
             }
         }
@@ -172,7 +172,7 @@ FunctionHook<void, SaveFileData*, signed int> OnGenericEmblemCollected(
     0x4B3F30, [](SaveFileData* savefile, signed int index)-> void
     {
         OnGenericEmblemCollected.Original(savefile, index);
-        eventDetector->OnGenericEmblem(index);
+        eventDetectorPtr->OnGenericEmblem(index);
     });
 
 
@@ -189,7 +189,7 @@ void EventDetector::OnPlayingFrame() const
         return;
 
     bool checksFound = false;
-    for (const auto& check : _checkData)
+    for (const auto& check : checkData)
     {
         if (check.second.type == LocationUpgrade && !check.second.checked
             && GetEventFlag(static_cast<EventFlags>(check.second.eventFlag)))
@@ -199,13 +199,13 @@ void EventDetector::OnPlayingFrame() const
         }
     }
     if (checksFound)
-        _checkData = randomizer.GetCheckData();
+        checkData = randomizer.GetCheckData();
 }
 
 void EventDetector::OnLevelEmblem(int character, int level, int mission)
 {
     bool checksFound = false;
-    for (const auto& check : _checkData)
+    for (const auto& check : checkData)
     {
         if (check.second.type == LocationLevel && !check.second.checked
             && check.second.character == character
@@ -224,13 +224,13 @@ void EventDetector::OnLevelEmblem(int character, int level, int mission)
         }
     }
     if (checksFound)
-        _checkData = randomizer.GetCheckData();
+        checkData = randomizer.GetCheckData();
 }
 
 void EventDetector::OnGenericEmblem(signed int index)
 {
     bool checksFound = false;
-    for (const auto& check : _checkData)
+    for (const auto& check : checkData)
     {
         if (check.second.type == LocationFieldEmblem && !check.second.checked
             && check.second.emblemId == index)
@@ -240,7 +240,7 @@ void EventDetector::OnGenericEmblem(signed int index)
         }
     }
     if (checksFound)
-        _checkData = randomizer.GetCheckData();
+        checkData = randomizer.GetCheckData();
 }
 
 void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
@@ -251,12 +251,12 @@ void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
 
 FunctionHook<SEQ_SECTIONTBL*, int> SeqGetSectionListHook(0x44EAF0, [](int playerno)-> SEQ_SECTIONTBL* {
     SEQ_SECTIONTBL* ptr = SeqGetSectionListHook.Original(playerno);
-    if (LastStoryFlag == 1 && eventDetector->lastStoryState == LastStoryNotStarted)
+    if (LastStoryFlag == 1 && eventDetectorPtr->lastStoryState == LastStoryNotStarted)
     {
         //Start Perfect Chaos fight as soon as we load the story
         ptr->stg = LevelIDs_PerfectChaos;
         ptr->act = 0;
-        eventDetector->lastStoryState = LastStoryStarted;
+        eventDetectorPtr->lastStoryState = LastStoryStarted;
     }
     return ptr;
 });
@@ -264,7 +264,7 @@ FunctionHook<SEQ_SECTIONTBL*, int> SeqGetSectionListHook(0x44EAF0, [](int player
 
 FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](const __int16 scene) -> void
 {
-    if (LastStoryFlag == 1 && eventDetector->lastStoryState == LastStoryStarted && scene == 1)
+    if (LastStoryFlag == 1 && eventDetectorPtr->lastStoryState == LastStoryStarted && scene == 1)
     {
         //We start the credits as soon as the fight is won
         startLevelCutsceneHook.Original(scene);
@@ -272,7 +272,7 @@ FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](const __int16 sc
         WriteSaveFile();
         GameState = MD_GAME_FADEOUT_STAFFROLL;
         GameMode = GameModes_StartCredits;
-        eventDetector->lastStoryState = LastStoryCompleted;
+        eventDetectorPtr->lastStoryState = LastStoryCompleted;
         return;
     }
     startLevelCutsceneHook.Original(scene);
@@ -280,14 +280,14 @@ FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](const __int16 sc
 
 FunctionHook<BOOL> onMissionMenuRenderHook(0x506410, []()-> BOOL
 {
-    eventDetector->lastStoryState = LastStoryNotStarted;
+    eventDetectorPtr->lastStoryState = LastStoryNotStarted;
     return onMissionMenuRenderHook.Original();
 });
 
 
 FunctionHook<void, EntityData1*> OnExtraLife(0x4D6D40, [](EntityData1* entity)-> void
 {
-    for (const auto& lifeCapsule : eventDetector->lifeCapsules)
+    for (const auto& lifeCapsule : eventDetectorPtr->lifeCapsules)
     {
         if (lifeCapsule.character != CurrentCharacter)
             continue;
@@ -302,7 +302,7 @@ FunctionHook<void, EntityData1*> OnExtraLife(0x4D6D40, [](EntityData1* entity)->
 
         if (distance <= 5.0)
         {
-            eventDetector->randomizer.OnCheckFound(lifeCapsule.locationId);
+            eventDetectorPtr->randomizer.OnCheckFound(lifeCapsule.locationId);
             break; // Entity is near a capsule, no need to check further
         }
     }
@@ -314,6 +314,55 @@ FunctionHook<void, EntityData1*> OnExtraLife(0x4D6D40, [](EntityData1* entity)->
 FunctionHook<void, int> onGiveLives(0x425B60, [](int lives)-> void
 {
     if (lives == -1 && GameState == MD_GAME_FADEOUT_MISS)
-        eventDetector->randomizer.OnDeath();
+        eventDetectorPtr->randomizer.OnDeath();
     onGiveLives.Original(lives);
+});
+
+FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
+{
+    onLoadLevelResults.Original();
+    if (CurrentLevel < LevelIDs_Chaos0 || CurrentLevel > LevelIDs_E101R)
+        return;
+    if (!eventDetectorPtr->randomizer.GetOptions().bossChecks)
+        return;
+
+    bool checksFound = false;
+    for (const auto& check : eventDetectorPtr->checkData)
+    {
+        if (check.second.type != LocationBossFight)
+            continue;
+
+        if (eventDetectorPtr->randomizer.GetOptions().unifyEggHornet && CurrentLevel == LevelIDs_EggHornet)
+        {
+            if (check.second.character == -1 && check.second.level == LevelIDs_EggHornet && !check.second.checked)
+            {
+                eventDetectorPtr->randomizer.OnCheckFound(check.first);
+                checksFound = true;
+            }
+        }
+        else if (eventDetectorPtr->randomizer.GetOptions().unifyChaos4 && CurrentLevel == LevelIDs_Chaos4)
+        {
+            if (check.second.character == -1 && check.second.level == LevelIDs_Chaos4 && !check.second.checked)
+            {
+                eventDetectorPtr->randomizer.OnCheckFound(check.first);
+                checksFound = true;
+            }
+        }
+        else if (eventDetectorPtr->randomizer.GetOptions().unifyChaos6 && CurrentLevel == LevelIDs_Chaos6)
+        {
+            if (check.second.character == -1 && check.second.level == LevelIDs_Chaos6 && !check.second.checked)
+            {
+                eventDetectorPtr->randomizer.OnCheckFound(check.first);
+                checksFound = true;
+            }
+        }
+        else if (check.second.character == CurrentCharacter && check.second.level == CurrentLevel && !check.second.
+            checked)
+        {
+            eventDetectorPtr->randomizer.OnCheckFound(check.first);
+            checksFound = true;
+        }
+    }
+    if (checksFound)
+        eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
 });

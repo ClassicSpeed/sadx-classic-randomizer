@@ -164,6 +164,26 @@ void SADX_RingLoss(const int ringLoss)
     randomizerPtr->SetRingLoss(static_cast<RingLoss>(ringLoss));
 }
 
+void SADX_BossChecks(const int bossChecks)
+{
+    randomizerPtr->SetBossChecks(bossChecks);
+}
+
+void SADX_UnifyChaos4(const int unifiyChaos4)
+{
+    randomizerPtr->SetUnifyChaos4(unifiyChaos4);
+}
+
+void SADX_UnifyChaos6(const int unifiyChaos6)
+{
+    randomizerPtr->SetUnifyChaos6(unifiyChaos6);
+}
+
+void SADX_UnifyEggHornet(const int unifyEggHornet)
+{
+    randomizerPtr->SetUnifyEggHornet(unifyEggHornet);
+}
+
 void SADX_SonicMissions(const int missions)
 {
     randomizerPtr->SetMissions(Characters_Sonic, missions);
@@ -208,6 +228,11 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
     AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);
     AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
+
+    AP_RegisterSlotDataIntCallback("BossChecks", &SADX_BossChecks);
+    AP_RegisterSlotDataIntCallback("UnifyChaos4", &SADX_UnifyChaos4);
+    AP_RegisterSlotDataIntCallback("UnifyChaos6", &SADX_UnifyChaos6);
+    AP_RegisterSlotDataIntCallback("UnifyEggHornet", &SADX_UnifyEggHornet);
     AP_RegisterSlotDataIntCallback("SonicMissions", &SADX_SonicMissions);
     AP_RegisterSlotDataIntCallback("TailsMissions", &SADX_TailsMissions);
     AP_RegisterSlotDataIntCallback("KnucklesMissions", &SADX_KnucklesMissions);

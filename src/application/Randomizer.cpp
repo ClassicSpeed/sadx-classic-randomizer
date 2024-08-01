@@ -187,6 +187,26 @@ void Randomizer::SetRingLoss(const RingLoss ringLoss)
     _characterManager.UpdateOptions(_options);
 }
 
+void Randomizer::SetBossChecks(const bool bossChecks)
+{
+    _options.bossChecks = bossChecks;
+}
+
+void Randomizer::SetUnifyChaos4(const bool unifyChaos4)
+{
+    _options.unifyChaos4 = unifyChaos4;
+}
+
+void Randomizer::SetUnifyChaos6(const bool unifyChaos6)
+{
+    _options.unifyChaos6 = unifyChaos6;
+}
+
+void Randomizer::SetUnifyEggHornet(const bool unifyEggHornet)
+{
+    _options.unifyEggHornet = unifyEggHornet;
+}
+
 Options Randomizer::GetOptions() const
 {
     return _options;

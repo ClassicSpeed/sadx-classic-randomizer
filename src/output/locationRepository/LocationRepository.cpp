@@ -155,6 +155,32 @@ LocationRepository::LocationRepository()
         {32, LocationData::FieldEmblemLocation(124, "Hidden Bed Emblem")},
         {33, LocationData::FieldEmblemLocation(122, "Main Platform Emblem")},
 
+        //Boss Fight
+        {700, LocationData::BossFightLocation(Characters_Sonic, LevelIDs_Chaos0)},
+        {710, LocationData::BossFightLocation(Characters_Knuckles, LevelIDs_Chaos2)},
+        {720, LocationData::BossFightLocation(Characters_Tails, LevelIDs_EggWalker)},
+
+        {730, LocationData::BossFightLocation(Characters_Sonic, LevelIDs_EggHornet)},
+        {731, LocationData::BossFightLocation(Characters_Tails, LevelIDs_EggHornet)},
+        {739, LocationData::BossFightLocation(-1, LevelIDs_EggHornet)},
+
+        {740, LocationData::BossFightLocation(Characters_Sonic, LevelIDs_Chaos4)},
+        {741, LocationData::BossFightLocation(Characters_Tails, LevelIDs_Chaos4)},
+        {742, LocationData::BossFightLocation(Characters_Knuckles, LevelIDs_Chaos4)},
+        {749, LocationData::BossFightLocation(-1, LevelIDs_Chaos4)},
+
+        {750, LocationData::BossFightLocation(Characters_Sonic, LevelIDs_EggViper)},
+        {760, LocationData::BossFightLocation(Characters_Gamma, LevelIDs_E101)},
+
+        {770, LocationData::BossFightLocation(Characters_Sonic, LevelIDs_Chaos6)},
+        {771, LocationData::BossFightLocation(Characters_Knuckles, LevelIDs_Chaos6)},
+        {772, LocationData::BossFightLocation(Characters_Big, LevelIDs_Chaos6)},
+        {779, LocationData::BossFightLocation(-1, LevelIDs_Chaos6)},
+
+        {780, LocationData::BossFightLocation(Characters_Gamma, LevelIDs_E101R)},
+        {790, LocationData::BossFightLocation(Characters_Amy, LevelIDs_Zero)},
+
+
     };
 
     _lifeCapsules = {

@@ -40,6 +40,10 @@ public:
     void SetDeathLink(bool deathLinkActive);
     void SetRingLink(bool ringLinkActive);
     void SetRingLoss(RingLoss ringLoss);
+    void SetBossChecks(bool bossChecks);
+    void SetUnifyChaos4(bool unifyChaos4);
+    void SetUnifyChaos6(bool unifyChaos6);
+    void SetUnifyEggHornet(bool unifyEggHornet);
     Options GetOptions() const;
     std::vector<LifeBoxLocationData> GetLifeCapsules();
     void ProcessDeath(const std::string& deathCause);
