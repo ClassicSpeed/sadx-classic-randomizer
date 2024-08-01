@@ -272,6 +272,8 @@ LocationRepository::LocationRepository()
         {400.11f, -260.01f, 1125.68f, LevelAndActIDs_SkyDeck1, Characters_Tails, 2310},
         {401.52f, -210.01f, 1320.11f, LevelAndActIDs_SkyDeck1, Characters_Tails, 2311},
         {487.7f, -450.0f, 3727.33f, LevelAndActIDs_SkyDeck1, Characters_Tails, 2312},
+        {401.04f, -601.0f, 4220.15f, LevelAndActIDs_SkyDeck1, Characters_Tails, 2313},
+        {401.04f, -599.5f, 4220.15f, LevelAndActIDs_SkyDeck1, Characters_Tails, 2313}, //DX
         {4956.11f, -1714.0f, 1364.51f, LevelAndActIDs_SpeedHighway1, Characters_Tails, 2410},
         {4626.2f, -1675.0f, 1667.93f, LevelAndActIDs_SpeedHighway1, Characters_Tails, 2411},
         {4259.64f, -1704.04f, 4095.85f, LevelAndActIDs_SpeedHighway1, Characters_Tails, 2412},

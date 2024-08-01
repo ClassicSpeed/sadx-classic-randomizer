@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
     - Every entrance is represented by a warp platform (Chaos 2 entrance is 2nd elevator in the hotel).
 - Added Big's Emerald Coast life capsule as a location check.
 - Added Sonic's 3rd Life Capsule in the Casino sewer (Credit to TerraFrost).
+- Added Tails's 4th Life Capsule in Sky Deck.
 
 ### Changed
 
