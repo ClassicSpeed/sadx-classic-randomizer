@@ -197,12 +197,11 @@ LocationRepository::LocationRepository()
         {1147.72f, -2209.17f, 1260.16f, LevelAndActIDs_WindyValley3, Characters_Sonic, 1112},
         {1677.8f, -2577.0f, 1117.49f, LevelAndActIDs_WindyValley3, Characters_Sonic, 1113}, // R:Light Shoes
         {4159.61f, -4484.5f, -1826.59f, LevelAndActIDs_WindyValley3, Characters_Sonic, 1114},
-        {-2.18f, -8.14f, 104.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1210}, //evil tower bypass lol
-        {-2.18f, -3.0f, 104.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1210}, //evil tower bypass but DX
-        {-161.4f, 55.0f, 2.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1210},
-        {-161.4f, 50.0f, 12.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1210}, //m
-        {-1.93f, -3.0f, 39.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1211}, //bumper tower bypass
-        {166.62f, 50.0f, 14.55f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1211},
+        {-2.18f, -8.14f, 104.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1210},
+        {-2.18f, -3.0f, 104.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1210},
+        {-161.4f, 55.0f, 2.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1211}, //evil tower bypass lol
+        {-161.4f, 50.0f, 12.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1211}, //evil tower bypass but DX
+        {166.62f, 50.0f, 14.55f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1212}, //bumper tower bypass
         {487.79f, 250.67f, 1149.06f, LevelAndActIDs_IceCap1, Characters_Sonic, 1310},
         {487.79f, 249.67f, 1149.06f, LevelAndActIDs_IceCap1, Characters_Sonic, 1310}, //DX
         {-2537.78f, -208.31f, 7597.23f, LevelAndActIDs_TwinklePark1, Characters_Sonic, 1410},

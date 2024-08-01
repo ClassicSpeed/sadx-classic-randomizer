@@ -11,11 +11,12 @@ All notable changes to this project will be documented in this file.
     - Every entrance is located near the location of the boss in the story.
     - Every entrance is represented by a warp platform (Chaos 2 entrance is 2nd elevator in the hotel).
 - Added Big's Emerald Coast life capsule as a location check.
+- Added Sonic's 3rd Life Capsule in the Casino sewer (Credit to TerraFrost).
 
 ### Changed
 
 - Improved handling of the spawned objects in the levels.
-- Updated capitalization for upgrade names.
+- Updated capitalization for upgrade names (Credit to Knux).
 - Renamed Jungle Kart to Jungle Cart.
 - Removed Amy from City Hall emblem logic.
 - Removed Life Belt for Big's Ice Cap life capsule.
