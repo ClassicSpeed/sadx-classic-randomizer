@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file.
 - Improved handling of the spawned objects in the levels.
 - Updated capitalization for upgrade names.
 - Renamed Jungle Kart to Jungle Cart.
+- Removed Amy from City Hall emblem logic.
+- Removed Life Belt for Big's Ice Cap life capsule.
 
 ## [v0.3.3] - 2024-07-28
 
