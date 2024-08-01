@@ -162,7 +162,7 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_MOUNTAIN));
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_MOUNTAIN));
 
-    //Jungle Kart
+    //Jungle Cart
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_TRUCK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_TRUCK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_TRUCK));

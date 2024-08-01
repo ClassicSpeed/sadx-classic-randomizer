@@ -40,5 +40,5 @@ struct UnlockStatus
     bool keyEmployeeCard;
     bool keyDynamite;
     bool keyIceStone;
-    bool jungleKart;
+    bool jungleCart;
 };

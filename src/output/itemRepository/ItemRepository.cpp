@@ -92,7 +92,7 @@ ItemRepository::ItemRepository()
             89, ItemData::KeyItem({
                                       FLAG_SONIC_MR_TRUCK, FLAG_MILES_MR_TRUCK, FLAG_KNUCKLES_MR_TRUCK,
                                       FLAG_AMY_MR_TRUCK, FLAG_E102_MR_TRUCK, FLAG_BIG_MR_TRUCK
-                                  }, "Jungle Kart")
+                                  }, "Jungle Cart")
         },
 
         {90, ItemData::EmblemItem("Emblem")},
@@ -172,6 +172,6 @@ UnlockStatus ItemRepository::GetUnlockStatus()
     unlockStatus.keyEmployeeCard = _itemData[86].obtained;
     unlockStatus.keyIceStone = _itemData[87].obtained;
     unlockStatus.keyDynamite = _itemData[88].obtained;
-    unlockStatus.jungleKart = _itemData[89].obtained;
+    unlockStatus.jungleCart = _itemData[89].obtained;
     return unlockStatus;
 }

@@ -9,13 +9,14 @@ All notable changes to this project will be documented in this file.
 - Added Bosses as a location check
     - You can unify Chaos 4, Chaos 6 and Egg Hornet in the options, so you'll have to fight them only once.
     - Every entrance is located near the location of the boss in the story.
-    - Every entrance is represented by a warp platform (Except for Chaos 2, you use the other elevator in the hotel).
+    - Every entrance is represented by a warp platform (Chaos 2 entrance is 2nd elevator in the hotel).
 - Added Big's Emerald Coast life capsule as a location check.
 
 ### Changed
 
 - Improved handling of the spawned objects in the levels.
 - Updated capitalization for upgrade names.
+- Renamed Jungle Kart to Jungle Cart.
 
 ## [v0.3.3] - 2024-07-28
 
