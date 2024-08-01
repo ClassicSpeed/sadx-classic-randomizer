@@ -9,8 +9,7 @@ All notable changes to this project will be documented in this file.
 - Added Bosses as a location check
     - You can unify Chaos 4, Chaos 6 and Egg Hornet in the options, so you'll have to fight them only once.
     - Every entrance is located near the location of the boss in the story.
-    - Every entrance in Station Square and Mystic Ruins is represented by Tikal (Except for Chaos 2 since it's just).
-    - The entrance in the Egg Carrier platform is represented by a hint Monitor at the center of it.
+    - Every entrance is represented by a warp platform (Except for Chaos 2, you use the other elevator in the hotel).
 
 ### Changed
 

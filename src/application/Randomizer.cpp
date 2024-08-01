@@ -16,6 +16,10 @@ void Randomizer::OnCheckFound(const int checkId) const
     if (check.character == Characters_Big && check.level == LevelIDs_TwinklePark && check.mission == MISSION_C)
         _worldStateManager.SetEventFlags({FLAG_BIG_SS_TPARK_ELEVATOR});
 }
+void Randomizer::MarkCheckedLocation(const int64_t checkId) const
+{
+    _locationRepository.SetLocationChecked(checkId);
+}
 
 
 void Randomizer::OnItemReceived(const int64_t itemId) const
@@ -36,6 +40,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     _characterManager.UpdateUnlockStatus(unlockStatus);
     _displayManager.UpdateUnlockStatus(unlockStatus);
 }
+
 
 void Randomizer::OnCharacterLoaded() const
 {

@@ -87,7 +87,7 @@ void SADX_ResetItems()
 void SADX_CheckLocation(int64_t loc_id)
 {
     PrintDebug("Checked location %d\n", loc_id);
-    randomizerPtr->OnCheckFound(loc_id - archipelagoManagerPtr->baseId);
+    randomizerPtr->MarkCheckedLocation(loc_id - archipelagoManagerPtr->baseId);
 }
 
 void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)

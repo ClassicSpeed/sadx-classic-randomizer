@@ -27,6 +27,7 @@ public:
 
     void OnCheckFound(int checkId) const;
     void OnItemReceived(int64_t itemId) const;
+    void MarkCheckedLocation(int64_t checkId) const;
     void OnCharacterLoaded() const;
     void OnCharacterSelectScreenLoaded() const;
     std::map<int, LocationData> GetCheckData() const;

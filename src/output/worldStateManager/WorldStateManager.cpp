@@ -2,23 +2,61 @@
 
 WorldStateManager* worldStateManagerPtr;
 
-constexpr int SCENE_CHANGE_STATION_SQUARE = 19;
-constexpr int SCENE_CHANGE_MYSTIC_RUINS = 6;
-constexpr int SCENE_CHANGE_PAST = 10;
-constexpr int SCENE_CHANGE_EGG_CARRIER_OUTSIDE = 6;
+
+constexpr int WARP_EGG_CARRIER_INSIDE = 35;
+
+constexpr int WARP_STATION_SQUARE = 17;
+constexpr int WARP_MYSTIC_RUINS = 6;
+constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
 
 
-constexpr int TIKAL_STATION_SQUARE = 105;
-constexpr int TIKAL_MYSTIC_RUINS = 61;
-constexpr int TIKAL_EGG_CARRIER = 22;
+static void __cdecl HandleWarp()
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Sonic)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos0, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2 && CurrentCharacter ==
+        Characters_Tails)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggWalker, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Sonic)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggViper, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Gamma)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_E101, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
+            || CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Knuckles)
+        && EntityData1Ptrs[0]->Position.y < 0)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos4, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
+        || CurrentCharacter == Characters_Tails) && EntityData1Ptrs[0]->Position.y > 0)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggHornet, 0);
+
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Gamma)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_E101R, 0);
+
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Amy)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Zero, 0);
+
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && (CurrentCharacter == Characters_Sonic || CurrentCharacter ==
+        Characters_Knuckles || CurrentCharacter == Characters_Big))
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 0);
+
+    else
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
+}
 
 WorldStateManager::WorldStateManager()
 {
+    WriteCall(reinterpret_cast<void*>(0x526629), &HandleWarp);
     worldStateManagerPtr = this;
-    //We replace the checkpoint for a Scene change object from Station Square
-    ObjList_Past[10] = ObjList_SSquare[SCENE_CHANGE_STATION_SQUARE];
-    ObjList_MRuins[SCENE_CHANGE_MYSTIC_RUINS] = ObjList_SSquare[SCENE_CHANGE_STATION_SQUARE];
-    ObjList_ECarrier0[SCENE_CHANGE_EGG_CARRIER_OUTSIDE] = ObjList_SSquare[SCENE_CHANGE_STATION_SQUARE];
+
+    //We replace the checkpoint for a warp object from the Egg Carrier
+    ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
+    ObjList_MRuins[WARP_MYSTIC_RUINS] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
+    ObjList_ECarrier0[WARP_EGG_CARRIER_OUTSIDE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
 }
 
 void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
@@ -191,110 +229,74 @@ void AddSetToLevel(const SETEntry& newSetEntry, const LevelAndActIDs levelAndAct
     }
 }
 
-const SETEntry final_egg_spring = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f});
-const SETEntry sewers_spring = CreateSetEntry(1, {505, -89, 635});
+const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f});
+const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635});
 
-// const SETEntry time_travel = CreateSetEntry(19, {-69, 10, 1469}, {0, 0, 0x2200}, {2, 2, 2});
 
 //Station Square Bosses
-const SETEntry tikalChaos0 = CreateSetEntry(TIKAL_STATION_SQUARE, {270, 0, 390}, {0, 0, 0x96F6}, {0, 0, 18});
-const SETEntry Chaos0 = CreateSetEntry(SCENE_CHANGE_STATION_SQUARE, {270, 10, 390}, {0, 0, 0x0F00}, {1.5f, 1.5f, 1.5f});
+const SETEntry WARP_CHAOS0 = CreateSetEntry(WARP_STATION_SQUARE, {270, 0, 450});
 
-const SETEntry tikalEggWalker = CreateSetEntry(TIKAL_STATION_SQUARE, {-390, 0, 945}, {0, 0, 0x96F6}, {0, 0, 18});
-const SETEntry EggWalker = CreateSetEntry(SCENE_CHANGE_STATION_SQUARE, {-390, 10, 945}, {0, 0, 0x1500},
-                                          {1.5f, 1.5f, 1.5f});
+const SETEntry WARP_EGG_WALKER = CreateSetEntry(WARP_STATION_SQUARE, {-400, -3, 955});
 
 
 //Mystic Ruins Bosses
-const SETEntry tikalEggHornet = CreateSetEntry(TIKAL_MYSTIC_RUINS, {950, 123.92f, 950}, {0, 0xCA7F, 2}, {1.9f, 0, 18});
-const SETEntry EggHornet = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {950, 133.92f, 950}, {0, 0, 0x1400},
-                                          {1.5f, 1.5f, 1.5f});
+const SETEntry WARP_EGG_HORNET = CreateSetEntry(WARP_MYSTIC_RUINS, {950, 127, 950});
 
-const SETEntry tikalChaos4 = CreateSetEntry(TIKAL_MYSTIC_RUINS, {88.62f, -33.99f, -140.96f}, {0, 0xCA7F, 2},
-                                            {1.9f, 0, 18});
-const SETEntry Chaos4 = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {88.62f, -23.99f, -140.96f}, {0, 0, 0x1100},
-                                       {1.5f, 1.5f, 1.5f});
+const SETEntry WARP_CHAOS4 = CreateSetEntry(WARP_MYSTIC_RUINS, {88.62f, -33.99f, -140.96f});
 
-const SETEntry tikalEggViper = CreateSetEntry(TIKAL_MYSTIC_RUINS, {0, 0, 0}, {0, 0xCA7F, 2}, {1.9f, 0, 18});
-const SETEntry EggViper = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {0, 10, 0}, {0, 0, 0x1600}, {1.5f, 1.5f, 1.5f});
+const SETEntry WARP_EGG_VIPER = CreateSetEntry(WARP_MYSTIC_RUINS, {0, 0, 0});
 
-const SETEntry tikalE101 = CreateSetEntry(TIKAL_MYSTIC_RUINS, {0, 0, 0}, {0, 0xCA7F, 2}, {1.9f, 0, 18});
-const SETEntry E101 = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {0, 10, 0}, {0, 0, 0x1800}, {1.5f, 1.5f, 1.5f});
+const SETEntry WARP_E101 = CreateSetEntry(WARP_MYSTIC_RUINS, {0, 0, 0});
 
 //Egg Carrier Bosses
-const SETEntry tikalChaos6 = CreateSetEntry(TIKAL_EGG_CARRIER, {0, 770, -385.69f}, {0, 0x4E4A, 0}, {50, 10, 22});
-const SETEntry Chaos6 = CreateSetEntry(SCENE_CHANGE_EGG_CARRIER_OUTSIDE, {0, 760, -385.69f}, {0, 0, 0x1200},
-                                       {1.5f, 1.5f, 1.5f});
+const SETEntry WARP_CHAOS6 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 749, -385.69f});
 
-const SETEntry tikalZero = CreateSetEntry(TIKAL_EGG_CARRIER, {0, 770, -385.69f}, {0, 0x4E4A, 0}, {50, 10, 22});
-const SETEntry Zero = CreateSetEntry(SCENE_CHANGE_EGG_CARRIER_OUTSIDE, {0, 760, -385.69f}, {0, 0, 0x1700},
-                                     {1.5f, 1.5f, 1.5f});
+const SETEntry WARP_ZERO = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 749, -385.69f});
 
-const SETEntry tikalE101Mk2 = CreateSetEntry(TIKAL_EGG_CARRIER, {0, 770, -385.69f}, {0, 0x4E4A, 0}, {50, 10, 22});
-const SETEntry E101Mk2 = CreateSetEntry(SCENE_CHANGE_EGG_CARRIER_OUTSIDE, {0, 760, -385.69f}, {0, 0, 0x1900},
-                                        {1.5f, 1.5f, 1.5f});
+const SETEntry WARP_E101_MK2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 749, -385.69f});
+
 
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
     onCountSetItemsMaybe.Original();
 
-    AddSetToLevel(final_egg_spring, LevelAndActIDs_FinalEgg3, Characters_Sonic);
-    AddSetToLevel(sewers_spring, LevelAndActIDs_StationSquare3, Characters_Sonic);
+    LoadPVM("EC_ALIFE", ADV01C_TEXLISTS[3]);
 
+    AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
+    AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
 
-    // AddSetToLevel(time_travel, LevelAndActIDs_StationSquare4, Characters_Sonic);
 
     //Station Square Bosses
-    AddSetToLevel(tikalChaos0, LevelAndActIDs_StationSquare1, Characters_Sonic);
-    AddSetToLevel(Chaos0, LevelAndActIDs_StationSquare1, Characters_Sonic);
-
-    AddSetToLevel(tikalEggWalker, LevelAndActIDs_StationSquare2, Characters_Tails);
-    AddSetToLevel(EggWalker, LevelAndActIDs_StationSquare2, Characters_Tails);
+    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Sonic);
+    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Tails);
 
 
     //Mystic Ruins Bosses
-    AddSetToLevel(tikalEggHornet, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-    AddSetToLevel(EggHornet, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-    AddSetToLevel(tikalEggHornet, LevelAndActIDs_MysticRuins1, Characters_Tails);
-    AddSetToLevel(EggHornet, LevelAndActIDs_MysticRuins1, Characters_Tails);
+    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Tails);
 
-    AddSetToLevel(tikalChaos4, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-    AddSetToLevel(Chaos4, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-    AddSetToLevel(tikalChaos4, LevelAndActIDs_MysticRuins1, Characters_Tails);
-    AddSetToLevel(Chaos4, LevelAndActIDs_MysticRuins1, Characters_Tails);
-    AddSetToLevel(tikalChaos4, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
-    AddSetToLevel(Chaos4, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
+    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Tails);
+    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
 
-    AddSetToLevel(tikalEggViper, LevelAndActIDs_MysticRuins4, Characters_Sonic);
-    AddSetToLevel(EggViper, LevelAndActIDs_MysticRuins4, Characters_Sonic);
-    AddSetToLevel(tikalE101, LevelAndActIDs_MysticRuins4, Characters_Gamma);
-    AddSetToLevel(E101, LevelAndActIDs_MysticRuins4, Characters_Gamma);
+    AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Sonic);
+    AddSetToLevel(WARP_E101, LevelAndActIDs_MysticRuins4, Characters_Gamma);
 
     //Egg Carrier Bosses
-    AddSetToLevel(tikalChaos6, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
-    AddSetToLevel(Chaos6, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
-    AddSetToLevel(tikalChaos6, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
-    AddSetToLevel(Chaos6, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
 
-    AddSetToLevel(tikalChaos6, LevelAndActIDs_EggCarrierOutside1, Characters_Knuckles);
-    AddSetToLevel(Chaos6, LevelAndActIDs_EggCarrierOutside1, Characters_Knuckles);
-    AddSetToLevel(tikalChaos6, LevelAndActIDs_EggCarrierOutside2, Characters_Knuckles);
-    AddSetToLevel(Chaos6, LevelAndActIDs_EggCarrierOutside2, Characters_Knuckles);
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside1, Characters_Knuckles);
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside2, Characters_Knuckles);
 
-    AddSetToLevel(tikalChaos6, LevelAndActIDs_EggCarrierOutside1, Characters_Big);
-    AddSetToLevel(Chaos6, LevelAndActIDs_EggCarrierOutside1, Characters_Big);
-    AddSetToLevel(tikalChaos6, LevelAndActIDs_EggCarrierOutside2, Characters_Big);
-    AddSetToLevel(Chaos6, LevelAndActIDs_EggCarrierOutside2, Characters_Big);
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside1, Characters_Big);
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside2, Characters_Big);
 
-    AddSetToLevel(tikalZero, LevelAndActIDs_EggCarrierOutside1, Characters_Amy);
-    AddSetToLevel(Zero, LevelAndActIDs_EggCarrierOutside1, Characters_Amy);
-    AddSetToLevel(tikalZero, LevelAndActIDs_EggCarrierOutside2, Characters_Amy);
-    AddSetToLevel(Zero, LevelAndActIDs_EggCarrierOutside2, Characters_Amy);
+    AddSetToLevel(WARP_ZERO, LevelAndActIDs_EggCarrierOutside1, Characters_Amy);
+    AddSetToLevel(WARP_ZERO, LevelAndActIDs_EggCarrierOutside2, Characters_Amy);
 
-    AddSetToLevel(tikalE101Mk2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
-    AddSetToLevel(E101Mk2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
-    AddSetToLevel(tikalE101Mk2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
-    AddSetToLevel(E101Mk2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
+    AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
+    AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
 });
 
 //Hook to change the level after beating the boss
