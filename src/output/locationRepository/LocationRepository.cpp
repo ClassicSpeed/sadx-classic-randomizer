@@ -310,6 +310,7 @@ LocationRepository::LocationRepository()
         {-664.08f, 474.0215f, -3583.48f, LevelAndActIDs_HotShelter3, Characters_Gamma, 5412},
 
         {1174.01f, 332.79f, -256.39f, LevelAndActIDs_IceCap4, Characters_Big, 6110},
+        {6086.91f, 78.29f, 1186.96f, LevelAndActIDs_EmeraldCoast3, Characters_Big, 6210},
         {931.23f, 0.99f, -659.31f, LevelAndActIDs_HotShelter1, Characters_Big, 6310}
     };
 

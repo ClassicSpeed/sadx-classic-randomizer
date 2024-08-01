@@ -287,6 +287,8 @@ FunctionHook<BOOL> onMissionMenuRenderHook(0x506410, []()-> BOOL
 
 FunctionHook<void, EntityData1*> OnExtraLife(0x4D6D40, [](EntityData1* entity)-> void
 {
+    PrintDebug("Life Capsule position: %f %f %f\n", entity->Position.x, entity->Position.y, entity->Position.z);
+    PrintDebug("Current level %d, act %d, character %d\n", CurrentStageAndAct, CurrentAct, CurrentCharacter);
     for (const auto& lifeCapsule : eventDetectorPtr->lifeCapsules)
     {
         if (lifeCapsule.character != CurrentCharacter)

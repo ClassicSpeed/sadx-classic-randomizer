@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
     - You can unify Chaos 4, Chaos 6 and Egg Hornet in the options, so you'll have to fight them only once.
     - Every entrance is located near the location of the boss in the story.
     - Every entrance is represented by a warp platform (Except for Chaos 2, you use the other elevator in the hotel).
+- Added Big's Emerald Coast life capsule as a location check.
 
 ### Changed
 
