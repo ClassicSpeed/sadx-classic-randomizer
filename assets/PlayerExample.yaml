@@ -28,11 +28,11 @@ Sonic Adventure DX:
   # Determines whether beating a boss grants a check (15 Locations)
   boss_checks: 'true'
   # Determines whatever the Chaos 4 fight counts as a single location or three (Sonic, Tails and Knuckles)
-  unify_chaos4: 'false'
+  unify_chaos4: 'true'
   # Determines whatever the Chaos 6 fight counts as a single location or three (Sonic, Big and Knuckles)
-  unify_chaos6: 'true'
+  unify_chaos6: 'false'
   # Determines whatever the Egg Hornet fight counts as a single location or three (Sonic, Tails)
-  unify_egg_hornet: 'true'
+  unify_egg_hornet: 'false'
   # Determines whether Sonic's upgrades are randomized and sent to the item pool
   randomized_sonic_upgrades: 'true'
   # Determines whether Tails' upgrades are randomized and sent to the item pool

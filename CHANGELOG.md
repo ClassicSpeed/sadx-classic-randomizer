@@ -6,15 +6,15 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Added Bosses as a location check.
-    - You can unify Chaos 4, Chaos 6 and Egg Hornet in the options, so you'll have to fight them only once.
+- Added boss fights as location checks.
+    - You can unify the Chaos 4, Chaos 6 and Egg Hornet fights in the options, so you'll have to fight them only once.
     - Every entrance is located near the location of the boss in the story.
     - Every entrance is represented by a warp platform (Chaos 2 entrance is 2nd elevator in the hotel).
 - Added option for starting locations.
-    - The possible options are random, random with no item, Station Square and Station Square with no item.
+    - The possible options are: random, random with no item, Station Square and Station Square with no item.
 - Added Big's Emerald Coast life capsule as a location check.
 - Added Sonic's 3rd Life Capsule in the Casino sewer (Credit to TerraFrost).
-- Added Tails's 4th Life Capsule in Sky Deck.
+- Added Tails' 4th Life Capsule in Sky Deck.
 
 ### Changed
 
