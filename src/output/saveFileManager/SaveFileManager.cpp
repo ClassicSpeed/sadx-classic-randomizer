@@ -104,11 +104,13 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_STATION_BACK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_STATION_BACK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_SS_STATION_BACK));
+    
     //Casino-Hotel door
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_HOTEL_BACK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_HOTEL_BACK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_HOTEL_BACK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_SS_HOTEL_BACK));
+    
     //Casino Door
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_CASINO));
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ENTRANCE_CASINO));
@@ -160,7 +162,7 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_MOUNTAIN));
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_MOUNTAIN));
 
-    //Jungle Kart
+    //Jungle Cart
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_TRUCK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_TRUCK));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_TRUCK));

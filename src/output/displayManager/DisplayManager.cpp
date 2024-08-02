@@ -416,6 +416,6 @@ void DisplayManager::DisplayItemsUnlocked()
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Ice Stone");
 
     displayOffset++;
-    SetDebugFontColor(_unlockStatus.jungleKart ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Jungle Kart");
+    SetDebugFontColor(_unlockStatus.jungleCart ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Jungle Cart");
 }

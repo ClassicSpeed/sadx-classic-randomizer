@@ -23,8 +23,7 @@ public:
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
     std::vector<LifeBoxLocationData> lifeCapsules;
+    mutable std::map<int, LocationData> checkData;
     Randomizer& randomizer;
 
-private:
-    mutable std::map<int, LocationData> _checkData;
 };

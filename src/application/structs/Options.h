@@ -29,6 +29,11 @@ struct Options
     bool deathLinkActive = false;
     bool ringLinkActive = false;
     RingLoss ringLoss = Classic;
+    
+    bool bossChecks = false;
+    bool unifyChaos4 = false;
+    bool unifyChaos6 = false;
+    bool unifyEggHornet = false;
 
     int sonicMissions = 0;
     int tailsMissions = 0;

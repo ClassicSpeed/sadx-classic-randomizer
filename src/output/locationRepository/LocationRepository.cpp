@@ -155,6 +155,32 @@ LocationRepository::LocationRepository()
         {32, LocationData::FieldEmblemLocation(124, "Hidden Bed Emblem")},
         {33, LocationData::FieldEmblemLocation(122, "Main Platform Emblem")},
 
+        //Boss Fight
+        {700, LocationData::BossFightLocation(Characters_Sonic, LevelIDs_Chaos0)},
+        {710, LocationData::BossFightLocation(Characters_Knuckles, LevelIDs_Chaos2)},
+        {720, LocationData::BossFightLocation(Characters_Tails, LevelIDs_EggWalker)},
+
+        {730, LocationData::BossFightLocation(Characters_Sonic, LevelIDs_EggHornet)},
+        {731, LocationData::BossFightLocation(Characters_Tails, LevelIDs_EggHornet)},
+        {739, LocationData::BossFightLocation(-1, LevelIDs_EggHornet)},
+
+        {740, LocationData::BossFightLocation(Characters_Sonic, LevelIDs_Chaos4)},
+        {741, LocationData::BossFightLocation(Characters_Tails, LevelIDs_Chaos4)},
+        {742, LocationData::BossFightLocation(Characters_Knuckles, LevelIDs_Chaos4)},
+        {749, LocationData::BossFightLocation(-1, LevelIDs_Chaos4)},
+
+        {750, LocationData::BossFightLocation(Characters_Sonic, LevelIDs_EggViper)},
+        {760, LocationData::BossFightLocation(Characters_Gamma, LevelIDs_E101)},
+
+        {770, LocationData::BossFightLocation(Characters_Sonic, LevelIDs_Chaos6)},
+        {771, LocationData::BossFightLocation(Characters_Knuckles, LevelIDs_Chaos6)},
+        {772, LocationData::BossFightLocation(Characters_Big, LevelIDs_Chaos6)},
+        {779, LocationData::BossFightLocation(-1, LevelIDs_Chaos6)},
+
+        {780, LocationData::BossFightLocation(Characters_Gamma, LevelIDs_E101R)},
+        {790, LocationData::BossFightLocation(Characters_Amy, LevelIDs_Zero)},
+
+
     };
 
     _lifeCapsules = {
@@ -171,12 +197,11 @@ LocationRepository::LocationRepository()
         {1147.72f, -2209.17f, 1260.16f, LevelAndActIDs_WindyValley3, Characters_Sonic, 1112},
         {1677.8f, -2577.0f, 1117.49f, LevelAndActIDs_WindyValley3, Characters_Sonic, 1113}, // R:Light Shoes
         {4159.61f, -4484.5f, -1826.59f, LevelAndActIDs_WindyValley3, Characters_Sonic, 1114},
-        {-2.18f, -8.14f, 104.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1210}, //evil tower bypass lol
-        {-2.18f, -3.0f, 104.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1210}, //evil tower bypass but DX
-        {-161.4f, 55.0f, 2.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1210},
-        {-161.4f, 50.0f, 12.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1210}, //m
-        {-1.93f, -3.0f, 39.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1211}, //bumper tower bypass
-        {166.62f, 50.0f, 14.55f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1211},
+        {-2.18f, -8.14f, 104.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1210},
+        {-2.18f, -3.0f, 104.95f, LevelAndActIDs_Casinopolis2, Characters_Sonic, 1210},
+        {-161.4f, 55.0f, 2.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1211}, //evil tower bypass lol
+        {-161.4f, 50.0f, 12.32f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1211}, //evil tower bypass but DX
+        {166.62f, 50.0f, 14.55f, LevelAndActIDs_Casinopolis3, Characters_Sonic, 1212}, //bumper tower bypass
         {487.79f, 250.67f, 1149.06f, LevelAndActIDs_IceCap1, Characters_Sonic, 1310},
         {487.79f, 249.67f, 1149.06f, LevelAndActIDs_IceCap1, Characters_Sonic, 1310}, //DX
         {-2537.78f, -208.31f, 7597.23f, LevelAndActIDs_TwinklePark1, Characters_Sonic, 1410},
@@ -247,6 +272,8 @@ LocationRepository::LocationRepository()
         {400.11f, -260.01f, 1125.68f, LevelAndActIDs_SkyDeck1, Characters_Tails, 2310},
         {401.52f, -210.01f, 1320.11f, LevelAndActIDs_SkyDeck1, Characters_Tails, 2311},
         {487.7f, -450.0f, 3727.33f, LevelAndActIDs_SkyDeck1, Characters_Tails, 2312},
+        {401.04f, -601.0f, 4220.15f, LevelAndActIDs_SkyDeck1, Characters_Tails, 2313},
+        {401.04f, -599.5f, 4220.15f, LevelAndActIDs_SkyDeck1, Characters_Tails, 2313}, //DX
         {4956.11f, -1714.0f, 1364.51f, LevelAndActIDs_SpeedHighway1, Characters_Tails, 2410},
         {4626.2f, -1675.0f, 1667.93f, LevelAndActIDs_SpeedHighway1, Characters_Tails, 2411},
         {4259.64f, -1704.04f, 4095.85f, LevelAndActIDs_SpeedHighway1, Characters_Tails, 2412},
@@ -284,6 +311,7 @@ LocationRepository::LocationRepository()
         {-664.08f, 474.0215f, -3583.48f, LevelAndActIDs_HotShelter3, Characters_Gamma, 5412},
 
         {1174.01f, 332.79f, -256.39f, LevelAndActIDs_IceCap4, Characters_Big, 6110},
+        {6086.91f, 78.29f, 1186.96f, LevelAndActIDs_EmeraldCoast3, Characters_Big, 6210},
         {931.23f, 0.99f, -659.31f, LevelAndActIDs_HotShelter1, Characters_Big, 6310}
     };
 

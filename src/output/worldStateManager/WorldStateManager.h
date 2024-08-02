@@ -9,6 +9,5 @@ public:
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
     void UpdateOptions(Options newOptions);
-    void OnPlayingFrame();
     Options options;
 };

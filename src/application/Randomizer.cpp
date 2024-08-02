@@ -16,6 +16,10 @@ void Randomizer::OnCheckFound(const int checkId) const
     if (check.character == Characters_Big && check.level == LevelIDs_TwinklePark && check.mission == MISSION_C)
         _worldStateManager.SetEventFlags({FLAG_BIG_SS_TPARK_ELEVATOR});
 }
+void Randomizer::MarkCheckedLocation(const int64_t checkId) const
+{
+    _locationRepository.SetLocationChecked(checkId);
+}
 
 
 void Randomizer::OnItemReceived(const int64_t itemId) const
@@ -36,6 +40,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     _characterManager.UpdateUnlockStatus(unlockStatus);
     _displayManager.UpdateUnlockStatus(unlockStatus);
 }
+
 
 void Randomizer::OnCharacterLoaded() const
 {
@@ -185,6 +190,26 @@ void Randomizer::SetRingLoss(const RingLoss ringLoss)
 {
     _options.ringLoss = ringLoss;
     _characterManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetBossChecks(const bool bossChecks)
+{
+    _options.bossChecks = bossChecks;
+}
+
+void Randomizer::SetUnifyChaos4(const bool unifyChaos4)
+{
+    _options.unifyChaos4 = unifyChaos4;
+}
+
+void Randomizer::SetUnifyChaos6(const bool unifyChaos6)
+{
+    _options.unifyChaos6 = unifyChaos6;
+}
+
+void Randomizer::SetUnifyEggHornet(const bool unifyEggHornet)
+{
+    _options.unifyEggHornet = unifyEggHornet;
 }
 
 Options Randomizer::GetOptions() const

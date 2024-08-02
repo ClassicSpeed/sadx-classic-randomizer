@@ -6,6 +6,9 @@ CharacterManager* characterManagerPtr;
 CharacterManager::CharacterManager()
 {
     characterManagerPtr = this;
+    //Re-enable control after graving an emblem
+    WriteCall((void*)0x4B4891, EnableControl);
+    WriteCall((void*)0x4B46C5, EnableControl);
 }
 
 void CharacterManager::GiveUpgrade(const Upgrades upgrade)
@@ -114,6 +117,10 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 int CharacterManager::GetRingDifference()
 {
     if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+        return lastRingAmount = 0;
+    if (CurrentLevel == LevelIDs_PerfectChaos)
+        return lastRingAmount = 0;
+    if (GameMode == GameModes_Adventure_ActionStg && TimeThing == 0)
         return lastRingAmount = 0;
 
     const int ringDifference = Rings - lastRingAmount;

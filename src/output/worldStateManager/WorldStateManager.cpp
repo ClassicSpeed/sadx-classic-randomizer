@@ -2,12 +2,61 @@
 
 WorldStateManager* worldStateManagerPtr;
 
+
+constexpr int WARP_EGG_CARRIER_INSIDE = 35;
+
+constexpr int WARP_STATION_SQUARE = 17;
+constexpr int WARP_MYSTIC_RUINS = 6;
+constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
+
+
+static void __cdecl HandleWarp()
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Sonic)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos0, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2 && CurrentCharacter ==
+        Characters_Tails)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggWalker, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Sonic)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggViper, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Gamma)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_E101, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
+            || CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Knuckles)
+        && EntityData1Ptrs[0]->Position.y < 0)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos4, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
+        || CurrentCharacter == Characters_Tails) && EntityData1Ptrs[0]->Position.y > 0)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggHornet, 0);
+
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Gamma)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_E101R, 0);
+
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Amy)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Zero, 0);
+
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && (CurrentCharacter == Characters_Sonic || CurrentCharacter ==
+        Characters_Knuckles || CurrentCharacter == Characters_Big))
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 0);
+
+    else
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
+}
+
 WorldStateManager::WorldStateManager()
 {
+    WriteCall(reinterpret_cast<void*>(0x526629), &HandleWarp);
     worldStateManagerPtr = this;
-    //Re-enable control after graving an emblem
-    WriteCall((void*)0x4B4891, EnableControl);
-    WriteCall((void*)0x4B46C5, EnableControl);
+
+    //We replace the checkpoint for a warp object from the Egg Carrier
+    ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
+    ObjList_MRuins[WARP_MYSTIC_RUINS] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
+    ObjList_ECarrier0[WARP_EGG_CARRIER_OUTSIDE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
 }
 
 void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
@@ -42,57 +91,11 @@ void WorldStateManager::UpdateOptions(const Options newOptions)
     this->options = newOptions;
 }
 
-FunctionHook<void, char> OnAddSetStage(0x46BF70, [](char Gap)-> void
+//Allow Knuckles to fight Chaos 2
+FunctionHook<BOOL> isChaos2DoorOpen(0x638D50, []()-> BOOL
 {
-    OnAddSetStage.Original(Gap);
-    //Creates a spring for sonic in the sewers
-    if (CurrentCharacter == Characters_Sonic && levelact(NextLevel, NextAct) == LevelAndActIDs_StationSquare3)
-    {
-        PrintDebug("sewers\n");
-        const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
-        spring->twp->pos.x = 505;
-        spring->twp->pos.y = -89;
-        spring->twp->pos.z = 635;
-    }
+    return CurrentCharacter == Characters_Knuckles;
 });
-
-bool createdFinalEggSpring = false;
-FunctionHook<void> onSetRoundMaster(0x4143C0, []()-> void
-{
-    onSetRoundMaster.Original();
-    createdFinalEggSpring = false;
-});
-
-//This is a temporal hack to make the final egg spring appear for the 4 life capsules room
-//We reset the boolean when spawning and if we get close enough, we spawn the spring
-void WorldStateManager::OnPlayingFrame()
-{
-    if (CurrentCharacter == Characters_Sonic && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_FinalEgg3)
-    {
-        if (EntityData1Ptrs[0] == nullptr)
-            return;
-
-        if (createdFinalEggSpring)
-            return;
-
-        const auto position = EntityData1Ptrs[0]->Position;
-        const float dx = position.x - 10;
-        const float dy = position.y - -3160;
-        const float dz = position.z - -171;
-        const float distance = sqrt(dx * dx + dy * dy + dz * dz);
-
-        if (distance <= 300.0)
-        {
-            //Creates a spring for sonic in final egg for the 4 life capsules room
-            const auto spring = CreateElementalTask(LoadObj_Data1, 3, ObjectSpring);
-            spring->twp->pos.x = -52.21f;
-            spring->twp->pos.y = -3240.81f;
-            spring->twp->pos.z = -190.0f;
-            createdFinalEggSpring = true;
-        }
-    }
-}
-
 
 //Makes Sonic, Tails and Gamma use the winds stone
 FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
@@ -127,7 +130,7 @@ FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
     return false;
 });
 
-//Opens the Casino for all the characters
+//Makes the Casino keys open the Casino for all the characters
 FunctionHook<int> isStationToCasinoDoorOpen(0x638880, []()-> int
 {
     return EventFlagArray[FLAG_SONIC_SS_STATION_BACK];
@@ -189,4 +192,170 @@ FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
     case None:
         break;
     }
+});
+
+typedef struct
+{
+    int x;
+    int y;
+    int z;
+} NJS_INT_POINT3;
+
+SETEntry CreateSetEntry(const int16_t objectType, const NJS_VECTOR& position, const NJS_INT_POINT3 rotation = {0, 0, 0},
+                        const NJS_VECTOR& scale = {1, 1, 1})
+{
+    SETEntry setEntry;
+    setEntry.ObjectType = objectType;
+    setEntry.XRotation = rotation.x;
+    setEntry.YRotation = rotation.y;
+    setEntry.ZRotation = rotation.z;
+    setEntry.Position = position;
+    setEntry.Properties = scale;
+    return setEntry;
+}
+
+
+void AddSetToLevel(const SETEntry& newSetEntry, const LevelAndActIDs levelAndAct, const Characters character)
+{
+    if (CurrentCharacter == character && levelact(CurrentLevel, CurrentAct) == levelAndAct)
+    {
+        SETObjData* setObjData = &SETTable[SETTable_Count];
+        setObjData->Flags |= 0x8000u;
+
+        setObjData->SETEntry = new SETEntry(newSetEntry);
+
+        setObjData->LoadCount = 0;
+        SETTable_Count += 1;
+    }
+}
+
+const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f});
+const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635});
+
+
+//Station Square Bosses
+const SETEntry WARP_CHAOS0 = CreateSetEntry(WARP_STATION_SQUARE, {270, 0, 450});
+
+const SETEntry WARP_EGG_WALKER = CreateSetEntry(WARP_STATION_SQUARE, {-400, -3, 955});
+
+
+//Mystic Ruins Bosses
+const SETEntry WARP_EGG_HORNET = CreateSetEntry(WARP_MYSTIC_RUINS, {950, 127, 950});
+
+const SETEntry WARP_CHAOS4 = CreateSetEntry(WARP_MYSTIC_RUINS, {88.62f, -33.99f, -140.96f});
+
+const SETEntry WARP_EGG_VIPER = CreateSetEntry(WARP_MYSTIC_RUINS, {0, 0, 0});
+
+const SETEntry WARP_E101 = CreateSetEntry(WARP_MYSTIC_RUINS, {0, 0, 0});
+
+//Egg Carrier Bosses
+const SETEntry WARP_CHAOS6 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 749, -385.69f});
+
+const SETEntry WARP_ZERO = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 749, -385.69f});
+
+const SETEntry WARP_E101_MK2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 749, -385.69f});
+
+
+FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
+{
+    onCountSetItemsMaybe.Original();
+
+    LoadPVM("EC_ALIFE", ADV01C_TEXLISTS[3]);
+
+    AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
+    AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
+
+
+    //Station Square Bosses
+    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Sonic);
+    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Tails);
+
+
+    //Mystic Ruins Bosses
+    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Tails);
+
+    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Tails);
+    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
+
+    AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Sonic);
+    AddSetToLevel(WARP_E101, LevelAndActIDs_MysticRuins4, Characters_Gamma);
+
+    //Egg Carrier Bosses
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
+
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside1, Characters_Knuckles);
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside2, Characters_Knuckles);
+
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside1, Characters_Big);
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside2, Characters_Big);
+
+    AddSetToLevel(WARP_ZERO, LevelAndActIDs_EggCarrierOutside1, Characters_Amy);
+    AddSetToLevel(WARP_ZERO, LevelAndActIDs_EggCarrierOutside2, Characters_Amy);
+
+    AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
+    AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
+});
+
+//Hook to change the level after beating the boss
+FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
+{
+    const Sint32 response = onFinishedLevelMaybe.Original();
+    if (GameState != MD_GAME_END)
+        return response;
+
+
+    if (CurrentLevel == LevelIDs_Chaos0)
+    {
+        SetNextLevelAndAct(LevelIDs_StationSquare, 0);
+        SetEntranceNumber(0);
+    }
+    else if (CurrentLevel == LevelIDs_Chaos2)
+    {
+        SetNextLevelAndAct(LevelIDs_StationSquare, 4);
+        SetEntranceNumber(5);
+    }
+    else if (CurrentLevel == LevelIDs_Chaos4)
+    {
+        SetNextLevelAndAct(LevelIDs_MysticRuins, 0);
+        SetEntranceNumber(5);
+    }
+    else if (CurrentLevel == LevelIDs_Chaos6)
+    {
+        SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
+        SetEntranceNumber(0);
+    }
+    else if (CurrentLevel == LevelIDs_EggHornet)
+    {
+        SetNextLevelAndAct(LevelIDs_MysticRuins, 0);
+        SetEntranceNumber(0);
+    }
+    else if (CurrentLevel == LevelIDs_EggWalker)
+    {
+        SetNextLevelAndAct(LevelIDs_StationSquare, 1);
+        SetEntranceNumber(1);
+    }
+    else if (CurrentLevel == LevelIDs_EggViper)
+    {
+        SetNextLevelAndAct(LevelIDs_MysticRuins, 3);
+        SetEntranceNumber(3);
+    }
+    else if (CurrentLevel == LevelIDs_Zero)
+    {
+        SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
+        SetEntranceNumber(0);
+    }
+    else if (CurrentLevel == LevelIDs_E101)
+    {
+        SetNextLevelAndAct(LevelIDs_MysticRuins, 3);
+        SetEntranceNumber(3);
+    }
+    else if (CurrentLevel == LevelIDs_E101R)
+    {
+        SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
+        SetEntranceNumber(0);
+    }
+    return response;
 });

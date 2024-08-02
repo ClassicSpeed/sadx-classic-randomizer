@@ -10,6 +10,7 @@ enum LocationType
     LocationSubLevel,
     LocationFieldEmblem,
     LocationLifeCapsule,
+    LocationBossFight,
     LocationUnknown
 };
 
@@ -76,6 +77,12 @@ struct LocationData
         return LocationData(static_cast<StoryFlags>(0x0), -1, -1, -1, -1, LocationLifeCapsule, false,
                             "Life Capsule " + std::to_string(lifeCapsule.character) + " - " + std::to_string(
                                 lifeCapsule.level), -1);
+    }
+
+    static LocationData BossFightLocation(const int character, const int level)
+    {
+        return LocationData(static_cast<StoryFlags>(0x0), character, level, -1, -1, LocationBossFight, false,
+                            std::to_string(character) + std::to_string(level), -1);
     }
 
     StoryFlags eventFlag;

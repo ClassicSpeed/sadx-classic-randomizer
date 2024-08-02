@@ -101,7 +101,6 @@ __declspec(dllexport) void __cdecl OnFrame()
     {
         eventDetector.OnPlayingFrame();
         characterLoadingDetector.OnPlayingFrame();
-        worldStateManager.OnPlayingFrame();
         randomizer.OnPlayingFrame();
     }
     if(syncTimer == 0)
