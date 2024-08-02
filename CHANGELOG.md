@@ -24,6 +24,8 @@ All notable changes to this project will be documented in this file.
 - Removed Amy from City Hall emblem logic.
 - Removed Life Belt for Big's Ice Cap life capsule.
 - The mod now correctly handles external checks.
+- Ring Link no longer depletes rings after finishing a level.
+- Ring Link no longer depletes rings during the Perfect Chaos fight.
 
 ## [v0.3.3] - 2024-07-28
 

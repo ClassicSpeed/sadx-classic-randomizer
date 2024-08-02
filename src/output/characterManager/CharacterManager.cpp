@@ -118,6 +118,10 @@ int CharacterManager::GetRingDifference()
 {
     if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
         return lastRingAmount = 0;
+    if (CurrentLevel == LevelIDs_PerfectChaos)
+        return lastRingAmount = 0;
+    if (GameMode == GameModes_Adventure_ActionStg && TimeThing == 0)
+        return lastRingAmount = 0;
 
     const int ringDifference = Rings - lastRingAmount;
     lastRingAmount = Rings;
