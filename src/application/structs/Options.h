@@ -28,6 +28,7 @@ struct Options
     // bool subLevelChecks = false;
     bool deathLinkActive = false;
     bool ringLinkActive = false;
+    bool hardRingLinkActive = false;
     RingLoss ringLoss = Classic;
     
     bool bossChecks = false;

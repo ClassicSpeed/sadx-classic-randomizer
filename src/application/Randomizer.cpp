@@ -177,6 +177,7 @@ void Randomizer::OnPinballLifeCapsulesSet(const bool pinballLifeCapsules)
     _options.pinballCapsules = pinballLifeCapsules;
     _displayManager.UpdateOptions(_options);
 }
+
 void Randomizer::SetStatingArea(const StartingArea startingArea)
 {
     _options.startingArea = startingArea;
@@ -199,6 +200,11 @@ void Randomizer::SetRingLink(const bool ringLinkActive)
 {
     _options.ringLinkActive = ringLinkActive;
     _archipelagoMessenger.UpdateTags(_options);
+}
+
+void Randomizer::SetHardRingLink(const bool hardRingLinkActive)
+{
+    _options.hardRingLinkActive = hardRingLinkActive;
 }
 
 void Randomizer::SetRingLoss(const RingLoss ringLoss)

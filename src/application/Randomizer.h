@@ -41,6 +41,7 @@ public:
     void SetMissions(Characters characters, int missions);
     void SetDeathLink(bool deathLinkActive);
     void SetRingLink(bool ringLinkActive);
+    void SetHardRingLink(bool hardRingLinkActive);
     void SetRingLoss(RingLoss ringLoss);
     void SetBossChecks(bool bossChecks);
     void SetUnifyChaos4(bool unifyChaos4);

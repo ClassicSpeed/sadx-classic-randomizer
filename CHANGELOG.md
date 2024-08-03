@@ -8,6 +8,9 @@ All notable changes to this project will be documented in this file.
 
 - Added life capsules status for the current level.
 - Life capsules won't respawn after getting them with life-sanity on.
+- Added Hard Ring Link option.
+    - If enabled ring link will work during the Perfect Chaos fight.
+    - Also, you'll send ring losses after finishing a level.
 
 ### Changed
 

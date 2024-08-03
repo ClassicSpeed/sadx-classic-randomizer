@@ -12,8 +12,11 @@ Sonic Adventure DX:
   field_emblems_checks: 'true'
   # When you die, everyone dies. Of course the reverse is true too.
   death_link: 'false'
-  #Whether your in-level ring gain/loss is linked to other players
+  # Whether your in-level ring gain/loss is linked to other players
   ring_link: 'false'
+  # If Ring Link is enabled, sends and receives rings in more situations.
+  # Particularly it will subtract rings when finishing a level and during the Perfect Chaos fight.
+  hard_ring_link: 'false'
   # How taking damage is handled
   # Classic (0): You lose all of your rings when hit
   # Modern (1): You lose 20 rings when hit
