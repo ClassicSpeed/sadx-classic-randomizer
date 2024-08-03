@@ -23,8 +23,8 @@ struct Options
     int emblemGoal = -1;
     StartingArea startingArea = None;
     // bool fieldEmblems = true;
-    // bool lifeSanity = false;
-    // bool pinballCapsules = false;
+    bool lifeSanity = false;
+    bool pinballCapsules = false;
     // bool subLevelChecks = false;
     bool deathLinkActive = false;
     bool ringLinkActive = false;

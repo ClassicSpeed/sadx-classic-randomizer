@@ -143,6 +143,15 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 {
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
+void SADX_LifeSanity(const int lifeSanity)
+{
+    randomizerPtr->OnLifeSanitySet(lifeSanity);
+}
+void SADX_PinballLifeCapsules(const int pinballLifeCapsules)
+{
+    randomizerPtr->OnPinballLifeCapsulesSet(pinballLifeCapsules);
+}
+
 
 void SADX_StartingArea(const int startingArea)
 {
@@ -224,6 +233,8 @@ void ArchipelagoManager::Connect()
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("LifeSanity", &SADX_LifeSanity);
+    AP_RegisterSlotDataIntCallback("PinballLifeCapsules", &SADX_PinballLifeCapsules);
     AP_RegisterSlotDataIntCallback("StartingArea", &SADX_StartingArea);
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
     AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.4.0] - 2024-08-?
+
+### Added
+
+- Added life capsules status for the current level.
+
 ## [v0.4.0] - 2024-08-02
 
 ### Added

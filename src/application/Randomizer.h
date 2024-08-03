@@ -20,9 +20,10 @@ public:
           _worldStateManager(menuManager),
           _itemRepository(itemRepository),
           _locationRepository(locationRepository),
-          _archipelagoMessenger(archipelagoMessenger)
+          _archipelagoMessenger(archipelagoMessenger), _deathPending(false)
 
     {
+        _displayManager.UpdateChecks(locationRepository.GetLocations());
     }
 
     void OnCheckFound(int checkId) const;
@@ -52,6 +53,8 @@ public:
     void OnSync();
     void OnDeath();
     void ProcessRings(Sint16 amount);
+    void OnLifeSanitySet(bool lifeSanity);
+    void OnPinballLifeCapsulesSet(bool pinballLifeCapsules);
 
 private:
     DisplayManager& _displayManager;

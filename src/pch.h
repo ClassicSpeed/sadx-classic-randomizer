@@ -9,7 +9,7 @@
 
 #define SADX_AP_VERSION_MAJOR 0
 #define SADX_AP_VERSION_MINOR 4
-#define SADX_AP_VERSION_PATCH 0
+#define SADX_AP_VERSION_PATCH 1
 
 #define MISSION_C  2
 #define MISSION_B  1
@@ -30,3 +30,4 @@
 
 #endif //PCH_H
 #define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
+#define GET_LEVEL(levelAct) ((levelAct) >> 8)

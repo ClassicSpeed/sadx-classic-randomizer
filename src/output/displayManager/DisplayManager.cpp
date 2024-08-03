@@ -168,6 +168,11 @@ void DisplayManager::OnExitCharacterSelectScreen()
     this->_inCharacterSelectScreen = false;
 }
 
+void DisplayManager::UpdateChecks(const std::map<int, LocationData>& checkData)
+{
+    this->_checkData = checkData;
+}
+
 
 void DisplayManager::DisplayItemsUnlocked()
 {
@@ -238,8 +243,7 @@ void DisplayManager::DisplayItemsUnlocked()
         const std::string levelInfo = levelName + " (" + characterName + " - " + missionName + ")";
         SetDebugFontColor(currentColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), levelInfo.c_str());
-
-
+        
         // Show missions checked
         displayOffset++;
         buffer.clear();
@@ -251,6 +255,20 @@ void DisplayManager::DisplayItemsUnlocked()
         if (missionsEnabled > 2)
             buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A) ? " A" : "  ");
         buffer.append(" ");
+        
+        if (CurrentLevel > LevelIDs_HedgehogHammer && CurrentLevel <= LevelIDs_HotShelter)
+        {
+            buffer.append(" Lives: ");
+            for (const auto& check : _checkData)
+            {
+                if (check.second.character == CurrentCharacter && check.second.type == LocationLifeCapsule && GET_LEVEL(check.second.level) == CurrentLevel )
+                {
+                    buffer.append(check.second.checked ? "X" : "-");
+                }
+            }
+            SetDebugFontColor(currentColor);
+            DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        }
 
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
@@ -270,6 +288,8 @@ void DisplayManager::DisplayItemsUnlocked()
 
         displayOffset++;
     }
+
+   
 
     if (_options.sonicMissions > 0)
     {
