@@ -231,7 +231,7 @@ void AddSetToLevel(const SETEntry& newSetEntry, const LevelAndActIDs levelAndAct
 }
 
 const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f});
-const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635});
+const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635}, {0,0,0}, {0.3f, 0, 51});
 
 
 //Station Square Bosses
