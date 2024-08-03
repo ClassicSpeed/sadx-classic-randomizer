@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 - Added life capsules status for the current level.
 - Life capsules won't respawn after getting them with life-sanity on.
 
+### Changed
+
+- Fix generation error when starting with gamma on station square.
+
 ## [v0.4.0] - 2024-08-02
 
 ### Added
