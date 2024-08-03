@@ -50,8 +50,8 @@ static void __cdecl HandleWarp()
 
 WorldStateManager::WorldStateManager()
 {
-    WriteCall(reinterpret_cast<void*>(0x526629), &HandleWarp);
-    worldStateManagerPtr = this;
+    WriteCall(reinterpret_cast<void*>(0x526589), &HandleWarp);
+    worldStateManagerPtr = this;    
 
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];

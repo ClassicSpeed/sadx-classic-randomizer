@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- Made boss warp points work faster.
 - Fix generation error when starting with gamma on station square.
 
 ## [v0.4.0] - 2024-08-02
