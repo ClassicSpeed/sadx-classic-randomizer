@@ -12,6 +12,7 @@ constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
 
 static void __cdecl HandleWarp()
 {
+    DisableController(0);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Sonic)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos0, 0);
 
@@ -50,7 +51,7 @@ static void __cdecl HandleWarp()
 
 WorldStateManager::WorldStateManager()
 {
-    WriteCall(reinterpret_cast<void*>(0x526589), &HandleWarp);
+    WriteCall(reinterpret_cast<void*>(0x5264C5  ), &HandleWarp);
     worldStateManagerPtr = this;    
 
     //We replace the checkpoint for a warp object from the Egg Carrier
