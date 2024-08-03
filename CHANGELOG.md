@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Added life capsules status for the current level.
+- Life capsules won't respawn after getting them with life-sanity on.
 
 ## [v0.4.0] - 2024-08-02
 
