@@ -12,6 +12,7 @@ constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
 
 static void __cdecl HandleWarp()
 {
+    DisableController(0);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Sonic)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos0, 0);
 
@@ -50,8 +51,8 @@ static void __cdecl HandleWarp()
 
 WorldStateManager::WorldStateManager()
 {
-    WriteCall(reinterpret_cast<void*>(0x526629), &HandleWarp);
-    worldStateManagerPtr = this;
+    WriteCall(reinterpret_cast<void*>(0x5264C5  ), &HandleWarp);
+    worldStateManagerPtr = this;    
 
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
@@ -230,7 +231,7 @@ void AddSetToLevel(const SETEntry& newSetEntry, const LevelAndActIDs levelAndAct
 }
 
 const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f});
-const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635});
+const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635}, {0,0,0}, {0.3f, 0, 51});
 
 
 //Station Square Bosses

@@ -92,7 +92,7 @@ void CharacterManager::ProcessRings(const Sint16 amount)
     if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
         return;
 
-    if (CurrentLevel == LevelIDs_PerfectChaos)
+    if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return;
 
     if (amount == 0)
@@ -118,10 +118,11 @@ int CharacterManager::GetRingDifference()
 {
     if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
         return lastRingAmount = 0;
-    if (CurrentLevel == LevelIDs_PerfectChaos)
+    if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return lastRingAmount = 0;
-    if (GameMode == GameModes_Adventure_ActionStg && TimeThing == 0)
+    if (GameMode == GameModes_Adventure_ActionStg && TimeThing == 0 && !options.hardRingLinkActive)
         return lastRingAmount = 0;
+
 
     const int ringDifference = Rings - lastRingAmount;
     lastRingAmount = Rings;

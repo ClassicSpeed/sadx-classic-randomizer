@@ -15,7 +15,10 @@ void Randomizer::OnCheckFound(const int checkId) const
     _archipelagoMessenger.CheckLocation(checkId);
     if (check.character == Characters_Big && check.level == LevelIDs_TwinklePark && check.mission == MISSION_C)
         _worldStateManager.SetEventFlags({FLAG_BIG_SS_TPARK_ELEVATOR});
+
+    _displayManager.UpdateChecks(_locationRepository.GetLocations());
 }
+
 void Randomizer::MarkCheckedLocation(const int64_t checkId) const
 {
     _locationRepository.SetLocationChecked(checkId);
@@ -162,6 +165,19 @@ void Randomizer::OnEmblemGoalSet(const int emblemGoal)
     _displayManager.UpdateOptions(_options);
 }
 
+void Randomizer::OnLifeSanitySet(const bool lifeSanity)
+{
+    _options.lifeSanity = lifeSanity;
+    _displayManager.UpdateOptions(_options);
+}
+
+
+void Randomizer::OnPinballLifeCapsulesSet(const bool pinballLifeCapsules)
+{
+    _options.pinballCapsules = pinballLifeCapsules;
+    _displayManager.UpdateOptions(_options);
+}
+
 void Randomizer::SetStatingArea(const StartingArea startingArea)
 {
     _options.startingArea = startingArea;
@@ -184,6 +200,11 @@ void Randomizer::SetRingLink(const bool ringLinkActive)
 {
     _options.ringLinkActive = ringLinkActive;
     _archipelagoMessenger.UpdateTags(_options);
+}
+
+void Randomizer::SetHardRingLink(const bool hardRingLinkActive)
+{
+    _options.hardRingLinkActive = hardRingLinkActive;
 }
 
 void Randomizer::SetRingLoss(const RingLoss ringLoss)

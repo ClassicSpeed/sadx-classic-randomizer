@@ -2,19 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.4.1] - 2024-08-03
+
+### Added
+
+- Added life capsules status for the current level.
+- Life capsules won't respawn after getting them with life-sanity on.
+- Added Hard Ring Link option.
+    - If enabled ring link will work during the Perfect Chaos fight.
+    - Also, you'll send ring losses after finishing a level.
+
+### Changed
+
+- Made boss warp points work faster.
+- Fix generation error when starting with gamma on station square.
+- Fix sewer spring sending Sonic too far.
+
 ## [v0.4.0] - 2024-08-02
 
 ### Added
 
-- Added Bosses as a location check.
-    - You can unify Chaos 4, Chaos 6 and Egg Hornet in the options, so you'll have to fight them only once.
+- Added boss fights as location checks.
+    - You can unify the Chaos 4, Chaos 6 and Egg Hornet fights in the options, so you'll have to fight them only once.
     - Every entrance is located near the location of the boss in the story.
     - Every entrance is represented by a warp platform (Chaos 2 entrance is 2nd elevator in the hotel).
 - Added option for starting locations.
-    - The possible options are random, random with no item, Station Square and Station Square with no item.
+    - The possible options are: random, random with no item, Station Square and Station Square with no item.
 - Added Big's Emerald Coast life capsule as a location check.
 - Added Sonic's 3rd Life Capsule in the Casino sewer (Credit to TerraFrost).
-- Added Tails's 4th Life Capsule in Sky Deck.
+- Added Tails' 4th Life Capsule in Sky Deck.
 
 ### Changed
 

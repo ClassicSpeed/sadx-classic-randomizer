@@ -74,7 +74,7 @@ struct LocationData
 
     static LocationData LifeCapsuleLocation(const LifeBoxLocationData& lifeCapsule)
     {
-        return LocationData(static_cast<StoryFlags>(0x0), -1, -1, -1, -1, LocationLifeCapsule, false,
+        return LocationData(static_cast<StoryFlags>(0x0), lifeCapsule.character, lifeCapsule.level, -1, -1, LocationLifeCapsule, false,
                             "Life Capsule " + std::to_string(lifeCapsule.character) + " - " + std::to_string(
                                 lifeCapsule.level), -1);
     }

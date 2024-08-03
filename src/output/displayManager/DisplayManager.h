@@ -5,7 +5,10 @@
 #include "../../application/structs/Message.h"
 #include "../../application/structs/UnlockStatus.h"
 #include "../../application/structs/Options.h"
+#include "../../application/structs/LocationData.h"
 
+
+struct LocationData;
 
 class DisplayManager
 {
@@ -20,6 +23,7 @@ public:
     void ShowEmblemCount(int emblemCount);
     void OnEnterCharacterSelectScreen();
     void OnExitCharacterSelectScreen();
+    void UpdateChecks(const std::map<int, LocationData>& checkData);
 
 private:
     void RemoveExpiredMessages();
@@ -64,4 +68,5 @@ private:
 
     std::unordered_map<int, std::string> _charactersMap;
     std::unordered_map<int, std::string> _levelsMap;
+    mutable std::map<int, LocationData> _checkData;
 };

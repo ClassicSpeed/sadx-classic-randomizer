@@ -285,10 +285,8 @@ FunctionHook<BOOL> onMissionMenuRenderHook(0x506410, []()-> BOOL
 });
 
 
-FunctionHook<void, EntityData1*> OnExtraLife(0x4D6D40, [](EntityData1* entity)-> void
+int GetLifeCapsuleFromPosition(const NJS_VECTOR& position)
 {
-    PrintDebug("Life Capsule position: %f %f %f\n", entity->Position.x, entity->Position.y, entity->Position.z);
-    PrintDebug("Current level %d, act %d, character %d\n", CurrentStageAndAct, CurrentAct, CurrentCharacter);
     for (const auto& lifeCapsule : eventDetectorPtr->lifeCapsules)
     {
         if (lifeCapsule.character != CurrentCharacter)
@@ -297,19 +295,60 @@ FunctionHook<void, EntityData1*> OnExtraLife(0x4D6D40, [](EntityData1* entity)->
         if (lifeCapsule.level != CurrentStageAndAct)
             continue;
 
-        const float dx = entity->Position.x - lifeCapsule.x;
-        const float dy = entity->Position.y - lifeCapsule.y;
-        const float dz = entity->Position.z - lifeCapsule.z;
+        const float dx = position.x - lifeCapsule.x;
+        const float dy = position.y - lifeCapsule.y;
+        const float dz = position.z - lifeCapsule.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
         if (distance <= 5.0)
-        {
-            eventDetectorPtr->randomizer.OnCheckFound(lifeCapsule.locationId);
-            break; // Entity is near a capsule, no need to check further
-        }
+            return lifeCapsule.locationId;
     }
+    return -1;
+}
 
-    return OnExtraLife.Original(entity);
+FunctionHook<void, EntityData1*> onExtraLife(0x4D6D40, [](EntityData1* entity)-> void
+{
+    onExtraLife.Original(entity);
+    if (!eventDetectorPtr->randomizer.GetOptions().lifeSanity)
+        return;
+
+    const int locationId = GetLifeCapsuleFromPosition(entity->Position);
+    if (locationId > 0)
+    {
+        eventDetectorPtr->randomizer.OnCheckFound(locationId);
+        eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
+    }
+});
+
+
+FunctionHook<void, task*> onObjectItemBox(0x4D6F10, [](task* tp)-> void
+{
+    onObjectItemBox.Original(tp);
+    if (!eventDetectorPtr->randomizer.GetOptions().lifeSanity)
+        return;
+
+    const int locationId = GetLifeCapsuleFromPosition(tp->twp->pos);
+    if (locationId > 0)
+    {
+        const auto test = eventDetectorPtr->checkData.find(locationId);
+        if (test->second.checked)
+            DestroyTask(tp);
+    }
+});
+
+FunctionHook<void, task*> onObjectItemBoxAir(0x4C07D0, [](task* tp)-> void
+{
+    onObjectItemBoxAir.Original(tp);
+    if (!eventDetectorPtr->randomizer.GetOptions().lifeSanity)
+        return;
+
+    const int locationId = GetLifeCapsuleFromPosition(tp->twp->pos);
+    if (locationId > 0)
+    {
+        const auto test = eventDetectorPtr->checkData.find(locationId);
+        if (test->second.checked)
+            DestroyTask(tp);
+    }
 });
 
 
