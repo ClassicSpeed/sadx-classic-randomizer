@@ -9,7 +9,7 @@
 
 #define SADX_AP_VERSION_MAJOR 0
 #define SADX_AP_VERSION_MINOR 4
-#define SADX_AP_VERSION_PATCH 1
+#define SADX_AP_VERSION_PATCH 2
 
 #define MISSION_C  2
 #define MISSION_B  1
@@ -23,9 +23,8 @@
 #include "../lib/sadx-mod-loader/SADXModLoader/include/SADXModLoader.h"
 #include "../lib/sadx-mod-loader/SADXModLoader/include/FunctionHook.h"
 #include "../lib/sadx-mod-loader/mod-loader-common/ModLoaderCommon/IniFile.hpp"
-#include "../lib/APCpp/Archipelago.h"
-#include "../lib/APCpp/json/json.h"
-
+#include <APCpp/Archipelago.h>
+#include <json/json.h>
 
 
 #endif //PCH_H

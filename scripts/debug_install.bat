@@ -16,13 +16,7 @@ if not exist ".\Debug\sadx-classic-randomizer.dll" (
     exit /b 1
 )
 
-if not exist ".\lib\APCpp\APCppForDebug.dll" (
-    echo Source file does not exist: .\lib\APCpp\APCppForDebug.dll
-    exit /b 1
-)
 
 REM Copy files
 copy ".\Debug\sadx-classic-randomizer.dll" "!SADX_DIR!\mods\SADX_Archipelago\sadx-classic-randomizer.dll"
-copy ".\lib\APCpp\APCppForDebug.dll" "!SADX_DIR!\APCpp.dll"
-
 echo Debugs files copied successfully.

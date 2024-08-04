@@ -1,229 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-  </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{B38A1B9C-5BD6-4AF7-B747-34931F8B85BB}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
-    <RootNamespace>sadx_classic_randomizer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup>
-    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-    <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>lib/APCpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>APCpp.lib;jsoncpp.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
-    </Link>
-    <PostBuildEvent>
-      <Command>call ./scripts/debug_install.bat</Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>lib/APCpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>APCpp.lib;jsoncpp.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
+    <ItemGroup Label="ProjectConfigurations">
+        <ProjectConfiguration Include="Debug|Win32">
+            <Configuration>Debug</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+        <ProjectConfiguration Include="Release|Win32">
+            <Configuration>Release</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+    </ItemGroup>
+    <PropertyGroup Label="Globals">
+        <VCProjectVersion>15.0</VCProjectVersion>
+        <ProjectGuid>{B38A1B9C-5BD6-4AF7-B747-34931F8B85BB}</ProjectGuid>
+        <Keyword>Win32Proj</Keyword>
+        <RootNamespace>sadx_classic_randomizer</RootNamespace>
+        <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+        <PlatformToolset>v143</PlatformToolset>
+        <CharacterSet>Unicode</CharacterSet>
+    </PropertyGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+    <PropertyGroup>
+        <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+        <ConfigurationType>DynamicLibrary</ConfigurationType>
+        <UseDebugLibraries>true</UseDebugLibraries>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+        <ConfigurationType>DynamicLibrary</ConfigurationType>
+        <UseDebugLibraries>false</UseDebugLibraries>
+        <WholeProgramOptimization>true</WholeProgramOptimization>
+    </PropertyGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+    <ImportGroup Label="ExtensionSettings" />
+    <ImportGroup Label="Shared" />
+    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+    </ImportGroup>
+    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+    </ImportGroup>
+    <PropertyGroup Label="UserMacros"/>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+        <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+        <LinkIncremental>true</LinkIncremental>
+        <LibraryPath>$(LibraryPath)</LibraryPath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+        <LinkIncremental>false</LinkIncremental>
+    </PropertyGroup>
+    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+        <ClCompile>
+            <WarningLevel>Level3</WarningLevel>
+            <Optimization>Disabled</Optimization>
+            <SDLCheck>true</SDLCheck>
+            <PreprocessorDefinitions>WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <ConformanceMode>true</ConformanceMode>
+            <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+            <AdditionalIncludeDirectories>lib;lib/json/include;lib/ixwebsocket;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        </ClCompile>
+        <Link>
+            <SubSystem>Windows</SubSystem>
+            <GenerateDebugInformation>true</GenerateDebugInformation>
+            <EnableUAC>false</EnableUAC>
+            <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies);</AdditionalDependencies>
+        </Link>
+        <PostBuildEvent>
+            <Command>call ./scripts/debug_install.bat</Command>
+        </PostBuildEvent>
+    </ItemDefinitionGroup>
+    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        <ClCompile>
+            <WarningLevel>Level3</WarningLevel>
+            <Optimization>MaxSpeed</Optimization>
+            <FunctionLevelLinking>true</FunctionLevelLinking>
+            <IntrinsicFunctions>true</IntrinsicFunctions>
+            <SDLCheck>true</SDLCheck>
+            <PreprocessorDefinitions>WIN32;NDEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <ConformanceMode>true</ConformanceMode>
+            <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+            <AdditionalIncludeDirectories>lib;lib/json/include;lib/ixwebsocket;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        </ClCompile>
+        <Link>
+            <SubSystem>Windows</SubSystem>
+            <EnableCOMDATFolding>true</EnableCOMDATFolding>
+            <OptimizeReferences>true</OptimizeReferences>
+            <GenerateDebugInformation>true</GenerateDebugInformation>
+            <EnableUAC>false</EnableUAC>
+            <AdditionalDependencies>Ws2_32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
+        </Link>
 
-    </Link>
-
-    <PreBuildEvent>
-      <Command>call ./scripts/release-clean.bat</Command>
-    </PreBuildEvent>
-    <PostBuildEvent>
-      <Command>call ./scripts/release_install.bat &amp;&amp; call ./scripts/release_zip.bat</Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\CodeParser.cpp" />
-    <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\FileSystem.cpp" />
-    <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\IniFile.cpp" />
-    <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\stdafx.cpp" />
-    <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\TextConv.cpp" />
-    <ClCompile Include="src\application\Randomizer.cpp" />
-    <ClCompile Include="src\dllmain.cpp" />
-    <ClCompile Include="src\input\archipelago\ArchipelagoManager.cpp" />
-    <ClCompile Include="src\input\cheatsManager\CheatsManager.cpp" />
-    <ClCompile Include="src\input\characterLoading\CharacterLoadingDetector.cpp" />
-    <ClCompile Include="src\input\eventDetector\EventDetector.cpp" />
-    <ClCompile Include="src\mod.cpp" />
-    <ClCompile Include="src\output\archipelagoMessenger\ArchipelagoMessenger.cpp" />
-    <ClCompile Include="src\output\worldStateManager\WorldStateManager.cpp" />
-    <ClCompile Include="src\output\locationRepository\LocationRepository.cpp" />
-    <ClCompile Include="src\output\displayManager\DisplayManager.cpp" />
-    <ClCompile Include="src\output\itemRepository\ItemRepository.cpp" />
-    <ClCompile Include="src\output\characterManager\CharacterManager.cpp" />
-    <ClCompile Include="src\output\saveFileManager\SaveFileManager.cpp" />
-    <ClCompile Include="src\pch.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\application\structs\Options.h" />
-    <ClInclude Include="src\application\structs\UnlockStatus.h" />
-    <ClInclude Include="src\framework.h" />
-    <ClInclude Include="src\output\saveFileManager\SaveFileManager.h" />
-    <ClInclude Include="src\pch.h" />
-    <Content Include="assets\sadx.apworld" />
-    <Content Include="assets\SADX_Archipelago\CopyAPCppDLL.bat" />
-    <ClInclude Include="lib\APCpp\Archipelago.h" />
-    <ClInclude Include="lib\APCpp\json\allocator.h" />
-    <ClInclude Include="lib\APCpp\json\assertions.h" />
-    <ClInclude Include="lib\APCpp\json\config.h" />
-    <ClInclude Include="lib\APCpp\json\forwards.h" />
-    <ClInclude Include="lib\APCpp\json\json.h" />
-    <ClInclude Include="lib\APCpp\json\json_features.h" />
-    <ClInclude Include="lib\APCpp\json\reader.h" />
-    <ClInclude Include="lib\APCpp\json\value.h" />
-    <ClInclude Include="lib\APCpp\json\version.h" />
-    <ClInclude Include="lib\APCpp\json\writer.h" />
-    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\CodeParser.hpp" />
-    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\FileSystem.h" />
-    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\IniFile.hpp" />
-    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\stdafx.h" />
-    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\targetver.h" />
-    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\TextConv.hpp" />
-    <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\Utils.hpp" />
-    <ClInclude Include="src\application\structs\Message.h" />
-    <Content Include="assets\SADX_Archipelago\object\o_emblm.nja.sa1mdl" />
-    <Content Include="assets\SADX_Archipelago\replacetex\AVA_EMBLEM\embrem.png" />
-    <Content Include="assets\SADX_Archipelago\replacetex\AVA_EMBLEM\index.txt" />
-    <Content Include="assets\SADX_Archipelago\replacetex\EMBLEM\index.txt" />
-    <Content Include="assets\SADX_Archipelago\replacetex\EMBLEM\sonic_emblm01.png" />
-    <Content Include="assets\SADX_Archipelago\replacetex\OBJ_REGULAR\1up102.png" />
-    <Content Include="assets\SADX_Archipelago\replacetex\OBJ_REGULAR\1upamy.png" />
-    <Content Include="assets\SADX_Archipelago\replacetex\OBJ_REGULAR\1upbig.png" />
-    <Content Include="assets\SADX_Archipelago\replacetex\OBJ_REGULAR\1upknuck.png" />
-    <Content Include="assets\SADX_Archipelago\replacetex\OBJ_REGULAR\1upmetal.png" />
-    <Content Include="assets\SADX_Archipelago\replacetex\OBJ_REGULAR\1uptails.png" />
-    <Content Include="assets\SADX_Archipelago\replacetex\OBJ_REGULAR\index.txt" />
-    <Content Include="assets\SADX_Archipelago\replacetex\OBJ_REGULAR\item_1up.png" />
-    <Content Include="assets\SADX_Archipelago\textures\pvr_common\HYOJI_EMBLEM0.png" />
-    <Content Include="assets\SADX_Archipelago\textures\pvr_common\HYOJI_EMBLEM1.png" />
-    <Content Include="assets\SADX_Archipelago\textures\pvr_common\index.txt" />
-    <Content Include="lib\APCpp\APCpp.dll" />
-    <Content Include="lib\APCpp\APCpp.exp" />
-    <Content Include="lib\APCpp\APCpp.lib" />
-    <Content Include="lib\APCpp\APCpp.pdb" />
-    <Content Include="lib\APCpp\ixwebsocket.lib" />
-    <Content Include="lib\APCpp\ixwebsocket.pdb" />
-    <Content Include="lib\APCpp\jsoncpp.lib" />
-    <Content Include="lib\APCpp\jsoncpp.pdb" />
-    <Content Include="lib\APCpp\mbedcrypto.lib" />
-    <Content Include="lib\APCpp\mbedcrypto.pdb" />
-    <Content Include="lib\APCpp\mbedtls.lib" />
-    <Content Include="lib\APCpp\mbedtls.pdb" />
-    <Content Include="lib\APCpp\mbedx509.lib" />
-    <Content Include="lib\APCpp\mbedx509.pdb" />
-    <Content Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\ModLoaderCommon.vcxproj" />
-    <Content Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\ModLoaderCommon.vcxproj.filters" />
-    <Content Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\AudioFile.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\d3d8types.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\FunctionHook.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\MemAccess.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\ninja.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\njdef.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXEnums.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXEnumsNew.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXFunctions.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXFunctionsNew.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXModelsNew.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXModInfo.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXModLoader.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXMotionsNew.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXStructs.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXStructsNew.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXVariables.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\SADXVariablesNew.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\ScaleInfo.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\UsercallFunctionHandler.h" />
-    <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\WeightInfo.h" />
-    <ClInclude Include="src\application\Randomizer.h" />
-    <ClInclude Include="src\application\structs\LocationData.h" />
-    <ClInclude Include="src\application\structs\ItemData.h" />
-    <ClInclude Include="src\input\archipelago\ArchipelagoManager.h" />
-    <ClInclude Include="src\input\cheatsManager\CheatsManager.h" />
-    <ClInclude Include="src\input\characterLoading\CharacterLoadingDetector.h" />
-    <ClInclude Include="src\input\eventDetector\EventDetector.h" />
-    <ClInclude Include="src\output\archipelagoMessenger\ArchipelagoMessenger.h" />
-    <ClInclude Include="src\output\worldStateManager\WorldStateManager.h" />
-    <ClInclude Include="src\output\locationRepository\LocationRepository.h" />
-    <ClInclude Include="src\output\displayManager\DisplayManager.h" />
-    <ClInclude Include="src\output\itemRepository\ItemRepository.h" />
-    <ClInclude Include="src\output\characterManager\CharacterManager.h" />
-  </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+        <PreBuildEvent>
+            <Command>call ./scripts/release-clean.bat</Command>
+        </PreBuildEvent>
+        <PostBuildEvent>
+            <Command>call ./scripts/release_install.bat &amp;&amp; call ./scripts/release_zip.bat</Command>
+        </PostBuildEvent>
+    </ItemDefinitionGroup>
+    <ItemGroup>
+        <ClCompile Include="lib\APCpp\Archipelago.cpp"/>
+        <ClCompile Include="lib\ixwebsocket\ixwebsocket\*.cpp"/>
+        <ClCompile Include="lib\json\src\lib_json\*.cpp"/>
+        <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.cpp"/>
+        <ClCompile Include="src\**\*.cpp" />
+    </ItemGroup>
+    <ItemGroup>
+        <ClInclude Include="lib\APCpp\Archipelago.h"/>
+        <ClInclude Include="lib\ixwebsocket\ixwebsocket\*.h"/>
+        <ClInclude Include="lib\json\include\json\*.h"/>
+        <ClInclude Include="lib\json\src\lib_json\json_valueiterator.inl"/>
+        <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.hpp"/>
+        <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.h"/>
+        <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\*.h"/>
+        <ClInclude Include="src\**\*.h" />
+        <Content Include="assets\sadx.apworld"/>
+        <Content Include="assets\SADX_Archipelago\*.*"/>
+    </ItemGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+    <ImportGroup Label="ExtensionTargets">
+    </ImportGroup>
 </Project>

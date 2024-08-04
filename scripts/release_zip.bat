@@ -28,7 +28,6 @@ echo Version=%VERSION%>>%OUTPUT_DIR%\SADX_Archipelago\mod.ini
 
 REM Copy files
 copy .\Release\sadx-classic-randomizer.dll %OUTPUT_DIR%\SADX_Archipelago\sadx-classic-randomizer.dll
-copy .\lib\APCpp\APCpp.dll %OUTPUT_DIR%\SADX_Archipelago\APCpp.dll
 
 REM Create the zip file
 "C:\Program Files\7-Zip\7z.exe" a -tzip "%ZIP_PATH%" "%OUTPUT_DIR%\*" -mx=9 -aoa

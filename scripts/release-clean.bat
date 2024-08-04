@@ -1,7 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
 
-del /Q /S .\Release
 del /Q /S .\Output
 
 
