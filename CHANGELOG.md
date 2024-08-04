@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Fixed crash while picking up life capsules in the kart section of twinkle park.
+- Removed APCpp.dll from the installation process.
+- Improving the project's dependencies and build configuration.
 
 ## [v0.4.1] - 2024-08-03
 
