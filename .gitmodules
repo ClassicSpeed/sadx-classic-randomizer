@@ -4,3 +4,6 @@
 [submodule "lib/ixwebsocket"]
 	path = lib/ixwebsocket
 	url = https://github.com/machinezone/IXWebSocket.git
+[submodule "lib/json"]
+	path = lib/json
+	url = https://github.com/open-source-parsers/jsoncpp.git
