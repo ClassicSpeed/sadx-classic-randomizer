@@ -63,7 +63,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>lib;lib/ixwebsocket;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -85,7 +85,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>lib;lib/ixwebsocket;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -105,45 +105,45 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="lib\APCpp\Archipelago.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXBench.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXCancellationRequest.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXConnectionState.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXDNSLookup.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXExponentialBackoff.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXGetFreePort.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXGzipCodec.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXHttp.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXHttpClient.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXHttpServer.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXNetSystem.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSelectInterrupt.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSelectInterruptEvent.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSelectInterruptFactory.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSelectInterruptPipe.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSetThreadName.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSocket.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSocketAppleSSL.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSocketConnect.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSocketFactory.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSocketMbedTLS.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSocketOpenSSL.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSocketServer.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXSocketTLSOptions.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXStrCaseCompare.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXUdpSocket.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXUrlParser.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXUserAgent.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXUuid.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXWebSocket.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXWebSocketCloseConstants.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXWebSocketHandshake.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXWebSocketHttpHeaders.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXWebSocketPerMessageDeflate.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXWebSocketPerMessageDeflateCodec.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXWebSocketPerMessageDeflateOptions.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXWebSocketProxyServer.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXWebSocketServer.cpp" />
-    <ClCompile Include="lib\ixwebsocket\IXWebSocketTransport.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXBench.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXCancellationRequest.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXConnectionState.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXDNSLookup.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXExponentialBackoff.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXGetFreePort.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXGzipCodec.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXHttp.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXHttpClient.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXHttpServer.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXNetSystem.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSelectInterrupt.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSelectInterruptEvent.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSelectInterruptFactory.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSelectInterruptPipe.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSetThreadName.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSocket.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSocketAppleSSL.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSocketConnect.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSocketFactory.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSocketMbedTLS.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSocketOpenSSL.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSocketServer.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXSocketTLSOptions.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXStrCaseCompare.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXUdpSocket.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXUrlParser.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXUserAgent.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXUuid.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXWebSocket.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXWebSocketCloseConstants.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXWebSocketHandshake.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXWebSocketHttpHeaders.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXWebSocketPerMessageDeflate.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXWebSocketPerMessageDeflateCodec.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXWebSocketPerMessageDeflateOptions.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXWebSocketProxyServer.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXWebSocketServer.cpp" />
+    <ClCompile Include="lib\ixwebsocket\ixwebsocket\IXWebSocketTransport.cpp" />
     <ClCompile Include="lib\json\json_reader.cpp" />
     <ClCompile Include="lib\json\json_value.cpp" />
     <ClCompile Include="lib\json\json_writer.cpp" />
@@ -170,59 +170,59 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\APCpp\Archipelago.h" />
-    <ClInclude Include="lib\ixwebsocket\IXBase64.h" />
-    <ClInclude Include="lib\ixwebsocket\IXBench.h" />
-    <ClInclude Include="lib\ixwebsocket\IXCancellationRequest.h" />
-    <ClInclude Include="lib\ixwebsocket\IXConnectionState.h" />
-    <ClInclude Include="lib\ixwebsocket\IXDNSLookup.h" />
-    <ClInclude Include="lib\ixwebsocket\IXExponentialBackoff.h" />
-    <ClInclude Include="lib\ixwebsocket\IXGetFreePort.h" />
-    <ClInclude Include="lib\ixwebsocket\IXGzipCodec.h" />
-    <ClInclude Include="lib\ixwebsocket\IXHttp.h" />
-    <ClInclude Include="lib\ixwebsocket\IXHttpClient.h" />
-    <ClInclude Include="lib\ixwebsocket\IXHttpServer.h" />
-    <ClInclude Include="lib\ixwebsocket\IXNetSystem.h" />
-    <ClInclude Include="lib\ixwebsocket\IXProgressCallback.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSelectInterrupt.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSelectInterruptEvent.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSelectInterruptFactory.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSelectInterruptPipe.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSetThreadName.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSocket.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSocketAppleSSL.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSocketConnect.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSocketFactory.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSocketMbedTLS.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSocketOpenSSL.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSocketServer.h" />
-    <ClInclude Include="lib\ixwebsocket\IXSocketTLSOptions.h" />
-    <ClInclude Include="lib\ixwebsocket\IXStrCaseCompare.h" />
-    <ClInclude Include="lib\ixwebsocket\IXUdpSocket.h" />
-    <ClInclude Include="lib\ixwebsocket\IXUniquePtr.h" />
-    <ClInclude Include="lib\ixwebsocket\IXUrlParser.h" />
-    <ClInclude Include="lib\ixwebsocket\IXUserAgent.h" />
-    <ClInclude Include="lib\ixwebsocket\IXUtf8Validator.h" />
-    <ClInclude Include="lib\ixwebsocket\IXUuid.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocket.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketCloseConstants.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketCloseInfo.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketErrorInfo.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketHandshake.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketHandshakeKeyGen.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketHttpHeaders.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketInitResult.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketMessage.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketMessageType.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketOpenInfo.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketPerMessageDeflate.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketPerMessageDeflateCodec.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketPerMessageDeflateOptions.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketProxyServer.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketSendData.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketSendInfo.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketServer.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketTransport.h" />
-    <ClInclude Include="lib\ixwebsocket\IXWebSocketVersion.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXBase64.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXBench.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXCancellationRequest.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXConnectionState.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXDNSLookup.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXExponentialBackoff.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXGetFreePort.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXGzipCodec.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXHttp.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXHttpClient.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXHttpServer.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXNetSystem.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXProgressCallback.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSelectInterrupt.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSelectInterruptEvent.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSelectInterruptFactory.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSelectInterruptPipe.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSetThreadName.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSocket.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSocketAppleSSL.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSocketConnect.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSocketFactory.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSocketMbedTLS.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSocketOpenSSL.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSocketServer.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXSocketTLSOptions.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXStrCaseCompare.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXUdpSocket.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXUniquePtr.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXUrlParser.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXUserAgent.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXUtf8Validator.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXUuid.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocket.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketCloseConstants.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketCloseInfo.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketErrorInfo.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketHandshake.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketHandshakeKeyGen.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketHttpHeaders.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketInitResult.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketMessage.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketMessageType.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketOpenInfo.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketPerMessageDeflate.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketPerMessageDeflateCodec.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketPerMessageDeflateOptions.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketProxyServer.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketSendData.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketSendInfo.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketServer.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketTransport.h" />
+    <ClInclude Include="lib\ixwebsocket\ixwebsocket\IXWebSocketVersion.h" />
     <ClInclude Include="lib\json\allocator.h" />
     <ClInclude Include="lib\json\assertions.h" />
     <ClInclude Include="lib\json\config.h" />

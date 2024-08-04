@@ -1,8 +1,8 @@
 #include "Archipelago.h"
 
-#include "../ixwebsocket/IXNetSystem.h"
-#include "../ixwebsocket/IXWebSocket.h"
-#include "../ixwebsocket/IXUserAgent.h"
+#include "ixwebsocket/IXNetSystem.h"
+#include "ixwebsocket/IXWebSocket.h"
+#include "ixwebsocket/IXUserAgent.h"
 
 #include <cstddef>
 #include <cstdint>
