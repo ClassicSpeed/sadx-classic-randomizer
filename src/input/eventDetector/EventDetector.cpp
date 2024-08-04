@@ -332,7 +332,7 @@ FunctionHook<void, task*> onObjectItemBox(0x4D6F10, [](task* tp)-> void
     {
         const auto test = eventDetectorPtr->checkData.find(locationId);
         if (test->second.checked)
-            DestroyTask(tp);
+            FreeTask(tp);
     }
 });
 
@@ -347,7 +347,7 @@ FunctionHook<void, task*> onObjectItemBoxAir(0x4C07D0, [](task* tp)-> void
     {
         const auto test = eventDetectorPtr->checkData.find(locationId);
         if (test->second.checked)
-            DestroyTask(tp);
+            FreeTask(tp);
     }
 });
 
