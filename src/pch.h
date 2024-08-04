@@ -24,7 +24,7 @@
 #include "../lib/sadx-mod-loader/SADXModLoader/include/FunctionHook.h"
 #include "../lib/sadx-mod-loader/mod-loader-common/ModLoaderCommon/IniFile.hpp"
 #include "../lib/APCpp/Archipelago.h"
-#include "../lib/APCpp/json/json.h"
+#include "../lib/json/json/json.h"
 
 
 
