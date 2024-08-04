@@ -14,8 +14,8 @@
 
 #include "IXGetFreePort.h"
 
-#include "IXNetSystem.h"
-#include "IXSocket.h"
+#include <ixwebsocket/IXNetSystem.h>
+#include <ixwebsocket/IXSocket.h>
 #include <random>
 #include <string>
 

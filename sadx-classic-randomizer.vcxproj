@@ -63,6 +63,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -84,6 +85,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -221,18 +223,18 @@
     <ClInclude Include="lib\ixwebsocket\IXWebSocketServer.h" />
     <ClInclude Include="lib\ixwebsocket\IXWebSocketTransport.h" />
     <ClInclude Include="lib\ixwebsocket\IXWebSocketVersion.h" />
-    <ClInclude Include="lib\json\json\allocator.h" />
-    <ClInclude Include="lib\json\json\assertions.h" />
-    <ClInclude Include="lib\json\json\config.h" />
-    <ClInclude Include="lib\json\json\forwards.h" />
-    <ClInclude Include="lib\json\json\json.h" />
-    <ClInclude Include="lib\json\json\json_features.h" />
-    <ClInclude Include="lib\json\json\reader.h" />
-    <ClInclude Include="lib\json\json\value.h" />
-    <ClInclude Include="lib\json\json\version.h" />
-    <ClInclude Include="lib\json\json\writer.h" />
+    <ClInclude Include="lib\json\allocator.h" />
+    <ClInclude Include="lib\json\assertions.h" />
+    <ClInclude Include="lib\json\config.h" />
+    <ClInclude Include="lib\json\forwards.h" />
+    <ClInclude Include="lib\json\json.h" />
+    <ClInclude Include="lib\json\json_features.h" />
     <ClInclude Include="lib\json\json_tool.h" />
     <ClInclude Include="lib\json\json_valueiterator.inl" />
+    <ClInclude Include="lib\json\reader.h" />
+    <ClInclude Include="lib\json\value.h" />
+    <ClInclude Include="lib\json\version.h" />
+    <ClInclude Include="lib\json\writer.h" />
     <ClInclude Include="src\application\structs\Options.h" />
     <ClInclude Include="src\application\structs\UnlockStatus.h" />
     <ClInclude Include="src\framework.h" />

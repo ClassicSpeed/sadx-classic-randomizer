@@ -8,10 +8,10 @@
 #include <cstdint>
 #include <random>
 #include <fstream>
-#include "../json/json/json.h"
-#include "../json/json/reader.h"
-#include "../json/json/value.h"
-#include "../json/json/writer.h"
+#include <json/json.h>
+#include <json/reader.h>
+#include <json/value.h>
+#include <json/writer.h>
 #include <deque>
 #include <set>
 #include <string>
