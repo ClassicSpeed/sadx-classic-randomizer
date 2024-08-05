@@ -91,10 +91,10 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 {
     if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
         return;
-
     if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return;
-
+    if (GameState != MD_GAME_MAIN)
+        return;
     if (amount == 0)
         return;
 

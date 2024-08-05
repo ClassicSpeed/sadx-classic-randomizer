@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Fixed death link and ring link not working together.
+- Fixed crash when receiving a death link while in the main menu.
 
 ## [v0.4.2] - 2024-08-04
 

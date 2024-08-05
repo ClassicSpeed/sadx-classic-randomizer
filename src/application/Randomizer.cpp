@@ -101,6 +101,8 @@ void Randomizer::OnPlayingFrame()
         return;
     if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
         return;
+    if (GameState != MD_GAME_MAIN)
+        return;
 
     _characterManager.KillPlayer();
     _displayManager.QueueMessage(_pendingDeathCause);
