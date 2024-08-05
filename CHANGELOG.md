@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.4.3] - 2024-08-05
+
+### Changed
+
+- Fixed death link and ring link not working together.
+
 ## [v0.4.2] - 2024-08-04
 
 ### Changed

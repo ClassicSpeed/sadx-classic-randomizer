@@ -232,7 +232,7 @@ void ArchipelagoManager::Connect()
 {
     AP_Init(_serverIP.c_str(), "Sonic Adventure DX", playerName.c_str(), _serverPassword.c_str());
 
-    AP_SetDeathLinkSupported(true);
+    AP_SetDeathLinkSupported(false);
     AP_SetItemClearCallback(&SADX_ResetItems);
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
