@@ -81,12 +81,12 @@ void SADX_RecvItem(const int64_t itemId, bool notify)
 
 void SADX_ResetItems()
 {
-    PrintDebug("Reset items\n");
+    PrintDebug(" --- Reset items\n");
 }
 
 void SADX_CheckLocation(int64_t loc_id)
 {
-    PrintDebug("Checked location %d\n", loc_id);
+    PrintDebug(" --- Checked location %d\n", loc_id);
     randomizerPtr->MarkCheckedLocation(loc_id - archipelagoManagerPtr->baseId);
 }
 

@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.4.3] - 2024-08-05
 
+### Added
+- Added Gamma's Hot shelter 4th life capsule
+
 ### Changed
 
 - Fixed death link and ring link not working together.
