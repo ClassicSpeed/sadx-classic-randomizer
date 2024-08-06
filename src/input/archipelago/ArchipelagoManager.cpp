@@ -81,12 +81,13 @@ void SADX_RecvItem(const int64_t itemId, bool notify)
 
 void SADX_ResetItems()
 {
-    PrintDebug("Reset items\n");
+    PrintDebug(" --- Reset items\n");
+    randomizerPtr->ResetItems();
 }
 
 void SADX_CheckLocation(int64_t loc_id)
 {
-    PrintDebug("Checked location %d\n", loc_id);
+    PrintDebug(" --- Checked location %d\n", loc_id);
     randomizerPtr->MarkCheckedLocation(loc_id - archipelagoManagerPtr->baseId);
 }
 
@@ -143,13 +144,45 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 {
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
+
 void SADX_LifeSanity(const int lifeSanity)
 {
     randomizerPtr->OnLifeSanitySet(lifeSanity);
 }
+
 void SADX_PinballLifeCapsules(const int pinballLifeCapsules)
 {
     randomizerPtr->OnPinballLifeCapsulesSet(pinballLifeCapsules);
+}
+
+void SADX_SonicLifeSanity(const int lifeSanity)
+{
+    randomizerPtr->SetCharacterLifeSanity(Characters_Sonic, lifeSanity);
+}
+
+void SADX_TailsLifeSanity(const int lifeSanity)
+{
+    randomizerPtr->SetCharacterLifeSanity(Characters_Tails, lifeSanity);
+}
+
+void SADX_KnucklesLifeSanity(const int lifeSanity)
+{
+    randomizerPtr->SetCharacterLifeSanity(Characters_Knuckles, lifeSanity);
+}
+
+void SADX_AmyLifeSanity(const int lifeSanity)
+{
+    randomizerPtr->SetCharacterLifeSanity(Characters_Amy, lifeSanity);
+}
+
+void SADX_GammaLifeSanity(const int lifeSanity)
+{
+    randomizerPtr->SetCharacterLifeSanity(Characters_Gamma, lifeSanity);
+}
+
+void SADX_BigLifeSanity(const int lifeSanity)
+{
+    randomizerPtr->SetCharacterLifeSanity(Characters_Big, lifeSanity);
 }
 
 
@@ -232,7 +265,7 @@ void ArchipelagoManager::Connect()
 {
     AP_Init(_serverIP.c_str(), "Sonic Adventure DX", playerName.c_str(), _serverPassword.c_str());
 
-    AP_SetDeathLinkSupported(true);
+    AP_SetDeathLinkSupported(false);
     AP_SetItemClearCallback(&SADX_ResetItems);
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
@@ -240,6 +273,13 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("LifeSanity", &SADX_LifeSanity);
     AP_RegisterSlotDataIntCallback("PinballLifeCapsules", &SADX_PinballLifeCapsules);
+    AP_RegisterSlotDataIntCallback("SonicLifeSanity", &SADX_SonicLifeSanity);
+    AP_RegisterSlotDataIntCallback("TailsLifeSanity", &SADX_TailsLifeSanity);
+    AP_RegisterSlotDataIntCallback("KnucklesLifeSanity", &SADX_KnucklesLifeSanity);
+    AP_RegisterSlotDataIntCallback("AmyLifeSanity", &SADX_AmyLifeSanity);
+    AP_RegisterSlotDataIntCallback("BigLifeSanity", &SADX_BigLifeSanity);
+    AP_RegisterSlotDataIntCallback("GammaLifeSanity", &SADX_GammaLifeSanity);
+
     AP_RegisterSlotDataIntCallback("StartingArea", &SADX_StartingArea);
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
     AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);

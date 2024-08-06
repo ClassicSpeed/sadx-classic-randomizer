@@ -306,9 +306,10 @@ LocationRepository::LocationRepository()
         {2028.11f, -467.0f, 6.6f, LevelAndActIDs_WindyValley1, Characters_Gamma, 5211},
         {-253.36f, 239.01f, 549.6f, LevelAndActIDs_RedMountain2, Characters_Gamma, 5310},
         {-28.29f, 50.78f, -433.41f, LevelAndActIDs_HotShelter3, Characters_Gamma, 5410},
-        {-848.5f, 825.0f, -3620.1f, LevelAndActIDs_HotShelter3, Characters_Gamma, 5411},
-        {-848.5f, 820.0f, -3620.1f, LevelAndActIDs_HotShelter3, Characters_Gamma, 5411}, //DX
-        {-664.08f, 474.0215f, -3583.48f, LevelAndActIDs_HotShelter3, Characters_Gamma, 5412},
+        {-808.61f, 343.99f, -2115.52f, LevelAndActIDs_HotShelter3, Characters_Gamma, 5411},
+        {-848.5f, 825.0f, -3620.1f, LevelAndActIDs_HotShelter3, Characters_Gamma, 5412},
+        {-848.5f, 820.0f, -3620.1f, LevelAndActIDs_HotShelter3, Characters_Gamma, 5412}, //DX
+        {-664.08f, 474.0215f, -3583.48f, LevelAndActIDs_HotShelter3, Characters_Gamma, 5413},
 
         {1174.01f, 332.79f, -256.39f, LevelAndActIDs_IceCap4, Characters_Big, 6110},
         {6086.91f, 78.29f, 1186.96f, LevelAndActIDs_EmeraldCoast3, Characters_Big, 6210},

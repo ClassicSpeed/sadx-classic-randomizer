@@ -190,7 +190,7 @@ FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
     case EggCarrier:
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
         break;
-    case None:
+    case NoStatingArea:
         break;
     }
 });

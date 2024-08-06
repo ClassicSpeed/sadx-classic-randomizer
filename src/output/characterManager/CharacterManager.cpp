@@ -91,10 +91,10 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 {
     if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
         return;
-
     if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return;
-
+    if (GameState != MD_GAME_MAIN)
+        return;
     if (amount == 0)
         return;
 
@@ -127,6 +127,56 @@ int CharacterManager::GetRingDifference()
     const int ringDifference = Rings - lastRingAmount;
     lastRingAmount = Rings;
     return ringDifference;
+}
+
+void CharacterManager::GiveFillerItem(const FillerType filler)
+{
+    _remainingFiller.push(filler);
+}
+
+void CharacterManager::OnPlayingFrame()
+{
+    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+        return;
+    if (CurrentLevel == LevelIDs_PerfectChaos)
+        return;
+    if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
+        return;
+
+    while (!_remainingFiller.empty())
+    {
+        const FillerType frontElement = _remainingFiller.front();
+        ActivateFiller(frontElement);
+        _remainingFiller.pop();
+    }
+}
+
+void CharacterManager::ActivateFiller(const FillerType filler)
+{
+    switch (filler)
+    {
+    case Invincibility:
+        InvincibilityPowerup(EntityData1Ptrs[0]);
+        break;
+    case FiveRings:
+        FiveRingsPowerup(EntityData1Ptrs[0]);
+        break;
+    case TenRings:
+        TenRingsPowerup(EntityData1Ptrs[0]);
+        break;
+    case Shield:
+        BarrierPowerup(EntityData1Ptrs[0]);
+        break;
+    case MagneticShield:
+        MagneticBarrierPowerup(EntityData1Ptrs[0]);
+        break;
+    case ExtraLife:
+        ExtraLifePowerup(EntityData1Ptrs[0]);
+        break;
+    case NoFiller:
+        break;
+    default: ;
+    }
 }
 
 

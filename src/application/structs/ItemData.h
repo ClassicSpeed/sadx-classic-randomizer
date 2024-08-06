@@ -9,23 +9,37 @@ enum ItemType
     ItemEmblem,
     ItemKey,
     ItemLure,
+    ItemFiller,
     ItemUnknown
+};
+
+
+enum FillerType
+{
+    Invincibility,
+    FiveRings,
+    TenRings,
+    Shield,
+    MagneticShield,
+    ExtraLife,
+    NoFiller
 };
 
 struct ItemData
 {
     ItemData() : upgrade(static_cast<Upgrades>(0)), eventFlags({}), type(ItemUnknown), obtained(false),
-                 displayName(std::string("Unknown"))
+                 displayName(std::string("Unknown")), fillerType(NoFiller)
     {
     }
 
     ItemData(const Upgrades upgrade, const std::vector<StoryFlags>& eventFlags, const ItemType type,
-             const bool obtained, const std::string& displayName)
+             const bool obtained, const std::string& displayName, const FillerType fillerType = NoFiller)
         : upgrade(upgrade),
           eventFlags(eventFlags),
           type(type),
           obtained(obtained),
-          displayName(displayName)
+          displayName(displayName),
+          fillerType(fillerType)
     {
     }
 
@@ -54,10 +68,16 @@ struct ItemData
         return ItemData(static_cast<Upgrades>(0), {}, ItemLure, false, displayName);
     }
 
+    static ItemData FillerItem(const std::string& displayName, const FillerType fillerType)
+    {
+        return ItemData(static_cast<Upgrades>(0), {}, ItemFiller, false, displayName, fillerType);
+    }
+
 
     Upgrades upgrade;
     std::vector<StoryFlags> eventFlags;
     ItemType type;
     bool obtained;
     std::string displayName;
+    FillerType fillerType;
 };

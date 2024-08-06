@@ -306,9 +306,9 @@ int GetLifeCapsuleFromPosition(const NJS_VECTOR& position)
     return -1;
 }
 
-FunctionHook<void, EntityData1*> onExtraLife(0x4D6D40, [](EntityData1* entity)-> void
+FunctionHook<void, EntityData1*> onBrokenGenericLifeCapsule(0x4D6D40, [](EntityData1* entity)-> void
 {
-    onExtraLife.Original(entity);
+    onBrokenGenericLifeCapsule.Original(entity);
     if (!eventDetectorPtr->randomizer.GetOptions().lifeSanity)
         return;
 
@@ -321,9 +321,9 @@ FunctionHook<void, EntityData1*> onExtraLife(0x4D6D40, [](EntityData1* entity)->
 });
 
 
-FunctionHook<void, task*> onObjectItemBox(0x4D6F10, [](task* tp)-> void
+FunctionHook<void, task*> onBrokenGroundLifeCapsule(0x4D6F10, [](task* tp)-> void
 {
-    onObjectItemBox.Original(tp);
+    onBrokenGroundLifeCapsule.Original(tp);
     if (!eventDetectorPtr->randomizer.GetOptions().lifeSanity)
         return;
 
@@ -336,9 +336,9 @@ FunctionHook<void, task*> onObjectItemBox(0x4D6F10, [](task* tp)-> void
     }
 });
 
-FunctionHook<void, task*> onObjectItemBoxAir(0x4C07D0, [](task* tp)-> void
+FunctionHook<void, task*> onBrokenAirLifeCapsule(0x4C07D0, [](task* tp)-> void
 {
-    onObjectItemBoxAir.Original(tp);
+    onBrokenAirLifeCapsule.Original(tp);
     if (!eventDetectorPtr->randomizer.GetOptions().lifeSanity)
         return;
 
@@ -352,8 +352,9 @@ FunctionHook<void, task*> onObjectItemBoxAir(0x4C07D0, [](task* tp)-> void
 });
 
 
-FunctionHook<void, int> onGiveLives(0x425B60, [](int lives)-> void
+FunctionHook<void, int> onGiveLives(0x425B60, [](const int lives)-> void
 {
+    //The game gives a negative live to represent a death
     if (lives == -1 && GameState == MD_GAME_FADEOUT_MISS)
         eventDetectorPtr->randomizer.OnDeath();
     onGiveLives.Original(lives);

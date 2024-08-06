@@ -39,6 +39,7 @@ public:
     void OnEmblemGoalSet(int emblemGoal);
     void SetStatingArea(StartingArea startingArea);
     void SetMissions(Characters characters, int missions);
+    void SetCharacterLifeSanity(Characters character, bool characterLifeSanity);
     void SetDeathLink(bool deathLinkActive);
     void SetRingLink(bool ringLinkActive);
     void SetHardRingLink(bool hardRingLinkActive);
@@ -56,6 +57,7 @@ public:
     void ProcessRings(Sint16 amount);
     void OnLifeSanitySet(bool lifeSanity);
     void OnPinballLifeCapsulesSet(bool pinballLifeCapsules);
+    void ResetItems();
 
 private:
     DisplayManager& _displayManager;

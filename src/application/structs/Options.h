@@ -15,22 +15,28 @@ enum StartingArea
     MysticRuinsMain,
     Jungle,
     EggCarrier,
-    None
+    NoStatingArea
 };
 
 struct Options
 {
     int emblemGoal = -1;
-    StartingArea startingArea = None;
-    // bool fieldEmblems = true;
+    StartingArea startingArea = NoStatingArea;
     bool lifeSanity = false;
+
+    bool sonicLifeSanity = false;
+    bool tailsLifeSanity = false;
+    bool knucklesLifeSanity = false;
+    bool amyLifeSanity = false;
+    bool bigLifeSanity = false;
+    bool gammaLifeSanity = false;
+
     bool pinballCapsules = false;
-    // bool subLevelChecks = false;
     bool deathLinkActive = false;
     bool ringLinkActive = false;
     bool hardRingLinkActive = false;
     RingLoss ringLoss = Classic;
-    
+
     bool bossChecks = false;
     bool unifyChaos4 = false;
     bool unifyChaos6 = false;
@@ -70,5 +76,58 @@ struct Options
         case Characters_MetalSonic:
             break;
         }
+    }
+
+    void SetCharacterLifeSanity(const Characters character, const bool characterLifeSanity)
+    {
+        switch (character)
+        {
+        case Characters_Sonic:
+            this->sonicLifeSanity = characterLifeSanity;
+            break;
+        case Characters_Tails:
+            this->tailsLifeSanity = characterLifeSanity;
+            break;
+        case Characters_Knuckles:
+            this->knucklesLifeSanity = characterLifeSanity;
+            break;
+        case Characters_Amy:
+            this->amyLifeSanity = characterLifeSanity;
+            break;
+        case Characters_Big:
+            this->bigLifeSanity = characterLifeSanity;
+            break;
+        case Characters_Gamma:
+            this->gammaLifeSanity = characterLifeSanity;
+            break;
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+    }
+
+    bool GetCharacterLifeSanity(const Characters character) const
+    {
+        switch (character)
+        {
+        case Characters_Sonic:
+            return this->sonicLifeSanity;
+        case Characters_Tails:
+            return this->tailsLifeSanity;
+        case Characters_Knuckles:
+            return this->knucklesLifeSanity;
+        case Characters_Amy:
+            return this->amyLifeSanity;
+        case Characters_Big:
+            return this->bigLifeSanity;
+        case Characters_Gamma:
+            return this->gammaLifeSanity;
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+        return false;
     }
 };

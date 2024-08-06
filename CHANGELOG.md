@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.4.3] - 2024-08-05
+
+### Added
+
+- Added filler items:
+    - Invincibility, 5 Rings, 10 rings, Shield, Magnetic Shield, Extra life.
+- Added Gamma's Hot shelter 4th life capsule
+- Added error message when generating without any character.
+- Added separate life-sanity option for each character.
+    - Only works if the life-sanity is enabled.
+    - The level status won't track life capsules for characters with life-sanity off.
+
+### Changed
+
+- Fixed death link and ring link not working together.
+- Fixed crash when receiving a death link while in the main menu.
+- Fixed receiving extra items after reconnecting to the server.
+
 ## [v0.4.2] - 2024-08-04
 
 ### Changed
