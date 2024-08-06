@@ -78,12 +78,24 @@ Sonic Adventure DX:
   
   # Determines whether collecting field emblems grants checks (12 Locations)
   field_emblems_checks: 'true'
+  # Determines whether beating a sublevel grants checks (4 Locations)
+  sub_level_checks: 'true'
   # Determines whether collecting life capsules grants checks (102 Locations)
   life_sanity: 'false'
   # Determines whether casinopolis life capsules grant checks (2 Locations)
   pinball_life_capsules: 'false'
-  # Determines whether beating a sublevel grants checks (4 Locations)
-  sub_level_checks: 'true'
+  # If life-sanity is on, determines whether Sonic's life capsules are part of the randomizer
+  sonic_life_sanity: 'true'
+  # If life-sanity is on, determines whether Tails' life capsules are part of the randomizer
+  tails_life_sanity: 'true'
+  # If life-sanity is on, determines whether Knuckles' life capsules are part of the randomizer
+  knuckles_life_sanity: 'true'
+  # If life-sanity is on, determines whether Amy's life capsules are part of the randomizer
+  amy_life_sanity: 'true'
+  # If life-sanity is on, determines whether Big's life capsules are part of the randomizer
+  big_life_sanity: 'true'
+  # If life-sanity is on, determines whether Gamma's life capsules are part of the randomizer
+  gamma_life_sanity: 'true'
   
   # Junk Options
   

@@ -10,6 +10,9 @@ All notable changes to this project will be documented in this file.
     - Invincibility, 5 Rings, 10 rings, Shield, Magnetic Shield, Extra life.
 - Added Gamma's Hot shelter 4th life capsule
 - Added error message when generating without any character.
+- Added separate life-sanity option for each character.
+    - Only works if the life-sanity is enabled.
+    - The level status won't track life capsules for characters with life-sanity off.
 
 ### Changed
 

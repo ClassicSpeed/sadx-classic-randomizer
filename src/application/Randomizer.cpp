@@ -203,9 +203,15 @@ void Randomizer::SetStatingArea(const StartingArea startingArea)
     _worldStateManager.UpdateOptions(_options);
 }
 
-void Randomizer::SetMissions(Characters characters, int missions)
+void Randomizer::SetMissions(const Characters characters, const int missions)
 {
     _options.SetMissions(characters, missions);
+    _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetCharacterLifeSanity(const Characters character, const bool characterLifeSanity)
+{
+    _options.SetCharacterLifeSanity(character, characterLifeSanity);
     _displayManager.UpdateOptions(_options);
 }
 
