@@ -35,7 +35,14 @@ ItemRepository::ItemRepository()
         {63, ItemData::LureItem("Lure 2 (Big)")},
         {64, ItemData::LureItem("Lure 3 (Big)")},
         {65, ItemData::LureItem("Lure 4 (Big)")},
-\
+
+        {71, ItemData::FillerItem("Invincibility", Invincibility)},
+        {72, ItemData::FillerItem("5 Rings", FiveRings)},
+        {73, ItemData::FillerItem("10 Rings", TenRings)},
+        {74, ItemData::FillerItem("Shield", Shield)},
+        {75, ItemData::FillerItem("Magnetic Shield", MagneticShield)},
+        {76, ItemData::FillerItem("Extra Life", ExtraLife)},
+
         {
             80,
             ItemData::KeyItem({
@@ -100,13 +107,22 @@ ItemRepository::ItemRepository()
 }
 
 
-ItemData ItemRepository::SetObtained(const int64_t itemId)
+bool ItemRepository::SetObtained(const int64_t itemId)
 {
+    _itemsReceived++;
     _itemData[itemId].obtained = true;
-    return _itemData[itemId];
+    //We save in the save file the number of items received
+    if (_itemsReceived > this->GetSavedItemReceived())
+        this->UpdateItemsReceived(_itemsReceived);
+        //If the item is already processed and filler, we ignore it
+    else if (_itemData[itemId].type == ItemFiller)
+        return true;
+
+
+    return false;
 }
 
-ItemData ItemRepository::GetItem(const int itemId)
+ItemData ItemRepository::GetItem(const int64_t itemId)
 {
     return _itemData[itemId];
 }
@@ -160,7 +176,8 @@ UnlockStatus ItemRepository::GetUnlockStatus()
     unlockStatus.bigUnlocked = _itemData[6].obtained;
     unlockStatus.bigLifeRingUnlocked = _itemData[60].obtained;
     unlockStatus.bigPowerRodUnlocked = _itemData[61].obtained;
-    unlockStatus.bigLureQuantity = _itemData[62].obtained + _itemData[63].obtained + _itemData[64].obtained + _itemData[65].obtained;
+    unlockStatus.bigLureQuantity = _itemData[62].obtained + _itemData[63].obtained + _itemData[64].obtained + _itemData[
+        65].obtained;
 
 
     unlockStatus.keyTrain = _itemData[80].obtained;
@@ -174,4 +191,26 @@ UnlockStatus ItemRepository::GetUnlockStatus()
     unlockStatus.keyDynamite = _itemData[88].obtained;
     unlockStatus.jungleCart = _itemData[89].obtained;
     return unlockStatus;
+}
+
+void ItemRepository::ResetItems()
+{
+    _emblemCount = 0;
+    _itemsReceived = 0;
+    for (auto& item : _itemData)
+    {
+        item.second.obtained = false;
+    }
+}
+
+//We use the metal sonic emblems space
+int ItemRepository::GetSavedItemReceived()
+{
+    return SaveFile.MetalEmblems;
+}
+
+void ItemRepository::UpdateItemsReceived(int itemsReceived)
+{
+    SaveFile.MetalEmblems = itemsReceived;
+    WriteSaveFile();
 }

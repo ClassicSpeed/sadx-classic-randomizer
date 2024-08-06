@@ -15,13 +15,13 @@ enum StartingArea
     MysticRuinsMain,
     Jungle,
     EggCarrier,
-    None
+    NoStatingArea
 };
 
 struct Options
 {
     int emblemGoal = -1;
-    StartingArea startingArea = None;
+    StartingArea startingArea = NoStatingArea;
     // bool fieldEmblems = true;
     bool lifeSanity = false;
     bool pinballCapsules = false;

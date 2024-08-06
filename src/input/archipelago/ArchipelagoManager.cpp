@@ -82,6 +82,7 @@ void SADX_RecvItem(const int64_t itemId, bool notify)
 void SADX_ResetItems()
 {
     PrintDebug(" --- Reset items\n");
+    randomizerPtr->ResetItems();
 }
 
 void SADX_CheckLocation(int64_t loc_id)
@@ -143,10 +144,12 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 {
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
+
 void SADX_LifeSanity(const int lifeSanity)
 {
     randomizerPtr->OnLifeSanitySet(lifeSanity);
 }
+
 void SADX_PinballLifeCapsules(const int pinballLifeCapsules)
 {
     randomizerPtr->OnPinballLifeCapsulesSet(pinballLifeCapsules);

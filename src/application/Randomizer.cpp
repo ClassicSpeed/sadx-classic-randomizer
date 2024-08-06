@@ -27,11 +27,18 @@ void Randomizer::MarkCheckedLocation(const int64_t checkId) const
 
 void Randomizer::OnItemReceived(const int64_t itemId) const
 {
-    const ItemData item = _itemRepository.SetObtained(itemId);
+    const bool ignore = _itemRepository.SetObtained(itemId);
+    if (ignore)
+        return;
+
+    const ItemData item = _itemRepository.GetItem(itemId);
+
     if (item.type == ItemUpgrade)
         _characterManager.GiveUpgrade(item.upgrade);
     else if (item.type == ItemCharacter || item.type == ItemKey)
         _worldStateManager.SetEventFlags(item.eventFlags);
+    else if (item.type == ItemFiller)
+        _characterManager.GiveFillerItem(item.fillerType);
     else if (item.type == ItemEmblem)
     {
         const int emblemCount = _itemRepository.AddEmblem();
@@ -39,6 +46,16 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
         if (emblemCount == _options.emblemGoal)
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
+    const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
+    _characterManager.UpdateUnlockStatus(unlockStatus);
+    _displayManager.UpdateUnlockStatus(unlockStatus);
+}
+
+
+
+void Randomizer::ResetItems()
+{
+    _itemRepository.ResetItems();
     const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
     _characterManager.UpdateUnlockStatus(unlockStatus);
     _displayManager.UpdateUnlockStatus(unlockStatus);

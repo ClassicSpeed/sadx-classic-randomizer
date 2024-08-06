@@ -56,6 +56,7 @@ public:
     void ProcessRings(Sint16 amount);
     void OnLifeSanitySet(bool lifeSanity);
     void OnPinballLifeCapsulesSet(bool pinballLifeCapsules);
+    void ResetItems();
 
 private:
     DisplayManager& _displayManager;

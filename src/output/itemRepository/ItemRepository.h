@@ -9,14 +9,19 @@ class ItemRepository
 {
 public:
     ItemRepository();
-    ItemData SetObtained(int64_t itemId);
-    ItemData GetItem(int itemId);
+    bool SetObtained(int64_t itemId);
+    ItemData GetItem(int64_t itemId);
     std::map<int64_t, ItemData> GetItems();
     int AddEmblem();
     int GetEmblemCount();
     UnlockStatus GetUnlockStatus();
+    void ResetItems();
 
 private:
+    int GetSavedItemReceived();
+    void UpdateItemsReceived(int itemsReceived);
     std::map<int64_t, ItemData> _itemData;
     int _emblemCount = 0;
+
+    int _itemsReceived = 0;
 };

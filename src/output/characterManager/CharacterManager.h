@@ -1,7 +1,11 @@
 #pragma once
+#include <queue>
+
 #include "../../pch.h"
 #include "../../application/structs/Options.h"
 #include "../../application/structs/UnlockStatus.h"
+#include "../../application/structs/ItemData.h"
+
 
 #define RING_LOSS_SOUND_ID 0
 #define RING_GAIN_SOUND_ID 7
@@ -17,7 +21,13 @@ public:
     void KillPlayer();
     void ProcessRings(Sint16 amount);
     int GetRingDifference();
+    void GiveFillerItem(FillerType filler);
+    void OnPlayingFrame();
     Options options;
     UnlockStatus unlockStatus;
     int lastRingAmount;
+private:
+    
+    void ActivateFiller(FillerType filler);
+    std::queue<FillerType> _remainingFiller;
 };
