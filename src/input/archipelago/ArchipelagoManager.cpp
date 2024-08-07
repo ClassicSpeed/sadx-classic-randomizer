@@ -42,7 +42,7 @@ void ArchipelagoManager::OnFrame()
         }
 
         _status = Connected;
-        _randomizer.OnConnected();
+        _randomizer.OnConnected(playerName);
         return;
     }
 

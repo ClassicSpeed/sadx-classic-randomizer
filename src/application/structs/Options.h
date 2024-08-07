@@ -20,6 +20,7 @@ enum StartingArea
 
 struct Options
 {
+    std::string playerName = "Player";
     int emblemGoal = -1;
     StartingArea startingArea = NoStatingArea;
     bool lifeSanity = false;

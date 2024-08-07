@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Separated Hedgehog Hammer's checks for amy.
+- Hedgehog Hammer's high score will show the player's name instead of Amy's.
 
 ## [v0.4.3] - 2024-08-05
 

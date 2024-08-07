@@ -1,5 +1,9 @@
 #include "WorldStateManager.h"
 
+#include <algorithm>
+
+#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
+
 WorldStateManager* worldStateManagerPtr;
 
 
@@ -55,10 +59,39 @@ static void __cdecl HandleWarp()
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
 }
 
+UsercallFuncVoid(onHandleHedgehogHammerText_t, (unsigned __int8* a1, NJS_PLANE* a2), (a1, a2), 0x0527E60, rEAX, rESI);
+
+void OnHandleHedgehogHammerTextR(unsigned __int8* a1, NJS_PLANE* a2)
+{
+    char* str = reinterpret_cast<char*>(a1);
+
+    //Instead of showing Amy's name, we show the player names
+    if (strcmp(str, "AMY") == 0)
+    {
+        const char* playerName = worldStateManagerPtr->options.playerName.c_str();
+        std::string upperPlayerName(playerName);
+        std::transform(upperPlayerName.begin(), upperPlayerName.end(), upperPlayerName.begin(), ::toupper);
+
+        strcpy(str, upperPlayerName.c_str());
+        const size_t length = strlen(worldStateManagerPtr->options.playerName.c_str());
+        a2->px = length * -4.0f;
+    }
+    //We correctly center the high score part
+    else if (strcmp(str, "HIGH SCORE") == 0)
+        a2->px = strlen(str) * -4.0f;
+
+
+    onHandleHedgehogHammerText_t.Original(a1, a2);
+}
+
 WorldStateManager::WorldStateManager()
 {
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehoHammer);
+
+    onHandleHedgehogHammerText_t.Hook(OnHandleHedgehogHammerTextR);
+
+
     worldStateManagerPtr = this;
 
     //We replace the checkpoint for a warp object from the Egg Carrier
@@ -367,3 +400,15 @@ FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
     }
     return response;
 });
+
+//#define UsercallFuncVoid(NAME, ARGS, ARGNAMES, ADDRESS, ...)
+
+
+// //void __usercall sub_527E60(unsigned __int8 *a1@<eax>, NJS_PLANE *a2@<esi>)
+// FunctionHook<void, unsigned __int8*, NJS_PLANE*> onHandleHedgehogHammerText(
+//     0x0527E60, [](unsigned __int8* a1, NJS_PLANE* a2)-> void
+//     {
+//         const auto str = reinterpret_cast<char*>(a1);
+//         PrintDebug("Hedgehog Hammer Text: %s\n", str);
+//         onHandleHedgehogHammerText.Original(a1, a2);
+//     });
