@@ -24,12 +24,12 @@ struct Options
     StartingArea startingArea = NoStatingArea;
     bool lifeSanity = false;
 
-    bool sonicLifeSanity = false;
-    bool tailsLifeSanity = false;
-    bool knucklesLifeSanity = false;
-    bool amyLifeSanity = false;
-    bool bigLifeSanity = false;
-    bool gammaLifeSanity = false;
+    bool sonicLifeSanity = true;
+    bool tailsLifeSanity = true;
+    bool knucklesLifeSanity = true;
+    bool amyLifeSanity = true;
+    bool bigLifeSanity = true;
+    bool gammaLifeSanity = true;
 
     bool pinballCapsules = false;
     bool deathLinkActive = false;

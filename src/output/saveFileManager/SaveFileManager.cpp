@@ -10,7 +10,7 @@ void SaveFileManager::OnSaveFileLoaded()
 
 void SaveFileManager::OnFrame()
 {
-    // These doesn't save for some reason, so we set it manually
+    // These don't save for some reason, so we set it manually
     // For some reason, some functions override these fields, we force them off
     // Maybe I'll search for a better way later
     SaveFile.AdventureData[Characters_Sonic].field_4 = -1;
@@ -53,7 +53,7 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_SHOVELCLAW));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_FIGHTINGGROVE));
 
-    // ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_FIGHTERSFEATHER));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_FIGHTERSFEATHER));
     ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_LONGHAMMER));
 
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_BOOSTER));

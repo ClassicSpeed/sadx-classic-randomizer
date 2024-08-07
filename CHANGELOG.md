@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.4.4] - 2024-08-?
+
+### Added
+
+- Separated Hedgehog Hammer's checks for amy.
+
 ## [v0.4.3] - 2024-08-05
 
 ### Added
