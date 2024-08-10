@@ -156,7 +156,25 @@ void DisplayManager::DisplayEmblemCount()
         NJM_LOCATION(2, this->_startLine - 1), ("Emblems: " + std::to_string(_emblemCount)).c_str());
 }
 
-std::string DisplayManager::GetLevelTime(const bool showTarget)
+std::string DisplayManager::GetMissionBTarget(const bool showTarget)
+{
+    switch (CurrentCharacter)
+    {
+    case Characters_Sonic:
+    case Characters_Tails:
+    case Characters_Amy:
+    case Characters_Gamma:
+        return showTarget ? " 50 Rings " : "(        )";
+    case Characters_Knuckles:
+        return showTarget ? " No Hints " : "(        )";
+    case Characters_Big:
+        return showTarget ? " 1000g " : "(     )";
+
+    default: return "";
+    }
+}
+
+std::string DisplayManager::GetMissionATarget(const bool showTarget)
 {
     int targetTime = 0;
 
@@ -183,7 +201,7 @@ std::string DisplayManager::GetLevelTime(const bool showTarget)
             targetTime = GAMMA_TARGET_TIMES.at(CurrentLevel);
         break;
     case Characters_Big:
-        return showTarget ? " 2000 " : "(    )";
+        return showTarget ? " 2000g " : "(     )";
 
     default: return "";
     }
@@ -302,11 +320,13 @@ void DisplayManager::DisplayItemsUnlocked()
         if (missionsEnabled > 0)
             buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
         if (missionsEnabled > 1)
-            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B) ? " B" : "  ");
+            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
+                              ? " B" + this->GetMissionBTarget(true)
+                              : "  " + this->GetMissionBTarget(true));
         if (missionsEnabled > 2)
             buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
-                              ? " A" + this->GetLevelTime(true)
-                              : "  " + this->GetLevelTime(true));
+                              ? " A" + this->GetMissionATarget(true)
+                              : "  " + this->GetMissionATarget(true));
         buffer.append(" ");
 
         if (_options.lifeSanity && _options.GetCharacterLifeSanity(static_cast<Characters>(CurrentCharacter)))
@@ -331,11 +351,13 @@ void DisplayManager::DisplayItemsUnlocked()
         if (missionsEnabled > 0)
             buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
         if (missionsEnabled > 1)
-            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B) ? "-B" : "- ");
+            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
+                              ? "-B" + this->GetMissionBTarget(false)
+                              : "- " + this->GetMissionBTarget(false));
         if (missionsEnabled > 2)
             buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
-                              ? "-A" + this->GetLevelTime(false)
-                              : "- " + this->GetLevelTime(false));
+                              ? "-A" + this->GetMissionATarget(false)
+                              : "- " + this->GetMissionATarget(false));
         buffer.append("]");
 
         SetDebugFontColor(currentColor & 0x00FFFFFF | 0x66000000);

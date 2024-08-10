@@ -31,7 +31,8 @@ All notable changes to this project will be documented in this file.
 - Added separate life-sanity option for each character.
     - Only works if the life-sanity is enabled.
     - The level status won't track life capsules for characters with life-sanity off.
-- Added target time for mission A in the pause screen.
+- Added target time for mission A and B in the pause screen.
+    - This is specially important for tails, since the target time for mission A is an approximation of the real target.
 
 ### Changed
 
