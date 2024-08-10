@@ -42,7 +42,7 @@ void ArchipelagoManager::OnFrame()
         }
 
         _status = Connected;
-        _randomizer.OnConnected();
+        _randomizer.OnConnected(playerName);
         return;
     }
 
@@ -378,9 +378,9 @@ void ArchipelagoManager::EnqueueMessage(AP_Message* msg)
                 return;
             std::string foundText = hintMsg->checked ? " (found)" : " (not found)";
 
+            _randomizer.QueueNewMessage("  " + hintMsg->location + " in " + hintMsg->sendPlayer + "'s world."
+                + foundText);
             _randomizer.QueueNewMessage(hintMsg->recvPlayer + "'s " + hintMsg->item + " can be found at");
-            _randomizer.QueueNewMessage("  " + hintMsg->location + " in " + hintMsg->sendPlayer + "'s world." +
-                foundText);
             return;
         }
     case AP_MessageType::Plaintext:

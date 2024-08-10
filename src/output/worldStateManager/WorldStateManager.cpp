@@ -1,5 +1,9 @@
 #include "WorldStateManager.h"
 
+#include <algorithm>
+
+#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
+
 WorldStateManager* worldStateManagerPtr;
 
 
@@ -9,6 +13,12 @@ constexpr int WARP_STATION_SQUARE = 17;
 constexpr int WARP_MYSTIC_RUINS = 6;
 constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
 
+
+// //We pretend that the egg carrier is sunk so that the hedgehog hammer is works
+static bool __cdecl HandleHedgehoHammer()
+{
+    return GetEventFlag(EventFlags_Amy_WarriorFeather);
+}
 
 static void __cdecl HandleWarp()
 {
@@ -49,10 +59,49 @@ static void __cdecl HandleWarp()
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
 }
 
+UsercallFuncVoid(onHandleHedgehogHammerText_t, (unsigned __int8* a1, NJS_PLANE* a2), (a1, a2), 0x0527E60, rEAX, rESI);
+
+void OnHandleHedgehogHammerTextR(unsigned __int8* a1, NJS_PLANE* a2)
+{
+    char* str = reinterpret_cast<char*>(a1);
+
+    //Instead of showing Amy's name, we show the player names
+    if (strcmp(str, "AMY") == 0)
+    {
+        const char* playerName = worldStateManagerPtr->options.playerName.c_str();
+        std::string upperPlayerName(playerName);
+        std::transform(upperPlayerName.begin(), upperPlayerName.end(), upperPlayerName.begin(), ::toupper);
+
+        strcpy(str, upperPlayerName.c_str());
+        const size_t length = strlen(worldStateManagerPtr->options.playerName.c_str());
+        a2->px = length * -4.0f;
+    }
+    //We correctly center the high score part
+    else if (strcmp(str, "HIGH SCORE") == 0)
+        a2->px = strlen(str) * -4.0f;
+
+
+    onHandleHedgehogHammerText_t.Original(a1, a2);
+}
+
+
+//We don't create animals outside levels
+//Allow us to spawn enemies in the adventure fields
+FunctionHook<void, int, float, float, float> onCreateAnimal(0x4BE610, [](int e_num, float x, float y, float z)-> void
+{
+    if (GameMode == GameModes_Adventure_ActionStg)
+        onCreateAnimal.Original(e_num, x, y, z);
+});
+
 WorldStateManager::WorldStateManager()
 {
-    WriteCall(reinterpret_cast<void*>(0x5264C5  ), &HandleWarp);
-    worldStateManagerPtr = this;    
+    WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
+    WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehoHammer);
+
+    onHandleHedgehogHammerText_t.Hook(OnHandleHedgehogHammerTextR);
+
+
+    worldStateManagerPtr = this;
 
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
@@ -231,7 +280,7 @@ void AddSetToLevel(const SETEntry& newSetEntry, const LevelAndActIDs levelAndAct
 }
 
 const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f});
-const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635}, {0,0,0}, {0.3f, 0, 51});
+const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635}, {0, 0, 0}, {0.3f, 0, 51});
 
 
 //Station Square Bosses
@@ -261,7 +310,17 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
     onCountSetItemsMaybe.Original();
 
+    //Warp point
     LoadPVM("EC_ALIFE", ADV01C_TEXLISTS[3]);
+
+    //Buyon enemy
+    LoadPVM("E_BUYON", &E_BUYON_TEXLIST);
+
+    //Cop
+    LoadPVM("NISEPAT", &NISEPAT_TEXLIST);
+
+    //Freeze trap
+    LoadNoNamePVM(&stx_ice0_TEXLIST);
 
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);

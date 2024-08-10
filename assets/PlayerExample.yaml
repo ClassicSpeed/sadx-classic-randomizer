@@ -33,7 +33,7 @@ Sonic Adventure DX:
   # 3 means Missions A, B and C
   # 2 means Missions B and C
   # 1 means Missions C
-  # 0 means the character is not played at all on the randomzier
+  # 0 means the character is not played at all on the randomizer
   # Choose what missions will be a location check for Sonic
   sonic_missions: 1
   # Choose what missions will be a location check for Tails.
@@ -100,4 +100,14 @@ Sonic Adventure DX:
   # Junk Options
   
   # Replace a percentage of non-required emblems in the item pool with random junk items
-  junk_fill_percentage: 100
+  junk_fill_percentage: 50
+  # Replace a percentage of junk items in the item pool with random traps
+  trap_fill_percentage: 0
+  # Likelihood of receiving a trap which freeze the player in place
+  ice_trap_weight: 2
+  # Likelihood of receiving a trap which spawns a spring that sends the player flying to the opposite direction
+  spring_trap_weight: 2
+  # Likelihood of receiving a trap which spawns a lot of Cop Speeder enemies
+  police_trap_weight: 2
+  # Likelihood of receiving a trap which spawns a lot of Buyon enemies
+  buyon_trap_weight: 2

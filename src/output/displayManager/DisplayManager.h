@@ -24,12 +24,15 @@ public:
     void OnEnterCharacterSelectScreen();
     void OnExitCharacterSelectScreen();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
+    void SetMessageConfiguration(float messageDisplayDuration, int messageFontSize, int messageColor);
 
 private:
     void RemoveExpiredMessages();
     void AddNewMessages();
     void DisplayMessages() const;
     void DisplayEmblemCount();
+    std::string GetMissionBTarget(bool showTarget);
+    std::string GetMissionATarget(bool showTarget);
     void DisplayItemsUnlocked();
 
     int _startLine = 2;
@@ -66,7 +69,5 @@ private:
     int _gammaColor = 0xFF827f80;
     
 
-    std::unordered_map<int, std::string> _charactersMap;
-    std::unordered_map<int, std::string> _levelsMap;
     mutable std::map<int, LocationData> _checkData;
 };

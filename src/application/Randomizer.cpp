@@ -148,8 +148,8 @@ void Randomizer::OnDeath()
         return;
     }
 
+    _archipelagoMessenger.SendDeath(_options.playerName);
     _displayManager.QueueMessage("Death Sent");
-    _archipelagoMessenger.SendDeath();
 }
 
 void Randomizer::ProcessRings(const Sint16 amount)
@@ -157,8 +157,10 @@ void Randomizer::ProcessRings(const Sint16 amount)
     _characterManager.ProcessRings(amount);
 }
 
-void Randomizer::OnConnected()
+void Randomizer::OnConnected(std::string playerName)
 {
+    _options.playerName = playerName;
+    _worldStateManager.UpdateOptions(_options);
     _displayManager.QueueMessage("Connected to Archipelago");
 }
 

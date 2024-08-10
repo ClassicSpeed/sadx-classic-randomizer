@@ -9,6 +9,7 @@
 
 #define RING_LOSS_SOUND_ID 0
 #define RING_GAIN_SOUND_ID 7
+
 class CharacterManager
 {
 public:
@@ -26,8 +27,18 @@ public:
     Options options;
     UnlockStatus unlockStatus;
     int lastRingAmount;
+
 private:
-    
     void ActivateFiller(FillerType filler);
+    void FreezePlayer();
+    void SpawnSpring();
+    void SpawnEnemies(void (*enemyFunc)(task* tp));
     std::queue<FillerType> _remainingFiller;
+    
+    task* _springTask;
+    float _springDuration = 2.0f;
+    std::clock_t _springTimer;
+    
+    float _freezeDuration = 2.0f;
+    std::clock_t _freezeTimer = -1;
 };

@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.4.4] - 2024-08-?
+
+### Added
+
+- Added trap items:
+    - Ice Trap: Freezes the player for a few seconds.
+    - Spring Trap: Sends the player to the opposite direction they were going.
+    - Police Trap: Spawns a bunch of police cars that will chase the player.
+    - Buyon Trap: Spawns a bunch of Buyons that will chase the player.
+- Separated Hedgehog Hammer's checks for amy.
+- Hedgehog Hammer's high score will show the player's name instead of Amy's.
+- Added configuration for archipelago messages
+    - You can change the display duration, font size, and color.
+
+### Changed
+
+- Fixed hint text being backwards.
+
 ## [v0.4.3] - 2024-08-05
 
 ### Added
@@ -13,12 +31,16 @@ All notable changes to this project will be documented in this file.
 - Added separate life-sanity option for each character.
     - Only works if the life-sanity is enabled.
     - The level status won't track life capsules for characters with life-sanity off.
+- Added target time for mission A and B in the pause screen.
+    - This is specially important for tails, since the target time for mission A is an approximation of the real target.
+- Added character name to the death link message.
 
 ### Changed
 
 - Fixed death link and ring link not working together.
 - Fixed crash when receiving a death link while in the main menu.
 - Fixed receiving extra items after reconnecting to the server.
+- Fixed death link not working properly.
 
 ## [v0.4.2] - 2024-08-04
 

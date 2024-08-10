@@ -32,7 +32,7 @@ public:
     void OnCharacterLoaded() const;
     void OnCharacterSelectScreenLoaded() const;
     std::map<int, LocationData> GetCheckData() const;
-    void OnConnected();
+    void OnConnected(std::string playerName);
     void OnGameCompleted();
     void ShowStatusInformation(std::string information);
     void QueueNewMessage(std::string information);

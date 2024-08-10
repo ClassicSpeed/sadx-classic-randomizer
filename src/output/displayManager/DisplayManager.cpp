@@ -5,31 +5,6 @@ DisplayManager* displayManagerPtr;
 DisplayManager::DisplayManager()
 {
     displayManagerPtr = this;
-    _charactersMap = {
-        {Characters_Sonic, "Sonic"},
-        {Characters_Tails, "Tails"},
-        {Characters_Knuckles, "Knuckles"},
-        {Characters_Amy, "Amy"},
-        {Characters_Gamma, "Gamma"},
-        {Characters_Big, "Big"}
-    };
-
-
-    _levelsMap = {
-        {LevelIDs_EmeraldCoast, "Emerald Coast"},
-        {LevelIDs_WindyValley, "Windy Valley"},
-        {LevelIDs_TwinklePark, "Twinkle Park"},
-        {LevelIDs_SpeedHighway, "Speed Highway"},
-        {LevelIDs_RedMountain, "Red Mountain"},
-        {LevelIDs_SkyDeck, "Sky Deck"},
-        {LevelIDs_LostWorld, "Lost World"},
-        {LevelIDs_IceCap, "Ice Cap"},
-        {LevelIDs_Casinopolis, "Casinopolis"},
-        {LevelIDs_FinalEgg, "Final Egg"},
-        {LevelIDs_HotShelter, "Hot Shelter"},
-        {LevelIDs_TwinkleCircuit, "Twinkle Circuit"},
-        {LevelIDs_SandHill, "Sand Hill"},
-    };
 }
 
 
@@ -156,6 +131,66 @@ void DisplayManager::DisplayEmblemCount()
         NJM_LOCATION(2, this->_startLine - 1), ("Emblems: " + std::to_string(_emblemCount)).c_str());
 }
 
+std::string DisplayManager::GetMissionBTarget(const bool showTarget)
+{
+    switch (CurrentCharacter)
+    {
+    case Characters_Sonic:
+    case Characters_Tails:
+    case Characters_Amy:
+    case Characters_Gamma:
+        return showTarget ? " 50 Rings " : "(        )";
+    case Characters_Knuckles:
+        return showTarget ? " No Hints " : "(        )";
+    case Characters_Big:
+        return showTarget ? " 1000g " : "(     )";
+
+    default: return "";
+    }
+}
+
+std::string DisplayManager::GetMissionATarget(const bool showTarget)
+{
+    int targetTime = 0;
+
+    switch (CurrentCharacter)
+    {
+    case Characters_Sonic:
+        if (SONIC_TARGET_TIMES.find(CurrentLevel) != SONIC_TARGET_TIMES.end())
+            targetTime = SONIC_TARGET_TIMES.at(CurrentLevel);
+        break;
+    case Characters_Tails:
+        if (TAILS_TARGET_TIMES.find(CurrentLevel) != TAILS_TARGET_TIMES.end())
+            targetTime = TAILS_TARGET_TIMES.at(CurrentLevel);
+        break;
+    case Characters_Knuckles:
+        if (KNUCKLES_TARGET_TIMES.find(CurrentLevel) != KNUCKLES_TARGET_TIMES.end())
+            targetTime = KNUCKLES_TARGET_TIMES.at(CurrentLevel);
+        break;
+    case Characters_Amy:
+        if (AMY_TARGET_TIMES.find(CurrentLevel) != AMY_TARGET_TIMES.end())
+            targetTime = AMY_TARGET_TIMES.at(CurrentLevel);
+        break;
+    case Characters_Gamma:
+        if (GAMMA_TARGET_TIMES.find(CurrentLevel) != GAMMA_TARGET_TIMES.end())
+            targetTime = GAMMA_TARGET_TIMES.at(CurrentLevel);
+        break;
+    case Characters_Big:
+        return showTarget ? " 2000g " : "(     )";
+
+    default: return "";
+    }
+    const int minutes = targetTime / 60 / 60;
+    const int seconds = targetTime / 60 % 60;
+    const std::string formattedTime = " " + std::to_string(minutes) + ":" + (seconds < 10 ? "0" : "") +
+        std::to_string(seconds) + " ";
+
+    if (showTarget)
+        return formattedTime;
+    else
+        return "(" + std::string(formattedTime.length() - 2, ' ') + ")";
+}
+
 
 void DisplayManager::OnEnterCharacterSelectScreen()
 {
@@ -171,6 +206,14 @@ void DisplayManager::OnExitCharacterSelectScreen()
 void DisplayManager::UpdateChecks(const std::map<int, LocationData>& checkData)
 {
     this->_checkData = checkData;
+}
+
+void DisplayManager::SetMessageConfiguration(const float messageDisplayDuration, const int messageFontSize,
+                                             const int messageColor)
+{
+    this->_displayDuration = messageDisplayDuration;
+    this->_debugFontSize = messageFontSize;
+    this->_displayMessageColor = messageColor;
 }
 
 
@@ -226,9 +269,9 @@ void DisplayManager::DisplayItemsUnlocked()
 
         // Show current level name
         displayOffset++;
-        const std::string levelName = _levelsMap.at(CurrentLevel);
+        const std::string levelName = LEVELS_MAP.at(CurrentLevel);
         // Show current character
-        const std::string characterName = _charactersMap.at(CurrentCharacter);
+        const std::string characterName = CHARACTERS_MAP.at(CurrentCharacter);
         // Show current mission
 
         std::string missionName;
@@ -248,12 +291,17 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append(" ");
+        const std::string levelTime = "2:45";
         if (missionsEnabled > 0)
             buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
         if (missionsEnabled > 1)
-            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B) ? " B" : "  ");
+            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
+                              ? " B" + this->GetMissionBTarget(true)
+                              : "  " + this->GetMissionBTarget(true));
         if (missionsEnabled > 2)
-            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A) ? " A" : "  ");
+            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
+                              ? " A" + this->GetMissionATarget(true)
+                              : "  " + this->GetMissionATarget(true));
         buffer.append(" ");
 
         if (_options.lifeSanity && _options.GetCharacterLifeSanity(static_cast<Characters>(CurrentCharacter)))
@@ -278,9 +326,13 @@ void DisplayManager::DisplayItemsUnlocked()
         if (missionsEnabled > 0)
             buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
         if (missionsEnabled > 1)
-            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B) ? "-B" : "- ");
+            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
+                              ? "-B" + this->GetMissionBTarget(false)
+                              : "- " + this->GetMissionBTarget(false));
         if (missionsEnabled > 2)
-            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A) ? "-A" : "- ");
+            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
+                              ? "-A" + this->GetMissionATarget(false)
+                              : "- " + this->GetMissionATarget(false));
         buffer.append("]");
 
         SetDebugFontColor(currentColor & 0x00FFFFFF | 0x66000000);

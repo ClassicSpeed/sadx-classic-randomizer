@@ -143,13 +143,37 @@ void CharacterManager::OnPlayingFrame()
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
         return;
 
+
     while (!_remainingFiller.empty())
     {
         const FillerType frontElement = _remainingFiller.front();
         ActivateFiller(frontElement);
         _remainingFiller.pop();
     }
+
+    if (_freezeTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_freezeTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _freezeDuration)
+        {
+            EnableController(0);
+            _freezeTimer = -1;
+        }
+    }
+
+    if (_springTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_springTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _springDuration)
+        {
+            FreeTask(_springTask);
+            _springTask = nullptr;
+            _springTimer = -1;
+        }
+    }
 }
+
+TaskFunc(EBuyon_Main, 0x7B2E00);
 
 void CharacterManager::ActivateFiller(const FillerType filler)
 {
@@ -173,6 +197,23 @@ void CharacterManager::ActivateFiller(const FillerType filler)
     case ExtraLife:
         ExtraLifePowerup(EntityData1Ptrs[0]);
         break;
+    case IceTrap:
+        this->FreezePlayer();
+        PlayVoice(174);
+        break;
+    case SpringTrap:
+        this->SpawnSpring();
+        PlayVoice(174);
+        break;
+    case PoliceTrap:
+        this->SpawnEnemies(EnemyPolice);
+        PlayVoice(174);
+        break;
+    case BuyonTrap:
+        this->SpawnEnemies(EBuyon_Main);
+        PlayVoice(174);
+        break;
+
     case NoFiller:
         break;
     default: ;
@@ -183,4 +224,114 @@ void CharacterManager::ActivateFiller(const FillerType filler)
 FunctionHook<int> getLureQuantity(0x46C870, []()-> int
 {
     return characterManagerPtr->unlockStatus.bigLureQuantity;
+});
+
+void CharacterManager::SpawnSpring()
+{
+    _springTimer = std::clock();
+    _springTask = CreateElementalTask(LoadObj_Data1, 3, ObjectSpringB);
+    _springTask->twp->pos.x = EntityData1Ptrs[0]->Position.x;
+    _springTask->twp->pos.y = EntityData1Ptrs[0]->Position.y + 5;
+    _springTask->twp->pos.z = EntityData1Ptrs[0]->Position.z;
+
+    _springTask->twp->ang.x = 0x10000 - EntityData1Ptrs[0]->Rotation.y;
+    _springTask->twp->ang.z = 0x5000;
+
+    _springTask->twp->scl.x = 5;
+    _springTask->twp->scl.y = 6;
+    _springTask->twp->scl.z = 1;
+}
+
+
+void CharacterManager::SpawnEnemies(void (*enemyFunc)(task* tp))
+{
+    const auto enemy = CreateElementalTask(LoadObj_Data1, 3, enemyFunc);
+    enemy->twp->pos.x = EntityData1Ptrs[0]->Position.x + 30;
+    enemy->twp->pos.y = EntityData1Ptrs[0]->Position.y;
+    enemy->twp->pos.z = EntityData1Ptrs[0]->Position.z + 30;
+    enemy->thp = 0;
+    enemy->ocp = new OBJ_CONDITION;
+
+    const auto enemy2 = CreateElementalTask(LoadObj_Data1, 3, enemyFunc);
+    enemy2->twp->pos.x = EntityData1Ptrs[0]->Position.x + 30;
+    enemy2->twp->pos.y = EntityData1Ptrs[0]->Position.y;
+    enemy2->twp->pos.z = EntityData1Ptrs[0]->Position.z - 30;
+    enemy2->thp = 0;
+    enemy2->ocp = new OBJ_CONDITION;
+
+
+    const auto enemy3 = CreateElementalTask(LoadObj_Data1, 3, enemyFunc);
+    enemy3->twp->pos.x = EntityData1Ptrs[0]->Position.x - 30;
+    enemy3->twp->pos.y = EntityData1Ptrs[0]->Position.y;
+    enemy3->twp->pos.z = EntityData1Ptrs[0]->Position.z + 30;
+    enemy3->thp = 0;
+    enemy3->ocp = new OBJ_CONDITION;
+
+
+    const auto enemy4 = CreateElementalTask(LoadObj_Data1, 3, enemyFunc);
+    enemy4->twp->pos.x = EntityData1Ptrs[0]->Position.x - 30;
+    enemy4->twp->pos.y = EntityData1Ptrs[0]->Position.y;
+    enemy4->twp->pos.z = EntityData1Ptrs[0]->Position.z - 30;
+    enemy4->thp = 0;
+    enemy4->ocp = new OBJ_CONDITION;
+
+
+    const auto enemy5 = CreateElementalTask(LoadObj_Data1, 3, enemyFunc);
+    enemy5->twp->pos.x = EntityData1Ptrs[0]->Position.x + 30;
+    enemy5->twp->pos.y = EntityData1Ptrs[0]->Position.y;
+    enemy5->twp->pos.z = EntityData1Ptrs[0]->Position.z;
+    enemy5->thp = 0;
+    enemy5->ocp = new OBJ_CONDITION;
+
+
+    const auto enemy6 = CreateElementalTask(LoadObj_Data1, 3, enemyFunc);
+    enemy6->twp->pos.x = EntityData1Ptrs[0]->Position.x;
+    enemy6->twp->pos.y = EntityData1Ptrs[0]->Position.y;
+    enemy6->twp->pos.z = EntityData1Ptrs[0]->Position.z + 30;
+    enemy6->thp = 0;
+    enemy6->ocp = new OBJ_CONDITION;
+
+
+    const auto enemy7 = CreateElementalTask(LoadObj_Data1, 3, enemyFunc);
+    enemy7->twp->pos.x = EntityData1Ptrs[0]->Position.x - 30;
+    enemy7->twp->pos.y = EntityData1Ptrs[0]->Position.y;
+    enemy7->twp->pos.z = EntityData1Ptrs[0]->Position.z;
+    enemy7->thp = 0;
+    enemy7->ocp = new OBJ_CONDITION;
+
+
+    const auto enemy8 = CreateElementalTask(LoadObj_Data1, 3, enemyFunc);
+    enemy8->twp->pos.x = EntityData1Ptrs[0]->Position.x;
+    enemy8->twp->pos.y = EntityData1Ptrs[0]->Position.y;
+    enemy8->twp->pos.z = EntityData1Ptrs[0]->Position.z - 30;
+    enemy8->thp = 0;
+
+    enemy8->ocp = new OBJ_CONDITION;
+}
+
+FunctionPointer(ObjectMaster *, freezePLayer, (char a1), 0x4A2550);
+
+void CharacterManager::FreezePlayer()
+{
+    _freezeTimer = std::clock();
+    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Knuckles)
+        return ForcePlayerAction(0, PL_OP_ICED);
+
+    freezePLayer(EntityData1Ptrs[0]->CharIndex);
+    Current_CharObj2->field_88.x = 300;
+    NullifyVelocity(EntityData2Ptrs[0], Current_CharObj2);
+    DisableController(0);
+}
+
+
+//We scale up the freeze trap for Big and Gamma
+FunctionHook<void, task*> freezeTrapDisplay(0x4A2240, [](task* tp)-> void
+{
+    if (CurrentCharacter == Characters_Big || CurrentCharacter == Characters_Gamma)
+    {
+        tp->twp->scl.x = 3;
+        tp->twp->scl.y = 3;
+        tp->twp->scl.z = 3;
+    }
+    freezeTrapDisplay.Original(tp);
 });

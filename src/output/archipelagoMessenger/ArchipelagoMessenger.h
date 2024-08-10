@@ -8,7 +8,7 @@ public:
     explicit ArchipelagoMessenger(int instanceId, int64_t baseId);
     void CheckLocation(int locationId);
     void GameCompleted();
-    void SendDeath();
+    void SendDeath(std::string playerName);
     void UpdateTags(Options options);
     void SendRingUpdate(int ringDifference);
 private:
