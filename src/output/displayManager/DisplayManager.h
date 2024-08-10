@@ -24,6 +24,7 @@ public:
     void OnEnterCharacterSelectScreen();
     void OnExitCharacterSelectScreen();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
+    void SetMessageConfiguration(float messageDisplayDuration, int messageFontSize, int messageColor);
 
 private:
     void RemoveExpiredMessages();

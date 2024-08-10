@@ -173,6 +173,13 @@ void DisplayManager::UpdateChecks(const std::map<int, LocationData>& checkData)
     this->_checkData = checkData;
 }
 
+void DisplayManager::SetMessageConfiguration(const float messageDisplayDuration, const int messageFontSize, const int messageColor)
+{
+    this->_displayDuration = messageDisplayDuration;
+    this->_debugFontSize =  messageFontSize;
+    this->_displayMessageColor = messageColor;
+}
+
 
 void DisplayManager::DisplayItemsUnlocked()
 {

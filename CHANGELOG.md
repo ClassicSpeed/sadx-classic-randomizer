@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
     - Buyon Trap: Spawns a bunch of Buyons that will chase the player.
 - Separated Hedgehog Hammer's checks for amy.
 - Hedgehog Hammer's high score will show the player's name instead of Amy's.
+- Added configuration for archipelago messages
+    - You can change the display duration, font size, and color.
 
 ### Changed
 
