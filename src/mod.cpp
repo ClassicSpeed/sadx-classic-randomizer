@@ -135,7 +135,7 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
 
 void LoadDisplayMessageSettings(const IniFile* settingsIni)
 {
-    const float messageDisplayDuration = settingsIni->getFloat("Messages", "MessageDisplayDuration", 21);
+    const float messageDisplayDuration = settingsIni->getFloat("Messages", "MessageDisplayDuration", 5.0f);
     const int messageFontSize = settingsIni->getInt("Messages", "MessageFontSize", 21);
     const int messageColorR = settingsIni->getInt("Messages", "MessageColorR", 33);
     const int messageColorG = settingsIni->getInt("Messages", "MessageColorG", 255);

@@ -14,7 +14,7 @@
             </Property>
         </Group>
         <Group name="Messages" display="Messages Settings">
-            <Property name="MessageDisplayDuration" type="float" defaultvalue="5" minvalue="3.0" maxvalue="15.0" display="Message Display Duration">
+            <Property name="MessageDisplayDuration" type="float" defaultvalue="5" minvalue="3" maxvalue="15" display="Message Display Duration">
                 <HelpText>How long the archipelago messages will display</HelpText>
             </Property>
             <Property name="MessageFontSize" type="int" defaultvalue="21" minvalue="10" maxvalue="36" display="Message Font Size">
