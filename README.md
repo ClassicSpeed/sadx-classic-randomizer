@@ -15,6 +15,7 @@ the [Archipelago guide](https://github.com/ClassicSpeed/Archipelago/blob/sadx_in
 ## Things that won't be added:
 
 - Configuration for messages besides the archipelago ones.
+- Auto update for the mod. It adds manual extra manual work for the release, and it could break your current randomizer.
 
 ## Thanks to:
 
