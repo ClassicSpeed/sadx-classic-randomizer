@@ -9,50 +9,6 @@ EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
 }
 
 
-const std::unordered_map<int, int> sonic_target_times = {
-    {LevelIDs_EmeraldCoast, 7200},
-    {LevelIDs_WindyValley, 10800},
-    {LevelIDs_Casinopolis, 18000},
-    {LevelIDs_IceCap, 14400},
-    {LevelIDs_TwinklePark, 10800},
-    {LevelIDs_SpeedHighway, 9000},
-    {LevelIDs_RedMountain, 10800},
-    {LevelIDs_SkyDeck, 18000},
-    {LevelIDs_LostWorld, 16200},
-    {LevelIDs_FinalEgg, 16200}
-};
-
-const std::unordered_map<int, int> tails_target_times = {
-    {LevelIDs_WindyValley, 5400}, //1 min 30 sec
-    {LevelIDs_Casinopolis, 3600}, //1 min
-    {LevelIDs_IceCap, 7200}, // 2 min
-    {LevelIDs_SkyDeck, 3600}, //1 min
-    {LevelIDs_SpeedHighway, 7200}, //2 min
-};
-
-
-const std::unordered_map<int, int> knuckles_target_times = {
-    {LevelIDs_SpeedHighway, 3600},
-    {LevelIDs_Casinopolis, 3600},
-    {LevelIDs_RedMountain, 3600},
-    {LevelIDs_LostWorld, 3600},
-    {LevelIDs_SkyDeck, 7200},
-};
-
-const std::unordered_map<int, int> amy_target_times = {
-    {LevelIDs_TwinklePark, 7200},
-    {LevelIDs_HotShelter, 23400},
-    {LevelIDs_FinalEgg, 9000},
-};
-
-const std::unordered_map<int, int> gamma_target_times = {
-    {LevelIDs_FinalEgg, 9000},
-    {LevelIDs_EmeraldCoast, 10800},
-    {LevelIDs_WindyValley, 10800},
-    {LevelIDs_RedMountain, 10800},
-    {LevelIDs_HotShelter, 7200},
-};
-
 
 DataPointer(int, NumberOfHintsUsed, 0x3B0F138);
 
@@ -76,24 +32,24 @@ bool ManualMissionACheck(const int character, const int level)
     switch (character)
     {
     case Characters_Sonic:
-        if (sonic_target_times.find(level) != sonic_target_times.end())
-            return time <= sonic_target_times.at(level);
+        if (SONIC_TARGET_TIMES.find(level) != SONIC_TARGET_TIMES.end())
+            return time <= SONIC_TARGET_TIMES.at(level);
         break;
     case Characters_Tails:
-        if (tails_target_times.find(level) != tails_target_times.end())
-            return time <= tails_target_times.at(level);
+        if (TAILS_TARGET_TIMES.find(level) != TAILS_TARGET_TIMES.end())
+            return time <= TAILS_TARGET_TIMES.at(level);
         break;
     case Characters_Knuckles:
-        if (knuckles_target_times.find(level) != knuckles_target_times.end())
-            return time <= knuckles_target_times.at(level);
+        if (KNUCKLES_TARGET_TIMES.find(level) != KNUCKLES_TARGET_TIMES.end())
+            return time <= KNUCKLES_TARGET_TIMES.at(level);
         break;
     case Characters_Amy:
-        if (amy_target_times.find(level) != amy_target_times.end())
-            return time <= amy_target_times.at(level);
+        if (AMY_TARGET_TIMES.find(level) != AMY_TARGET_TIMES.end())
+            return time <= AMY_TARGET_TIMES.at(level);
         break;
     case Characters_Gamma:
-        if (gamma_target_times.find(level) != gamma_target_times.end())
-            return time > gamma_target_times.at(level);
+        if (GAMMA_TARGET_TIMES.find(level) != GAMMA_TARGET_TIMES.end())
+            return time > GAMMA_TARGET_TIMES.at(level);
         break;
     case Characters_Big:
         return BigWeightRecord >= 2000;

@@ -27,6 +27,52 @@
 #include <json/json.h>
 
 
-#endif //PCH_H
 #define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
 #define GET_LEVEL(levelAct) ((levelAct) >> 8)
+
+const std::unordered_map<int, int> SONIC_TARGET_TIMES = {
+    {LevelIDs_EmeraldCoast, 7200},
+    {LevelIDs_WindyValley, 10800},
+    {LevelIDs_Casinopolis, 18000},
+    {LevelIDs_IceCap, 14400},
+    {LevelIDs_TwinklePark, 10800},
+    {LevelIDs_SpeedHighway, 9000},
+    {LevelIDs_RedMountain, 10800},
+    {LevelIDs_SkyDeck, 18000},
+    {LevelIDs_LostWorld, 16200},
+    {LevelIDs_FinalEgg, 16200}
+};
+
+const std::unordered_map<int, int> TAILS_TARGET_TIMES = {
+    {LevelIDs_WindyValley, 5400}, //1 min 30 sec
+    {LevelIDs_Casinopolis, 3600}, //1 min
+    {LevelIDs_IceCap, 7200}, // 2 min
+    {LevelIDs_SkyDeck, 3600}, //1 min
+    {LevelIDs_SpeedHighway, 7200}, //2 min
+};
+
+
+const std::unordered_map<int, int> KNUCKLES_TARGET_TIMES = {
+    {LevelIDs_SpeedHighway, 3600},
+    {LevelIDs_Casinopolis, 3600},
+    {LevelIDs_RedMountain, 3600},
+    {LevelIDs_LostWorld, 3600},
+    {LevelIDs_SkyDeck, 7200},
+};
+
+const std::unordered_map<int, int> AMY_TARGET_TIMES = {
+    {LevelIDs_TwinklePark, 7200},
+    {LevelIDs_HotShelter, 23400},
+    {LevelIDs_FinalEgg, 9000},
+};
+
+const std::unordered_map<int, int> GAMMA_TARGET_TIMES = {
+    {LevelIDs_FinalEgg, 9000},
+    {LevelIDs_EmeraldCoast, 10800},
+    {LevelIDs_WindyValley, 10800},
+    {LevelIDs_RedMountain, 10800},
+    {LevelIDs_HotShelter, 7200},
+};
+
+
+#endif //PCH_H

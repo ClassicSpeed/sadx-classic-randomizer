@@ -31,6 +31,7 @@ private:
     void AddNewMessages();
     void DisplayMessages() const;
     void DisplayEmblemCount();
+    std::string GetLevelTime(bool showTarget);
     void DisplayItemsUnlocked();
 
     int _startLine = 2;

@@ -31,6 +31,7 @@ All notable changes to this project will be documented in this file.
 - Added separate life-sanity option for each character.
     - Only works if the life-sanity is enabled.
     - The level status won't track life capsules for characters with life-sanity off.
+- Added target time for mission A in the pause screen.
 
 ### Changed
 
