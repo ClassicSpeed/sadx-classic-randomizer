@@ -84,6 +84,15 @@ void OnHandleHedgehogHammerTextR(unsigned __int8* a1, NJS_PLANE* a2)
     onHandleHedgehogHammerText_t.Original(a1, a2);
 }
 
+
+//We don't create animals outside levels
+//Allow us to spawn enemies in the adventure fields
+FunctionHook<void, int, float, float, float> onCreateAnimal(0x4BE610, [](int e_num, float x, float y, float z)-> void
+{
+    if (GameMode == GameModes_Adventure_ActionStg)
+        onCreateAnimal.Original(e_num, x, y, z);
+});
+
 WorldStateManager::WorldStateManager()
 {
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
@@ -301,7 +310,17 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
     onCountSetItemsMaybe.Original();
 
+    //Warp point
     LoadPVM("EC_ALIFE", ADV01C_TEXLISTS[3]);
+
+    //Buyon enemy
+    LoadPVM("E_BUYON", &E_BUYON_TEXLIST);
+
+    //Cop
+    LoadPVM("NISEPAT", &NISEPAT_TEXLIST);
+
+    //Freeze trap
+    LoadNoNamePVM(&stx_ice0_TEXLIST);
 
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
@@ -400,15 +419,3 @@ FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
     }
     return response;
 });
-
-//#define UsercallFuncVoid(NAME, ARGS, ARGNAMES, ADDRESS, ...)
-
-
-// //void __usercall sub_527E60(unsigned __int8 *a1@<eax>, NJS_PLANE *a2@<esi>)
-// FunctionHook<void, unsigned __int8*, NJS_PLANE*> onHandleHedgehogHammerText(
-//     0x0527E60, [](unsigned __int8* a1, NJS_PLANE* a2)-> void
-//     {
-//         const auto str = reinterpret_cast<char*>(a1);
-//         PrintDebug("Hedgehog Hammer Text: %s\n", str);
-//         onHandleHedgehogHammerText.Original(a1, a2);
-//     });

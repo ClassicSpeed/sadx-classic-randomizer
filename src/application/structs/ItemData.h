@@ -22,7 +22,11 @@ enum FillerType
     Shield,
     MagneticShield,
     ExtraLife,
-    NoFiller
+    IceTrap,
+    SpringTrap,
+    PoliceTrap,
+    BuyonTrap,
+    NoFiller,
 };
 
 struct ItemData

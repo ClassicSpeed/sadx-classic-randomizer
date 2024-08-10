@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 ## [v0.4.4] - 2024-08-?
 
 ### Added
-
+- Added trap items:
+    - Ice Trap: Freezes the player for a few seconds.
+    - Spring Trap: Sends the player to the opposite direction they were going.
+    - Police Trap: Spawns a bunch of police cars that will chase the player.
+    - Buyon Trap: Spawns a bunch of Buyons that will chase the player.
 - Separated Hedgehog Hammer's checks for amy.
 - Hedgehog Hammer's high score will show the player's name instead of Amy's.
 

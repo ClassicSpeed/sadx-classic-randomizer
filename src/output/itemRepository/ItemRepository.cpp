@@ -42,6 +42,11 @@ ItemRepository::ItemRepository()
         {74, ItemData::FillerItem("Shield", Shield)},
         {75, ItemData::FillerItem("Magnetic Shield", MagneticShield)},
         {76, ItemData::FillerItem("Extra Life", ExtraLife)},
+        
+        {100, ItemData::FillerItem("Ice Trap", IceTrap)},
+        {101, ItemData::FillerItem("Spring Trap", SpringTrap)},
+        {102, ItemData::FillerItem("Police Trap", PoliceTrap)},
+        {103, ItemData::FillerItem("Buyon Trap", BuyonTrap)},
 
         {
             80,
