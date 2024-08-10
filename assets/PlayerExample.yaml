@@ -33,7 +33,7 @@ Sonic Adventure DX:
   # 3 means Missions A, B and C
   # 2 means Missions B and C
   # 1 means Missions C
-  # 0 means the character is not played at all on the randomzier
+  # 0 means the character is not played at all on the randomizer
   # Choose what missions will be a location check for Sonic
   sonic_missions: 1
   # Choose what missions will be a location check for Tails.

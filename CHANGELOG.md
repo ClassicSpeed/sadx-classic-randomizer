@@ -33,12 +33,14 @@ All notable changes to this project will be documented in this file.
     - The level status won't track life capsules for characters with life-sanity off.
 - Added target time for mission A and B in the pause screen.
     - This is specially important for tails, since the target time for mission A is an approximation of the real target.
+- Added character name to the death link message.
 
 ### Changed
 
 - Fixed death link and ring link not working together.
 - Fixed crash when receiving a death link while in the main menu.
 - Fixed receiving extra items after reconnecting to the server.
+- Fixed death link not working properly.
 
 ## [v0.4.2] - 2024-08-04
 

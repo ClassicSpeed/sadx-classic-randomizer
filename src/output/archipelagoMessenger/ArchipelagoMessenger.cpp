@@ -19,9 +19,22 @@ void ArchipelagoMessenger::GameCompleted()
     AP_StoryComplete();
 }
 
-void ArchipelagoMessenger::SendDeath()
+void ArchipelagoMessenger::SendDeath(std::string playerName)
 {
-    AP_DeathLinkSend();
+    const std::string characterName = CHARACTERS_MAP.at(CurrentCharacter);
+    Json::FastWriter writer;
+    std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
+    AP_Bounce b;
+    Json::Value v;
+    v["time"] = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
+    v["source"] = playerName;
+    v["cause"] = characterName + " died. (" + playerName + ")";
+    b.data = writer.write(v);
+    b.games = nullptr;
+    b.slots = nullptr;
+    std::vector<std::string> tags = {std::string("DeathLink")};
+    b.tags = &tags;
+    AP_SendBounce(b);
 }
 
 void ArchipelagoMessenger::UpdateTags(Options options)

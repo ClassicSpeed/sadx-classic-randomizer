@@ -69,7 +69,5 @@ private:
     int _gammaColor = 0xFF827f80;
     
 
-    std::unordered_map<int, std::string> _charactersMap;
-    std::unordered_map<int, std::string> _levelsMap;
     mutable std::map<int, LocationData> _checkData;
 };

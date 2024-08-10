@@ -30,6 +30,34 @@
 #define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
 #define GET_LEVEL(levelAct) ((levelAct) >> 8)
 
+
+const std::unordered_map<int, std::string> CHARACTERS_MAP = {
+    {Characters_Sonic, "Sonic"},
+    {Characters_Tails, "Tails"},
+    {Characters_Knuckles, "Knuckles"},
+    {Characters_Amy, "Amy"},
+    {Characters_Gamma, "Gamma"},
+    {Characters_Big, "Big"}
+};
+
+
+
+const std::unordered_map<int, std::string> LEVELS_MAP = {
+    {LevelIDs_EmeraldCoast, "Emerald Coast"},
+    {LevelIDs_WindyValley, "Windy Valley"},
+    {LevelIDs_TwinklePark, "Twinkle Park"},
+    {LevelIDs_SpeedHighway, "Speed Highway"},
+    {LevelIDs_RedMountain, "Red Mountain"},
+    {LevelIDs_SkyDeck, "Sky Deck"},
+    {LevelIDs_LostWorld, "Lost World"},
+    {LevelIDs_IceCap, "Ice Cap"},
+    {LevelIDs_Casinopolis, "Casinopolis"},
+    {LevelIDs_FinalEgg, "Final Egg"},
+    {LevelIDs_HotShelter, "Hot Shelter"},
+    {LevelIDs_TwinkleCircuit, "Twinkle Circuit"},
+    {LevelIDs_SandHill, "Sand Hill"},
+};
+
 const std::unordered_map<int, int> SONIC_TARGET_TIMES = {
     {LevelIDs_EmeraldCoast, 7200},
     {LevelIDs_WindyValley, 10800},

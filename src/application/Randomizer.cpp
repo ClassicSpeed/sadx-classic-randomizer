@@ -148,8 +148,8 @@ void Randomizer::OnDeath()
         return;
     }
 
+    _archipelagoMessenger.SendDeath(_options.playerName);
     _displayManager.QueueMessage("Death Sent");
-    _archipelagoMessenger.SendDeath();
 }
 
 void Randomizer::ProcessRings(const Sint16 amount)

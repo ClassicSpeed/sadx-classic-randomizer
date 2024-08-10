@@ -5,31 +5,6 @@ DisplayManager* displayManagerPtr;
 DisplayManager::DisplayManager()
 {
     displayManagerPtr = this;
-    _charactersMap = {
-        {Characters_Sonic, "Sonic"},
-        {Characters_Tails, "Tails"},
-        {Characters_Knuckles, "Knuckles"},
-        {Characters_Amy, "Amy"},
-        {Characters_Gamma, "Gamma"},
-        {Characters_Big, "Big"}
-    };
-
-
-    _levelsMap = {
-        {LevelIDs_EmeraldCoast, "Emerald Coast"},
-        {LevelIDs_WindyValley, "Windy Valley"},
-        {LevelIDs_TwinklePark, "Twinkle Park"},
-        {LevelIDs_SpeedHighway, "Speed Highway"},
-        {LevelIDs_RedMountain, "Red Mountain"},
-        {LevelIDs_SkyDeck, "Sky Deck"},
-        {LevelIDs_LostWorld, "Lost World"},
-        {LevelIDs_IceCap, "Ice Cap"},
-        {LevelIDs_Casinopolis, "Casinopolis"},
-        {LevelIDs_FinalEgg, "Final Egg"},
-        {LevelIDs_HotShelter, "Hot Shelter"},
-        {LevelIDs_TwinkleCircuit, "Twinkle Circuit"},
-        {LevelIDs_SandHill, "Sand Hill"},
-    };
 }
 
 
@@ -294,9 +269,9 @@ void DisplayManager::DisplayItemsUnlocked()
 
         // Show current level name
         displayOffset++;
-        const std::string levelName = _levelsMap.at(CurrentLevel);
+        const std::string levelName = LEVELS_MAP.at(CurrentLevel);
         // Show current character
-        const std::string characterName = _charactersMap.at(CurrentCharacter);
+        const std::string characterName = CHARACTERS_MAP.at(CurrentCharacter);
         // Show current mission
 
         std::string missionName;
