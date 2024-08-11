@@ -173,11 +173,21 @@ FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
 FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
 FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
 {
-    if (CurrentCharacter == Characters_Knuckles)
+    if (CurrentCharacter == Characters_Knuckles && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1)
         return true;
+    if (CurrentCharacter == Characters_Knuckles && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+        return isMonkeyDead(1);
     if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma)
         return isMonkeyDead(1);
     return false;
+});
+
+//We open the casino door for knuckles despite any story flags
+FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
+{
+    if (CurrentCharacter == Characters_Knuckles)
+        return GetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO));
+    return isCasinoOpen.Original();
 });
 
 //Makes the Casino keys open the Casino for all the characters

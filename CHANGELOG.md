@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.5.0] - 2024-08-?
+
+### Added
+
+- Added the monkey killer switch for knuckles.
+    - Now to enter Red Mountain, you have to kill the monkey.
+
 ## [v0.4.4] - 2024-08-10
 
 ### Added
