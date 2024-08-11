@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 - Added the monkey killer switch for knuckles.
     - Now to enter Red Mountain, you have to kill the monkey.
 
+### Changed
+
+- Bosses' warp points won't show up if the boss checks are disabled.
+
 ## [v0.4.4] - 2024-08-10
 
 ### Added
