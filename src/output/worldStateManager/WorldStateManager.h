@@ -2,6 +2,8 @@
 
 #include "../../pch.h"
 #include "../../application/structs/Options.h"
+#include "../../application/structs/UnlockStatus.h"
+
 class WorldStateManager
 {
 public:
@@ -9,5 +11,7 @@ public:
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
     void UpdateOptions(Options newOptions);
+    void UpdateUnlockStatus(UnlockStatus unlockStatus);
     Options options;
+    UnlockStatus unlockStatus;
 };

@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Added the monkey killer switch for knuckles.
+- Added Wind Stone as an item for Sonic, Tails and Gamma.
+- Knuckles can now dig for the monkey killer switch for knuckles.
     - Now to enter Red Mountain, you have to kill the monkey.
 
 ### Changed

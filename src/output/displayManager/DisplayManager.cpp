@@ -486,6 +486,10 @@ void DisplayManager::DisplayItemsUnlocked()
     displayOffset++;
     SetDebugFontColor(_unlockStatus.keyIceStone ? _keyItemColor : disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Ice Stone");
+    
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.keyWindStone ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Wind Stone");
 
     displayOffset++;
     SetDebugFontColor(_unlockStatus.jungleCart ? _keyItemColor : disabledKeyItemColor);

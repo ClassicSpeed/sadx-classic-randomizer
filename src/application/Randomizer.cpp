@@ -49,6 +49,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
     _characterManager.UpdateUnlockStatus(unlockStatus);
     _displayManager.UpdateUnlockStatus(unlockStatus);
+    _worldStateManager.UpdateUnlockStatus(unlockStatus);
 }
 
 
@@ -59,6 +60,7 @@ void Randomizer::ResetItems()
     const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
     _characterManager.UpdateUnlockStatus(unlockStatus);
     _displayManager.UpdateUnlockStatus(unlockStatus);
+    _worldStateManager.UpdateUnlockStatus(unlockStatus);
 }
 
 

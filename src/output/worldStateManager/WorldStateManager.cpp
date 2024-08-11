@@ -141,6 +141,11 @@ void WorldStateManager::UpdateOptions(const Options newOptions)
     this->options = newOptions;
 }
 
+void WorldStateManager::UpdateUnlockStatus(UnlockStatus newUnlockStatus)
+{
+    this->unlockStatus = newUnlockStatus;
+}
+
 //Allow Knuckles to fight Chaos 2
 FunctionHook<BOOL> isChaos2DoorOpen(0x638D50, []()-> BOOL
 {
@@ -340,7 +345,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
         //Station Square Bosses
         AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Sonic);
         AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Tails);
-        
+
         //Mystic Ruins Bosses
         AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Sonic);
         AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Tails);
@@ -429,4 +434,14 @@ FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
         SetEntranceNumber(0);
     }
     return response;
+});
+
+//We prevent the wind stone from spawning if the player doesn't have the item
+FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
+        && !worldStateManagerPtr->unlockStatus.keyWindStone)
+        return;
+
+    onMysticRuinsKey.Original(tp);
 });

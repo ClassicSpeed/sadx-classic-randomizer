@@ -42,11 +42,6 @@ ItemRepository::ItemRepository()
         {74, ItemData::FillerItem("Shield", Shield)},
         {75, ItemData::FillerItem("Magnetic Shield", MagneticShield)},
         {76, ItemData::FillerItem("Extra Life", ExtraLife)},
-        
-        {100, ItemData::FillerItem("Ice Trap", IceTrap)},
-        {101, ItemData::FillerItem("Spring Trap", SpringTrap)},
-        {102, ItemData::FillerItem("Police Trap", PoliceTrap)},
-        {103, ItemData::FillerItem("Buyon Trap", BuyonTrap)},
 
         {
             80,
@@ -108,6 +103,14 @@ ItemRepository::ItemRepository()
         },
 
         {90, ItemData::EmblemItem("Emblem")},
+
+        {100, ItemData::FillerItem("Ice Trap", IceTrap)},
+        {101, ItemData::FillerItem("Spring Trap", SpringTrap)},
+        {102, ItemData::FillerItem("Police Trap", PoliceTrap)},
+        {103, ItemData::FillerItem("Buyon Trap", BuyonTrap)},
+
+
+        {120, ItemData::KeyItem({}, "Wind Stone")},
     };
 }
 
@@ -193,6 +196,7 @@ UnlockStatus ItemRepository::GetUnlockStatus()
     unlockStatus.keyTwinkleParkTicket = _itemData[85].obtained;
     unlockStatus.keyEmployeeCard = _itemData[86].obtained;
     unlockStatus.keyIceStone = _itemData[87].obtained;
+    unlockStatus.keyWindStone = _itemData[120].obtained;
     unlockStatus.keyDynamite = _itemData[88].obtained;
     unlockStatus.jungleCart = _itemData[89].obtained;
     return unlockStatus;
