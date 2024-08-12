@@ -62,19 +62,8 @@ ItemRepository::ItemRepository()
                                       FLAG_AMY_RAFT, FLAG_E102_RAFT, FLAG_BIG_RAFT
                                   }, "Raft")
         },
-        {
-            83, ItemData::KeyItem({
-                                      FLAG_SONIC_SS_HOTEL_FRONT, FLAG_MILES_SS_HOTEL_FRONT,
-                                      FLAG_KNUCKLES_SS_HOTEL_FRONT, FLAG_AMY_SS_HOTEL_FRONT,
-                                      FLAG_E102_SS_HOTEL_FRONT, FLAG_BIG_SS_HOTEL_FRONT, FLAG_BIG_SS_HOTEL_POOL
-                                  }, "Hotel Keys")
-        },
-        {
-            84, ItemData::KeyItem({
-                                      FLAG_SONIC_SS_STATION_BACK, FLAG_MILES_SS_STATION_BACK,
-                                      FLAG_KNUCKLES_SS_STATION_BACK, FLAG_AMY_SS_STATION_BACK
-                                  }, "Casino District Keys")
-        },
+        {83, ItemData::KeyItem({}, "Hotel Keys")},
+        {84, ItemData::KeyItem({}, "Casino District Keys")},
         {
             85, ItemData::KeyItem({
                                       FLAG_SONIC_SS_TPARK_ELEVATOR,
@@ -111,6 +100,7 @@ ItemRepository::ItemRepository()
 
 
         {120, ItemData::KeyItem({}, "Wind Stone")},
+        {121, ItemData::KeyItem({}, "Station Keys")},
     };
 }
 
@@ -191,6 +181,7 @@ UnlockStatus ItemRepository::GetUnlockStatus()
     unlockStatus.keyTrain = _itemData[80].obtained;
     unlockStatus.keyBoat = _itemData[81].obtained;
     unlockStatus.keyRaft = _itemData[82].obtained;
+    unlockStatus.keyStationKeys = _itemData[121].obtained;
     unlockStatus.keyHotelKeys = _itemData[83].obtained;
     unlockStatus.keyCasinoKeys = _itemData[84].obtained;
     unlockStatus.keyTwinkleParkTicket = _itemData[85].obtained;

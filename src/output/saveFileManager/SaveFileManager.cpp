@@ -91,25 +91,6 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_RAFT));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RAFT));
 
-    //Hotel Door
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_HOTEL_FRONT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_HOTEL_FRONT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_HOTEL_FRONT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_SS_HOTEL_FRONT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_SS_HOTEL_FRONT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_SS_HOTEL_FRONT));
-
-    //Casino-Station Door
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_STATION_BACK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_STATION_BACK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_STATION_BACK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_SS_STATION_BACK));
-    
-    //Casino-Hotel door
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_HOTEL_BACK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_HOTEL_BACK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_HOTEL_BACK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_SS_HOTEL_BACK));
     
     //Casino Door
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_CASINO));

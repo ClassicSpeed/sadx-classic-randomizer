@@ -85,21 +85,11 @@ void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
     for (StoryFlags storyFlag : storyFlags)
     {
         SetEventFlag(static_cast<EventFlags>(storyFlag));
-        //We open the door between the hotel and the casino if you have both keys
-        if ((storyFlag == FLAG_SONIC_SS_STATION_BACK &&
-                GetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_HOTEL_FRONT))) ||
-            (storyFlag == FLAG_SONIC_SS_HOTEL_FRONT &&
-                GetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_STATION_BACK))))
-        {
-            SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_HOTEL_BACK));
-            SetEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_HOTEL_BACK));
-            SetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_HOTEL_BACK));
-            SetEventFlag(static_cast<EventFlags>(FLAG_AMY_SS_HOTEL_BACK));
-            SetEventFlag(static_cast<EventFlags>(FLAG_BIG_SS_HOTEL_BACK));
-        }
     }
     WriteSaveFile();
 }
+
+
 
 void WorldStateManager::UnlockSuperSonic()
 {
@@ -158,18 +148,34 @@ FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
     return false;
 });
 
+//We open the station door if we have the keys
+FunctionHook<BOOL> isStationDoorOpen(0x63AB70, []()-> BOOL
+{
+    return worldStateManagerPtr->unlockStatus.keyStationKeys;
+});
+
+//We open the main hotel door if we have the keys
+FunctionHook<BOOL> isHotelDoorOpen(0x630900, []()-> BOOL
+{
+    return worldStateManagerPtr->unlockStatus.keyHotelKeys;
+});
+
+//We open both casino entrances if we have the casino district keys
+FunctionHook<BOOL> isCasinoHotelDoorOpen(0x630970, []()-> BOOL
+{
+    return worldStateManagerPtr->unlockStatus.keyCasinoKeys;
+});
+FunctionHook<BOOL> isCasinoStationDoorOpen(0x638880, []()-> BOOL
+{
+    return worldStateManagerPtr->unlockStatus.keyCasinoKeys;
+});
+
 //We open the casino door for knuckles despite any story flags
 FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
 {
     if (CurrentCharacter == Characters_Knuckles)
         return GetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO));
     return isCasinoOpen.Original();
-});
-
-//Makes the Casino keys open the Casino for all the characters
-FunctionHook<int> isStationToCasinoDoorOpen(0x638880, []()-> int
-{
-    return EventFlagArray[FLAG_SONIC_SS_STATION_BACK];
 });
 
 

@@ -34,6 +34,7 @@ struct UnlockStatus
     bool keyTrain;
     bool keyBoat;
     bool keyRaft;
+    bool keyStationKeys;
     bool keyHotelKeys;
     bool keyCasinoKeys;
     bool keyTwinkleParkTicket;

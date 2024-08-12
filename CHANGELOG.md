@@ -6,7 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Added Wind Stone as an item for Sonic, Tails and Gamma.
+- Added Station keys in the item pool.
+    - The casino district keys will now open the casino-hotel door and the station-hotel door.
+- Added Wind Stone in the item pool.
 - Knuckles can now dig for the monkey killer switch for knuckles.
     - Now to enter Red Mountain, you have to kill the monkey.
 

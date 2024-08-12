@@ -462,6 +462,10 @@ void DisplayManager::DisplayItemsUnlocked()
     displayOffset++;
     SetDebugFontColor(_unlockStatus.keyRaft ? _keyItemColor : disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Raft");
+    
+    displayOffset++;
+    SetDebugFontColor(_unlockStatus.keyStationKeys ? _keyItemColor : disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Station Keys");
 
     displayOffset++;
     SetDebugFontColor(_unlockStatus.keyHotelKeys ? _keyItemColor : disabledKeyItemColor);
