@@ -41,9 +41,14 @@ static void __cdecl HandleWarp()
         && EntityData1Ptrs[0]->Position.y < 0)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos4, 0);
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
-        || CurrentCharacter == Characters_Tails) && EntityData1Ptrs[0]->Position.y > 0)
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
+        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+        && EntityData1Ptrs[0]->Position.y > 0 && EntityData1Ptrs[0]->Position.y < 150)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggHornet, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
+        || CurrentCharacter == Characters_Tails) && EntityData1Ptrs[0]->Position.y > 150)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_SkyChase1, 0);
 
     else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Gamma)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_E101R, 0);
@@ -51,12 +56,17 @@ static void __cdecl HandleWarp()
     else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Amy)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Zero, 0);
 
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside &&
-        (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Big))
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z > -500
+        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Big))
+
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 0);
 
     else if (CurrentLevel == LevelIDs_EggCarrierOutside && (CurrentCharacter == Characters_Knuckles))
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 1);
+
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z < -500
+        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_SkyChase2, 0);
 
     else
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
@@ -299,6 +309,11 @@ const SETEntry WARP_ZERO = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, 
 
 const SETEntry WARP_E101_MK2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, -385.69f});
 
+//Sky Chase
+const SETEntry WARP_SKY_CHASE_1 = CreateSetEntry(WARP_MYSTIC_RUINS, {1473, 201, 776});
+const SETEntry WARP_SKY_CHASE_2_EC1 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 700, -1100});
+const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 650, -1100});
+
 
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
@@ -351,6 +366,16 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
+
+        //Sky Chase
+        AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+        AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Tails);
+
+        AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
+        AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
+
+        AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
+        AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
     }
 });
 
@@ -377,12 +402,13 @@ FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
         SetNextLevelAndAct(LevelIDs_MysticRuins, 0);
         SetEntranceNumber(5);
     }
-    else if (CurrentLevel == LevelIDs_Chaos6)
+    else if (CurrentLevel == LevelIDs_Chaos6 || CurrentLevel == LevelIDs_Zero
+        || CurrentLevel == LevelIDs_E101R || CurrentLevel == LevelIDs_SkyChase2)
     {
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
         SetEntranceNumber(0);
     }
-    else if (CurrentLevel == LevelIDs_EggHornet)
+    else if (CurrentLevel == LevelIDs_EggHornet || CurrentLevel == LevelIDs_SkyChase1)
     {
         SetNextLevelAndAct(LevelIDs_MysticRuins, 0);
         SetEntranceNumber(0);
@@ -392,25 +418,10 @@ FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
         SetNextLevelAndAct(LevelIDs_StationSquare, 1);
         SetEntranceNumber(1);
     }
-    else if (CurrentLevel == LevelIDs_EggViper)
+    else if (CurrentLevel == LevelIDs_EggViper || CurrentLevel == LevelIDs_E101)
     {
         SetNextLevelAndAct(LevelIDs_MysticRuins, 3);
         SetEntranceNumber(3);
-    }
-    else if (CurrentLevel == LevelIDs_Zero)
-    {
-        SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
-        SetEntranceNumber(0);
-    }
-    else if (CurrentLevel == LevelIDs_E101)
-    {
-        SetNextLevelAndAct(LevelIDs_MysticRuins, 3);
-        SetEntranceNumber(3);
-    }
-    else if (CurrentLevel == LevelIDs_E101R)
-    {
-        SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
-        SetEntranceNumber(0);
     }
     return response;
 });

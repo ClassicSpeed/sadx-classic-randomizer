@@ -9,7 +9,6 @@ EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
 }
 
 
-
 DataPointer(int, NumberOfHintsUsed, 0x3B0F138);
 
 bool ManualMissionBCheck(const int character)
@@ -62,24 +61,26 @@ bool ManualMissionACheck(const int character, const int level)
 
 bool ManualSubLevelMissionACheck(const int level)
 {
+    //You can't fail the Twinkle Circuit mission A 
     if (level == LevelIDs_TwinkleCircuit)
-    {
-        //You can't fail the Twinkle Circuit mission A 
         return true;
-    }
-
+    
     if (level == LevelIDs_SandHill)
-    {
         return Score >= 10000;
-    }
+
+    if (level == LevelIDs_SkyChase1)
+        return Score >= 8000;
+
+    if (level == LevelIDs_SkyChase1)
+        return Score >= 20000;
 
     return false;
 }
 
-FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
-    0x4B4640, [](SaveFileData* savefile, int character, signed int level, int mission)-> void
+FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
+    0x4B4640, [](SaveFileData* saveFile, const int character, const signed int level, const int mission)-> void
     {
-        OnLevelEmblemCollected.Original(savefile, character, level, mission);
+        onLevelEmblemCollected.Original(saveFile, character, level, mission);
         eventDetectorPtr->OnLevelEmblem(character, level, mission);
 
         if (!eventDetectorPtr->completeMultipleLevelMissions)
@@ -93,7 +94,7 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
             {
                 if (ManualMissionBCheck(character))
                 {
-                    OnLevelEmblemCollected.Original(savefile, character, level, MISSION_B);
+                    onLevelEmblemCollected.Original(saveFile, character, level, MISSION_B);
                     eventDetectorPtr->OnLevelEmblem(character, level, MISSION_B);
                 }
             }
@@ -103,19 +104,19 @@ FunctionHook<void, SaveFileData*, int, signed int, int> OnLevelEmblemCollected(
             {
                 if (ManualMissionACheck(character, level))
                 {
-                    OnLevelEmblemCollected.Original(savefile, character, level, MISSION_A);
+                    onLevelEmblemCollected.Original(saveFile, character, level, MISSION_A);
                     eventDetectorPtr->OnLevelEmblem(character, level, MISSION_A);
                 }
             }
         }
-        if (level == LevelIDs_TwinkleCircuit || level == LevelIDs_SandHill)
+        if (level >= LevelIDs_TwinkleCircuit && level <= LevelIDs_SandHill)
         {
             //sublevel - mission A
             if (mission == SUB_LEVEL_MISSION_B)
             {
                 if (ManualSubLevelMissionACheck(level))
                 {
-                    OnLevelEmblemCollected.Original(savefile, character, level, SUB_LEVEL_MISSION_A);
+                    onLevelEmblemCollected.Original(saveFile, character, level, SUB_LEVEL_MISSION_A);
                     eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
                 }
             }
@@ -205,8 +206,8 @@ void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
 }
 
 
-FunctionHook<SEQ_SECTIONTBL*, int> SeqGetSectionListHook(0x44EAF0, [](int playerno)-> SEQ_SECTIONTBL* {
-    SEQ_SECTIONTBL* ptr = SeqGetSectionListHook.Original(playerno);
+FunctionHook<SEQ_SECTIONTBL*, int> seqGetSectionListHook(0x44EAF0, [](int playerno)-> SEQ_SECTIONTBL* {
+    SEQ_SECTIONTBL* ptr = seqGetSectionListHook.Original(playerno);
     if (LastStoryFlag == 1 && eventDetectorPtr->lastStoryState == LastStoryNotStarted)
     {
         //Start Perfect Chaos fight as soon as we load the story
@@ -218,7 +219,7 @@ FunctionHook<SEQ_SECTIONTBL*, int> SeqGetSectionListHook(0x44EAF0, [](int player
 });
 
 
-FunctionHook<void, __int16> startLevelCutsceneHook(0x413C90, [](const __int16 scene) -> void
+FunctionHook<void, short> startLevelCutsceneHook(0x413C90, [](const short scene) -> void
 {
     if (LastStoryFlag == 1 && eventDetectorPtr->lastStoryState == LastStoryStarted && scene == 1)
     {

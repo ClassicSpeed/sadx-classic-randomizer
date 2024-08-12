@@ -13,11 +13,17 @@ All notable changes to this project will be documented in this file.
     - Now to enter Red Mountain, you have to kill the monkey.
 - Simplified key item information on pause menu.
 - Knuckles' Chaos 6 fight now takes place in his version of the arena.
+- Added Sky Chase act 1 and 2 as location checks.
+    - Act 1 entrance is located inside Tails' workshop.
+    - Act 2 entrance is located in the egg carrier runway.
+- Added extra option for sublevels to enable the harder A mission (off by default).
+    - Right now, the current sublevels are: Twinkle Circuit, Sand Hill and Sky Chase Act 1 and 2
 
 ### Changed
 
 - Bosses' warp points won't show up if the boss checks are disabled.
 - Fixed Egg Carrier boss gate clipping through the floor.
+- Added trap weight information on the configuration file.
 
 ## [v0.4.5] - 2024-08-11
 

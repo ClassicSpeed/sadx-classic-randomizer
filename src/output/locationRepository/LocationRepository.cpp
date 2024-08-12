@@ -140,6 +140,12 @@ LocationRepository::LocationRepository()
         {25, LocationData::SubLevelLocation(LevelIDs_SandHill, MISSION_B)},
         {26, LocationData::SubLevelLocation(LevelIDs_SandHill, MISSION_A)},
 
+        {27, LocationData::SubLevelLocation(LevelIDs_SkyChase1, MISSION_B)},
+        {28, LocationData::SubLevelLocation(LevelIDs_SkyChase1, MISSION_A)},
+
+        {35, LocationData::SubLevelLocation(LevelIDs_SkyChase2, MISSION_B)},
+        {36, LocationData::SubLevelLocation(LevelIDs_SkyChase2, MISSION_A)},
+
         // Field Emblems
         {10, LocationData::FieldEmblemLocation(119, "Station Emblem")},
         {11, LocationData::FieldEmblemLocation(121, "Burger Shop Emblem")},
