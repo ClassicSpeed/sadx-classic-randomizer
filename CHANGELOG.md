@@ -14,6 +14,13 @@ All notable changes to this project will be documented in this file.
 
 - Bosses' warp points won't show up if the boss checks are disabled.
 
+## [v0.4.5] - 2024-08-11
+
+### Changed
+
+- Removed player name in hedgehog hammer since it caused crashes and texture corruption.
+- Change traps classification to trap.
+
 ## [v0.4.4] - 2024-08-10
 
 ### Added
