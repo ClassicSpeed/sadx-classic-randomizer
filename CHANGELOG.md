@@ -12,10 +12,12 @@ All notable changes to this project will be documented in this file.
 - Knuckles can now dig for the monkey killer switch for knuckles.
     - Now to enter Red Mountain, you have to kill the monkey.
 - Simplified key item information on pause menu.
+- Knuckles' Chaos 6 fight now takes place in his version of the arena.
 
 ### Changed
 
 - Bosses' warp points won't show up if the boss checks are disabled.
+- Fixed Egg Carrier boss gate clipping through the floor.
 
 ## [v0.4.5] - 2024-08-11
 

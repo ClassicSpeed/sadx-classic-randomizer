@@ -51,9 +51,12 @@ static void __cdecl HandleWarp()
     else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Amy)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Zero, 0);
 
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside && (CurrentCharacter == Characters_Sonic || CurrentCharacter ==
-        Characters_Knuckles || CurrentCharacter == Characters_Big))
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside &&
+        (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Big))
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 0);
+
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && (CurrentCharacter == Characters_Knuckles))
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 1);
 
     else
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
@@ -88,7 +91,6 @@ void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
     }
     WriteSaveFile();
 }
-
 
 
 void WorldStateManager::UnlockSuperSonic()
@@ -291,11 +293,11 @@ const SETEntry WARP_EGG_VIPER = CreateSetEntry(WARP_MYSTIC_RUINS, {0, 0, 0});
 const SETEntry WARP_E101 = CreateSetEntry(WARP_MYSTIC_RUINS, {0, 0, 0});
 
 //Egg Carrier Bosses
-const SETEntry WARP_CHAOS6 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 749, -385.69f});
+const SETEntry WARP_CHAOS6 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, -385.69f});
 
-const SETEntry WARP_ZERO = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 749, -385.69f});
+const SETEntry WARP_ZERO = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, -385.69f});
 
-const SETEntry WARP_E101_MK2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 749, -385.69f});
+const SETEntry WARP_E101_MK2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, -385.69f});
 
 
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
