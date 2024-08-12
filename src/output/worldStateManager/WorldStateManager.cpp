@@ -59,32 +59,6 @@ static void __cdecl HandleWarp()
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
 }
 
-UsercallFuncVoid(onHandleHedgehogHammerText_t, (unsigned __int8* a1, NJS_PLANE* a2), (a1, a2), 0x0527E60, rEAX, rESI);
-
-void OnHandleHedgehogHammerTextR(unsigned __int8* a1, NJS_PLANE* a2)
-{
-    char* str = reinterpret_cast<char*>(a1);
-
-    //Instead of showing Amy's name, we show the player names
-    if (strcmp(str, "AMY") == 0)
-    {
-        const char* playerName = worldStateManagerPtr->options.playerName.c_str();
-        std::string upperPlayerName(playerName);
-        std::transform(upperPlayerName.begin(), upperPlayerName.end(), upperPlayerName.begin(), ::toupper);
-
-        strcpy(str, upperPlayerName.c_str());
-        const size_t length = strlen(worldStateManagerPtr->options.playerName.c_str());
-        a2->px = length * -4.0f;
-    }
-    //We correctly center the high score part
-    else if (strcmp(str, "HIGH SCORE") == 0)
-        a2->px = strlen(str) * -4.0f;
-
-
-    onHandleHedgehogHammerText_t.Original(a1, a2);
-}
-
-
 //We don't create animals outside levels
 //Allow us to spawn enemies in the adventure fields
 FunctionHook<void, int, float, float, float> onCreateAnimal(0x4BE610, [](int e_num, float x, float y, float z)-> void
@@ -97,9 +71,6 @@ WorldStateManager::WorldStateManager()
 {
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehoHammer);
-
-    onHandleHedgehogHammerText_t.Hook(OnHandleHedgehogHammerTextR);
-
 
     worldStateManagerPtr = this;
 
