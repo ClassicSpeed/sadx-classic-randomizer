@@ -452,50 +452,77 @@ void DisplayManager::DisplayItemsUnlocked()
     const int disabledKeyItemColor = _keyItemColor & 0x00FFFFFF | 0x66000000;
 
     displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyTrain ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Train");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyBoat ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Boat");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyRaft ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Raft");
+    buffer.clear();
+    buffer.append("Travel  ");
+    buffer.append(_unlockStatus.keyTrain ? "Train " : "      ");
+    buffer.append(_unlockStatus.keyBoat ? "Boat " : "     ");
+    buffer.append(_unlockStatus.keyRaft ? "Raft" : "    ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("      : ");
+    buffer.append(!_unlockStatus.keyTrain ? "Train|" : "     |");
+    buffer.append(!_unlockStatus.keyBoat ? "Boat|" : "    |");
+    buffer.append(!_unlockStatus.keyRaft ? "Raft" : "    ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     
     displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyStationKeys ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Station Keys");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyHotelKeys ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Hotel Keys");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyCasinoKeys ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Casino District Keys");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyTwinkleParkTicket ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Twinkle Park Ticket");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyEmployeeCard ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Employee card");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyDynamite ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Dynamite");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyIceStone ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Ice Stone");
+    buffer.clear();
+    buffer.append("Keys  ");
+    buffer.append(_unlockStatus.keyStationKeys ? "Station " : "        ");
+    buffer.append(_unlockStatus.keyHotelKeys ? "Hotel " : "      ");
+    buffer.append(_unlockStatus.keyCasinoKeys ? "Casino" : "      ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("    : ");
+    buffer.append(!_unlockStatus.keyStationKeys ? "Station|" : "       |");
+    buffer.append(!_unlockStatus.keyHotelKeys ? "Hotel|" : "     |");
+    buffer.append(!_unlockStatus.keyCasinoKeys ? "Casino" : "      ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     
     displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyWindStone ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Wind Stone");
+    buffer.clear();
+    buffer.append("Stones  ");
+    buffer.append(_unlockStatus.keyWindStone ? "Wind " : "     ");
+    buffer.append(_unlockStatus.keyIceStone ? "Ice" : "   ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("      : ");
+    buffer.append(!_unlockStatus.keyWindStone ? "Wind|" : "    |");
+    buffer.append(!_unlockStatus.keyIceStone ? "Ice" : "   ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
     displayOffset++;
-    SetDebugFontColor(_unlockStatus.jungleCart ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Jungle Cart");
+    buffer.clear();
+    buffer.append("SS  ");
+    buffer.append(_unlockStatus.keyTwinkleParkTicket ? "TP Ticket " : "          ");
+    buffer.append(_unlockStatus.keyEmployeeCard ? "Employee Card" : "             ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("  : ");
+    buffer.append(!_unlockStatus.keyTwinkleParkTicket ? "TP Ticket|" : "         |");
+    buffer.append(!_unlockStatus.keyEmployeeCard ? "Employee Card" : "             ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+    displayOffset++;
+    buffer.clear();
+    buffer.append("MR  ");
+    buffer.append(_unlockStatus.keyDynamite ? "Dynamite " : "         ");
+    buffer.append(_unlockStatus.jungleCart ? "Jungle Cart" : "           ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("  : ");
+    buffer.append(!_unlockStatus.keyDynamite ? "Dynamite|" : "        |");
+    buffer.append(!_unlockStatus.jungleCart ? "Jungle Cart" : "           ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
 }

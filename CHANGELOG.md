@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Added Wind Stone in the item pool.
 - Knuckles can now dig for the monkey killer switch for knuckles.
     - Now to enter Red Mountain, you have to kill the monkey.
+- Simplified key item information on pause menu.
 
 ### Changed
 
