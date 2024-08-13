@@ -21,13 +21,6 @@ static bool __cdecl HandleHedgehoHammer()
     return GetEventFlag(EventFlags_Amy_WarriorFeather);
 }
 
-//We spawn on the transformed Egg Carrier when taking the raft and the boat
-static void __cdecl HandleBoatAndRaft()
-{
-    SetLevelEntrance(0);
-    SetNextLevelAndAct_CutsceneMode(LevelIDs_EggCarrierOutside, 1);
-}
-
 static void __cdecl HandleWarp()
 {
     DisableController(0);
@@ -112,8 +105,6 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
 WorldStateManager::WorldStateManager()
 {
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
-    WriteCall(reinterpret_cast<void*>(0x63B51D), &HandleBoatAndRaft);
-    WriteCall(reinterpret_cast<void*>(0x5398CC), &HandleBoatAndRaft);
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehoHammer);
 
     worldStateManagerPtr = this;

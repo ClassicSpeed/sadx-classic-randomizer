@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.5.1] - 2024-08-13
+
+### Changed
+
+- Fixed setting station square as the starting location.
+- Fixed wind stone not being in the item pool.
+- Reverted Egg Carrier transformation from the start.
+    - The boss fights will still remember the transformation state. 
+
 ## [v0.5.0] - 2024-08-13
 
 ### Added
