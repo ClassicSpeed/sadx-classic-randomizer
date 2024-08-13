@@ -20,6 +20,8 @@ All notable changes to this project will be documented in this file.
     - Right now, the current sublevels are: Twinkle Circuit, Sand Hill and Sky Chase Act 1 and 2
 - The Egg Carrier is now transformed from the start.
 - Now Egg Carrier's bosses and Sky Chase will remember the Egg Carrier's transformation state.
+- Tails now needs to press the button to open the Sand Hill entrance.
+- When exiting Sand Hill, you'll spawn in front of the entrance.
 
 ### Changed
 

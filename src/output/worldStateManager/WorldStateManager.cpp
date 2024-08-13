@@ -224,6 +224,20 @@ FunctionHook<void, int> onAddSeconds(0x426640, [](int seconds)-> void
     return onAddSeconds.Original(seconds);
 });
 
+//We create a custom spawn point after exiting sand hill
+FunctionHook<void, EntityData1 *> onGetEntranceMRuins(0x530790, [](EntityData1 *a1)-> void
+{
+    onGetEntranceMRuins.Original(a1);
+    if(LastLevel == LevelIDs_SandHill)
+    {
+        a1->Position.x = -1500;
+        a1->Position.y = 50;
+        a1->Position.z = -70;
+        a1->Rotation.x = 0;
+        a1->Rotation.y = 4000;
+        a1->Rotation.z = 0;
+    }
+});
 
 //Set starting location
 FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
