@@ -317,6 +317,10 @@ FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
     case StationSquareMain:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
         break;
+    case Station:
+        SetLevelAndAct(LevelIDs_StationSquare, 1);
+        SetEntranceNumber(0);
+        break;
     case HotelArea:
         SetLevelAndAct(LevelIDs_StationSquare, 4);
         break;

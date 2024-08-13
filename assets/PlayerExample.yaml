@@ -8,12 +8,10 @@ Sonic Adventure DX:
   
   # What percentage of the available emblems do you need to unlock the final story
   emblems_percentage: 80
-  # Select starting Location
-  # Random location (0): You'll start at a random location, and you could get an item to ensure access to a level.
-  # Random location no items (1): Same as Random, but locations that need items to access a level them are excluded.
-  # Station Square (2): You'll start at Station Square, and you could get an item to ensure access to a level.
-  # Station Square no items (3): Same as Station Square, but you won't get an item.
-  random_starting_location: 0
+  # Randomize starting location, if false, you will start at Station Square
+  random_starting_location: 'true'
+  # Ensures access to a level from the start, even if it means giving you an item
+  guaranteed_level: 'false'
   # When you die, everyone dies. Of course the reverse is true too.
   death_link: 'false'
   # Whether your in-level ring gain/loss is linked to other players

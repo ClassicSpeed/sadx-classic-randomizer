@@ -10,6 +10,7 @@ enum RingLoss
 enum StartingArea
 {
     StationSquareMain,
+    Station,
     HotelArea,
     CasinoArea,
     MysticRuinsMain,
