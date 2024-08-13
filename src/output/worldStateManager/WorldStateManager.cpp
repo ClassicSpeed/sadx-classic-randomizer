@@ -456,15 +456,18 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
     }
-    //Sky Chase
-    AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-    AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Tails);
+    if(worldStateManagerPtr->options.sublevelsChecks)
+    {
+        //Sky Chase
+        AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+        AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Tails);
 
-    AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
-    AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
+        AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
+        AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
 
-    AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
-    AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
+        AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
+        AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
+    }
 
     //Time Travel 
     AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Sonic);

@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Fixed wind stone not being in the item pool.
 - Reverted Egg Carrier transformation from the start.
     - The boss fights will still remember the transformation state. 
+- Sky Chase warp points won't spawn if sublevels are off
 
 ## [v0.5.0] - 2024-08-13
 
