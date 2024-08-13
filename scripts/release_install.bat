@@ -18,6 +18,7 @@ if not exist ".\Release\sadx-classic-randomizer.dll" (
 
 
 REM Copy files
+if not exist "!SADX_DIR!\mods\SADX_Archipelago" mkdir "!SADX_DIR!\mods\SADX_Archipelago"
 copy ".\Release\sadx-classic-randomizer.dll" "!SADX_DIR!\mods\SADX_Archipelago\sadx-classic-randomizer.dll"
 
 echo Release files copied successfully.
