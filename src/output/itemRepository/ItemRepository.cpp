@@ -93,6 +93,14 @@ ItemRepository::ItemRepository()
 
         {90, ItemData::EmblemItem("Emblem")},
 
+        {92, ItemData::ChaosEmeraldItem("White Chaos Emerald")},
+        {93, ItemData::ChaosEmeraldItem("Red Chaos Emerald")},
+        {94, ItemData::ChaosEmeraldItem("Cyan Chaos Emerald")},
+        {95, ItemData::ChaosEmeraldItem("Purple Chaos Emerald")},
+        {96, ItemData::ChaosEmeraldItem("Green Chaos Emerald")},
+        {97, ItemData::ChaosEmeraldItem("Yellow Chaos Emerald")},
+        {98, ItemData::ChaosEmeraldItem("Blue Chaos Emerald")},
+
         {100, ItemData::FillerItem("Ice Trap", IceTrap)},
         {101, ItemData::FillerItem("Spring Trap", SpringTrap)},
         {102, ItemData::FillerItem("Police Trap", PoliceTrap)},
@@ -149,6 +157,14 @@ UnlockStatus ItemRepository::GetUnlockStatus()
     auto unlockStatus = UnlockStatus();
 
     unlockStatus.currentEmblems = _emblemCount;
+
+    unlockStatus.whiteEmerald = _itemData[92].obtained;
+    unlockStatus.redEmerald = _itemData[93].obtained;
+    unlockStatus.cyanEmerald = _itemData[94].obtained;
+    unlockStatus.purpleEmerald = _itemData[95].obtained;
+    unlockStatus.greenEmerald = _itemData[96].obtained;
+    unlockStatus.yellowEmerald = _itemData[97].obtained;
+    unlockStatus.blueEmerald = _itemData[98].obtained;
 
     unlockStatus.sonicUnlocked = _itemData[1].obtained;
     unlockStatus.sonicLightShoesUnlocked = _itemData[10].obtained;

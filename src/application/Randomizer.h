@@ -36,6 +36,7 @@ public:
     void OnGameCompleted();
     void ShowStatusInformation(std::string information);
     void QueueNewMessage(std::string information);
+    void OnGoalSet(Goal goal);
     void OnEmblemGoalSet(int emblemGoal);
     void SetStatingArea(StartingArea startingArea);
     void SetMissions(Characters characters, int missions);
@@ -60,6 +61,7 @@ public:
     void ResetItems();
 
 private:
+    bool AreLastStoryRequirementsCompleted() const;
     DisplayManager& _displayManager;
     CharacterManager& _characterManager;
     WorldStateManager& _worldStateManager;

@@ -1,5 +1,12 @@
 ﻿#pragma once
 
+enum Goal
+{
+    GoalEmblems,
+    GoalEmeraldHunt,
+    GoalEmblemsAndEmeraldHunt,
+    None
+};
 enum RingLoss
 {
     Classic,
@@ -22,6 +29,7 @@ enum StartingArea
 struct Options
 {
     std::string playerName = "Player";
+    Goal goal = None;
     int emblemGoal = -1;
     StartingArea startingArea = NoStatingArea;
     bool lifeSanity = false;

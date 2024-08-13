@@ -40,18 +40,28 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     else if (item.type == ItemFiller)
         _characterManager.GiveFillerItem(item.fillerType);
     else if (item.type == ItemEmblem)
-    {
-        const int emblemCount = _itemRepository.AddEmblem();
-        _displayManager.ShowEmblemCount(emblemCount);
-        if (emblemCount == _options.emblemGoal)
-            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
-    }
+        _itemRepository.AddEmblem();
+
     const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
     _characterManager.UpdateUnlockStatus(unlockStatus);
     _displayManager.UpdateUnlockStatus(unlockStatus);
     _worldStateManager.UpdateUnlockStatus(unlockStatus);
-}
 
+    if (item.type == ItemChaosEmerald)
+    {
+        _displayManager.ShowGoalStatus();
+
+        if (AreLastStoryRequirementsCompleted())
+            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+    }
+
+    else if (item.type == ItemEmblem)
+    {
+        _displayManager.ShowGoalStatus();
+        if (unlockStatus.currentEmblems == _options.emblemGoal && AreLastStoryRequirementsCompleted())
+            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+    }
+}
 
 
 void Randomizer::ResetItems()
@@ -61,6 +71,20 @@ void Randomizer::ResetItems()
     _characterManager.UpdateUnlockStatus(unlockStatus);
     _displayManager.UpdateUnlockStatus(unlockStatus);
     _worldStateManager.UpdateUnlockStatus(unlockStatus);
+}
+
+bool Randomizer::AreLastStoryRequirementsCompleted() const
+{
+    if (_options.goal == GoalEmblems)
+        return _itemRepository.GetEmblemCount() >= _options.emblemGoal;
+
+    if (_options.goal == GoalEmeraldHunt)
+        return _itemRepository.GetUnlockStatus().GotAllChaosEmeralds();
+
+    if (_options.goal == GoalEmblemsAndEmeraldHunt)
+        return _itemRepository.GetEmblemCount() >= _options.emblemGoal &&
+            _itemRepository.GetUnlockStatus().GotAllChaosEmeralds();
+    return false;
 }
 
 
@@ -85,8 +109,7 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
     {
         if (item.second.type == ItemEmblem)
         {
-            if (_options.emblemGoal >= 0 &&
-                _itemRepository.GetEmblemCount() >= _options.emblemGoal)
+            if (AreLastStoryRequirementsCompleted())
                 _worldStateManager.UnlockSuperSonic();
         }
 
@@ -180,6 +203,12 @@ void Randomizer::ShowStatusInformation(std::string information)
 void Randomizer::QueueNewMessage(std::string information)
 {
     _displayManager.QueueMessage(information);
+}
+
+void Randomizer::OnGoalSet(const Goal goal)
+{
+    _options.goal = goal;
+    _displayManager.UpdateOptions(_options);
 }
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)

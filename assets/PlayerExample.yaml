@@ -6,11 +6,20 @@ Sonic Adventure DX:
   
   # Game Options
   
+  # Determines the goal of the seed
+  # Emblems (0): You have to collect a certain number of emblems to unlock the Perfect Chaos Fight.
+  # Chaos Emerald Hunt (1): You have to collect all 7 Chaos Emeralds to unlock the Perfect Chaos Fight.
+  #   There won't be any emblems in the item pool, only filler items and traps depending on your options.
+  # Emblems and Chaos Emerald Hunt (2): You have to collect both emblems and the emeralds to fight Perfect Chaos.
+  # 
+  # Keep in mind select Emerald Hunt will require enough checks to add the 7 emeralds to the pool,
+  #   Some options will fail to generate a seed if there are not enough checks to add the emeralds.
+  goal: 0
   # What percentage of the available emblems do you need to unlock the final story
   emblems_percentage: 80
-  # Randomize starting location, if false, you will start at Station Square
+  # Randomize starting location, if false, you will start at Station Square.
   random_starting_location: 'true'
-  # Ensures access to a level from the start, even if it means giving you an item
+  # Ensures access to a level from the start, even if it means giving you an item.
   guaranteed_level: 'false'
   # When you die, everyone dies. Of course the reverse is true too.
   death_link: 'false'

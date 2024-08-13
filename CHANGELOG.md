@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Added a Goal setting:
+    - Emblems: You have to collect a certain number of emblems to unlock the Perfect Chaos Fight.
+    - Chaos Emerald Hunt: You have to collect all 7 Chaos Emeralds to unlock the Perfect Chaos Fight.
+    - Emblems and Chaos Emerald Hunt: You have to collect both emblems and the emeralds to fight Perfect Chaos.
 - Added Station Keys to the item pool.
     - The Casino District Keys now open the casino-hotel door and the station-hotel door.
 - Added the inside of the Station as a starting location.
