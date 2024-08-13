@@ -142,6 +142,8 @@ void CharacterManager::OnPlayingFrame()
         return;
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
         return;
+    if (PauseEnabled == 0)
+        return;
 
 
     while (!_remainingFiller.empty())

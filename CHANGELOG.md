@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
 - Bosses' warp points won't show up if the boss checks are disabled.
 - Fixed Egg Carrier boss gate clipping through the floor.
 - Added trap weight information on the configuration file.
+- Traps will no longer activate during the result screen, it will queue and activate after getting out the level.
 
 ## [v0.4.5] - 2024-08-11
 
