@@ -22,6 +22,8 @@ All notable changes to this project will be documented in this file.
 - Now Egg Carrier's bosses and Sky Chase will remember the Egg Carrier's transformation state.
 - Tails now needs to press the button to open the Sand Hill entrance.
 - When exiting Sand Hill, you'll spawn in front of the entrance.
+- Tails' Rhythm Badge upgrade point is part of the randomizer.
+    - A warp point near the Master Emerald shrine was added to travel to the past.
 
 ### Changed
 

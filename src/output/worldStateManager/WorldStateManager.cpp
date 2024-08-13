@@ -12,6 +12,7 @@ constexpr int WARP_EGG_CARRIER_INSIDE = 35;
 constexpr int WARP_STATION_SQUARE = 17;
 constexpr int WARP_MYSTIC_RUINS = 6;
 constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
+constexpr int WARP_PAST = 10;
 
 
 // //We pretend that the egg carrier is sunk so that the hedgehog hammer is works
@@ -75,6 +76,12 @@ static void __cdecl HandleWarp()
         && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
         SetNextLevelAndAct_CutsceneMode(LevelIDs_SkyChase2, 0);
 
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Past, 1);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past2)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 1);
+
     else
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
 }
@@ -120,6 +127,7 @@ WorldStateManager::WorldStateManager()
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_MRuins[WARP_MYSTIC_RUINS] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_ECarrier0[WARP_EGG_CARRIER_OUTSIDE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
+    ObjList_Past[WARP_PAST] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
 }
 
 void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
@@ -257,6 +265,15 @@ FunctionHook<void, EntityData1*> onGetEntranceMRuins(0x530790, [](EntityData1* a
         a1->Rotation.y = 4000;
         a1->Rotation.z = 0;
     }
+    else if (LastLevel == LevelIDs_Past)
+    {
+        a1->Position.x = -2.5f;
+        a1->Position.y = -240;
+        a1->Position.z = 2480;
+        a1->Rotation.x = 0;
+        a1->Rotation.y = 4000;
+        a1->Rotation.z = 0;
+    }
 });
 
 //We spawn in the middle on the runway for the transformed Egg Carrier
@@ -268,6 +285,21 @@ FunctionHook<void, EntityData1*> onGetEntranceEggCarrier(0x52D820, [](EntityData
         a1->Position.x = 0;
         a1->Position.y = 650;
         a1->Position.z = -1000;
+        a1->Rotation.x = 0;
+        a1->Rotation.y = 0x4000;
+        a1->Rotation.z = 0;
+    }
+});
+
+//We spawn in front of the Master Emerald Shrine in the past when time traveling
+FunctionHook<void, EntityData1*> onGetEntrancePast(0x542180, [](EntityData1* a1)-> void
+{
+    onGetEntrancePast.Original(a1);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past2 && LastLevel == LevelIDs_MysticRuins)
+    {
+        a1->Position.x = 0;
+        a1->Position.y = 10;
+        a1->Position.z = 380;
         a1->Rotation.x = 0;
         a1->Rotation.y = 0x4000;
         a1->Rotation.z = 0;
@@ -372,6 +404,10 @@ const SETEntry WARP_SKY_CHASE_1 = CreateSetEntry(WARP_MYSTIC_RUINS, {1473, 201, 
 const SETEntry WARP_SKY_CHASE_2_EC1 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 700, -1100});
 const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 650, -1100});
 
+//Past
+const SETEntry WARP_TO_PAST = CreateSetEntry(WARP_MYSTIC_RUINS, {-2.5f, -240, 2397.5f});
+const SETEntry WARP_FROM_PAST = CreateSetEntry(WARP_PAST, {0, 7, 247.5f});
+
 
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
@@ -434,6 +470,21 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
     AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
+
+    //Time Travel 
+    AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Sonic);
+    AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Tails);
+    AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Knuckles);
+    AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Amy);
+    AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Gamma);
+    AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Big);
+
+    AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Sonic);
+    AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Tails);
+    AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Knuckles);
+    AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Amy);
+    AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Gamma);
+    AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Big);
 });
 
 //Hook to change the level after beating the boss

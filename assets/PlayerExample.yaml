@@ -52,7 +52,6 @@ Sonic Adventure DX:
   # Determines whether Sonic's upgrades are randomized and sent to the item pool
   randomized_sonic_upgrades: 'true'
   # Determines whether Tails' upgrades are randomized and sent to the item pool
-  # If you turn this off, Tails will never get the Rhythm Badge
   randomized_tails_upgrades: 'true'
   # Determines whether Knuckles' upgrades are randomized and sent to the item pool
   randomized_knuckles_upgrades: 'true'
