@@ -18,6 +18,8 @@ All notable changes to this project will be documented in this file.
     - Act 2 entrance is located in the egg carrier runway.
 - Added extra option for sublevels to enable the harder A mission (off by default).
     - Right now, the current sublevels are: Twinkle Circuit, Sand Hill and Sky Chase Act 1 and 2
+- The Egg Carrier is now transformed from the start.
+- Now Egg Carrier's bosses and Sky Chase will remember the Egg Carrier's transformation state.
 
 ### Changed
 

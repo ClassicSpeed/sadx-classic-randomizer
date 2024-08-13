@@ -163,6 +163,14 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_FINALEGG));
     ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_ENTRANCE_FINALEGG));
 
+    //Egg Carrier
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));
+
     //Chao Garden
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_SS));
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_MR));
