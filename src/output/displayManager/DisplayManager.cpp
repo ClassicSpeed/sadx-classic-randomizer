@@ -52,7 +52,7 @@ void DisplayManager::OnFrame()
 
     DisplayMessages();
 
-    DisplayEmblemCount();
+    DisplayGoalStatus();
     DisplayItemsUnlocked();
 }
 
@@ -63,9 +63,8 @@ void DisplayManager::ShowStatusInformation(std::string information)
     DisplayDebugString(NJM_LOCATION(2, 1), ("> " + information).c_str());
 }
 
-void DisplayManager::ShowEmblemCount(const int emblemCount)
+void DisplayManager::ShowGoalStatus()
 {
-    _emblemCount = emblemCount;
     _emblemTimer = std::clock();
 }
 
@@ -113,22 +112,44 @@ void DisplayManager::DisplayMessages() const
     }
 }
 
-void DisplayManager::DisplayEmblemCount()
+void DisplayManager::DisplayGoalStatus()
 {
-    if (_emblemCount < 0)
+    if (_emblemTimer < 0)
         return;
 
     const double timePassed = (std::clock() - this->_emblemTimer) / static_cast<double>(CLOCKS_PER_SEC);
     if (timePassed > _displayDuration)
     {
-        _emblemCount = -1;
+        _emblemTimer = -1;
         return;
     }
 
     SetDebugFontSize(this->_debugFontSize);
     SetDebugFontColor(this->_displayEmblemColor);
+
+    std::string buffer;
+
+    if (_options.goal == GoalEmblems || _options.goal == GoalEmblemsAndEmeraldHunt)
+        buffer.append("Emblems: " + std::to_string(_unlockStatus.currentEmblems) + "/"
+            + std::to_string(_options.emblemGoal));
+
+    if (_options.goal == GoalEmblemsAndEmeraldHunt)
+        buffer.append(" ");
+
+    if (_options.goal == GoalEmeraldHunt || _options.goal == GoalEmblemsAndEmeraldHunt)
+    {
+        buffer.append("Emeralds: ");
+        buffer.append(_unlockStatus.whiteEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.redEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.cyanEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.purpleEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.greenEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.yellowEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.blueEmerald ? "X" : "-");
+    }
+
     DisplayDebugString(
-        NJM_LOCATION(2, this->_startLine - 1), ("Emblems: " + std::to_string(_emblemCount)).c_str());
+        NJM_LOCATION(2, this->_startLine - 1), buffer.c_str());
 }
 
 std::string DisplayManager::GetMissionBTarget(const bool showTarget)
@@ -232,13 +253,35 @@ void DisplayManager::DisplayItemsUnlocked()
     }
     SetDebugFontSize(this->_debugFontSize);
     SetDebugFontColor(this->_displayEmblemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+1),
-                       ("Emblems: " + std::to_string(_unlockStatus.currentEmblems) + "/"
-                           + std::to_string(_options.emblemGoal)).c_str());
-
-    int displayOffset = 1;
-
     std::string buffer;
+
+    int displayOffset = 0;
+    if (_options.goal == GoalEmblems || _options.goal == GoalEmblemsAndEmeraldHunt)
+    {
+        displayOffset++;
+        buffer.clear();
+        buffer.append("Emblems: " + std::to_string(_unlockStatus.currentEmblems) + "/"
+            + std::to_string(_options.emblemGoal));
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    }
+
+    if (_options.goal == GoalEmeraldHunt || _options.goal == GoalEmblemsAndEmeraldHunt)
+    {
+        displayOffset++;
+        buffer.clear();
+        buffer.append("Emeralds: ");
+        buffer.append(_unlockStatus.whiteEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.redEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.cyanEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.purpleEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.greenEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.yellowEmerald ? "X" : "-");
+        buffer.append(_unlockStatus.blueEmerald ? "X" : "-");
+
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    }
+
+
     //Show Level information
     if (CurrentLevel > LevelIDs_HedgehogHammer && CurrentLevel <= LevelIDs_HotShelter)
     {
@@ -452,42 +495,76 @@ void DisplayManager::DisplayItemsUnlocked()
     const int disabledKeyItemColor = _keyItemColor & 0x00FFFFFF | 0x66000000;
 
     displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyTrain ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Train");
+    buffer.clear();
+    buffer.append("Travel  ");
+    buffer.append(_unlockStatus.keyTrain ? "Train " : "      ");
+    buffer.append(_unlockStatus.keyBoat ? "Boat " : "     ");
+    buffer.append(_unlockStatus.keyRaft ? "Raft" : "    ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("      : ");
+    buffer.append(!_unlockStatus.keyTrain ? "Train|" : "     |");
+    buffer.append(!_unlockStatus.keyBoat ? "Boat|" : "    |");
+    buffer.append(!_unlockStatus.keyRaft ? "Raft" : "    ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
     displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyBoat ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Boat");
+    buffer.clear();
+    buffer.append("Keys  ");
+    buffer.append(_unlockStatus.keyStationKeys ? "Station " : "        ");
+    buffer.append(_unlockStatus.keyHotelKeys ? "Hotel " : "      ");
+    buffer.append(_unlockStatus.keyCasinoKeys ? "Casino" : "      ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("    : ");
+    buffer.append(!_unlockStatus.keyStationKeys ? "Station|" : "       |");
+    buffer.append(!_unlockStatus.keyHotelKeys ? "Hotel|" : "     |");
+    buffer.append(!_unlockStatus.keyCasinoKeys ? "Casino" : "      ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
     displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyRaft ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Raft");
+    buffer.clear();
+    buffer.append("Stones  ");
+    buffer.append(_unlockStatus.keyWindStone ? "Wind " : "     ");
+    buffer.append(_unlockStatus.keyIceStone ? "Ice" : "   ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("      : ");
+    buffer.append(!_unlockStatus.keyWindStone ? "Wind|" : "    |");
+    buffer.append(!_unlockStatus.keyIceStone ? "Ice" : "   ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
     displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyHotelKeys ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Hotel Keys");
+    buffer.clear();
+    buffer.append("SS  ");
+    buffer.append(_unlockStatus.keyTwinkleParkTicket ? "TP Ticket " : "          ");
+    buffer.append(_unlockStatus.keyEmployeeCard ? "Employee Card" : "             ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("  : ");
+    buffer.append(!_unlockStatus.keyTwinkleParkTicket ? "TP Ticket|" : "         |");
+    buffer.append(!_unlockStatus.keyEmployeeCard ? "Employee Card" : "             ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
     displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyCasinoKeys ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Casino District Keys");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyTwinkleParkTicket ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Twinkle Park Ticket");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyEmployeeCard ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Employee card");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyDynamite ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Dynamite");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.keyIceStone ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Ice Stone");
-
-    displayOffset++;
-    SetDebugFontColor(_unlockStatus.jungleCart ? _keyItemColor : disabledKeyItemColor);
-    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "Jungle Cart");
+    buffer.clear();
+    buffer.append("MR  ");
+    buffer.append(_unlockStatus.keyDynamite ? "Dynamite " : "         ");
+    buffer.append(_unlockStatus.jungleCart ? "Jungle Cart" : "           ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("  : ");
+    buffer.append(!_unlockStatus.keyDynamite ? "Dynamite|" : "        |");
+    buffer.append(!_unlockStatus.jungleCart ? "Jungle Cart" : "           ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 }

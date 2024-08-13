@@ -7,6 +7,7 @@ enum ItemType
     ItemUpgrade,
     ItemCharacter,
     ItemEmblem,
+    ItemChaosEmerald,
     ItemKey,
     ItemLure,
     ItemFiller,
@@ -65,6 +66,11 @@ struct ItemData
     static ItemData EmblemItem(const std::string& displayName)
     {
         return ItemData(static_cast<Upgrades>(0), {}, ItemEmblem, false, displayName);
+    }
+    
+    static ItemData ChaosEmeraldItem(const std::string& displayName)
+    {
+        return ItemData(static_cast<Upgrades>(0), {}, ItemChaosEmerald, false, displayName);
     }
 
     static ItemData LureItem(const std::string& displayName)

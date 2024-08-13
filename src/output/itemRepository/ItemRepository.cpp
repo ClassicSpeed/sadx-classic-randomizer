@@ -42,11 +42,6 @@ ItemRepository::ItemRepository()
         {74, ItemData::FillerItem("Shield", Shield)},
         {75, ItemData::FillerItem("Magnetic Shield", MagneticShield)},
         {76, ItemData::FillerItem("Extra Life", ExtraLife)},
-        
-        {100, ItemData::FillerItem("Ice Trap", IceTrap)},
-        {101, ItemData::FillerItem("Spring Trap", SpringTrap)},
-        {102, ItemData::FillerItem("Police Trap", PoliceTrap)},
-        {103, ItemData::FillerItem("Buyon Trap", BuyonTrap)},
 
         {
             80,
@@ -67,19 +62,8 @@ ItemRepository::ItemRepository()
                                       FLAG_AMY_RAFT, FLAG_E102_RAFT, FLAG_BIG_RAFT
                                   }, "Raft")
         },
-        {
-            83, ItemData::KeyItem({
-                                      FLAG_SONIC_SS_HOTEL_FRONT, FLAG_MILES_SS_HOTEL_FRONT,
-                                      FLAG_KNUCKLES_SS_HOTEL_FRONT, FLAG_AMY_SS_HOTEL_FRONT,
-                                      FLAG_E102_SS_HOTEL_FRONT, FLAG_BIG_SS_HOTEL_FRONT, FLAG_BIG_SS_HOTEL_POOL
-                                  }, "Hotel Keys")
-        },
-        {
-            84, ItemData::KeyItem({
-                                      FLAG_SONIC_SS_STATION_BACK, FLAG_MILES_SS_STATION_BACK,
-                                      FLAG_KNUCKLES_SS_STATION_BACK, FLAG_AMY_SS_STATION_BACK
-                                  }, "Casino District Keys")
-        },
+        {83, ItemData::KeyItem({}, "Hotel Keys")},
+        {84, ItemData::KeyItem({}, "Casino District Keys")},
         {
             85, ItemData::KeyItem({
                                       FLAG_SONIC_SS_TPARK_ELEVATOR,
@@ -108,6 +92,23 @@ ItemRepository::ItemRepository()
         },
 
         {90, ItemData::EmblemItem("Emblem")},
+
+        {92, ItemData::ChaosEmeraldItem("White Chaos Emerald")},
+        {93, ItemData::ChaosEmeraldItem("Red Chaos Emerald")},
+        {94, ItemData::ChaosEmeraldItem("Cyan Chaos Emerald")},
+        {95, ItemData::ChaosEmeraldItem("Purple Chaos Emerald")},
+        {96, ItemData::ChaosEmeraldItem("Green Chaos Emerald")},
+        {97, ItemData::ChaosEmeraldItem("Yellow Chaos Emerald")},
+        {98, ItemData::ChaosEmeraldItem("Blue Chaos Emerald")},
+
+        {100, ItemData::FillerItem("Ice Trap", IceTrap)},
+        {101, ItemData::FillerItem("Spring Trap", SpringTrap)},
+        {102, ItemData::FillerItem("Police Trap", PoliceTrap)},
+        {103, ItemData::FillerItem("Buyon Trap", BuyonTrap)},
+
+
+        {120, ItemData::KeyItem({}, "Wind Stone")},
+        {121, ItemData::KeyItem({}, "Station Keys")},
     };
 }
 
@@ -157,6 +158,14 @@ UnlockStatus ItemRepository::GetUnlockStatus()
 
     unlockStatus.currentEmblems = _emblemCount;
 
+    unlockStatus.whiteEmerald = _itemData[92].obtained;
+    unlockStatus.redEmerald = _itemData[93].obtained;
+    unlockStatus.cyanEmerald = _itemData[94].obtained;
+    unlockStatus.purpleEmerald = _itemData[95].obtained;
+    unlockStatus.greenEmerald = _itemData[96].obtained;
+    unlockStatus.yellowEmerald = _itemData[97].obtained;
+    unlockStatus.blueEmerald = _itemData[98].obtained;
+
     unlockStatus.sonicUnlocked = _itemData[1].obtained;
     unlockStatus.sonicLightShoesUnlocked = _itemData[10].obtained;
     unlockStatus.sonicCrystalRingUnlocked = _itemData[11].obtained;
@@ -188,11 +197,13 @@ UnlockStatus ItemRepository::GetUnlockStatus()
     unlockStatus.keyTrain = _itemData[80].obtained;
     unlockStatus.keyBoat = _itemData[81].obtained;
     unlockStatus.keyRaft = _itemData[82].obtained;
+    unlockStatus.keyStationKeys = _itemData[121].obtained;
     unlockStatus.keyHotelKeys = _itemData[83].obtained;
     unlockStatus.keyCasinoKeys = _itemData[84].obtained;
     unlockStatus.keyTwinkleParkTicket = _itemData[85].obtained;
     unlockStatus.keyEmployeeCard = _itemData[86].obtained;
     unlockStatus.keyIceStone = _itemData[87].obtained;
+    unlockStatus.keyWindStone = _itemData[120].obtained;
     unlockStatus.keyDynamite = _itemData[88].obtained;
     unlockStatus.jungleCart = _itemData[89].obtained;
     return unlockStatus;

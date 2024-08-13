@@ -139,6 +139,10 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
     }
 }
 
+void SADX_Goal(const int goal)
+{
+    randomizerPtr->OnGoalSet(static_cast<Goal>(goal));
+}
 
 void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 {
@@ -270,6 +274,7 @@ void ArchipelagoManager::Connect()
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
+    AP_RegisterSlotDataIntCallback("Goal", &SADX_Goal);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("LifeSanity", &SADX_LifeSanity);
     AP_RegisterSlotDataIntCallback("PinballLifeCapsules", &SADX_PinballLifeCapsules);

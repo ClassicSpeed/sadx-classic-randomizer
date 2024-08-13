@@ -20,7 +20,7 @@ public:
     void UpdateOptions(Options options);
     void OnFrame();
     void ShowStatusInformation(std::string information);
-    void ShowEmblemCount(int emblemCount);
+    void ShowGoalStatus();
     void OnEnterCharacterSelectScreen();
     void OnExitCharacterSelectScreen();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
@@ -30,7 +30,7 @@ private:
     void RemoveExpiredMessages();
     void AddNewMessages();
     void DisplayMessages() const;
-    void DisplayEmblemCount();
+    void DisplayGoalStatus();
     std::string GetMissionBTarget(bool showTarget);
     std::string GetMissionATarget(bool showTarget);
     void DisplayItemsUnlocked();
@@ -43,31 +43,30 @@ private:
 
     bool _inCharacterSelectScreen;
 
-    
+
     float _displayDuration = 6.0f;
     unsigned __int16 _debugFontSize = 21;
     std::queue<std::string> _messagesQueue;
     std::deque<Message> _currentMessages;
-    
-    int _emblemCount = -1;
-    std::clock_t _emblemTimer;
-    
+
+    std::clock_t _emblemTimer = -1;
+
     std::clock_t _unlockStatusTimer;
     float _unlockStatusDelay = 0.3f;
 
     UnlockStatus _unlockStatus;
     Options _options;
 
-    
+
     int _keyItemColor = 0xFFF2C600;
 
     int _sonicColor = 0xFF0D7ADF;
-    int _tailsColor = 0xFFF1B000; 
-    int _knucklesColor = 0xFFFF1400; 
-    int _amyColor = 0xFFFD95C6; 
-    int _bigColor = 0xFF7505f5; 
+    int _tailsColor = 0xFFF1B000;
+    int _knucklesColor = 0xFFFF1400;
+    int _amyColor = 0xFFFD95C6;
+    int _bigColor = 0xFF7505f5;
     int _gammaColor = 0xFF827f80;
-    
+
 
     mutable std::map<int, LocationData> _checkData;
 };

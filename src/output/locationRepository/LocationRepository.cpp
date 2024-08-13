@@ -9,7 +9,7 @@ LocationRepository::LocationRepository()
         {102, LocationData::UpgradeLocation(FLAG_SONIC_MR_ANCIENT_LIGHT, "Ancient Light Upgrade (Sonic)", 12)},
 
         {200, LocationData::UpgradeLocation(FLAG_MILES_SS_JETANKLET, "Jet Ankle Upgrade (Tails)", 20)},
-        // {201, LocationData::UpgradeLocation(FLAG_MILES_MR_RHYTHMBROOCH, "Rhythm Badge Upgrade (Tails)", 21)},
+        {201, LocationData::UpgradeLocation(FLAG_MILES_MR_RHYTHMBROOCH, "Rhythm Badge Upgrade (Tails)", 21)},
 
         {300, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_SHOVELCLAW, "Shovel Claw Upgrade (Knuckles)", 30)},
         {301, LocationData::UpgradeLocation(FLAG_KNUCKLES_MR_FIGHTINGGROVE, "Fighting Gloves Upgrade (Knuckles)", 31)},
@@ -139,6 +139,12 @@ LocationRepository::LocationRepository()
 
         {25, LocationData::SubLevelLocation(LevelIDs_SandHill, MISSION_B)},
         {26, LocationData::SubLevelLocation(LevelIDs_SandHill, MISSION_A)},
+
+        {27, LocationData::SubLevelLocation(LevelIDs_SkyChase1, MISSION_B)},
+        {28, LocationData::SubLevelLocation(LevelIDs_SkyChase1, MISSION_A)},
+
+        {35, LocationData::SubLevelLocation(LevelIDs_SkyChase2, MISSION_B)},
+        {36, LocationData::SubLevelLocation(LevelIDs_SkyChase2, MISSION_A)},
 
         // Field Emblems
         {10, LocationData::FieldEmblemLocation(119, "Station Emblem")},

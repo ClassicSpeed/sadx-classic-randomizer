@@ -3,7 +3,14 @@
 struct UnlockStatus
 {
     int currentEmblems;
-    // int emblemGoal;
+
+    bool whiteEmerald;
+    bool redEmerald;
+    bool cyanEmerald;
+    bool purpleEmerald;
+    bool greenEmerald;
+    bool yellowEmerald;
+    bool blueEmerald;
 
     bool sonicUnlocked;
     bool sonicLightShoesUnlocked;
@@ -30,15 +37,22 @@ struct UnlockStatus
     bool bigLifeRingUnlocked;
     bool bigPowerRodUnlocked;
     int bigLureQuantity = 0;
-    
+
     bool keyTrain;
     bool keyBoat;
     bool keyRaft;
+    bool keyStationKeys;
     bool keyHotelKeys;
     bool keyCasinoKeys;
     bool keyTwinkleParkTicket;
     bool keyEmployeeCard;
     bool keyDynamite;
     bool keyIceStone;
+    bool keyWindStone;
     bool jungleCart;
+
+    bool GotAllChaosEmeralds()
+    {
+        return whiteEmerald && redEmerald && cyanEmerald && purpleEmerald && greenEmerald && yellowEmerald && blueEmerald;
+    }
 };

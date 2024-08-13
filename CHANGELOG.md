@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.5.0] - 2024-08-13
+
+### Added
+
+- Added a Goal setting:
+    - Emblems: You have to collect a certain number of emblems to unlock the Perfect Chaos Fight.
+    - Chaos Emerald Hunt: You have to collect all 7 Chaos Emeralds to unlock the Perfect Chaos Fight.
+    - Emblems and Chaos Emerald Hunt: You have to collect both emblems and the emeralds to fight Perfect Chaos.
+- Added Station Keys to the item pool.
+    - The Casino District Keys now open the casino-hotel door and the station-hotel door.
+- Added the inside of the Station as a starting location.
+- Changed the starting location logic.
+    - You can now choose to randomize the starting location or start in Station Square.
+    - You can now guarantee access to an action stage, even if it means giving you an item.
+    - The possible starting locations now take into account the logic for your options.
+    - For example, the inside of the station is only available if you have field emblems enabled.
+- Added the Wind Stone to the item pool.
+- Knuckles can now dig for the monkey killer switch in Mystic Ruins.
+    - To enter Red Mountain, you now have to kill the monkey.
+- Simplified key item information on the pause menu.
+- Knuckles' Chaos 6 fight now takes place in his version of the arena.
+- Added Sky Chase Act 1 and 2 as location checks.
+    - Act 1 entrance is located inside Tails' workshop.
+    - Act 2 entrance is located on the Egg Carrier runway.
+- Added an extra option for sublevels to enable the harder A mission (off by default).
+    - The current sublevels are: Twinkle Circuit, Sand Hill, and Sky Chase Act 1 and 2.
+- The Egg Carrier is now transformed from the start.
+- Egg Carrier's bosses and Sky Chase now remember the Egg Carrier's transformation state.
+- Tails now needs to press the button to open the Sand Hill entrance.
+- When exiting Sand Hill, you'll spawn in the cave.
+- Tails' Rhythm Badge upgrade point is part of the randomizer.
+    - A warp point near the Master Emerald shrine was added to travel to the past.
+    - There is no other location check in the past, but you can still explore it with any character.
+
+### Changed
+
+- Bosses' warp points won't show up if the boss checks are disabled.
+- Fixed Egg Carrier boss gate clipping through the floor.
+- Added trap weight information to the configuration file.
+- Traps will no longer activate during the result screen; they will queue up and activate after exiting the level.
+
 ## [v0.4.5] - 2024-08-11
 
 ### Changed
