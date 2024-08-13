@@ -129,24 +129,39 @@ void DisplayManager::DisplayGoalStatus()
 
     std::string buffer;
 
+    if (_options.goal == GoalEmeraldHunt || _options.goal == GoalEmblemsAndEmeraldHunt)
+    {
+        buffer.append("Emeralds:        ");
+        SetDebugFontColor(
+            _unlockStatus.whiteEmerald ? _whiteEmeraldColor : _whiteEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "          W");
+        SetDebugFontColor(_unlockStatus.redEmerald ? _redEmeraldColor : _redEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "           R");
+        SetDebugFontColor(_unlockStatus.cyanEmerald ? _cyanEmeraldColor : _cyanEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "            C");
+        SetDebugFontColor(_unlockStatus.purpleEmerald
+                              ? _purpleEmeraldColor
+                              : _purpleEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "             P");
+        SetDebugFontColor(
+            _unlockStatus.greenEmerald ? _greenEmeraldColor : _greenEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "              G");
+        SetDebugFontColor(_unlockStatus.yellowEmerald
+                              ? _yellowEmeraldColor
+                              : _yellowEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "               Y");
+        SetDebugFontColor(_unlockStatus.blueEmerald ? _blueEmeraldColor : _blueEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "                B");
+    }
+
+    SetDebugFontColor(this->_displayEmblemColor);
+    if (_options.goal == GoalEmblemsAndEmeraldHunt)
+        buffer.append(" ");
+
     if (_options.goal == GoalEmblems || _options.goal == GoalEmblemsAndEmeraldHunt)
         buffer.append("Emblems: " + std::to_string(_unlockStatus.currentEmblems) + "/"
             + std::to_string(_options.emblemGoal));
 
-    if (_options.goal == GoalEmblemsAndEmeraldHunt)
-        buffer.append(" ");
-
-    if (_options.goal == GoalEmeraldHunt || _options.goal == GoalEmblemsAndEmeraldHunt)
-    {
-        buffer.append("Emeralds: ");
-        buffer.append(_unlockStatus.whiteEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.redEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.cyanEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.purpleEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.greenEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.yellowEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.blueEmerald ? "X" : "-");
-    }
 
     DisplayDebugString(
         NJM_LOCATION(2, this->_startLine - 1), buffer.c_str());
@@ -270,15 +285,28 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("Emeralds: ");
-        buffer.append(_unlockStatus.whiteEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.redEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.cyanEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.purpleEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.greenEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.yellowEmerald ? "X" : "-");
-        buffer.append(_unlockStatus.blueEmerald ? "X" : "-");
-
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+        SetDebugFontColor(
+            _unlockStatus.whiteEmerald ? _whiteEmeraldColor : _whiteEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "          W");
+        SetDebugFontColor(_unlockStatus.redEmerald ? _redEmeraldColor : _redEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "           R");
+        SetDebugFontColor(_unlockStatus.cyanEmerald ? _cyanEmeraldColor : _cyanEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "            C");
+        SetDebugFontColor(_unlockStatus.purpleEmerald
+                              ? _purpleEmeraldColor
+                              : _purpleEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "             P");
+        SetDebugFontColor(
+            _unlockStatus.greenEmerald ? _greenEmeraldColor : _greenEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "              G");
+        SetDebugFontColor(_unlockStatus.yellowEmerald
+                              ? _yellowEmeraldColor
+                              : _yellowEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "               Y");
+        SetDebugFontColor(_unlockStatus.blueEmerald ? _blueEmeraldColor : _blueEmeraldColor & 0x00FFFFFF | 0x66000000);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "                B");
     }
 
 

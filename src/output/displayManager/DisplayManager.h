@@ -67,6 +67,15 @@ private:
     int _bigColor = 0xFF7505f5;
     int _gammaColor = 0xFF827f80;
 
+    
+    int _whiteEmeraldColor = 0xDDFFFFFF;
+    int _redEmeraldColor = 0xDDFF0000;
+    int _cyanEmeraldColor = 0xDD00FFFF;
+    int _purpleEmeraldColor = 0xDD800080;
+    int _greenEmeraldColor = 0xDD00FF00;
+    int _yellowEmeraldColor = 0xDDFFFF00;
+    int _blueEmeraldColor = 0xDD0000FF;
+
 
     mutable std::map<int, LocationData> _checkData;
 };

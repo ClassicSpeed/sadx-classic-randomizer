@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Reverted Egg Carrier transformation from the start.
     - The boss fights will still remember the transformation state. 
 - Sky Chase warp points won't spawn if sublevels are off
+- Chaos Emerald now have their respective colors in the pause menu.
 
 ## [v0.5.0] - 2024-08-13
 
