@@ -87,6 +87,21 @@ FunctionHook<void, int, float, float, float> onCreateAnimal(0x4BE610, [](int e_n
         onCreateAnimal.Original(e_num, x, y, z);
 });
 
+
+FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+    {
+        //We find the cube collision that prevent tails from entering the Master Emerald Shrine and delete it
+        if (tp->twp->pos.x < -1070 && tp->twp->pos.x > -1080
+            && tp->twp->pos.y < -210 && tp->twp->pos.y > -220
+            && tp->twp->pos.z < -1030 && tp->twp->pos.z > -1050)
+            FreeTask(tp);
+    }
+    else
+        onCollisionCube.Original(tp);
+});
+
 WorldStateManager::WorldStateManager()
 {
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
@@ -95,6 +110,11 @@ WorldStateManager::WorldStateManager()
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehoHammer);
 
     worldStateManagerPtr = this;
+
+    //We allow Tails and Big to enter the Master Emerald Shrine
+    DataArray(int, islandDoorFlags, 0x111E010, 8);
+    islandDoorFlags[Characters_Tails] = FLAG_SONIC_MR_ISLANDDOOR;
+    islandDoorFlags[Characters_Big] = FLAG_SONIC_MR_ISLANDDOOR;
 
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
@@ -225,16 +245,31 @@ FunctionHook<void, int> onAddSeconds(0x426640, [](int seconds)-> void
 });
 
 //We create a custom spawn point after exiting sand hill
-FunctionHook<void, EntityData1 *> onGetEntranceMRuins(0x530790, [](EntityData1 *a1)-> void
+FunctionHook<void, EntityData1*> onGetEntranceMRuins(0x530790, [](EntityData1* a1)-> void
 {
     onGetEntranceMRuins.Original(a1);
-    if(LastLevel == LevelIDs_SandHill)
+    if (LastLevel == LevelIDs_SandHill)
     {
         a1->Position.x = -1500;
         a1->Position.y = 50;
         a1->Position.z = -70;
         a1->Rotation.x = 0;
         a1->Rotation.y = 4000;
+        a1->Rotation.z = 0;
+    }
+});
+
+//We spawn in the middle on the runway for the transformed Egg Carrier
+FunctionHook<void, EntityData1*> onGetEntranceEggCarrier(0x52D820, [](EntityData1* a1)-> void
+{
+    onGetEntranceEggCarrier.Original(a1);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2 && LevelEntrance == 0)
+    {
+        a1->Position.x = 0;
+        a1->Position.y = 650;
+        a1->Position.z = -1000;
+        a1->Rotation.x = 0;
+        a1->Rotation.y = 0x4000;
         a1->Rotation.z = 0;
     }
 });
@@ -264,7 +299,7 @@ FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
         SetLevelAndAct(LevelIDs_MysticRuins, 2);
         break;
     case EggCarrier:
-        SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
+        SetLevelAndAct(LevelIDs_EggCarrierOutside, 1);
         break;
     case NoStatingArea:
         break;
