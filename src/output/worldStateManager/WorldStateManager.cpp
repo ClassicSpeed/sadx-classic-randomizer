@@ -21,13 +21,6 @@ static bool __cdecl HandleHedgehoHammer()
     return GetEventFlag(EventFlags_Amy_WarriorFeather);
 }
 
-//We spawn on the transformed Egg Carrier when taking the raft and the boat
-static void __cdecl HandleBoatAndRaft()
-{
-    SetLevelEntrance(0);
-    SetNextLevelAndAct_CutsceneMode(LevelIDs_EggCarrierOutside, 1);
-}
-
 static void __cdecl HandleWarp()
 {
     DisableController(0);
@@ -112,8 +105,6 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
 WorldStateManager::WorldStateManager()
 {
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
-    WriteCall(reinterpret_cast<void*>(0x63B51D), &HandleBoatAndRaft);
-    WriteCall(reinterpret_cast<void*>(0x5398CC), &HandleBoatAndRaft);
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehoHammer);
 
     worldStateManagerPtr = this;
@@ -465,15 +456,18 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
     }
-    //Sky Chase
-    AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-    AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Tails);
+    if(worldStateManagerPtr->options.sublevelsChecks)
+    {
+        //Sky Chase
+        AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+        AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Tails);
 
-    AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
-    AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
+        AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
+        AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
 
-    AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
-    AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
+        AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
+        AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
+    }
 
     //Time Travel 
     AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Sonic);

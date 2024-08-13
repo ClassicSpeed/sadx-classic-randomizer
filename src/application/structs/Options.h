@@ -59,6 +59,8 @@ struct Options
     int bigMissions = 0;
     int gammaMissions = 0;
 
+    bool sublevelsChecks = false;
+
     void SetMissions(const Characters character, const int missions)
     {
         switch (character)
