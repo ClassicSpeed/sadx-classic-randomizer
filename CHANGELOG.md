@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Fixed Egg Carrier being transformed when stating in it.
+- Fixed Knuckles' life capsules in Red Mountain not requiring the shovel claw.
+- Fixed every check in Big's Ice Cap not requiring the station keys.
 
 ## [v0.5.1] - 2024-08-13
 
