@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Added Item groups: "Chaos Emeralds", "Playable Characters", "Upgrades", "Key Items", "Fillers" and "Traps".
 - Added Location groups: "Upgrade Points", "Field Emblems", "Levels", "Sublevels", "Bosses", "Life Capsules".
 - There is also a location group for each of the 11 levels that include every level mission and life capsules.
+- Added a 2.5-second delay for the processing traps/filler items.
 
 ### Changed
 

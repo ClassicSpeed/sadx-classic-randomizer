@@ -156,14 +156,6 @@ void CharacterManager::OnPlayingFrame()
     if (PauseEnabled == 0)
         return;
 
-
-    while (!_remainingFiller.empty())
-    {
-        const FillerType frontElement = _remainingFiller.front();
-        ActivateFiller(frontElement);
-        _remainingFiller.pop();
-    }
-
     if (_freezeTimer > 0)
     {
         const double timePassed = (std::clock() - this->_freezeTimer) / static_cast<double>(CLOCKS_PER_SEC);
@@ -173,6 +165,7 @@ void CharacterManager::OnPlayingFrame()
             _freezeTimer = -1;
         }
     }
+
 
     if (_springTimer > 0)
     {
@@ -184,6 +177,23 @@ void CharacterManager::OnPlayingFrame()
             _springTimer = -1;
         }
     }
+
+    if (_fillerTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_fillerTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _fillerDuration)
+        {
+            _fillerTimer = -1;
+        }
+    }
+
+    if (_remainingFiller.empty() || _fillerTimer > 0)
+        return;
+
+
+    ActivateFiller(_remainingFiller.front());
+    _remainingFiller.pop();
+    _fillerTimer = std::clock();
 }
 
 TaskFunc(EBuyon_Main, 0x7B2E00);
