@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.5.2] - 2024-08-15
+
+### Added
+
+- Added Item groups: "Chaos Emeralds", "Playable Characters", "Upgrades", "Key Items", "Fillers" and "Traps".
+- Added Location groups: "Upgrade Points", "Field Emblems", "Levels", "Sublevels", "Bosses", "Life Capsules".
+- There is also a location group for each of the 11 levels that include every level mission and life capsules.
+- Added a 2.5-second delay for processing traps/filler items.
+
+### Changed
+
+- Fixed Sky Chase crash.
+- You can no longer activate filler items during Sky Chase or Twinkle Circuit.
+- Fixed crash when leaving the menu after winning the game.
+- Fixed Egg Carrier being transformed when starting in it.
+- Fixed Knuckles' life capsules in Red Mountain not requiring the shovel claw.
+- Fixed every check in Big's Ice Cap not requiring the station keys.
+- Sonic is now in logic for the Egg Carrier Hidden Bed Emblem.
+- Hints are no longer shown for already found items.
+- Removed emblems from the item pool when the goal is set to Emerald Hunt.
+- Fixed non-randomized upgrades not working correctly.
+- Fixed some spelling mistakes in the mod configuration file.
+- Fixed some checks getting triggered while in preview/demo mode.
+
 ## [v0.5.1] - 2024-08-13
 
 ### Changed
@@ -9,7 +33,7 @@ All notable changes to this project will be documented in this file.
 - Fixed setting station square as the starting location.
 - Fixed wind stone not being in the item pool.
 - Reverted Egg Carrier transformation from the start.
-    - The boss fights will still remember the transformation state. 
+    - The boss fights will still remember the transformation state.
 - Sky Chase warp points won't spawn if sublevels are off
 - Chaos Emerald now have their respective colors in the pause menu.
 

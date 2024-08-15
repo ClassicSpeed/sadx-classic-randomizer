@@ -13,6 +13,11 @@ CharacterManager::CharacterManager()
 
 void CharacterManager::GiveUpgrade(const Upgrades upgrade)
 {
+    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg && GameMode !=
+        GameModes_Menu)
+        return;
+    if (CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
+        return;
     if (Current_CharObj2 != nullptr)
         Current_CharObj2->Upgrades |= upgrade;
     if (CharObj2Ptrs != nullptr)
@@ -28,6 +33,11 @@ void CharacterManager::GiveUpgrade(const Upgrades upgrade)
 
 void CharacterManager::RemoveUpgrade(const Upgrades upgrade)
 {
+    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg && GameMode !=
+        GameModes_Menu)
+        return;
+    if (CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
+        return;
     if (Current_CharObj2 != nullptr)
         Current_CharObj2->Upgrades &= ~upgrade;
 
@@ -138,20 +148,13 @@ void CharacterManager::OnPlayingFrame()
 {
     if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
         return;
-    if (CurrentLevel == LevelIDs_PerfectChaos)
+    if (CurrentLevel == LevelIDs_PerfectChaos || CurrentLevel == LevelIDs_TwinkleCircuit
+        || CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
         return;
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
         return;
     if (PauseEnabled == 0)
         return;
-
-
-    while (!_remainingFiller.empty())
-    {
-        const FillerType frontElement = _remainingFiller.front();
-        ActivateFiller(frontElement);
-        _remainingFiller.pop();
-    }
 
     if (_freezeTimer > 0)
     {
@@ -163,6 +166,7 @@ void CharacterManager::OnPlayingFrame()
         }
     }
 
+
     if (_springTimer > 0)
     {
         const double timePassed = (std::clock() - this->_springTimer) / static_cast<double>(CLOCKS_PER_SEC);
@@ -173,6 +177,23 @@ void CharacterManager::OnPlayingFrame()
             _springTimer = -1;
         }
     }
+
+    if (_fillerTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_fillerTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _fillerDuration)
+        {
+            _fillerTimer = -1;
+        }
+    }
+
+    if (_remainingFiller.empty() || _fillerTimer > 0)
+        return;
+
+
+    ActivateFiller(_remainingFiller.front());
+    _remainingFiller.pop();
+    _fillerTimer = std::clock();
 }
 
 TaskFunc(EBuyon_Main, 0x7B2E00);

@@ -326,7 +326,7 @@ FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
         SetLevelAndAct(LevelIDs_MysticRuins, 2);
         break;
     case EggCarrier:
-        SetLevelAndAct(LevelIDs_EggCarrierOutside, 1);
+        SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
         break;
     case NoStatingArea:
         break;

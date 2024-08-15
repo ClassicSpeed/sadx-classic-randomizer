@@ -150,7 +150,7 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions",
                                                                     true);
     const bool autoSkipCutscenes = settingsIni->getBool("GameSettings", "AutoSkipCutscenes", true);
-    const bool skipCredits = settingsIni->getBool("GameSettings", "SkippeableCredits", true);
+    const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
     const bool winButtonEnabled = settingsIni->getBool("GameSettings", "AutoWinButton", false);
 
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, winButtonEnabled);

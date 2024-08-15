@@ -34,11 +34,14 @@ private:
     void SpawnSpring();
     void SpawnEnemies(void (*enemyFunc)(task* tp));
     std::queue<FillerType> _remainingFiller;
-    
+
+    float _fillerDuration = 2.5f;
+    std::clock_t _fillerTimer = -1;
+
     task* _springTask;
     float _springDuration = 2.0f;
-    std::clock_t _springTimer;
-    
+    std::clock_t _springTimer = -1;
+
     float _freezeDuration = 2.0f;
     std::clock_t _freezeTimer = -1;
 };
