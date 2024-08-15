@@ -2,13 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.5.1] - 2024-08-15
+## [v0.5.2] - 2024-08-16
+
+### Added
+
+- Added Item groups: "Chaos Emeralds", "Playable Characters", "Upgrades", "Key Items", "Fillers" and "Traps".
+- Added Location groups: "Upgrade Points", "Field Emblems", "Levels", "Sublevels", "Bosses", "Life Capsules".
+- There is also a location group for each of the 11 levels that include every level mission and life capsules.
 
 ### Changed
 
 - Fixed Egg Carrier being transformed when stating in it.
 - Fixed Knuckles' life capsules in Red Mountain not requiring the shovel claw.
 - Fixed every check in Big's Ice Cap not requiring the station keys.
+- Sonic is now in logic for the Egg Carrier Hidden Bed Emblem.
 
 ## [v0.5.1] - 2024-08-13
 
