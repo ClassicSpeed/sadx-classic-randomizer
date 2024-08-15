@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - Hints are no longer shown for already found items.
 - Removed emblems from the item pool when the goal is set to Emerald Hunt.
 - Fixed non-randomized upgrades not working correctly.
+- Fixed some spelling mistakes in the mod configuration file.
 
 ## [v0.5.1] - 2024-08-13
 
