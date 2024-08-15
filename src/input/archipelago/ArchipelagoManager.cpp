@@ -384,14 +384,15 @@ void ArchipelagoManager::EnqueueMessage(AP_Message* msg)
         }
     case AP_MessageType::Hint:
         {
-            AP_HintMessage* hintMsg = static_cast<AP_HintMessage*>(msg);
+            const AP_HintMessage* hintMsg = static_cast<AP_HintMessage*>(msg);
 
             if (!hintMsg)
                 return;
-            std::string foundText = hintMsg->checked ? " (found)" : " (not found)";
+            if (hintMsg->checked)
+                return;
 
-            _randomizer.QueueNewMessage("  " + hintMsg->location + " in " + hintMsg->sendPlayer + "'s world."
-                + foundText);
+            _randomizer.QueueNewMessage(
+                "  " + hintMsg->location + " in " + hintMsg->sendPlayer + "'s world. (not found)");
             _randomizer.QueueNewMessage(hintMsg->recvPlayer + "'s " + hintMsg->item + " can be found at");
             return;
         }

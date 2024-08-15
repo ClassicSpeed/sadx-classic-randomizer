@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Knuckles' life capsules in Red Mountain not requiring the shovel claw.
 - Fixed every check in Big's Ice Cap not requiring the station keys.
 - Sonic is now in logic for the Egg Carrier Hidden Bed Emblem.
+- Hints are no longer shown for already found items.
 
 ## [v0.5.1] - 2024-08-13
 
