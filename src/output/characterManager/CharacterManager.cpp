@@ -13,6 +13,11 @@ CharacterManager::CharacterManager()
 
 void CharacterManager::GiveUpgrade(const Upgrades upgrade)
 {
+    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg && GameMode !=
+        GameModes_Menu)
+        return;
+    if (CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
+        return;
     if (Current_CharObj2 != nullptr)
         Current_CharObj2->Upgrades |= upgrade;
     if (CharObj2Ptrs != nullptr)
@@ -28,6 +33,11 @@ void CharacterManager::GiveUpgrade(const Upgrades upgrade)
 
 void CharacterManager::RemoveUpgrade(const Upgrades upgrade)
 {
+    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg && GameMode !=
+        GameModes_Menu)
+        return;
+    if (CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
+        return;
     if (Current_CharObj2 != nullptr)
         Current_CharObj2->Upgrades &= ~upgrade;
 
@@ -138,7 +148,8 @@ void CharacterManager::OnPlayingFrame()
 {
     if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
         return;
-    if (CurrentLevel == LevelIDs_PerfectChaos)
+    if (CurrentLevel == LevelIDs_PerfectChaos || CurrentLevel == LevelIDs_TwinkleCircuit
+        || CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
         return;
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
         return;
