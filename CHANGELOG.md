@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 
 - Fixed Sky Chase crash.
 - You can no longer activate filler items during sky chase or twinkle circuit.
+- Fixed crash when leaving the menu after winning the game.
 - Fixed Egg Carrier being transformed when stating in it.
 - Fixed Knuckles' life capsules in Red Mountain not requiring the shovel claw.
 - Fixed every check in Big's Ice Cap not requiring the station keys.

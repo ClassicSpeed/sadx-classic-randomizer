@@ -142,9 +142,6 @@ void EventDetector::OnPlayingFrame() const
     if (DemoPlaying > 0)
         return;
 
-    if (GameMode == GameModes_StartCredits && GetEventFlag(EventFlags_SuperSonicAdventureComplete))
-        randomizer.OnGameCompleted();
-
     //Ignore events given by the mod itself
     if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
         return;
@@ -228,12 +225,11 @@ FunctionHook<void, short> startLevelCutsceneHook(0x413C90, [](const short scene)
     if (LastStoryFlag == 1 && eventDetectorPtr->lastStoryState == LastStoryStarted && scene == 1)
     {
         //We start the credits as soon as the fight is won
-        startLevelCutsceneHook.Original(scene);
         EventFlagArray[EventFlags_SuperSonicAdventureComplete] = 1;
         WriteSaveFile();
         GameState = MD_GAME_FADEOUT_STAFFROLL;
-        GameMode = GameModes_StartCredits;
         eventDetectorPtr->lastStoryState = LastStoryCompleted;
+        eventDetectorPtr->randomizer.OnGameCompleted();
         return;
     }
     startLevelCutsceneHook.Original(scene);
