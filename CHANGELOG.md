@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 - Removed emblems from the item pool when the goal is set to Emerald Hunt.
 - Fixed non-randomized upgrades not working correctly.
 - Fixed some spelling mistakes in the mod configuration file.
+- Fixed some checks getting trigger while on the preview/demo mode.
 
 ## [v0.5.1] - 2024-08-13
 

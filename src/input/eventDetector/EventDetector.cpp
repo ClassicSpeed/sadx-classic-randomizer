@@ -64,7 +64,7 @@ bool ManualSubLevelMissionACheck(const int level)
     //You can't fail the Twinkle Circuit mission A 
     if (level == LevelIDs_TwinkleCircuit)
         return true;
-    
+
     if (level == LevelIDs_SandHill)
         return Score >= 10000;
 
@@ -81,6 +81,8 @@ FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
     0x4B4640, [](SaveFileData* saveFile, const int character, const signed int level, const int mission)-> void
     {
         onLevelEmblemCollected.Original(saveFile, character, level, mission);
+        if (DemoPlaying > 0)
+            return;
         eventDetectorPtr->OnLevelEmblem(character, level, mission);
 
         if (!eventDetectorPtr->completeMultipleLevelMissions)
@@ -129,6 +131,8 @@ FunctionHook<void, SaveFileData*, signed int> OnGenericEmblemCollected(
     0x4B3F30, [](SaveFileData* savefile, signed int index)-> void
     {
         OnGenericEmblemCollected.Original(savefile, index);
+        if (DemoPlaying > 0)
+            return;
         eventDetectorPtr->OnGenericEmblem(index);
     });
 
@@ -266,6 +270,8 @@ int GetLifeCapsuleFromPosition(const NJS_VECTOR& position)
 FunctionHook<void, EntityData1*> onBrokenGenericLifeCapsule(0x4D6D40, [](EntityData1* entity)-> void
 {
     onBrokenGenericLifeCapsule.Original(entity);
+    if (DemoPlaying > 0)
+        return;
     if (!eventDetectorPtr->randomizer.GetOptions().lifeSanity)
         return;
 
@@ -320,6 +326,8 @@ FunctionHook<void, int> onGiveLives(0x425B60, [](const int lives)-> void
 FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
 {
     onLoadLevelResults.Original();
+    if (DemoPlaying > 0)
+        return;
     if (CurrentLevel < LevelIDs_Chaos0 || CurrentLevel > LevelIDs_E101R)
         return;
     if (!eventDetectorPtr->randomizer.GetOptions().bossChecks)
