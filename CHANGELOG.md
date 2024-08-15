@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Fixed every check in Big's Ice Cap not requiring the station keys.
 - Sonic is now in logic for the Egg Carrier Hidden Bed Emblem.
 - Hints are no longer shown for already found items.
+- Removed emblems from the item pool when the goal is set to Emerald Hunt.
 
 ## [v0.5.1] - 2024-08-13
 
