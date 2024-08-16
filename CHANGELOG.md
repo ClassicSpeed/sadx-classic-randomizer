@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.6.0] - 2024-08-16
+
+### Added
+- Added Mission mode.
+- Activating a mission card no longer prevents you from moving.
+- Finishing a mission no longer prevents you from moving.
+- Random starting locations now take life capsules into account.
+
+### Changed
+
+- Fixed Station Square starting location not working correctly when guaranteed action stage was disabled.
+
 ## [v0.5.2] - 2024-08-15
 
 ### Added

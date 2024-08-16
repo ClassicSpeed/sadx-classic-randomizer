@@ -86,6 +86,7 @@ __declspec(dllexport) void __cdecl OnFrame()
     archipelagoManager.OnFrame();
     displayManager.OnFrame();
     cheatsManager.OnPlayingFrame();
+    worldStateManager.OnFrame();
     if (Current_CharObj2 != nullptr)
     {
         eventDetector.OnPlayingFrame();

@@ -9,12 +9,21 @@ CharacterManager::CharacterManager()
     //Re-enable control after graving an emblem
     WriteCall((void*)0x4B4891, EnableControl);
     WriteCall((void*)0x4B46C5, EnableControl);
+
+
+    //Re-enable control after graving a mission card
+    WriteCall((void*)0x595BFD, EnableControl);
+    WriteCall((void*)0x595C53, EnableControl);
+    WriteCall((void*)0x595C5D, EnableControl);
+
+    //Re-enable control after finishing a mission
+    WriteCall((void*)0x592094, EnableControl);
+    WriteCall((void*)0x5920CA, EnableControl);
 }
 
 void CharacterManager::GiveUpgrade(const Upgrades upgrade)
 {
-    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg && GameMode !=
-        GameModes_Menu)
+    if (GameMode != GameModes_Mission && GameMode != GameModes_Menu)
         return;
     if (CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
         return;
@@ -33,8 +42,7 @@ void CharacterManager::GiveUpgrade(const Upgrades upgrade)
 
 void CharacterManager::RemoveUpgrade(const Upgrades upgrade)
 {
-    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg && GameMode !=
-        GameModes_Menu)
+    if (GameMode != GameModes_Mission && GameMode != GameModes_Menu)
         return;
     if (CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
         return;
@@ -99,7 +107,7 @@ void CharacterManager::KillPlayer()
 
 void CharacterManager::ProcessRings(const Sint16 amount)
 {
-    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+    if (GameMode != GameModes_Mission)
         return;
     if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return;
@@ -126,11 +134,11 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 
 int CharacterManager::GetRingDifference()
 {
-    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+    if (GameMode != GameModes_Mission)
         return lastRingAmount = 0;
     if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return lastRingAmount = 0;
-    if (GameMode == GameModes_Adventure_ActionStg && TimeThing == 0 && !options.hardRingLinkActive)
+    if (GameMode == GameModes_Mission && TimeThing == 0 && !options.hardRingLinkActive)
         return lastRingAmount = 0;
 
 
@@ -146,7 +154,7 @@ void CharacterManager::GiveFillerItem(const FillerType filler)
 
 void CharacterManager::OnPlayingFrame()
 {
-    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+    if (GameMode != GameModes_Mission)
         return;
     if (CurrentLevel == LevelIDs_PerfectChaos || CurrentLevel == LevelIDs_TwinkleCircuit
         || CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
