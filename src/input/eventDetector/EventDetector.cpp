@@ -176,18 +176,12 @@ void EventDetector::OnLevelCompleted(const short character, const short level)
 
 void EventDetector::OnSublevelCompleted(const short character, const short level, const int mission)
 {
+    //sublevel - mission A
     if (mission == SUB_LEVEL_MISSION_B)
     {
         eventDetectorPtr->OnLevelEmblem(character, level, mission);
-    }
-
-    if (!eventDetectorPtr->completeMultipleLevelMissions)
-        return;
-
-    //sublevel - mission A
-    if (mission == SUB_LEVEL_MISSION_A || (mission == SUB_LEVEL_MISSION_B && eventDetectorPtr->
-        completeMultipleLevelMissions))
-    {
+        if (!eventDetectorPtr->completeMultipleLevelMissions)
+            return;
         if (ManualSubLevelMissionACheck(level))
         {
             SetLevelEmblemCollected(&SaveFile, character, level, SUB_LEVEL_MISSION_A);

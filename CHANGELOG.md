@@ -2,9 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.6.1] - 2024-08-17
+
+### Changed
+
+- Fixed sublevels crashing when completing the level.
+
 ## [v0.6.0] - 2024-08-16
 
 ### Added
+
 - Added Mission mode.
 - Activating a mission card no longer prevents you from moving.
 - Finishing a mission no longer prevents you from moving.
