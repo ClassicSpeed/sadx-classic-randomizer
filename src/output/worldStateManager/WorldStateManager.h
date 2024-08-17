@@ -12,6 +12,7 @@ public:
     void UnlockSuperSonic();
     void UpdateOptions(Options newOptions);
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
+    void OnFrame();
     Options options;
     UnlockStatus unlockStatus;
 };

@@ -141,7 +141,7 @@ void Randomizer::OnPlayingFrame()
         return;
     if (!_deathPending)
         return;
-    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+    if (GameMode != GameModes_Mission)
         return;
     if (GameState != MD_GAME_MAIN)
         return;

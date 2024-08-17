@@ -83,11 +83,9 @@ static void __cdecl HandleWarp()
 //Allow us to spawn enemies in the adventure fields
 FunctionHook<void, int, float, float, float> onCreateAnimal(0x4BE610, [](int e_num, float x, float y, float z)-> void
 {
-    if (GameMode == GameModes_Adventure_ActionStg)
+    if (CurrentLevel > LevelIDs_HedgehogHammer && CurrentLevel <= LevelIDs_HotShelter)
         onCreateAnimal.Original(e_num, x, y, z);
 });
-
-
 FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
@@ -145,6 +143,16 @@ void WorldStateManager::UpdateOptions(const Options newOptions)
 void WorldStateManager::UpdateUnlockStatus(UnlockStatus newUnlockStatus)
 {
     this->unlockStatus = newUnlockStatus;
+}
+
+void WorldStateManager::OnFrame()
+{
+    if (DemoPlaying > 0)
+        return;
+    if (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill)
+        GameMode = GameModes_Adventure_ActionStg;
+    else if (GameMode == GameModes_Adventure_Field || GameMode == GameModes_Adventure_ActionStg)
+        GameMode = GameModes_Mission;
 }
 
 //Allow Knuckles to fight Chaos 2
@@ -395,7 +403,7 @@ const SETEntry WARP_ZERO = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, 
 const SETEntry WARP_E101_MK2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, -385.69f});
 
 //Sky Chase
-const SETEntry WARP_SKY_CHASE_1 = CreateSetEntry(WARP_MYSTIC_RUINS, {1473, 201, 776});
+const SETEntry WARP_SKY_CHASE_1 = CreateSetEntry(WARP_MYSTIC_RUINS, {1561, 191, 900}, {0, 0x1C00, 0});
 const SETEntry WARP_SKY_CHASE_2_EC1 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 700, -1100});
 const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 650, -1100});
 
@@ -456,7 +464,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
     }
-    if(worldStateManagerPtr->options.sublevelsChecks)
+    if (worldStateManagerPtr->options.sublevelsChecks)
     {
         //Sky Chase
         AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);

@@ -8,7 +8,6 @@ EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
     eventDetectorPtr = this;
 }
 
-
 DataPointer(int, NumberOfHintsUsed, 0x3B0F138);
 
 bool ManualMissionBCheck(const int character)
@@ -77,54 +76,6 @@ bool ManualSubLevelMissionACheck(const int level)
     return false;
 }
 
-FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
-    0x4B4640, [](SaveFileData* saveFile, const int character, const signed int level, const int mission)-> void
-    {
-        onLevelEmblemCollected.Original(saveFile, character, level, mission);
-        if (DemoPlaying > 0)
-            return;
-        eventDetectorPtr->OnLevelEmblem(character, level, mission);
-
-        if (!eventDetectorPtr->completeMultipleLevelMissions)
-            return;
-
-        //We check all other missions that were completed
-        if (level <= LevelIDs_HotShelter)
-        {
-            //level - mission B
-            if (mission == MISSION_C)
-            {
-                if (ManualMissionBCheck(character))
-                {
-                    onLevelEmblemCollected.Original(saveFile, character, level, MISSION_B);
-                    eventDetectorPtr->OnLevelEmblem(character, level, MISSION_B);
-                }
-            }
-
-            //level - mission A
-            if (mission == MISSION_C || mission == MISSION_B)
-            {
-                if (ManualMissionACheck(character, level))
-                {
-                    onLevelEmblemCollected.Original(saveFile, character, level, MISSION_A);
-                    eventDetectorPtr->OnLevelEmblem(character, level, MISSION_A);
-                }
-            }
-        }
-        if (level >= LevelIDs_TwinkleCircuit && level <= LevelIDs_SandHill)
-        {
-            //sublevel - mission A
-            if (mission == SUB_LEVEL_MISSION_B)
-            {
-                if (ManualSubLevelMissionACheck(level))
-                {
-                    onLevelEmblemCollected.Original(saveFile, character, level, SUB_LEVEL_MISSION_A);
-                    eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
-                }
-            }
-        }
-    });
-
 
 //FunctionPointer(void, SetEmblemCollected, (SaveFileData *savefile, signed int index), 0x4B3F30);
 FunctionHook<void, SaveFileData*, signed int> OnGenericEmblemCollected(
@@ -143,7 +94,7 @@ void EventDetector::OnPlayingFrame() const
         return;
 
     //Ignore events given by the mod itself
-    if (GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+    if (GameMode != GameModes_Mission)
         return;
 
     bool checksFound = false;
@@ -160,7 +111,7 @@ void EventDetector::OnPlayingFrame() const
         checkData = randomizer.GetCheckData();
 }
 
-void EventDetector::OnLevelEmblem(int character, int level, int mission)
+void EventDetector::OnLevelEmblem(const int character, const int level, const int mission)
 {
     bool checksFound = false;
     for (const auto& check : checkData)
@@ -183,6 +134,111 @@ void EventDetector::OnLevelEmblem(int character, int level, int mission)
     }
     if (checksFound)
         checkData = randomizer.GetCheckData();
+}
+
+
+void EventDetector::OnLevelCompleted(const short character, const short level)
+{
+    int mission = MISSION_C;
+    if (GetLevelEmblemCollected(&SaveFile, character, level, MISSION_C))
+        mission = MISSION_B;
+    if (GetLevelEmblemCollected(&SaveFile, character, level, MISSION_B))
+        mission = MISSION_A;
+
+    if (mission == MISSION_C)
+    {
+        SetLevelEmblemCollected(&SaveFile, character, level, MISSION_C);
+        eventDetectorPtr->OnLevelEmblem(character, level, mission);
+    }
+
+    //We check all other missions that were completed
+    //level - mission B
+    if (mission == MISSION_B || (mission == MISSION_C && eventDetectorPtr->completeMultipleLevelMissions))
+    {
+        if (ManualMissionBCheck(character))
+        {
+            SetLevelEmblemCollected(&SaveFile, character, level, MISSION_B);
+            eventDetectorPtr->OnLevelEmblem(character, level, MISSION_B);
+        }
+    }
+
+    //level - mission A
+    if (mission == MISSION_A || ((mission == MISSION_C || mission == MISSION_B) && eventDetectorPtr->
+        completeMultipleLevelMissions))
+    {
+        if (ManualMissionACheck(character, level))
+        {
+            SetLevelEmblemCollected(&SaveFile, character, level, MISSION_A);
+            eventDetectorPtr->OnLevelEmblem(character, level, MISSION_A);
+        }
+    }
+}
+
+void EventDetector::OnSublevelCompleted(const short character, const short level, const int mission)
+{
+    if (mission == SUB_LEVEL_MISSION_B)
+    {
+        eventDetectorPtr->OnLevelEmblem(character, level, mission);
+    }
+
+    if (!eventDetectorPtr->completeMultipleLevelMissions)
+        return;
+
+    //sublevel - mission A
+    if (mission == SUB_LEVEL_MISSION_A || (mission == SUB_LEVEL_MISSION_B && eventDetectorPtr->
+        completeMultipleLevelMissions))
+    {
+        if (ManualSubLevelMissionACheck(level))
+        {
+            SetLevelEmblemCollected(&SaveFile, character, level, SUB_LEVEL_MISSION_A);
+            eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
+        }
+    }
+}
+
+void EventDetector::OnBossCompleted(int character, int level)
+{
+    if (!this->randomizer.GetOptions().bossChecks)
+        return;
+    bool checksFound = false;
+    for (const auto& check : this->checkData)
+    {
+        if (check.second.type != LocationBossFight)
+            continue;
+
+        if (this->randomizer.GetOptions().unifyEggHornet && CurrentLevel == LevelIDs_EggHornet)
+        {
+            if (check.second.character == -1 && check.second.level == LevelIDs_EggHornet && !check.second.checked)
+            {
+                this->randomizer.OnCheckFound(check.first);
+                checksFound = true;
+            }
+        }
+        else if (this->randomizer.GetOptions().unifyChaos4 && CurrentLevel == LevelIDs_Chaos4)
+        {
+            if (check.second.character == -1 && check.second.level == LevelIDs_Chaos4 && !check.second.checked)
+            {
+                this->randomizer.OnCheckFound(check.first);
+                checksFound = true;
+            }
+        }
+        else if (this->randomizer.GetOptions().unifyChaos6 && CurrentLevel == LevelIDs_Chaos6)
+        {
+            if (check.second.character == -1 && check.second.level == LevelIDs_Chaos6 && !check.second.checked)
+            {
+                this->randomizer.OnCheckFound(check.first);
+                checksFound = true;
+            }
+        }
+        else if (check.second.character == CurrentCharacter && check.second.level == CurrentLevel && !check.second.
+            checked)
+        {
+            this->randomizer.OnCheckFound(check.first);
+            checksFound = true;
+        }
+    }
+    if (checksFound)
+        this->checkData = this->randomizer.GetCheckData();
 }
 
 void EventDetector::OnGenericEmblem(signed int index)
@@ -319,48 +375,40 @@ FunctionHook<void, int> onGiveLives(0x425B60, [](const int lives)-> void
     onGiveLives.Original(lives);
 });
 
+FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
+    0x4B4640, [](SaveFileData* saveFile, const int character, const signed int level, const int mission)-> void
+    {
+        onLevelEmblemCollected.Original(saveFile, character, level, mission);
+        if (DemoPlaying > 0)
+            return;
+        if (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill)
+            eventDetectorPtr->OnSublevelCompleted(CurrentCharacter, CurrentLevel, mission);
+    });
+
 FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
 {
     onLoadLevelResults.Original();
     if (DemoPlaying > 0)
         return;
-    if (CurrentLevel < LevelIDs_Chaos0 || CurrentLevel > LevelIDs_E101R)
-        return;
-    if (!eventDetectorPtr->randomizer.GetOptions().bossChecks)
-        return;
+
+    if (CurrentLevel >= LevelIDs_Chaos0 && CurrentLevel <= LevelIDs_E101R)
+        eventDetectorPtr->OnBossCompleted(CurrentCharacter, CurrentLevel);
+    else if (CurrentLevel <= LevelIDs_HotShelter)
+        eventDetectorPtr->OnLevelCompleted(CurrentCharacter, CurrentLevel);
+});
+
+FunctionHook<void, ObjectMaster*> onClearMission(0x5923C0, [](ObjectMaster* obj)-> void
+{
+    onClearMission.Original(obj);
+
+    const int missionNumber = 1 + **reinterpret_cast<Sint8**>(&obj->SETData.SETData[1].LoadCount);
 
     bool checksFound = false;
     for (const auto& check : eventDetectorPtr->checkData)
     {
-        if (check.second.type != LocationBossFight)
+        if (check.second.type != LocationMission)
             continue;
-
-        if (eventDetectorPtr->randomizer.GetOptions().unifyEggHornet && CurrentLevel == LevelIDs_EggHornet)
-        {
-            if (check.second.character == -1 && check.second.level == LevelIDs_EggHornet && !check.second.checked)
-            {
-                eventDetectorPtr->randomizer.OnCheckFound(check.first);
-                checksFound = true;
-            }
-        }
-        else if (eventDetectorPtr->randomizer.GetOptions().unifyChaos4 && CurrentLevel == LevelIDs_Chaos4)
-        {
-            if (check.second.character == -1 && check.second.level == LevelIDs_Chaos4 && !check.second.checked)
-            {
-                eventDetectorPtr->randomizer.OnCheckFound(check.first);
-                checksFound = true;
-            }
-        }
-        else if (eventDetectorPtr->randomizer.GetOptions().unifyChaos6 && CurrentLevel == LevelIDs_Chaos6)
-        {
-            if (check.second.character == -1 && check.second.level == LevelIDs_Chaos6 && !check.second.checked)
-            {
-                eventDetectorPtr->randomizer.OnCheckFound(check.first);
-                checksFound = true;
-            }
-        }
-        else if (check.second.character == CurrentCharacter && check.second.level == CurrentLevel && !check.second.
-            checked)
+        if (check.second.missionNumber == missionNumber && !check.second.checked)
         {
             eventDetectorPtr->randomizer.OnCheckFound(check.first);
             checksFound = true;

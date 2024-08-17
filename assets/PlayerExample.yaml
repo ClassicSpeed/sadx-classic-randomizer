@@ -84,6 +84,14 @@ Sonic Adventure DX:
   
   # Determines whether collecting field emblems grants checks (12 Locations)
   field_emblems_checks: 'true'
+  # Determines whether completing missions grants checks (60 Locations)
+  mission_mode_checks: 'false'
+  # Determines whether missions where you can't stop to collect things are enabled:
+  #    Mission 49 (Flags in the Kart section of Twinkle Park )
+  #    Mission 53 (Triple Jump in the Snowboard section of Ice Cap)
+  #    Mission 54 (Flags in the Snowboard section of Ice Cap)
+  #    Mission 58 (Flags in the rolling bounce section of Lost World)
+  non_stop_missions: 'false'
   # Determines whether beating the default sublevel mission  grants checks (4 Locations)
   # Current sublevels are: Twinkle Circuit, Sand Hill and Sky Chase Act 1 and 2
   sub_level_checks: 'true'
