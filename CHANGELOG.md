@@ -2,9 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.6.1] - 2024-08-17
+
+### Added
+
+- Unlocked all the Game Gear games in the main menu.
+
+### Changed
+
+- Fixed sublevels crashing when completing the level.
+- Moved the mission switch in Big's House to allow the player to get the power rod upgrade.
+- Moved up the Sonic's mission card in the sewers, so it doesn't clip with the spring.
+- Fixed Perfect Chaos fight not being soft locked.
+
 ## [v0.6.0] - 2024-08-16
 
 ### Added
+
 - Added Mission mode.
 - Activating a mission card no longer prevents you from moving.
 - Finishing a mission no longer prevents you from moving.

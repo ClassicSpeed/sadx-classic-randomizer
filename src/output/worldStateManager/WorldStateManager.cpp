@@ -149,11 +149,24 @@ void WorldStateManager::OnFrame()
 {
     if (DemoPlaying > 0)
         return;
+    if (CurrentLevel == LevelIDs_PerfectChaos)
+        return;
     if (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill)
         GameMode = GameModes_Adventure_ActionStg;
     else if (GameMode == GameModes_Adventure_Field || GameMode == GameModes_Adventure_ActionStg)
         GameMode = GameModes_Mission;
 }
+
+//Enable all GameGear Games
+FunctionHook<int> onHowManyGameGearGames(0x6FDA90, []()-> int
+{
+    return 12;
+});
+
+FunctionHook<bool> onIsGameGearMenuEnabled(0x506460, []()-> bool
+{
+    return true;
+});
 
 //Allow Knuckles to fight Chaos 2
 FunctionHook<BOOL> isChaos2DoorOpen(0x638D50, []()-> BOOL
@@ -411,7 +424,6 @@ const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {
 const SETEntry WARP_TO_PAST = CreateSetEntry(WARP_MYSTIC_RUINS, {-2.5f, -240, 2397.5f});
 const SETEntry WARP_FROM_PAST = CreateSetEntry(WARP_PAST, {0, 7, 247.5f});
 
-
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
     onCountSetItemsMaybe.Original();
@@ -492,6 +504,33 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Gamma);
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Big);
 });
+
+FunctionHook<void> onMissionSetLoad(0x591A70, []()-> void
+{
+    onMissionSetLoad.Original();
+
+    for (int i = 0; i < MissionSetCount; ++i)
+    {
+        const SETObjData* objData = &MissionSETTable[i];
+        if (objData->SETEntry != nullptr)
+        {
+            const NJS_VECTOR position = objData->SETEntry->Position;
+            //We move the mission switch from Big's bed
+            if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && position.x > 1294 && position.x <
+                1298 && position.y > 130 && position.y < 133 && position.z > -729 && position.z < -726)
+            {
+                objData->SETEntry->Position = {1333, 120, -707};
+            }
+            //We move the mission card in the sewer, so it doesn't clip with the srping
+            if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3 && position.x > 506 && position.x <
+                507 && position.y > -89 && position.y < -88 && position.z > 635 && position.z < 636)
+            {
+                objData->SETEntry->Position = {position.x, -70, position.z};
+            }
+        }
+    }
+});
+
 
 //Hook to change the level after beating the boss
 FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
