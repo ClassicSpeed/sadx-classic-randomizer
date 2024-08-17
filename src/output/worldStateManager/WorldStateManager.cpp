@@ -155,6 +155,17 @@ void WorldStateManager::OnFrame()
         GameMode = GameModes_Mission;
 }
 
+//Enable all GameGear Games
+FunctionHook<int> onHowManyGameGearGames(0x6FDA90, []()-> int
+{
+    return 12;
+});
+
+FunctionHook<bool> onIsGameGearMenuEnabled(0x506460, []()-> bool
+{
+    return true;
+});
+
 //Allow Knuckles to fight Chaos 2
 FunctionHook<BOOL> isChaos2DoorOpen(0x638D50, []()-> BOOL
 {

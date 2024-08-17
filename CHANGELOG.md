@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.6.1] - 2024-08-17
 
+### Added
+
+- Unlocked all the Game Gear games in the main menu.
+
 ### Changed
 
 - Fixed sublevels crashing when completing the level.
