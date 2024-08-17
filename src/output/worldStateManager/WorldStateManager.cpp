@@ -149,6 +149,8 @@ void WorldStateManager::OnFrame()
 {
     if (DemoPlaying > 0)
         return;
+    if (CurrentLevel == LevelIDs_PerfectChaos)
+        return;
     if (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill)
         GameMode = GameModes_Adventure_ActionStg;
     else if (GameMode == GameModes_Adventure_Field || GameMode == GameModes_Adventure_ActionStg)

@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Fixed sublevels crashing when completing the level.
 - Moved the mission switch in Big's House to allow the player to get the power rod upgrade.
 - Moved up the Sonic's mission card in the sewers, so it doesn't clip with the spring.
+- Fixed Perfect Chaos fight not being soft locked.
 
 ## [v0.6.0] - 2024-08-16
 
