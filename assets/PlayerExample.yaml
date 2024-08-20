@@ -57,17 +57,17 @@ Sonic Adventure DX:
   # 1 means Missions C
   # 0 means no missions at all (You can still play the character if they are enabled)
   # Choose what action stage missions will be a location check for Sonic
-  sonic_missions: 1
+  sonic_action_stage_missions: 1
   # Choose what action stage missions will be a location check for Tails.
-  tails_missions: 1
+  tails_action_stage_missions: 1
   # Choose what action stage missions will be a location check for Knuckles.
-  knuckles_missions: 1
+  knuckles_action_stage_missions: 1
   # Choose what action stage missions will be a location check for Amy.
-  amy_missions: 1
+  amy_action_stage_missions: 1
   # Choose what action stage missions will be a location check for Gamma.
-  gamma_missions: 1
+  gamma_action_stage_missions: 1
   # Choose what action stage missions will be a location check for Big.
-  big_missions: 1
+  big_action_stage_missions: 1
   
   # Upgrade Options
   

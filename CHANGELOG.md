@@ -18,6 +18,8 @@ All notable changes to this project will be documented in this file.
   the [Google Sheet](https://docs.google.com/spreadsheets/d/1CfBZ_pLGm3YTWwEwBLbk67e4iSrOE5vbcu0UkFej0pY).
 - Removed apworld from commited files and added link to its repository in the README.
 - Tails' workshop emblem is now in logic for Gamma with the Jet Booster.
+- Fixed issue with the monkey door on mystic ruins not being open for Big to start mission 35.
+- Fixed issue with mission 35 being in logic without dynamite.
 
 ## [v0.6.2] - 2024-08-20
 

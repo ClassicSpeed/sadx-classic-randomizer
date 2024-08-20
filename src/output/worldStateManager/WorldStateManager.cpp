@@ -198,7 +198,7 @@ FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
 
 //Prevents the monkey from blocking the entrance to Red Mountain for knuckles
 FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
-FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
+FunctionHook<BOOL, int> isMonkeyDoorOpen(0x53E5D0, [](int a1)-> BOOL
 {
     if (CurrentCharacter == Characters_Knuckles && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1)
         return true;
@@ -206,7 +206,8 @@ FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
         return isMonkeyDead(1);
     if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma)
         return isMonkeyDead(1);
-    return false;
+    //For everyone else, we return true if we are in the main mystic ruins area
+    return levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1;
 });
 
 //We open the station door if we have the keys
@@ -594,4 +595,3 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
 
     onMysticRuinsKey.Original(tp);
 });
-
