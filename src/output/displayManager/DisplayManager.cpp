@@ -414,7 +414,7 @@ void DisplayManager::DisplayItemsUnlocked()
     }
 
 
-    if (_options.sonicActionStageMissions > 0)
+    if (_options.playableSonic)
     {
         displayOffset++;
         buffer.clear();
@@ -433,7 +433,7 @@ void DisplayManager::DisplayItemsUnlocked()
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
-    if (_options.tailsActionStageMissions > 0)
+    if (_options.playableTails)
     {
         displayOffset++;
         buffer.clear();
@@ -450,7 +450,7 @@ void DisplayManager::DisplayItemsUnlocked()
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
-    if (_options.knucklesActionStageMissions > 0)
+    if (_options.playableKnuckles)
     {
         displayOffset++;
         buffer.clear();
@@ -467,7 +467,7 @@ void DisplayManager::DisplayItemsUnlocked()
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
-    if (_options.amyActionStageMissions > 0)
+    if (_options.playableAmy)
     {
         displayOffset++;
         buffer.clear();
@@ -484,7 +484,7 @@ void DisplayManager::DisplayItemsUnlocked()
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
-    if (_options.bigActionStageMissions > 0)
+    if (_options.playableBig)
     {
         displayOffset++;
         buffer.clear();
@@ -502,7 +502,7 @@ void DisplayManager::DisplayItemsUnlocked()
         SetDebugFontColor(this->_bigColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
-    if (_options.gammaActionStageMissions > 0)
+    if (_options.playableGamma)
     {
         displayOffset++;
         buffer.clear();

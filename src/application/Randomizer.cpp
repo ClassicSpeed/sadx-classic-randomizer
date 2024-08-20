@@ -235,6 +235,11 @@ void Randomizer::SetCharacterStatingArea(const Characters character,const Starti
     _options.SetCharacterStatingArea(character, startingArea);
     _worldStateManager.UpdateOptions(_options);
 }
+void Randomizer::SetPlayableCharacter(const Characters character, const bool playable)
+{
+    _options.SetPlayableCharacter(character, playable);
+    _displayManager.UpdateOptions(_options);
+}
 
 void Randomizer::SetActionStageMissions(const Characters characters, const int missions)
 {

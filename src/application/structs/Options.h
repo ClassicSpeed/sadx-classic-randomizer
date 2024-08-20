@@ -62,6 +62,14 @@ struct Options
     bool unifyChaos6 = false;
     bool unifyEggHornet = false;
 
+
+    bool playableSonic = true;
+    bool playableTails = true;
+    bool playableKnuckles = true;
+    bool playableAmy = true;
+    bool playableBig = true;
+    bool playableGamma = true;
+
     int sonicActionStageMissions = 0;
     int tailsActionStageMissions = 0;
     int knucklesActionStageMissions = 0;
@@ -205,4 +213,58 @@ struct Options
         }
         return StationSquareMain;
     }
+
+    void SetPlayableCharacter(const Characters character, const bool playable)
+    {
+        switch (character)
+        {
+        case Characters_Sonic:
+            this->playableSonic = playable;
+            break;
+        case Characters_Tails:
+            this->playableTails = playable;
+            break;
+        case Characters_Knuckles:
+            this->playableKnuckles = playable;
+            break;
+        case Characters_Amy:
+            this->playableAmy = playable;
+            break;
+        case Characters_Big:
+            this->playableBig = playable;
+            break;
+        case Characters_Gamma:
+            this->playableGamma = playable;
+            break;
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+    }
+
+    bool GetPlayableCharacter(const Characters character) const
+    {
+        switch (character)
+        {
+        case Characters_Sonic:
+            return this->playableSonic;
+        case Characters_Tails:
+            return this->playableTails;
+        case Characters_Knuckles:
+            return this->playableKnuckles;
+        case Characters_Amy:
+            return this->playableAmy;
+        case Characters_Big:
+            return this->playableBig;
+        case Characters_Gamma:
+            return this->playableGamma;
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+        return false;
+    }
+
 };

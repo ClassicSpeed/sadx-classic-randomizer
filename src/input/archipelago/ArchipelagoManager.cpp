@@ -265,6 +265,36 @@ void SADX_UnifyEggHornet(const int unifyEggHornet)
     randomizerPtr->SetUnifyEggHornet(unifyEggHornet);
 }
 
+void SADX_PlayableSonic(const int playable)
+{
+    randomizerPtr->SetPlayableCharacter(Characters_Sonic, playable);
+}
+
+void SADX_PlayableTails(const int playable)
+{
+    randomizerPtr->SetPlayableCharacter(Characters_Tails, playable);
+}
+
+void SADX_PlayableKnuckles(const int playable)
+{
+    randomizerPtr->SetPlayableCharacter(Characters_Knuckles, playable);
+}
+
+void SADX_PlayableAmy(const int playable)
+{
+    randomizerPtr->SetPlayableCharacter(Characters_Amy, playable);
+}
+
+void SADX_PlayableGamma(const int playable)
+{
+    randomizerPtr->SetPlayableCharacter(Characters_Gamma, playable);
+}
+
+void SADX_PlayableBig(const int playable)
+{
+    randomizerPtr->SetPlayableCharacter(Characters_Big, playable);
+}
+
 void SADX_SonicActionStageMissions(const int missions)
 {
     randomizerPtr->SetActionStageMissions(Characters_Sonic, missions);
@@ -333,6 +363,14 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("UnifyChaos4", &SADX_UnifyChaos4);
     AP_RegisterSlotDataIntCallback("UnifyChaos6", &SADX_UnifyChaos6);
     AP_RegisterSlotDataIntCallback("UnifyEggHornet", &SADX_UnifyEggHornet);
+
+
+    AP_RegisterSlotDataIntCallback("PlayableSonic", &SADX_PlayableSonic);
+    AP_RegisterSlotDataIntCallback("PlayableTails", &SADX_PlayableTails);
+    AP_RegisterSlotDataIntCallback("PlayableKnuckles", &SADX_PlayableKnuckles);
+    AP_RegisterSlotDataIntCallback("PlayableAmy", &SADX_PlayableAmy);
+    AP_RegisterSlotDataIntCallback("PlayableBig", &SADX_PlayableBig);
+    AP_RegisterSlotDataIntCallback("PlayableGamma", &SADX_PlayableGamma);
 
     AP_RegisterSlotDataIntCallback("SonicActionStageMissions", &SADX_SonicActionStageMissions);
     AP_RegisterSlotDataIntCallback("TailsActionStageMissions", &SADX_TailsActionStageMissions);
@@ -430,7 +468,6 @@ void ArchipelagoManager::EnqueueMessage(AP_Message* msg)
         }
     case AP_MessageType::Plaintext:
     case AP_MessageType::Countdown:
-    default:
         {
             // Do nothing, avoid spam
         }
