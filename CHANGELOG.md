@@ -21,6 +21,8 @@ All notable changes to this project will be documented in this file.
 - Fixed issue with the monkey door on mystic ruins not being open for Big to start mission 35.
 - Fixed issue with mission 35 being in logic without dynamite.
 - Fixed soft lock when dying during level transitions.
+- Restored the normal level result screen are shown again.
+  - This fixes Gamma not adding the extra time at end and sublevel problems.
 
 ## [v0.6.2] - 2024-08-20
 

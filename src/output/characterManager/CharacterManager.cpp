@@ -366,3 +366,12 @@ FunctionHook<void, task*> freezeTrapDisplay(0x4A2240, [](task* tp)-> void
     }
     freezeTrapDisplay.Original(tp);
 });
+
+// We temporally set the game mode to trick the result screen into showing its full version
+FunctionHook<void, task*> onScoreDisplay_Main(0x42BCC0, [](task* tp)-> void
+{
+    const GameModes bufferGameMode = GameMode;
+    GameMode = GameModes_Adventure_ActionStg;
+    onScoreDisplay_Main.Original(tp);
+    GameMode = bufferGameMode;
+});
