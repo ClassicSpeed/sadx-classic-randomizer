@@ -39,7 +39,7 @@ public:
     void OnGoalSet(Goal goal);
     void OnEmblemGoalSet(int emblemGoal);
     void SetStatingArea(StartingArea startingArea);
-    void SetMissions(Characters characters, int missions);
+    void SetActionStageMissions(Characters characters, int missions);
     void SetCharacterLifeSanity(Characters character, bool characterLifeSanity);
     void SetDeathLink(bool deathLinkActive);
     void SetRingLink(bool ringLinkActive);

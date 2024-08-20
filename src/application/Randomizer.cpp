@@ -236,9 +236,9 @@ void Randomizer::SetStatingArea(const StartingArea startingArea)
     _worldStateManager.UpdateOptions(_options);
 }
 
-void Randomizer::SetMissions(const Characters characters, const int missions)
+void Randomizer::SetActionStageMissions(const Characters characters, const int missions)
 {
-    _options.SetMissions(characters, missions);
+    _options.SetActionStageMissions(characters, missions);
     _displayManager.UpdateOptions(_options);
 }
 

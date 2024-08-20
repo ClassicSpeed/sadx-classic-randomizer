@@ -34,24 +34,37 @@ Sonic Adventure DX:
   # One Hit K.O. (2): You die immediately when hit
   ring_loss: 0
   
+  # Playable Characters
+  # Determines whether Sonic is playable
+  playable_sonic: 'true'
+  # Determines whether Tails is playable
+  playable_tails: 'true'
+  # Determines whether Knuckles is playable
+  playable_knuckles: 'true'
+  # Determines whether Amy is playable
+  playable_amy: 'true'
+  # Determines whether Big is playable
+  playable_gamma: 'true'
+  # Determines whether Big is playable
+  playable_big: 'true'
+
   # Stage Options
-  
   # For missions, the options go from 3 to 0
   # 3 means Missions A, B and C
   # 2 means Missions B and C
   # 1 means Missions C
-  # 0 means the character is not played at all on the randomizer
-  # Choose what missions will be a location check for Sonic
+  # 0 means no missions at all (You can still play the character if they are enabled)
+  # Choose what action stage missions will be a location check for Sonic
   sonic_missions: 1
-  # Choose what missions will be a location check for Tails.
+  # Choose what action stage missions will be a location check for Tails.
   tails_missions: 1
-  # Choose what missions will be a location check for Knuckles.
+  # Choose what action stage missions will be a location check for Knuckles.
   knuckles_missions: 1
-  # Choose what missions will be a location check for Amy.
+  # Choose what action stage missions will be a location check for Amy.
   amy_missions: 1
-  # Choose what missions will be a location check for Gamma.
+  # Choose what action stage missions will be a location check for Gamma.
   gamma_missions: 1
-  # Choose what missions will be a location check for Big.
+  # Choose what action stage missions will be a location check for Big.
   big_missions: 1
   
   # Upgrade Options
@@ -97,7 +110,7 @@ Sonic Adventure DX:
   sub_level_checks: 'true'
   # Determines whether beating the harder (points based) sublevel mission grants checks (4 Locations)
   # Only works if sublevel checks are enabled
-  sub_level_checks_hard: 'true'
+  sub_level_checks_hard: 'false'
   # Determines whether collecting life capsules grants checks (102 Locations)
   life_sanity: 'false'
   # Determines whether casinopolis life capsules grant checks (2 Locations)

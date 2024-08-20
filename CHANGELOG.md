@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.7.0] - 2024-08-?
+
+### Added
+
+- Added option to enable playable characters.
+    - You can now enable a character without their levels, and still do missions, bosses, etc.
+
+### Changed
+
+- Reworked logic to be able to import from
+  the [Google Sheet](https://docs.google.com/spreadsheets/d/1CfBZ_pLGm3YTWwEwBLbk67e4iSrOE5vbcu0UkFej0pY).
+- Removed apworld from commited files and added link to its repository in the README.
+- Tails' workshop emblem is now in logic for Gamma with the Jet Booster.
+
 ## [v0.6.1] - 2024-08-17
 
 ### Added

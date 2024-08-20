@@ -349,8 +349,11 @@ FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
     case EggCarrier:
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
         break;
+
     case NoStatingArea:
-        break;
+    case TwinkleParkArea:
+    case AngelIsland:
+        SetLevelAndAct(LevelIDs_StationSquare, 3);
     }
 });
 
