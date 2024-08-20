@@ -34,8 +34,15 @@ struct Options
     std::string playerName = "Player";
     Goal goal = None;
     int emblemGoal = -1;
-    StartingArea startingArea = NoStatingArea;
     bool lifeSanity = false;
+
+
+    StartingArea sonicStartingArea = NoStatingArea;
+    StartingArea tailsStartingArea = NoStatingArea;
+    StartingArea knucklesStartingArea = NoStatingArea;
+    StartingArea amyStartingArea = NoStatingArea;
+    StartingArea bigStartingArea = NoStatingArea;
+    StartingArea gammaStartingArea = NoStatingArea;
 
     bool sonicLifeSanity = true;
     bool tailsLifeSanity = true;
@@ -144,5 +151,58 @@ struct Options
             break;
         }
         return false;
+    }
+
+    void SetCharacterStatingArea(const Characters character, const StartingArea startingArea)
+    {
+        switch (character)
+        {
+        case Characters_Sonic:
+            this->sonicStartingArea = startingArea;
+            break;
+        case Characters_Tails:
+            this->tailsStartingArea = startingArea;
+            break;
+        case Characters_Knuckles:
+            this->knucklesStartingArea = startingArea;
+            break;
+        case Characters_Amy:
+            this->amyStartingArea = startingArea;
+            break;
+        case Characters_Big:
+            this->bigStartingArea = startingArea;
+            break;
+        case Characters_Gamma:
+            this->gammaStartingArea = startingArea;
+            break;
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+    }
+
+    StartingArea GetCharacterStartingArea(const Characters character) const
+    {
+        switch (character)
+        {
+        case Characters_Sonic:
+            return this->sonicStartingArea;
+        case Characters_Tails:
+            return this->tailsStartingArea;
+        case Characters_Knuckles:
+            return this->knucklesStartingArea;
+        case Characters_Amy:
+            return this->amyStartingArea;
+        case Characters_Big:
+            return this->bigStartingArea;
+        case Characters_Gamma:
+            return this->gammaStartingArea;
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+        return StationSquareMain;
     }
 };

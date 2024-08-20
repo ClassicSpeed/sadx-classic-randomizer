@@ -324,7 +324,7 @@ FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
     onAdventureSetLevelAndAct.Original();
     if (LastStoryFlag == 1)
         return;
-    switch (worldStateManagerPtr->options.startingArea)
+    switch (worldStateManagerPtr->options.GetCharacterStartingArea(static_cast<Characters>(CurrentCharacter)))
     {
     case StationSquareMain:
         SetLevelAndAct(LevelIDs_StationSquare, 3);

@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
     - You can now enable a character without their levels, and still do missions, bosses, etc.
 - Added option set to blacklist missions. the previous non-stop missions option was removed.
 - Added location group for missions.
+- Added random starting location per character.
 
 ### Changed
 

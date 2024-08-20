@@ -190,9 +190,34 @@ void SADX_BigLifeSanity(const int lifeSanity)
 }
 
 
-void SADX_StartingArea(const int startingArea)
+void SADX_SonicStartingArea(const int startingArea)
 {
-    randomizerPtr->SetStatingArea(static_cast<StartingArea>(startingArea));
+    randomizerPtr->SetCharacterStatingArea(Characters_Sonic, static_cast<StartingArea>(startingArea));
+}
+
+void SADX_TailsStartingArea(const int startingArea)
+{
+    randomizerPtr->SetCharacterStatingArea(Characters_Tails, static_cast<StartingArea>(startingArea));
+}
+
+void SADX_KnucklesStartingArea(const int startingArea)
+{
+    randomizerPtr->SetCharacterStatingArea(Characters_Knuckles, static_cast<StartingArea>(startingArea));
+}
+
+void SADX_AmyStartingArea(const int startingArea)
+{
+    randomizerPtr->SetCharacterStatingArea(Characters_Amy, static_cast<StartingArea>(startingArea));
+}
+
+void SADX_GammaStartingArea(const int startingArea)
+{
+    randomizerPtr->SetCharacterStatingArea(Characters_Gamma, static_cast<StartingArea>(startingArea));
+}
+
+void SADX_BigStartingArea(const int startingArea)
+{
+    randomizerPtr->SetCharacterStatingArea(Characters_Big, static_cast<StartingArea>(startingArea));
 }
 
 void SADX_SetDeathLink(const int deathLinkActive)
@@ -290,7 +315,13 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("BigLifeSanity", &SADX_BigLifeSanity);
     AP_RegisterSlotDataIntCallback("GammaLifeSanity", &SADX_GammaLifeSanity);
 
-    AP_RegisterSlotDataIntCallback("StartingArea", &SADX_StartingArea);
+    AP_RegisterSlotDataIntCallback("SonicStartingArea", &SADX_SonicStartingArea);
+    AP_RegisterSlotDataIntCallback("TailsStartingArea", &SADX_TailsStartingArea);
+    AP_RegisterSlotDataIntCallback("KnucklesStartingArea", &SADX_KnucklesStartingArea);
+    AP_RegisterSlotDataIntCallback("AmyStartingArea", &SADX_AmyStartingArea);
+    AP_RegisterSlotDataIntCallback("GammaStartingArea", &SADX_GammaStartingArea);
+    AP_RegisterSlotDataIntCallback("BigStartingArea", &SADX_BigStartingArea);
+
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
     AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);
     AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);
@@ -302,7 +333,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("UnifyChaos4", &SADX_UnifyChaos4);
     AP_RegisterSlotDataIntCallback("UnifyChaos6", &SADX_UnifyChaos6);
     AP_RegisterSlotDataIntCallback("UnifyEggHornet", &SADX_UnifyEggHornet);
-    
+
     AP_RegisterSlotDataIntCallback("SonicActionStageMissions", &SADX_SonicActionStageMissions);
     AP_RegisterSlotDataIntCallback("TailsActionStageMissions", &SADX_TailsActionStageMissions);
     AP_RegisterSlotDataIntCallback("KnucklesActionStageMissions", &SADX_KnucklesActionStageMissions);

@@ -230,9 +230,9 @@ void Randomizer::OnPinballLifeCapsulesSet(const bool pinballLifeCapsules)
     _displayManager.UpdateOptions(_options);
 }
 
-void Randomizer::SetStatingArea(const StartingArea startingArea)
+void Randomizer::SetCharacterStatingArea(const Characters character,const StartingArea startingArea)
 {
-    _options.startingArea = startingArea;
+    _options.SetCharacterStatingArea(character, startingArea);
     _worldStateManager.UpdateOptions(_options);
 }
 

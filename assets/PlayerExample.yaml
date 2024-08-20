@@ -19,6 +19,8 @@ Sonic Adventure DX:
   emblems_percentage: 80
   # Randomize starting location, if false, you will start at Station Square.
   random_starting_location: 'true'
+  # If Randomize starting location is enabled, each character will start in a random location
+  random_starting_location_per_character: 'true'
   # Ensures access to a level from the start, even if it means giving you an item.
   guaranteed_level: 'false'
   # When you die, everyone dies. Of course the reverse is true too.

@@ -38,7 +38,7 @@ public:
     void QueueNewMessage(std::string information);
     void OnGoalSet(Goal goal);
     void OnEmblemGoalSet(int emblemGoal);
-    void SetStatingArea(StartingArea startingArea);
+    void SetCharacterStatingArea(Characters characters, StartingArea startingArea);
     void SetActionStageMissions(Characters characters, int missions);
     void SetCharacterLifeSanity(Characters character, bool characterLifeSanity);
     void SetDeathLink(bool deathLinkActive);
