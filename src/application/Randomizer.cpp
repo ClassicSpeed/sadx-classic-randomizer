@@ -145,6 +145,8 @@ void Randomizer::OnPlayingFrame()
         return;
     if (GameState != MD_GAME_MAIN)
         return;
+    if (!IsControllerEnabled(0))
+        return;
 
     _characterManager.KillPlayer();
     _displayManager.QueueMessage(_pendingDeathCause);
