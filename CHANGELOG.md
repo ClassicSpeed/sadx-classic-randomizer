@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.6.2] - 2024-08-20
+
+### Changed
+
+- Fixed bug that prevented the ice stone from spawning in mystic ruins.
+
 ## [v0.6.1] - 2024-08-17
 
 ### Added

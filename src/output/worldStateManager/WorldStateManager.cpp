@@ -579,12 +579,16 @@ FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
     return response;
 });
 
-//We prevent the wind stone from spawning if the player doesn't have the item
+// We prevent the wind stone from spawning if the player doesn't have the item
 FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
         && !worldStateManagerPtr->unlockStatus.keyWindStone)
-        return;
+        if (tp->twp->pos.x > 1390 && tp->twp->pos.x < 1395
+            && tp->twp->pos.y > 190 && tp->twp->pos.y < 193
+            && tp->twp->pos.z > 862 && tp->twp->pos.z < 865)
+            return;
 
     onMysticRuinsKey.Original(tp);
 });
+
