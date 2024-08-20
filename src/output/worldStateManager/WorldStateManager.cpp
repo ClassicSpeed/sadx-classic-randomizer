@@ -594,3 +594,4 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
 
     onMysticRuinsKey.Original(tp);
 });
+
