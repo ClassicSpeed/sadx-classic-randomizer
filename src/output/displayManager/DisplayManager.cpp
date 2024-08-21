@@ -317,22 +317,22 @@ void DisplayManager::DisplayItemsUnlocked()
         int currentColor = -1;
         switch (CurrentCharacter)
         {
-        case Characters_Sonic: missionsEnabled = _options.sonicMissions;
+        case Characters_Sonic: missionsEnabled = _options.sonicActionStageMissions;
             currentColor = _sonicColor;
             break;
-        case Characters_Tails: missionsEnabled = _options.tailsMissions;
+        case Characters_Tails: missionsEnabled = _options.tailsActionStageMissions;
             currentColor = _tailsColor;
             break;
-        case Characters_Knuckles: missionsEnabled = _options.knucklesMissions;
+        case Characters_Knuckles: missionsEnabled = _options.knucklesActionStageMissions;
             currentColor = _knucklesColor;
             break;
-        case Characters_Amy: missionsEnabled = _options.amyMissions;
+        case Characters_Amy: missionsEnabled = _options.amyActionStageMissions;
             currentColor = _amyColor;
             break;
-        case Characters_Big: missionsEnabled = _options.bigMissions;
+        case Characters_Big: missionsEnabled = _options.bigActionStageMissions;
             currentColor = _bigColor;
             break;
-        case Characters_Gamma: missionsEnabled = _options.gammaMissions;
+        case Characters_Gamma: missionsEnabled = _options.gammaActionStageMissions;
             currentColor = _gammaColor;
             break;
         default: break;
@@ -414,7 +414,7 @@ void DisplayManager::DisplayItemsUnlocked()
     }
 
 
-    if (_options.sonicMissions > 0)
+    if (_options.playableSonic)
     {
         displayOffset++;
         buffer.clear();
@@ -433,7 +433,7 @@ void DisplayManager::DisplayItemsUnlocked()
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
-    if (_options.tailsMissions > 0)
+    if (_options.playableTails)
     {
         displayOffset++;
         buffer.clear();
@@ -450,7 +450,7 @@ void DisplayManager::DisplayItemsUnlocked()
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
-    if (_options.knucklesMissions > 0)
+    if (_options.playableKnuckles)
     {
         displayOffset++;
         buffer.clear();
@@ -467,7 +467,7 @@ void DisplayManager::DisplayItemsUnlocked()
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
-    if (_options.amyMissions > 0)
+    if (_options.playableAmy)
     {
         displayOffset++;
         buffer.clear();
@@ -484,7 +484,7 @@ void DisplayManager::DisplayItemsUnlocked()
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
-    if (_options.bigMissions > 0)
+    if (_options.playableBig)
     {
         displayOffset++;
         buffer.clear();
@@ -502,7 +502,7 @@ void DisplayManager::DisplayItemsUnlocked()
         SetDebugFontColor(this->_bigColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
-    if (_options.gammaMissions > 0)
+    if (_options.playableGamma)
     {
         displayOffset++;
         buffer.clear();

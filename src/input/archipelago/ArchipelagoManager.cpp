@@ -190,9 +190,34 @@ void SADX_BigLifeSanity(const int lifeSanity)
 }
 
 
-void SADX_StartingArea(const int startingArea)
+void SADX_SonicStartingArea(const int startingArea)
 {
-    randomizerPtr->SetStatingArea(static_cast<StartingArea>(startingArea));
+    randomizerPtr->SetCharacterStatingArea(Characters_Sonic, static_cast<StartingArea>(startingArea));
+}
+
+void SADX_TailsStartingArea(const int startingArea)
+{
+    randomizerPtr->SetCharacterStatingArea(Characters_Tails, static_cast<StartingArea>(startingArea));
+}
+
+void SADX_KnucklesStartingArea(const int startingArea)
+{
+    randomizerPtr->SetCharacterStatingArea(Characters_Knuckles, static_cast<StartingArea>(startingArea));
+}
+
+void SADX_AmyStartingArea(const int startingArea)
+{
+    randomizerPtr->SetCharacterStatingArea(Characters_Amy, static_cast<StartingArea>(startingArea));
+}
+
+void SADX_GammaStartingArea(const int startingArea)
+{
+    randomizerPtr->SetCharacterStatingArea(Characters_Gamma, static_cast<StartingArea>(startingArea));
+}
+
+void SADX_BigStartingArea(const int startingArea)
+{
+    randomizerPtr->SetCharacterStatingArea(Characters_Big, static_cast<StartingArea>(startingArea));
 }
 
 void SADX_SetDeathLink(const int deathLinkActive)
@@ -240,34 +265,64 @@ void SADX_UnifyEggHornet(const int unifyEggHornet)
     randomizerPtr->SetUnifyEggHornet(unifyEggHornet);
 }
 
-void SADX_SonicMissions(const int missions)
+void SADX_PlayableSonic(const int playable)
 {
-    randomizerPtr->SetMissions(Characters_Sonic, missions);
+    randomizerPtr->SetPlayableCharacter(Characters_Sonic, playable);
 }
 
-void SADX_TailsMissions(const int missions)
+void SADX_PlayableTails(const int playable)
 {
-    randomizerPtr->SetMissions(Characters_Tails, missions);
+    randomizerPtr->SetPlayableCharacter(Characters_Tails, playable);
 }
 
-void SADX_KnucklesMissions(const int missions)
+void SADX_PlayableKnuckles(const int playable)
 {
-    randomizerPtr->SetMissions(Characters_Knuckles, missions);
+    randomizerPtr->SetPlayableCharacter(Characters_Knuckles, playable);
 }
 
-void SADX_AmyMissions(const int missions)
+void SADX_PlayableAmy(const int playable)
 {
-    randomizerPtr->SetMissions(Characters_Amy, missions);
+    randomizerPtr->SetPlayableCharacter(Characters_Amy, playable);
 }
 
-void SADX_GammaMissions(const int missions)
+void SADX_PlayableGamma(const int playable)
 {
-    randomizerPtr->SetMissions(Characters_Gamma, missions);
+    randomizerPtr->SetPlayableCharacter(Characters_Gamma, playable);
 }
 
-void SADX_BigMissions(const int missions)
+void SADX_PlayableBig(const int playable)
 {
-    randomizerPtr->SetMissions(Characters_Big, missions);
+    randomizerPtr->SetPlayableCharacter(Characters_Big, playable);
+}
+
+void SADX_SonicActionStageMissions(const int missions)
+{
+    randomizerPtr->SetActionStageMissions(Characters_Sonic, missions);
+}
+
+void SADX_TailsActionStageMissions(const int missions)
+{
+    randomizerPtr->SetActionStageMissions(Characters_Tails, missions);
+}
+
+void SADX_KnucklesActionStageMissions(const int missions)
+{
+    randomizerPtr->SetActionStageMissions(Characters_Knuckles, missions);
+}
+
+void SADX_AmyActionStageMissions(const int missions)
+{
+    randomizerPtr->SetActionStageMissions(Characters_Amy, missions);
+}
+
+void SADX_GammaActionStageMissions(const int missions)
+{
+    randomizerPtr->SetActionStageMissions(Characters_Gamma, missions);
+}
+
+void SADX_BigActionStageMissions(const int missions)
+{
+    randomizerPtr->SetActionStageMissions(Characters_Big, missions);
 }
 
 void ArchipelagoManager::Connect()
@@ -290,7 +345,13 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("BigLifeSanity", &SADX_BigLifeSanity);
     AP_RegisterSlotDataIntCallback("GammaLifeSanity", &SADX_GammaLifeSanity);
 
-    AP_RegisterSlotDataIntCallback("StartingArea", &SADX_StartingArea);
+    AP_RegisterSlotDataIntCallback("SonicStartingArea", &SADX_SonicStartingArea);
+    AP_RegisterSlotDataIntCallback("TailsStartingArea", &SADX_TailsStartingArea);
+    AP_RegisterSlotDataIntCallback("KnucklesStartingArea", &SADX_KnucklesStartingArea);
+    AP_RegisterSlotDataIntCallback("AmyStartingArea", &SADX_AmyStartingArea);
+    AP_RegisterSlotDataIntCallback("GammaStartingArea", &SADX_GammaStartingArea);
+    AP_RegisterSlotDataIntCallback("BigStartingArea", &SADX_BigStartingArea);
+
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
     AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);
     AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);
@@ -302,12 +363,21 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("UnifyChaos4", &SADX_UnifyChaos4);
     AP_RegisterSlotDataIntCallback("UnifyChaos6", &SADX_UnifyChaos6);
     AP_RegisterSlotDataIntCallback("UnifyEggHornet", &SADX_UnifyEggHornet);
-    AP_RegisterSlotDataIntCallback("SonicMissions", &SADX_SonicMissions);
-    AP_RegisterSlotDataIntCallback("TailsMissions", &SADX_TailsMissions);
-    AP_RegisterSlotDataIntCallback("KnucklesMissions", &SADX_KnucklesMissions);
-    AP_RegisterSlotDataIntCallback("AmyMissions", &SADX_AmyMissions);
-    AP_RegisterSlotDataIntCallback("GammaMissions", &SADX_GammaMissions);
-    AP_RegisterSlotDataIntCallback("BigMissions", &SADX_BigMissions);
+
+
+    AP_RegisterSlotDataIntCallback("PlayableSonic", &SADX_PlayableSonic);
+    AP_RegisterSlotDataIntCallback("PlayableTails", &SADX_PlayableTails);
+    AP_RegisterSlotDataIntCallback("PlayableKnuckles", &SADX_PlayableKnuckles);
+    AP_RegisterSlotDataIntCallback("PlayableAmy", &SADX_PlayableAmy);
+    AP_RegisterSlotDataIntCallback("PlayableBig", &SADX_PlayableBig);
+    AP_RegisterSlotDataIntCallback("PlayableGamma", &SADX_PlayableGamma);
+
+    AP_RegisterSlotDataIntCallback("SonicActionStageMissions", &SADX_SonicActionStageMissions);
+    AP_RegisterSlotDataIntCallback("TailsActionStageMissions", &SADX_TailsActionStageMissions);
+    AP_RegisterSlotDataIntCallback("KnucklesActionStageMissions", &SADX_KnucklesActionStageMissions);
+    AP_RegisterSlotDataIntCallback("AmyActionStageMissions", &SADX_AmyActionStageMissions);
+    AP_RegisterSlotDataIntCallback("GammaActionStageMissions", &SADX_GammaActionStageMissions);
+    AP_RegisterSlotDataIntCallback("BigActionStageMissions", &SADX_BigActionStageMissions);
     AP_Start();
 
     _connectedAt = std::clock();
@@ -398,7 +468,6 @@ void ArchipelagoManager::EnqueueMessage(AP_Message* msg)
         }
     case AP_MessageType::Plaintext:
     case AP_MessageType::Countdown:
-    default:
         {
             // Do nothing, avoid spam
         }

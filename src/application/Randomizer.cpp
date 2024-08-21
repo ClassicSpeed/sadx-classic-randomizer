@@ -145,6 +145,8 @@ void Randomizer::OnPlayingFrame()
         return;
     if (GameState != MD_GAME_MAIN)
         return;
+    if (!IsControllerEnabled(0))
+        return;
 
     _characterManager.KillPlayer();
     _displayManager.QueueMessage(_pendingDeathCause);
@@ -230,15 +232,20 @@ void Randomizer::OnPinballLifeCapsulesSet(const bool pinballLifeCapsules)
     _displayManager.UpdateOptions(_options);
 }
 
-void Randomizer::SetStatingArea(const StartingArea startingArea)
+void Randomizer::SetCharacterStatingArea(const Characters character,const StartingArea startingArea)
 {
-    _options.startingArea = startingArea;
+    _options.SetCharacterStatingArea(character, startingArea);
     _worldStateManager.UpdateOptions(_options);
 }
-
-void Randomizer::SetMissions(const Characters characters, const int missions)
+void Randomizer::SetPlayableCharacter(const Characters character, const bool playable)
 {
-    _options.SetMissions(characters, missions);
+    _options.SetPlayableCharacter(character, playable);
+    _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetActionStageMissions(const Characters characters, const int missions)
+{
+    _options.SetActionStageMissions(characters, missions);
     _displayManager.UpdateOptions(_options);
 }
 

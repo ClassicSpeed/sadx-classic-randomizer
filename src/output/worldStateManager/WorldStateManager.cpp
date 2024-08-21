@@ -198,7 +198,7 @@ FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
 
 //Prevents the monkey from blocking the entrance to Red Mountain for knuckles
 FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
-FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
+FunctionHook<BOOL, int> isMonkeyDoorOpen(0x53E5D0, [](int a1)-> BOOL
 {
     if (CurrentCharacter == Characters_Knuckles && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1)
         return true;
@@ -206,7 +206,8 @@ FunctionHook<BOOL, int> isRedMountainOpen(0x53E5D0, [](int a1)-> BOOL
         return isMonkeyDead(1);
     if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma)
         return isMonkeyDead(1);
-    return false;
+    //For everyone else, we return true if we are in the main mystic ruins area
+    return levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1;
 });
 
 //We open the station door if we have the keys
@@ -324,7 +325,7 @@ FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
     onAdventureSetLevelAndAct.Original();
     if (LastStoryFlag == 1)
         return;
-    switch (worldStateManagerPtr->options.startingArea)
+    switch (worldStateManagerPtr->options.GetCharacterStartingArea(static_cast<Characters>(CurrentCharacter)))
     {
     case StationSquareMain:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
@@ -349,8 +350,11 @@ FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
     case EggCarrier:
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
         break;
+
     case NoStatingArea:
-        break;
+    case TwinkleParkArea:
+    case AngelIsland:
+        SetLevelAndAct(LevelIDs_StationSquare, 3);
     }
 });
 
@@ -591,4 +595,3 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
 
     onMysticRuinsKey.Original(tp);
 });
-

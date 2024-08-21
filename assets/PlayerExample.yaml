@@ -15,10 +15,18 @@ Sonic Adventure DX:
   # Keep in mind select Emerald Hunt will require enough checks to add the 7 emeralds to the pool,
   #   Some options will fail to generate a seed if there are not enough checks to add the emeralds.
   goal: 0
+  
+  #  What kind of logic the randomizer will use
+  #  Casual Logic (0): Very forgiving, ideal if you are not used to this game or its location checks.
+  #  Normal Logic (1): Less forgiving logic, some checks require to do spindash jumps or dying to get the check.
+  #  Hard Logic (2): The most unforgiving logic, some checks require to do precise jumps or glitches.
+  logic_level: 0
   # What percentage of the available emblems do you need to unlock the final story
   emblems_percentage: 80
   # Randomize starting location, if false, you will start at Station Square.
   random_starting_location: 'true'
+  # If Randomize starting location is enabled, each character will start in a random location
+  random_starting_location_per_character: 'true'
   # Ensures access to a level from the start, even if it means giving you an item.
   guaranteed_level: 'false'
   # When you die, everyone dies. Of course the reverse is true too.
@@ -34,25 +42,38 @@ Sonic Adventure DX:
   # One Hit K.O. (2): You die immediately when hit
   ring_loss: 0
   
+  # Playable Characters
+  # Determines whether Sonic is playable
+  playable_sonic: 'true'
+  # Determines whether Tails is playable
+  playable_tails: 'true'
+  # Determines whether Knuckles is playable
+  playable_knuckles: 'true'
+  # Determines whether Amy is playable
+  playable_amy: 'true'
+  # Determines whether Big is playable
+  playable_gamma: 'true'
+  # Determines whether Big is playable
+  playable_big: 'true'
+
   # Stage Options
-  
   # For missions, the options go from 3 to 0
   # 3 means Missions A, B and C
   # 2 means Missions B and C
   # 1 means Missions C
-  # 0 means the character is not played at all on the randomizer
-  # Choose what missions will be a location check for Sonic
-  sonic_missions: 1
-  # Choose what missions will be a location check for Tails.
-  tails_missions: 1
-  # Choose what missions will be a location check for Knuckles.
-  knuckles_missions: 1
-  # Choose what missions will be a location check for Amy.
-  amy_missions: 1
-  # Choose what missions will be a location check for Gamma.
-  gamma_missions: 1
-  # Choose what missions will be a location check for Big.
-  big_missions: 1
+  # 0 means no missions at all (You can still play the character if they are enabled)
+  # Choose what action stage missions will be a location check for Sonic
+  sonic_action_stage_missions: 1
+  # Choose what action stage missions will be a location check for Tails.
+  tails_action_stage_missions: 1
+  # Choose what action stage missions will be a location check for Knuckles.
+  knuckles_action_stage_missions: 1
+  # Choose what action stage missions will be a location check for Amy.
+  amy_action_stage_missions: 1
+  # Choose what action stage missions will be a location check for Gamma.
+  gamma_action_stage_missions: 1
+  # Choose what action stage missions will be a location check for Big.
+  big_action_stage_missions: 1
   
   # Upgrade Options
   
@@ -86,18 +107,18 @@ Sonic Adventure DX:
   field_emblems_checks: 'true'
   # Determines whether completing missions grants checks (60 Locations)
   mission_mode_checks: 'false'
-  # Determines whether missions where you can't stop to collect things are enabled:
+  # Determines what missions are blacklisted, the default are:
   #    Mission 49 (Flags in the Kart section of Twinkle Park )
   #    Mission 53 (Triple Jump in the Snowboard section of Ice Cap)
   #    Mission 54 (Flags in the Snowboard section of Ice Cap)
   #    Mission 58 (Flags in the rolling bounce section of Lost World)
-  non_stop_missions: 'false'
+  mission_blacklist: [ "49", "53", "54", "58" ]
   # Determines whether beating the default sublevel mission  grants checks (4 Locations)
   # Current sublevels are: Twinkle Circuit, Sand Hill and Sky Chase Act 1 and 2
   sub_level_checks: 'true'
   # Determines whether beating the harder (points based) sublevel mission grants checks (4 Locations)
   # Only works if sublevel checks are enabled
-  sub_level_checks_hard: 'true'
+  sub_level_checks_hard: 'false'
   # Determines whether collecting life capsules grants checks (102 Locations)
   life_sanity: 'false'
   # Determines whether casinopolis life capsules grant checks (2 Locations)

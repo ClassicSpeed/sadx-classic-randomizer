@@ -115,7 +115,6 @@
         <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.h"/>
         <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\*.h"/>
         <ClInclude Include="src\**\*.h" />
-        <Content Include="assets\sadx.apworld"/>
         <Content Include="assets\SADX_Archipelago\*.*"/>
         <Content Include="lib\APCpp\*.lib" />
         <Content Include="lib\APCpp\*.pdb" />
