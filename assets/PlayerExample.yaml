@@ -15,6 +15,12 @@ Sonic Adventure DX:
   # Keep in mind select Emerald Hunt will require enough checks to add the 7 emeralds to the pool,
   #   Some options will fail to generate a seed if there are not enough checks to add the emeralds.
   goal: 0
+  
+  #  What kind of logic the randomizer will use
+  #  Casual Logic (0): Very forgiving, ideal if you are not used to this game or its location checks.
+  #  Normal Logic (1): Less forgiving logic, some checks require to do spindash jumps or dying to get the check.
+  #  Hard Logic (2): The most unforgiving logic, some checks require to do precise jumps or glitches.
+  logic_level: 0
   # What percentage of the available emblems do you need to unlock the final story
   emblems_percentage: 80
   # Randomize starting location, if false, you will start at Station Square.
