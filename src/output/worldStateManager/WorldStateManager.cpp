@@ -2,8 +2,6 @@
 
 #include <algorithm>
 
-#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
-
 WorldStateManager* worldStateManagerPtr;
 
 
@@ -320,10 +318,10 @@ FunctionHook<void, EntityData1*> onGetEntrancePast(0x542180, [](EntityData1* a1)
 });
 
 //Set starting location when we get a game over 
-FunctionHook<void,Sint8 > onSetTimeOfDay(0x412C00, [](Sint8 time)-> void
+FunctionHook<void, Sint8> onSetTimeOfDay(0x412C00, [](Sint8 time)-> void
 {
     onSetTimeOfDay.Original(time);
-    if(GameState == MD_GAME_CONTINUE)
+    if (GameState == MD_GAME_CONTINUE)
         worldStateManagerPtr->SetStartingArea();
 });
 
@@ -610,4 +608,16 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
             return;
 
     onMysticRuinsKey.Original(tp);
+});
+
+// We make Big's hud think we are not in the mission mode
+FunctionHook<void> onBigHud_DrawWeightAndLife(0x46FB00, []()-> void
+{
+    const GameModes bufferGameMode = GameMode;
+    if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past)
+        GameMode = GameModes_Adventure_Field;
+    else
+        GameMode = GameModes_Adventure_ActionStg;
+    onBigHud_DrawWeightAndLife.Original();
+    GameMode = bufferGameMode;
 });

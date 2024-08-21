@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Moved Chaos 4 entrance to the place where you encounter knuckles in the story.
 - Fixed spawning in Station Square after a game over.
 - Fixed the randomizer status info not showing in the character select screen when quitting the game.
+- Big's HUD is now hidden in the adventure fields again.
 
 ## [v0.7.0] - 2024-08-20
 
