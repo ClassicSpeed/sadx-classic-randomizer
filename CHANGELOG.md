@@ -4,11 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.7.1] - 2024-08-?
 
+- You'll now go directly to the character select screen when quiting the game. (Changed in v0.6.0)
+
 ### Changed
 
 - Mission cards no longer spawn if you have missions disabled.
 - Moved Chaos 4 entrance to the place where you encounter knuckles in the story.
 - Fixed spawning in Station Square after a game over.
+- Fixed the randomizer status info not showing in the character select screen when quitting the game.
 
 ## [v0.7.0] - 2024-08-20
 

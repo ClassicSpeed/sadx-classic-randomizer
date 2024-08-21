@@ -7,7 +7,7 @@ DisplayManager::DisplayManager()
     displayManagerPtr = this;
 }
 
-
+// On entering the character select screen while on the main menu
 FunctionHook<void, AdvaModeEnum> CharSelAdvaModeProcedureHook(0x505E60, [](AdvaModeEnum mode)-> void
 {
     if (mode == ADVA_MODE_EXPLAIN)
@@ -15,11 +15,22 @@ FunctionHook<void, AdvaModeEnum> CharSelAdvaModeProcedureHook(0x505E60, [](AdvaM
     CharSelAdvaModeProcedureHook.Original(mode);
 });
 
+// On exiting the character select screen 
 FunctionHook<void, AdvaModeEnum> CmnAdvaModeProcedureHook(0x505B40, [](AdvaModeEnum mode)-> void
 {
     if (mode == ADVA_MODE_TITLE_MENU)
         displayManagerPtr->OnExitCharacterSelectScreen();
     CmnAdvaModeProcedureHook.Original(mode);
+});
+
+//When leaving a level, check if we quiting the adventure game
+FunctionHook<Sint32> onFinishedLevelMaybe2(0x414090, []()-> Sint32
+{
+    if (GameState == MD_GAME_ABORT)
+    {
+        displayManagerPtr->OnEnterCharacterSelectScreen();
+    }
+    return onFinishedLevelMaybe2.Original();
 });
 
 FunctionHook<SEQ_SECTIONTBL*, int> storySelectedHook(0x44EAF0, [](int playerno)-> SEQ_SECTIONTBL* {
