@@ -319,13 +319,26 @@ FunctionHook<void, EntityData1*> onGetEntrancePast(0x542180, [](EntityData1* a1)
     }
 });
 
-//Set starting location
+//Set starting location when we get a game over 
+FunctionHook<void,Sint8 > onSetTimeOfDay(0x412C00, [](Sint8 time)-> void
+{
+    onSetTimeOfDay.Original(time);
+    if(GameState == MD_GAME_CONTINUE)
+        worldStateManagerPtr->SetStartingArea();
+});
+
+//Set starting location when starting the adventure
 FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
 {
     onAdventureSetLevelAndAct.Original();
+    worldStateManagerPtr->SetStartingArea();
+});
+
+void WorldStateManager::SetStartingArea()
+{
     if (LastStoryFlag == 1)
         return;
-    switch (worldStateManagerPtr->options.GetCharacterStartingArea(static_cast<Characters>(CurrentCharacter)))
+    switch (this->options.GetCharacterStartingArea(static_cast<Characters>(CurrentCharacter)))
     {
     case StationSquareMain:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
@@ -356,7 +369,7 @@ FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
     case AngelIsland:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
     }
-});
+}
 
 typedef struct
 {

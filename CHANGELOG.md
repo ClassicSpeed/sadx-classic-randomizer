@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Mission cards no longer spawn if you have missions disabled.
 - Moved Chaos 4 entrance to the place where you encounter knuckles in the story.
+- Fixed spawning in Station Square after a game over.
 
 ## [v0.7.0] - 2024-08-20
 

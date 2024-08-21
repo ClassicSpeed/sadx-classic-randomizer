@@ -13,6 +13,7 @@ public:
     void UpdateOptions(Options newOptions);
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
     void OnFrame();
+    void SetStartingArea();
     Options options;
     UnlockStatus unlockStatus;
 };
