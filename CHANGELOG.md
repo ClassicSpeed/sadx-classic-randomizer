@@ -2,28 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.7.0] - 2024-08-?
+## [v0.7.0] - 2024-08-20
 
 ### Added
 
 - Reworked logic to be able to import from
   the [Google Sheet](https://docs.google.com/spreadsheets/d/1CfBZ_pLGm3YTWwEwBLbk67e4iSrOE5vbcu0UkFej0pY).
-- Added option for logic level: Casual, Normal and Hard.
+- Added option for logic level: Casual, Normal, and Hard.
 - Added option to enable playable characters separated from the action stage missions.
-    - You can now enable a character without their levels, and still do missions, bosses, etc.
-- Added option set to blacklist missions. the previous non-stop missions option was removed.
+    - You can now enable a character without their levels and still do missions, bosses, etc.
+- Added option set to blacklist missions. The previous non-stop missions option was removed.
 - Added location group for missions.
 - Added random starting location per character.
 
 ### Changed
 
-- Removed apworld from commited files and added link to its repository in the README.
+- Removed `apworld` from committed files and added a link to its repository in the README.
 - Tails' workshop emblem is now in logic for Gamma with the Jet Booster.
-- Fixed issue with the monkey door on mystic ruins not being open for Big to start mission 35.
+- Fixed issue with the monkey door on Mystic Ruins not being open for Big to start mission 35.
 - Fixed issue with mission 35 being in logic without dynamite.
 - Fixed soft lock when dying during level transitions.
-- Restored the normal level result screen are shown again.
-    - This fixes Gamma not adding the extra time at end and sublevel problems.
+- Restored the normal level result screen.
+    - This fixes Gamma not adding the extra time at the end and sublevel problems.
 
 ## [v0.6.2] - 2024-08-20
 
