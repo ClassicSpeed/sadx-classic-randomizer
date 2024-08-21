@@ -94,6 +94,14 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
             && tp->twp->pos.z < -1030 && tp->twp->pos.z > -1050)
             FreeTask(tp);
     }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Casinopolis2)
+    {
+        //We find the cube collision that prevent sonic from entering the life capsule path in SADX and delete it
+        if (tp->twp->pos.x < 2 && tp->twp->pos.x > 0
+            && tp->twp->pos.y < -1713 && tp->twp->pos.y > -1716
+            && tp->twp->pos.z < 2769 && tp->twp->pos.z > 2765)
+            FreeTask(tp);
+    }
     else
         onCollisionCube.Original(tp);
 });
