@@ -149,6 +149,12 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
 
+
+void SADX_MissionModeChecks(const int missionModeEnabled)
+{
+    randomizerPtr->SetMissionMode(missionModeEnabled);
+}
+
 void SADX_LifeSanity(const int lifeSanity)
 {
     randomizerPtr->OnLifeSanitySet(lifeSanity);
@@ -336,6 +342,8 @@ void ArchipelagoManager::Connect()
     AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
     AP_RegisterSlotDataIntCallback("Goal", &SADX_Goal);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("MissionModeChecks", &SADX_MissionModeChecks);
+    
     AP_RegisterSlotDataIntCallback("LifeSanity", &SADX_LifeSanity);
     AP_RegisterSlotDataIntCallback("PinballLifeCapsules", &SADX_PinballLifeCapsules);
     AP_RegisterSlotDataIntCallback("SonicLifeSanity", &SADX_SonicLifeSanity);

@@ -511,6 +511,9 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
 FunctionHook<void> onMissionSetLoad(0x591A70, []()-> void
 {
+    if (!worldStateManagerPtr->options.missionModeEnabled)
+        return;
+
     onMissionSetLoad.Original();
 
     for (int i = 0; i < MissionSetCount; ++i)

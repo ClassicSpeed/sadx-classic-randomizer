@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- Mission cards no longer spawn if you have missions disabled.
 - Moved Chaos 4 entrance to the place where you encounter knuckles in the story.
 
 ## [v0.7.0] - 2024-08-20
