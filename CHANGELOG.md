@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.7.1] - 2024-08-?
+
+### Changed
+
+- Moved Chaos 4 entrance to the place where you encounter knuckles in the story.
+
 ## [v0.7.0] - 2024-08-20
 
 ### Added

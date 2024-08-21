@@ -39,12 +39,12 @@ static void __cdecl HandleWarp()
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
             || CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Knuckles)
-        && EntityData1Ptrs[0]->Position.y < 0)
+        && EntityData1Ptrs[0]->Position.y < 100)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos4, 0);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
         && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
-        && EntityData1Ptrs[0]->Position.y > 0 && EntityData1Ptrs[0]->Position.y < 150)
+        && EntityData1Ptrs[0]->Position.y > 100 && EntityData1Ptrs[0]->Position.y < 150)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggHornet, 0);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
@@ -406,7 +406,7 @@ const SETEntry WARP_EGG_WALKER = CreateSetEntry(WARP_STATION_SQUARE, {-400, -3, 
 //Mystic Ruins Bosses
 const SETEntry WARP_EGG_HORNET = CreateSetEntry(WARP_MYSTIC_RUINS, {950, 127, 950});
 
-const SETEntry WARP_CHAOS4 = CreateSetEntry(WARP_MYSTIC_RUINS, {88.62f, -33.99f, -140.96f});
+const SETEntry WARP_CHAOS4 = CreateSetEntry(WARP_MYSTIC_RUINS, {80, 72, 180});
 
 const SETEntry WARP_EGG_VIPER = CreateSetEntry(WARP_MYSTIC_RUINS, {0, 0, 0});
 
