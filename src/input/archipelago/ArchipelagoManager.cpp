@@ -110,10 +110,8 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
             if (!randomizerPtr->GetOptions().deathLinkActive)
                 return;
 
-            //Ignore our own death link    
-            if (!strcmp(bounceData["source"].asCString(), archipelagoManagerPtr->playerName.c_str()))
-                break;
-
+            //We don't ignore deaths from our own slot
+            
             std::string deathCause;
             if (!bounceData["cause"].isNull())
                 deathCause = std::string(bounceData["cause"].asCString());
@@ -127,7 +125,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
             if (!randomizerPtr->GetOptions().ringLinkActive)
                 return;
 
-            //Ignore our own death link    
+            //Ignore our own ring link    
             if (bounceData["source"].asInt() == archipelagoManagerPtr->instanceId)
                 break;
 

@@ -138,6 +138,12 @@ std::vector<LifeBoxLocationData> Randomizer::GetLifeCapsules()
 
 void Randomizer::ProcessDeath(const std::string& deathCause)
 {
+    if (_ignoreNextDeathLink)
+    {
+        _ignoreNextDeathLink = false;
+        return;
+    }
+
     _pendingDeathCause = deathCause;
     _deathPending = true;
 }
@@ -159,7 +165,7 @@ void Randomizer::OnPlayingFrame()
     _displayManager.QueueMessage(_pendingDeathCause);
     _pendingDeathCause.clear();
     _deathPending = false;
-    _ignoreNextDeath = true;
+    _ignoreNextPlayerDeath = true;
 }
 
 void Randomizer::OnSync()
@@ -176,13 +182,14 @@ void Randomizer::OnDeath()
 {
     if (!_options.deathLinkActive)
         return;
-    if (_ignoreNextDeath)
+    if (_ignoreNextPlayerDeath)
     {
-        _ignoreNextDeath = false;
+        _ignoreNextPlayerDeath = false;
         return;
     }
 
     _archipelagoMessenger.SendDeath(_options.playerName);
+    _ignoreNextDeathLink = true;
     _displayManager.QueueMessage("Death Sent");
 }
 

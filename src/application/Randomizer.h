@@ -75,5 +75,6 @@ private:
     Options _options;
     std::string _pendingDeathCause;
     bool _deathPending;
-    bool _ignoreNextDeath = false;
+    bool _ignoreNextPlayerDeath = false;
+    bool _ignoreNextDeathLink = false;
 };

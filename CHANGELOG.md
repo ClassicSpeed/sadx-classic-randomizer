@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.7.1] - 2024-08-?
 
+### Added
+
 - You'll now go directly to the character select screen when quiting the game. (Changed in v0.6.0)
+- Death Link will now work between players in the same slot.
 
 ### Changed
 
