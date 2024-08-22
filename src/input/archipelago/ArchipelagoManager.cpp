@@ -26,6 +26,8 @@ void ArchipelagoManager::OnFrame()
 
     if (_status == AttemptedConnection)
     {
+        //We prevent entering the main menu when we are still connecting
+        TldFlg = false;
         if (AP_GetConnectionStatus() != AP_ConnectionStatus::Authenticated)
         {
             const double timePassed = (std::clock() - this->_connectedAt) / static_cast<double>(CLOCKS_PER_SEC);
@@ -42,6 +44,7 @@ void ArchipelagoManager::OnFrame()
         }
 
         _status = Connected;
+        TldFlg = true;
         _randomizer.OnConnected(playerName);
         return;
     }

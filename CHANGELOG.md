@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Fixed spawning in Station Square after a game over.
 - Fixed the randomizer status info not showing in the character select screen when quitting the game.
 - Big's HUD is now hidden in the adventure fields again.
+- The character select screen won't load until the game is connected to archipelago.
 
 ## [v0.7.0] - 2024-08-20
 
