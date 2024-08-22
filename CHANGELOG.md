@@ -2,22 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.7.1] - 2024-08-?
+## [v0.7.1] - 2024-08-22
 
 ### Added
 
-- You'll now go directly to the character select screen when quiting the game. (Changed in v0.6.0)
+- You'll now go directly to the character select screen when quitting the game. (Changed in v0.6.0)
 - Death Link will now work between players in the same slot.
-- Removed invisible wall on Sonic's casinopolis sewer that prevented the player from getting the life capsule in SADX.
+- Removed invisible wall in Sonic's Casinopolis sewer that prevented the player from getting the life capsule in SADX.
 
 ### Changed
 
 - Mission cards no longer spawn if you have missions disabled.
-- Moved Chaos 4 entrance to the place where you encounter knuckles in the story.
+- Moved Chaos 4 entrance to the place where you encounter Knuckles in the story.
 - Fixed spawning in Station Square after a game over.
-- Fixed the randomizer status info not showing in the character select screen when quitting the game.
+- Fixed the randomizer status info not showing on the character select screen when quitting the game.
 - Big's HUD is now hidden in the adventure fields again.
-- The character select screen won't load until the game is connected to archipelago.
+- The character select screen won't load until the game is connected to Archipelago.
 
 ## [v0.7.0] - 2024-08-20
 
