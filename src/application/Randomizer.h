@@ -61,6 +61,7 @@ public:
     void OnLifeSanitySet(bool lifeSanity);
     void OnPinballLifeCapsulesSet(bool pinballLifeCapsules);
     void ResetItems();
+    void SetMissionMode(int missionModeEnabled);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;
@@ -74,5 +75,6 @@ private:
     Options _options;
     std::string _pendingDeathCause;
     bool _deathPending;
-    bool _ignoreNextDeath = false;
+    bool _ignoreNextPlayerDeath = false;
+    bool _ignoreNextDeathLink = false;
 };

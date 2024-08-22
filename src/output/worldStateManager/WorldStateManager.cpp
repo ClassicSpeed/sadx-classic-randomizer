@@ -2,8 +2,6 @@
 
 #include <algorithm>
 
-#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
-
 WorldStateManager* worldStateManagerPtr;
 
 
@@ -39,12 +37,12 @@ static void __cdecl HandleWarp()
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
             || CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Knuckles)
-        && EntityData1Ptrs[0]->Position.y < 0)
+        && EntityData1Ptrs[0]->Position.y < 100)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos4, 0);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
         && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
-        && EntityData1Ptrs[0]->Position.y > 0 && EntityData1Ptrs[0]->Position.y < 150)
+        && EntityData1Ptrs[0]->Position.y > 100 && EntityData1Ptrs[0]->Position.y < 150)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggHornet, 0);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
@@ -94,6 +92,14 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
         if (tp->twp->pos.x < -1070 && tp->twp->pos.x > -1080
             && tp->twp->pos.y < -210 && tp->twp->pos.y > -220
             && tp->twp->pos.z < -1030 && tp->twp->pos.z > -1050)
+            FreeTask(tp);
+    }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Casinopolis2)
+    {
+        //We find the cube collision that prevent sonic from entering the life capsule path in SADX and delete it
+        if (tp->twp->pos.x < 2 && tp->twp->pos.x > 0
+            && tp->twp->pos.y < -1713 && tp->twp->pos.y > -1716
+            && tp->twp->pos.z < 2769 && tp->twp->pos.z > 2765)
             FreeTask(tp);
     }
     else
@@ -319,13 +325,26 @@ FunctionHook<void, EntityData1*> onGetEntrancePast(0x542180, [](EntityData1* a1)
     }
 });
 
-//Set starting location
+//Set starting location when we get a game over 
+FunctionHook<void, Sint8> onSetTimeOfDay(0x412C00, [](Sint8 time)-> void
+{
+    onSetTimeOfDay.Original(time);
+    if (GameState == MD_GAME_CONTINUE)
+        worldStateManagerPtr->SetStartingArea();
+});
+
+//Set starting location when starting the adventure
 FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
 {
     onAdventureSetLevelAndAct.Original();
+    worldStateManagerPtr->SetStartingArea();
+});
+
+void WorldStateManager::SetStartingArea()
+{
     if (LastStoryFlag == 1)
         return;
-    switch (worldStateManagerPtr->options.GetCharacterStartingArea(static_cast<Characters>(CurrentCharacter)))
+    switch (this->options.GetCharacterStartingArea(static_cast<Characters>(CurrentCharacter)))
     {
     case StationSquareMain:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
@@ -356,7 +375,7 @@ FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
     case AngelIsland:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
     }
-});
+}
 
 typedef struct
 {
@@ -406,7 +425,7 @@ const SETEntry WARP_EGG_WALKER = CreateSetEntry(WARP_STATION_SQUARE, {-400, -3, 
 //Mystic Ruins Bosses
 const SETEntry WARP_EGG_HORNET = CreateSetEntry(WARP_MYSTIC_RUINS, {950, 127, 950});
 
-const SETEntry WARP_CHAOS4 = CreateSetEntry(WARP_MYSTIC_RUINS, {88.62f, -33.99f, -140.96f});
+const SETEntry WARP_CHAOS4 = CreateSetEntry(WARP_MYSTIC_RUINS, {80, 72, 180});
 
 const SETEntry WARP_EGG_VIPER = CreateSetEntry(WARP_MYSTIC_RUINS, {0, 0, 0});
 
@@ -511,6 +530,9 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
 FunctionHook<void> onMissionSetLoad(0x591A70, []()-> void
 {
+    if (!worldStateManagerPtr->options.missionModeEnabled)
+        return;
+
     onMissionSetLoad.Original();
 
     for (int i = 0; i < MissionSetCount; ++i)
@@ -594,4 +616,16 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
             return;
 
     onMysticRuinsKey.Original(tp);
+});
+
+// We make Big's hud think we are not in the mission mode
+FunctionHook<void> onBigHud_DrawWeightAndLife(0x46FB00, []()-> void
+{
+    const GameModes bufferGameMode = GameMode;
+    if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past)
+        GameMode = GameModes_Adventure_Field;
+    else
+        GameMode = GameModes_Adventure_ActionStg;
+    onBigHud_DrawWeightAndLife.Original();
+    GameMode = bufferGameMode;
 });

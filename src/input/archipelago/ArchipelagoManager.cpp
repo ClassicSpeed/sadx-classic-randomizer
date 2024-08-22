@@ -26,6 +26,8 @@ void ArchipelagoManager::OnFrame()
 
     if (_status == AttemptedConnection)
     {
+        //We prevent entering the main menu when we are still connecting
+        TldFlg = false;
         if (AP_GetConnectionStatus() != AP_ConnectionStatus::Authenticated)
         {
             const double timePassed = (std::clock() - this->_connectedAt) / static_cast<double>(CLOCKS_PER_SEC);
@@ -42,6 +44,7 @@ void ArchipelagoManager::OnFrame()
         }
 
         _status = Connected;
+        TldFlg = true;
         _randomizer.OnConnected(playerName);
         return;
     }
@@ -110,10 +113,8 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
             if (!randomizerPtr->GetOptions().deathLinkActive)
                 return;
 
-            //Ignore our own death link    
-            if (!strcmp(bounceData["source"].asCString(), archipelagoManagerPtr->playerName.c_str()))
-                break;
-
+            //We don't ignore deaths from our own slot
+            
             std::string deathCause;
             if (!bounceData["cause"].isNull())
                 deathCause = std::string(bounceData["cause"].asCString());
@@ -127,7 +128,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
             if (!randomizerPtr->GetOptions().ringLinkActive)
                 return;
 
-            //Ignore our own death link    
+            //Ignore our own ring link    
             if (bounceData["source"].asInt() == archipelagoManagerPtr->instanceId)
                 break;
 
@@ -147,6 +148,12 @@ void SADX_Goal(const int goal)
 void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 {
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
+}
+
+
+void SADX_MissionModeChecks(const int missionModeEnabled)
+{
+    randomizerPtr->SetMissionMode(missionModeEnabled);
 }
 
 void SADX_LifeSanity(const int lifeSanity)
@@ -336,6 +343,8 @@ void ArchipelagoManager::Connect()
     AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
     AP_RegisterSlotDataIntCallback("Goal", &SADX_Goal);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("MissionModeChecks", &SADX_MissionModeChecks);
+    
     AP_RegisterSlotDataIntCallback("LifeSanity", &SADX_LifeSanity);
     AP_RegisterSlotDataIntCallback("PinballLifeCapsules", &SADX_PinballLifeCapsules);
     AP_RegisterSlotDataIntCallback("SonicLifeSanity", &SADX_SonicLifeSanity);

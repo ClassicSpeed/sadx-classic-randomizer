@@ -73,6 +73,13 @@ void Randomizer::ResetItems()
     _worldStateManager.UpdateUnlockStatus(unlockStatus);
 }
 
+void Randomizer::SetMissionMode(const int missionModeEnabled)
+{
+    _options.missionModeEnabled = missionModeEnabled;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
 bool Randomizer::AreLastStoryRequirementsCompleted() const
 {
     if (_options.goal == GoalEmblems)
@@ -131,6 +138,12 @@ std::vector<LifeBoxLocationData> Randomizer::GetLifeCapsules()
 
 void Randomizer::ProcessDeath(const std::string& deathCause)
 {
+    if (_ignoreNextDeathLink)
+    {
+        _ignoreNextDeathLink = false;
+        return;
+    }
+
     _pendingDeathCause = deathCause;
     _deathPending = true;
 }
@@ -152,7 +165,7 @@ void Randomizer::OnPlayingFrame()
     _displayManager.QueueMessage(_pendingDeathCause);
     _pendingDeathCause.clear();
     _deathPending = false;
-    _ignoreNextDeath = true;
+    _ignoreNextPlayerDeath = true;
 }
 
 void Randomizer::OnSync()
@@ -169,13 +182,14 @@ void Randomizer::OnDeath()
 {
     if (!_options.deathLinkActive)
         return;
-    if (_ignoreNextDeath)
+    if (_ignoreNextPlayerDeath)
     {
-        _ignoreNextDeath = false;
+        _ignoreNextPlayerDeath = false;
         return;
     }
 
     _archipelagoMessenger.SendDeath(_options.playerName);
+    _ignoreNextDeathLink = true;
     _displayManager.QueueMessage("Death Sent");
 }
 
@@ -188,6 +202,7 @@ void Randomizer::OnConnected(std::string playerName)
 {
     _options.playerName = playerName;
     _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
     _displayManager.QueueMessage("Connected to Archipelago");
 }
 
@@ -210,18 +225,21 @@ void Randomizer::QueueNewMessage(std::string information)
 void Randomizer::OnGoalSet(const Goal goal)
 {
     _options.goal = goal;
+    _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
 {
     _options.emblemGoal = max(1, emblemGoal);
+    _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
 
 void Randomizer::OnLifeSanitySet(const bool lifeSanity)
 {
     _options.lifeSanity = lifeSanity;
+    _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
 
@@ -229,29 +247,35 @@ void Randomizer::OnLifeSanitySet(const bool lifeSanity)
 void Randomizer::OnPinballLifeCapsulesSet(const bool pinballLifeCapsules)
 {
     _options.pinballCapsules = pinballLifeCapsules;
+    _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
 
-void Randomizer::SetCharacterStatingArea(const Characters character,const StartingArea startingArea)
+void Randomizer::SetCharacterStatingArea(const Characters character, const StartingArea startingArea)
 {
     _options.SetCharacterStatingArea(character, startingArea);
     _worldStateManager.UpdateOptions(_options);
+    _worldStateManager.UpdateOptions(_options);
 }
+
 void Randomizer::SetPlayableCharacter(const Characters character, const bool playable)
 {
     _options.SetPlayableCharacter(character, playable);
+    _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
 
 void Randomizer::SetActionStageMissions(const Characters characters, const int missions)
 {
     _options.SetActionStageMissions(characters, missions);
+    _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
 
 void Randomizer::SetCharacterLifeSanity(const Characters character, const bool characterLifeSanity)
 {
     _options.SetCharacterLifeSanity(character, characterLifeSanity);
+    _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
 
@@ -275,6 +299,7 @@ void Randomizer::SetHardRingLink(const bool hardRingLinkActive)
 void Randomizer::SetRingLoss(const RingLoss ringLoss)
 {
     _options.ringLoss = ringLoss;
+    _worldStateManager.UpdateOptions(_options);
     _characterManager.UpdateOptions(_options);
 }
 

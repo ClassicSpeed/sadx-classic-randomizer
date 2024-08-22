@@ -34,7 +34,7 @@ struct Options
     std::string playerName = "Player";
     Goal goal = None;
     int emblemGoal = -1;
-    bool lifeSanity = false;
+    bool missionModeEnabled = false;
 
 
     StartingArea sonicStartingArea = NoStatingArea;
@@ -44,6 +44,7 @@ struct Options
     StartingArea bigStartingArea = NoStatingArea;
     StartingArea gammaStartingArea = NoStatingArea;
 
+    bool lifeSanity = false;
     bool sonicLifeSanity = true;
     bool tailsLifeSanity = true;
     bool knucklesLifeSanity = true;
