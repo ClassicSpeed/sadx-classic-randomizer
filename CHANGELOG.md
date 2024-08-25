@@ -10,11 +10,14 @@ All notable changes to this project will be documented in this file.
 - Complete all the action stages enabled to unlock the Perfect Chaos fight.
 - Added option to auto-start missions.
 - Added warning message for version mismatch.
+- Added Angel Island area as a starting location.
+- Added Twinkle Park Lobby as a starting location.
 
 ### Changed
 
 - Fixed normal/hard logic for missions not working correctly.
 - Added an 80% maximum for the emblem percentage goal.
+- Twinkle circuit is now in logic if you have access to the Twinkle Park Lobby.
 
 ## [v0.7.1] - 2024-08-22
 

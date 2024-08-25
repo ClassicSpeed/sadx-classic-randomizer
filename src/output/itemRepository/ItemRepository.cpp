@@ -71,7 +71,6 @@ ItemRepository::ItemRepository()
                                       FLAG_KNUCKLES_SS_TPARK_ELEVATOR,
                                       FLAG_AMY_SS_TPARK_ELEVATOR,
                                       FLAG_E102_SS_TPARK_ELEVATOR,
-                                      FLAG_BIG_SS_ENTRANCE_CIRCUIT,
                                   }, "Twinkle Park Ticket")
         },
         {86, ItemData::KeyItem({FLAG_SONIC_SS_CARD, FLAG_MILES_SS_ENTRANCE_HIGHWAY}, "Employee Card")},
