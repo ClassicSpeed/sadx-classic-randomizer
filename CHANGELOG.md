@@ -13,8 +13,8 @@ All notable changes to this project will be documented in this file.
 - Added Angel Island area as a starting location.
 - Added Twinkle Park Lobby as a starting location.
 - Separated the sublevel checks options into two.
-    - The original one now affects only Twinkle Circuit and Sand Hill.
-    - The new one enables Sky Chase Act 1 and 2.
+    - One for Twinkle Circuit and Sand Hill and another for Sky Chase Act 1 and 2.
+- Added error messages when generating with really low settings. Now there is a minimum of 5 emblems for the goal.
 
 ### Changed
 
