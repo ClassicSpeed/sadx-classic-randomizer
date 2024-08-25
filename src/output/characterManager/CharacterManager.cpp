@@ -370,6 +370,10 @@ FunctionHook<void, task*> freezeTrapDisplay(0x4A2240, [](task* tp)-> void
 // We temporally set the game mode to trick the result screen into showing its full version
 FunctionHook<void, task*> onScoreDisplay_Main(0x42BCC0, [](task* tp)-> void
 {
+    //If Tails just lost, we don't do anything
+    if (CurrentCharacter == Characters_Tails && RaceWinnerPlayer == 2)
+        return onScoreDisplay_Main.Original(tp);
+
     const GameModes bufferGameMode = GameMode;
     GameMode = GameModes_Adventure_ActionStg;
     onScoreDisplay_Main.Original(tp);

@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 - Twinkle circuit is now in logic if you have access to the Twinkle Park Lobby.
 - Improved emblem requirements calculation.
     - It should hopefully fix the issue with the wrong emblem percentage goal.
+- Fixed soft lock when losing any race as Tails.
 
 ## [v0.7.1] - 2024-08-22
 
