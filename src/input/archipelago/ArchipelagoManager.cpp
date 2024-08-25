@@ -144,6 +144,10 @@ void SADX_Goal(const int goal)
 {
     randomizerPtr->OnGoalSet(static_cast<Goal>(goal));
 }
+void SADX_CompareModVersion(const int version)
+{
+    randomizerPtr->OnCheckVersion(version);
+}
 
 void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 {
@@ -347,6 +351,7 @@ void ArchipelagoManager::Connect()
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
     AP_RegisterSlotDataIntCallback("Goal", &SADX_Goal);
+    AP_RegisterSlotDataIntCallback("ModVersion", &SADX_CompareModVersion);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("MissionModeChecks", &SADX_MissionModeChecks);
     AP_RegisterSlotDataIntCallback("AutoStartMissions", &SADX_AutoStartMissions);

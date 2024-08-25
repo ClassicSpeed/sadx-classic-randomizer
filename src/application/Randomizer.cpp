@@ -98,6 +98,19 @@ void Randomizer::SetAutoStartMissions(const int autoStartMissions)
         _worldStateManager.StartAllMissions();
 }
 
+void Randomizer::OnCheckVersion(int serverVersion)
+{
+    if (serverVersion != SADX_AP_VERSION_MAJOR * 100 + SADX_AP_VERSION_MINOR * 10 + SADX_AP_VERSION_PATCH)
+    {
+        const std::string modVersionString = std::to_string(SADX_AP_VERSION_MAJOR) + "." +
+            std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH);
+        const std::string serverVersionString = std::to_string(serverVersion / 100) + "." +
+            std::to_string((serverVersion / 10) % 10) + "." + std::to_string(serverVersion % 10);
+        _displayManager.QueueMessage(
+            "Warning: Version mismatch! Server: v" + serverVersionString + " Mod: v" + modVersionString);
+    }
+}
+
 bool Randomizer::AreLastStoryRequirementsCompleted() const
 {
     if (_options.goal == GoalLevels)

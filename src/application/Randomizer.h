@@ -63,6 +63,7 @@ public:
     void ResetItems();
     void SetMissionMode(int missionModeEnabled);
     void SetAutoStartMissions(int autoStartMissions);
+    void OnCheckVersion(int serverVersion);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;

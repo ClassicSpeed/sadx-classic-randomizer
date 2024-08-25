@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Level completion as a goal.
 - Complete all the action stages enabled to unlock the Perfect Chaos fight.
 - Added option to auto-start missions.
+- Added warning message for version mismatch.
 
 ### Changed
 
