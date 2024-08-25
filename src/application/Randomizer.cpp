@@ -4,7 +4,7 @@ void Randomizer::OnCheckFound(const int checkId) const
 {
     const LocationData check = _locationRepository.GetLocation(checkId);
 
-    if (LocationUpgrade == check.type)
+    if (check.type == LocationUpgrade)
     {
         const ItemData item = _itemRepository.GetItem(check.originalItemId);
         if (!item.obtained)
@@ -17,12 +17,13 @@ void Randomizer::OnCheckFound(const int checkId) const
         _worldStateManager.SetEventFlags({FLAG_BIG_SS_TPARK_ELEVATOR});
 
     _displayManager.UpdateChecks(_locationRepository.GetLocations());
-    if (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt)
+    if (check.type == LocationLevel && check.mission == MISSION_C
+        && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
     {
         const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
         _displayManager.UpdateLevelStatus(levelStatus);
         _displayManager.ShowGoalStatus();
-        if (levelStatus.levelsTotal == levelStatus.levelsCompleted && check.mission == MISSION_C
+        if (levelStatus.levelsTotal == levelStatus.levelsCompleted
             && AreLastStoryRequirementsCompleted())
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
@@ -89,6 +90,12 @@ void Randomizer::SetMissionMode(const int missionModeEnabled)
     _options.missionModeEnabled = missionModeEnabled;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetAutoStartMissions(const int autoStartMissions)
+{
+    if (autoStartMissions)
+        _worldStateManager.StartAllMissions();
 }
 
 bool Randomizer::AreLastStoryRequirementsCompleted() const

@@ -377,6 +377,16 @@ void WorldStateManager::SetStartingArea()
     }
 }
 
+void WorldStateManager::StartAllMissions()
+{
+    for (int i = 0; i < 60; i++)
+    {
+        MissionFlags[i] |= MissionFlags_Found;
+        MissionFlags[i] |= MissionFlags_Started;
+    }
+    WriteSaveFile();
+}
+
 typedef struct
 {
     int x;

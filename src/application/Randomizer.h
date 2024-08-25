@@ -62,6 +62,7 @@ public:
     void OnPinballLifeCapsulesSet(bool pinballLifeCapsules);
     void ResetItems();
     void SetMissionMode(int missionModeEnabled);
+    void SetAutoStartMissions(int autoStartMissions);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;

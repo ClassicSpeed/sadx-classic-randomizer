@@ -108,6 +108,8 @@ Sonic Adventure DX:
   field_emblems_checks: 'true'
   # Determines whether completing missions grants checks (60 Locations)
   mission_mode_checks: 'false'
+  # Determines whether missions will start already activated.
+  auto_start_missions: 'false'
   # Determines what missions are blacklisted, the default are:
   #    Mission 49 (Flags in the Kart section of Twinkle Park )
   #    Mission 53 (Triple Jump in the Snowboard section of Ice Cap)

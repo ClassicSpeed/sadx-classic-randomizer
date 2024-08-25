@@ -459,7 +459,7 @@ LevelStatus LocationRepository::GetLevelStatus(Options options)
     levelStatus.gammaHotShelter = _checkData[5402].checked;
 
 
-    if (options.sonicActionStageMissions > 0)
+    if (options.sonicActionStageMissions > 0 && options.playableSonic)
     {
         int count = 0;
         if (levelStatus.sonicEmeraldCoast) count++;
@@ -476,7 +476,7 @@ LevelStatus LocationRepository::GetLevelStatus(Options options)
         levelStatus.sonicLevelsTotal = 10;
         levelStatus.sonicLevelsCompleted = count;
     }
-    if (options.tailsActionStageMissions > 0)
+    if (options.tailsActionStageMissions > 0 && options.playableTails)
     {
         int count = 0;
         if (levelStatus.tailsWindyValley) count++;
@@ -487,7 +487,7 @@ LevelStatus LocationRepository::GetLevelStatus(Options options)
         levelStatus.tailsLevelsTotal = 5;
         levelStatus.tailsLevelsCompleted = count;
     }
-    if (options.knucklesActionStageMissions > 0)
+    if (options.knucklesActionStageMissions > 0 && options.playableKnuckles)
     {
         int count = 0;
         if (levelStatus.knucklesSpeedHighway) count++;
@@ -498,7 +498,7 @@ LevelStatus LocationRepository::GetLevelStatus(Options options)
         levelStatus.knucklesLevelsTotal = 5;
         levelStatus.knucklesLevelsCompleted = count;
     }
-    if (options.amyActionStageMissions > 0)
+    if (options.amyActionStageMissions > 0 && options.playableAmy)
     {
         int count = 0;
         if (levelStatus.amyTwinklePark) count++;
@@ -507,7 +507,7 @@ LevelStatus LocationRepository::GetLevelStatus(Options options)
         levelStatus.amyLevelsTotal = 3;
         levelStatus.amyLevelsCompleted = count;
     }
-    if (options.bigActionStageMissions > 0)
+    if (options.bigActionStageMissions > 0 && options.playableBig)
     {
         int count = 0;
         if (levelStatus.bigTwinklePark) count++;
@@ -517,7 +517,7 @@ LevelStatus LocationRepository::GetLevelStatus(Options options)
         levelStatus.bigLevelsTotal = 4;
         levelStatus.bigLevelsCompleted = count;
     }
-    if (options.gammaActionStageMissions > 0)
+    if (options.gammaActionStageMissions > 0 && options.playableGamma)
     {
         int count = 0;
         if (levelStatus.gammaFinalEgg) count++;

@@ -14,6 +14,7 @@ public:
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
     void OnFrame();
     void SetStartingArea();
+    void StartAllMissions();
     Options options;
     UnlockStatus unlockStatus;
 };

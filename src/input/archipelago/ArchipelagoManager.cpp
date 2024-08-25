@@ -114,7 +114,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
                 return;
 
             //We don't ignore deaths from our own slot
-            
+
             std::string deathCause;
             if (!bounceData["cause"].isNull())
                 deathCause = std::string(bounceData["cause"].asCString());
@@ -154,6 +154,11 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 void SADX_MissionModeChecks(const int missionModeEnabled)
 {
     randomizerPtr->SetMissionMode(missionModeEnabled);
+}
+
+void SADX_AutoStartMissions(const int autoStartMissions)
+{
+    randomizerPtr->SetAutoStartMissions(autoStartMissions);
 }
 
 void SADX_LifeSanity(const int lifeSanity)
@@ -344,7 +349,8 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("Goal", &SADX_Goal);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("MissionModeChecks", &SADX_MissionModeChecks);
-    
+    AP_RegisterSlotDataIntCallback("AutoStartMissions", &SADX_AutoStartMissions);
+
     AP_RegisterSlotDataIntCallback("LifeSanity", &SADX_LifeSanity);
     AP_RegisterSlotDataIntCallback("PinballLifeCapsules", &SADX_PinballLifeCapsules);
     AP_RegisterSlotDataIntCallback("SonicLifeSanity", &SADX_SonicLifeSanity);
