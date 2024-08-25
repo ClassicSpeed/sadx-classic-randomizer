@@ -46,7 +46,7 @@ public:
     void SetRingLink(bool ringLinkActive);
     void SetHardRingLink(bool hardRingLinkActive);
     void SetRingLoss(RingLoss ringLoss);
-    void SetSublevelChecks(bool sublevelChecks);
+    void SetSkyChaseChecks(bool skyChaseChecks);
     void SetBossChecks(bool bossChecks);
     void SetUnifyChaos4(bool unifyChaos4);
     void SetUnifyChaos6(bool unifyChaos6);

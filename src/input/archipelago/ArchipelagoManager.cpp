@@ -256,9 +256,9 @@ void SADX_RingLoss(const int ringLoss)
     randomizerPtr->SetRingLoss(static_cast<RingLoss>(ringLoss));
 }
 
-void SADX_SublevelChecks(const int sublevelChecks)
+void SADX_SkyChaseChecks(const int skyChaseChecks)
 {
-    randomizerPtr->SetSublevelChecks(sublevelChecks);
+    randomizerPtr->SetSkyChaseChecks(skyChaseChecks);
 }
 
 void SADX_BossChecks(const int bossChecks)
@@ -377,7 +377,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);
     AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
 
-    AP_RegisterSlotDataIntCallback("SubLevelChecks", &SADX_SublevelChecks);
+    AP_RegisterSlotDataIntCallback("SkyChaseChecks", &SADX_SkyChaseChecks);
 
     AP_RegisterSlotDataIntCallback("BossChecks", &SADX_BossChecks);
     AP_RegisterSlotDataIntCallback("UnifyChaos4", &SADX_UnifyChaos4);

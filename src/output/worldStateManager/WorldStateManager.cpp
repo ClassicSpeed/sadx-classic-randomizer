@@ -537,7 +537,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
     }
-    if (worldStateManagerPtr->options.sublevelsChecks)
+    if (worldStateManagerPtr->options.skyChaseChecks)
     {
         //Sky Chase
         AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);

@@ -351,9 +351,9 @@ void Randomizer::SetRingLoss(const RingLoss ringLoss)
     _characterManager.UpdateOptions(_options);
 }
 
-void Randomizer::SetSublevelChecks(const bool sublevelChecks)
+void Randomizer::SetSkyChaseChecks(const bool skyChaseChecks)
 {
-    _options.sublevelsChecks = sublevelChecks;
+    _options.skyChaseChecks = skyChaseChecks;
 }
 
 void Randomizer::SetBossChecks(const bool bossChecks)

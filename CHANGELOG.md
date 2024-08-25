@@ -12,6 +12,9 @@ All notable changes to this project will be documented in this file.
 - Added warning message for version mismatch.
 - Added Angel Island area as a starting location.
 - Added Twinkle Park Lobby as a starting location.
+- Separated the sublevel checks options into two.
+    - The original one now affects only Twinkle Circuit and Sand Hill.
+    - The new one enables Sky Chase Act 1 and 2.
 
 ### Changed
 

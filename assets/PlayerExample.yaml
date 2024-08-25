@@ -116,12 +116,16 @@ Sonic Adventure DX:
   #    Mission 54 (Flags in the Snowboard section of Ice Cap)
   #    Mission 58 (Flags in the rolling bounce section of Lost World)
   mission_blacklist: [ "49", "53", "54", "58" ]
-  # Determines whether beating the default sublevel mission  grants checks (4 Locations)
-  # Current sublevels are: Twinkle Circuit, Sand Hill and Sky Chase Act 1 and 2
+  # Determines whether beating Twinkle Circuit and Sand Hill grants checks (2 Locations)
   sub_level_checks: 'true'
-  # Determines whether beating the harder (points based) sublevel mission grants checks (4 Locations)
+  # Determines whether beating the harder (points based) Twinkle Circuit and Sand Hill missions grants checks (2 Locations)
   # Only works if sublevel checks are enabled
   sub_level_checks_hard: 'false'
+  # Determines whether beating Sky Chase Act 1 and 2 grants checks (2 Locations)
+  sky_chase_checks: 'true'
+  # Determines whether beating the harder (points based) Sky Chase Act 1 and 2 mission grants checks (2 Locations)
+  # Only works if Sky Chase checks are enabled
+  sky_chase_checks_hard: 'false'
   # Determines whether collecting life capsules grants checks (102 Locations)
   life_sanity: 'false'
   # Determines whether casinopolis life capsules grant checks (2 Locations)
