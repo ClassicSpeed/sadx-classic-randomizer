@@ -21,6 +21,8 @@ All notable changes to this project will be documented in this file.
 - Fixed normal/hard logic for missions not working correctly.
 - Added an 80% maximum for the emblem percentage goal.
 - Twinkle circuit is now in logic if you have access to the Twinkle Park Lobby.
+- Improved emblem requirements calculation.
+    - It should hopefully fix the issue with the wrong emblem percentage goal.
 
 ## [v0.7.1] - 2024-08-22
 
