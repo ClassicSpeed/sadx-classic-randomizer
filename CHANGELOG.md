@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.8.0] - 2024-08-?
+
+### Added
+
+- Level completion as a goal.
+- Complete all the action stages enabled to unlock the Perfect Chaos fight.
+
+### Changed
+
+- Fixed normal/hard logic for missions not working correctly.
+
 ## [v0.7.1] - 2024-08-22
 
 ### Added

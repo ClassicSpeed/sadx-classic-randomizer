@@ -2,8 +2,10 @@
 
 enum Goal
 {
+    GoalLevels,
     GoalEmblems,
     GoalEmeraldHunt,
+    GoalLevelsAndEmeraldHunt,
     GoalEmblemsAndEmeraldHunt,
     None
 };

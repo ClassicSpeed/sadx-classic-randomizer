@@ -49,6 +49,11 @@ void DisplayManager::UpdateUnlockStatus(const UnlockStatus unlockStatus)
     this->_unlockStatus = unlockStatus;
 }
 
+void DisplayManager::UpdateLevelStatus(LevelStatus levelStatus)
+{
+    this->_levelStatus = levelStatus;
+}
+
 void DisplayManager::UpdateOptions(const Options options)
 {
     this->_options = options;
@@ -76,7 +81,7 @@ void DisplayManager::ShowStatusInformation(std::string information)
 
 void DisplayManager::ShowGoalStatus()
 {
-    _emblemTimer = std::clock();
+    _goalTimer = std::clock();
 }
 
 
@@ -125,13 +130,13 @@ void DisplayManager::DisplayMessages() const
 
 void DisplayManager::DisplayGoalStatus()
 {
-    if (_emblemTimer < 0)
+    if (_goalTimer < 0)
         return;
 
-    const double timePassed = (std::clock() - this->_emblemTimer) / static_cast<double>(CLOCKS_PER_SEC);
+    const double timePassed = (std::clock() - this->_goalTimer) / static_cast<double>(CLOCKS_PER_SEC);
     if (timePassed > _displayDuration)
     {
-        _emblemTimer = -1;
+        _goalTimer = -1;
         return;
     }
 
@@ -140,7 +145,8 @@ void DisplayManager::DisplayGoalStatus()
 
     std::string buffer;
 
-    if (_options.goal == GoalEmeraldHunt || _options.goal == GoalEmblemsAndEmeraldHunt)
+    if (_options.goal == GoalEmeraldHunt || _options.goal == GoalEmblemsAndEmeraldHunt || _options.goal ==
+        GoalLevelsAndEmeraldHunt)
     {
         buffer.append("Emeralds:        ");
         SetDebugFontColor(
@@ -166,12 +172,16 @@ void DisplayManager::DisplayGoalStatus()
     }
 
     SetDebugFontColor(this->_displayEmblemColor);
-    if (_options.goal == GoalEmblemsAndEmeraldHunt)
+    if (_options.goal == GoalEmblemsAndEmeraldHunt || _options.goal == GoalLevelsAndEmeraldHunt)
         buffer.append(" ");
 
     if (_options.goal == GoalEmblems || _options.goal == GoalEmblemsAndEmeraldHunt)
         buffer.append("Emblems: " + std::to_string(_unlockStatus.currentEmblems) + "/"
             + std::to_string(_options.emblemGoal));
+
+    if (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt)
+        buffer.append("Levels: " + std::to_string(_levelStatus.levelsCompleted) + "/"
+            + std::to_string(_levelStatus.levelsTotal));
 
 
     DisplayDebugString(
@@ -291,7 +301,17 @@ void DisplayManager::DisplayItemsUnlocked()
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
-    if (_options.goal == GoalEmeraldHunt || _options.goal == GoalEmblemsAndEmeraldHunt)
+    if (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt)
+    {
+        displayOffset++;
+        buffer.clear();
+        buffer.append("Levels: " + std::to_string(_levelStatus.levelsCompleted) + "/"
+            + std::to_string(_levelStatus.levelsTotal));
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    }
+
+    if (_options.goal == GoalEmeraldHunt || _options.goal == GoalEmblemsAndEmeraldHunt || _options.goal ==
+        GoalLevelsAndEmeraldHunt)
     {
         displayOffset++;
         buffer.clear();
@@ -373,7 +393,6 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append(" ");
-        const std::string levelTime = "2:45";
         if (missionsEnabled > 0)
             buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
         if (missionsEnabled > 1)
@@ -433,6 +452,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.sonicLightShoesUnlocked ? "LS " : "   ");
         buffer.append(_unlockStatus.sonicCrystalRingUnlocked ? "CR " : "   ");
         buffer.append(_unlockStatus.sonicAncientLightUnlocked ? "AL" : "  ");
+        if (_unlockStatus.sonicUnlocked  && _options.sonicActionStageMissions > 0
+          && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " +std::to_string(_levelStatus.sonicLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.sonicLevelsTotal));
+        }
         SetDebugFontColor(this->_sonicColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
@@ -440,6 +465,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(!_unlockStatus.sonicLightShoesUnlocked ? "LS " : "   ");
         buffer.append(!_unlockStatus.sonicCrystalRingUnlocked ? "CR " : "   ");
         buffer.append(!_unlockStatus.sonicAncientLightUnlocked ? "AL" : "  ");
+        if (!_unlockStatus.sonicUnlocked  && _options.sonicActionStageMissions > 0
+         && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " +std::to_string(_levelStatus.sonicLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.sonicLevelsTotal));
+        }
         SetDebugFontColor(this->_sonicColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
@@ -451,12 +482,24 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.tailsUnlocked ? "T  " : "   ");
         buffer.append(_unlockStatus.tailsJetAnkletUnlocked ? "JA " : "   ");
         buffer.append(_unlockStatus.tailsRhythmBadgeUnlocked ? "RB" : "  ");
+        if (_unlockStatus.tailsUnlocked && _options.tailsActionStageMissions > 0
+            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " +std::to_string(_levelStatus.tailsLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.tailsLevelsTotal));
+        }
         SetDebugFontColor(this->_tailsColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.tailsUnlocked ? "T: " : " : ");
         buffer.append(!_unlockStatus.tailsJetAnkletUnlocked ? "JA " : "   ");
         buffer.append(!_unlockStatus.tailsRhythmBadgeUnlocked ? "RB" : "  ");
+        if (!_unlockStatus.tailsUnlocked && _options.tailsActionStageMissions > 0
+            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " +std::to_string(_levelStatus.tailsLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.tailsLevelsTotal));
+        }
         SetDebugFontColor(this->_tailsColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
@@ -468,12 +511,24 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.knucklesUnlocked ? "K  " : "   ");
         buffer.append(_unlockStatus.knucklesShovelClawUnlocked ? "SC " : "   ");
         buffer.append(_unlockStatus.knucklesFightingGlovesUnlocked ? "FG" : "  ");
+        if (_unlockStatus.knucklesUnlocked && _options.knucklesActionStageMissions > 0
+           && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " +std::to_string(_levelStatus.knucklesLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.knucklesLevelsTotal));
+        }
         SetDebugFontColor(this->_knucklesColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.knucklesUnlocked ? "K: " : " : ");
         buffer.append(!_unlockStatus.knucklesShovelClawUnlocked ? "SC " : "   ");
         buffer.append(!_unlockStatus.knucklesFightingGlovesUnlocked ? "FG" : "  ");
+        if (!_unlockStatus.knucklesUnlocked && _options.knucklesActionStageMissions > 0
+          && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " +std::to_string(_levelStatus.knucklesLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.knucklesLevelsTotal));
+        }
         SetDebugFontColor(this->_knucklesColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
@@ -485,12 +540,24 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.amyUnlocked ? "A  " : "   ");
         buffer.append(_unlockStatus.amyLongHammerUnlocked ? "LH " : "   ");
         buffer.append(_unlockStatus.amyWarriorFeatherUnlocked ? "WF" : "  ");
+        if (_unlockStatus.amyUnlocked && _options.amyActionStageMissions > 0
+           && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " +std::to_string(_levelStatus.amyLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.amyLevelsTotal));
+        }
         SetDebugFontColor(this->_amyColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.amyUnlocked ? "A: " : " : ");
         buffer.append(!_unlockStatus.amyLongHammerUnlocked ? "LH " : "   ");
         buffer.append(!_unlockStatus.amyWarriorFeatherUnlocked ? "WF" : "  ");
+        if (!_unlockStatus.amyUnlocked && _options.amyActionStageMissions > 0
+           && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " + std::to_string(_levelStatus.amyLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.amyLevelsTotal));
+        }
         SetDebugFontColor(this->_amyColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
@@ -503,6 +570,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.bigLifeRingUnlocked ? "LR " : "   ");
         buffer.append(_unlockStatus.bigPowerRodUnlocked ? "PR " : "   ");
         buffer.append(_unlockStatus.bigLureQuantity > 0 ? "L" + std::to_string(_unlockStatus.bigLureQuantity) : "  ");
+        if (_unlockStatus.bigUnlocked && _options.bigActionStageMissions > 0
+           && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " +std::to_string(_levelStatus.bigLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.bigLevelsTotal));
+        }
         SetDebugFontColor(this->_bigColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
@@ -510,6 +583,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(!_unlockStatus.bigLifeRingUnlocked ? "LR " : "   ");
         buffer.append(!_unlockStatus.bigPowerRodUnlocked ? "PR " : "   ");
         buffer.append(_unlockStatus.bigLureQuantity == 0 ? "L0" : "  ");
+        if (!_unlockStatus.bigUnlocked && _options.bigActionStageMissions > 0
+          && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " +std::to_string(_levelStatus.bigLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.bigLevelsTotal));
+        }
         SetDebugFontColor(this->_bigColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
@@ -520,12 +599,24 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.gammaUnlocked ? "G  " : "   ");
         buffer.append(_unlockStatus.gammaJetBoosterUnlocked ? "JB " : "   ");
         buffer.append(_unlockStatus.gammaLaserBlasterUnlocked ? "LB" : "  ");
+        if (_unlockStatus.gammaUnlocked && _options.gammaActionStageMissions > 0
+            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " +std::to_string(_levelStatus.gammaLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.gammaLevelsTotal));
+        }
         SetDebugFontColor(this->_gammaColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.gammaUnlocked ? "G: " : " : ");
         buffer.append(!_unlockStatus.gammaJetBoosterUnlocked ? "JB " : "   ");
         buffer.append(!_unlockStatus.gammaLaserBlasterUnlocked ? "LB" : "  ");
+        if (!_unlockStatus.gammaUnlocked && _options.gammaActionStageMissions > 0
+            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        {
+            buffer.append(" " +std::to_string(_levelStatus.gammaLevelsCompleted)
+                + "/" + std::to_string(_levelStatus.gammaLevelsTotal));
+        }
         SetDebugFontColor(this->_gammaColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
