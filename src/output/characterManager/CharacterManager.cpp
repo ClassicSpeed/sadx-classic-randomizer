@@ -204,6 +204,40 @@ void CharacterManager::OnPlayingFrame()
     _fillerTimer = std::clock();
 }
 
+void CharacterManager::SetStartingCharacter(int startingCharacterIndex)
+{
+    if (startingCharacterIndex == 1)
+    {
+        BYTE1(CharacterSelection) = 0;
+        CurrentCharacter = Characters_Sonic;
+    }
+    else if (startingCharacterIndex == 2)
+    {
+        BYTE1(CharacterSelection) = 1;
+        CurrentCharacter = Characters_Tails;
+    }
+    else if (startingCharacterIndex == 3)
+    {
+        BYTE1(CharacterSelection) = 2;
+        CurrentCharacter = Characters_Knuckles;
+    }
+    else if (startingCharacterIndex == 4)
+    {
+        BYTE1(CharacterSelection) = 3;
+        CurrentCharacter = Characters_Amy;
+    }
+    else if (startingCharacterIndex == 5)
+    {
+        BYTE1(CharacterSelection) = 4;
+        CurrentCharacter = Characters_Big;
+    }
+    else if (startingCharacterIndex == 6)
+    {
+        BYTE1(CharacterSelection) = 5;
+        CurrentCharacter = Characters_Gamma;
+    }
+}
+
 TaskFunc(EBuyon_Main, 0x7B2E00);
 
 void CharacterManager::ActivateFiller(const FillerType filler)

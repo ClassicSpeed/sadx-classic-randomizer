@@ -9,9 +9,10 @@ All notable changes to this project will be documented in this file.
 - Level completion as a goal.
 - Complete all the action stages enabled to unlock the Perfect Chaos fight.
 - Added option to auto-start missions.
-- Added warning message for version mismatch.
 - Added Angel Island area as a starting location.
 - Added Twinkle Park Lobby as a starting location.
+- Your starting character will now be selected on the character select screen when starting the game.
+- Added warning message for version mismatch when connecting to Archipelago.
 - Separated the sublevel checks options into two.
     - One for Twinkle Circuit and Sand Hill and another for Sky Chase Act 1 and 2.
 - Added error messages when generating with really low settings. Now there is a minimum of 5 emblems for the goal.

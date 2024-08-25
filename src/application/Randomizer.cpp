@@ -111,6 +111,11 @@ void Randomizer::OnCheckVersion(int serverVersion)
     }
 }
 
+void Randomizer::SetStartingCharacter(const int startingCharacterIndex)
+{
+    _characterManager.SetStartingCharacter(startingCharacterIndex);
+}
+
 bool Randomizer::AreLastStoryRequirementsCompleted() const
 {
     if (_options.goal == GoalLevels)

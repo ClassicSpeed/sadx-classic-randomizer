@@ -206,6 +206,10 @@ void SADX_BigLifeSanity(const int lifeSanity)
 }
 
 
+void SADX_StartingCharacter(const int startingCharacterIndex)
+{
+    randomizerPtr->SetStartingCharacter(startingCharacterIndex);
+}
 void SADX_SonicStartingArea(const int startingArea)
 {
     randomizerPtr->SetCharacterStatingArea(Characters_Sonic, static_cast<StartingArea>(startingArea));
@@ -365,6 +369,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("BigLifeSanity", &SADX_BigLifeSanity);
     AP_RegisterSlotDataIntCallback("GammaLifeSanity", &SADX_GammaLifeSanity);
 
+    AP_RegisterSlotDataIntCallback("StartingCharacter", &SADX_StartingCharacter);
     AP_RegisterSlotDataIntCallback("SonicStartingArea", &SADX_SonicStartingArea);
     AP_RegisterSlotDataIntCallback("TailsStartingArea", &SADX_TailsStartingArea);
     AP_RegisterSlotDataIntCallback("KnucklesStartingArea", &SADX_KnucklesStartingArea);

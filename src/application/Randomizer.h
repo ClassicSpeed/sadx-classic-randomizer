@@ -64,6 +64,7 @@ public:
     void SetMissionMode(int missionModeEnabled);
     void SetAutoStartMissions(int autoStartMissions);
     void OnCheckVersion(int serverVersion);
+    void SetStartingCharacter(int startingCharacterIndex);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;
