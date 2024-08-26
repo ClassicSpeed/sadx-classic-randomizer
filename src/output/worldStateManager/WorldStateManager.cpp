@@ -18,6 +18,19 @@ constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
 
 constexpr int BEACH_BARRICADE_STATION_SQUARE = 67;
 
+LevelEntrances levelEntrances = {
+    {EmeraldCoast, EmeraldCoast},
+    {WindyValley, WindyValley},
+    {Casinopolis, Casinopolis},
+    {IceCap, IceCap},
+    {TwinklePark, TwinklePark},
+    {SpeedHighway, SpeedHighway},
+    {RedMountain, RedMountain},
+    {SkyDeck, SkyDeck},
+    {LostWorld, LostWorld},
+    {FinalEgg, FinalEgg},
+    {HotShelter, HotShelter},
+};
 
 // //We pretend that the egg carrier is sunk so that the hedgehog hammer is works
 static bool __cdecl HandleHedgehoHammer()
@@ -678,7 +691,8 @@ FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
 FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
-        && !worldStateManagerPtr->unlockStatus.keyWindStone)
+        && (!worldStateManagerPtr->unlockStatus.keyWindStone
+            || !levelEntrances.canEnter(WindyValley, CurrentCharacter)))
         if (tp->twp->pos.x > 1390 && tp->twp->pos.x < 1395
             && tp->twp->pos.y > 190 && tp->twp->pos.y < 193
             && tp->twp->pos.z > 862 && tp->twp->pos.z < 865)
@@ -698,20 +712,6 @@ FunctionHook<void> onBigHud_DrawWeightAndLife(0x46FB00, []()-> void
     onBigHud_DrawWeightAndLife.Original();
     GameMode = bufferGameMode;
 });
-
-LevelEntrances levelEntrances = {
-    {EmeraldCoast, EmeraldCoast},
-    {WindyValley, WindyValley},
-    {Casinopolis, Casinopolis},
-    {IceCap, IceCap},
-    {TwinklePark, TwinklePark},
-    {SpeedHighway, SpeedHighway},
-    {RedMountain, RedMountain},
-    {SkyDeck, SkyDeck},
-    {LostWorld, LostWorld},
-    {FinalEgg, FinalEgg},
-    {HotShelter, HotShelter},
-};
 
 
 // Handles the return position
@@ -869,7 +869,7 @@ FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
 
     if (CurrentCharacter == Characters_Gamma)
         return EventFlagArray[FLAG_E102_MR_WINDYSTONE] && levelEntrances.canEnter(WindyValley, CurrentCharacter);
-    return levelEntrances.canEnter(WindyValley, CurrentCharacter);
+    return levelEntrances.canEnter(WindyValley, CurrentCharacter) && worldStateManagerPtr->unlockStatus.keyWindStone;
 });
 
 // Handles the Casinopolis entrance

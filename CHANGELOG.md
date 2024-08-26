@@ -20,8 +20,9 @@ All notable changes to this project will be documented in this file.
 - The adventure field was modified to allow some character to use level entrances that they wouldn't be able to use.
 - Some level entrances are now closed is the corresponding level for that entrance is not a level for the character.
 - Gamma won't be able to open the Emerald Coast's gate if the level for that entrance is not a level for him.
-- Windy Valley won't open even with the wind stone if the level for that entrance is not a level for the character.
-- Amy, Knuckles and Big don't need the wind stone to open Windy Valley.
+- Windy Valley won't open if the level for that entrance is not a level for the character.
+    - For Sonic, Tails and Gamma, the Wind Stone won't spawn if the level is not for the character.
+    - For, Amy, Knuckles and Big, it will open as soon as you get the wind stone.
 - Casinopolis button won't open the casino door if the level for that entrance is not a level for the character.
 
 ### Changed
