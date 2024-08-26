@@ -128,12 +128,18 @@ static void __cdecl HandleWindyValleyEntrance();
 static void __cdecl HandleSkyDeckEntrance();
 static void __cdecl HandleHotShelterEntrance();
 UsercallFuncVoid(onSceneChangeMr_t, (int a1), (a1), 0x539220, rEBX);
-
 static void __cdecl HandleMREntrance(int newScene);
+
+UsercallFunc(bool, onTwinkleParkDoor_t, (char tpChar), (tpChar), 0x63EA90, rEAX, rEAX);
+static bool __cdecl HandleTwinkleParkEntrance(char character);
+
+
+// bool __usercall sub_63EA90@<eax>(char a1@<sil>)
 
 WorldStateManager::WorldStateManager()
 {
     onSceneChangeMr_t.Hook(HandleMREntrance);
+    onTwinkleParkDoor_t.Hook(HandleTwinkleParkEntrance);
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
 
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehoHammer);
@@ -834,6 +840,7 @@ static void __cdecl HandleHotShelterEntrance()
     SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
 }
 
+// Handles the Emerald Coast entrance
 FunctionHook<BOOL> isEmeraldCoastOpen(0x639A30, []()-> BOOL
 {
     if (CurrentCharacter == Characters_Gamma)
@@ -851,7 +858,7 @@ FunctionHook<void, task*> loadEmeraldCoastBarricadeTargets(0x63A0C0, [](task* tp
 });
 
 // Handles the Windy Valley entrance
-//Makes Sonic, Tails and Gamma use the winds stone
+// Makes Sonic, Tails and Gamma use the winds stone
 FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
 {
     if (CurrentCharacter == Characters_Sonic)
@@ -865,7 +872,7 @@ FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
     return levelEntrances.canEnter(WindyValley, CurrentCharacter);
 });
 
-
+// Handles the Casinopolis entrance
 FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
 {
     if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
@@ -880,8 +887,14 @@ FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
 });
 
 
+// Handles the Twinkle Park entrance
+static bool __cdecl HandleTwinkleParkEntrance(const char character)
+{
+    return levelEntrances.canEnter(TwinklePark, CurrentCharacter);
+}
+
+
 //TODO:
-// TwinklePark,
 // SpeedHighway,
 // RedMountain,
 // SkyDeck,

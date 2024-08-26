@@ -16,6 +16,13 @@ All notable changes to this project will be documented in this file.
 - Separated the sublevel checks options into two.
     - One for Twinkle Circuit and Sand Hill and another for Sky Chase Act 1 and 2.
 - Added error messages when generating with really low settings. Now there is a minimum of 5 emblems for the goal.
+- Levels entrances can now be randomized.
+- The adventure field was modified to allow some character to use level entrances that they wouldn't be able to use.
+- Some level entrances are now closed is the corresponding level for that entrance is not a level for the character.
+- Gamma won't be able to open the Emerald Coast's gate if the level for that entrance is not a level for him.
+- Windy Valley won't open even with the wind stone if the level for that entrance is not a level for the character.
+- Amy, Knuckles and Big don't need the wind stone to open Windy Valley.
+- Casinopolis button won't open the casino door if the level for that entrance is not a level for the character.
 
 ### Changed
 
