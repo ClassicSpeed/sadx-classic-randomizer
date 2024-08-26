@@ -24,6 +24,9 @@ All notable changes to this project will be documented in this file.
     - For Sonic, Tails and Gamma, the Wind Stone won't spawn if the level is not for the character.
     - For, Amy, Knuckles and Big, it will open as soon as you get the wind stone.
 - Casinopolis button won't open the casino door if the level for that entrance is not a level for the character.
+- Speed Highway's shutter and elevator will open for Amy and Big when the player gets the Employee Card.
+- Big's Speed Highway entrance is at the city hall, he still needs the Employee Card to enter.
+- Knuckles' barricade won't spawn if the level for that entrance is not a level for him.
 
 ### Changed
 

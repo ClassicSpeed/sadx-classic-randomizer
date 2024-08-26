@@ -16,7 +16,8 @@ constexpr int WARP_PAST = 10;
 
 constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
 
-constexpr int BEACH_BARRICADE_STATION_SQUARE = 67;
+constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
+constexpr int BEACH_GATE_STATION_SQUARE = 67;
 
 LevelEntrances levelEntrances = {
     {EmeraldCoast, EmeraldCoast},
@@ -33,7 +34,7 @@ LevelEntrances levelEntrances = {
 };
 
 // //We pretend that the egg carrier is sunk so that the hedgehog hammer is works
-static bool __cdecl HandleHedgehoHammer()
+static bool __cdecl HandleHedgehogHammer()
 {
     return GetEventFlag(EventFlags_Amy_WarriorFeather);
 }
@@ -155,7 +156,7 @@ WorldStateManager::WorldStateManager()
     onTwinkleParkDoor_t.Hook(HandleTwinkleParkEntrance);
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
 
-    WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehoHammer);
+    WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehogHammer);
 
     WriteCall(reinterpret_cast<void*>(0x639198), &HandleSpeedHighwayEntrance);
 
@@ -469,8 +470,11 @@ const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635}, {0, 0, 0}, {0.
 const SETEntry COLLISION_CUBE_MR = CreateSetEntry(COLLISION_CUBE_MYSTIC_RUINS, {-393.62f, 120, 890.06f},
                                                   {0xFEFF, 0x4BF1, 0xFD6A}, {60, 80, 10});
 
-const SETEntry BEACH_BARRICADE_SS = CreateSetEntry(BEACH_BARRICADE_STATION_SQUARE, {-525, -10, 2098},
-                                                   {0, 0x2000, 0});
+const SETEntry BEACH_GATE_SS = CreateSetEntry(BEACH_GATE_STATION_SQUARE, {-525, -10, 2098},
+                                              {0, 0x2000, 0});
+
+const SETEntry CITY_HALL_SCENE_CHANGE_SS = CreateSetEntry(SCENE_CHANGE_STATION_SQUARE, {270, -1, 234},
+                                                          {0, 0, 0X402}, {8, 3.2, 0});
 
 //Station Square Bosses
 const SETEntry WARP_CHAOS0 = CreateSetEntry(WARP_STATION_SQUARE, {270, 0, 450});
@@ -530,7 +534,10 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Gamma);
 
     //Emerald Coast
-    AddSetToLevel(BEACH_BARRICADE_SS, LevelAndActIDs_StationSquare5, Characters_Sonic);
+    AddSetToLevel(BEACH_GATE_SS, LevelAndActIDs_StationSquare5, Characters_Sonic);
+
+    //Speed Highway (City Hall)
+    AddSetToLevel(CITY_HALL_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Big);
 
 
     if (worldStateManagerPtr->options.bossChecks)
@@ -772,7 +779,8 @@ FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-
 // SpeedHighway (Mains Area)
 static void __cdecl HandleSpeedHighwayEntrance()
 {
-    if (levelEntrances.canEnter(SpeedHighway, CurrentCharacter))
+    if (levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
+        && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
     {
         const LevelAndActIDs levelAndAct = levelEntrances.getLevelAndActIdFromEntrance(SpeedHighway, CurrentCharacter);
         SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
@@ -848,13 +856,13 @@ FunctionHook<BOOL> isEmeraldCoastOpen(0x639A30, []()-> BOOL
     return levelEntrances.canEnter(EmeraldCoast, CurrentCharacter);
 });
 
-FunctionHook<void, task*> loadEmeraldCoastBarricadeTargets(0x63A0C0, [](task* tp)-> void
+FunctionHook<void, task*> loadEmeraldCoastGateTargets(0x63A0C0, [](task* tp)-> void
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
         && !levelEntrances.canEnter(EmeraldCoast, CurrentCharacter))
         FreeTask(tp);
     else
-        loadEmeraldCoastBarricadeTargets.Original(tp);
+        loadEmeraldCoastGateTargets.Original(tp);
 });
 
 // Handles the Windy Valley entrance
@@ -893,13 +901,52 @@ static bool __cdecl HandleTwinkleParkEntrance(const char character)
     return levelEntrances.canEnter(TwinklePark, CurrentCharacter);
 }
 
+// Speed Highway
+FunctionHook<BOOL> isSpeedHighwayShutterOpen(0x63A2A0, []()-> BOOL
+{
+    return levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
+        && worldStateManagerPtr->unlockStatus.keyEmployeeCard;
+});
+
+FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
+{
+    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy)
+        && levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
+        && worldStateManagerPtr->unlockStatus.keyEmployeeCard)
+        FreeTask(tp);
+    else
+        loadSpeedHighwayShutter.Original(tp);
+});
+
+FunctionHook<BOOL> isSpeedHighwayElevatorOpen(0x638CC0, []()-> BOOL
+{
+    return worldStateManagerPtr->unlockStatus.keyEmployeeCard;
+});
+
+FunctionHook<BOOL> isCityHallDoorOpen(0x636BF0, []()-> BOOL
+{
+    if (CurrentCharacter == Characters_Big)
+        return worldStateManagerPtr->unlockStatus.keyEmployeeCard
+            && levelEntrances.canEnter(SpeedHighway, CurrentCharacter);
+
+    return levelEntrances.canEnter(SpeedHighway, CurrentCharacter) && isCityHallDoorOpen.Original();
+});
+
+//We don't create Knuckles barricade if he doesn't have access to the level
+FunctionHook<void, task*> loadBarricade(0x637580, [](task* tp)-> void
+{
+    if (CurrentCharacter == Characters_Knuckles && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
+        if (!levelEntrances.canEnter(SpeedHighway, CurrentCharacter))
+            return FreeTask(tp);
+    
+    loadBarricade.Original(tp);
+});
+
 
 //TODO:
-// SpeedHighway,
 // RedMountain,
 // SkyDeck,
 // LostWorld,
 // FinalEgg,
 // HotShelter
-
 // IceCap,
