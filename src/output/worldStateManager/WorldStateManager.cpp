@@ -263,14 +263,6 @@ FunctionHook<BOOL> isCasinoStationDoorOpen(0x638880, []()-> BOOL
     return worldStateManagerPtr->unlockStatus.keyCasinoKeys;
 });
 
-//We open the casino door for knuckles despite any story flags
-FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
-{
-    if (CurrentCharacter == Characters_Knuckles)
-        return GetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO));
-    return isCasinoOpen.Original();
-});
-
 
 //Prevents the recap screen from showing on the last story
 FunctionHook<int, int> showRecap(0x643C00, [](int _)-> int
@@ -703,11 +695,11 @@ FunctionHook<void> onBigHud_DrawWeightAndLife(0x46FB00, []()-> void
 
 LevelEntrances levelEntrances = {
     {EmeraldCoast, EmeraldCoast},
-    {WindyValley, SpeedHighway},
+    {WindyValley, WindyValley},
     {Casinopolis, Casinopolis},
     {IceCap, IceCap},
     {TwinklePark, TwinklePark},
-    {SpeedHighway, WindyValley},
+    {SpeedHighway, SpeedHighway},
     {RedMountain, RedMountain},
     {SkyDeck, SkyDeck},
     {LostWorld, LostWorld},
@@ -858,7 +850,7 @@ FunctionHook<void, task*> loadEmeraldCoastBarricadeTargets(0x63A0C0, [](task* tp
         loadEmeraldCoastBarricadeTargets.Original(tp);
 });
 
-
+// Handles the Windy Valley entrance
 //Makes Sonic, Tails and Gamma use the winds stone
 FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
 {
@@ -874,9 +866,21 @@ FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
 });
 
 
+FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
+{
+    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+        return isCasinoOpen.Original() && levelEntrances.canEnter(Casinopolis, CurrentCharacter);
+
+    //We open the casino door for knuckles despite any story flags
+    if (CurrentCharacter == Characters_Knuckles)
+        return GetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO)) && levelEntrances.canEnter(
+            WindyValley, CurrentCharacter);
+
+    return levelEntrances.canEnter(WindyValley, CurrentCharacter);
+});
+
+
 //TODO:
-// Casinopolis,
-// IceCap,
 // TwinklePark,
 // SpeedHighway,
 // RedMountain,
@@ -884,3 +888,5 @@ FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
 // LostWorld,
 // FinalEgg,
 // HotShelter
+
+// IceCap,
