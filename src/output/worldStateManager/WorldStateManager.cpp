@@ -943,10 +943,41 @@ FunctionHook<void, task*> loadBarricade(0x637580, [](task* tp)-> void
 });
 
 
+FunctionHook<BOOL, EntityData1*> isFinalEggGammaDoorOpen(0x53ED30, [](EntityData1* entity)-> BOOL
+{
+    if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_MysticRuins4)
+        return isFinalEggGammaDoorOpen.Original(entity);
+
+    if (entity->Position.y < 100)
+        return isFinalEggGammaDoorOpen.Original(entity);
+
+    if (entity->Position.z < -150)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
+            return false;
+        return levelEntrances.canEnter(FinalEgg, CurrentCharacter);
+    }
+    return true;
+});
+
+
+FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
+{
+    if ((CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
+        && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && tp->twp->ang.x == 3)
+    {
+        if (!levelEntrances.canEnter(FinalEgg, CurrentCharacter))
+        {
+            return FreeTask(tp);
+        }
+    }
+
+    onLoadSceneChangeMr.Original(tp);
+});
+
 //TODO:
 // RedMountain,
 // SkyDeck,
 // LostWorld,
-// FinalEgg,
 // HotShelter
 // IceCap,

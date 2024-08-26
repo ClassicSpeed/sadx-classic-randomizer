@@ -111,7 +111,7 @@ public:
         return ConvertLevelsToLevelIDs(entrance);
     }
 
-    bool canEnter(const Levels level, const short currentCharacter)
+    bool canEnter(const Levels levelEntrance, const short currentCharacter)
     {
         // Define the map of characters to their accessible levels
         static const std::map<short, std::vector<Levels>> characterLevels = {
@@ -144,7 +144,7 @@ public:
         if (it != characterLevels.end())
         {
             const auto& levels = it->second;
-            return std::find(levels.begin(), levels.end(), level) != levels.end();
+            return std::find(levels.begin(), levels.end(), levelEntrance) != levels.end();
         }
         return false;
     }
