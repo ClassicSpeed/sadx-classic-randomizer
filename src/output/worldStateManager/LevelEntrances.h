@@ -63,6 +63,7 @@ class LevelEntrances
 {
 public:
     LevelEntrances() = default;
+
     LevelEntrances(const std::initializer_list<std::pair<Levels, Levels>> pairs)
     {
         for (const auto& pair : pairs)
@@ -87,7 +88,12 @@ public:
     LevelAndActIDs getLevelAndActIdFromEntrance(const Levels entrance, const int characters) const
     {
         const Levels newLevel = getLevelFromEntrance(entrance);
-        return characterLevelMap.at({characters, newLevel});
+        const auto it = characterLevelMap.find({characters, newLevel});
+        if (it != characterLevelMap.end())
+        {
+            return it->second;
+        }
+        return LevelAndActIDs_HedgehogHammer;
     }
 
     Levels getEntranceFromLevel(const Levels level) const
@@ -103,7 +109,44 @@ public:
         const Levels level = ConvertLevelIDsToLevel(currentLevel);
         const Levels entrance = this->getEntranceFromLevel(level);
         return ConvertLevelsToLevelIDs(entrance);
-        
+    }
+
+    bool canEnter(const Levels level, const short currentCharacter)
+    {
+        // Define the map of characters to their accessible levels
+        static const std::map<short, std::vector<Levels>> characterLevels = {
+            // {Characters_Sonic, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg}},
+            // {Characters_Tails, {WindyValley, Casinopolis, IceCap, SkyDeck, SpeedHighway}},
+            // {Characters_Knuckles, {SpeedHighway, Casinopolis, RedMountain, LostWorld, SkyDeck}},
+            // {Characters_Amy, {TwinklePark, HotShelter, FinalEgg}},
+            // {Characters_Big, {TwinklePark, IceCap, EmeraldCoast, HotShelter}},
+            // {Characters_Gamma, {FinalEgg, EmeraldCoast, WindyValley, RedMountain, HotShelter}}
+
+
+            {Characters_Sonic, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
+            {Characters_Tails, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
+            {Characters_Knuckles, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
+            {Characters_Amy, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
+            {Characters_Big, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
+            {Characters_Gamma, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
+
+            //
+            // {Characters_Sonic, {}},
+            // {Characters_Tails, {}},
+            // {Characters_Knuckles, {}},
+            // {Characters_Amy, {}},
+            // {Characters_Big, {}},
+            // {Characters_Gamma, {}}
+        };
+
+        // Check if the character can enter the specified level
+        const auto it = characterLevels.find(currentCharacter);
+        if (it != characterLevels.end())
+        {
+            const auto& levels = it->second;
+            return std::find(levels.begin(), levels.end(), level) != levels.end();
+        }
+        return false;
     }
 
     static LevelIDs ConvertLevelsToLevelIDs(const Levels level)
@@ -121,7 +164,7 @@ public:
         case LostWorld: return LevelIDs_LostWorld;
         case FinalEgg: return LevelIDs_FinalEgg;
         case HotShelter: return LevelIDs_HotShelter;
-        default: return LevelIDs_HedgehogHammer; 
+        default: return LevelIDs_HedgehogHammer;
         }
     }
 
