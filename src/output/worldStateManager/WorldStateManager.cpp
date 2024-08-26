@@ -2,6 +2,7 @@
 #include "LevelEntrances.h"
 
 #include <algorithm>
+#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
 
 WorldStateManager* worldStateManagerPtr;
 
@@ -80,6 +81,7 @@ static void __cdecl HandleWarp()
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
 }
 
+
 //We don't create animals outside levels
 //Allow us to spawn enemies in the adventure fields
 FunctionHook<void, int, float, float, float> onCreateAnimal(0x4BE610, [](int e_num, float x, float y, float z)-> void
@@ -119,10 +121,30 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
         onCollisionCube.Original(tp);
 });
 
+static void __cdecl HandleSpeedHighwayEntrance();
+static void __cdecl HandleWindyValleyEntrance();
+static void __cdecl HandleSkyDeckEntrance();
+static void __cdecl HandleHotShelterEntrance();
+UsercallFuncVoid(onSceneChangeMr_t, (int a1), (a1), 0x539220, rEBX);
+
+static void __cdecl HandleMREntrance(int a1);
+
 WorldStateManager::WorldStateManager()
 {
+    onSceneChangeMr_t.Hook(HandleMREntrance);
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
+    
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehoHammer);
+
+    WriteCall(reinterpret_cast<void*>(0x639198), &HandleSpeedHighwayEntrance);
+
+    WriteCall(reinterpret_cast<void*>(0x537F52), &HandleWindyValleyEntrance);
+    WriteCall(reinterpret_cast<void*>(0x537F64), &HandleWindyValleyEntrance);
+    
+    WriteCall(reinterpret_cast<void*>(0x525054), &HandleSkyDeckEntrance);
+    
+    WriteCall(reinterpret_cast<void*>(0x52D6F8), &HandleHotShelterEntrance);
+
 
     worldStateManagerPtr = this;
 
@@ -137,6 +159,7 @@ WorldStateManager::WorldStateManager()
     ObjList_ECarrier0[WARP_EGG_CARRIER_OUTSIDE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_Past[WARP_PAST] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
 }
+
 
 void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
 {
@@ -684,14 +707,14 @@ FunctionHook<void> onBigHud_DrawWeightAndLife(0x46FB00, []()-> void
     GameMode = bufferGameMode;
 });
 
-std::map<Characters, LevelEntrances> characterLevelEntrances = {
+std::map<int, LevelEntrances> characterLevelEntrances = {
     {
         Characters_Sonic, {
-            {EmeraldCoast, TwinklePark},
+            {EmeraldCoast, EmeraldCoast},
             {WindyValley, WindyValley},
             {Casinopolis, Casinopolis},
             {IceCap, IceCap},
-            {TwinklePark, EmeraldCoast},
+            {TwinklePark, TwinklePark},
             {SpeedHighway, SpeedHighway},
             {RedMountain, RedMountain},
             {SkyDeck, SkyDeck},
@@ -735,30 +758,16 @@ std::map<Characters, LevelEntrances> characterLevelEntrances = {
     {
         Characters_Gamma, {
             {FinalEgg, FinalEgg},
-            {EmeraldCoast, HotShelter},
+            {EmeraldCoast, EmeraldCoast},
             {WindyValley, WindyValley},
             {RedMountain, RedMountain},
-            {HotShelter, EmeraldCoast},
+            {HotShelter, HotShelter},
         }
     }
 };
 
 
-FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-> void
-{
-    // Emerald Coast Entrance
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5 &&
-        tp->twp->pos.x > -590 && tp->twp->pos.x < -580
-        && tp->twp->pos.y > -25 && tp->twp->pos.y < -15
-        && tp->twp->pos.z > 2130 && tp->twp->pos.z < 2140)
-    {
-        const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
-        tp->twp->ang.z = entrances.getLevelAndActIdFromEntrance(EmeraldCoast, Characters_Sonic);
-    }
-    onSceneChangeMainStationSquare.Original(tp);
-});
-
-
+// Handles the return position
 FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> void
 {
     if (CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
@@ -776,5 +785,115 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
 });
 
 
-//TODO: Check every level entrance
-//Implement logic from data slot
+FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-> void
+{
+    // Emerald Coast Entrance
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5 &&
+        tp->twp->pos.x > -590 && tp->twp->pos.x < -580
+        && tp->twp->pos.y > -25 && tp->twp->pos.y < -15
+        && tp->twp->pos.z > 2130 && tp->twp->pos.z < 2140)
+    {
+        const LevelEntrances entrances = characterLevelEntrances[CurrentCharacter];
+        tp->twp->ang.z = entrances.getLevelAndActIdFromEntrance(EmeraldCoast, CurrentCharacter);
+    }
+    //  Casinopolis
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2 &&
+        tp->twp->pos.x > -646 && tp->twp->pos.x < -642
+        && tp->twp->pos.y > -8 && tp->twp->pos.y < 4
+        && tp->twp->pos.z > 878 && tp->twp->pos.z < 882)
+    {
+        const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+        tp->twp->ang.z = entrances.getLevelAndActIdFromEntrance(Casinopolis, CurrentCharacter);
+    }
+
+    // TwinklePark
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare6 &&
+        tp->twp->pos.x > 850 && tp->twp->pos.x < 860
+        && tp->twp->pos.y > 40 && tp->twp->pos.y < 50
+        && tp->twp->pos.z > 1760 && tp->twp->pos.z < 1780)
+    {
+        const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+        tp->twp->ang.z = entrances.getLevelAndActIdFromEntrance(TwinklePark, CurrentCharacter);
+    }
+
+    // SpeedHighway (City Hall)
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 &&
+        tp->twp->pos.x > 269 && tp->twp->pos.x < 272
+        && tp->twp->pos.y > -4 && tp->twp->pos.y < 0
+        && tp->twp->pos.z > 232 && tp->twp->pos.z < 236)
+    {
+        const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+        tp->twp->ang.z = entrances.getLevelAndActIdFromEntrance(SpeedHighway, CurrentCharacter);
+    }
+
+    onSceneChangeMainStationSquare.Original(tp);
+});
+
+// SpeedHighway (Mains Area)
+static void __cdecl HandleSpeedHighwayEntrance()
+{
+    const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+    const LevelAndActIDs levelAndAct = entrances.getLevelAndActIdFromEntrance(SpeedHighway, CurrentCharacter);
+    SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
+}
+
+// WindyValley
+static void __cdecl HandleWindyValleyEntrance()
+{
+    const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+    const LevelAndActIDs levelAndAct = entrances.getLevelAndActIdFromEntrance(WindyValley, CurrentCharacter);
+    SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
+}
+
+// MysticRuins
+static void __cdecl HandleMREntrance(int newScene)
+{
+    // Final Egg
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && ( newScene == 2 || newScene == 3))
+    {
+        const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+        const LevelAndActIDs levelAndAct = entrances.getLevelAndActIdFromEntrance(FinalEgg, CurrentCharacter);
+        SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
+    }
+    // Lost World
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && (newScene == 6 || newScene == 7))
+    {
+        const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+        const LevelAndActIDs levelAndAct = entrances.getLevelAndActIdFromEntrance(LostWorld, CurrentCharacter);
+        SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
+    }
+    // Ice Cap
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2 && newScene == 1)
+    {
+        const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+        const LevelAndActIDs levelAndAct = entrances.getLevelAndActIdFromEntrance(IceCap, CurrentCharacter);
+        SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
+    }
+    // Red Mountain
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2 && newScene == 0)
+    {
+        const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+        const LevelAndActIDs levelAndAct = entrances.getLevelAndActIdFromEntrance(RedMountain, CurrentCharacter);
+        SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
+    }
+    else
+    {
+        onSceneChangeMr_t.Original(newScene);
+    }
+}
+
+// SkyDeck
+static void __cdecl HandleSkyDeckEntrance()
+{
+    const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+    const LevelAndActIDs levelAndAct = entrances.getLevelAndActIdFromEntrance(SkyDeck, CurrentCharacter);
+    SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
+}
+
+// HotShelter
+static void __cdecl HandleHotShelterEntrance()
+{
+    const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+    const LevelAndActIDs levelAndAct = entrances.getLevelAndActIdFromEntrance(HotShelter, CurrentCharacter);
+    SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
+}

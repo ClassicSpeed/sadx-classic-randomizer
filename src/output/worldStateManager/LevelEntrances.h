@@ -6,7 +6,7 @@
 // Define a struct to hold the key
 struct CharacterLevelKey
 {
-    Characters character;
+    int character;
     Levels level;
 
     // Implement the operator< for std::map
@@ -84,7 +84,7 @@ public:
         return entrance;
     }
 
-    LevelAndActIDs getLevelAndActIdFromEntrance(const Levels entrance, const Characters characters) const
+    LevelAndActIDs getLevelAndActIdFromEntrance(const Levels entrance, const int characters) const
     {
         const Levels newLevel = getLevelFromEntrance(entrance);
         return characterLevelMap.at({characters, newLevel});
@@ -144,7 +144,7 @@ public:
         }
     }
 
-    static int transformToHex(LevelIDs levelId)
+    static int transformToHex(const LevelIDs levelId)
     {
         return levelId << 8;
     }
