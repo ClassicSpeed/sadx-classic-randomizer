@@ -1,4 +1,5 @@
 #include "WorldStateManager.h"
+#include "LevelEntrances.h"
 
 #include <algorithm>
 
@@ -682,3 +683,98 @@ FunctionHook<void> onBigHud_DrawWeightAndLife(0x46FB00, []()-> void
     onBigHud_DrawWeightAndLife.Original();
     GameMode = bufferGameMode;
 });
+
+std::map<Characters, LevelEntrances> characterLevelEntrances = {
+    {
+        Characters_Sonic, {
+            {EmeraldCoast, TwinklePark},
+            {WindyValley, WindyValley},
+            {Casinopolis, Casinopolis},
+            {IceCap, IceCap},
+            {TwinklePark, EmeraldCoast},
+            {SpeedHighway, SpeedHighway},
+            {RedMountain, RedMountain},
+            {SkyDeck, SkyDeck},
+            {LostWorld, LostWorld},
+            {FinalEgg, FinalEgg},
+        }
+    },
+    {
+        Characters_Tails, {
+            {WindyValley, WindyValley},
+            {Casinopolis, Casinopolis},
+            {IceCap, IceCap},
+            {SkyDeck, SkyDeck},
+            {SpeedHighway, SpeedHighway},
+        }
+    },
+    {
+        Characters_Knuckles, {
+            {SpeedHighway, SpeedHighway},
+            {Casinopolis, Casinopolis},
+            {RedMountain, RedMountain},
+            {LostWorld, LostWorld},
+            {SkyDeck, SkyDeck},
+        }
+    },
+    {
+        Characters_Amy, {
+            {TwinklePark, TwinklePark},
+            {HotShelter, HotShelter},
+            {FinalEgg, FinalEgg},
+        }
+    },
+    {
+        Characters_Big, {
+            {TwinklePark, TwinklePark},
+            {IceCap, IceCap},
+            {EmeraldCoast, EmeraldCoast},
+            {HotShelter, HotShelter},
+        }
+    },
+    {
+        Characters_Gamma, {
+            {FinalEgg, FinalEgg},
+            {EmeraldCoast, HotShelter},
+            {WindyValley, WindyValley},
+            {RedMountain, RedMountain},
+            {HotShelter, EmeraldCoast},
+        }
+    }
+};
+
+
+FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-> void
+{
+    // Emerald Coast Entrance
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5 &&
+        tp->twp->pos.x > -590 && tp->twp->pos.x < -580
+        && tp->twp->pos.y > -25 && tp->twp->pos.y < -15
+        && tp->twp->pos.z > 2130 && tp->twp->pos.z < 2140)
+    {
+        const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+        tp->twp->ang.z = entrances.getLevelAndActIdFromEntrance(EmeraldCoast, Characters_Sonic);
+    }
+    onSceneChangeMainStationSquare.Original(tp);
+});
+
+
+FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> void
+{
+    if (CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
+    {
+        onSetStartPosReturnToField.Original(tp);
+        return;
+    }
+
+    const short buffer = CurrentLevel;
+    const LevelEntrances entrances = characterLevelEntrances[static_cast<Characters>(CurrentCharacter)];
+    CurrentLevel = entrances.getEntranceLevelIdFromLevel(static_cast<LevelIDs>(CurrentLevel));
+
+    onSetStartPosReturnToField.Original(tp);
+    CurrentLevel = buffer;
+});
+
+
+//TODO: Check every level entrance
+//Implement logic from data slot

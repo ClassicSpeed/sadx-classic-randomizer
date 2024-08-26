@@ -31,6 +31,21 @@ enum StartingArea
     NoStatingArea
 };
 
+enum Levels
+{
+    EmeraldCoast = 9,
+    WindyValley,
+    Casinopolis,
+    IceCap,
+    TwinklePark,
+    SpeedHighway,
+    RedMountain,
+    SkyDeck,
+    LostWorld,
+    FinalEgg,
+    HotShelter
+};
+
 struct Options
 {
     std::string playerName = "Player";
