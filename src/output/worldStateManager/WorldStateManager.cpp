@@ -239,14 +239,6 @@ FunctionHook<BOOL> isChaos2DoorOpen(0x638D50, []()-> BOOL
 });
 
 
-//Makes knuckles able to enter the lost world using the keys
-FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
-{
-    if (CurrentCharacter == Characters_Knuckles)
-        return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[FLAG_KNUCKLES_MR_BLUECUBE];
-    return false;
-});
-
 //Prevents the monkey from blocking the entrance to Red Mountain for knuckles
 FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
 FunctionHook<BOOL, int> isMonkeyDoorOpen(0x53E5D0, [](int a1)-> BOOL
@@ -694,9 +686,9 @@ FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
     return response;
 });
 
-// We prevent the wind stone from spawning if the player doesn't have the item
 FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
 {
+    // We prevent the wind stone from spawning if the player doesn't have the item
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
         && (!worldStateManagerPtr->unlockStatus.keyWindStone
             || !levelEntrances.canEnter(WindyValley, CurrentCharacter)))
@@ -704,7 +696,12 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
             && tp->twp->pos.y > 190 && tp->twp->pos.y < 193
             && tp->twp->pos.z > 862 && tp->twp->pos.z < 865)
             return;
-
+    // We don't spawn the golden/silver keys for knuckles if he can enter LostWorld
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
+    {
+        if (!levelEntrances.canEnter(LostWorld, CurrentCharacter))
+            return;
+    }
     onMysticRuinsKey.Original(tp);
 });
 
@@ -938,7 +935,7 @@ FunctionHook<void, task*> loadBarricade(0x637580, [](task* tp)-> void
     if (CurrentCharacter == Characters_Knuckles && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
         if (!levelEntrances.canEnter(SpeedHighway, CurrentCharacter))
             return FreeTask(tp);
-    
+
     loadBarricade.Original(tp);
 });
 
@@ -975,9 +972,26 @@ FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
     onLoadSceneChangeMr.Original(tp);
 });
 
+
+//Makes knuckles able to enter the lost world using the keys
+FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
+{
+    if (CurrentCharacter == Characters_Knuckles)
+        return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[FLAG_KNUCKLES_MR_BLUECUBE]
+            && levelEntrances.canEnter(LostWorld, CurrentCharacter);
+
+    return false;
+});
+
+//Allows everyone to enter Lost World
+FunctionHook<BOOL> isLostWorldFrontEntranceOpen(0x532E60, []()-> BOOL
+{
+    if (CurrentCharacter == Characters_Knuckles)
+        return false;
+    return levelEntrances.canEnter(LostWorld, CurrentCharacter);
+});
 //TODO:
 // RedMountain,
 // SkyDeck,
-// LostWorld,
 // HotShelter
 // IceCap,

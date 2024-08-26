@@ -28,6 +28,9 @@ All notable changes to this project will be documented in this file.
 - Big's Speed Highway entrance is at the city hall, he still needs the Employee Card to enter.
 - Knuckles' barricade won't spawn if the level for that entrance is not a level for him.
 - Big, Knuckles and Tails can use Gamma's Final Egg entrance.
+- Tails, Amy, Gamma and Big can now use Sonic's Lost World entrance.
+    - It will be closed if the level for that entrance is not a level for the character.
+    - Knuckles' Gold/Silver Key won't spawn if the level for that entrance is not a level for him.
 
 ### Changed
 
