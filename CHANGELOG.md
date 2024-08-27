@@ -41,6 +41,7 @@ All notable changes to this project will be documented in this file.
 - The Ice Cap door will be open for Knuckles, Amy and Gamma if as soon as you get the Ice Stone.
     - For Sonic/Tails/Big you still have to go fetch the actual keys.
     - The ladder (and the load zone) won't spawn if the level for that entrance is not a level for the character.
+- Big, Amy and Gamma can now use Knuckles' Sky Deck entrance.
 
 ### Changed
 
