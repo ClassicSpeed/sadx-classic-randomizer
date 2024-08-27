@@ -18,18 +18,22 @@ All notable changes to this project will be documented in this file.
 - Added error messages when generating with really low settings. Now there is a minimum of 5 emblems for the goal.
 - Levels entrances can now be randomized.
 - The adventure field was modified to allow some character to use level entrances that they wouldn't be able to use.
-- Some level entrances are now closed is the corresponding level for that entrance is not a level for the character.
-- Gamma won't be able to open the Emerald Coast's gate if the level for that entrance is not a level for him.
+- Some level entrances are now closed if the corresponding level for that entrance is not a level for the character.
+
+#### Level Entrance Changes
+
+- TL;DR: Every character can use every level entrance if the level for that entrance is a level for the character.
+    - Wind/Ice Stone will open the level/cave directly for characters that don't normally use them.
+- Gamma won't be able to shoot the Emerald Coast's gate's targets if the level for that entrance is not a level for him.
 - Windy Valley won't open if the level for that entrance is not a level for the character.
     - For Sonic, Tails and Gamma, the Wind Stone won't spawn if the level is not for the character.
     - For, Amy, Knuckles and Big, it will open as soon as you get the wind stone.
 - Casinopolis button won't open the casino door if the level for that entrance is not a level for the character.
-- Speed Highway's shutter and elevator will open for Amy and Big when the player gets the Employee Card.
+- Speed Highway's shutter and elevator will open for Amy and Gamma when the player gets the Employee Card.
 - Big's Speed Highway entrance is at the city hall, he still needs the Employee Card to enter.
 - Knuckles' barricade won't spawn if the level for that entrance is not a level for him.
 - Big, Knuckles and Tails can use Gamma's Final Egg entrance.
 - Tails, Amy, Gamma and Big can now use Sonic's Lost World entrance.
-    - It will be closed if the level for that entrance is not a level for the character.
     - Knuckles' Gold/Silver Key won't spawn if the level for that entrance is not a level for him.
 - Red Mountain's Door will stay closed if the level for that entrance is not a level for the character.
     - Red Mountain's Monkey will only spawn if it's needed to open the door.

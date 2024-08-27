@@ -143,7 +143,6 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
 static void __cdecl HandleSpeedHighwayEntrance();
 static void __cdecl HandleWindyValleyEntrance();
 static void __cdecl HandleSkyDeckEntrance();
-static void __cdecl HandleHotShelterEntrance();
 UsercallFuncVoid(onSceneChangeMr_t, (int a1), (a1), 0x539220, rEBX);
 static void __cdecl HandleMREntrance(int newScene);
 
@@ -151,12 +150,20 @@ UsercallFunc(bool, onTwinkleParkDoor_t, (char tpChar), (tpChar), 0x63EA90, rEAX,
 static bool __cdecl HandleTwinkleParkEntrance(char character);
 
 
-// bool __usercall sub_63EA90@<eax>(char a1@<sil>)
+UsercallFunc(int, onEggCarrierEggDoor_t, (int a1), (a1), 0x52B420, rEAX, rESI);
+static int __cdecl HandleEggCarrierEggDoor(int tp);
+
+
+UsercallFuncVoid(_onSceneChangeEC_t, (int a1, int a2), (a1,2), 0x52D690, rEAX, rECX);
+static void __cdecl HandleSceneChangeEc(int a1, int a2);
+
 
 WorldStateManager::WorldStateManager()
 {
     onSceneChangeMr_t.Hook(HandleMREntrance);
     onTwinkleParkDoor_t.Hook(HandleTwinkleParkEntrance);
+    onEggCarrierEggDoor_t.Hook(HandleEggCarrierEggDoor);
+    _onSceneChangeEC_t.Hook(HandleSceneChangeEc);
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
 
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehogHammer);
@@ -167,8 +174,6 @@ WorldStateManager::WorldStateManager()
     WriteCall(reinterpret_cast<void*>(0x537F64), &HandleWindyValleyEntrance);
 
     WriteCall(reinterpret_cast<void*>(0x525054), &HandleSkyDeckEntrance);
-
-    WriteCall(reinterpret_cast<void*>(0x52D6F8), &HandleHotShelterEntrance);
 
 
     worldStateManagerPtr = this;
@@ -544,7 +549,6 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     //Speed Highway (City Hall)
     AddSetToLevel(CITY_HALL_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Big);
 
-
     if (worldStateManagerPtr->options.bossChecks)
     {
         //Station Square Bosses
@@ -852,9 +856,17 @@ static void __cdecl HandleSkyDeckEntrance()
 }
 
 // HotShelter
-static void __cdecl HandleHotShelterEntrance()
+void HandleSceneChangeEc(int a1, int a2)
 {
+    if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierInside2)
+        return _onSceneChangeEC_t.Original(a1, a2);
+
+    const int doorId = *(_DWORD*)(a1 + 20);
+    if (doorId != 512)
+        return _onSceneChangeEC_t.Original(a1, a2);
+
     const LevelAndActIDs levelAndAct = levelEntrances.getLevelAndActIdFromEntrance(HotShelter, CurrentCharacter);
+    camerahax_adventurefields();
     SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
 }
 
@@ -1072,7 +1084,30 @@ FunctionHook<BOOL, int> preventKeyStoneFromSpawning(0x53C630, [](int a1)-> BOOL
     return preventKeyStoneFromSpawning.Original(a1);
 });
 
+// HotShelter
+static int __cdecl HandleEggCarrierEggDoor(const int a1)
+{
+    // Middle door
+    if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierInside2)
+        return onEggCarrierEggDoor_t.Original(a1);
 
+    if (*reinterpret_cast<BYTE*>(a1 + 1) != 6)
+        return onEggCarrierEggDoor_t.Original(a1);
+
+    if (!levelEntrances.canEnter(HotShelter, CurrentCharacter))
+        return false;
+
+    const EntityData1* player = EntityData1Ptrs[0];
+    const double dz = player->Position.z - *(float*)(a1 + 40);
+    const double dy = player->Position.y - *(float*)(a1 + 36);
+    const double dx = player->Position.x - *(float*)(a1 + 32);
+    const double distance = dx * dx + dy * dy + dz * dz;
+    if (squareroot(distance) > 50.0)
+        return false;
+
+    if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
+        return IsSwitchPressed(1);
+    return true;
+}
 //TODO:
 // SkyDeck,
-// HotShelter
