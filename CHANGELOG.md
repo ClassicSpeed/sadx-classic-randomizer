@@ -31,6 +31,9 @@ All notable changes to this project will be documented in this file.
 - Tails, Amy, Gamma and Big can now use Sonic's Lost World entrance.
     - It will be closed if the level for that entrance is not a level for the character.
     - Knuckles' Gold/Silver Key won't spawn if the level for that entrance is not a level for him.
+- Red Mountain's Door will stay closed if the level for that entrance is not a level for the character.
+    - Red Mountain's Monkey will only spawn if it's needed to open the door.
+    - For Tails/Amy/Big it won't spawn or if the level for that entrance is not a level for the character.
 
 ### Changed
 

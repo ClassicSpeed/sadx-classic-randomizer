@@ -15,6 +15,8 @@ constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
 constexpr int WARP_PAST = 10;
 
 constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
+constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
+constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
 
 constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
 constexpr int BEACH_GATE_STATION_SQUARE = 67;
@@ -25,8 +27,8 @@ LevelEntrances levelEntrances = {
     {Casinopolis, Casinopolis},
     {IceCap, IceCap},
     {TwinklePark, TwinklePark},
-    {SpeedHighway, SpeedHighway},
-    {RedMountain, RedMountain},
+    {SpeedHighway, RedMountain},
+    {RedMountain, SpeedHighway},
     {SkyDeck, SkyDeck},
     {LostWorld, LostWorld},
     {FinalEgg, FinalEgg},
@@ -238,21 +240,6 @@ FunctionHook<BOOL> isChaos2DoorOpen(0x638D50, []()-> BOOL
     return CurrentCharacter == Characters_Knuckles;
 });
 
-
-//Prevents the monkey from blocking the entrance to Red Mountain for knuckles
-FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
-FunctionHook<BOOL, int> isMonkeyDoorOpen(0x53E5D0, [](int a1)-> BOOL
-{
-    if (CurrentCharacter == Characters_Knuckles && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1)
-        return true;
-    if (CurrentCharacter == Characters_Knuckles && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
-        return isMonkeyDead(1);
-    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma)
-        return isMonkeyDead(1);
-    //For everyone else, we return true if we are in the main mystic ruins area
-    return levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1;
-});
-
 //We open the station door if we have the keys
 FunctionHook<BOOL> isStationDoorOpen(0x63AB70, []()-> BOOL
 {
@@ -461,6 +448,10 @@ const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635}, {0, 0, 0}, {0.
 
 const SETEntry COLLISION_CUBE_MR = CreateSetEntry(COLLISION_CUBE_MYSTIC_RUINS, {-393.62f, 120, 890.06f},
                                                   {0xFEFF, 0x4BF1, 0xFD6A}, {60, 80, 10});
+const SETEntry RED_MOUNTAIN_SCENE_CHANGE_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {-2100, -304, 1650},
+                                                             {0, 0, 0}, {40, 50, 0});
+const SETEntry RED_MOUNTAIN_DOOR_MR = CreateSetEntry(RED_MOUNTAIN_DOOR_MYSTIC_RUINS, {-1960.7f, -350.19f, 1652.01f},
+                                                     {0x1, 0xBEFB, 0xFF6E}, {0.3f, 0, 0});
 
 const SETEntry BEACH_GATE_SS = CreateSetEntry(BEACH_GATE_STATION_SQUARE, {-525, -10, 2098},
                                               {0, 0x2000, 0});
@@ -524,6 +515,9 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Big);
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Gamma);
+
+    AddSetToLevel(RED_MOUNTAIN_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Tails);
+    AddSetToLevel(RED_MOUNTAIN_DOOR_MR, LevelAndActIDs_MysticRuins2, Characters_Tails);
 
     //Emerald Coast
     AddSetToLevel(BEACH_GATE_SS, LevelAndActIDs_StationSquare5, Characters_Sonic);
@@ -990,8 +984,40 @@ FunctionHook<BOOL> isLostWorldFrontEntranceOpen(0x532E60, []()-> BOOL
         return false;
     return levelEntrances.canEnter(LostWorld, CurrentCharacter);
 });
+
+
+//Prevents the monkey from blocking the entrance to Red Mountain for knuckles
+FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
+FunctionHook<BOOL, int> isMonkeyDoorOpen(0x53E5D0, [](int a1)-> BOOL
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1)
+        return true;
+
+    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma
+        || CurrentCharacter == Characters_Knuckles)
+        return isMonkeyDead(1) && levelEntrances.canEnter(RedMountain, CurrentCharacter);
+
+    //For everyone else, we return true if we are in the main mystic ruins area
+    return levelEntrances.canEnter(RedMountain, CurrentCharacter);
+});
+
+
+// We only load the monkey if it's needed for opening the door
+FunctionHook<void, task*> onLoadMonkeyCage(0x540730, [](task* tp)-> void
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+    {
+        if (CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Big
+            || CurrentCharacter == Characters_Amy)
+            return FreeTask(tp);
+        if (!levelEntrances.canEnter(RedMountain, CurrentCharacter))
+            return FreeTask(tp);
+    }
+    onLoadMonkeyCage.Original(tp);
+});
+
+
 //TODO:
-// RedMountain,
 // SkyDeck,
 // HotShelter
 // IceCap,
