@@ -34,6 +34,9 @@ All notable changes to this project will be documented in this file.
 - Red Mountain's Door will stay closed if the level for that entrance is not a level for the character.
     - Red Mountain's Monkey will only spawn if it's needed to open the door.
     - For Tails/Amy/Big it won't spawn or if the level for that entrance is not a level for the character.
+- The Ice Cap door will be open for Knuckles, Amy and Gamma if as soon as you get the Ice Stone.
+    - For Sonic/Tails/Big you still have to go fetch the actual keys.
+    - The ladder (and the load zone) won't spawn if the level for that entrance is not a level for the character.
 
 ### Changed
 

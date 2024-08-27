@@ -17,6 +17,7 @@ constexpr int WARP_PAST = 10;
 constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
 constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
 constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
+constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
 
 constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
 constexpr int BEACH_GATE_STATION_SQUARE = 67;
@@ -27,8 +28,8 @@ LevelEntrances levelEntrances = {
     {Casinopolis, Casinopolis},
     {IceCap, IceCap},
     {TwinklePark, TwinklePark},
-    {SpeedHighway, RedMountain},
-    {RedMountain, SpeedHighway},
+    {SpeedHighway, SpeedHighway},
+    {RedMountain, RedMountain},
     {SkyDeck, SkyDeck},
     {LostWorld, LostWorld},
     {FinalEgg, FinalEgg},
@@ -443,15 +444,26 @@ void AddSetToLevel(const SETEntry& newSetEntry, const LevelAndActIDs levelAndAct
 }
 
 const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f});
-const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635}, {0, 0, 0}, {0.3f, 0, 51});
+const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635},
+                                              {0, 0, 0}, {0.3f, 0, 51});
 
 
 const SETEntry COLLISION_CUBE_MR = CreateSetEntry(COLLISION_CUBE_MYSTIC_RUINS, {-393.62f, 120, 890.06f},
                                                   {0xFEFF, 0x4BF1, 0xFD6A}, {60, 80, 10});
 const SETEntry RED_MOUNTAIN_SCENE_CHANGE_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {-2100, -304, 1650},
                                                              {0, 0, 0}, {40, 50, 0});
+
+const SETEntry ICE_CAP_SCENE_CHANGE_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {-1450, 95, 360},
+                                                        {1, 0, 0}, {20, 5, 0});
+const SETEntry ICE_CAP_LADDER_MR = CreateSetEntry(LONG_LADDER_MYSTIC_RUINS, {-1450, 40, 360},
+                                                  {0, 0XC800, 0}, {0, 0, 0});
+
+
 const SETEntry RED_MOUNTAIN_DOOR_MR = CreateSetEntry(RED_MOUNTAIN_DOOR_MYSTIC_RUINS, {-1960.7f, -350.19f, 1652.01f},
                                                      {0x1, 0xBEFB, 0xFF6E}, {0.3f, 0, 0});
+
+const SETEntry ICE_CAP_SPRING = CreateSetEntry(1, {-1070, -35, 236},
+                                               {0, 0, 0}, {0.3f, -1.25f, 1});
 
 const SETEntry BEACH_GATE_SS = CreateSetEntry(BEACH_GATE_STATION_SQUARE, {-525, -10, 2098},
                                               {0, 0x2000, 0});
@@ -518,6 +530,13 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     AddSetToLevel(RED_MOUNTAIN_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Tails);
     AddSetToLevel(RED_MOUNTAIN_DOOR_MR, LevelAndActIDs_MysticRuins2, Characters_Tails);
+
+    AddSetToLevel(ICE_CAP_LADDER_MR, LevelAndActIDs_MysticRuins2, Characters_Knuckles);
+    AddSetToLevel(ICE_CAP_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Knuckles);
+    AddSetToLevel(ICE_CAP_LADDER_MR, LevelAndActIDs_MysticRuins2, Characters_Gamma);
+    AddSetToLevel(ICE_CAP_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Gamma);
+
+    AddSetToLevel(ICE_CAP_SPRING, LevelAndActIDs_MysticRuins2, Characters_Amy);
 
     //Emerald Coast
     AddSetToLevel(BEACH_GATE_SS, LevelAndActIDs_StationSquare5, Characters_Sonic);
@@ -954,10 +973,20 @@ FunctionHook<BOOL, EntityData1*> isFinalEggGammaDoorOpen(0x53ED30, [](EntityData
 
 FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
 {
+    //Final Egg
     if ((CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
         && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && tp->twp->ang.x == 3)
     {
         if (!levelEntrances.canEnter(FinalEgg, CurrentCharacter))
+        {
+            return FreeTask(tp);
+        }
+    }
+
+    //Ice Cap
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2 && tp->twp->ang.x == 1)
+    {
+        if (!levelEntrances.canEnter(IceCap, CurrentCharacter))
         {
             return FreeTask(tp);
         }
@@ -971,7 +1000,8 @@ FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
 FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
 {
     if (CurrentCharacter == Characters_Knuckles)
-        return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[FLAG_KNUCKLES_MR_BLUECUBE]
+        return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[
+                FLAG_KNUCKLES_MR_BLUECUBE]
             && levelEntrances.canEnter(LostWorld, CurrentCharacter);
 
     return false;
@@ -1016,8 +1046,33 @@ FunctionHook<void, task*> onLoadMonkeyCage(0x540730, [](task* tp)-> void
     onLoadMonkeyCage.Original(tp);
 });
 
+// Removed the ladder on Ice Cap
+FunctionHook<void, task*> onLoadLongLadderMr(0x536CB0, [](task* tp)-> void
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+    {
+        if (!levelEntrances.canEnter(IceCap, CurrentCharacter))
+        {
+            return FreeTask(tp);
+        }
+    }
+    onLoadLongLadderMr.Original(tp);
+});
+
+
+FunctionHook<BOOL, int> preventKeyStoneFromSpawning(0x53C630, [](int a1)-> BOOL
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2
+        && ((CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Knuckles
+            || CurrentCharacter == Characters_Gamma) && levelEntrances.canEnter(IceCap, CurrentCharacter)))
+    {
+        return worldStateManagerPtr->unlockStatus.keyIceStone;
+    }
+
+    return preventKeyStoneFromSpawning.Original(a1);
+});
+
 
 //TODO:
 // SkyDeck,
 // HotShelter
-// IceCap,
