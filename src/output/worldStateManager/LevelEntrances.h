@@ -115,12 +115,12 @@ public:
     {
         // Define the map of characters to their accessible levels
         static const std::map<short, std::vector<Levels>> characterLevels = {
-            // {Characters_Sonic, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg}},
-            // {Characters_Tails, {WindyValley, Casinopolis, IceCap, SkyDeck, SpeedHighway}},
-            // {Characters_Knuckles, {SpeedHighway, Casinopolis, RedMountain, LostWorld, SkyDeck}},
-            // {Characters_Amy, {TwinklePark, HotShelter, FinalEgg}},
-            // {Characters_Big, {TwinklePark, IceCap, EmeraldCoast, HotShelter}},
-            // {Characters_Gamma, {FinalEgg, EmeraldCoast, WindyValley, RedMountain, HotShelter}}
+            {Characters_Sonic, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg}},
+            {Characters_Tails, {WindyValley, Casinopolis, IceCap, SkyDeck, SpeedHighway}},
+            {Characters_Knuckles, {SpeedHighway, Casinopolis, RedMountain, LostWorld, SkyDeck}},
+            {Characters_Amy, {TwinklePark, HotShelter, FinalEgg}},
+            {Characters_Big, {TwinklePark, IceCap, EmeraldCoast, HotShelter}},
+            {Characters_Gamma, {FinalEgg, EmeraldCoast, WindyValley, RedMountain, HotShelter}}
 
 
             // {Characters_Sonic, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
@@ -131,12 +131,12 @@ public:
             // {Characters_Gamma, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
 
             
-            {Characters_Sonic, {}},
-            {Characters_Tails, {}},
-            {Characters_Knuckles, {}},
-            {Characters_Amy, {}},
-            {Characters_Big, {}},
-            {Characters_Gamma, {}}
+            // {Characters_Sonic, {}},
+            // {Characters_Tails, {}},
+            // {Characters_Knuckles, {}},
+            // {Characters_Amy, {}},
+            // {Characters_Big, {}},
+            // {Characters_Gamma, {}}
         };
 
         // Check if the character can enter the specified level

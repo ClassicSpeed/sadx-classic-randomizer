@@ -187,7 +187,7 @@ UnlockStatus ItemRepository::GetUnlockStatus()
     unlockStatus.gammaLaserBlasterUnlocked = _itemData[51].obtained;
 
     unlockStatus.bigUnlocked = _itemData[6].obtained;
-    unlockStatus.bigLifeRingUnlocked = _itemData[60].obtained;
+    unlockStatus.bigLifeBeltUnlocked = _itemData[60].obtained;
     unlockStatus.bigPowerRodUnlocked = _itemData[61].obtained;
     unlockStatus.bigLureQuantity = _itemData[62].obtained + _itemData[63].obtained + _itemData[64].obtained + _itemData[
         65].obtained;
