@@ -144,6 +144,7 @@ void SADX_Goal(const int goal)
 {
     randomizerPtr->OnGoalSet(static_cast<Goal>(goal));
 }
+
 void SADX_CompareModVersion(const int version)
 {
     randomizerPtr->OnCheckVersion(version);
@@ -210,6 +211,7 @@ void SADX_StartingCharacter(const int startingCharacterIndex)
 {
     randomizerPtr->SetStartingCharacter(startingCharacterIndex);
 }
+
 void SADX_SonicStartingArea(const int startingArea)
 {
     randomizerPtr->SetCharacterStatingArea(Characters_Sonic, static_cast<StartingArea>(startingArea));
@@ -238,6 +240,22 @@ void SADX_GammaStartingArea(const int startingArea)
 void SADX_BigStartingArea(const int startingArea)
 {
     randomizerPtr->SetCharacterStatingArea(Characters_Big, static_cast<StartingArea>(startingArea));
+}
+
+void SADX_LevelEntranceMap(const std::map<int, int> levelEntrancesValues)
+{
+    if (levelEntrancesValues.empty())
+        return;
+    
+    LevelEntrances levelEntrances = {};
+
+    for (const auto& entrance : levelEntrancesValues)
+    {
+        const auto levelEntrance = static_cast<Levels>(entrance.first);
+        const auto actualLevel = static_cast<Levels>(entrance.second);
+        levelEntrances.addRelationship(levelEntrance, actualLevel);
+    }
+    randomizerPtr->UpdateLevelEntrances(levelEntrances);
 }
 
 void SADX_SetDeathLink(const int deathLinkActive)
@@ -376,6 +394,8 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("AmyStartingArea", &SADX_AmyStartingArea);
     AP_RegisterSlotDataIntCallback("GammaStartingArea", &SADX_GammaStartingArea);
     AP_RegisterSlotDataIntCallback("BigStartingArea", &SADX_BigStartingArea);
+
+    AP_RegisterSlotDataMapIntIntCallback("LevelEntranceMap", &SADX_LevelEntranceMap);
 
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
     AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);

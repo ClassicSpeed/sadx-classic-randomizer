@@ -116,6 +116,11 @@ void Randomizer::SetStartingCharacter(const int startingCharacterIndex)
     _characterManager.SetStartingCharacter(startingCharacterIndex);
 }
 
+void Randomizer::UpdateLevelEntrances(LevelEntrances levelEntrances)
+{
+    _worldStateManager.UpdateLevelEntrances(levelEntrances);
+}
+
 bool Randomizer::AreLastStoryRequirementsCompleted() const
 {
     if (_options.goal == GoalLevels)
