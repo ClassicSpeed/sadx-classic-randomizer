@@ -2,6 +2,7 @@
 
 #include "../../pch.h"
 #include "../../application/structs/Options.h"
+#include "../../application/structs/LevelEntrances.h"
 #include "../../application/structs/UnlockStatus.h"
 
 class WorldStateManager
@@ -15,6 +16,20 @@ public:
     void OnFrame();
     void SetStartingArea();
     void StartAllMissions();
+    void UpdateLevelEntrances(LevelEntrances levelEntrances);
     Options options;
     UnlockStatus unlockStatus;
+    LevelEntrances levelEntrances = {
+        {EmeraldCoast, EmeraldCoast},
+        {WindyValley, WindyValley},
+        {Casinopolis, Casinopolis},
+        {IceCap, IceCap},
+        {TwinklePark, TwinklePark},
+        {SpeedHighway, SpeedHighway},
+        {RedMountain, RedMountain},
+        {SkyDeck, SkyDeck},
+        {LostWorld, LostWorld},
+        {FinalEgg, FinalEgg},
+        {HotShelter, HotShelter},
+    };
 };

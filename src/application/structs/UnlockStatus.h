@@ -34,7 +34,7 @@ struct UnlockStatus
     bool gammaJetBoosterUnlocked;
 
     bool bigUnlocked;
-    bool bigLifeRingUnlocked;
+    bool bigLifeBeltUnlocked;
     bool bigPowerRodUnlocked;
     int bigLureQuantity = 0;
 

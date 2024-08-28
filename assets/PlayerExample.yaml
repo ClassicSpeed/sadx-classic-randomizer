@@ -30,6 +30,9 @@ Sonic Adventure DX:
   random_starting_location_per_character: 'true'
   # Ensures access to a level from the start, even if it means giving you an item.
   guaranteed_level: 'false'
+  # Randomizes the entrance of action stages
+  entrance_randomizer: 'false'
+  
   # When you die, everyone dies. Of course the reverse is true too.
   death_link: 'false'
   # Whether your in-level ring gain/loss is linked to other players

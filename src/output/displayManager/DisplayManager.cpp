@@ -567,7 +567,7 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append(_unlockStatus.bigUnlocked ? "B  " : "   ");
-        buffer.append(_unlockStatus.bigLifeRingUnlocked ? "LR " : "   ");
+        buffer.append(_unlockStatus.bigLifeBeltUnlocked ? "LB " : "   ");
         buffer.append(_unlockStatus.bigPowerRodUnlocked ? "PR " : "   ");
         buffer.append(_unlockStatus.bigLureQuantity > 0 ? "L" + std::to_string(_unlockStatus.bigLureQuantity) : "  ");
         if (_unlockStatus.bigUnlocked && _options.bigActionStageMissions > 0
@@ -580,7 +580,7 @@ void DisplayManager::DisplayItemsUnlocked()
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append(!_unlockStatus.bigUnlocked ? "B: " : " : ");
-        buffer.append(!_unlockStatus.bigLifeRingUnlocked ? "LR " : "   ");
+        buffer.append(!_unlockStatus.bigLifeBeltUnlocked ? "LB " : "   ");
         buffer.append(!_unlockStatus.bigPowerRodUnlocked ? "PR " : "   ");
         buffer.append(_unlockStatus.bigLureQuantity == 0 ? "L0" : "  ");
         if (!_unlockStatus.bigUnlocked && _options.bigActionStageMissions > 0

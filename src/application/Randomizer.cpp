@@ -13,8 +13,6 @@ void Randomizer::OnCheckFound(const int checkId) const
 
     _locationRepository.SetLocationChecked(checkId);
     _archipelagoMessenger.CheckLocation(checkId);
-    if (check.character == Characters_Big && check.level == LevelIDs_TwinklePark && check.mission == MISSION_C)
-        _worldStateManager.SetEventFlags({FLAG_BIG_SS_TPARK_ELEVATOR});
 
     _displayManager.UpdateChecks(_locationRepository.GetLocations());
     if (check.type == LocationLevel && check.mission == MISSION_C
@@ -114,6 +112,11 @@ void Randomizer::OnCheckVersion(int serverVersion)
 void Randomizer::SetStartingCharacter(const int startingCharacterIndex)
 {
     _characterManager.SetStartingCharacter(startingCharacterIndex);
+}
+
+void Randomizer::UpdateLevelEntrances(LevelEntrances levelEntrances)
+{
+    _worldStateManager.UpdateLevelEntrances(levelEntrances);
 }
 
 bool Randomizer::AreLastStoryRequirementsCompleted() const
