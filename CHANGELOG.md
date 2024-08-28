@@ -2,35 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.8.0] - 2024-08-?
+## [v0.8.0] - 2024-08-28
 
 ### Added
 
 - Level completion as a goal.
-- Complete all the action stages enabled to unlock the Perfect Chaos fight.
-- Added option to auto-start missions.
+- Completing all the action stages enables the Perfect Chaos fight.
+- Added an option to auto-start missions.
 - Added Angel Island area as a starting location.
 - Added Twinkle Park Lobby as a starting location.
-    - You will need the Twinkle Park ticket to exit the lobby even as Big.
+    - You will need the Twinkle Park ticket to exit the lobby, even as Big.
 - Your starting character will now be selected on the character select screen when starting the game.
-- Added warning message for version mismatch when connecting to Archipelago.
+- Added a warning message for version mismatch when connecting to Archipelago.
 - Separated the sublevel checks options into two:
     - One for Twinkle Circuit and Sand Hill, and another for Sky Chase Act 1 and 2.
-- Added error messages when generating with very low settings. Now there is a minimum of 5 emblems for the goal.
+- Added error messages when generating with very low settings. There is now a minimum of 5 emblems for the goal.
 - Level entrances can now be randomized.
 - The adventure field was modified to allow some characters to use level entrances they wouldn't normally use.
 - Some level entrances are now closed if the corresponding level is not accessible for the character.
 
 #### Level Entrance Changes
 
-- Gamma won't be able to shoot the Emerald Coast's gate's targets if the level is not accessible for him.
+- Gamma won't be able to shoot the Emerald Coast's gate targets if the level is not accessible for him.
 - Windy Valley won't open if the level is not accessible for the character.
     - For Sonic, Tails, and Gamma, the Wind Stone won't spawn if the level is not accessible for the character.
     - For Amy, Knuckles, and Big, it will open as soon as you get the Wind Stone.
 - Casinopolis button won't open the casino door if the level is not accessible for the character.
 - Speed Highway's shutter and elevator will open for Amy and Gamma when the player gets the Employee Card.
 - Big's Speed Highway entrance is at the city hall; he still needs the Employee Card to enter.
-- Knuckles' City Hall's barricade won't spawn if the level is not accessible for him.
+- Knuckles' City Hall barricade won't spawn if the level is not accessible for him.
 - Big, Knuckles, and Tails can use Gamma's Final Egg entrance.
 - Tails, Amy, Gamma, and Big can now use Sonic's Lost World entrance.
     - Knuckles' Gold/Silver Key won't spawn if the level is not accessible for him.
@@ -56,7 +56,7 @@ All notable changes to this project will be documented in this file.
 - Moved the City Hall emblem a little higher so you can get it when using the Cream the Rabbit mod.
 - Changed LR (Life Ring) to LB (Life Belt) in the pause menu.
 - Casual Logic for Big's mission 29 now requires the Life Belt.
-- Fixed Logic for Knuckles' Chaos 6 when unified.
+- Fixed logic for Knuckles' Chaos 6 when unified.
 - Fixed Big's logic requiring the Twinkle Park Ticket to enter the lobby.
 
 ## [v0.7.1] - 2024-08-22
