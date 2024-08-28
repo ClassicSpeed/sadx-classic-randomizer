@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Added option to auto-start missions.
 - Added Angel Island area as a starting location.
 - Added Twinkle Park Lobby as a starting location.
+    - You will need the Twinkle Park ticket to exit the lobby even as Big.
 - Your starting character will now be selected on the character select screen when starting the game.
 - Added warning message for version mismatch when connecting to Archipelago.
 - Separated the sublevel checks options into two:
@@ -56,6 +57,7 @@ All notable changes to this project will be documented in this file.
 - Changed LR (Life Ring) to LB (Life Belt) in the pause menu.
 - Casual Logic for Big's mission 29 now requires the Life Belt.
 - Fixed Logic for Knuckles' Chaos 6 when unified.
+- Fixed Big's logic requiring the Twinkle Park Ticket to enter the lobby.
 
 ## [v0.7.1] - 2024-08-22
 
