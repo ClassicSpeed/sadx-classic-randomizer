@@ -13,41 +13,42 @@ All notable changes to this project will be documented in this file.
 - Added Twinkle Park Lobby as a starting location.
 - Your starting character will now be selected on the character select screen when starting the game.
 - Added warning message for version mismatch when connecting to Archipelago.
-- Separated the sublevel checks options into two.
-    - One for Twinkle Circuit and Sand Hill and another for Sky Chase Act 1 and 2.
-- Added error messages when generating with really low settings. Now there is a minimum of 5 emblems for the goal.
-- Levels entrances can now be randomized.
-- The adventure field was modified to allow some character to use level entrances that they wouldn't be able to use.
-- Some level entrances are now closed if the corresponding level for that entrance is not a level for the character.
+- Separated the sublevel checks options into two:
+    - One for Twinkle Circuit and Sand Hill, and another for Sky Chase Act 1 and 2.
+- Added error messages when generating with very low settings. Now there is a minimum of 5 emblems for the goal.
+- Level entrances can now be randomized.
+- The adventure field was modified to allow some characters to use level entrances they wouldn't normally use.
+- Some level entrances are now closed if the corresponding level is not accessible for the character.
 
 #### Level Entrance Changes
 
-- TL;DR: Every character can use every level entrance if the level for that entrance is a level for the character.
-    - Wind/Ice Stone will open the level/cave directly for characters that don't normally use them.
-- Gamma won't be able to shoot the Emerald Coast's gate's targets if the level for that entrance is not a level for him.
-- Windy Valley won't open if the level for that entrance is not a level for the character.
-    - For Sonic, Tails and Gamma, the Wind Stone won't spawn if the level is not for the character.
-    - For, Amy, Knuckles and Big, it will open as soon as you get the wind stone.
-- Casinopolis button won't open the casino door if the level for that entrance is not a level for the character.
+- Gamma won't be able to shoot the Emerald Coast's gate's targets if the level is not accessible for him.
+- Windy Valley won't open if the level is not accessible for the character.
+    - For Sonic, Tails, and Gamma, the Wind Stone won't spawn if the level is not accessible for the character.
+    - For Amy, Knuckles, and Big, it will open as soon as you get the Wind Stone.
+- Casinopolis button won't open the casino door if the level is not accessible for the character.
 - Speed Highway's shutter and elevator will open for Amy and Gamma when the player gets the Employee Card.
-- Big's Speed Highway entrance is at the city hall, he still needs the Employee Card to enter.
-- Knuckles' barricade won't spawn if the level for that entrance is not a level for him.
-- Big, Knuckles and Tails can use Gamma's Final Egg entrance.
-- Tails, Amy, Gamma and Big can now use Sonic's Lost World entrance.
-    - Knuckles' Gold/Silver Key won't spawn if the level for that entrance is not a level for him.
-- Red Mountain's Door will stay closed if the level for that entrance is not a level for the character.
+- Big's Speed Highway entrance is at the city hall; he still needs the Employee Card to enter.
+- Knuckles' City Hall's barricade won't spawn if the level is not accessible for him.
+- Big, Knuckles, and Tails can use Gamma's Final Egg entrance.
+- Tails, Amy, Gamma, and Big can now use Sonic's Lost World entrance.
+    - Knuckles' Gold/Silver Key won't spawn if the level is not accessible for him.
+- Red Mountain's door will stay closed if the level is not accessible for the character.
     - Red Mountain's Monkey will only spawn if it's needed to open the door.
-    - For Tails/Amy/Big it won't spawn or if the level for that entrance is not a level for the character.
-- The Ice Cap door will be open for Knuckles, Amy and Gamma if as soon as you get the Ice Stone.
-    - For Sonic/Tails/Big you still have to go fetch the actual keys.
-    - The ladder (and the load zone) won't spawn if the level for that entrance is not a level for the character.
-- Big, Amy and Gamma can now use Knuckles' Sky Deck entrance.
+    - For Tails, Amy, and Big, it won't spawn if the level is not accessible for the character.
+- The Ice Cap door will be open for Knuckles, Amy, and Gamma as soon as you get the Ice Stone.
+    - For Sonic, Tails, and Big, you still have to fetch the actual Ice Stone.
+    - The ladder (and the load zone) won't spawn if the level is not accessible for the character.
+- Big, Amy, and Gamma can now use Knuckles' Sky Deck entrance.
+
+- TL;DR: Every character can use every level entrance if the level is accessible for the character.
+    - Wind/Ice Stone will open the level/cave directly for characters that don't normally use them.
 
 ### Changed
 
 - Fixed normal/hard logic for missions not working correctly.
 - Added an 80% maximum for the emblem percentage goal.
-- Twinkle circuit is now in logic if you have access to the Twinkle Park Lobby.
+- Twinkle Circuit is now in logic if you have access to the Twinkle Park Lobby.
 - Improved emblem requirements calculation.
     - It should hopefully fix the issue with the wrong emblem percentage goal.
 - Fixed soft lock when losing any race as Tails.
