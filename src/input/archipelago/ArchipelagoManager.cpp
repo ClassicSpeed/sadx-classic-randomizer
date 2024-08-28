@@ -114,7 +114,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
                 return;
 
             //We don't ignore deaths from our own slot
-            
+
             std::string deathCause;
             if (!bounceData["cause"].isNull())
                 deathCause = std::string(bounceData["cause"].asCString());
@@ -144,6 +144,10 @@ void SADX_Goal(const int goal)
 {
     randomizerPtr->OnGoalSet(static_cast<Goal>(goal));
 }
+void SADX_CompareModVersion(const int version)
+{
+    randomizerPtr->OnCheckVersion(version);
+}
 
 void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 {
@@ -154,6 +158,11 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 void SADX_MissionModeChecks(const int missionModeEnabled)
 {
     randomizerPtr->SetMissionMode(missionModeEnabled);
+}
+
+void SADX_AutoStartMissions(const int autoStartMissions)
+{
+    randomizerPtr->SetAutoStartMissions(autoStartMissions);
 }
 
 void SADX_LifeSanity(const int lifeSanity)
@@ -197,6 +206,10 @@ void SADX_BigLifeSanity(const int lifeSanity)
 }
 
 
+void SADX_StartingCharacter(const int startingCharacterIndex)
+{
+    randomizerPtr->SetStartingCharacter(startingCharacterIndex);
+}
 void SADX_SonicStartingArea(const int startingArea)
 {
     randomizerPtr->SetCharacterStatingArea(Characters_Sonic, static_cast<StartingArea>(startingArea));
@@ -247,9 +260,9 @@ void SADX_RingLoss(const int ringLoss)
     randomizerPtr->SetRingLoss(static_cast<RingLoss>(ringLoss));
 }
 
-void SADX_SublevelChecks(const int sublevelChecks)
+void SADX_SkyChaseChecks(const int skyChaseChecks)
 {
-    randomizerPtr->SetSublevelChecks(sublevelChecks);
+    randomizerPtr->SetSkyChaseChecks(skyChaseChecks);
 }
 
 void SADX_BossChecks(const int bossChecks)
@@ -342,9 +355,11 @@ void ArchipelagoManager::Connect()
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
     AP_RegisterSlotDataIntCallback("Goal", &SADX_Goal);
+    AP_RegisterSlotDataIntCallback("ModVersion", &SADX_CompareModVersion);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("MissionModeChecks", &SADX_MissionModeChecks);
-    
+    AP_RegisterSlotDataIntCallback("AutoStartMissions", &SADX_AutoStartMissions);
+
     AP_RegisterSlotDataIntCallback("LifeSanity", &SADX_LifeSanity);
     AP_RegisterSlotDataIntCallback("PinballLifeCapsules", &SADX_PinballLifeCapsules);
     AP_RegisterSlotDataIntCallback("SonicLifeSanity", &SADX_SonicLifeSanity);
@@ -354,6 +369,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("BigLifeSanity", &SADX_BigLifeSanity);
     AP_RegisterSlotDataIntCallback("GammaLifeSanity", &SADX_GammaLifeSanity);
 
+    AP_RegisterSlotDataIntCallback("StartingCharacter", &SADX_StartingCharacter);
     AP_RegisterSlotDataIntCallback("SonicStartingArea", &SADX_SonicStartingArea);
     AP_RegisterSlotDataIntCallback("TailsStartingArea", &SADX_TailsStartingArea);
     AP_RegisterSlotDataIntCallback("KnucklesStartingArea", &SADX_KnucklesStartingArea);
@@ -366,7 +382,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);
     AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
 
-    AP_RegisterSlotDataIntCallback("SubLevelChecks", &SADX_SublevelChecks);
+    AP_RegisterSlotDataIntCallback("SkyChaseChecks", &SADX_SkyChaseChecks);
 
     AP_RegisterSlotDataIntCallback("BossChecks", &SADX_BossChecks);
     AP_RegisterSlotDataIntCallback("UnifyChaos4", &SADX_UnifyChaos4);

@@ -8,8 +8,8 @@
 #define PCH_H
 
 #define SADX_AP_VERSION_MAJOR 0
-#define SADX_AP_VERSION_MINOR 7
-#define SADX_AP_VERSION_PATCH 1
+#define SADX_AP_VERSION_MINOR 8
+#define SADX_AP_VERSION_PATCH 0
 
 
 #define MISSION_C  2
@@ -30,6 +30,7 @@
 
 #define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
 #define GET_LEVEL(levelAct) ((levelAct) >> 8)
+#define BYTE1(x, n)   (*((uint8_t*)&(x)+1))
 
 
 const std::unordered_map<int, std::string> CHARACTERS_MAP = {

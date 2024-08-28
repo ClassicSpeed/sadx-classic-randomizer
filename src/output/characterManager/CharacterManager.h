@@ -24,6 +24,7 @@ public:
     int GetRingDifference();
     void GiveFillerItem(FillerType filler);
     void OnPlayingFrame();
+    void SetStartingCharacter(int startingCharacterIndex);
     Options options;
     UnlockStatus unlockStatus;
     int lastRingAmount;

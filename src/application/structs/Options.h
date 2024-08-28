@@ -2,8 +2,10 @@
 
 enum Goal
 {
+    GoalLevels,
     GoalEmblems,
     GoalEmeraldHunt,
+    GoalLevelsAndEmeraldHunt,
     GoalEmblemsAndEmeraldHunt,
     None
 };
@@ -78,7 +80,7 @@ struct Options
     int bigActionStageMissions = 0;
     int gammaActionStageMissions = 0;
 
-    bool sublevelsChecks = false;
+    bool skyChaseChecks = false;
 
     void SetActionStageMissions(const Characters character, const int missions)
     {

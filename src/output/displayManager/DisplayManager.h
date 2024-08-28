@@ -4,6 +4,7 @@
 #include "../../application/structs/ItemData.h"
 #include "../../application/structs/Message.h"
 #include "../../application/structs/UnlockStatus.h"
+#include "../../application/structs/LevelStatus.h"
 #include "../../application/structs/Options.h"
 #include "../../application/structs/LocationData.h"
 
@@ -17,6 +18,7 @@ public:
 
     void QueueMessage(const std::string& message);
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
+    void UpdateLevelStatus(LevelStatus levelStatus);
     void UpdateOptions(Options options);
     void OnFrame();
     void ShowStatusInformation(std::string information);
@@ -49,12 +51,13 @@ private:
     std::queue<std::string> _messagesQueue;
     std::deque<Message> _currentMessages;
 
-    std::clock_t _emblemTimer = -1;
+    std::clock_t _goalTimer = -1;
 
     std::clock_t _unlockStatusTimer;
     float _unlockStatusDelay = 0.3f;
 
     UnlockStatus _unlockStatus;
+    LevelStatus _levelStatus;
     Options _options;
 
 

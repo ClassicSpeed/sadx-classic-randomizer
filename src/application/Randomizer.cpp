@@ -4,7 +4,7 @@ void Randomizer::OnCheckFound(const int checkId) const
 {
     const LocationData check = _locationRepository.GetLocation(checkId);
 
-    if (LocationUpgrade == check.type)
+    if (check.type == LocationUpgrade)
     {
         const ItemData item = _itemRepository.GetItem(check.originalItemId);
         if (!item.obtained)
@@ -17,11 +17,23 @@ void Randomizer::OnCheckFound(const int checkId) const
         _worldStateManager.SetEventFlags({FLAG_BIG_SS_TPARK_ELEVATOR});
 
     _displayManager.UpdateChecks(_locationRepository.GetLocations());
+    if (check.type == LocationLevel && check.mission == MISSION_C
+        && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+    {
+        const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
+        _displayManager.UpdateLevelStatus(levelStatus);
+        _displayManager.ShowGoalStatus();
+        if (levelStatus.levelsTotal == levelStatus.levelsCompleted
+            && AreLastStoryRequirementsCompleted())
+            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+    }
 }
 
 void Randomizer::MarkCheckedLocation(const int64_t checkId) const
 {
     _locationRepository.SetLocationChecked(checkId);
+    const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
+    _displayManager.UpdateLevelStatus(levelStatus);
 }
 
 
@@ -80,13 +92,44 @@ void Randomizer::SetMissionMode(const int missionModeEnabled)
     _displayManager.UpdateOptions(_options);
 }
 
+void Randomizer::SetAutoStartMissions(const int autoStartMissions)
+{
+    if (autoStartMissions)
+        _worldStateManager.StartAllMissions();
+}
+
+void Randomizer::OnCheckVersion(int serverVersion)
+{
+    if (serverVersion != SADX_AP_VERSION_MAJOR * 100 + SADX_AP_VERSION_MINOR * 10 + SADX_AP_VERSION_PATCH)
+    {
+        const std::string modVersionString = std::to_string(SADX_AP_VERSION_MAJOR) + "." +
+            std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH);
+        const std::string serverVersionString = std::to_string(serverVersion / 100) + "." +
+            std::to_string((serverVersion / 10) % 10) + "." + std::to_string(serverVersion % 10);
+        _displayManager.QueueMessage(
+            "Warning: Version mismatch! Server: v" + serverVersionString + " Mod: v" + modVersionString);
+    }
+}
+
+void Randomizer::SetStartingCharacter(const int startingCharacterIndex)
+{
+    _characterManager.SetStartingCharacter(startingCharacterIndex);
+}
+
 bool Randomizer::AreLastStoryRequirementsCompleted() const
 {
+    if (_options.goal == GoalLevels)
+        return _locationRepository.CompletedAllLevels(_options);
+
     if (_options.goal == GoalEmblems)
         return _itemRepository.GetEmblemCount() >= _options.emblemGoal;
 
     if (_options.goal == GoalEmeraldHunt)
         return _itemRepository.GetUnlockStatus().GotAllChaosEmeralds();
+
+    if (_options.goal == GoalLevelsAndEmeraldHunt)
+        return _locationRepository.CompletedAllLevels(_options) &&
+            _itemRepository.GetUnlockStatus().GotAllChaosEmeralds();
 
     if (_options.goal == GoalEmblemsAndEmeraldHunt)
         return _itemRepository.GetEmblemCount() >= _options.emblemGoal &&
@@ -227,6 +270,11 @@ void Randomizer::OnGoalSet(const Goal goal)
     _options.goal = goal;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
+    if (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt)
+    {
+        const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
+        _displayManager.UpdateLevelStatus(levelStatus);
+    }
 }
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
@@ -270,6 +318,11 @@ void Randomizer::SetActionStageMissions(const Characters characters, const int m
     _options.SetActionStageMissions(characters, missions);
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
+    if (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt)
+    {
+        const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
+        _displayManager.UpdateLevelStatus(levelStatus);
+    }
 }
 
 void Randomizer::SetCharacterLifeSanity(const Characters character, const bool characterLifeSanity)
@@ -303,9 +356,9 @@ void Randomizer::SetRingLoss(const RingLoss ringLoss)
     _characterManager.UpdateOptions(_options);
 }
 
-void Randomizer::SetSublevelChecks(const bool sublevelChecks)
+void Randomizer::SetSkyChaseChecks(const bool skyChaseChecks)
 {
-    _options.sublevelsChecks = sublevelChecks;
+    _options.skyChaseChecks = skyChaseChecks;
 }
 
 void Randomizer::SetBossChecks(const bool bossChecks)

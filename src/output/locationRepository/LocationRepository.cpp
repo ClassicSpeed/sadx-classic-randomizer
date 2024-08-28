@@ -410,3 +410,131 @@ std::vector<LifeBoxLocationData> LocationRepository::GetLifeCapsules()
 {
     return _lifeCapsules;
 }
+
+bool LocationRepository::CompletedAllLevels(Options options)
+{
+    const LevelStatus levelStatus = this->GetLevelStatus(options);
+    return levelStatus.levelsTotal == levelStatus.levelsCompleted;
+}
+
+LevelStatus LocationRepository::GetLevelStatus(Options options)
+{
+    auto levelStatus = LevelStatus();
+    levelStatus.sonicEmeraldCoast = _checkData[1002].checked;
+    levelStatus.sonicWindyValley = _checkData[1102].checked;
+    levelStatus.sonicCasinopolis = _checkData[1202].checked;
+    levelStatus.sonicIceCap = _checkData[1302].checked;
+    levelStatus.sonicTwinklePark = _checkData[1402].checked;
+    levelStatus.sonicSpeedHighway = _checkData[1502].checked;
+    levelStatus.sonicRedMountain = _checkData[1602].checked;
+    levelStatus.sonicSkyDeck = _checkData[1702].checked;
+    levelStatus.sonicLostWorld = _checkData[1802].checked;
+    levelStatus.sonicFinalEgg = _checkData[1902].checked;
+
+    levelStatus.tailsWindyValley = _checkData[2002].checked;
+    levelStatus.tailsCasinopolis = _checkData[2102].checked;
+    levelStatus.tailsIceCap = _checkData[2202].checked;
+    levelStatus.tailsSkyDeck = _checkData[2302].checked;
+    levelStatus.tailsSpeedHighway = _checkData[2402].checked;
+
+    levelStatus.knucklesSpeedHighway = _checkData[3002].checked;
+    levelStatus.knucklesCasinopolis = _checkData[3102].checked;
+    levelStatus.knucklesRedMountain = _checkData[3202].checked;
+    levelStatus.knucklesLostWorld = _checkData[3302].checked;
+    levelStatus.knucklesSkyDeck = _checkData[3402].checked;
+
+    levelStatus.amyTwinklePark = _checkData[4002].checked;
+    levelStatus.amyHotShelter = _checkData[4102].checked;
+    levelStatus.amyFinalEgg = _checkData[4202].checked;
+
+    levelStatus.bigTwinklePark = _checkData[6002].checked;
+    levelStatus.bigIceCap = _checkData[6102].checked;
+    levelStatus.bigEmeraldCoast = _checkData[6202].checked;
+    levelStatus.bigHotShelter = _checkData[6302].checked;
+
+    levelStatus.gammaFinalEgg = _checkData[5002].checked;
+    levelStatus.gammaWindyValley = _checkData[5102].checked;
+    levelStatus.gammaEmeraldCoast = _checkData[5202].checked;
+    levelStatus.gammaRedMountain = _checkData[5302].checked;
+    levelStatus.gammaHotShelter = _checkData[5402].checked;
+
+
+    if (options.sonicActionStageMissions > 0 && options.playableSonic)
+    {
+        int count = 0;
+        if (levelStatus.sonicEmeraldCoast) count++;
+        if (levelStatus.sonicWindyValley) count++;
+        if (levelStatus.sonicCasinopolis) count++;
+        if (levelStatus.sonicIceCap) count++;
+        if (levelStatus.sonicTwinklePark) count++;
+        if (levelStatus.sonicSpeedHighway) count++;
+        if (levelStatus.sonicRedMountain) count++;
+        if (levelStatus.sonicSkyDeck) count++;
+        if (levelStatus.sonicLostWorld) count++;
+        if (levelStatus.sonicFinalEgg) count++;
+
+        levelStatus.sonicLevelsTotal = 10;
+        levelStatus.sonicLevelsCompleted = count;
+    }
+    if (options.tailsActionStageMissions > 0 && options.playableTails)
+    {
+        int count = 0;
+        if (levelStatus.tailsWindyValley) count++;
+        if (levelStatus.tailsCasinopolis) count++;
+        if (levelStatus.tailsIceCap) count++;
+        if (levelStatus.tailsSkyDeck) count++;
+        if (levelStatus.tailsSpeedHighway) count++;
+        levelStatus.tailsLevelsTotal = 5;
+        levelStatus.tailsLevelsCompleted = count;
+    }
+    if (options.knucklesActionStageMissions > 0 && options.playableKnuckles)
+    {
+        int count = 0;
+        if (levelStatus.knucklesSpeedHighway) count++;
+        if (levelStatus.knucklesCasinopolis) count++;
+        if (levelStatus.knucklesRedMountain) count++;
+        if (levelStatus.knucklesLostWorld) count++;
+        if (levelStatus.knucklesSkyDeck) count++;
+        levelStatus.knucklesLevelsTotal = 5;
+        levelStatus.knucklesLevelsCompleted = count;
+    }
+    if (options.amyActionStageMissions > 0 && options.playableAmy)
+    {
+        int count = 0;
+        if (levelStatus.amyTwinklePark) count++;
+        if (levelStatus.amyHotShelter) count++;
+        if (levelStatus.amyFinalEgg) count++;
+        levelStatus.amyLevelsTotal = 3;
+        levelStatus.amyLevelsCompleted = count;
+    }
+    if (options.bigActionStageMissions > 0 && options.playableBig)
+    {
+        int count = 0;
+        if (levelStatus.bigTwinklePark) count++;
+        if (levelStatus.bigIceCap) count++;
+        if (levelStatus.bigEmeraldCoast) count++;
+        if (levelStatus.bigHotShelter) count++;
+        levelStatus.bigLevelsTotal = 4;
+        levelStatus.bigLevelsCompleted = count;
+    }
+    if (options.gammaActionStageMissions > 0 && options.playableGamma)
+    {
+        int count = 0;
+        if (levelStatus.gammaFinalEgg) count++;
+        if (levelStatus.gammaWindyValley) count++;
+        if (levelStatus.gammaEmeraldCoast) count++;
+        if (levelStatus.gammaRedMountain) count++;
+        if (levelStatus.gammaHotShelter) count++;
+        levelStatus.gammaLevelsTotal = 5;
+        levelStatus.gammaLevelsCompleted = count;
+    }
+
+    levelStatus.levelsTotal = levelStatus.sonicLevelsTotal + levelStatus.tailsLevelsTotal
+        + levelStatus.knucklesLevelsTotal + levelStatus.amyLevelsTotal
+        + levelStatus.bigLevelsTotal + levelStatus.gammaLevelsTotal;
+    levelStatus.levelsCompleted = levelStatus.sonicLevelsCompleted + levelStatus.tailsLevelsCompleted
+        + levelStatus.knucklesLevelsCompleted + levelStatus.amyLevelsCompleted
+        + levelStatus.bigLevelsCompleted + levelStatus.gammaLevelsCompleted;
+
+    return levelStatus;
+}

@@ -12,6 +12,8 @@ constexpr int WARP_MYSTIC_RUINS = 6;
 constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
 constexpr int WARP_PAST = 10;
 
+constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
+
 
 // //We pretend that the egg carrier is sunk so that the hedgehog hammer is works
 static bool __cdecl HandleHedgehoHammer()
@@ -102,6 +104,16 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
             && tp->twp->pos.z < 2769 && tp->twp->pos.z > 2765)
             FreeTask(tp);
     }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
+        && worldStateManagerPtr->unlockStatus.keyDynamite)
+    {
+        //We find the cube collision that we created for the dynamite and delete it
+        if (tp->twp->pos.x < -394 && tp->twp->pos.x > -392
+            && tp->twp->pos.y < 121 && tp->twp->pos.y > 118
+            && tp->twp->pos.z < 891 && tp->twp->pos.z > 889)
+            FreeTask(tp);
+    }
+
     else
         onCollisionCube.Original(tp);
 });
@@ -360,6 +372,9 @@ void WorldStateManager::SetStartingArea()
         SetLevelAndAct(LevelIDs_StationSquare, 1);
         SetEntranceNumber(2);
         break;
+    case TwinkleParkArea:
+        SetLevelAndAct(LevelIDs_StationSquare, 5);
+        break;
     case MysticRuinsMain:
         SetLevelAndAct(LevelIDs_MysticRuins, 0);
         break;
@@ -369,12 +384,23 @@ void WorldStateManager::SetStartingArea()
     case EggCarrier:
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
         break;
-
-    case NoStatingArea:
-    case TwinkleParkArea:
     case AngelIsland:
+        SetLevelAndAct(LevelIDs_MysticRuins, 1);
+        break;
+    case NoStatingArea:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
+        break;
     }
+}
+
+void WorldStateManager::StartAllMissions()
+{
+    for (int i = 0; i < 60; i++)
+    {
+        MissionFlags[i] |= MissionFlags_Found;
+        MissionFlags[i] |= MissionFlags_Started;
+    }
+    WriteSaveFile();
 }
 
 typedef struct
@@ -414,6 +440,10 @@ void AddSetToLevel(const SETEntry& newSetEntry, const LevelAndActIDs levelAndAct
 
 const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f});
 const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635}, {0, 0, 0}, {0.3f, 0, 51});
+
+
+const SETEntry COLLISION_CUBE_MR = CreateSetEntry(COLLISION_CUBE_MYSTIC_RUINS, {-393.62f, 120, 890.06f},
+                                                  {0xFEFF, 0x4BF1, 0xFD6A}, {60, 80, 10});
 
 
 //Station Square Bosses
@@ -466,6 +496,14 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
 
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Tails);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Big);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Gamma);
+
+
     if (worldStateManagerPtr->options.bossChecks)
     {
         //Station Square Bosses
@@ -499,7 +537,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
     }
-    if (worldStateManagerPtr->options.sublevelsChecks)
+    if (worldStateManagerPtr->options.skyChaseChecks)
     {
         //Sky Chase
         AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);
@@ -526,6 +564,21 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Amy);
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Gamma);
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Big);
+});
+
+
+// We move the emblem a little higher so Cream can get it.
+FunctionHook<void, task*> onEmblemMain(0x4B4940, [](task* tp)-> void
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
+        if (tp->twp->pos.x > 386 && tp->twp->pos.x < 390
+            && tp->twp->pos.y > -6 && tp->twp->pos.y < -5
+            && tp->twp->pos.z > 489 && tp->twp->pos.z < 492)
+        {
+            tp->twp->pos.y = -4;
+        }
+
+    onEmblemMain.Original(tp);
 });
 
 FunctionHook<void> onMissionSetLoad(0x591A70, []()-> void
