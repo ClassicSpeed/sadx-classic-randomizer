@@ -54,6 +54,7 @@ All notable changes to this project will be documented in this file.
 - Fixed soft lock when losing any race as Tails.
 - Moved the City Hall emblem a little higher so you can get it when using the Cream the Rabbit mod.
 - Changed LR (Life Ring) to LB (Life Belt) in the pause menu.
+- Casual Logic for Big's mission 29 now requires the Life Belt.
 
 ## [v0.7.1] - 2024-08-22
 
