@@ -751,9 +751,9 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
 
 FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-> void
 {
-    // Emerald Coast Entrance
     const auto& pos = tp->twp->pos;
 
+    // Emerald Coast Entrance
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
         && worldStateManagerPtr->levelEntrances.canEnter(EmeraldCoast, CurrentCharacter)
         && pos.x > -590 && pos.x < -580 && pos.y > -25 && pos.y < -15 && pos.z > 2130 && pos.z < 2140)
@@ -952,8 +952,7 @@ FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
     //We open the casino door for knuckles despite any story flags
     if (CurrentCharacter == Characters_Knuckles)
         return GetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO)) && worldStateManagerPtr->
-            levelEntrances.canEnter(
-                WindyValley, CurrentCharacter);
+            levelEntrances.canEnter(Casinopolis, CurrentCharacter);
 
     return worldStateManagerPtr->levelEntrances.canEnter(Casinopolis, CurrentCharacter);
 });
