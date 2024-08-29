@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.8.1] - 2024-08-29
+
+### Changed
+
+- Fixed Tails, Knuckles, and Big not being able to enter the Final Egg Tower in the Jungle.
+- Fixed hotel elevators not working.
+- Added Light Shoes requirement for two Life Capsules in Sonic's Red Mountain.
+- Updated `PlayerExample.yaml` to include goals information.
+- Fixed Amy's Angel Island cave not opening.
+- Fixed Knuckles' Casinopolis entrance not opening.
+
 ## [v0.8.0] - 2024-08-28
 
 ### Added

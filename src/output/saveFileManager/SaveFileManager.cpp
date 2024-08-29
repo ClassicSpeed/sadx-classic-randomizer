@@ -130,14 +130,6 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_ICESTONE));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_ENTRANCE_ICECAP));
 
-    //Angel Island
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_WESTROCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_WESTROCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_WESTROCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_WESTROCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_WESTROCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_ISLANDDOOR));
-
     //Red Mountain
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_MOUNTAIN));
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_MOUNTAIN));
