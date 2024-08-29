@@ -71,6 +71,7 @@ ItemRepository::ItemRepository()
                                       FLAG_KNUCKLES_SS_TPARK_ELEVATOR,
                                       FLAG_AMY_SS_TPARK_ELEVATOR,
                                       FLAG_E102_SS_TPARK_ELEVATOR,
+                                      FLAG_BIG_SS_TPARK_ELEVATOR
                                   }, "Twinkle Park Ticket")
         },
         {86, ItemData::KeyItem({FLAG_SONIC_SS_CARD, FLAG_MILES_SS_ENTRANCE_HIGHWAY}, "Employee Card")},
@@ -78,9 +79,7 @@ ItemRepository::ItemRepository()
         {
             88, ItemData::KeyItem({
                                       FLAG_SONIC_MR_WESTROCK, FLAG_MILES_MR_WESTROCK, FLAG_KNUCKLES_MR_WESTROCK,
-                                      FLAG_E102_MR_WESTROCK, FLAG_BIG_MR_WESTROCK,
-                                      FLAG_SONIC_MR_ISLANDDOOR, FLAG_KNUCKLES_MR_ISLANDDOOR,
-                                      FLAG_AMY_MR_ISLANDDOOR, FLAG_E102_MR_ISLANDDOOR
+                                      FLAG_E102_MR_WESTROCK, FLAG_BIG_MR_WESTROCK
                                   }, "Dynamite")
         },
         {
