@@ -741,7 +741,8 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
     }
 
     const short buffer = CurrentLevel;
-    CurrentLevel = worldStateManagerPtr->levelEntrances.getEntranceLevelIdFromLevel(static_cast<LevelIDs>(CurrentLevel));
+    CurrentLevel = worldStateManagerPtr->levelEntrances.
+                                         getEntranceLevelIdFromLevel(static_cast<LevelIDs>(CurrentLevel));
 
     onSetStartPosReturnToField.Original(tp);
     CurrentLevel = buffer;
@@ -757,14 +758,16 @@ FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-
         && worldStateManagerPtr->levelEntrances.canEnter(EmeraldCoast, CurrentCharacter)
         && pos.x > -590 && pos.x < -580 && pos.y > -25 && pos.y < -15 && pos.z > 2130 && pos.z < 2140)
     {
-        tp->twp->ang.z = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(EmeraldCoast, CurrentCharacter);
+        tp->twp->ang.z = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+            EmeraldCoast, CurrentCharacter);
     }
     //  Casinopolis
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2
         && worldStateManagerPtr->levelEntrances.canEnter(Casinopolis, CurrentCharacter)
         && pos.x > -646 && pos.x < -642 && pos.y > -8 && pos.y < 4 && pos.z > 878 && pos.z < 882)
     {
-        tp->twp->ang.z = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(Casinopolis, CurrentCharacter);
+        tp->twp->ang.z = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+            Casinopolis, CurrentCharacter);
     }
 
     // TwinklePark
@@ -772,7 +775,8 @@ FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-
         && worldStateManagerPtr->levelEntrances.canEnter(TwinklePark, CurrentCharacter)
         && pos.x > 850 && pos.x < 860 && pos.y > 40 && pos.y < 50 && pos.z > 1760 && pos.z < 1780)
     {
-        tp->twp->ang.z = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(TwinklePark, CurrentCharacter);
+        tp->twp->ang.z = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+            TwinklePark, CurrentCharacter);
     }
 
     // SpeedHighway (City Hall)
@@ -780,7 +784,8 @@ FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-
         && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
         && pos.x > 269 && pos.x < 272 && pos.y > -4 && pos.y < 0 && pos.z > 232 && pos.z < 236)
     {
-        tp->twp->ang.z = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(SpeedHighway, CurrentCharacter);
+        tp->twp->ang.z = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+            SpeedHighway, CurrentCharacter);
     }
 
     onSceneChangeMainStationSquare.Original(tp);
@@ -792,7 +797,8 @@ static void __cdecl HandleSpeedHighwayEntrance()
     if (worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
         && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
     {
-        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(SpeedHighway, CurrentCharacter);
+        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+            SpeedHighway, CurrentCharacter);
         SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
     }
 }
@@ -802,7 +808,8 @@ static void __cdecl HandleWindyValleyEntrance()
 {
     if (worldStateManagerPtr->levelEntrances.canEnter(WindyValley, CurrentCharacter))
     {
-        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(WindyValley, CurrentCharacter);
+        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+            WindyValley, CurrentCharacter);
         SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
     }
 }
@@ -810,32 +817,47 @@ static void __cdecl HandleWindyValleyEntrance()
 // MysticRuins
 static void __cdecl HandleMREntrance(const int newScene)
 {
-    // Final Egg
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4
-        && worldStateManagerPtr->levelEntrances.canEnter(FinalEgg, CurrentCharacter) && (newScene == 2 || newScene == 3))
+    // Jungle Final Egg tower
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && newScene == 5)
     {
-        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(FinalEgg, CurrentCharacter);
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 3);
+    }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && newScene == 4)
+    {
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 2);
+    }
+    // Final Egg
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4
+        && worldStateManagerPtr->levelEntrances.canEnter(FinalEgg, CurrentCharacter) && (newScene == 2 || newScene ==
+            3))
+    {
+        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+            FinalEgg, CurrentCharacter);
         SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
     }
     // Lost World
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3
-        && worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter) && (newScene == 6 || newScene == 7))
+        && worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter) && (newScene == 6 || newScene ==
+            7))
     {
-        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(LostWorld, CurrentCharacter);
+        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+            LostWorld, CurrentCharacter);
         SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
     }
     // Ice Cap
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2
         && worldStateManagerPtr->levelEntrances.canEnter(IceCap, CurrentCharacter) && newScene == 1)
     {
-        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(IceCap, CurrentCharacter);
+        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+            IceCap, CurrentCharacter);
         SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
     }
     // Red Mountain
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2
         && worldStateManagerPtr->levelEntrances.canEnter(RedMountain, CurrentCharacter) && newScene == 0)
     {
-        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(RedMountain, CurrentCharacter);
+        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+            RedMountain, CurrentCharacter);
         SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
     }
     else
@@ -855,7 +877,8 @@ void HandleSceneChangeEcInside(int a1, int a2)
     if (doorId != 512)
         return _onSceneChangeECInside_t.Original(a1, a2);
 
-    const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(HotShelter, CurrentCharacter);
+    const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+        HotShelter, CurrentCharacter);
     camerahax_adventurefields();
     SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
 }
@@ -870,7 +893,8 @@ void HandleSceneChangeEcOutside(int a1)
     const int doorId = *(_DWORD*)(a1 + 20);
     if (doorId != 256)
         return _onSceneChangeECOutside_t.Original(a1);
-    const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(SkyDeck, CurrentCharacter);
+    const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+        SkyDeck, CurrentCharacter);
     camerahax_adventurefields();
     SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
 }
@@ -897,14 +921,18 @@ FunctionHook<void, task*> loadEmeraldCoastGateTargets(0x63A0C0, [](task* tp)-> v
 FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
 {
     if (CurrentCharacter == Characters_Sonic)
-        return EventFlagArray[FLAG_SONIC_MR_WINDYSTONE] && worldStateManagerPtr->levelEntrances.canEnter(WindyValley, CurrentCharacter);
+        return EventFlagArray[FLAG_SONIC_MR_WINDYSTONE] && worldStateManagerPtr->levelEntrances.canEnter(
+            WindyValley, CurrentCharacter);
 
     if (CurrentCharacter == Characters_Tails)
-        return EventFlagArray[FLAG_MILES_MR_WINDYSTONE] && worldStateManagerPtr->levelEntrances.canEnter(WindyValley, CurrentCharacter);
+        return EventFlagArray[FLAG_MILES_MR_WINDYSTONE] && worldStateManagerPtr->levelEntrances.canEnter(
+            WindyValley, CurrentCharacter);
 
     if (CurrentCharacter == Characters_Gamma)
-        return EventFlagArray[FLAG_E102_MR_WINDYSTONE] && worldStateManagerPtr->levelEntrances.canEnter(WindyValley, CurrentCharacter);
-    return worldStateManagerPtr->levelEntrances.canEnter(WindyValley, CurrentCharacter) && worldStateManagerPtr->unlockStatus.keyWindStone;
+        return EventFlagArray[FLAG_E102_MR_WINDYSTONE] && worldStateManagerPtr->levelEntrances.canEnter(
+            WindyValley, CurrentCharacter);
+    return worldStateManagerPtr->levelEntrances.canEnter(WindyValley, CurrentCharacter) && worldStateManagerPtr->
+        unlockStatus.keyWindStone;
 });
 
 // Handles the Casinopolis entrance
@@ -915,8 +943,9 @@ FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
 
     //We open the casino door for knuckles despite any story flags
     if (CurrentCharacter == Characters_Knuckles)
-        return GetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO)) && worldStateManagerPtr->levelEntrances.canEnter(
-            WindyValley, CurrentCharacter);
+        return GetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO)) && worldStateManagerPtr->
+            levelEntrances.canEnter(
+                WindyValley, CurrentCharacter);
 
     return worldStateManagerPtr->levelEntrances.canEnter(Casinopolis, CurrentCharacter);
 });
@@ -956,7 +985,8 @@ FunctionHook<BOOL> isCityHallDoorOpen(0x636BF0, []()-> BOOL
         return worldStateManagerPtr->unlockStatus.keyEmployeeCard
             && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter);
 
-    return worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter) && isCityHallDoorOpen.Original();
+    return worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter) && isCityHallDoorOpen.
+        Original();
 });
 
 //We don't create Knuckles barricade if he doesn't have access to the level
@@ -972,6 +1002,9 @@ FunctionHook<void, task*> loadBarricade(0x637580, [](task* tp)-> void
 
 FunctionHook<BOOL, EntityData1*> isFinalEggGammaDoorOpen(0x53ED30, [](EntityData1* entity)-> BOOL
 {
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
+        return true;
+
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_MysticRuins4)
         return isFinalEggGammaDoorOpen.Original(entity);
 
@@ -990,7 +1023,7 @@ FunctionHook<BOOL, EntityData1*> isFinalEggGammaDoorOpen(0x53ED30, [](EntityData
 
 FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
 {
-    //Final Egg
+    // Final Egg
     if ((CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
         && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && tp->twp->ang.x == 3)
     {
@@ -1010,6 +1043,15 @@ FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
     }
 
     onLoadSceneChangeMr.Original(tp);
+});
+//
+FunctionHook<BOOL> isFinalEggTowerActive(0x538550, []()-> BOOL
+{
+    return true;
+});
+FunctionHook<BOOL> isFinalEggDoorActive(0x53EDF0, []()-> BOOL
+{
+    return true;
 });
 
 
@@ -1081,7 +1123,8 @@ FunctionHook<BOOL, int> preventKeyStoneFromSpawning(0x53C630, [](int a1)-> BOOL
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2
         && ((CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Knuckles
-            || CurrentCharacter == Characters_Gamma) && worldStateManagerPtr->levelEntrances.canEnter(IceCap, CurrentCharacter)))
+            || CurrentCharacter == Characters_Gamma) && worldStateManagerPtr->levelEntrances.canEnter(
+            IceCap, CurrentCharacter)))
     {
         return worldStateManagerPtr->unlockStatus.keyIceStone;
     }

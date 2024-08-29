@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.8.1] - 2024-08-?
+
+### Changed
+
+- Fixed Tails, Knuckles and Big not being able to enter the Final Egg Tower at the Jungle.
+
 ## [v0.8.0] - 2024-08-28
 
 ### Added
