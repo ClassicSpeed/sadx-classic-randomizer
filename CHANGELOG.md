@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Fixed Tails, Knuckles and Big not being able to enter the Final Egg Tower at the Jungle.
 - Fixed Hotel elevators not working.
+- Added Light Shoes requirement for 2 Life Capsules in Sonic's Red Mountain.
 
 ## [v0.8.0] - 2024-08-28
 
