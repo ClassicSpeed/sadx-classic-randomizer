@@ -801,6 +801,14 @@ static void __cdecl HandleSpeedHighwayEntrance()
             SpeedHighway, CurrentCharacter);
         SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
     }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5)
+    {
+        const EntityData1* player = EntityData1Ptrs[0];
+        if (player->Position.z < 1683)
+            SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos2, 0);
+        else
+            SetNextLevelAndAct_CutsceneMode(LevelIDs_SSGarden, 0);
+    }
 }
 
 // WindyValley
