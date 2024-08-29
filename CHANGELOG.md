@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.8.1] - 2024-08-?
+## [v0.8.1] - 2024-08-29
 
 ### Changed
 
@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Hotel elevators not working.
 - Added Light Shoes requirement for 2 Life Capsules in Sonic's Red Mountain.
 - Updated PlayerExample.yaml to include goals information.
+- Fixed Angel Island Cave not opening for Amy.
 
 ## [v0.8.0] - 2024-08-28
 

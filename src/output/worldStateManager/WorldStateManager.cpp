@@ -1082,6 +1082,10 @@ FunctionHook<BOOL> isLostWorldFrontEntranceOpen(0x532E60, []()-> BOOL
     return worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
 });
 
+FunctionHook<BOOL> isAngelIslandOpen(0x534570, []()-> BOOL
+{
+    return worldStateManagerPtr->unlockStatus.keyDynamite;
+});
 
 //Prevents the monkey from blocking the entrance to Red Mountain for knuckles
 FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
