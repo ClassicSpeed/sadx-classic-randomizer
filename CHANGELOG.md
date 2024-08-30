@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.8.2] - 2024-08-?
+
+### Changed
+
+- Fixed Sky Deck entrance being open despite not having an accessible level.
+
 ## [v0.8.1] - 2024-08-29
 
 ### Changed

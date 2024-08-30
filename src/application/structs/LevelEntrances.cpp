@@ -44,8 +44,7 @@ std::map<CharacterLevelKey, LevelAndActIDs> characterLevelMap = {
 // Define the map of characters to their accessible levels
 static const std::map<short, std::vector<Levels>> CHARACTER_LEVELS = {
     {
-        Characters_Sonic,
-        {
+        Characters_Sonic, {
             EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck,
             LostWorld, FinalEgg
         }
@@ -57,20 +56,6 @@ static const std::map<short, std::vector<Levels>> CHARACTER_LEVELS = {
     {Characters_Gamma, {FinalEgg, EmeraldCoast, WindyValley, RedMountain, HotShelter}}
 
 
-    // {Characters_Sonic, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
-    // {Characters_Tails, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
-    // {Characters_Knuckles, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
-    // {Characters_Amy, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
-    // {Characters_Big, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
-    // {Characters_Gamma, {EmeraldCoast, WindyValley, Casinopolis, IceCap, TwinklePark, SpeedHighway, RedMountain, SkyDeck, LostWorld, FinalEgg, HotShelter}},
-
-
-    // {Characters_Sonic, {}},
-    // {Characters_Tails, {}},
-    // {Characters_Knuckles, {}},
-    // {Characters_Amy, {}},
-    // {Characters_Big, {}},
-    // {Characters_Gamma, {}}
 };
 
 LevelEntrances::LevelEntrances()

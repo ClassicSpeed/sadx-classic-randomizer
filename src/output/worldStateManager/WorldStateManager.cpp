@@ -145,8 +145,8 @@ static void __cdecl HandleSceneChangeEcInside(int a1, int a2);
 UsercallFuncVoid(_onSceneChangeECOutside_t, (int a1), (a1), 0x524FE0, rEAX);
 static void __cdecl HandleSceneChangeEcOutside(int a1);
 
-UsercallFunc(bool, onSkyDeckDoor_t, (EntityData1 * a1), (a1), 0x51DEB0, rEAX, rESI);
-static bool __cdecl HandleSkyDeckDoor(EntityData1* a1);
+UsercallFunc(int, onSkyDeckDoor_t, (EntityData1 * a1), (a1), 0x51DEB0, rEAX, rESI);
+static int __cdecl HandleSkyDeckDoor(EntityData1* a1);
 
 
 WorldStateManager::WorldStateManager()
@@ -1191,14 +1191,16 @@ FunctionHook<void, task*> onLoadPoolDoor(0x51E320, [](task* tp)-> void
     FreeTask(tp);
 });
 
-bool HandleSkyDeckDoor(EntityData1* a1)
+int HandleSkyDeckDoor(EntityData1* a1)
 {
+    if (!worldStateManagerPtr->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
+        return false;
+    
     const EntityData1* player = EntityData1Ptrs[0];
     const double dz = player->Position.z - a1->Position.z;
     const double dy = player->Position.y - a1->Position.y;
     const double dx = player->Position.x - a1->Position.x;
     const double distance = squareroot(dx * dx + dy * dy + dz * dz);
 
-    PrintDebug("Distance: %f\n", distance);
     return distance <= 50.0;
 }
