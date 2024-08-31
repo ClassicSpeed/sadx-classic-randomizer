@@ -150,6 +150,8 @@ static void __cdecl HandleSceneChangeEcOutside(int a1);
 UsercallFunc(int, onSkyDeckDoor_t, (EntityData1 * a1), (a1), 0x51DEB0, rEAX, rESI);
 static int __cdecl HandleSkyDeckDoor(EntityData1* a1);
 
+UsercallFuncVoid(onLostWorldEntranceCollision_t, (int a1), (a1), 0x532960, rEDI);
+static void __cdecl HandleLostWorldEntranceCollision(int a1);
 
 WorldStateManager::WorldStateManager()
 {
@@ -159,6 +161,7 @@ WorldStateManager::WorldStateManager()
     _onSceneChangeECInside_t.Hook(HandleSceneChangeEcInside);
     _onSceneChangeECOutside_t.Hook(HandleSceneChangeEcOutside);
     onSkyDeckDoor_t.Hook(HandleSkyDeckDoor);
+    onLostWorldEntranceCollision_t.Hook(HandleLostWorldEntranceCollision);
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
 
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehogHammer);
@@ -556,7 +559,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     AddSetToLevel(ICE_CAP_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Knuckles);
     AddSetToLevel(ICE_CAP_LADDER_MR, LevelAndActIDs_MysticRuins2, Characters_Gamma);
     AddSetToLevel(ICE_CAP_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Gamma);
-    
+
     AddSetToLevel(CAVE_WIND_CHANGE_SCENE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
 
     AddSetToLevel(ICE_CAP_SPRING, LevelAndActIDs_MysticRuins2, Characters_Amy);
@@ -761,13 +764,96 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
         onSetStartPosReturnToField.Original(tp);
         return;
     }
-
-    const short buffer = CurrentLevel;
-    CurrentLevel = worldStateManagerPtr->levelEntrances.
-                                         getEntranceLevelIdFromLevel(static_cast<LevelIDs>(CurrentLevel));
+    const short currentLevelBuffer = CurrentLevel;
+    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
+        || CurrentCharacter == Characters_Knuckles)
+        CurrentLevel = LevelIDs_SpeedHighway;
+    else
+        CurrentLevel = LevelIDs_HotShelter;
 
     onSetStartPosReturnToField.Original(tp);
-    CurrentLevel = buffer;
+    CurrentLevel = currentLevelBuffer;
+
+    const LevelIDs entranceLevel = worldStateManagerPtr->
+                                   levelEntrances.getEntranceLevelIdFromLevel(static_cast<LevelIDs>(CurrentLevel));
+
+    switch (entranceLevel)
+    {
+    case LevelIDs_EmeraldCoast:
+        FieldStartPos->Position = {-492.79999, 10, 2053.8};
+        FieldStartPos->YRot = 0x0DBA9;
+        break;
+    case LevelIDs_WindyValley:
+        FieldStartPos->Position = {644.90002, 59.099998, -155.0};
+        FieldStartPos->YRot = 0x6000;
+        break;
+    case LevelIDs_TwinklePark:
+        FieldStartPos->Position = {785.29999, 50.0, 1771.7};
+        FieldStartPos->YRot = 0x7AB7;
+        break;
+    case LevelIDs_SpeedHighway:
+        if (CurrentCharacter == Characters_Knuckles || CurrentCharacter == Characters_Big)
+        {
+            FieldStartPos->Position = {272.0, 4.0, 294.89999};
+            FieldStartPos->YRot = 0x3D0C;
+        }
+        else
+        {
+            FieldStartPos->Position = {347.79999, 0.0, 1370.3};
+            FieldStartPos->YRot = 0x7FB9;
+        }
+        break;
+    case LevelIDs_RedMountain:
+        FieldStartPos->Position = {-1945.7, -351.5, 1646.6};
+        FieldStartPos->YRot = 0x5F9;
+        break;
+    case LevelIDs_SkyDeck:
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+        {
+            FieldStartPos->Position = {0.0, 655.0, 146.0};
+            FieldStartPos->YRot = 0x0C000;
+        }
+        else
+        {
+            FieldStartPos->Position = {290.0, 17.0, 0.0};
+            FieldStartPos->YRot = 0x8000;
+        }
+        break;
+
+    case LevelIDs_LostWorld:
+        if (CurrentCharacter == Characters_Knuckles)
+        {
+            FieldStartPos->Position = {-515.90002, 16.6, -1446.0};
+            FieldStartPos->YRot = 0xC000;
+        }
+        else
+        {
+            FieldStartPos->Position = {-515.0, 92.0, -1054.0};
+            FieldStartPos->YRot = 0x4000;
+        }
+        break;
+    case LevelIDs_IceCap:
+        FieldStartPos->Position = {-1290.0, 27.5, 315.0};
+        FieldStartPos->YRot = 0x0EC68;
+        break;
+    case LevelIDs_Casinopolis:
+        FieldStartPos->Position = {-572.5, -2.5, 939.5};
+        FieldStartPos->YRot = 0x1F17;
+        break;
+    case LevelIDs_FinalEgg:
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
+        {
+            FieldStartPos->Position = {133.39999, 108.4, -7.1999998};
+            FieldStartPos->YRot = 0x70EF;
+        }
+        else
+        {
+            FieldStartPos->Position = {-0.5, 108.8, -138.10001};
+            FieldStartPos->YRot = 0x4537;
+        }
+        break;
+    default: ;
+    }
 });
 
 
@@ -1103,6 +1189,16 @@ FunctionHook<BOOL> isLostWorldFrontEntranceOpen(0x532E60, []()-> BOOL
     return worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
 });
 
+
+void HandleLostWorldEntranceCollision(const int a1)
+{
+    const int bufferCharacter = CurrentCharacter;
+    CurrentCharacter = Characters_Sonic;
+    onLostWorldEntranceCollision_t.Original(a1);
+    CurrentCharacter = bufferCharacter;
+}
+
+
 FunctionHook<BOOL> isAngelIslandOpen(0x534570, []()-> BOOL
 {
     return worldStateManagerPtr->unlockStatus.keyDynamite;
@@ -1216,6 +1312,15 @@ FunctionHook<void, task*> onLoadPoolDoor(0x51E320, [](task* tp)-> void
 int HandleSkyDeckDoor(EntityData1* a1)
 {
     if (!worldStateManagerPtr->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
+        return false;
+
+    if ((CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+        && levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierOutside2)
+        return false;
+
+    if ((CurrentCharacter == Characters_Knuckles || CurrentCharacter == Characters_Amy
+            || CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Big)
+        && levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierOutside6)
         return false;
 
     const EntityData1* player = EntityData1Ptrs[0];
