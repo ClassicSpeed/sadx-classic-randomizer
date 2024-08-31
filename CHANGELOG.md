@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Pause is no longer disabled during after completing a mission.
+- Added Sonic for the Pool Emblem's hard logic.
 
 ### Changed
 
