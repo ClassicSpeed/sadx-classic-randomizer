@@ -19,6 +19,10 @@ CharacterManager::CharacterManager()
     //Re-enable control after finishing a mission
     WriteCall((void*)0x592094, EnableControl);
     WriteCall((void*)0x5920CA, EnableControl);
+
+    //Re-enable pause after finishing a mission
+    WriteCall((void*)0x592048, EnablePause);
+    WriteCall((void*)0x5920AF, EnablePause);
 }
 
 void CharacterManager::GiveUpgrade(const Upgrades upgrade)
