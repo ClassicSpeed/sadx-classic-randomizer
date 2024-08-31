@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.8.2] - 2024-08-?
+## [v0.8.2] - 2024-08-31
 
 ### Added
 
@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file.
 - Fixed the wind for angel island cave not being present for Amy.
 - Fixed the angel island door not opening for Amy.
 - Renamed logic levels to Normal, Hard and Expert, with Expert containing Out of Bounds jumps.
+- Improved the wording for the option and default player yaml.
+- Added default archipelago options values to the default player yaml.
 
 ## [v0.8.1] - 2024-08-29
 

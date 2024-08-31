@@ -7,6 +7,7 @@ public:
     explicit CheatsManager(Randomizer& randomizer)
         : _randomizer(randomizer)
     {
+        
     }
 
     void OnPlayingFrame() const;
