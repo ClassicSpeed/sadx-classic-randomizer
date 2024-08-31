@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Removed wall that prevented Tails from entering Emerald Coast.
 - Fixed the wind for angel island cave not being present for Amy.
 - Fixed the angel island door not opening for Amy.
+- Renamed logic levels to Normal, Hard and Expert, with Expert containing Out of Bounds jumps.
 
 ## [v0.8.1] - 2024-08-29
 
