@@ -20,6 +20,7 @@ constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
 
 constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
 constexpr int BEACH_GATE_STATION_SQUARE = 67;
+constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
 
 
 // //We pretend that the egg carrier is sunk so that the hedgehog hammer is works
@@ -506,6 +507,21 @@ const SETEntry WARP_FROM_PAST = CreateSetEntry(WARP_PAST, {0, 7, 247.5f});
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
     onCountSetItemsMaybe.Original();
+
+    for (int i = 0; i < SETTable_Count; ++i)
+    {
+        const SETObjData* objData = &SETTable[i];
+        if (objData->SETEntry != nullptr)
+        {
+            //We delete the wall that prevent tails from entering the Emerald Coast
+            if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
+                && objData->SETEntry->ObjectType == WALL_THAT_PUSHES_YOU_STATION_SQUARE)
+            {
+                objData->SETEntry->Properties = {0, 0, 0};
+            }
+        }
+    }
+
 
     //Warp point
     LoadPVM("EC_ALIFE", ADV01C_TEXLISTS[3]);
@@ -1195,7 +1211,7 @@ int HandleSkyDeckDoor(EntityData1* a1)
 {
     if (!worldStateManagerPtr->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
         return false;
-    
+
     const EntityData1* player = EntityData1Ptrs[0];
     const double dz = player->Position.z - a1->Position.z;
     const double dy = player->Position.y - a1->Position.y;
