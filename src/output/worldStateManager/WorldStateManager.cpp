@@ -17,6 +17,7 @@ constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
 constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
 constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
 constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
+constexpr int CAVE_WIND_CHANGE_SCENE_MYSTIC_RUINS = 31;
 
 constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
 constexpr int BEACH_GATE_STATION_SQUARE = 67;
@@ -174,6 +175,7 @@ WorldStateManager::WorldStateManager()
     DataArray(int, islandDoorFlags, 0x111E010, 8);
     islandDoorFlags[Characters_Tails] = FLAG_SONIC_MR_ISLANDDOOR;
     islandDoorFlags[Characters_Big] = FLAG_SONIC_MR_ISLANDDOOR;
+    islandDoorFlags[Characters_Amy] = FLAG_SONIC_MR_ISLANDDOOR;
 
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
@@ -460,6 +462,8 @@ const SETEntry ICE_CAP_SCENE_CHANGE_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUIN
 const SETEntry ICE_CAP_LADDER_MR = CreateSetEntry(LONG_LADDER_MYSTIC_RUINS, {-1450, 40, 360},
                                                   {0, 0XC800, 0}, {0, 0, 0});
 
+const SETEntry CAVE_WIND_CHANGE_SCENE_MR = CreateSetEntry(CAVE_WIND_CHANGE_SCENE_MYSTIC_RUINS, {-727, 168, 744});
+
 
 const SETEntry RED_MOUNTAIN_DOOR_MR = CreateSetEntry(RED_MOUNTAIN_DOOR_MYSTIC_RUINS, {-1960.7f, -350.19f, 1652.01f},
                                                      {0x1, 0xBEFB, 0xFF6E}, {0.3f, 0, 0});
@@ -552,6 +556,8 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     AddSetToLevel(ICE_CAP_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Knuckles);
     AddSetToLevel(ICE_CAP_LADDER_MR, LevelAndActIDs_MysticRuins2, Characters_Gamma);
     AddSetToLevel(ICE_CAP_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Gamma);
+    
+    AddSetToLevel(CAVE_WIND_CHANGE_SCENE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
 
     AddSetToLevel(ICE_CAP_SPRING, LevelAndActIDs_MysticRuins2, Characters_Amy);
 

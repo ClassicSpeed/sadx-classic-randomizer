@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
 
 - Fixed Sky Deck entrance being open despite not having an accessible level.
 - Removed wall that prevented Tails from entering Emerald Coast.
+- Fixed the wind for angel island cave not being present for Amy.
+- Fixed the angel island door not opening for Amy.
 
 ## [v0.8.1] - 2024-08-29
 
