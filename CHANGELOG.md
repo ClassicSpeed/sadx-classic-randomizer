@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Fixed the returning position from Hot Shelter for Sonic, Tails and Knuckles
+- Fixed the returning position from Hot Shelter for Sonic, Tails and Knuckles.
+- Improved Field Emblem draw distance in Mystic Ruins.
 
 ## [v0.8.2] - 2024-08-31
 

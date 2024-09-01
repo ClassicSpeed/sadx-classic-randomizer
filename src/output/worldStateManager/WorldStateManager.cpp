@@ -18,6 +18,7 @@ constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
 constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
 constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
 constexpr int CAVE_WIND_CHANGE_SCENE_MYSTIC_RUINS = 31;
+constexpr int EMBLEM_MYSTIC_RUINS = 65;
 
 constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
 constexpr int BEACH_GATE_STATION_SQUARE = 67;
@@ -183,6 +184,8 @@ WorldStateManager::WorldStateManager()
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_MRuins[WARP_MYSTIC_RUINS] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
+    ObjList_MRuins[EMBLEM_MYSTIC_RUINS].Distance = 1000000.0f;
+    ObjList_MRuins[EMBLEM_MYSTIC_RUINS].UseDistance = 1;
     ObjList_ECarrier0[WARP_EGG_CARRIER_OUTSIDE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_Past[WARP_PAST] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
 }
