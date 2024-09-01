@@ -852,6 +852,10 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
             FieldStartPos->YRot = 0x4537;
         }
         break;
+    case LevelIDs_HotShelter:
+        FieldStartPos->Position = {0.0, 14.0, 160.0};
+        FieldStartPos->YRot = 0xC000;
+        break;
     default: ;
     }
 });
