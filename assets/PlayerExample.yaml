@@ -49,7 +49,11 @@ Sonic Adventure DX:
   random_starting_location_per_character: 'true'
   # Ensures access to a level from the start, even if it means giving you an item.
   guaranteed_level: 'false'
-  # Randomizes the entrance of action stages.
+  # Randomizes the entrances to action stages.
+  # This means that the entrance to an action stage could be different from the original game.
+  # If a given entrance is closed (e.g., doors not opening), it indicates that the level behind that entrance is not accessible.
+  # For example, if Hot Shelter is inside the Emerald Coast entrance, the beach entrance will appear closed for Sonic but open for Amy.
+  # Depending on the character, the entrance may be Sonic's or Knuckles'. Big, for example, can't use the Speed Highway elevator.
   entrance_randomizer: 'false'
   # Whether your in-level ring gain/loss is linked to other players.
   ring_link: 'false'

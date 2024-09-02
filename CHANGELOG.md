@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
     - Since he can transform the Egg Carrier now, the hidden bed emblem and the chaos 6 main platform emblem are in
       hard/expert logic for Big.
 - Added Sonic to the hard/expert logic for the Pool Emblem and tree Stump Emblem.
+- Added explanation for entrance randomizer in the options.
 
 ### Changed
 
