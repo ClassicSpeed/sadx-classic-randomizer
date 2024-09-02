@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Improved Field Emblem draw distance in Mystic Ruins.
 - The City Hall Emblem is now higher only for Tails (so Cream can get it) to prevent other characters from getting it.
 - Fixed Amy's mission 19 logic
+- Random level entrance are now taken into account for the random starting location logic.
 
 ## [v0.8.2] - 2024-08-31
 
