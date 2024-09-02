@@ -649,7 +649,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 // We move the emblem a little higher so Cream can get it.
 FunctionHook<void, task*> onEmblemMain(0x4B4940, [](task* tp)-> void
 {
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Tails)
         if (tp->twp->pos.x > 386 && tp->twp->pos.x < 390
             && tp->twp->pos.y > -6 && tp->twp->pos.y < -5
             && tp->twp->pos.z > 489 && tp->twp->pos.z < 492)

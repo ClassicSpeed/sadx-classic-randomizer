@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 
 - Fixed the returning position from Hot Shelter for Sonic, Tails and Knuckles.
 - Improved Field Emblem draw distance in Mystic Ruins.
+- The City Hall Emblem is now higher only for Tails (so Cream can get it) to prevent other characters from getting it.
 
 ## [v0.8.2] - 2024-08-31
 
