@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.8.3] - 2024-09-??
 
+### Added
+
+- Big now has to use Sonic and Tail's entrance to Sky Deck so he can use the pool for mission 19.
+    - Since he can transform the Egg Carrier now, the hidden bed emblem and the chaos 6 main platform emblem are in
+      hard/expert logic for Big.
+- Added Sonic to the hard/expert logic for the Pool Emblem and tree Stump Emblem.
+
 ### Changed
 
 - Fixed the returning position from Hot Shelter for Sonic, Tails and Knuckles.
