@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Big now has to use Sonic and Tail's entrance to Sky Deck so he can use the pool for mission 19.
+- Big now has to use Sonic and Tail's entrance to Sky Deck so he can use the pool for mission 44.
     - Since he can transform the Egg Carrier now, the hidden bed emblem and the chaos 6 main platform emblem are in
       hard/expert logic for Big.
 - Added Sonic to the hard/expert logic for the Pool Emblem and tree Stump Emblem.
@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Fixed the returning position from Hot Shelter for Sonic, Tails and Knuckles.
 - Improved Field Emblem draw distance in Mystic Ruins.
 - The City Hall Emblem is now higher only for Tails (so Cream can get it) to prevent other characters from getting it.
+- Fixed Amy's mission 19 logic
 
 ## [v0.8.2] - 2024-08-31
 
