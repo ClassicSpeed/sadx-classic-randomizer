@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 - Random level entrance are now taken into account for the random starting location logic.
 - Fixed Game Over not sending death links.
 - The death link is now sent as soon as the player dies instead of waiting for the animation/fade out.
+- The wap point for the past is now Tails only.
 
 ## [v0.8.2] - 2024-08-31
 
