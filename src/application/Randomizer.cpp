@@ -347,6 +347,11 @@ void Randomizer::SetRingLink(const bool ringLinkActive)
     _archipelagoMessenger.UpdateTags(_options);
 }
 
+void Randomizer::SetCasinopolisRingLink(const bool casinopolisRingLink)
+{
+    _options.casinopolisRingLink = casinopolisRingLink;
+}
+
 void Randomizer::SetHardRingLink(const bool hardRingLinkActive)
 {
     _options.hardRingLinkActive = hardRingLinkActive;

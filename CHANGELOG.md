@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Added level entrance plando, only works if random level entrance is enabled.
     - It supports partial plando, so you can choose which levels you want to be randomized.
 - If pinball's life capsules are disable, they won't show up in the in-game tracker.
+- Added option to disable Ring link while playing Sonic's Casinopolis.
 
 ### Changed
 
@@ -33,7 +34,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Pause is no longer disabled during after completing a mission.
+- Pause is no longer disabled after completing a mission.
 - Added Sonic for the Pool Emblem's hard logic.
 - Changed the returning position after a finishing a level to match the original level's one.
 

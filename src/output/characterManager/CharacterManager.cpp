@@ -115,6 +115,8 @@ void CharacterManager::ProcessRings(const Sint16 amount)
         return;
     if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return;
+    if (!options.casinopolisRingLink && CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic)
+        return;
     if (GameState != MD_GAME_MAIN)
         return;
     if (amount == 0)
@@ -144,7 +146,8 @@ int CharacterManager::GetRingDifference()
         return lastRingAmount = 0;
     if (GameMode == GameModes_Mission && TimeThing == 0 && !options.hardRingLinkActive)
         return lastRingAmount = 0;
-
+    if (!options.casinopolisRingLink && CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic)
+        return lastRingAmount = 0;
 
     const int ringDifference = Rings - lastRingAmount;
     lastRingAmount = Rings;

@@ -72,6 +72,7 @@ struct Options
     bool includePinballCapsules = false;
     bool deathLinkActive = false;
     bool ringLinkActive = false;
+    bool casinopolisRingLink = true;
     bool hardRingLinkActive = false;
     RingLoss ringLoss = Classic;
 
