@@ -55,6 +55,10 @@ Sonic Adventure DX:
   # For example, if Hot Shelter is inside the Emerald Coast entrance, the beach entrance will appear closed for Sonic but open for Amy.
   # Depending on the character, the entrance may be Sonic's or Knuckles'. Big, for example, can't use the Speed Highway elevator.
   entrance_randomizer: 'false'
+  # Plando for level entrance. Only works if Entrance Randomizer is enabled.
+  # The level name should be Capitalized with no spaces.
+  # For example, {'Emerald Coast': 'Final Egg'} will place Final Egg behind the Emerald Coast entrance and randomize the rest.
+  level_entrance_plando: { }
   # Whether your in-level ring gain/loss is linked to other players.
   ring_link: 'false'
   # If Ring Link is enabled, sends and receives rings in more situations.
