@@ -69,9 +69,10 @@ struct Options
     bool bigLifeSanity = true;
     bool gammaLifeSanity = true;
 
-    bool pinballCapsules = false;
+    bool includePinballCapsules = false;
     bool deathLinkActive = false;
     bool ringLinkActive = false;
+    bool casinopolisRingLink = false;
     bool hardRingLinkActive = false;
     RingLoss ringLoss = Classic;
 

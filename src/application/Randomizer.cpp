@@ -207,11 +207,11 @@ void Randomizer::OnPlayingFrame()
     if (!IsControllerEnabled(0))
         return;
 
+    _ignoreNextPlayerDeath = true;
     _characterManager.KillPlayer();
     _displayManager.QueueMessage(_pendingDeathCause);
     _pendingDeathCause.clear();
     _deathPending = false;
-    _ignoreNextPlayerDeath = true;
 }
 
 void Randomizer::OnSync()
@@ -297,7 +297,7 @@ void Randomizer::OnLifeSanitySet(const bool lifeSanity)
 
 void Randomizer::OnPinballLifeCapsulesSet(const bool pinballLifeCapsules)
 {
-    _options.pinballCapsules = pinballLifeCapsules;
+    _options.includePinballCapsules = pinballLifeCapsules;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
@@ -345,6 +345,11 @@ void Randomizer::SetRingLink(const bool ringLinkActive)
 {
     _options.ringLinkActive = ringLinkActive;
     _archipelagoMessenger.UpdateTags(_options);
+}
+
+void Randomizer::SetCasinopolisRingLink(const bool casinopolisRingLink)
+{
+    _options.casinopolisRingLink = casinopolisRingLink;
 }
 
 void Randomizer::SetHardRingLink(const bool hardRingLinkActive)

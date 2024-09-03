@@ -413,6 +413,8 @@ void DisplayManager::DisplayItemsUnlocked()
                 if (check.second.character == CurrentCharacter && check.second.type == LocationLifeCapsule &&
                     GET_LEVEL(check.second.level) == CurrentLevel)
                 {
+                    if (!_options.includePinballCapsules && (check.first  == 1211 || check.first == 1212))
+                        continue;
                     buffer.append(check.second.checked ? "X" : "-");
                 }
             }

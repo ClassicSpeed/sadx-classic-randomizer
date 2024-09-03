@@ -25,5 +25,6 @@ public:
     std::vector<LifeBoxLocationData> lifeCapsules;
     mutable std::map<int, LocationData> checkData;
     Randomizer& randomizer;
-
+    float deathDetectionCooldown = 0.5f;
+    std::clock_t deathCooldownTimer = -1;
 };

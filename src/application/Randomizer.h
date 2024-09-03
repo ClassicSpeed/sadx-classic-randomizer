@@ -44,6 +44,7 @@ public:
     void SetCharacterLifeSanity(Characters character, bool characterLifeSanity);
     void SetDeathLink(bool deathLinkActive);
     void SetRingLink(bool ringLinkActive);
+    void SetCasinopolisRingLink(bool casinopolisRingLink);
     void SetHardRingLink(bool hardRingLinkActive);
     void SetRingLoss(RingLoss ringLoss);
     void SetSkyChaseChecks(bool skyChaseChecks);
