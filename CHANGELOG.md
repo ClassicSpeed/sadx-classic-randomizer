@@ -2,33 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.8.3] - 2024-09-??
+## [v0.8.3] - 2024-09-03
 
 ### Added
 
-- Big now has to use Sonic and Tail's entrance to Sky Deck so he can use the pool for mission 44.
-    - Since he can transform the Egg Carrier now, the hidden bed emblem and the chaos 6 main platform emblem are in
-      hard/expert logic for Big.
-- Added Sonic to the hard/expert logic for the Pool Emblem and tree Stump Emblem.
-- Added explanation for entrance randomizer in the options.
+- Big now has to use Sonic and Tails' entrance to Sky Deck so he can use the pool for mission 44.
+    - Since he can transform the Egg Carrier now, the hidden bed emblem and the Chaos 6 main platform emblem are in hard/expert logic for Big.
+- Added Sonic to the hard/expert logic for the Pool Emblem and Tree Stump Emblem.
+- Added an explanation for entrance randomizer in the options.
 - Guaranteed level now supports entrance randomizer.
-    - Be aware that without random starting location, the guaranteed level option will probably fail to generate.
-- Added level entrance plando, only works if random level entrance is enabled.
+    - Be aware that without a random starting location, the guaranteed level option will probably fail to generate.
+- Added level entrance plando, which only works if random level entrance is enabled.
     - It supports partial plando, so you can choose which levels you want to be randomized.
-- If pinball's life capsules are disable, they won't show up in the in-game tracker.
-- Added option to disable Ring link while playing Sonic's Casinopolis.
+- If pinball's life capsules are disabled, they won't show up in the in-game tracker.
+- Added an option to disable Ring Link while playing Sonic's Casinopolis.
 
 ### Changed
 
-- Fixed the returning position from Hot Shelter for Sonic, Tails and Knuckles.
+- Fixed the returning position from Hot Shelter for Sonic, Tails, and Knuckles.
 - Improved Field Emblem draw distance in Mystic Ruins.
 - The City Hall Emblem is now higher only for Tails (so Cream can get it) to prevent other characters from getting it.
-- Fixed Amy's mission 19 logic
-- Random level entrance are now taken into account for the random starting location logic.
+- Fixed Amy's mission 19 logic.
+- Random level entrances are now taken into account for the random starting location logic.
 - Fixed Game Over not sending death links.
 - The death link is now sent as soon as the player dies instead of waiting for the animation/fade out.
-- The wap point for the past is now Tails only.
-- Fixed the mod changing the character into your starter character if connection is lost.
+- The warp point for the past is now Tails only.
+- Fixed the mod changing the character to your starter character if the connection is lost.
 
 ## [v0.8.2] - 2024-08-31
 
