@@ -23,6 +23,8 @@ All notable changes to this project will be documented in this file.
 - The City Hall Emblem is now higher only for Tails (so Cream can get it) to prevent other characters from getting it.
 - Fixed Amy's mission 19 logic
 - Random level entrance are now taken into account for the random starting location logic.
+- Fixed Game Over not sending death links.
+- The death link is now sent as soon as the player dies instead of waiting for the animation/fade out.
 
 ## [v0.8.2] - 2024-08-31
 

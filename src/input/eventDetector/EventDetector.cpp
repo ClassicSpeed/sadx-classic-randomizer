@@ -1,8 +1,14 @@
 #include "EventDetector.h"
+#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
 EventDetector* eventDetectorPtr;
+
+UsercallFuncVoid(PlayCharacterDeathSound_t, (task * tp, int pid), (tp, pid), 0x446AF0, rEAX, stack4);
+static void __cdecl HandlePlayCharacterDeathSound(task* tp, int pid);
+
 
 EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
 {
+    PlayCharacterDeathSound_t.Hook(HandlePlayCharacterDeathSound);
     checkData = randomizer.GetCheckData();
     lifeCapsules = randomizer.GetLifeCapsules();
     eventDetectorPtr = this;
@@ -309,14 +315,29 @@ FunctionHook<void, task*> onBrokenAirLifeCapsule(0x4C07D0, [](task* tp)-> void
     }
 });
 
-
-FunctionHook<void, int> onGiveLives(0x425B60, [](const int lives)-> void
+FunctionHook<void, unsigned short> onKillHimP(0x440CD0, [](const unsigned short a1)-> void
 {
-    //The game gives a negative live to represent a death
-    if (lives == -1 && GameState == MD_GAME_FADEOUT_MISS)
-        eventDetectorPtr->randomizer.OnDeath();
-    onGiveLives.Original(lives);
+    onKillHimP.Original(a1);
+    eventDetectorPtr->randomizer.OnDeath();
 });
+
+FunctionHook<void> onKillHimByFallingDownP(0x446AD0, []()-> void
+{
+    onKillHimByFallingDownP.Original();
+    eventDetectorPtr->randomizer.OnDeath();
+});
+
+void HandlePlayCharacterDeathSound(task* tp, const int pid)
+{
+    PlayCharacterDeathSound_t.Original(tp, pid);
+    const double timePassed = (std::clock() - eventDetectorPtr->deathCooldownTimer) / static_cast<double>(
+        CLOCKS_PER_SEC);
+    if (timePassed > eventDetectorPtr->deathDetectionCooldown)
+    {
+        eventDetectorPtr->deathCooldownTimer = std::clock();
+        eventDetectorPtr->randomizer.OnDeath();
+    }
+}
 
 FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
 {

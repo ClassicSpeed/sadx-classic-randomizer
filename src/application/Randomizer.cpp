@@ -207,11 +207,11 @@ void Randomizer::OnPlayingFrame()
     if (!IsControllerEnabled(0))
         return;
 
+    _ignoreNextPlayerDeath = true;
     _characterManager.KillPlayer();
     _displayManager.QueueMessage(_pendingDeathCause);
     _pendingDeathCause.clear();
     _deathPending = false;
-    _ignoreNextPlayerDeath = true;
 }
 
 void Randomizer::OnSync()
