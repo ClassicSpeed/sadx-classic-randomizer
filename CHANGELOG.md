@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
       hard/expert logic for Big.
 - Added Sonic to the hard/expert logic for the Pool Emblem and tree Stump Emblem.
 - Added explanation for entrance randomizer in the options.
+- Guaranteed level now supports entrance randomizer.
+- Be aware that without random starting location, the guaranteed level option will probably fail to generate.
 
 ### Changed
 
