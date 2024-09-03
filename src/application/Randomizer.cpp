@@ -297,7 +297,7 @@ void Randomizer::OnLifeSanitySet(const bool lifeSanity)
 
 void Randomizer::OnPinballLifeCapsulesSet(const bool pinballLifeCapsules)
 {
-    _options.pinballCapsules = pinballLifeCapsules;
+    _options.includePinballCapsules = pinballLifeCapsules;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }

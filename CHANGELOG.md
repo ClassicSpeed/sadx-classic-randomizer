@@ -12,9 +12,10 @@ All notable changes to this project will be documented in this file.
 - Added Sonic to the hard/expert logic for the Pool Emblem and tree Stump Emblem.
 - Added explanation for entrance randomizer in the options.
 - Guaranteed level now supports entrance randomizer.
-  - Be aware that without random starting location, the guaranteed level option will probably fail to generate.
+    - Be aware that without random starting location, the guaranteed level option will probably fail to generate.
 - Added level entrance plando, only works if random level entrance is enabled.
-  - It supports partial plando, so you can choose which levels you want to be randomized. 
+    - It supports partial plando, so you can choose which levels you want to be randomized.
+- If pinball's life capsules are disable, they won't show up in the in-game tracker.
 
 ### Changed
 
