@@ -210,6 +210,8 @@ void CharacterManager::OnPlayingFrame()
 
 void CharacterManager::SetStartingCharacter(int startingCharacterIndex)
 {
+    if (GameMode != GameModes_Menu)
+        return;
     if (startingCharacterIndex == 1)
     {
         BYTE1(CharacterSelection) = 0;
