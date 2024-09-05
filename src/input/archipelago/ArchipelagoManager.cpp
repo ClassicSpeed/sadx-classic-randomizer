@@ -155,10 +155,31 @@ void SADX_EmblemsForPerfectChaos(const int emblemGoal)
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
 }
 
+void SADX_LevelForPerfectChaos(const int levelGoal)
+{
+    randomizerPtr->OnLevelGoalSet(levelGoal);
+}
+
+void SADX_MissionForPerfectChaos(const int missionGoal)
+{
+    randomizerPtr->OnMissionGoalSet(missionGoal);
+}
 
 void SADX_MissionModeChecks(const int missionModeEnabled)
 {
     randomizerPtr->SetMissionMode(missionModeEnabled);
+}
+
+void SADX_MissionBlackList(const std::map<int, int> missionBlacklist)
+{
+    if (missionBlacklist.empty())
+        return;
+    std::vector<int> blacklistedMissions;
+
+    for (const auto& mission : missionBlacklist)
+        blacklistedMissions.push_back(mission.first);
+
+    randomizerPtr->UpdateMissionBlacklist(blacklistedMissions);
 }
 
 void SADX_AutoStartMissions(const int autoStartMissions)
@@ -246,7 +267,7 @@ void SADX_LevelEntranceMap(const std::map<int, int> levelEntrancesValues)
 {
     if (levelEntrancesValues.empty())
         return;
-    
+
     LevelEntrances levelEntrances = {};
 
     for (const auto& entrance : levelEntrancesValues)
@@ -380,7 +401,11 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("Goal", &SADX_Goal);
     AP_RegisterSlotDataIntCallback("ModVersion", &SADX_CompareModVersion);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("LevelForPerfectChaos", &SADX_LevelForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("MissionForPerfectChaos", &SADX_MissionForPerfectChaos);
     AP_RegisterSlotDataIntCallback("MissionModeChecks", &SADX_MissionModeChecks);
+    AP_RegisterSlotDataMapIntIntCallback("MissionBlackList", &SADX_MissionBlackList);
+
     AP_RegisterSlotDataIntCallback("AutoStartMissions", &SADX_AutoStartMissions);
 
     AP_RegisterSlotDataIntCallback("LifeSanity", &SADX_LifeSanity);

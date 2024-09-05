@@ -1,5 +1,7 @@
 ﻿#include "LocationRepository.h"
 
+#include "../../application/structs/MissionStatus.h"
+
 
 LocationRepository::LocationRepository()
 {
@@ -186,66 +188,66 @@ LocationRepository::LocationRepository()
         {790, LocationData::BossFightLocation(Characters_Amy, LevelIDs_Zero)},
 
         //Missions
-        {801, LocationData::MissionLocation(1)},
-        {802, LocationData::MissionLocation(2)},
-        {803, LocationData::MissionLocation(3)},
-        {804, LocationData::MissionLocation(4)},
-        {805, LocationData::MissionLocation(5)},
-        {806, LocationData::MissionLocation(6)},
-        {807, LocationData::MissionLocation(7)},
-        {808, LocationData::MissionLocation(8)},
-        {809, LocationData::MissionLocation(9)},
-        {810, LocationData::MissionLocation(10)},
-        {811, LocationData::MissionLocation(11)},
-        {812, LocationData::MissionLocation(12)},
-        {813, LocationData::MissionLocation(13)},
-        {814, LocationData::MissionLocation(14)},
-        {815, LocationData::MissionLocation(15)},
-        {816, LocationData::MissionLocation(16)},
-        {817, LocationData::MissionLocation(17)},
-        {818, LocationData::MissionLocation(18)},
-        {819, LocationData::MissionLocation(19)},
-        {820, LocationData::MissionLocation(20)},
-        {821, LocationData::MissionLocation(21)},
-        {822, LocationData::MissionLocation(22)},
-        {823, LocationData::MissionLocation(23)},
-        {824, LocationData::MissionLocation(24)},
-        {825, LocationData::MissionLocation(25)},
-        {826, LocationData::MissionLocation(26)},
-        {827, LocationData::MissionLocation(27)},
-        {828, LocationData::MissionLocation(28)},
-        {829, LocationData::MissionLocation(29)},
-        {830, LocationData::MissionLocation(30)},
-        {831, LocationData::MissionLocation(31)},
-        {832, LocationData::MissionLocation(32)},
-        {833, LocationData::MissionLocation(33)},
-        {834, LocationData::MissionLocation(34)},
-        {835, LocationData::MissionLocation(35)},
-        {836, LocationData::MissionLocation(36)},
-        {837, LocationData::MissionLocation(37)},
-        {838, LocationData::MissionLocation(38)},
-        {839, LocationData::MissionLocation(39)},
-        {840, LocationData::MissionLocation(40)},
-        {841, LocationData::MissionLocation(41)},
-        {842, LocationData::MissionLocation(42)},
-        {843, LocationData::MissionLocation(43)},
-        {844, LocationData::MissionLocation(44)},
-        {845, LocationData::MissionLocation(45)},
-        {846, LocationData::MissionLocation(46)},
-        {847, LocationData::MissionLocation(47)},
-        {848, LocationData::MissionLocation(48)},
-        {849, LocationData::MissionLocation(49)},
-        {850, LocationData::MissionLocation(50)},
-        {851, LocationData::MissionLocation(51)},
-        {852, LocationData::MissionLocation(52)},
-        {853, LocationData::MissionLocation(53)},
-        {854, LocationData::MissionLocation(54)},
-        {855, LocationData::MissionLocation(55)},
-        {856, LocationData::MissionLocation(56)},
-        {857, LocationData::MissionLocation(57)},
-        {858, LocationData::MissionLocation(58)},
-        {859, LocationData::MissionLocation(59)},
-        {860, LocationData::MissionLocation(60)},
+        {801, LocationData::MissionLocation(Characters_Sonic, 1)},
+        {802, LocationData::MissionLocation(Characters_Sonic, 2)},
+        {803, LocationData::MissionLocation(Characters_Sonic, 3)},
+        {804, LocationData::MissionLocation(Characters_Tails, 4)},
+        {805, LocationData::MissionLocation(Characters_Knuckles, 5)},
+        {806, LocationData::MissionLocation(Characters_Amy, 6)},
+        {807, LocationData::MissionLocation(Characters_Gamma, 7)},
+        {808, LocationData::MissionLocation(Characters_Big, 8)},
+        {809, LocationData::MissionLocation(Characters_Sonic, 9)},
+        {810, LocationData::MissionLocation(Characters_Tails, 10)},
+        {811, LocationData::MissionLocation(Characters_Sonic, 11)},
+        {812, LocationData::MissionLocation(Characters_Knuckles, 12)},
+        {813, LocationData::MissionLocation(Characters_Sonic, 13)},
+        {814, LocationData::MissionLocation(Characters_Big, 14)},
+        {815, LocationData::MissionLocation(Characters_Sonic, 15)},
+        {816, LocationData::MissionLocation(Characters_Tails, 16)},
+        {817, LocationData::MissionLocation(Characters_Sonic, 17)},
+        {818, LocationData::MissionLocation(Characters_Amy, 18)},
+        {819, LocationData::MissionLocation(Characters_Amy, 19)},
+        {820, LocationData::MissionLocation(Characters_Sonic, 20)},
+        {821, LocationData::MissionLocation(Characters_Gamma, 21)},
+        {822, LocationData::MissionLocation(Characters_Big, 22)},
+        {823, LocationData::MissionLocation(Characters_Sonic, 23)},
+        {824, LocationData::MissionLocation(Characters_Tails, 24)},
+        {825, LocationData::MissionLocation(Characters_Knuckles, 25)},
+        {826, LocationData::MissionLocation(Characters_Knuckles, 26)},
+        {827, LocationData::MissionLocation(Characters_Sonic, 27)},
+        {828, LocationData::MissionLocation(Characters_Sonic, 28)},
+        {829, LocationData::MissionLocation(Characters_Big, 29)},
+        {830, LocationData::MissionLocation(Characters_Sonic, 30)},
+        {831, LocationData::MissionLocation(Characters_Tails, 31)},
+        {832, LocationData::MissionLocation(Characters_Knuckles, 32)},
+        {833, LocationData::MissionLocation(Characters_Sonic, 33)},
+        {834, LocationData::MissionLocation(Characters_Sonic, 34)},
+        {835, LocationData::MissionLocation(Characters_Big, 35)},
+        {836, LocationData::MissionLocation(Characters_Sonic, 36)},
+        {837, LocationData::MissionLocation(Characters_Tails, 37)},
+        {838, LocationData::MissionLocation(Characters_Knuckles, 38)},
+        {839, LocationData::MissionLocation(Characters_Gamma, 39)},
+        {840, LocationData::MissionLocation(Characters_Sonic, 40)},
+        {841, LocationData::MissionLocation(Characters_Sonic, 41)},
+        {842, LocationData::MissionLocation(Characters_Gamma, 42)},
+        {843, LocationData::MissionLocation(Characters_Amy, 43)},
+        {844, LocationData::MissionLocation(Characters_Big, 44)},
+        {845, LocationData::MissionLocation(Characters_Sonic, 45)},
+        {846, LocationData::MissionLocation(Characters_Sonic, 46)},
+        {847, LocationData::MissionLocation(Characters_Tails, 47)},
+        {848, LocationData::MissionLocation(Characters_Knuckles, 48)},
+        {849, LocationData::MissionLocation(Characters_Sonic, 49)},
+        {850, LocationData::MissionLocation(Characters_Amy, 50)},
+        {851, LocationData::MissionLocation(Characters_Gamma, 51)},
+        {852, LocationData::MissionLocation(Characters_Big, 52)},
+        {853, LocationData::MissionLocation(Characters_Sonic, 53)},
+        {854, LocationData::MissionLocation(Characters_Tails, 54)},
+        {855, LocationData::MissionLocation(Characters_Sonic, 55)},
+        {856, LocationData::MissionLocation(Characters_Knuckles, 56)},
+        {857, LocationData::MissionLocation(Characters_Sonic, 57)},
+        {858, LocationData::MissionLocation(Characters_Sonic, 58)},
+        {859, LocationData::MissionLocation(Characters_Knuckles, 59)},
+        {860, LocationData::MissionLocation(Characters_Big, 60)},
 
 
     };
@@ -411,11 +413,6 @@ std::vector<LifeBoxLocationData> LocationRepository::GetLifeCapsules()
     return _lifeCapsules;
 }
 
-bool LocationRepository::CompletedAllLevels(Options options)
-{
-    const LevelStatus levelStatus = this->GetLevelStatus(options);
-    return levelStatus.levelsTotal == levelStatus.levelsCompleted;
-}
 
 LevelStatus LocationRepository::GetLevelStatus(Options options)
 {
@@ -529,12 +526,60 @@ LevelStatus LocationRepository::GetLevelStatus(Options options)
         levelStatus.gammaLevelsCompleted = count;
     }
 
-    levelStatus.levelsTotal = levelStatus.sonicLevelsTotal + levelStatus.tailsLevelsTotal
-        + levelStatus.knucklesLevelsTotal + levelStatus.amyLevelsTotal
-        + levelStatus.bigLevelsTotal + levelStatus.gammaLevelsTotal;
     levelStatus.levelsCompleted = levelStatus.sonicLevelsCompleted + levelStatus.tailsLevelsCompleted
         + levelStatus.knucklesLevelsCompleted + levelStatus.amyLevelsCompleted
         + levelStatus.bigLevelsCompleted + levelStatus.gammaLevelsCompleted;
 
     return levelStatus;
+}
+
+MissionStatus LocationRepository::GetMissionStatus(Options options)
+{
+    auto missionStatus = MissionStatus();
+    auto vector = options.missionBlacklist;
+    for (int index = 801; index <= 860; index++)
+    {
+        if(std::find(vector.begin(), vector.end(), _checkData[index].missionNumber)!=vector.end())
+            continue;
+        
+        if (_checkData[index].character == Characters_Sonic)
+        {
+            missionStatus.sonicMissionsTotal++;
+            if (_checkData[index].checked)
+                missionStatus.sonicMissionsCompleted++;
+        }
+        else if (_checkData[index].character == Characters_Tails)
+        {
+            missionStatus.tailsMissionsTotal++;
+            if (_checkData[index].checked)
+                missionStatus.tailsMissionsCompleted++;
+        }
+        else if (_checkData[index].character == Characters_Knuckles)
+        {
+            missionStatus.knucklesMissionsTotal++;
+            if (_checkData[index].checked)
+                missionStatus.knucklesMissionsCompleted++;
+        }
+        else if (_checkData[index].character == Characters_Amy)
+        {
+            missionStatus.amyMissionsTotal++;
+            if (_checkData[index].checked)
+                missionStatus.amyMissionsCompleted++;
+        }
+        else if (_checkData[index].character == Characters_Gamma)
+        {
+            missionStatus.gammaMissionsTotal++;
+            if (_checkData[index].checked)
+                missionStatus.gammaMissionsCompleted++;
+        }
+        else if (_checkData[index].character == Characters_Big)
+        {
+            missionStatus.bigMissionsTotal++;
+            if (_checkData[index].checked)
+                missionStatus.bigMissionsCompleted++;
+        }
+        if (_checkData[index].checked)
+            missionStatus.missionsCompleted++;
+    }
+    return missionStatus;
 }

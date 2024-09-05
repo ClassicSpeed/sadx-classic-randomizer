@@ -38,6 +38,8 @@ public:
     void QueueNewMessage(std::string information);
     void OnGoalSet(Goal goal);
     void OnEmblemGoalSet(int emblemGoal);
+    void OnLevelGoalSet(int levelGoal);
+    void OnMissionGoalSet(int missionGoal);
     void SetCharacterStatingArea(Characters characters, StartingArea startingArea);
     void SetPlayableCharacter(Characters character, bool playable);
     void SetActionStageMissions(Characters characters, int missions);
@@ -67,6 +69,7 @@ public:
     void OnCheckVersion(int serverVersion);
     void SetStartingCharacter(int startingCharacterIndex);
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
+    void UpdateMissionBlacklist(const std::vector<int>& missionBlacklist);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;

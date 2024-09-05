@@ -3,7 +3,7 @@
 #include "../../application/structs/LocationData.h"
 #include "../../application/structs/Options.h"
 #include "../../application/structs/LevelStatus.h"
-
+#include "../../application/structs/MissionStatus.h"
 
 
 class LocationRepository
@@ -14,8 +14,8 @@ public:
     LocationData GetLocation(int checkId);
     std::map<int, LocationData> GetLocations();
     std::vector<LifeBoxLocationData> GetLifeCapsules();
-    bool CompletedAllLevels(Options options);
     LevelStatus GetLevelStatus(Options options);
+    MissionStatus GetMissionStatus(Options options);
 
 private:
     std::map<int, LocationData> _checkData;

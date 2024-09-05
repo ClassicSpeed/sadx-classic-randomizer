@@ -95,9 +95,9 @@ struct LocationData
                             std::to_string(character) + std::to_string(level), -1);
     }
 
-    static LocationData MissionLocation(const int missionNumber)
+    static LocationData MissionLocation(const int character, const int missionNumber)
     {
-        return LocationData(static_cast<StoryFlags>(0x0), -1, -1, -1, -1, missionNumber, LocationMission, false,
+        return LocationData(static_cast<StoryFlags>(0x0), character, -1, -1, -1, missionNumber, LocationMission, false,
                             "Mission " + std::to_string(missionNumber), -1);
     }
 
