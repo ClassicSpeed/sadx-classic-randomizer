@@ -9,8 +9,7 @@
 
 #define SADX_AP_VERSION_MAJOR 0
 #define SADX_AP_VERSION_MINOR 8
-#define SADX_AP_VERSION_PATCH 3
-
+#define SADX_AP_VERSION_PATCH 4
 
 #define MISSION_C  2
 #define MISSION_B  1
@@ -42,7 +41,6 @@ const std::unordered_map<int, std::string> CHARACTERS_MAP = {
     {Characters_Gamma, "Gamma"},
     {Characters_Big, "Big"}
 };
-
 
 
 const std::unordered_map<int, std::string> LEVELS_MAP = {

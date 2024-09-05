@@ -27,6 +27,7 @@ public:
     LevelEntrances(const std::initializer_list<std::pair<Levels, Levels>> pairs);
     void addRelationship(const Levels levelEntrance, const Levels actualLevel);
     Levels getLevelFromEntrance(const Levels entrance) const;
+    std::string getLevelInitialsFromEntrance(Levels entrance) const;
     LevelAndActIDs getLevelAndActIdFromEntrance(const Levels entrance, const int characters) const;
     Levels getEntranceFromLevel(const Levels level) const;
     LevelIDs getEntranceLevelIdFromLevel(const LevelIDs currentLevel) const;

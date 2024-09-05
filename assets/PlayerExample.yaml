@@ -23,13 +23,15 @@ Sonic Adventure DX:
   
   # When you die, everyone dies. Of course the reverse is true too.
   death_link: 'false'
-  
+
   # Determines the goal of the seed.
-  # Levels (0): Complete all the action stages available to unlock the Perfect Chaos Fight.
+  # Levels (0): Complete action stages available to unlock the Perfect Chaos Fight.
   # Emblems (1): Collect a certain number of emblems to unlock the Perfect Chaos Fight.
   # Chaos Emerald Hunt (2): Collect all 7 Chaos Emeralds to unlock the Perfect Chaos Fight.
-  # Levels and Chaos Emerald Hunt (3): Beat all the action stages and collect the emeralds to fight Perfect Chaos.
+  # Levels and Chaos Emerald Hunt (3): Beat action stages and collect the emeralds to fight Perfect Chaos.
   # Emblems and Chaos Emerald Hunt (4): Collect both emblems and the emeralds to fight Perfect Chaos.
+  # Missions (5): Complete missions to unlock the Perfect Chaos Fight.
+  # Missions and Chaos Emerald Hunt (6): Complete and collect the emeralds to fight Perfect Chaos.
   # 
   # Keep in mind selecting emerald hunt will require enough checks to add the 7 emeralds to the pool.
   # Also, selecting emblems will require at least 5 checks to add the 5 emblems to the pool.
@@ -43,6 +45,12 @@ Sonic Adventure DX:
   # Percentage of the available emblems needed to unlock the final story.
   # Minimum value is 1, maximum value is 80
   emblems_percentage: 80
+  # If Levels are part of the goal, Percentage of the available levels that needed to be completed to unlock the final story.
+  # Minimum value is 25, maximum value is 100
+  levels_percentage: 100
+  # If Missions are part of the goal, Percentage of the available missions that needed to be completed to unlock the final story.
+  # Minimum value is 25, maximum value is 100
+  mission_percentage: 100
   # Randomize starting location. If false, you will start at Station Square.
   random_starting_location: 'true'
   # If randomize starting location is enabled, each character will start in a random location.

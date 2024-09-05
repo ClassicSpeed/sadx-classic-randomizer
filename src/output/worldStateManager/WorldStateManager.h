@@ -4,6 +4,7 @@
 #include "../../application/structs/Options.h"
 #include "../../application/structs/LevelEntrances.h"
 #include "../../application/structs/UnlockStatus.h"
+#include "../../application/structs/VisitedLevels.h"
 
 class WorldStateManager
 {
@@ -17,6 +18,7 @@ public:
     void SetStartingArea();
     void StartAllMissions();
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
+    VisitedLevels GetVisitedLevels(int visitedLevel);
     Options options;
     UnlockStatus unlockStatus;
     LevelEntrances levelEntrances = {
@@ -32,4 +34,6 @@ public:
         {FinalEgg, FinalEgg},
         {HotShelter, HotShelter},
     };
+private:
+    VisitedLevels _visitedLevels;
 };

@@ -160,6 +160,7 @@ static void __cdecl HandleLostWorldEntranceCollision(int a1);
 
 WorldStateManager::WorldStateManager()
 {
+    _visitedLevels = VisitedLevels();
     onSceneChangeMr_t.Hook(HandleMREntrance);
     onTwinkleParkDoor_t.Hook(HandleTwinkleParkEntrance);
     onEggCarrierEggDoor_t.Hook(HandleEggCarrierEggDoor);
@@ -421,6 +422,61 @@ void WorldStateManager::StartAllMissions()
 void WorldStateManager::UpdateLevelEntrances(LevelEntrances levelEntrances)
 {
     this->levelEntrances = levelEntrances;
+    this->_visitedLevels.emeraldCoastEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(EmeraldCoast);
+    this->_visitedLevels.windyValleyEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(WindyValley);
+    this->_visitedLevels.casinopolisEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(Casinopolis);
+    this->_visitedLevels.iceCapEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(IceCap);
+    this->_visitedLevels.twinkleParkEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(TwinklePark);
+    this->_visitedLevels.speedHighwayEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SpeedHighway);
+    this->_visitedLevels.redMountainEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(RedMountain);
+    this->_visitedLevels.skyDeckEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SkyDeck);
+    this->_visitedLevels.lostWorldEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(LostWorld);
+    this->_visitedLevels.finalEggEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(FinalEgg);
+    this->_visitedLevels.hotShelterEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(HotShelter);
+}
+
+VisitedLevels WorldStateManager::GetVisitedLevels(const int visitedLevel)
+{
+    const LevelIDs visitedEntrance = levelEntrances.getEntranceLevelIdFromLevel(static_cast<LevelIDs>(visitedLevel));
+    switch (visitedEntrance)
+    {
+    case LevelIDs_EmeraldCoast:
+        _visitedLevels.emeraldCoastEntranceVisited = true;
+        break;
+    case LevelIDs_WindyValley:
+        _visitedLevels.windyValleyEntranceVisited = true;
+        break;
+    case LevelIDs_Casinopolis:
+        _visitedLevels.casinopolisEntranceVisited = true;
+        break;
+    case LevelIDs_IceCap:
+        _visitedLevels.iceCapEntranceVisited = true;
+        break;
+    case LevelIDs_TwinklePark:
+        _visitedLevels.twinkleParkEntranceVisited = true;
+        break;
+    case LevelIDs_SpeedHighway:
+        _visitedLevels.speedHighwayEntranceVisited = true;
+        break;
+    case LevelIDs_RedMountain:
+        _visitedLevels.redMountainEntranceVisited = true;
+        break;
+    case LevelIDs_SkyDeck:
+        _visitedLevels.skyDeckEntranceVisited = true;
+        break;
+    case LevelIDs_LostWorld:
+        _visitedLevels.lostWorldEntranceVisited = true;
+        break;
+    case LevelIDs_FinalEgg:
+        _visitedLevels.finalEggEntranceVisited = true;
+        break;
+    case LevelIDs_HotShelter:
+        _visitedLevels.hotShelterEntranceVisited = true;
+        break;
+    default: break;
+    }
+
+    return _visitedLevels;
 }
 
 typedef struct

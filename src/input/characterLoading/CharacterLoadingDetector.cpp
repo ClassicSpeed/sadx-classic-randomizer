@@ -32,6 +32,8 @@ void CharacterLoadingDetector::OnCharacterSelectScreenLoaded() const
 
 void CharacterLoadingDetector::OnCharacterLoaded()
 {
+    if (DemoPlaying > 0)
+        return;
     //Workaround to load the upgrades after the event flags logic was applied
     _loadCharacterNextFrame = 5;
 }

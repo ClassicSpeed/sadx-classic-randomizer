@@ -7,6 +7,8 @@ enum Goal
     GoalEmeraldHunt,
     GoalLevelsAndEmeraldHunt,
     GoalEmblemsAndEmeraldHunt,
+    GoalMissions,
+    GoalMissionsAndEmeraldHunt,
     None
 };
 
@@ -51,7 +53,11 @@ struct Options
     std::string playerName = "Player";
     Goal goal = None;
     int emblemGoal = -1;
+    int levelGoal = -1;
+    int missionGoal = -1;
     bool missionModeEnabled = false;
+    
+    bool entranceRandomizer = false;
 
 
     StartingArea sonicStartingArea = NoStatingArea;
@@ -97,6 +103,7 @@ struct Options
     int gammaActionStageMissions = 0;
 
     bool skyChaseChecks = false;
+    std::vector<int> missionBlacklist = {};
 
     void SetActionStageMissions(const Characters character, const int missions)
     {

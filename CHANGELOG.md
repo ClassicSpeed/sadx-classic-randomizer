@@ -2,12 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.8.4] - 2024-09-05
+
+### Added
+
+- Added mission completion as a goal.
+- Added level percentage for the level completion goal.
+- Added mission percentage for the mission completion goal.
+- Added tracker for random level entrances.
+    - It will update as soon as you enter a level, but you need to finish the level for the change to persist after a
+      restart.
+
+### Changed
+
+- Every of Big's Mission A now requires all the lure upgrades in expert logic.
+
 ## [v0.8.3] - 2024-09-03
 
 ### Added
 
 - Big now has to use Sonic and Tails' entrance to Sky Deck so he can use the pool for mission 44.
-    - Since he can transform the Egg Carrier now, the hidden bed emblem and the Chaos 6 main platform emblem are in hard/expert logic for Big.
+    - Since he can transform the Egg Carrier now, the hidden bed emblem and the Chaos 6 main platform emblem are in
+      hard/expert logic for Big.
 - Added Sonic to the hard/expert logic for the Pool Emblem and Tree Stump Emblem.
 - Added an explanation for entrance randomizer in the options.
 - Guaranteed level now supports entrance randomizer.

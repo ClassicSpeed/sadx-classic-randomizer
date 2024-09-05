@@ -54,8 +54,6 @@ struct LevelStatus
     int bigLevelsCompleted = 0;
     int gammaLevelsCompleted = 0;
 
-    
-    int levelsTotal = 0;
     int levelsCompleted = 0;
 };
 
