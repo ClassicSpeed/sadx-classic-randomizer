@@ -82,6 +82,25 @@ Levels LevelEntrances::getLevelFromEntrance(const Levels entrance) const
         return _entranceToLevel.at(entrance);
     return entrance;
 }
+std::string LevelEntrances::getLevelInitialsFromEntrance(const Levels entrance) const
+{
+    Levels level = getLevelFromEntrance(entrance);
+    switch (level)
+    {
+    case EmeraldCoast: return "EC";
+    case WindyValley: return "WV";
+    case Casinopolis: return "C ";
+    case IceCap: return "IC";
+    case TwinklePark: return "TP";
+    case SpeedHighway: return "SH";
+    case RedMountain: return "RM";
+    case SkyDeck: return "SD";
+    case LostWorld: return "LW";
+    case FinalEgg: return "FE";
+    case HotShelter: return "HS";
+    default: return "??";
+    }
+}
 
 LevelAndActIDs LevelEntrances::getLevelAndActIdFromEntrance(const Levels entrance, const int characters) const
 {
@@ -111,7 +130,6 @@ LevelIDs LevelEntrances::getEntranceLevelIdFromLevel(const LevelIDs currentLevel
 
 bool LevelEntrances::canEnter(const Levels levelEntrance, const short currentCharacter)
 {
-    // Check if the character can enter the specified level
     const auto it = CHARACTER_LEVELS.find(currentCharacter);
     if (it != CHARACTER_LEVELS.end())
     {

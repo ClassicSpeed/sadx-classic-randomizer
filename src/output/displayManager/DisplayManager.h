@@ -6,6 +6,7 @@
 #include "../../application/structs/UnlockStatus.h"
 #include "../../application/structs/LevelStatus.h"
 #include "../../application/structs/MissionStatus.h"
+#include "../../application/structs/VisitedLevels.h"
 #include "../../application/structs/Options.h"
 #include "../../application/structs/LocationData.h"
 
@@ -21,6 +22,7 @@ public:
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
     void UpdateLevelStatus(LevelStatus levelStatus);
     void UpdateMissionStatus(MissionStatus missionStatus);
+    void UpdateVisitedLevels(VisitedLevels visitedLevels);
     void UpdateOptions(Options options);
     void OnFrame();
     void ShowStatusInformation(std::string information);
@@ -61,6 +63,7 @@ private:
     UnlockStatus _unlockStatus;
     LevelStatus _levelStatus;
     MissionStatus _missionStatus;
+    VisitedLevels _visitedLevels;
     Options _options;
 
 

@@ -2,12 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.8.4] - 2024-09-?
+## [v0.8.4] - 2024-09-05
 
 ### Added
+
 - Added mission completion as a goal.
 - Added level percentage for the level completion goal.
 - Added mission percentage for the mission completion goal.
+- Added tracker for random level entrances.
+    - It will update as soon as you enter a level, but you need to finish the level for the change to persist after a
+      restart.
 
 ### Changed
 

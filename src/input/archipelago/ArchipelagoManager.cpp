@@ -278,6 +278,10 @@ void SADX_LevelEntranceMap(const std::map<int, int> levelEntrancesValues)
     }
     randomizerPtr->UpdateLevelEntrances(levelEntrances);
 }
+void SADX_SetEntranceRandomizer(const int enableEntranceRandomizer)
+{
+    randomizerPtr->SetEntranceRandomizer(enableEntranceRandomizer);
+}
 
 void SADX_SetDeathLink(const int deathLinkActive)
 {
@@ -426,6 +430,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("BigStartingArea", &SADX_BigStartingArea);
 
     AP_RegisterSlotDataMapIntIntCallback("LevelEntranceMap", &SADX_LevelEntranceMap);
+    AP_RegisterSlotDataIntCallback("EntranceRandomizer", &SADX_SetEntranceRandomizer);
 
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
     AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);

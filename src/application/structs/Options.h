@@ -56,6 +56,8 @@ struct Options
     int levelGoal = -1;
     int missionGoal = -1;
     bool missionModeEnabled = false;
+    
+    bool entranceRandomizer = false;
 
 
     StartingArea sonicStartingArea = NoStatingArea;

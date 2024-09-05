@@ -59,6 +59,11 @@ void DisplayManager::UpdateMissionStatus(MissionStatus missionStatus)
     this->_missionStatus = missionStatus;
 }
 
+void DisplayManager::UpdateVisitedLevels(VisitedLevels visitedLevels)
+{
+    this->_visitedLevels = visitedLevels;
+}
+
 void DisplayManager::UpdateOptions(const Options options)
 {
     this->_options = options;
@@ -792,4 +797,186 @@ void DisplayManager::DisplayItemsUnlocked()
     buffer.append(!_unlockStatus.jungleCart ? "Jungle Cart" : "           ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    displayOffset++;
+
+    if (_options.entranceRandomizer)
+    {
+        displayOffset++;
+        buffer.clear();
+        buffer.append("EC");
+        if (_visitedLevels.emeraldCoastEntranceVisited)
+            buffer.append("   ").append(_visitedLevels.emeraldCoastEntranceActualLevel);
+        else
+            buffer.append("");
+        SetDebugFontColor(_keyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        buffer.clear();
+        buffer.append("   >");
+        if (!_visitedLevels.emeraldCoastEntranceVisited)
+            buffer.append(" ??");
+        SetDebugFontColor(disabledKeyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+        displayOffset++;
+        buffer.clear();
+        buffer.append("WV");
+        if (_visitedLevels.windyValleyEntranceVisited)
+            buffer.append("   ").append(_visitedLevels.windyValleyEntranceActualLevel);
+        else
+            buffer.append("");
+        SetDebugFontColor(_keyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        buffer.clear();
+        buffer.append("   >");
+        if (!_visitedLevels.windyValleyEntranceVisited)
+            buffer.append(" ??");
+        SetDebugFontColor(disabledKeyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+        displayOffset++;
+        buffer.clear();
+        buffer.append("C ");
+        if (_visitedLevels.casinopolisEntranceVisited)
+            buffer.append("   ").append(_visitedLevels.casinopolisEntranceActualLevel);
+        else
+            buffer.append("");
+        SetDebugFontColor(_keyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        buffer.clear();
+        buffer.append("   >");
+        if (!_visitedLevels.casinopolisEntranceVisited)
+            buffer.append(" ??");
+        SetDebugFontColor(disabledKeyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+        displayOffset++;
+        buffer.clear();
+        buffer.append("IC");
+        if (_visitedLevels.iceCapEntranceVisited)
+            buffer.append("   ").append(_visitedLevels.iceCapEntranceActualLevel);
+        else
+            buffer.append("");
+        SetDebugFontColor(_keyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        buffer.clear();
+        buffer.append("   >");
+        if (!_visitedLevels.iceCapEntranceVisited)
+            buffer.append(" ??");
+        SetDebugFontColor(disabledKeyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+        displayOffset++;
+        buffer.clear();
+        buffer.append("TP");
+        if (_visitedLevels.twinkleParkEntranceVisited)
+            buffer.append("   ").append(_visitedLevels.twinkleParkEntranceActualLevel);
+        else
+            buffer.append("");
+        SetDebugFontColor(_keyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        buffer.clear();
+        buffer.append("   >");
+        if (!_visitedLevels.twinkleParkEntranceVisited)
+            buffer.append(" ??");
+        SetDebugFontColor(disabledKeyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+
+        displayOffset++;
+        buffer.clear();
+        buffer.append("SH");
+        if (_visitedLevels.speedHighwayEntranceVisited)
+            buffer.append("   ").append(_visitedLevels.speedHighwayEntranceActualLevel);
+        else
+            buffer.append("");
+        SetDebugFontColor(_keyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        buffer.clear();
+        buffer.append("   >");
+        if (!_visitedLevels.speedHighwayEntranceVisited)
+            buffer.append(" ??");
+        SetDebugFontColor(disabledKeyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+
+        displayOffset++;
+        buffer.clear();
+        buffer.append("RM");
+        if (_visitedLevels.redMountainEntranceVisited)
+            buffer.append("   ").append(_visitedLevels.redMountainEntranceActualLevel);
+        else
+            buffer.append("");
+        SetDebugFontColor(_keyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        buffer.clear();
+        buffer.append("   >");
+        if (!_visitedLevels.redMountainEntranceVisited)
+            buffer.append(" ??");
+        SetDebugFontColor(disabledKeyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+        displayOffset++;
+        buffer.clear();
+        buffer.append("SD");
+        if (_visitedLevels.skyDeckEntranceVisited)
+            buffer.append("   ").append(_visitedLevels.skyDeckEntranceActualLevel);
+        else
+            buffer.append("");
+        SetDebugFontColor(_keyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        buffer.clear();
+        buffer.append("   >");
+        if (!_visitedLevels.skyDeckEntranceVisited)
+            buffer.append(" ??");
+        SetDebugFontColor(disabledKeyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+        displayOffset++;
+        buffer.clear();
+        buffer.append("LW");
+        if (_visitedLevels.lostWorldEntranceVisited)
+            buffer.append("   ").append(_visitedLevels.lostWorldEntranceActualLevel);
+        else
+            buffer.append("");
+        SetDebugFontColor(_keyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        buffer.clear();
+        buffer.append("   >");
+        if (!_visitedLevels.lostWorldEntranceVisited)
+            buffer.append(" ??");
+        SetDebugFontColor(disabledKeyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+        displayOffset++;
+        buffer.clear();
+        buffer.append("FE");
+        if (_visitedLevels.finalEggEntranceVisited)
+            buffer.append("   ").append(_visitedLevels.finalEggEntranceActualLevel);
+        else
+            buffer.append("");
+        SetDebugFontColor(_keyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        buffer.clear();
+        buffer.append("   >");
+        if (!_visitedLevels.finalEggEntranceVisited)
+            buffer.append(" ??");
+        SetDebugFontColor(disabledKeyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+        displayOffset++;
+        buffer.clear();
+        buffer.append("HS");
+        if (_visitedLevels.hotShelterEntranceVisited)
+            buffer.append("   ").append(_visitedLevels.hotShelterEntranceActualLevel);
+        else
+            buffer.append("");
+        SetDebugFontColor(_keyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        buffer.clear();
+        buffer.append("   >");
+        if (!_visitedLevels.hotShelterEntranceVisited)
+            buffer.append(" ??");
+        SetDebugFontColor(disabledKeyItemColor);
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    }
 }

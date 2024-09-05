@@ -70,6 +70,7 @@ public:
     void SetStartingCharacter(int startingCharacterIndex);
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
     void UpdateMissionBlacklist(const std::vector<int>& missionBlacklist);
+    void SetEntranceRandomizer(bool enableEntranceRandomizer);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;

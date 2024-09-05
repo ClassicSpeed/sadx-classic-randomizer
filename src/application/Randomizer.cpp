@@ -129,6 +129,13 @@ void Randomizer::SetStartingCharacter(const int startingCharacterIndex)
 void Randomizer::UpdateLevelEntrances(LevelEntrances levelEntrances)
 {
     _worldStateManager.UpdateLevelEntrances(levelEntrances);
+
+    for (const auto& location : _locationRepository.GetLocations())
+    {
+        if (location.second.type == LocationLevel && location.second.checked && location.second.level >=
+            LevelIDs_EmeraldCoast && location.second.level <= LevelIDs_HotShelter)
+            _displayManager.UpdateVisitedLevels(_worldStateManager.GetVisitedLevels(location.second.level));
+    }
 }
 
 void Randomizer::UpdateMissionBlacklist(const std::vector<int>& missionBlacklist)
@@ -141,6 +148,11 @@ void Randomizer::UpdateMissionBlacklist(const std::vector<int>& missionBlacklist
         const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
         _displayManager.UpdateMissionStatus(missionStatus);
     }
+}
+
+void Randomizer::SetEntranceRandomizer(const bool enableEntranceRandomizer)
+{
+    _options.entranceRandomizer = enableEntranceRandomizer;
 }
 
 bool Randomizer::AreLastStoryRequirementsCompleted() const
@@ -185,6 +197,8 @@ void Randomizer::OnCharacterLoaded() const
         else
             _characterManager.RemoveUpgrade(item.second.upgrade);
     }
+    if (_options.entranceRandomizer && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
+        _displayManager.UpdateVisitedLevels(_worldStateManager.GetVisitedLevels(CurrentLevel));
 }
 
 
