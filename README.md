@@ -22,4 +22,5 @@ Sonic Adventure DX Randomizer, compatible with archipelago
   their [SA2B Archipelago mod](https://github.com/PoryGone/SA2B_Archipelago)
 - [SPEEPSHighway](https://github.com/SPEEPSHighway) For the location of the life capsules in
   his [Emblem Challenge mod](https://gamebanana.com/mods/322761)
+- DementisXYZ for taking screenshots of the life capsules and field emblems for the [Location Wiki](https://github.com/ClassicSpeed/SADX-Archipelago-Locations-Wiki/blob/main/README.md)
 - And everyone who helped to test the mod on discord!
