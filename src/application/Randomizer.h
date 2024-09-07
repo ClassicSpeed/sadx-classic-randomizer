@@ -27,7 +27,7 @@ public:
     }
 
     void OnCheckFound(int checkId) const;
-    void PlayRandomVoiceForItem(const ItemData& item) const;
+    void PlayRandomVoiceForItem(const ItemData& item, const int64_t itemId) const;
     void OnItemReceived(int64_t itemId) const;
     void MarkCheckedLocation(int64_t checkId) const;
     void OnCharacterLoaded() const;
@@ -92,4 +92,8 @@ private:
     bool _eggmanCommentOnCharacterUnlock = true;
     bool _currentCharacterCommentOnCharacterUnlock = true;
     bool _unlockedCharacterCommentOnCharacterUnlock = true;
+
+    bool _eggmanCommentOnKeyItems = true;
+    bool _tikalCommentOnKeyItems = true;
+    bool _currentCharacterCommentOnKeyItems = true;
 };

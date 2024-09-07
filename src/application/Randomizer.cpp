@@ -84,10 +84,10 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
 
-    this->PlayRandomVoiceForItem(item);
+    this->PlayRandomVoiceForItem(item, itemId);
 }
 
-void Randomizer::PlayRandomVoiceForItem(const ItemData& item) const
+void Randomizer::PlayRandomVoiceForItem(const ItemData& item, const int64_t itemId) const
 {
     WeightedRandomSelector selector;
     if (item.type == ItemCharacter)
@@ -113,7 +113,7 @@ void Randomizer::PlayRandomVoiceForItem(const ItemData& item) const
             }
         }
 
-        if (item.displayName == "Playable Amy")
+        if (itemId == 4)
         {
             if (_unlockedCharacterCommentOnCharacterUnlock)
             {
@@ -136,7 +136,7 @@ void Randomizer::PlayRandomVoiceForItem(const ItemData& item) const
                 }
             }
         }
-        else if (item.displayName == "Playable Big")
+        else if (itemId == 6)
         {
             if (_unlockedCharacterCommentOnCharacterUnlock)
             {
@@ -156,7 +156,7 @@ void Randomizer::PlayRandomVoiceForItem(const ItemData& item) const
                 }
             }
         }
-        else if (item.displayName == "Playable Gamma")
+        else if (itemId == 5)
         {
             if (_unlockedCharacterCommentOnCharacterUnlock)
             {
@@ -203,7 +203,7 @@ void Randomizer::PlayRandomVoiceForItem(const ItemData& item) const
                 selector.addNumber(1280, 1); //I'm counting on you Gamma!
             }
         }
-        else if (item.displayName == "Playable Knuckles")
+        else if (itemId == 3)
         {
             if (_unlockedCharacterCommentOnCharacterUnlock)
             {
@@ -234,7 +234,7 @@ void Randomizer::PlayRandomVoiceForItem(const ItemData& item) const
                 selector.addNumber(1036, 1); //Kn- Knuckles!
             }
         }
-        else if (item.displayName == "Playable Sonic")
+        else if (itemId == 1)
         {
             if (_unlockedCharacterCommentOnCharacterUnlock)
             {
@@ -284,7 +284,7 @@ void Randomizer::PlayRandomVoiceForItem(const ItemData& item) const
                 selector.addNumber(1714, 1); //Be brave; blue hedgehog.
             }
         }
-        else if (item.displayName == "Playable Tails")
+        else if (itemId == 2)
         {
             if (_unlockedCharacterCommentOnCharacterUnlock)
             {
@@ -313,6 +313,278 @@ void Randomizer::PlayRandomVoiceForItem(const ItemData& item) const
             if (_eggmanCommentOnCharacterUnlock)
             {
                 selector.addNumber(219, 2); //You little fox!
+            }
+        }
+    }
+    else if (item.type == ItemChaosEmerald)
+    {
+        if (_currentCharacterCommentOnKeyItems)
+        {
+            if (CurrentCharacter == Characters_Knuckles)
+            {
+                selector.addNumber(478, 1); //That's a Chaos Emerald!
+                selector.addNumber(1076, 1); //(gasp) That's... a Chaos Emerald!
+                selector.addNumber(1142, 1); //Look! It's the Emerald!
+            }
+            else if (CurrentCharacter == Characters_Sonic)
+            {
+                selector.addNumber(425, 1); //Whoa! A Chaos Emerald!
+                selector.addNumber(632, 1); //It's a Chaos Emerald! No way!
+            }
+            else if (CurrentCharacter == Characters_Tails)
+            {
+                selector.addNumber(427, 1); //This thing's got unlimited power; ya know.
+                selector.addNumber(539, 1); //A Chaos Emerald!
+                selector.addNumber(633, 1); //I was lucky to find one of the seven Chaos Emeralds.
+                selector.addNumber(670, 1); //The Chaos Emerald!
+                selector.addNumber(726, 1); //Wow! There's a Chaos Emerald!
+                selector.addNumber(751, 1); //Oh yeah; the Chaos Emerald. Perfect!
+                selector.addNumber(771, 1); //That's a Chaos Emerald!
+                selector.addNumber(928, 1); //It's a Chaos Emerald!
+            }
+        }
+        if (_eggmanCommentOnKeyItems)
+        {
+            selector.addNumber(438, 1); //I want all of the Chaos Emeralds.
+            selector.addNumber(445, 1); //Come on Chaos; time to eat!
+            selector.addNumber(450, 1); //His strength increases every time I feed him a Chaos Emerald!
+            selector.addNumber(487, 1); //These are for you; my friend!
+            selector.addNumber(652, 1); //Chaos could use a little snack!
+
+            if (_itemRepository.GetUnlockStatus().CountChaosEmeralds() == 4)
+            {
+                selector.addNumber(485, 5); //Now I have four lovely Emeralds!
+                selector.addNumber(697, 5); //Ha ha ha ha! Four! Count them; four Emeralds!
+                selector.addNumber(1083, 5); //Hahahahaha! I've got four Emeralds now.
+            }
+            if (_itemRepository.GetUnlockStatus().CountChaosEmeralds() == 6)
+            {
+                selector.addNumber(570, 5); //Now I have six of the Chaos Emeralds!
+                selector.addNumber(571, 5); //There's only one more left to find!
+            }
+        }
+        if (_tikalCommentOnKeyItems)
+        {
+            if (_itemRepository.GetUnlockStatus().CountChaosEmeralds() == 7)
+            {
+                selector.addNumber(1355, 1); //So these are the seven Emeralds.
+            }
+        }
+    }
+    else if (item.type == ItemKey)
+    {
+        if (_eggmanCommentOnKeyItems)
+        {
+            selector.addNumber(1231, 1); //Ahh! There it is! Right there!!
+        }
+        if (_tikalCommentOnKeyItems)
+        {
+            selector.addNumber(1352, 1); //Wow...
+            //Boat
+            if (itemId == 81)
+            {
+                selector.addNumber(1632, 2); //Take the boat to get to the Egg Carrier.
+                selector.addNumber(1868, 2);
+                //The Egg Carrier has crashed and is floating somewhere in the ocean. Use this boat to get to it.
+                selector.addNumber(1927, 2); //Take this boat to get to the Egg Carrier.
+            }
+            //Casino District Keys
+            else if (itemId == 84)
+            {
+                selector.addNumber(1921, 2); //Something good may happen at the Casino area.
+                selector.addNumber(1922, 2); //Why don't you try going to the Casino?
+                selector.addNumber(1558, 2); //You can go to the Casino area at nighttime.
+            }
+            //Dynamite
+            else if (itemId == 88)
+            {
+                selector.addNumber(1928, 2); //Why don't you try going to Angel Island?
+                selector.addNumber(1955, 2); //You can break through the wall if you use dynamite.
+            }
+            //Employee Card
+            else if (itemId == 86)
+            {
+                selector.addNumber(1561, 3); //You can get into a certain building using the Employee Card.
+            }
+
+            //Hotel Keys
+            else if (itemId == 87)
+            {
+                selector.addNumber(1872, 3); //Get to the beach by going through the hotel.
+            }
+
+            //Ice Stone
+            else if (itemId == 83)
+            {
+                selector.addNumber(1559, 2); //Use the Ice Stone in the Mystic Ruins.
+                selector.addNumber(1641, 2); //Didn't you see a stone with an ice pattern on it?
+            }
+            //Jungle Cart
+            else if (itemId == 89)
+            {
+                selector.addNumber(1634, 3); //The trolley car seems to be working. It leads to the jungle.
+            }
+            //Train
+            else if (itemId == 80)
+            {
+                selector.addNumber(1572, 1); //A train will be arriving soon. Please stand back.
+                selector.addNumber(1654, 1); //Passengers are requested to wait onboard the train.
+                selector.addNumber(1656, 1); //A train will be arriving soon. Please stand back.
+                selector.addNumber(1630, 1); //The train for Station Square has arrived.
+                selector.addNumber(1869, 1); //Go to the station to catch the train.
+                selector.addNumber(1918, 1); //The train seems to be moving now.
+            }
+
+            //Wind Stone
+            else if (itemId == 120)
+            {
+                selector.addNumber(1639, 3);
+                //If you have the Stone of Wind; gusts of strong wind are known to blow in the caves.
+            }
+        }
+        if (_currentCharacterCommentOnKeyItems)
+        {
+            if (CurrentCharacter == Characters_Amy)
+            {
+                selector.addNumber(510, 1); //Let's go!
+                selector.addNumber(995, 1); //I'm so happy!
+                selector.addNumber(1731, 1); //Alright!
+                selector.addNumber(1732, 1); //Yay!
+                selector.addNumber(1733, 1); //Alright!
+
+                //Boat
+                if (itemId == 81)
+                {
+                    selector.addNumber(291, 3); //It's nice to have an ocean nearby.
+                }
+                //Hotel Keys
+                else if (itemId == 83)
+                {
+                    selector.addNumber(297, 3); //I'd love to vacation here!
+                }
+
+                //Twinkle Park Ticket
+                else if (itemId == 85)
+                {
+                    selector.addNumber(303, 2); //I'm getting excited!
+                    selector.addNumber(509, 2); //Look here! It says; 'Cute couples get in free'!
+                    selector.addNumber(875, 2); //Look! It says cute couples can get in free!
+                    selector.addNumber(876, 2); //What are we waiting for?
+                }
+            }
+            else if (CurrentCharacter == Characters_Gamma)
+            {
+                //Dynamite
+                if (itemId == 88)
+                {
+                    selector.addNumber(314, 2); //Arriving at Angel Island.
+                }
+                //Train
+                else if (itemId == 80)
+                {
+                    selector.addNumber(285, 5); //Train to Mystic Ruins confirmed.
+                }
+                //Twinkle Park Ticket
+                else if (itemId == 85)
+                {
+                    selector.addNumber(305, 3); //Bumper car area confirmed.
+                }
+            }
+            else if (CurrentCharacter == Characters_Big)
+            {
+                selector.addNumber(1346, 1); //Yes!
+                selector.addNumber(1383, 1); //Hurray!
+                selector.addNumber(1386, 1); //Oh. Okay! Thanks.
+                selector.addNumber(1389, 1); //Hey; maybe we could use this.
+                selector.addNumber(1745, 1); //Wow; it's big!
+                selector.addNumber(1751, 1); //Not too bad!
+                selector.addNumber(1760, 1); //Super!
+                selector.addNumber(1765, 1); //What's this?
+                selector.addNumber(1766, 1); //Allright!
+
+                //Jungle Cart
+                if (itemId == 89)
+                {
+                    selector.addNumber(319, 3); //Maybe I'll go home.
+                }
+
+                //Twinkle Park Ticket
+                else if (itemId == 85)
+                {
+                    selector.addNumber(304, 5); //Twinkle Park?
+                }
+            }
+            else if (CurrentCharacter == Characters_Knuckles)
+            {
+                selector.addNumber(1112, 1); //This is beginning to blow my mind.
+                selector.addNumber(1788, 1); //Yeeah!
+                selector.addNumber(1790, 1); //Found it!
+                selector.addNumber(1794, 1); //Heh. Good enough.
+
+                //Dynamite
+                if (itemId == 88)
+                {
+                    selector.addNumber(313, 3); //I've got to get this island airborne again.
+                }
+                //Hotel Keys
+                else if (itemId == 83)
+                {
+                    selector.addNumber(296, 3); //Great; a resort hotel.
+                }
+            }
+            else if (CurrentCharacter == Characters_Sonic)
+            {
+                selector.addNumber(213, 1); //Horray!
+                selector.addNumber(214, 1); //I got it!
+                selector.addNumber(315, 1); //Now this is more like it!
+                selector.addNumber(372, 1); //Not bad; not bad at all!
+                selector.addNumber(400, 1); //Aw; yeah!
+                selector.addNumber(401, 1); //This is happenin'!
+                selector.addNumber(406, 1); //Aw; yeah!
+                selector.addNumber(587, 1); //Wow; what's this?
+                selector.addNumber(1835, 1); //Hurray!
+                selector.addNumber(1837, 1); //Let's get 'em!
+                selector.addNumber(1838, 1); //Yes!
+                selector.addNumber(1839, 1); //Woohoo!
+                selector.addNumber(1840, 1); //Yes.
+                selector.addNumber(1842, 1); //*whistles* Sweet!
+                selector.addNumber(1844, 1); //Yeah; not bad!
+                selector.addNumber(1849, 1); //Yes!
+                selector.addNumber(1852, 1); //Yeah!
+                selector.addNumber(1853, 1); //Oh-kay!
+
+                //Dynamite
+                if (itemId == 88)
+                {
+                    selector.addNumber(312, 2); //So; this is Angel Island!
+                }
+                //Twinkle Park Ticket
+                else if (itemId == 85)
+                {
+                    selector.addNumber(300, 3); //I'm not too fond of places like this.
+                }
+                //Wind Stone
+                else if (itemId == 120)
+                {
+                    selector.addNumber(231, 4); //I can hear the wind in the distance.
+                }
+            }
+            else if (CurrentCharacter == Characters_Tails)
+            {
+                selector.addNumber(424, 1); //Tada!
+                selector.addNumber(1802, 1); //Allright!
+                selector.addNumber(1803, 1); //Yeeaah!
+                selector.addNumber(1812, 1); //Cool.
+                //Hotel Keys
+                if (itemId == 83)
+                {
+                    selector.addNumber(295, 2); //This hotel is nice!
+                }
+                //Train
+                else if (itemId == 80)
+                {
+                    selector.addNumber(289, 5); //Trains are cool; too!
+                }
             }
         }
     }
