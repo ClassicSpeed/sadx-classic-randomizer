@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Created [Location Wiki](https://github.com/ClassicSpeed/SADX-Archipelago-Locations-Wiki/blob/main/README.md) for the
-  locations of the life capsules and field emblems. (Credit to DementisXYZ).
+  locations of the life capsules and field emblems. (Credit to DementisXYZ & Roukles).
 - Added voice lines when getting a trap, a key item or a new character.
     - The voice lines are from Eggman or the current character.
     - There are settings in the mod configuration to disable them.
