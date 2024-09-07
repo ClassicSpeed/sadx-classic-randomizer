@@ -29,6 +29,10 @@ public:
         }
         return -1; // Should never reach here if weights are positive
     }
+    
+    bool isEmpty() const {
+        return numbers.empty();
+    }
 
 private:
     std::vector<std::pair<int, int>> numbers;

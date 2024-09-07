@@ -507,9 +507,11 @@ void CharacterManager::PlayRandomTrapVoice(const FillerType filler)
             selector.addNumber(1814, 1); //Augh!
         }
     }
-
-    const int randomVoice = selector.getRandomNumber();
-    PlayVoice(randomVoice);
+    if (!selector.isEmpty()) 
+    {
+        const int voice = selector.getRandomNumber();
+        PlayVoice(voice);
+    }
 }
 
 

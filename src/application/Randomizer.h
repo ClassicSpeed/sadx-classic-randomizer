@@ -27,6 +27,7 @@ public:
     }
 
     void OnCheckFound(int checkId) const;
+    void PlayRandomVoiceForItem(const ItemData& item) const;
     void OnItemReceived(int64_t itemId) const;
     void MarkCheckedLocation(int64_t checkId) const;
     void OnCharacterLoaded() const;
@@ -86,4 +87,9 @@ private:
     bool _deathPending;
     bool _ignoreNextPlayerDeath = false;
     bool _ignoreNextDeathLink = false;
+    
+    
+    bool _eggmanCommentOnCharacterUnlock = true;
+    bool _currentCharacterCommentOnCharacterUnlock = true;
+    bool _unlockedCharacterCommentOnCharacterUnlock = true;
 };
