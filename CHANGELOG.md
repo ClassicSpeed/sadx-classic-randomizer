@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.8.5] - 2024-09-06
+
+### Added
+
+- Created [Location Wiki](https://github.com/ClassicSpeed/SADX-Archipelago-Locations-Wiki/blob/main/README.md) for the
+  locations of the life capsules and field emblems. (Credit to DementisXYZ).
+
+### Changed
+
+- Fixed Red Mountain entrance not appearing for big without the DC conversion.
+
 ## [v0.8.4] - 2024-09-05
 
 ### Added
