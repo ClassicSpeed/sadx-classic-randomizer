@@ -72,6 +72,8 @@ public:
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
     void UpdateMissionBlacklist(const std::vector<int>& missionBlacklist);
     void SetEntranceRandomizer(bool enableEntranceRandomizer);
+    void SetCharacterVoiceReactions(bool eggmanCommentOnCharacterUnlock, bool currentCharacterCommentOnCharacterUnlock, bool unlockedCharacterCommentOnCharacterUnlock, bool eggmanCommentOnKeyItems, bool tikalCommentOnKeyItems,
+                                   bool currentCharacterCommentOnKeyItems);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;

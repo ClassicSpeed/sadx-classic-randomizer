@@ -247,6 +247,15 @@ void CharacterManager::SetStartingCharacter(int startingCharacterIndex)
     }
 }
 
+void CharacterManager::SetCharacterVoiceReactions(const bool eggmanCommentOnTrap,
+                                                  const bool otherCharactersCommentOnTrap,
+                                                  const bool currentCharacterReactToTrap)
+{
+    _eggmanCommentOnTrap = eggmanCommentOnTrap;
+    _otherCharactersCommentOnTrap = otherCharactersCommentOnTrap;
+    _currentCharacterReactToTrap = currentCharacterReactToTrap;
+}
+
 TaskFunc(EBuyon_Main, 0x7B2E00);
 
 void CharacterManager::ActivateFiller(const FillerType filler)
@@ -507,7 +516,7 @@ void CharacterManager::PlayRandomTrapVoice(const FillerType filler)
             selector.addNumber(1814, 1); //Augh!
         }
     }
-    if (!selector.isEmpty()) 
+    if (!selector.isEmpty())
     {
         const int voice = selector.getRandomNumber();
         PlayVoice(voice);

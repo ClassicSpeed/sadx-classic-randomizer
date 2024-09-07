@@ -665,6 +665,20 @@ void Randomizer::SetEntranceRandomizer(const bool enableEntranceRandomizer)
     _options.entranceRandomizer = enableEntranceRandomizer;
 }
 
+void Randomizer::SetCharacterVoiceReactions(const bool eggmanCommentOnCharacterUnlock,
+                                            const bool currentCharacterCommentOnCharacterUnlock,
+                                            const bool unlockedCharacterCommentOnCharacterUnlock,
+                                            const bool eggmanCommentOnKeyItems, const bool tikalCommentOnKeyItems,
+                                            const bool currentCharacterCommentOnKeyItems)
+{
+    _eggmanCommentOnCharacterUnlock = eggmanCommentOnCharacterUnlock;
+    _currentCharacterCommentOnCharacterUnlock = currentCharacterCommentOnCharacterUnlock;
+    _unlockedCharacterCommentOnCharacterUnlock = unlockedCharacterCommentOnCharacterUnlock;
+    _eggmanCommentOnKeyItems = eggmanCommentOnKeyItems;
+    _tikalCommentOnKeyItems = tikalCommentOnKeyItems;
+    _currentCharacterCommentOnKeyItems = currentCharacterCommentOnKeyItems;
+}
+
 bool Randomizer::AreLastStoryRequirementsCompleted() const
 {
     if (_options.goal == GoalLevels)

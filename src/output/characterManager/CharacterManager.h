@@ -26,6 +26,7 @@ public:
     void GiveFillerItem(FillerType filler);
     void OnPlayingFrame();
     void SetStartingCharacter(int startingCharacterIndex);
+    void SetCharacterVoiceReactions(bool eggmanCommentOnTrap, bool otherCharactersCommentOnTrap, bool currentCharacterReactToTrap);
     Options options;
     UnlockStatus unlockStatus;
     int lastRingAmount;
