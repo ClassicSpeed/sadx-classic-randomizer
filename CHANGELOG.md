@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
     - The cutscene is unskippable, so an option in the mod configuration was added to disable it.
 - When starting on Angel Island, the player will spawn near the Red Mountain entrance.
     - The door to the cave will be closed until you get the dynamite.
+- The Angel Island Shrine Emblem is now in logic for Gamma with the Jet Booster in hard and expert logic.
 
 ### Changed
 
