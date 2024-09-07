@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Fixed Red Mountain entrance not appearing for big without the DC conversion.
+- Fixed Final Egg Tower exiting spawning the character in the wrong place.
 
 ## [v0.8.4] - 2024-09-05
 

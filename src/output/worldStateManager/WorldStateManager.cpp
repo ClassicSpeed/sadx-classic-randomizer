@@ -1006,6 +1006,7 @@ static void __cdecl HandleMREntrance(const int newScene)
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && newScene == 4)
     {
         SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 2);
+        SetLevelEntrance(4);
     }
     // Final Egg
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4
