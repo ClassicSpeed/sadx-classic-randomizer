@@ -5,6 +5,7 @@
 #include "../../application/structs/Options.h"
 #include "../../application/structs/UnlockStatus.h"
 #include "../../application/structs/ItemData.h"
+#include "../../application/structs/WeightedRandomSelector.h"
 
 
 #define RING_LOSS_SOUND_ID 0
@@ -31,6 +32,7 @@ public:
 
 private:
     void ActivateFiller(FillerType filler);
+    void PlayRandomTrapVoice(FillerType filler);
     void FreezePlayer();
     void SpawnSpring();
     void SpawnEnemies(void (*enemyFunc)(task* tp));
@@ -45,4 +47,8 @@ private:
 
     float _freezeDuration = 2.0f;
     std::clock_t _freezeTimer = -1;
+
+    bool _eggmanCommentOnTrap = true;
+    bool _otherCharactersCommentOnTrap = true;
+    bool _currentCharacterReactToTrap = true;
 };
