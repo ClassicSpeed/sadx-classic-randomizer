@@ -36,6 +36,9 @@
                       display="Complete Multiple Level Missions">
                 <HelpText>Collect more than one check from levels if you beat the other requirements.</HelpText>
             </Property>
+            <Property name="EggCarrierTransformationCutscene" type="bool" defaultvalue="True" display="Egg Carrier's Transformation Cutscene">
+                <HelpText>Enable Egg Carrier's Transformation Cutscene.</HelpText>
+            </Property>
             <Property name="AutoSkipCutscenes" type="bool" defaultvalue="True" display="Auto Skip Cutscenes">
                 <HelpText>Automatically skip every cutscene as soon as it starts.</HelpText>
             </Property>

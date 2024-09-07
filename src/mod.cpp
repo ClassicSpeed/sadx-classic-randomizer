@@ -151,11 +151,13 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions",
                                                                     true);
     const bool autoSkipCutscenes = settingsIni->getBool("GameSettings", "AutoSkipCutscenes", true);
+    const bool eggCarrierTransformationCutscene = settingsIni->getBool("GameSettings", "EggCarrierTransformationCutscene", true);
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
     const bool winButtonEnabled = settingsIni->getBool("GameSettings", "AutoWinButton", false);
 
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, winButtonEnabled);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
+    worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
 }
 
 #define ReplacePNG_Common(a) do { \

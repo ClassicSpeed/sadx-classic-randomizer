@@ -23,6 +23,7 @@ constexpr int EMBLEM_MYSTIC_RUINS = 65;
 constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
 constexpr int BEACH_GATE_STATION_SQUARE = 67;
 constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
+DataPointer(__int16, EggCarrierSunk, 0x3C62394);
 
 
 // //We pretend that the egg carrier is sunk so that the hedgehog hammer is works
@@ -223,12 +224,22 @@ void WorldStateManager::UpdateUnlockStatus(UnlockStatus newUnlockStatus)
     this->unlockStatus = newUnlockStatus;
 }
 
+
 void WorldStateManager::OnFrame()
 {
     if (DemoPlaying > 0)
         return;
     if (CurrentLevel == LevelIDs_PerfectChaos)
         return;
+
+    if (this->eggCarrierTransformationCutscene)
+    {
+        if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
+            EggCarrierSunk = false;
+        else
+            EggCarrierSunk = true;
+    }
+
     if (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill)
         GameMode = GameModes_Adventure_ActionStg;
     else if (GameMode == GameModes_Adventure_Field || GameMode == GameModes_Adventure_ActionStg)
@@ -479,6 +490,11 @@ VisitedLevels WorldStateManager::GetVisitedLevels(const int visitedLevel)
     return _visitedLevels;
 }
 
+void WorldStateManager::SetEggCarrierTransformationCutscene(const bool eggCarrierTransformation)
+{
+    this->eggCarrierTransformationCutscene = eggCarrierTransformation;
+}
+
 typedef struct
 {
     int x;
@@ -596,7 +612,6 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
         }
     }
 
-
     //Warp point
     LoadPVM("EC_ALIFE", ADV01C_TEXLISTS[3]);
 
@@ -605,6 +620,10 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     //Cop
     LoadPVM("NISEPAT", &NISEPAT_TEXLIST);
+
+    if (worldStateManagerPtr->eggCarrierTransformationCutscene
+        && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
+        LoadPVM("EC_SKY", &EC_SKY_TEXLIST);
 
     //Freeze trap
     LoadNoNamePVM(&stx_ice0_TEXLIST);
