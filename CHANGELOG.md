@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
     - The door to the cave will be closed until you get the dynamite.
 - The Angel Island Shrine Emblem is now in logic for Gamma with the Jet Booster in hard and expert logic.
 - Added a 5-second grace period after sending or receiving a death link where the game won't process any more links.
+- Pausing is now disabled for 2.5 seconds after getting a trap (the same time as the traps cooldown).
 
 ### Changed
 

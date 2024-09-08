@@ -161,6 +161,16 @@ void CharacterManager::GiveFillerItem(const FillerType filler)
 
 void CharacterManager::OnPlayingFrame()
 {
+    if (_fillerTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_fillerTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _fillerDuration)
+        {
+            _fillerTimer = -1;
+            EnablePause();
+        }
+    }
+
     if (GameMode != GameModes_Mission)
         return;
     if (CurrentLevel == LevelIDs_PerfectChaos || CurrentLevel == LevelIDs_TwinkleCircuit
@@ -190,15 +200,6 @@ void CharacterManager::OnPlayingFrame()
             FreeTask(_springTask);
             _springTask = nullptr;
             _springTimer = -1;
-        }
-    }
-
-    if (_fillerTimer > 0)
-    {
-        const double timePassed = (std::clock() - this->_fillerTimer) / static_cast<double>(CLOCKS_PER_SEC);
-        if (timePassed > _fillerDuration)
-        {
-            _fillerTimer = -1;
         }
     }
 
@@ -282,18 +283,22 @@ void CharacterManager::ActivateFiller(const FillerType filler)
         break;
     case IceTrap:
         this->FreezePlayer();
+        DisablePause();
         PlayRandomTrapVoice(filler);
         break;
     case SpringTrap:
         this->SpawnSpring();
+        DisablePause();
         PlayRandomTrapVoice(filler);
         break;
     case PoliceTrap:
         this->SpawnEnemies(EnemyPolice);
+        DisablePause();
         PlayRandomTrapVoice(filler);
         break;
     case BuyonTrap:
         this->SpawnEnemies(EBuyon_Main);
+        DisablePause();
         PlayRandomTrapVoice(filler);
         break;
 
@@ -310,30 +315,30 @@ void CharacterManager::PlayRandomTrapVoice(const FillerType filler)
     selector.addNumber(174, 1); //Get a load of this!
     if (_eggmanCommentOnTrap)
     {
-        selector.addNumber(171, 1); //All systems; full power!
-        selector.addNumber(173, 1); //Ah-ha!
+        selector.addNumber(171, 2); //All systems; full power!
+        selector.addNumber(173, 3); //Ah-ha!
         selector.addNumber(178, 1); //Ho ho! It's no use. Give up!
         selector.addNumber(221, 1); //Wha ha ha ha ha ha ha ha ha!
         selector.addNumber(413, 1); //Ha ha ha ha ha ha ha ha ha ha ha!
         selector.addNumber(443, 1); //Aha!
         selector.addNumber(449, 1); //Ha ha ha ha ha!		
-        selector.addNumber(463, 1); //Oh no; you don't!
+        selector.addNumber(463, 5); //Oh no; you don't!
         selector.addNumber(465, 1); //Ha ha ha ha ha ha ha ha ha!
         selector.addNumber(474, 1); //Ha ha ha ha ha ha!
         selector.addNumber(562, 1); //Ha ha ha ha ha!
         selector.addNumber(569, 1); //Ha ha ha ha ha!
-        selector.addNumber(650, 1); //Gotcha!
+        selector.addNumber(650, 3); //Gotcha!
         selector.addNumber(924, 1); //You can't get away this easily!
         selector.addNumber(926, 1); //Too late; buddy!
         selector.addNumber(1059, 1); //Ah ha hahahaha!
         selector.addNumber(1072, 1); //Mwuahahahahahahahahaha!
         selector.addNumber(1376, 1); //Ha ha ha ha ha ha!
-        selector.addNumber(1518, 1); //Get a load of this!
-        selector.addNumber(1522, 1); //Hahahahaha! I bet you wern't expecting this!
+        selector.addNumber(1518, 10); //Get a load of this!
+        selector.addNumber(1522, 3); //Hahahahaha! I bet you wern't expecting this!
         selector.addNumber(1525, 1); //Haha hahahahaha!
         selector.addNumber(1542, 1); //I guess you wern't expecting that; were you?
         selector.addNumber(1680, 1); //You're not going to get away that easily. Huhahahaha.
-        selector.addNumber(1903, 1); //Take this!
+        selector.addNumber(1903, 5); //Take this!
         selector.addNumber(1986, 1); //Huhaha! Why don't you give up?
         selector.addNumber(1987, 1); //Ha ha! It's no use! Give up!
         if (CurrentCharacter == Characters_Tails)
