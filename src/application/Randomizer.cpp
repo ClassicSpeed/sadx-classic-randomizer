@@ -408,13 +408,13 @@ void Randomizer::PlayRandomVoiceForItem(const ItemData& item, const int64_t item
             }
 
             //Hotel Keys
-            else if (itemId == 87)
+            else if (itemId == 83)
             {
                 selector.addNumber(1872, 3); //Get to the beach by going through the hotel.
             }
 
             //Ice Stone
-            else if (itemId == 83)
+            else if (itemId == 87)
             {
                 selector.addNumber(1559, 2); //Use the Ice Stone in the Mystic Ruins.
                 selector.addNumber(1641, 2); //Didn't you see a stone with an ice pattern on it?

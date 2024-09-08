@@ -155,16 +155,16 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
     const bool winButtonEnabled = settingsIni->getBool("GameSettings", "AutoWinButton", false);
     
-    const bool eggmanCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnTrap", false);
-    const bool otherCharactersCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "OtherCharactersOnTrap", false);
-    const bool currentCharacterReactToTrap = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnTrap", false);
+    const bool eggmanCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnTrap", true);
+    const bool otherCharactersCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "OtherCharactersOnTrap", true);
+    const bool currentCharacterReactToTrap = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnTrap", true);
     
-    const bool eggmanCommentOnCharacterUnlock = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnUnlock", false);
-    const bool currentCharacterCommentOnCharacterUnlock = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnUnlock", false);
-    const bool unlockedCharacterCommentOnCharacterUnlock = settingsIni->getBool("CharacterVoiceReactions", "UnlockedCharactersOnUnlock", false);
-    const bool eggmanCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnKeyItem", false);
-    const bool tikalCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "TikalOnKeyItem", false);
-    const bool currentCharacterCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnKeyItem", false);
+    const bool eggmanCommentOnCharacterUnlock = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnUnlock", true);
+    const bool currentCharacterCommentOnCharacterUnlock = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnUnlock", true);
+    const bool unlockedCharacterCommentOnCharacterUnlock = settingsIni->getBool("CharacterVoiceReactions", "UnlockedCharactersOnUnlock", true);
+    const bool eggmanCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnKeyItem", true);
+    const bool tikalCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "TikalOnKeyItem", true);
+    const bool currentCharacterCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnKeyItem", true);
 
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, winButtonEnabled);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
