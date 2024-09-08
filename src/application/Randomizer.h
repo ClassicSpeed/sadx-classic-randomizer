@@ -87,8 +87,9 @@ private:
     Options _options;
     std::string _pendingDeathCause;
     bool _deathPending;
-    bool _ignoreNextPlayerDeath = false;
-    bool _ignoreNextDeathLink = false;
+    
+    float _deathLinkCooldown = 5.0f;
+    std::clock_t _deathLinkCooldownTimer = -1;
     
     
     bool _eggmanCommentOnCharacterUnlock = true;

@@ -754,14 +754,13 @@ std::vector<LifeBoxLocationData> Randomizer::GetLifeCapsules()
 
 void Randomizer::ProcessDeath(const std::string& deathCause)
 {
-    if (_ignoreNextDeathLink)
+    const double timePassed = (std::clock() - _deathLinkCooldownTimer) / static_cast<double>(CLOCKS_PER_SEC);
+    if (_deathLinkCooldownTimer < 0 || timePassed > _deathLinkCooldown)
     {
-        _ignoreNextDeathLink = false;
-        return;
+        //Processing a death won't restart the cooldown timer
+        _pendingDeathCause = deathCause;
+        _deathPending = true;
     }
-
-    _pendingDeathCause = deathCause;
-    _deathPending = true;
 }
 
 void Randomizer::OnPlayingFrame()
@@ -777,11 +776,17 @@ void Randomizer::OnPlayingFrame()
     if (!IsControllerEnabled(0))
         return;
 
-    _ignoreNextPlayerDeath = true;
-    _characterManager.KillPlayer();
-    _displayManager.QueueMessage(_pendingDeathCause);
-    _pendingDeathCause.clear();
-    _deathPending = false;
+
+    const double timePassed = (std::clock() - _deathLinkCooldownTimer) / static_cast<double>(CLOCKS_PER_SEC);
+
+    if (_deathLinkCooldownTimer < 0 || timePassed > _deathLinkCooldown)
+    {
+        _deathLinkCooldownTimer = std::clock();
+        _characterManager.KillPlayer();
+        _displayManager.QueueMessage(_pendingDeathCause);
+        _pendingDeathCause.clear();
+        _deathPending = false;
+    }
 }
 
 void Randomizer::OnSync()
@@ -798,15 +803,15 @@ void Randomizer::OnDeath()
 {
     if (!_options.deathLinkActive)
         return;
-    if (_ignoreNextPlayerDeath)
-    {
-        _ignoreNextPlayerDeath = false;
-        return;
-    }
 
-    _archipelagoMessenger.SendDeath(_options.playerName);
-    _ignoreNextDeathLink = true;
-    _displayManager.QueueMessage("Death Sent");
+    const double timePassed = (std::clock() - _deathLinkCooldownTimer) / static_cast<double>(CLOCKS_PER_SEC);
+
+    if (_deathLinkCooldownTimer < 0 || timePassed > _deathLinkCooldown)
+    {
+        _deathLinkCooldownTimer = std::clock();
+        _archipelagoMessenger.SendDeath(_options.playerName);
+        _displayManager.QueueMessage("Death Sent");
+    }
 }
 
 void Randomizer::ProcessRings(const Sint16 amount)
