@@ -2,28 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.8.5] - 2024-09-06
+## [v0.8.5] - 2024-09-08
 
 ### Added
 
 - Created [Location Wiki](https://github.com/ClassicSpeed/SADX-Archipelago-Locations-Wiki/blob/main/README.md) for the
   locations of the life capsules and field emblems. (Credit to DementisXYZ & Roukles).
-- Added voice lines when getting a trap, a key item or a new character.
+- Added voice lines when getting a trap, a key item, or a new character.
     - The voice lines are from Eggman or the current character.
     - There are settings in the mod configuration to disable them.
 - Re-enabled the Egg Carrier transformation cutscene to help players know that the switch worked.
     - The cutscene is unskippable, so an option in the mod configuration was added to disable it.
 - When starting on Angel Island, the player will spawn near the Red Mountain entrance.
     - The door to the cave will be closed until you get the dynamite.
-- The Angel Island Shrine Emblem is now in logic for Gamma with the Jet Booster in hard and expert logic.
 - Added a 5-second grace period after sending or receiving a death link where the game won't process any more links.
-- Pausing is now disabled for 2.5 seconds after getting a trap (the same time as the traps cooldown).
+- Pausing is now disabled for 2.5 seconds after getting a trap (the same time as the trap's cooldown).
+- Options that affect logic are passed through for Universal Tracker now.
+    - This means that weighted values won't break UT anymore.
 
 ### Changed
 
-- Fixed Red Mountain entrance not appearing for big without the DC conversion.
+- Fixed Red Mountain entrance not appearing for Big without the DC conversion.
 - Fixed Final Egg Tower exiting spawning the character in the wrong place.
 - Fixed automatic mission start re-starting the mission after resetting the game.
+- The Angel Island Shrine Emblem is now in logic for Gamma with the Jet Booster in hard and expert logic.
+- Sonic's Red Mountain entrance is now in logic without any upgrades in expert logic.
+- Sonic going from the station to the casino without the keys is now in logic for expert logic.
+- Tails going from the casino to the station without the keys is now in logic for expert logic.
+- Amy getting out of Twinkle Park Lobby without the ticket is now in logic for expert logic.
+- Amy is now in logic for the pool emblem in hard and expert logic.
 
 ## [v0.8.4] - 2024-09-05
 
