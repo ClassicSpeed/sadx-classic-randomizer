@@ -151,11 +151,29 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions",
                                                                     true);
     const bool autoSkipCutscenes = settingsIni->getBool("GameSettings", "AutoSkipCutscenes", true);
+    const bool eggCarrierTransformationCutscene = settingsIni->getBool("GameSettings", "EggCarrierTransformationCutscene", true);
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
     const bool winButtonEnabled = settingsIni->getBool("GameSettings", "AutoWinButton", false);
+    
+    const bool eggmanCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnTrap", true);
+    const bool otherCharactersCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "OtherCharactersOnTrap", true);
+    const bool currentCharacterReactToTrap = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnTrap", true);
+    
+    const bool eggmanCommentOnCharacterUnlock = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnUnlock", true);
+    const bool currentCharacterCommentOnCharacterUnlock = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnUnlock", true);
+    const bool unlockedCharacterCommentOnCharacterUnlock = settingsIni->getBool("CharacterVoiceReactions", "UnlockedCharactersOnUnlock", true);
+    const bool eggmanCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnKeyItem", true);
+    const bool tikalCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "TikalOnKeyItem", true);
+    const bool currentCharacterCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnKeyItem", true);
 
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, winButtonEnabled);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
+    worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
+    characterManager.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap, currentCharacterReactToTrap);
+
+    randomizer.SetCharacterVoiceReactions(eggmanCommentOnCharacterUnlock, currentCharacterCommentOnCharacterUnlock,
+                                          unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
+                                          tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems);
 }
 
 #define ReplacePNG_Common(a) do { \

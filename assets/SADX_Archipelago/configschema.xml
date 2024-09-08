@@ -14,19 +14,24 @@
             </Property>
         </Group>
         <Group name="Messages" display="Messages Settings">
-            <Property name="MessageDisplayDuration" type="float" defaultvalue="5" minvalue="3" maxvalue="15" display="Message Display Duration">
+            <Property name="MessageDisplayDuration" type="float" defaultvalue="5" minvalue="3" maxvalue="15"
+                      display="Message Display Duration">
                 <HelpText>How long the Archipelago messages will display</HelpText>
             </Property>
-            <Property name="MessageFontSize" type="int" defaultvalue="21" minvalue="10" maxvalue="36" display="Message Font Size">
+            <Property name="MessageFontSize" type="int" defaultvalue="21" minvalue="10" maxvalue="36"
+                      display="Message Font Size">
                 <HelpText>Font size for Archipelago messages</HelpText>
             </Property>
-            <Property name="MessageColorR" type="int" defaultvalue="33" minvalue="0" maxvalue="255" display="Message Color Red">
+            <Property name="MessageColorR" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
+                      display="Message Color Red">
                 <HelpText>Red value of color for Archipelago messages</HelpText>
             </Property>
-            <Property name="MessageColorG" type="int" defaultvalue="255" minvalue="0" maxvalue="255" display="Message Color Green">
+            <Property name="MessageColorG" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Message Color Green">
                 <HelpText>Green value of color for Archipelago messages</HelpText>
             </Property>
-            <Property name="MessageColorB" type="int" defaultvalue="33" minvalue="0" maxvalue="255" display="Message Color Blue">
+            <Property name="MessageColorB" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
+                      display="Message Color Blue">
                 <HelpText>Blue value of color for Archipelago messages</HelpText>
             </Property>
         </Group>
@@ -36,6 +41,10 @@
                       display="Complete Multiple Level Missions">
                 <HelpText>Collect more than one check from levels if you beat the other requirements.</HelpText>
             </Property>
+            <Property name="EggCarrierTransformationCutscene" type="bool" defaultvalue="True"
+                      display="Egg Carrier's Transformation Cutscene">
+                <HelpText>Enable Egg Carrier's Transformation Cutscene.</HelpText>
+            </Property>
             <Property name="AutoSkipCutscenes" type="bool" defaultvalue="True" display="Auto Skip Cutscenes">
                 <HelpText>Automatically skip every cutscene as soon as it starts.</HelpText>
             </Property>
@@ -44,6 +53,51 @@
             </Property>
             <Property name="AutoWinButton" type="bool" defaultvalue="False" display="Auto-Win Button">
                 <HelpText>For debugging purposes. Win the current level/boss by pressing the whistle button</HelpText>
+            </Property>
+        </Group>
+
+
+        <Group name="CharacterVoiceReactions" display="Character Voice Reactions">
+            <Property name="EggmanOnTrap" type="bool" defaultvalue="True"
+                      display="Eggman voice clips for traps">
+        <HelpText>Play an Eggman voice clip when receiving a trap. Note: turning off all trap voice lines will just play "GET A LOAD OF THIS".</HelpText>
+            </Property>
+            <Property name="OtherCharactersOnTrap" type="bool" defaultvalue="True"
+                      display="Other voice clips for traps">
+                <HelpText>Play voice clips from other characters when receiving traps.</HelpText>
+            </Property>
+            <Property name="CurrentCharacterOnTrap" type="bool" defaultvalue="True"
+                      display="Current character reacts to traps">
+                <HelpText>Play voice clips of the current character reacting when receiving traps.</HelpText>
+            </Property>
+
+            <Property name="EggmanOnUnlock" type="bool" defaultvalue="True"
+                      display="Eggman voice clips for character unlocks">
+                <HelpText>Play an Eggman voice clip when receiving a character unlock.</HelpText>
+
+            </Property>
+            <Property name="UnlockedCharactersOnUnlock" type="bool" defaultvalue="True"
+                      display="Unlocked character reaction">
+                <HelpText>Play voice clips from the unlocked character for themselves.</HelpText>
+            </Property>
+            <Property name="CurrentCharacterOnUnlock" type="bool" defaultvalue="True"
+              display="Current character reacts to unlock">
+                <HelpText>Play voice clips of the current character reacting when unlocking a character.</HelpText>
+            </Property>
+
+
+            <Property name="EggmanOnKeyItem" type="bool" defaultvalue="True"
+                      display="Eggman reacts to key items">
+                <HelpText>Play an Eggman voice clip when receiving a key item.</HelpText>
+
+            </Property>
+            <Property name="TikalOnKeyItem" type="bool" defaultvalue="True"
+                      display="Tikal reacts to key items">
+                <HelpText>Play a Tikal voice clip when receiving a key item.</HelpText>
+            </Property>
+            <Property name="CurrentCharacterOnKeyItem" type="bool" defaultvalue="True"
+              display="Current character reacts to key items">
+        <HelpText>Play voice clips of the current character reacting when receiving a key item.</HelpText>
             </Property>
         </Group>
     </Groups>

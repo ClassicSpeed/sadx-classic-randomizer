@@ -13,7 +13,6 @@ constexpr int WARP_MYSTIC_RUINS = 6;
 constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
 constexpr int WARP_PAST = 10;
 
-constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
 constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
 constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
 constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
@@ -23,6 +22,7 @@ constexpr int EMBLEM_MYSTIC_RUINS = 65;
 constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
 constexpr int BEACH_GATE_STATION_SQUARE = 67;
 constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
+DataPointer(__int16, EggCarrierSunk, 0x3C62394);
 
 
 // //We pretend that the egg carrier is sunk so that the hedgehog hammer is works
@@ -113,15 +113,6 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
         if (tp->twp->pos.x < 2 && tp->twp->pos.x > 0
             && tp->twp->pos.y < -1713 && tp->twp->pos.y > -1716
             && tp->twp->pos.z < 2769 && tp->twp->pos.z > 2765)
-            FreeTask(tp);
-    }
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
-        && worldStateManagerPtr->unlockStatus.keyDynamite)
-    {
-        //We find the cube collision that we created for the dynamite and delete it
-        if (tp->twp->pos.x < -394 && tp->twp->pos.x > -392
-            && tp->twp->pos.y < 121 && tp->twp->pos.y > 118
-            && tp->twp->pos.z < 891 && tp->twp->pos.z > 889)
             FreeTask(tp);
     }
 
@@ -223,12 +214,22 @@ void WorldStateManager::UpdateUnlockStatus(UnlockStatus newUnlockStatus)
     this->unlockStatus = newUnlockStatus;
 }
 
+
 void WorldStateManager::OnFrame()
 {
     if (DemoPlaying > 0)
         return;
     if (CurrentLevel == LevelIDs_PerfectChaos)
         return;
+
+    if (this->eggCarrierTransformationCutscene)
+    {
+        if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
+            EggCarrierSunk = false;
+        else
+            EggCarrierSunk = true;
+    }
+
     if (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill)
         GameMode = GameModes_Adventure_ActionStg;
     else if (GameMode == GameModes_Adventure_Field || GameMode == GameModes_Adventure_ActionStg)
@@ -402,6 +403,7 @@ void WorldStateManager::SetStartingArea()
         break;
     case AngelIsland:
         SetLevelAndAct(LevelIDs_MysticRuins, 1);
+        SetEntranceNumber(1);
         break;
     case NoStatingArea:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
@@ -413,8 +415,11 @@ void WorldStateManager::StartAllMissions()
 {
     for (int i = 0; i < 60; i++)
     {
-        MissionFlags[i] |= MissionFlags_Found;
-        MissionFlags[i] |= MissionFlags_Started;
+        if (!(MissionFlags[i] & MissionFlags_Complete))
+        {
+            MissionFlags[i] |= MissionFlags_Found;
+            MissionFlags[i] |= MissionFlags_Started;
+        }
     }
     WriteSaveFile();
 }
@@ -479,6 +484,11 @@ VisitedLevels WorldStateManager::GetVisitedLevels(const int visitedLevel)
     return _visitedLevels;
 }
 
+void WorldStateManager::SetEggCarrierTransformationCutscene(const bool eggCarrierTransformation)
+{
+    this->eggCarrierTransformationCutscene = eggCarrierTransformation;
+}
+
 typedef struct
 {
     int x;
@@ -518,9 +528,6 @@ const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f
 const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635},
                                               {0, 0, 0}, {0.3f, 0, 51});
 
-
-const SETEntry COLLISION_CUBE_MR = CreateSetEntry(COLLISION_CUBE_MYSTIC_RUINS, {-393.62f, 120, 890.06f},
-                                                  {0xFEFF, 0x4BF1, 0xFD6A}, {60, 80, 10});
 const SETEntry RED_MOUNTAIN_SCENE_CHANGE_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {-2100, -304, 1650},
                                                              {0, 0, 0}, {40, 50, 0});
 
@@ -596,7 +603,6 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
         }
     }
 
-
     //Warp point
     LoadPVM("EC_ALIFE", ADV01C_TEXLISTS[3]);
 
@@ -606,21 +612,20 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     //Cop
     LoadPVM("NISEPAT", &NISEPAT_TEXLIST);
 
+    if (worldStateManagerPtr->eggCarrierTransformationCutscene
+        && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
+        LoadPVM("EC_SKY", &EC_SKY_TEXLIST);
+
     //Freeze trap
     LoadNoNamePVM(&stx_ice0_TEXLIST);
 
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
 
-    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Tails);
-    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
-    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
-    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Big);
-    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Gamma);
-
     AddSetToLevel(RED_MOUNTAIN_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Tails);
     AddSetToLevel(RED_MOUNTAIN_DOOR_MR, LevelAndActIDs_MysticRuins2, Characters_Tails);
+    AddSetToLevel(RED_MOUNTAIN_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Big);
+    AddSetToLevel(RED_MOUNTAIN_DOOR_MR, LevelAndActIDs_MysticRuins2, Characters_Big);
 
     AddSetToLevel(ICE_CAP_LADDER_MR, LevelAndActIDs_MysticRuins2, Characters_Knuckles);
     AddSetToLevel(ICE_CAP_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Knuckles);
@@ -1004,6 +1009,7 @@ static void __cdecl HandleMREntrance(const int newScene)
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && newScene == 4)
     {
         SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 2);
+        SetLevelEntrance(4);
     }
     // Final Egg
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4

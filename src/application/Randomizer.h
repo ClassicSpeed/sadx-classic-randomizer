@@ -27,6 +27,7 @@ public:
     }
 
     void OnCheckFound(int checkId) const;
+    void PlayRandomVoiceForItem(const ItemData& item, const int64_t itemId) const;
     void OnItemReceived(int64_t itemId) const;
     void MarkCheckedLocation(int64_t checkId) const;
     void OnCharacterLoaded() const;
@@ -71,6 +72,8 @@ public:
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
     void UpdateMissionBlacklist(const std::vector<int>& missionBlacklist);
     void SetEntranceRandomizer(bool enableEntranceRandomizer);
+    void SetCharacterVoiceReactions(bool eggmanCommentOnCharacterUnlock, bool currentCharacterCommentOnCharacterUnlock, bool unlockedCharacterCommentOnCharacterUnlock, bool eggmanCommentOnKeyItems, bool tikalCommentOnKeyItems,
+                                   bool currentCharacterCommentOnKeyItems);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;
@@ -84,6 +87,16 @@ private:
     Options _options;
     std::string _pendingDeathCause;
     bool _deathPending;
-    bool _ignoreNextPlayerDeath = false;
-    bool _ignoreNextDeathLink = false;
+    
+    float _deathLinkCooldown = 5.0f;
+    std::clock_t _deathLinkCooldownTimer = -1;
+    
+    
+    bool _eggmanCommentOnCharacterUnlock = true;
+    bool _currentCharacterCommentOnCharacterUnlock = true;
+    bool _unlockedCharacterCommentOnCharacterUnlock = true;
+
+    bool _eggmanCommentOnKeyItems = true;
+    bool _tikalCommentOnKeyItems = true;
+    bool _currentCharacterCommentOnKeyItems = true;
 };
