@@ -415,8 +415,11 @@ void WorldStateManager::StartAllMissions()
 {
     for (int i = 0; i < 60; i++)
     {
-        MissionFlags[i] |= MissionFlags_Found;
-        MissionFlags[i] |= MissionFlags_Started;
+        if (!(MissionFlags[i] & MissionFlags_Complete))
+        {
+            MissionFlags[i] |= MissionFlags_Found;
+            MissionFlags[i] |= MissionFlags_Started;
+        }
     }
     WriteSaveFile();
 }
