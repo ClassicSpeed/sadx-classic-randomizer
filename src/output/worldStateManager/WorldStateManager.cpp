@@ -813,7 +813,7 @@ FunctionHook<void, task*> onEmployeeCard(0x63C370, [](task* tp)-> void
         && (!worldStateManagerPtr->unlockStatus.keyEmployeeCard
             || !worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)))
         return;
-    onMysticRuinsKey.Original(tp);
+    onEmployeeCard.Original(tp);
 });
 
 // We make Big's hud think we are not in the mission mode
@@ -1154,6 +1154,8 @@ static bool __cdecl HandleTwinkleParkEntrance(const char character)
 // Speed Highway
 FunctionHook<BOOL> isSpeedHighwayShutterOpen(0x63A2A0, []()-> BOOL
 {
+    if (CurrentCharacter == Characters_Sonic)
+        return isSpeedHighwayShutterOpen.Original();
     return worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
         && worldStateManagerPtr->unlockStatus.keyEmployeeCard;
 });

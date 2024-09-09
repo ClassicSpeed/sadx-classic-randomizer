@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - The Employee Card won't spawn for Sonic if the level is not accessible for him.
+- Fixed Sonic's Speed Highway Entrance not needing the in-game Employee Card.
 
 ## [v0.8.5] - 2024-09-08
 
