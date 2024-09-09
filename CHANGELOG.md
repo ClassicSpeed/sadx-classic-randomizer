@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.8.6] - 2024-09-0?
+
+### Changed
+
+- The Employee Card won't spawn for Sonic if the level is not accessible for him.
+
 ## [v0.8.5] - 2024-09-08
 
 ### Added

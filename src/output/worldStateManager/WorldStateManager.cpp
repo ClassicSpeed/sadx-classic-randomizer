@@ -806,6 +806,16 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
     onMysticRuinsKey.Original(tp);
 });
 
+FunctionHook<void, task*> onEmployeeCard(0x63C370, [](task* tp)-> void
+{
+    // We prevent the Employee card from spawning if the player doesn't have the item or he can't use it
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4
+        && (!worldStateManagerPtr->unlockStatus.keyEmployeeCard
+            || !worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)))
+        return;
+    onMysticRuinsKey.Original(tp);
+});
+
 // We make Big's hud think we are not in the mission mode
 FunctionHook<void> onBigHud_DrawWeightAndLife(0x46FB00, []()-> void
 {
