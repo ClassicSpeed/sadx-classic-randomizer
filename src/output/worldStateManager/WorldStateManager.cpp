@@ -1170,6 +1170,16 @@ FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
         loadSpeedHighwayShutter.Original(tp);
 });
 
+FunctionHook<void, task*> loadSpeedHighwayShutter2(0x63A500, [](task* tp)-> void
+{
+    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy)
+        && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
+        && worldStateManagerPtr->unlockStatus.keyEmployeeCard)
+        FreeTask(tp);
+    else
+        loadSpeedHighwayShutter2.Original(tp);
+});
+
 FunctionHook<BOOL> isSpeedHighwayElevatorOpen(0x638CC0, []()-> BOOL
 {
     return worldStateManagerPtr->unlockStatus.keyEmployeeCard;
