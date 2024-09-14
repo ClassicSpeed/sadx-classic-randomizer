@@ -424,6 +424,18 @@ void WorldStateManager::StartAllMissions()
     WriteSaveFile();
 }
 
+void WorldStateManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist)
+{
+    for (const int mission : missionBlacklist)
+    {
+        MissionFlags[mission - 1] |= MissionFlags_Found;
+        MissionFlags[mission - 1] &= ~MissionFlags_Started;
+        MissionFlags[mission - 1] |= MissionFlags_Complete;
+    }
+    WriteSaveFile();
+}
+
+
 void WorldStateManager::UpdateLevelEntrances(LevelEntrances levelEntrances)
 {
     this->levelEntrances = levelEntrances;

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.8.6] - 2024-09-0?
 
+### Added
+
+- Blacklisted missions won't spawn their cards in the adventure fields anymore.
+    - They will be marked as completed in the pause menu (but won't count towards the goal).
+
 ### Changed
 
 - The Employee Card won't spawn for Sonic if the level is not accessible for him.
