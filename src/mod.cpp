@@ -87,7 +87,7 @@ __declspec(dllexport) void __cdecl OnFrame()
     displayManager.OnFrame();
     cheatsManager.OnPlayingFrame();
     worldStateManager.OnFrame();
-    if (Current_CharObj2 != nullptr)
+    if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
     {
         eventDetector.OnPlayingFrame();
         characterLoadingDetector.OnPlayingFrame();
