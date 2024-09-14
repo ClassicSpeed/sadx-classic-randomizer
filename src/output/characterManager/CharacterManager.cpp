@@ -121,6 +121,8 @@ void CharacterManager::ProcessRings(const Sint16 amount)
         return;
     if (amount == 0)
         return;
+    if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
+        return;
 
     if (amount < 0 && Rings > 0)
     {
