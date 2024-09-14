@@ -155,6 +155,7 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
     const bool winButtonEnabled = settingsIni->getBool("GameSettings", "AutoWinButton", false);
     
+    const int voiceMenuIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
     const bool eggmanCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnTrap", true);
     const bool otherCharactersCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "OtherCharactersOnTrap", true);
     const bool currentCharacterReactToTrap = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnTrap", true);
@@ -166,6 +167,7 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool tikalCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "TikalOnKeyItem", true);
     const bool currentCharacterCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnKeyItem", true);
 
+    displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, winButtonEnabled);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);

@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Added option to select which character's voice will be used for the menus.
+    - The option is in the mod configuration, you can select a specific character or random.
 - Blacklisted missions won't spawn their cards in the adventure fields anymore.
     - They will be marked as completed in the pause menu (but won't count towards the goal).
 

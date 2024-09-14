@@ -31,6 +31,7 @@ public:
     void OnExitCharacterSelectScreen();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
     void SetMessageConfiguration(float messageDisplayDuration, int messageFontSize, int messageColor);
+    void UpdateVoiceMenuCharacter(int characterVoiceIndex);
 
 private:
     void RemoveExpiredMessages();
@@ -40,6 +41,8 @@ private:
     std::string GetMissionBTarget(bool showTarget);
     std::string GetMissionATarget(bool showTarget);
     void DisplayItemsUnlocked();
+
+    int _voiceMenuCharacter = 0;
 
     int _startLine = 2;
     size_t _displayCount = 5;
@@ -87,4 +90,5 @@ private:
 
 
     mutable std::map<int, LocationData> _checkData;
+    
 };
