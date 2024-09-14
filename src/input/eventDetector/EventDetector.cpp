@@ -339,6 +339,18 @@ void HandlePlayCharacterDeathSound(task* tp, const int pid)
     }
 }
 
+
+// We detect if tails just lost
+FunctionHook<void, task*> onScoreDisplayMain(0x42BCC0, [](task* tp)-> void
+{
+    //If Tails just lost, we send a death link
+    if (CurrentCharacter == Characters_Tails && RaceWinnerPlayer == 2)
+        eventDetectorPtr->randomizer.OnDeath();
+
+    return onScoreDisplayMain.Original(tp);
+});
+
+
 FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
 {
     onLoadLevelResults.Original();

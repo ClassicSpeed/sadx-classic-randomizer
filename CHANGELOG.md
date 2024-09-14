@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Sonic's Speed Highway Entrance not needing the in-game Employee Card.
 - Speed Highway's shutter will open as soon as you get the Employee Card for Amy and Gamma.
     - Previously, you had to leave station square if you got card in the main area.
+- Losing as Tails will now send a death link.
 
 ## [v0.8.5] - 2024-09-08
 
