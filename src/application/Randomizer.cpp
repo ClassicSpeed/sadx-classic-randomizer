@@ -658,6 +658,7 @@ void Randomizer::UpdateMissionBlacklist(const std::vector<int>& missionBlacklist
         const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
         _displayManager.UpdateMissionStatus(missionStatus);
     }
+    _worldStateManager.MarkBlacklistedMissionsAsCompleted(_options.missionBlacklist);
 }
 
 void Randomizer::SetEntranceRandomizer(const bool enableEntranceRandomizer)

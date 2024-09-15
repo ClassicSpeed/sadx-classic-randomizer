@@ -111,7 +111,7 @@ void CharacterManager::KillPlayer()
 
 void CharacterManager::ProcessRings(const Sint16 amount)
 {
-    if (GameMode != GameModes_Mission)
+    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
         return;
     if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return;
@@ -120,6 +120,8 @@ void CharacterManager::ProcessRings(const Sint16 amount)
     if (GameState != MD_GAME_MAIN)
         return;
     if (amount == 0)
+        return;
+    if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
         return;
 
     if (amount < 0 && Rings > 0)
@@ -140,7 +142,7 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 
 int CharacterManager::GetRingDifference()
 {
-    if (GameMode != GameModes_Mission)
+    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
         return lastRingAmount = 0;
     if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return lastRingAmount = 0;

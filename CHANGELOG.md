@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.8.6] - 2024-09-14
+
+### Added
+
+- Added option to select which character's voice will be used for the menus.
+    - The option is in the mod configuration; you can select a specific character or random.
+- Blacklisted missions won't spawn their cards in the adventure fields anymore.
+    - They will be marked as completed in the pause menu (but won't count towards the goal).
+
+### Changed
+
+- The Employee Card won't spawn for Sonic if the level is not accessible for him.
+- Fixed Sonic's Speed Highway entrance not needing the in-game Employee Card.
+- Speed Highway's shutter will open as soon as you get the Employee Card for Amy and Gamma.
+    - Previously, you had to leave Station Square if you got the card in the main area.
+- Losing as Tails will now send a death link.
+- Fixed Death link related crash.
+- Fixed Ring link related crash.
+- Fixed the game crashing when transitioning between stages with a police trap active.
+- Fixed Hard Ring link not working during the Perfect Chaos fight.
+- Gamma can now get every Hot Shelter check without the Jet Booster.
+
 ## [v0.8.5] - 2024-09-08
 
 ### Added

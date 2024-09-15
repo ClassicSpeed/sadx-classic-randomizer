@@ -97,6 +97,15 @@ FunctionHook<void, int, float, float, float> onCreateAnimal(0x4BE610, [](int e_n
     if (CurrentLevel > LevelIDs_HedgehogHammer && CurrentLevel <= LevelIDs_HotShelter)
         onCreateAnimal.Original(e_num, x, y, z);
 });
+
+//We delete the police enemy when transitioning between levels
+FunctionHook<void, task*> onPoliceMain(0x4B30E0, [](task* tp) -> void
+{
+    if (CutsceneMode == 3)
+        return FreeTask(tp);
+    onPoliceMain.Original(tp);
+});
+
 FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
@@ -423,6 +432,18 @@ void WorldStateManager::StartAllMissions()
     }
     WriteSaveFile();
 }
+
+void WorldStateManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist)
+{
+    for (const int mission : missionBlacklist)
+    {
+        MissionFlags[mission - 1] |= MissionFlags_Found;
+        MissionFlags[mission - 1] &= ~MissionFlags_Started;
+        MissionFlags[mission - 1] |= MissionFlags_Complete;
+    }
+    WriteSaveFile();
+}
+
 
 void WorldStateManager::UpdateLevelEntrances(LevelEntrances levelEntrances)
 {
@@ -806,6 +827,16 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
     onMysticRuinsKey.Original(tp);
 });
 
+FunctionHook<void, task*> onEmployeeCard(0x63C370, [](task* tp)-> void
+{
+    // We prevent the Employee card from spawning if the player doesn't have the item or he can't use it
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4
+        && (!worldStateManagerPtr->unlockStatus.keyEmployeeCard
+            || !worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)))
+        return;
+    onEmployeeCard.Original(tp);
+});
+
 // We make Big's hud think we are not in the mission mode
 FunctionHook<void> onBigHud_DrawWeightAndLife(0x46FB00, []()-> void
 {
@@ -1144,6 +1175,8 @@ static bool __cdecl HandleTwinkleParkEntrance(const char character)
 // Speed Highway
 FunctionHook<BOOL> isSpeedHighwayShutterOpen(0x63A2A0, []()-> BOOL
 {
+    if (CurrentCharacter == Characters_Sonic)
+        return isSpeedHighwayShutterOpen.Original();
     return worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
         && worldStateManagerPtr->unlockStatus.keyEmployeeCard;
 });
@@ -1156,6 +1189,16 @@ FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
         FreeTask(tp);
     else
         loadSpeedHighwayShutter.Original(tp);
+});
+
+FunctionHook<void, task*> loadSpeedHighwayShutter2(0x63A500, [](task* tp)-> void
+{
+    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy)
+        && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
+        && worldStateManagerPtr->unlockStatus.keyEmployeeCard)
+        FreeTask(tp);
+    else
+        loadSpeedHighwayShutter2.Original(tp);
 });
 
 FunctionHook<BOOL> isSpeedHighwayElevatorOpen(0x638CC0, []()-> BOOL

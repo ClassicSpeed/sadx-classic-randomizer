@@ -58,9 +58,13 @@
 
 
         <Group name="CharacterVoiceReactions" display="Character Voice Reactions">
+            <Property name="VoiceMenu" type="CharacterVoiceIndex" defaultvalue="-1" display="Menu Voice">
+                <HelpText>Select which character's voice will be used for the menus.</HelpText>
+            </Property>
+            
             <Property name="EggmanOnTrap" type="bool" defaultvalue="True"
                       display="Eggman voice clips for traps">
-        <HelpText>Play an Eggman voice clip when receiving a trap. Note: turning off all trap voice lines will just play "GET A LOAD OF THIS".</HelpText>
+            <HelpText>Play an Eggman voice clip when receiving a trap. Note: turning off all trap voice lines will just play "GET A LOAD OF THIS".</HelpText>
             </Property>
             <Property name="OtherCharactersOnTrap" type="bool" defaultvalue="True"
                       display="Other voice clips for traps">
@@ -101,4 +105,18 @@
             </Property>
         </Group>
     </Groups>
+    <Enums>
+        <Enum name="CharacterVoiceIndex">
+            <EnumMember name="-1" display="Random"/>
+            <EnumMember name="0" display="Default"/>
+            <EnumMember name="1" display="Sonic"/>
+            <EnumMember name="2" display="Tails"/>
+            <EnumMember name="3" display="Knuckles"/>
+            <EnumMember name="4" display="Amy"/>
+            <EnumMember name="5" display="Gamma"/>
+            <EnumMember name="6" display="Big"/>
+            <EnumMember name="7" display="Eggman"/>
+            <EnumMember name="8" display="Tikal"/>
+        </Enum>
+    </Enums>
 </ConfigSchema>

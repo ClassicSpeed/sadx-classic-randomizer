@@ -1,5 +1,7 @@
 #include "DisplayManager.h"
 
+#include <random>
+
 DisplayManager* displayManagerPtr;
 
 DisplayManager::DisplayManager()
@@ -72,6 +74,7 @@ void DisplayManager::UpdateOptions(const Options options)
 
 void DisplayManager::OnFrame()
 {
+    MenuVoice = _voiceMenuCharacter;
     RemoveExpiredMessages();
 
     AddNewMessages();
@@ -286,6 +289,21 @@ void DisplayManager::SetMessageConfiguration(const float messageDisplayDuration,
     this->_displayDuration = messageDisplayDuration;
     this->_debugFontSize = messageFontSize;
     this->_displayMessageColor = messageColor;
+}
+
+void DisplayManager::UpdateVoiceMenuCharacter(const int characterVoiceIndex)
+{
+    if (characterVoiceIndex == -1)
+    {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, 8);
+        this->_voiceMenuCharacter = dis(gen);
+    }
+    else
+    {
+        this->_voiceMenuCharacter = characterVoiceIndex;
+    }
 }
 
 
