@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Ring link related crash.
 - Fixed the game crashing when transitioning between stages with a police trap active.
 - Fixed Hard Ring link not working during the Perfect Chaos fight.
-- Gamma can now get every Hot Shelter check without the Jet Booster.
+- Gamma can now get every Hot Shelter check without the Jet Booster in hard/expert logic.
 
 ## [v0.8.5] - 2024-09-08
 
