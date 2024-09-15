@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - Losing as Tails will now send a death link.
 - Fixed death link related crash.
 - Fixed ring link related crash.
+- Fixed the game crashing when transitioning between stages with a police trap active.
 
 ## [v0.8.5] - 2024-09-08
 

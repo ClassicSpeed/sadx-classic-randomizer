@@ -97,6 +97,15 @@ FunctionHook<void, int, float, float, float> onCreateAnimal(0x4BE610, [](int e_n
     if (CurrentLevel > LevelIDs_HedgehogHammer && CurrentLevel <= LevelIDs_HotShelter)
         onCreateAnimal.Original(e_num, x, y, z);
 });
+
+//We delete the police enemy when transitioning between levels
+FunctionHook<void, task*> onPoliceMain(0x4B30E0, [](task* tp) -> void
+{
+    if (CutsceneMode == 3)
+        return FreeTask(tp);
+    onPoliceMain.Original(tp);
+});
+
 FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
