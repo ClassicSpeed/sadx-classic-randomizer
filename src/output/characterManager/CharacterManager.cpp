@@ -111,7 +111,7 @@ void CharacterManager::KillPlayer()
 
 void CharacterManager::ProcessRings(const Sint16 amount)
 {
-    if (GameMode != GameModes_Mission)
+    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
         return;
     if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return;
@@ -142,7 +142,7 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 
 int CharacterManager::GetRingDifference()
 {
-    if (GameMode != GameModes_Mission)
+    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
         return lastRingAmount = 0;
     if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return lastRingAmount = 0;
