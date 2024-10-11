@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Added support for Universal Tracker's map feature.
+- Added "Casino Keys" alias for the Casino District Keys.
 
 ### Changed
 
