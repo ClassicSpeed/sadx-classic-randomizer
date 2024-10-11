@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.8.7] - 2024-10-10
+
+### Added
+
+- Added support for Universal Tracker's map feature.
+
 ## [v0.8.6] - 2024-09-14
 
 ### Added
