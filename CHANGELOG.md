@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Added support for Universal Tracker's map feature.
 
+### Changed
+
+- Tail's can now go from main station square area to the hotel without the keys in expert logic.
+
 ## [v0.8.6] - 2024-09-14
 
 ### Added
