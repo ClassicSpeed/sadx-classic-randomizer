@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - Sonic can now enter Speed Highway without the employee card in expert logic (using Knuckles' entrance).
 - Fixed every Ice Cap entrance and Knuckles' Red Mountain entrance not requiring the dynamite.
 - Knuckles can now get out of the twinkle park lobby area without the ticket in expert logic.
+- Removed Big's life belt requirement for mission 22 in all logic levels.
 
 ## [v0.8.6] - 2024-09-14
 
