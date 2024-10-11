@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Tail's can now go from main station square area to the hotel without the keys in expert logic.
+- Knuckles can now enter Lost World without the shovel claw in expert logic.
 
 ## [v0.8.6] - 2024-09-14
 
