@@ -37,6 +37,10 @@
         </Group>
 
         <Group name="GameSettings" display="Game Settings">
+            <Property name="ObjectDrawDistance" type="int" defaultvalue="5" minvalue="1" maxvalue="20"
+                      display="Object Draw Distance Multiplier">
+                <HelpText>Multiplier for the current draw distance for each object. Setting it to one will behave like vanilla.</HelpText>
+            </Property>
             <Property name="CompleteMultipleLevelMissions" type="bool" defaultvalue="True"
                       display="Complete Multiple Level Missions">
                 <HelpText>Collect more than one check from levels if you beat the other requirements.</HelpText>

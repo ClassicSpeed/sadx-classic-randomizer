@@ -148,6 +148,8 @@ void LoadDisplayMessageSettings(const IniFile* settingsIni)
 
 void LoadGameSettings(const IniFile* settingsIni)
 {
+    
+    const int objectDrawDistance = settingsIni->getInt("GameSettings", "ObjectDrawDistance", 5.0f);
     const bool completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions",
                                                                     true);
     const bool autoSkipCutscenes = settingsIni->getBool("GameSettings", "AutoSkipCutscenes", true);
@@ -170,6 +172,7 @@ void LoadGameSettings(const IniFile* settingsIni)
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, winButtonEnabled);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
+    worldStateManager.SetObjectDrawDistance(objectDrawDistance);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
     characterManager.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap, currentCharacterReactToTrap);
 

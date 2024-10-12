@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - Added support for Universal Tracker's map feature.
 - Added "Casino Keys" alias for the Casino District Keys.
+- Improve objects' draw distance: there is now a 5x multiplier to each object's draw distance.
+    - This can be changed in the mod configuration. Setting the multiplier to 1 will result in vanilla draw distance.
 
 ### Changed
 
