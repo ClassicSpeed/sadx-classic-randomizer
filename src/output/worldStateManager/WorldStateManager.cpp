@@ -24,6 +24,7 @@ constexpr int BEACH_GATE_STATION_SQUARE = 67;
 constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
 DataPointer(__int16, EggCarrierSunk, 0x3C62394);
 
+constexpr float BASE_RENDER_DISTANCE = 160000.0f;
 
 // //We pretend that the egg carrier is sunk so that the hedgehog hammer is works
 static bool __cdecl HandleHedgehogHammer()
@@ -510,6 +511,11 @@ void WorldStateManager::SetEggCarrierTransformationCutscene(const bool eggCarrie
     this->eggCarrierTransformationCutscene = eggCarrierTransformation;
 }
 
+void WorldStateManager::SetObjectDrawDistance(const int objectDrawDistance)
+{
+    this->objectDrawDistance = objectDrawDistance;
+}
+
 typedef struct
 {
     int x;
@@ -609,6 +615,16 @@ const SETEntry WARP_FROM_PAST = CreateSetEntry(WARP_PAST, {0, 7, 247.5f});
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
     onCountSetItemsMaybe.Original();
+    
+    for (int i = 0; i < CurrentObjectList->Count; i++)
+    {
+        if (CurrentObjectList->List[i].UseDistance != 1)
+        {
+            CurrentObjectList->List[i].Distance = BASE_RENDER_DISTANCE;
+            CurrentObjectList->List[i].UseDistance = 1;
+        }
+        CurrentObjectList->List[i].Distance = CurrentObjectList->List[i].Distance * worldStateManagerPtr->objectDrawDistance;
+    }
 
     for (int i = 0; i < SETTable_Count; ++i)
     {

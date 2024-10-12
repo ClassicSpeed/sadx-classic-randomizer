@@ -21,9 +21,11 @@ public:
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
     VisitedLevels GetVisitedLevels(int visitedLevel);
     void SetEggCarrierTransformationCutscene(bool eggCarrierTransformation);
+    void SetObjectDrawDistance(int objectDrawDistance);
     Options options;
     UnlockStatus unlockStatus;
     bool eggCarrierTransformationCutscene = true;
+    int objectDrawDistance = 5.0;
     LevelEntrances levelEntrances = {
         {EmeraldCoast, EmeraldCoast},
         {WindyValley, WindyValley},
