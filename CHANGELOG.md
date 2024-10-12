@@ -8,16 +8,16 @@ All notable changes to this project will be documented in this file.
 
 - Added support for Universal Tracker's map feature.
 - Added "Casino Keys" alias for the Casino District Keys.
-- Improve objects' draw distance: there is now a 5x multiplier to each object's draw distance.
+- Improved objects' draw distance: there is now a 5x multiplier to each object's draw distance.
     - This can be changed in the mod configuration. Setting the multiplier to 1 will result in vanilla draw distance.
 
 ### Changed
 
-- Tails's can now go from main station square area to the hotel without the keys in expert logic.
+- Tails can now go from the main station square area to the hotel without the keys in expert logic.
 - Knuckles can now enter Lost World without the shovel claw in expert logic.
 - Sonic can now enter Speed Highway without the employee card in expert logic (using Knuckles' entrance).
 - Fixed every Ice Cap entrance and Knuckles' Red Mountain entrance not requiring the dynamite.
-- Knuckles, Big and Gamma can now get out of the twinkle park lobby area without the ticket in expert logic.
+- Knuckles, Big, and Gamma can now get out of the Twinkle Park lobby area without the ticket in expert logic.
 - Removed Big's life belt requirement for mission 22 in all logic levels.
 
 ## [v0.8.6] - 2024-09-14
