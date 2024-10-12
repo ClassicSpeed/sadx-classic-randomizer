@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.8.7b] - 2024-10-12
+
+### Removed
+
+- Removed object draw distance since it was causing issues with the game.
+
 ## [v0.8.7] - 2024-10-11
 
 ### Added
