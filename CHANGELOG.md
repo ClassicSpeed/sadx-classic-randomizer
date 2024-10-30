@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.9.0] - 2024-??-??
+
+### Added
+
+- Reverse controls trap that inverts the player's movement.
+- Gravity trap that increments the player's gravity.
+
+### Changed
+
+- When getting a spring trap, the player's velocity is stopped, to assure that player interacts with the spring.
+
 ## [v0.8.7b] - 2024-10-12
 
 ### Removed

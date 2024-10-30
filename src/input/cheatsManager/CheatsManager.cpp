@@ -1,6 +1,5 @@
 #include "CheatsManager.h"
 
-bool test = false;
 
 void CheatsManager::OnPlayingFrame() const
 {

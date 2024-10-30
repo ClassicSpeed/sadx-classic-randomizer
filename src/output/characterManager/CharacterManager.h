@@ -26,15 +26,19 @@ public:
     void GiveFillerItem(FillerType filler);
     void OnPlayingFrame();
     void SetStartingCharacter(int startingCharacterIndex);
-    void SetCharacterVoiceReactions(bool eggmanCommentOnTrap, bool otherCharactersCommentOnTrap, bool currentCharacterReactToTrap);
+    void SetCharacterVoiceReactions(bool eggmanCommentOnTrap, bool otherCharactersCommentOnTrap,
+                                    bool currentCharacterReactToTrap);
     Options options;
     UnlockStatus unlockStatus;
     int lastRingAmount;
+    bool reverseControlsEnabled = false;
 
 private:
     void ActivateFiller(FillerType filler);
     void PlayRandomTrapVoice(FillerType filler);
     void FreezePlayer();
+    void IncrementGravity();
+    void ReverseControls();
     void SpawnSpring();
     void SpawnEnemies(void (*enemyFunc)(task* tp));
     std::queue<FillerType> _remainingFiller;
@@ -48,6 +52,12 @@ private:
 
     float _freezeDuration = 2.0f;
     std::clock_t _freezeTimer = -1;
+
+    float _gravityDuration = 7.0f;
+    std::clock_t _gravityTimer = -1;
+
+    float _reverseControlsDuration = 7.0f;
+    std::clock_t _reverseControlsTimer = -1;
 
     bool _eggmanCommentOnTrap = true;
     bool _otherCharactersCommentOnTrap = true;

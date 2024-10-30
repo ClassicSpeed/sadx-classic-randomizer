@@ -192,6 +192,25 @@ void CharacterManager::OnPlayingFrame()
             _freezeTimer = -1;
         }
     }
+    if (_gravityTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_gravityTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _gravityDuration)
+        {
+            Gravity.y = -1;
+            _gravityTimer = -1;
+        }
+    }
+
+    if (_reverseControlsTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_reverseControlsTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _reverseControlsDuration)
+        {
+            reverseControlsEnabled = false;
+            _reverseControlsTimer = -1;
+        }
+    }
 
 
     if (_springTimer > 0)
@@ -300,6 +319,18 @@ void CharacterManager::ActivateFiller(const FillerType filler)
         break;
     case BuyonTrap:
         this->SpawnEnemies(EBuyon_Main);
+        DisablePause();
+        PlayRandomTrapVoice(filler);
+        break;
+
+    case ReverseTrap:
+        this->ReverseControls();
+        DisablePause();
+        PlayRandomTrapVoice(filler);
+        break;
+
+    case GravityTrap:
+        this->IncrementGravity();
         DisablePause();
         PlayRandomTrapVoice(filler);
         break;
@@ -539,6 +570,7 @@ FunctionHook<int> getLureQuantity(0x46C870, []()-> int
 void CharacterManager::SpawnSpring()
 {
     _springTimer = std::clock();
+    NullifyVelocity(EntityData2Ptrs[0], Current_CharObj2);
     _springTask = CreateElementalTask(LoadObj_Data1, 3, ObjectSpringB);
     _springTask->twp->pos.x = EntityData1Ptrs[0]->Position.x;
     _springTask->twp->pos.y = EntityData1Ptrs[0]->Position.y + 5;
@@ -632,6 +664,31 @@ void CharacterManager::FreezePlayer()
     NullifyVelocity(EntityData2Ptrs[0], Current_CharObj2);
     DisableController(0);
 }
+
+void CharacterManager::IncrementGravity()
+{
+    _gravityTimer = std::clock();
+    Gravity.y = Gravity.y * 4;
+}
+
+void CharacterManager::ReverseControls()
+{
+    _reverseControlsTimer = std::clock();
+    reverseControlsEnabled = true;
+}
+
+
+FunctionHook<void> onWriteAnalogs(0x40F170, []()-> void
+{
+    if (characterManagerPtr->reverseControlsEnabled)
+    {
+        ControllerPointers[0]->LeftStickX = -ControllerPointers[0]->LeftStickX;
+        ControllerPointers[0]->LeftStickY = -ControllerPointers[0]->LeftStickY;
+        ControllerPointers[0]->RightStickX = -ControllerPointers[0]->RightStickX;
+        ControllerPointers[0]->RightStickY = -ControllerPointers[0]->RightStickY;
+    }
+    onWriteAnalogs.Original();
+});
 
 
 //We scale up the freeze trap for Big and Gamma
