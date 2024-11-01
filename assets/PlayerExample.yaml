@@ -199,6 +199,10 @@ Sonic Adventure DX:
   police_trap_weight: 2
   # Likelihood of receiving a trap that spawns a lot of Buyon enemies.
   buyon_trap_weight: 2
+  # Likelihood of receiving a trap that reverses your controls.
+  reverse_trap_weight: 2
+  # Likelihood of receiving a trap that increments your gravity.
+  gravity_trap_weight: 2
   
   # Item & Location Options
   
