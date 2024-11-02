@@ -28,6 +28,11 @@ public:
     void SetStartingCharacter(int startingCharacterIndex);
     void SetCharacterVoiceReactions(bool eggmanCommentOnTrap, bool otherCharactersCommentOnTrap,
                                     bool currentCharacterReactToTrap);
+    void SetReverseControlTrapDuration(int reverseControlTrapDuration);
+    void SetTrapsOnAdventureFields(bool trapsOnAdventureFields);
+    void SetTrapsOnBossFights(bool trapsOnBossFights);
+    void SetTrapsOnPerfectChaosFight(bool trapsOnPerfectChaosFight);
+    void RemoveStatusEffects();
     Options options;
     UnlockStatus unlockStatus;
     int lastRingAmount;
@@ -62,4 +67,8 @@ private:
     bool _eggmanCommentOnTrap = true;
     bool _otherCharactersCommentOnTrap = true;
     bool _currentCharacterReactToTrap = true;
+    
+    bool _trapsOnBossFights= true;
+    bool _trapsOnAdventureFields= true;
+    bool _trapsOnPerfectChaosFight = false;
 };

@@ -680,6 +680,26 @@ void Randomizer::SetCharacterVoiceReactions(const bool eggmanCommentOnCharacterU
     _currentCharacterCommentOnKeyItems = currentCharacterCommentOnKeyItems;
 }
 
+void Randomizer::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
+{
+    _characterManager.SetReverseControlTrapDuration(reverseControlTrapDuration);
+}
+
+void Randomizer::SetTrapsOnAdventureFields(bool trapsOnAdventureFields)
+{
+    _characterManager.SetTrapsOnAdventureFields(trapsOnAdventureFields);
+}
+
+void Randomizer::SetTrapsOnBossFights(bool trapsOnBossFights)
+{
+    _characterManager.SetTrapsOnBossFights(trapsOnBossFights);
+}
+
+void Randomizer::SetTrapsOnPerfectChaosFight(bool trapsOnPerfectChaosFight)
+{
+    _characterManager.SetTrapsOnPerfectChaosFight(trapsOnPerfectChaosFight);
+}
+
 bool Randomizer::AreLastStoryRequirementsCompleted() const
 {
     if (_options.goal == GoalLevels)
@@ -712,6 +732,7 @@ bool Randomizer::AreLastStoryRequirementsCompleted() const
 
 void Randomizer::OnCharacterLoaded() const
 {
+    _characterManager.RemoveStatusEffects();
     for (const auto& item : _itemRepository.GetItems())
     {
         if (item.second.type != ItemUpgrade)

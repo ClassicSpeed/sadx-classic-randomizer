@@ -74,6 +74,10 @@ public:
     void SetEntranceRandomizer(bool enableEntranceRandomizer);
     void SetCharacterVoiceReactions(bool eggmanCommentOnCharacterUnlock, bool currentCharacterCommentOnCharacterUnlock, bool unlockedCharacterCommentOnCharacterUnlock, bool eggmanCommentOnKeyItems, bool tikalCommentOnKeyItems,
                                    bool currentCharacterCommentOnKeyItems);
+    void SetReverseControlTrapDuration(int reverseControlTrapDuration);
+    void SetTrapsOnAdventureFields(bool trapsOnAdventureFields);
+    void SetTrapsOnBossFights(bool trapsOnBossFights);
+    void SetTrapsOnPerfectChaosFight(bool trapsOnPerfectChaosFight);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;

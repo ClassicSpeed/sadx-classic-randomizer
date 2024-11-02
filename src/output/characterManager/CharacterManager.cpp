@@ -175,9 +175,19 @@ void CharacterManager::OnPlayingFrame()
 
     if (GameMode != GameModes_Mission)
         return;
-    if (CurrentLevel == LevelIDs_PerfectChaos || CurrentLevel == LevelIDs_TwinkleCircuit
-        || CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
+    if (CurrentLevel == LevelIDs_TwinkleCircuit || CurrentLevel == LevelIDs_SkyChase1
+        || CurrentLevel == LevelIDs_SkyChase2)
         return;
+
+    if (CurrentLevel >= LevelIDs_Chaos0 && CurrentLevel <= LevelIDs_E101R && !_trapsOnBossFights)
+        return;
+
+    if (CurrentLevel == LevelIDs_PerfectChaos && !_trapsOnPerfectChaosFight)
+        return;
+
+    if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past && !_trapsOnAdventureFields)
+        return;
+
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
         return;
     if (PauseEnabled == 0)
@@ -202,7 +212,7 @@ void CharacterManager::OnPlayingFrame()
         }
     }
 
-    if (_reverseControlsTimer > 0)
+    if (_reverseControlsTimer > 0 && _reverseControlsDuration > 0)
     {
         const double timePassed = (std::clock() - this->_reverseControlsTimer) / static_cast<double>(CLOCKS_PER_SEC);
         if (timePassed > _reverseControlsDuration)
@@ -276,6 +286,32 @@ void CharacterManager::SetCharacterVoiceReactions(const bool eggmanCommentOnTrap
     _eggmanCommentOnTrap = eggmanCommentOnTrap;
     _otherCharactersCommentOnTrap = otherCharactersCommentOnTrap;
     _currentCharacterReactToTrap = currentCharacterReactToTrap;
+}
+
+void CharacterManager::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
+{
+    _reverseControlsDuration = static_cast<float>(reverseControlTrapDuration);
+}
+
+void CharacterManager::SetTrapsOnAdventureFields(const bool trapsOnAdventureFields)
+{
+    this->_trapsOnAdventureFields = trapsOnAdventureFields;
+}
+
+void CharacterManager::SetTrapsOnBossFights(const bool trapsOnBossFights)
+{
+    this->_trapsOnBossFights = trapsOnBossFights;
+}
+
+void CharacterManager::SetTrapsOnPerfectChaosFight(const bool trapsOnPerfectChaosFight)
+{
+    this->_trapsOnPerfectChaosFight = trapsOnPerfectChaosFight;
+}
+
+void CharacterManager::RemoveStatusEffects()
+{
+    reverseControlsEnabled = false;
+    _reverseControlsTimer = -1;
 }
 
 TaskFunc(EBuyon_Main, 0x7B2E00);
@@ -673,7 +709,15 @@ void CharacterManager::IncrementGravity()
 
 void CharacterManager::ReverseControls()
 {
-    _reverseControlsTimer = std::clock();
+    //If the player is already under the effect of reverse controls, set them back to normal
+    if (reverseControlsEnabled)
+    {
+        reverseControlsEnabled = false;
+        _reverseControlsTimer = -1;
+    }
+
+    if(_reverseControlsDuration > 0)
+        _reverseControlsTimer = std::clock();
     reverseControlsEnabled = true;
 }
 

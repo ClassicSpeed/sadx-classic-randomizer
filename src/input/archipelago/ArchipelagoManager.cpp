@@ -278,6 +278,7 @@ void SADX_LevelEntranceMap(const std::map<int, int> levelEntrancesValues)
     }
     randomizerPtr->UpdateLevelEntrances(levelEntrances);
 }
+
 void SADX_SetEntranceRandomizer(const int enableEntranceRandomizer)
 {
     randomizerPtr->SetEntranceRandomizer(enableEntranceRandomizer);
@@ -393,6 +394,28 @@ void SADX_BigActionStageMissions(const int missions)
     randomizerPtr->SetActionStageMissions(Characters_Big, missions);
 }
 
+
+void SADX_ReverseControlTrapDuration(const int reverseControlTrapDuration)
+{
+    randomizerPtr->SetReverseControlTrapDuration(reverseControlTrapDuration);
+}
+
+void SADX_TrapsOnAdventureFields(const int trapsOnAdventureFields)
+{
+    randomizerPtr->SetTrapsOnAdventureFields(trapsOnAdventureFields);
+}
+
+void SADX_TrapsOnBossFights(const int trapsOnBossFights)
+{
+    randomizerPtr->SetTrapsOnBossFights(trapsOnBossFights);
+}
+
+void SADX_TrapsOnPerfectChaosFight(const int trapsOnPerfectChaosFight)
+{
+    randomizerPtr->SetTrapsOnPerfectChaosFight(trapsOnPerfectChaosFight);
+}
+
+
 void ArchipelagoManager::Connect()
 {
     AP_Init(_serverIP.c_str(), "Sonic Adventure DX", playerName.c_str(), _serverPassword.c_str());
@@ -459,6 +482,14 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("AmyActionStageMissions", &SADX_AmyActionStageMissions);
     AP_RegisterSlotDataIntCallback("GammaActionStageMissions", &SADX_GammaActionStageMissions);
     AP_RegisterSlotDataIntCallback("BigActionStageMissions", &SADX_BigActionStageMissions);
+
+
+    AP_RegisterSlotDataIntCallback("ReverseControlTrapDuration", &SADX_ReverseControlTrapDuration);
+    AP_RegisterSlotDataIntCallback("TrapsOnAdventureFields", &SADX_TrapsOnAdventureFields);
+    AP_RegisterSlotDataIntCallback("TrapsOnBossFights", &SADX_TrapsOnBossFights);
+    AP_RegisterSlotDataIntCallback("TrapsOnPerfectChaosFight", &SADX_TrapsOnPerfectChaosFight);
+
+
     AP_Start();
 
     _connectedAt = std::clock();
