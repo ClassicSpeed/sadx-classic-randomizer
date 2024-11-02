@@ -173,7 +173,7 @@ void CharacterManager::OnPlayingFrame()
         }
     }
 
-    if (GameMode != GameModes_Mission)
+    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
         return;
     if (CurrentLevel == LevelIDs_TwinkleCircuit || CurrentLevel == LevelIDs_SkyChase1
         || CurrentLevel == LevelIDs_SkyChase2)
@@ -623,6 +623,12 @@ void CharacterManager::SpawnSpring()
 
 void CharacterManager::SpawnEnemies(void (*enemyFunc)(task* tp))
 {
+    if (CurrentLevel == LevelIDs_PerfectChaos)
+    {
+        AddRings(-5);
+        return;
+    }
+
     const auto enemy = CreateElementalTask(LoadObj_Data1, 3, enemyFunc);
     enemy->twp->pos.x = EntityData1Ptrs[0]->Position.x + 30;
     enemy->twp->pos.y = EntityData1Ptrs[0]->Position.y;
@@ -692,8 +698,9 @@ FunctionPointer(ObjectMaster *, freezePLayer, (char a1), 0x4A2550);
 void CharacterManager::FreezePlayer()
 {
     _freezeTimer = std::clock();
-    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Knuckles)
-        return ForcePlayerAction(0, PL_OP_ICED);
+    if (CurrentLevel != LevelIDs_PerfectChaos)
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Knuckles)
+            return ForcePlayerAction(0, PL_OP_ICED);
 
     freezePLayer(EntityData1Ptrs[0]->CharIndex);
     Current_CharObj2->field_88.x = 300;
@@ -716,7 +723,7 @@ void CharacterManager::ReverseControls()
         _reverseControlsTimer = -1;
     }
 
-    if(_reverseControlsDuration > 0)
+    if (_reverseControlsDuration > 0)
         _reverseControlsTimer = std::clock();
     reverseControlsEnabled = true;
 }

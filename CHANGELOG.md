@@ -7,12 +7,13 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Reverse controls trap that inverts the player's movement.
-  - You can set the duration of the trap in options. 
-  - A value of 0 will make the trap last until you die or change level.
+    - You can set the duration of the trap in options.
+    - A value of 0 will make the trap last until you die or change level.
 - Gravity trap that increments the player's gravity.
 - Added an option to disable filler/traps while in the adventure field.
 - Added an option to disable filler/traps during boss fights.
 - Added an option to disable filler/traps during the Perfect Chaos fight.
+    - All traps work like in the normal levels, except enemy traps, that subtract 5 rings from the player.
 
 ### Changed
 
