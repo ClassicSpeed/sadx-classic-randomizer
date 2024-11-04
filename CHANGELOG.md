@@ -24,6 +24,7 @@ All notable changes to this project will be documented in this file.
 - If all traps are off, the trap percentage will be converted to filler items.
 - Gamma's entrance in lost world is now the same as Knuckles'.
     - This was done since opening the snake prevents the player from getting the mission 51 card.
+- Fixed an error that prevented the A mission check to be made if the player failed the B mission.
 
 ## [v0.8.7b] - 2024-10-12
 

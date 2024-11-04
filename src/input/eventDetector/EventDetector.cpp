@@ -6,9 +6,15 @@ UsercallFuncVoid(PlayCharacterDeathSound_t, (task * tp, int pid), (tp, pid), 0x4
 static void __cdecl HandlePlayCharacterDeathSound(task* tp, int pid);
 
 
+UsercallFunc(bool, CheckMissionRequirements_t, (int mission, int character, int level), (mission, character, level),
+             0x426AA0, rAL, rEAX, rEDX, rECX);
+static bool __cdecl HandleCheckMissionRequirements(int mission, int character, int level);
+
+
 EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
 {
     PlayCharacterDeathSound_t.Hook(HandlePlayCharacterDeathSound);
+    CheckMissionRequirements_t.Hook(HandleCheckMissionRequirements);
     checkData = randomizer.GetCheckData();
     lifeCapsules = randomizer.GetLifeCapsules();
     eventDetectorPtr = this;
@@ -82,6 +88,35 @@ bool ManualSubLevelMissionACheck(const int level)
     return false;
 }
 
+
+bool HandleCheckMissionRequirements(const int mission, const int character, const int level)
+{
+    //We check all other missions that were completed
+    if (level <= LevelIDs_HotShelter)
+    {
+        //level - mission B
+        if (mission == MISSION_C)
+        {
+            if (ManualMissionBCheck(character))
+            {
+                SetLevelEmblemCollected(&SaveFile, character, level, MISSION_B);
+                eventDetectorPtr->OnLevelEmblem(character, level, MISSION_B);
+            }
+        }
+
+        //level - mission A
+        if (mission == MISSION_C || mission == MISSION_B)
+        {
+            if (ManualMissionACheck(character, level))
+            {
+                SetLevelEmblemCollected(&SaveFile, character, level, MISSION_A);
+                eventDetectorPtr->OnLevelEmblem(character, level, MISSION_A);
+            }
+        }
+    }
+    return CheckMissionRequirements_t.Original(mission, character, level);
+}
+
 FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
     0x4B4640, [](SaveFileData* saveFile, const int character, const signed int level, const int mission)-> void
     {
@@ -93,29 +128,6 @@ FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
         if (!eventDetectorPtr->completeMultipleLevelMissions)
             return;
 
-        //We check all other missions that were completed
-        if (level <= LevelIDs_HotShelter)
-        {
-            //level - mission B
-            if (mission == MISSION_C)
-            {
-                if (ManualMissionBCheck(character))
-                {
-                    onLevelEmblemCollected.Original(saveFile, character, level, MISSION_B);
-                    eventDetectorPtr->OnLevelEmblem(character, level, MISSION_B);
-                }
-            }
-
-            //level - mission A
-            if (mission == MISSION_C || mission == MISSION_B)
-            {
-                if (ManualMissionACheck(character, level))
-                {
-                    onLevelEmblemCollected.Original(saveFile, character, level, MISSION_A);
-                    eventDetectorPtr->OnLevelEmblem(character, level, MISSION_A);
-                }
-            }
-        }
         if (level >= LevelIDs_TwinkleCircuit && level <= LevelIDs_SandHill)
         {
             //sublevel - mission A
