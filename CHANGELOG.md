@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Added support for The [Super Sonic mod](https://gamebanana.com/mods/49986).
     - Disable the "Remove limitations" option in the Super Sonic mod settings to be able to play as Super Sonic only
       after getting all the Chaos Emeralds from Archipelago.
+    - If your goal doesn't include the emeralds, you can play with Super Sonic from the start.
 
 ### Changed
 

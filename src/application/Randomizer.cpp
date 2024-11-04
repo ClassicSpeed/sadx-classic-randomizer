@@ -894,6 +894,11 @@ void Randomizer::OnGoalSet(const Goal goal)
         const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
         _displayManager.UpdateMissionStatus(missionStatus);
     }
+
+    if(_options.goal != GoalEmeraldHunt && _options.goal != GoalMissionsAndEmeraldHunt && _options.goal != GoalEmblemsAndEmeraldHunt && _options.goal != GoalMissionsAndEmeraldHunt)
+    {
+        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
+    }
 }
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
