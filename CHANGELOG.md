@@ -14,6 +14,9 @@ All notable changes to this project will be documented in this file.
 - Added an option to disable filler/traps during boss fights.
 - Added an option to disable filler/traps during the Perfect Chaos fight.
     - All traps work like in the normal levels, except enemy traps, that subtract 5 rings from the player.
+- Added support for The [Super Sonic mod](https://gamebanana.com/mods/49986).
+    - Disable the "Remove limitations" option in the Super Sonic mod settings to be able to play as Super Sonic only
+      after getting all the Chaos Emeralds from Archipelago.
 
 ### Changed
 
