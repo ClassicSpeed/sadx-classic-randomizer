@@ -23,6 +23,11 @@ Sonic Adventure DX:
   
   # When you die, everyone dies. Of course the reverse is true too.
   death_link: 'false'
+  
+  # When dying, the chance of sending a death link to another player.
+  send_death_link_chance: 100
+  # When receiving a death link, the chance of dying.
+  receive_death_link_chance: 100
 
   # Determines the goal of the seed.
   # Levels (0): Complete action stages available to unlock the Perfect Chaos Fight.

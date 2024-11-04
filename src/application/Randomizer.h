@@ -81,6 +81,8 @@ public:
     void SetTrapsOnBossFights(bool trapsOnBossFights);
     void SetTrapsOnPerfectChaosFight(bool trapsOnPerfectChaosFight);
     void SetSuperSonicModRunning(bool isModRunning);
+    void SetSendDeathLinkChance(int sendDeathLinkChance);
+    void SetReceiveDeathLinkChance(int receiveDeathLinkChance);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;
@@ -97,6 +99,9 @@ private:
 
     float _deathLinkCooldown = 5.0f;
     std::clock_t _deathLinkCooldownTimer = -1;
+    
+    int _sendDeathLinkChance = 100;
+    int _receiveDeathLinkChance = 100;
 
 
     bool _eggmanCommentOnCharacterUnlock = true;

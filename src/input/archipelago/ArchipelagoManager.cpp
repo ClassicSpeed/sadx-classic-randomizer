@@ -288,6 +288,16 @@ void SADX_SetDeathLink(const int deathLinkActive)
 {
     randomizerPtr->SetDeathLink(deathLinkActive);
 }
+void SADX_SendDeathLinkChance(const int sendDeathLinkChance)
+{
+    randomizerPtr->SetSendDeathLinkChance(sendDeathLinkChance);
+}
+
+void SADX_ReceiveDeathLinkChance(const int receiveDeathLinkChance)
+{
+    randomizerPtr->SetReceiveDeathLinkChance(receiveDeathLinkChance);
+}
+
 
 void SADX_SetRingLink(const int ringLinkActive)
 {
@@ -456,6 +466,9 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("EntranceRandomizer", &SADX_SetEntranceRandomizer);
 
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
+    AP_RegisterSlotDataIntCallback("SendDeathLinkChance", &SADX_SendDeathLinkChance);
+    AP_RegisterSlotDataIntCallback("ReceiveDeathLinkChance", &SADX_ReceiveDeathLinkChance);
+    
     AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);
     AP_RegisterSlotDataIntCallback("CasinopolisRingLink", &SADX_SetCasinopolisRingLink);
     AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);

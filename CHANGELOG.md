@@ -2,30 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.8.8] - 2024-??-??
+## [v0.8.8] - 2024-11-03
 
 ### Added
 
 - Reverse controls trap that inverts the player's movement.
-    - You can set the duration of the trap in options.
-    - A value of 0 will make the trap last until you die or change level.
-- Gravity trap that increments the player's gravity.
-- Added an option to disable filler/traps while in the adventure field.
-- Added an option to disable filler/traps during boss fights.
-- Added an option to disable filler/traps during the Perfect Chaos fight.
-    - All traps work like in the normal levels, except enemy traps, that subtract 5 rings from the player.
-- Added support for The [Super Sonic mod](https://gamebanana.com/mods/49986).
-    - Disable the "Remove limitations" option in the Super Sonic mod settings to be able to play as Super Sonic only
-      after getting all the Chaos Emeralds from Archipelago.
-    - If your goal doesn't include the emeralds, you can play with Super Sonic from the start.
+- Option to set the duration of the reverse controls trap in the settings. A value of 0 will make the trap last until
+  the player dies or changes levels.
+- Gravity trap that increases the player's gravity.
+- Option to disable filler/traps while in the adventure field.
+- Option to disable filler/traps during boss fights.
+- Option to disable filler/traps during the Perfect Chaos fight.
+- All traps function like they do in normal levels, except for enemy traps, which subtract 5 rings from the player.
+- Support for The Super Sonic mod:
+    - Disable the "Remove limitations" option in the Super Sonic mod settings to restrict playing as Super Sonic until
+      after collecting all the Chaos Emeralds in Archipelago.
+    - If your goal doesn’t include the emeralds, you can play as Super Sonic from the start.
+- Option to control the chance of dying when receiving a Death Link.
+    - When surviving, the player will see a "You survived a Death Link!" message.
+- Option to control the chance of sending a Death Link when dying.
+    - If no Death Link is sent, the player will see a "Death Link not sent!" message.
 
 ### Changed
 
-- When getting a spring trap, the player's velocity is stopped, to assure that player interacts with the spring.
-- If all traps are off, the trap percentage will be converted to filler items.
-- Gamma's entrance in lost world is now the same as Knuckles'.
-    - This was done since opening the snake prevents the player from getting the mission 51 card.
-- Fixed an error that prevented the A mission check to be made if the player failed the B mission.
+- When activating a spring trap, the player's velocity is stopped to ensure they interact with the spring properly.
+- If all traps are disabled, the trap percentage will be converted to filler items.
+- Gamma's entrance in Lost World is now the same as Knuckles'.
+    - This change was made because opening the snake prevents the player from obtaining the mission 51 card.
+
+### Fixed
+
+- Fixed an error that prevented the A mission check from occurring if the player failed the B mission.
 
 ## [v0.8.7b] - 2024-10-12
 

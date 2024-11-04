@@ -1,5 +1,7 @@
 #include "Randomizer.h"
 
+#include <random>
+
 void Randomizer::OnCheckFound(const int checkId) const
 {
     const LocationData check = _locationRepository.GetLocation(checkId);
@@ -714,6 +716,23 @@ void Randomizer::SetSuperSonicModRunning(const bool isModRunning)
     _superSonicModRunning = isModRunning;
 }
 
+int Clamp(const int value, const int min, const int max)
+{
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+}
+
+void Randomizer::SetSendDeathLinkChance(const int sendDeathLinkChance)
+{
+    _sendDeathLinkChance = Clamp(sendDeathLinkChance, 1, 100);
+}
+
+void Randomizer::SetReceiveDeathLinkChance(const int receiveDeathLinkChance)
+{
+    _receiveDeathLinkChance = Clamp(receiveDeathLinkChance, 1, 100);
+}
+
 bool Randomizer::AreLastStoryRequirementsCompleted() const
 {
     if (_options.goal == GoalLevels)
@@ -788,11 +807,27 @@ std::vector<LifeBoxLocationData> Randomizer::GetLifeCapsules()
     return _locationRepository.GetLifeCapsules();
 }
 
+
+bool CheckDeathLinkChance(const int chance)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 100);
+
+    return dis(gen) <= chance;
+}
+
 void Randomizer::ProcessDeath(const std::string& deathCause)
 {
     const double timePassed = (std::clock() - _deathLinkCooldownTimer) / static_cast<double>(CLOCKS_PER_SEC);
     if (_deathLinkCooldownTimer < 0 || timePassed > _deathLinkCooldown)
     {
+        if (!CheckDeathLinkChance(_receiveDeathLinkChance))
+        {
+            _displayManager.QueueMessage("You survived a Death Link!");
+            return;
+        }
+
         //Processing a death won't restart the cooldown timer
         _pendingDeathCause = deathCause;
         _deathPending = true;
@@ -845,6 +880,12 @@ void Randomizer::OnDeath()
     if (_deathLinkCooldownTimer < 0 || timePassed > _deathLinkCooldown)
     {
         _deathLinkCooldownTimer = std::clock();
+
+        if (!CheckDeathLinkChance(_sendDeathLinkChance))
+        {
+            _displayManager.QueueMessage("Death Link not sent!");
+            return;
+        }
         _archipelagoMessenger.SendDeath(_options.playerName);
         _displayManager.QueueMessage("Death Sent");
     }
@@ -895,7 +936,8 @@ void Randomizer::OnGoalSet(const Goal goal)
         _displayManager.UpdateMissionStatus(missionStatus);
     }
 
-    if(_options.goal != GoalEmeraldHunt && _options.goal != GoalLevelsAndEmeraldHunt && _options.goal != GoalEmblemsAndEmeraldHunt && _options.goal != GoalMissionsAndEmeraldHunt)
+    if (_options.goal != GoalEmeraldHunt && _options.goal != GoalLevelsAndEmeraldHunt && _options.goal !=
+        GoalEmblemsAndEmeraldHunt && _options.goal != GoalMissionsAndEmeraldHunt)
     {
         SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
     }
