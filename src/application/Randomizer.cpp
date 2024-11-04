@@ -73,6 +73,15 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     {
         _displayManager.ShowGoalStatus();
 
+        if (this->_superSonicModRunning)
+        {
+            if (_itemRepository.GetUnlockStatus().GotAllChaosEmeralds())
+            {
+                SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
+                _displayManager.QueueMessage("You can now transform into Super Sonic!");
+            }
+        }
+
         if (AreLastStoryRequirementsCompleted())
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
@@ -698,6 +707,11 @@ void Randomizer::SetTrapsOnBossFights(bool trapsOnBossFights)
 void Randomizer::SetTrapsOnPerfectChaosFight(bool trapsOnPerfectChaosFight)
 {
     _characterManager.SetTrapsOnPerfectChaosFight(trapsOnPerfectChaosFight);
+}
+
+void Randomizer::SetSuperSonicModRunning(const bool isModRunning)
+{
+    _superSonicModRunning = isModRunning;
 }
 
 bool Randomizer::AreLastStoryRequirementsCompleted() const

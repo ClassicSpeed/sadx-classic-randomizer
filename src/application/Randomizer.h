@@ -72,12 +72,15 @@ public:
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
     void UpdateMissionBlacklist(const std::vector<int>& missionBlacklist);
     void SetEntranceRandomizer(bool enableEntranceRandomizer);
-    void SetCharacterVoiceReactions(bool eggmanCommentOnCharacterUnlock, bool currentCharacterCommentOnCharacterUnlock, bool unlockedCharacterCommentOnCharacterUnlock, bool eggmanCommentOnKeyItems, bool tikalCommentOnKeyItems,
-                                   bool currentCharacterCommentOnKeyItems);
+    void SetCharacterVoiceReactions(bool eggmanCommentOnCharacterUnlock, bool currentCharacterCommentOnCharacterUnlock,
+                                    bool unlockedCharacterCommentOnCharacterUnlock, bool eggmanCommentOnKeyItems,
+                                    bool tikalCommentOnKeyItems,
+                                    bool currentCharacterCommentOnKeyItems);
     void SetReverseControlTrapDuration(int reverseControlTrapDuration);
     void SetTrapsOnAdventureFields(bool trapsOnAdventureFields);
     void SetTrapsOnBossFights(bool trapsOnBossFights);
     void SetTrapsOnPerfectChaosFight(bool trapsOnPerfectChaosFight);
+    void SetSuperSonicModRunning(bool isModRunning);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;
@@ -91,11 +94,11 @@ private:
     Options _options;
     std::string _pendingDeathCause;
     bool _deathPending;
-    
+
     float _deathLinkCooldown = 5.0f;
     std::clock_t _deathLinkCooldownTimer = -1;
-    
-    
+
+
     bool _eggmanCommentOnCharacterUnlock = true;
     bool _currentCharacterCommentOnCharacterUnlock = true;
     bool _unlockedCharacterCommentOnCharacterUnlock = true;
@@ -103,4 +106,5 @@ private:
     bool _eggmanCommentOnKeyItems = true;
     bool _tikalCommentOnKeyItems = true;
     bool _currentCharacterCommentOnKeyItems = true;
+    bool _superSonicModRunning = false;
 };

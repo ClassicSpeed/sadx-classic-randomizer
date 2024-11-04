@@ -78,6 +78,11 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     LoadGameSettings(settingsIni);
 
     ReplaceEmblemImage(path, helperFunctions);
+    if (helperFunctions.Mods->find_by_name("Super Sonic"))
+    {
+        PrintDebug("[SADX Randomizer] Super Sonic Mod detected\n");
+        randomizer.SetSuperSonicModRunning(true);
+    }
 }
 
 __declspec(dllexport) void __cdecl OnFrame()
