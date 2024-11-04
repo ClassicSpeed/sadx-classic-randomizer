@@ -102,6 +102,8 @@ ItemRepository::ItemRepository()
         {101, ItemData::FillerItem("Spring Trap", SpringTrap)},
         {102, ItemData::FillerItem("Police Trap", PoliceTrap)},
         {103, ItemData::FillerItem("Buyon Trap", BuyonTrap)},
+        {104, ItemData::FillerItem("Reverse Trap", ReverseTrap)},
+        {105, ItemData::FillerItem("Gravity Trap", GravityTrap)},
 
 
         {120, ItemData::KeyItem({}, "Wind Stone")},

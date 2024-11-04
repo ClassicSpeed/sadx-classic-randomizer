@@ -27,6 +27,8 @@ enum FillerType
     SpringTrap,
     PoliceTrap,
     BuyonTrap,
+    GravityTrap,
+    ReverseTrap,
     NoFiller,
 };
 

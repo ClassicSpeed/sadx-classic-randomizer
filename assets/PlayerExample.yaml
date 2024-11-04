@@ -23,6 +23,11 @@ Sonic Adventure DX:
   
   # When you die, everyone dies. Of course the reverse is true too.
   death_link: 'false'
+  
+  # When dying, the chance of sending a death link to another player.
+  send_death_link_chance: 100
+  # When receiving a death link, the chance of dying.
+  receive_death_link_chance: 100
 
   # Determines the goal of the seed.
   # Levels (0): Complete action stages available to unlock the Perfect Chaos Fight.
@@ -199,6 +204,19 @@ Sonic Adventure DX:
   police_trap_weight: 2
   # Likelihood of receiving a trap that spawns a lot of Buyon enemies.
   buyon_trap_weight: 2
+  # Likelihood of receiving a trap that reverses your controls.
+  reverse_trap_weight: 2
+  # Likelihood of receiving a trap that increments your gravity.
+  gravity_trap_weight: 2
+  # How many seconds the reverse control trap will last. If set to 0, the trap will last until you die or change level.
+  reverse_trap_duration: 10
+  # If enabled, traps and filler can activate in the adventure field.
+  traps_and_filler_on_adventure_fields: 'true'
+  # If enabled, traps and filler can activate during boss fights.
+  traps_and_filler_on_boss_fights: 'true'
+  # If enabled, traps and filler can activate during the Perfect Chaos fight.
+  # Keep in mind that enemy traps will subtract rings from the player.
+  traps_and_filler_on_perfect_chaos_fight: 'false'
   
   # Item & Location Options
   

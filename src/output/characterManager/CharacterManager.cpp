@@ -173,11 +173,21 @@ void CharacterManager::OnPlayingFrame()
         }
     }
 
-    if (GameMode != GameModes_Mission)
+    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
         return;
-    if (CurrentLevel == LevelIDs_PerfectChaos || CurrentLevel == LevelIDs_TwinkleCircuit
-        || CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
+    if (CurrentLevel == LevelIDs_TwinkleCircuit || CurrentLevel == LevelIDs_SkyChase1
+        || CurrentLevel == LevelIDs_SkyChase2)
         return;
+
+    if (CurrentLevel >= LevelIDs_Chaos0 && CurrentLevel <= LevelIDs_E101R && !_trapsOnBossFights)
+        return;
+
+    if (CurrentLevel == LevelIDs_PerfectChaos && !_trapsOnPerfectChaosFight)
+        return;
+
+    if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past && !_trapsOnAdventureFields)
+        return;
+
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
         return;
     if (PauseEnabled == 0)
@@ -190,6 +200,25 @@ void CharacterManager::OnPlayingFrame()
         {
             EnableController(0);
             _freezeTimer = -1;
+        }
+    }
+    if (_gravityTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_gravityTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _gravityDuration)
+        {
+            Gravity.y = -1;
+            _gravityTimer = -1;
+        }
+    }
+
+    if (_reverseControlsTimer > 0 && _reverseControlsDuration > 0)
+    {
+        const double timePassed = (std::clock() - this->_reverseControlsTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _reverseControlsDuration)
+        {
+            reverseControlsEnabled = false;
+            _reverseControlsTimer = -1;
         }
     }
 
@@ -259,6 +288,32 @@ void CharacterManager::SetCharacterVoiceReactions(const bool eggmanCommentOnTrap
     _currentCharacterReactToTrap = currentCharacterReactToTrap;
 }
 
+void CharacterManager::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
+{
+    _reverseControlsDuration = static_cast<float>(reverseControlTrapDuration);
+}
+
+void CharacterManager::SetTrapsOnAdventureFields(const bool trapsOnAdventureFields)
+{
+    this->_trapsOnAdventureFields = trapsOnAdventureFields;
+}
+
+void CharacterManager::SetTrapsOnBossFights(const bool trapsOnBossFights)
+{
+    this->_trapsOnBossFights = trapsOnBossFights;
+}
+
+void CharacterManager::SetTrapsOnPerfectChaosFight(const bool trapsOnPerfectChaosFight)
+{
+    this->_trapsOnPerfectChaosFight = trapsOnPerfectChaosFight;
+}
+
+void CharacterManager::RemoveStatusEffects()
+{
+    reverseControlsEnabled = false;
+    _reverseControlsTimer = -1;
+}
+
 TaskFunc(EBuyon_Main, 0x7B2E00);
 
 void CharacterManager::ActivateFiller(const FillerType filler)
@@ -300,6 +355,18 @@ void CharacterManager::ActivateFiller(const FillerType filler)
         break;
     case BuyonTrap:
         this->SpawnEnemies(EBuyon_Main);
+        DisablePause();
+        PlayRandomTrapVoice(filler);
+        break;
+
+    case ReverseTrap:
+        this->ReverseControls();
+        DisablePause();
+        PlayRandomTrapVoice(filler);
+        break;
+
+    case GravityTrap:
+        this->IncrementGravity();
         DisablePause();
         PlayRandomTrapVoice(filler);
         break;
@@ -539,6 +606,7 @@ FunctionHook<int> getLureQuantity(0x46C870, []()-> int
 void CharacterManager::SpawnSpring()
 {
     _springTimer = std::clock();
+    NullifyVelocity(EntityData2Ptrs[0], Current_CharObj2);
     _springTask = CreateElementalTask(LoadObj_Data1, 3, ObjectSpringB);
     _springTask->twp->pos.x = EntityData1Ptrs[0]->Position.x;
     _springTask->twp->pos.y = EntityData1Ptrs[0]->Position.y + 5;
@@ -555,6 +623,12 @@ void CharacterManager::SpawnSpring()
 
 void CharacterManager::SpawnEnemies(void (*enemyFunc)(task* tp))
 {
+    if (CurrentLevel == LevelIDs_PerfectChaos)
+    {
+        AddRings(-5);
+        return;
+    }
+
     const auto enemy = CreateElementalTask(LoadObj_Data1, 3, enemyFunc);
     enemy->twp->pos.x = EntityData1Ptrs[0]->Position.x + 30;
     enemy->twp->pos.y = EntityData1Ptrs[0]->Position.y;
@@ -624,14 +698,48 @@ FunctionPointer(ObjectMaster *, freezePLayer, (char a1), 0x4A2550);
 void CharacterManager::FreezePlayer()
 {
     _freezeTimer = std::clock();
-    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Knuckles)
-        return ForcePlayerAction(0, PL_OP_ICED);
+    if (CurrentLevel != LevelIDs_PerfectChaos)
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Knuckles)
+            return ForcePlayerAction(0, PL_OP_ICED);
 
     freezePLayer(EntityData1Ptrs[0]->CharIndex);
     Current_CharObj2->field_88.x = 300;
     NullifyVelocity(EntityData2Ptrs[0], Current_CharObj2);
     DisableController(0);
 }
+
+void CharacterManager::IncrementGravity()
+{
+    _gravityTimer = std::clock();
+    Gravity.y = Gravity.y * 4;
+}
+
+void CharacterManager::ReverseControls()
+{
+    //If the player is already under the effect of reverse controls, set them back to normal
+    if (reverseControlsEnabled)
+    {
+        reverseControlsEnabled = false;
+        _reverseControlsTimer = -1;
+    }
+
+    if (_reverseControlsDuration > 0)
+        _reverseControlsTimer = std::clock();
+    reverseControlsEnabled = true;
+}
+
+
+FunctionHook<void> onWriteAnalogs(0x40F170, []()-> void
+{
+    if (characterManagerPtr->reverseControlsEnabled)
+    {
+        ControllerPointers[0]->LeftStickX = -ControllerPointers[0]->LeftStickX;
+        ControllerPointers[0]->LeftStickY = -ControllerPointers[0]->LeftStickY;
+        ControllerPointers[0]->RightStickX = -ControllerPointers[0]->RightStickX;
+        ControllerPointers[0]->RightStickY = -ControllerPointers[0]->RightStickY;
+    }
+    onWriteAnalogs.Original();
+});
 
 
 //We scale up the freeze trap for Big and Gamma
