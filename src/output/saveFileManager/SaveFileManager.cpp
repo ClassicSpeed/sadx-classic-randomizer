@@ -165,6 +165,10 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_ENTRANCE_FINALEGG));
 
     //Chao Garden
+    ClearEventFlag(static_cast<EventFlags>(FLAG_GET_GOLDEGG));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_GET_SILVEREGG));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_GET_BLACKEGG));
+    
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_SS));
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_MR));
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_EC));

@@ -150,6 +150,8 @@ Sonic Adventure DX:
   
   # Determines whether collecting field emblems grants checks (12 Locations).
   field_emblems_checks: 'true'
+  # Determines whether getting the 3 secret chao eggs grants checks (3 Locations).
+  chao_egg_checks: 'true'
   # Determines whether completing missions grants checks (60 Locations).
   mission_mode_checks: 'false'
   # Determines whether missions will start already activated.

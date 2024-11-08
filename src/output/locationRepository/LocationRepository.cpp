@@ -249,6 +249,9 @@ LocationRepository::LocationRepository()
         {859, LocationData::MissionLocation(Characters_Knuckles, 59)},
         {860, LocationData::MissionLocation(Characters_Big, 60)},
 
+        {900, LocationData::ChaoEggLocation(FLAG_GET_GOLDEGG,"Gold Chao Egg")},
+        {901, LocationData::ChaoEggLocation(FLAG_GET_SILVEREGG,"Silver Chao Egg")},
+        {902, LocationData::ChaoEggLocation(FLAG_GET_BLACKEGG,"Black Chao Egg")},
 
     };
 

@@ -166,7 +166,7 @@ void EventDetector::OnPlayingFrame() const
     bool checksFound = false;
     for (const auto& check : checkData)
     {
-        if (check.second.type == LocationUpgrade && !check.second.checked
+        if ((check.second.type == LocationUpgrade || check.second.type == LocationChaoEgg) && !check.second.checked
             && GetEventFlag(static_cast<EventFlags>(check.second.eventFlag)))
         {
             randomizer.OnCheckFound(check.first);
