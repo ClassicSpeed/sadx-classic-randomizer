@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.9.0] - 2024-11-??
+
+### Added
+
+- All 3 secret chao eggs are now location checks. You have to bring them to the chao garden to get the check.
+
+### Fixed
+
+- Logic regarding level/mission goals not working correctly.
+
 ## [v0.8.8] - 2024-11-03
 
 ### Added
