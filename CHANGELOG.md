@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 - All 3 secret chao eggs are now location checks. You have to bring them to the chao garden to get the check.
 - Chao stats multiplier in the mod's settings (default is 1, up to 50).
 
+### Changed
+
+- When generation a game with all characters disabled, the game will now start with Sonic and give a warning message.
+
 ### Fixed
 
 - Logic regarding level/mission goals not working correctly.
