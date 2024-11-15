@@ -178,10 +178,13 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool currentCharacterCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions",
                                                                         "CurrentCharacterOnKeyItem", true);
 
+    const int chaoStatsMultiplier = settingsIni->getInt("Chao", "StatGainMultiplier");
+
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, winButtonEnabled);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
+    worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);
     characterManager.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,
                                                 currentCharacterReactToTrap);
 

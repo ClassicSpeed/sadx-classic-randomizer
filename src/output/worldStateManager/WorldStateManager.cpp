@@ -510,6 +510,19 @@ void WorldStateManager::SetEggCarrierTransformationCutscene(const bool eggCarrie
     this->eggCarrierTransformationCutscene = eggCarrierTransformation;
 }
 
+DataArray(int16_t, ChaoStatValues, 0x8895C8, 0x402);
+
+void WorldStateManager::SetChaoStatsMultiplier(const int chaoStatsMultiplier)
+{
+    if (chaoStatsMultiplier > 1 && chaoStatsMultiplier <= 50)
+    {
+        for (int i = 0x00; i < 0x402; i++)
+        {
+            ChaoStatValues[i] = ChaoStatValues[i] * chaoStatsMultiplier;
+        }
+    }
+}
+
 typedef struct
 {
     int x;

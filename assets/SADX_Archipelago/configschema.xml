@@ -104,6 +104,11 @@
         <HelpText>Play voice clips of the current character reacting when receiving a key item.</HelpText>
             </Property>
         </Group>
+        <Group name="Chao" display="Chao Settings">
+            <Property name="StatGainMultiplier" type="int" defaultvalue="1" minvalue="1" maxvalue="50" display="Stat Gain Multiplier">
+                <HelpText>How much animals, and fruits increase chao stats. Note: do not mix with the Mod Manager Code.</HelpText>
+            </Property>
+        </Group>
     </Groups>
     <Enums>
         <Enum name="CharacterVoiceIndex">
