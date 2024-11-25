@@ -51,7 +51,10 @@ enum Levels
 struct Options
 {
     std::string playerName = "Player";
-    Goal goal = None;
+    bool goalRequiresLevels = true;
+    bool goalRequiresEmblems = false;
+    bool goalRequiresChaosEmeralds = false;
+    bool goalRequiresMissions = false;
     int emblemGoal = -1;
     int levelGoal = -1;
     int missionGoal = -1;

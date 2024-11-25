@@ -8,11 +8,13 @@ All notable changes to this project will be documented in this file.
 
 - All 3 secret chao eggs are now location checks. You have to bring them to the chao garden to get the check.
 - Chao stats multiplier in the mod's settings (default is 1, up to 50).
+- The goal setting is now separated into multiple goal requirements (levels, emblems, chaos emeralds, and missions).
 
 ### Changed
 
 - The settings for the logic will now be checked early to ensure that a world is able to generate correctly:
     - With all characters disabled, Sonic will be enabled as a failsafe with a warning message.
+    - If there is no goal requirement set, the goal will be set to levels with a warning message.
     - If the goal contains levels and there are no levels in the settings, they will be enabled with a warning message.
     - If the goal contains missions and the missions are disabled in the settings, they will be enabled with a warning
       message.

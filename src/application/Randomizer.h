@@ -83,6 +83,10 @@ public:
     void SetSuperSonicModRunning(bool isModRunning);
     void SetSendDeathLinkChance(int sendDeathLinkChance);
     void SetReceiveDeathLinkChance(int receiveDeathLinkChance);
+    void OnGoalRequiresLevelsSet(bool goalRequiresLevels);
+    void OnGoalRequiresChaosEmeraldsSet(bool goalRequiresChaosEmeralds);
+    void OnGoalRequiresEmblems(bool goalRequiresEmblems);
+    void OnGoalRequiresMissionsSet(bool goalRequiresMissions);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;

@@ -158,8 +158,7 @@ void DisplayManager::DisplayGoalStatus()
 
     std::string buffer;
 
-    if (_options.goal == GoalEmeraldHunt || _options.goal == GoalEmblemsAndEmeraldHunt || _options.goal ==
-        GoalLevelsAndEmeraldHunt || _options.goal == GoalMissionsAndEmeraldHunt)
+    if (_options.goalRequiresChaosEmeralds)
     {
         buffer.append("Emeralds:        ");
         SetDebugFontColor(
@@ -185,20 +184,17 @@ void DisplayManager::DisplayGoalStatus()
     }
 
     SetDebugFontColor(this->_displayEmblemColor);
-    if (_options.goal == GoalEmblemsAndEmeraldHunt || _options.goal == GoalLevelsAndEmeraldHunt || _options.goal ==
-        GoalMissionsAndEmeraldHunt)
-        buffer.append(" ");
 
-    if (_options.goal == GoalEmblems || _options.goal == GoalEmblemsAndEmeraldHunt)
-        buffer.append("Emblems: " + std::to_string(_unlockStatus.currentEmblems) + "/"
-            + std::to_string(_options.emblemGoal));
-
-    if (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt)
-        buffer.append("Levels: " + std::to_string(_levelStatus.levelsCompleted) + "/"
+    if (_options.goalRequiresLevels)
+        buffer.append(" Levels: " + std::to_string(_levelStatus.levelsCompleted) + "/"
             + std::to_string(_options.levelGoal));
 
-    if (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt)
-        buffer.append("Missions: " + std::to_string(_missionStatus.missionsCompleted) + "/"
+    if (_options.goalRequiresEmblems)
+        buffer.append(" Emblems: " + std::to_string(_unlockStatus.currentEmblems) + "/"
+            + std::to_string(_options.emblemGoal));
+
+    if (_options.goalRequiresMissions)
+        buffer.append(" Missions: " + std::to_string(_missionStatus.missionsCompleted) + "/"
             + std::to_string(_options.missionGoal));
 
 
@@ -325,7 +321,26 @@ void DisplayManager::DisplayItemsUnlocked()
     std::string buffer;
 
     int displayOffset = 0;
-    if (_options.goal == GoalEmblems || _options.goal == GoalEmblemsAndEmeraldHunt)
+
+    if (_options.goalRequiresLevels)
+    {
+        displayOffset++;
+        buffer.clear();
+        buffer.append("Levels: " + std::to_string(_levelStatus.levelsCompleted) + "/"
+            + std::to_string(_options.levelGoal));
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    }
+    
+    if (_options.goalRequiresMissions)
+    {
+        displayOffset++;
+        buffer.clear();
+        buffer.append("Missions: " + std::to_string(_missionStatus.missionsCompleted) + "/"
+            + std::to_string(_options.missionGoal));
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    }
+    
+    if (_options.goalRequiresEmblems)
     {
         displayOffset++;
         buffer.clear();
@@ -334,26 +349,7 @@ void DisplayManager::DisplayItemsUnlocked()
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
-    if (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt)
-    {
-        displayOffset++;
-        buffer.clear();
-        buffer.append("Levels: " + std::to_string(_levelStatus.levelsCompleted) + "/"
-            + std::to_string(_options.levelGoal));
-        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
-    }
-
-    if (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt)
-    {
-        displayOffset++;
-        buffer.clear();
-        buffer.append("Missions: " + std::to_string(_missionStatus.missionsCompleted) + "/"
-            + std::to_string(_options.missionGoal));
-        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
-    }
-
-    if (_options.goal == GoalEmeraldHunt || _options.goal == GoalEmblemsAndEmeraldHunt || _options.goal ==
-        GoalLevelsAndEmeraldHunt || _options.goal == GoalMissionsAndEmeraldHunt)
+    if (_options.goalRequiresChaosEmeralds)
     {
         displayOffset++;
         buffer.clear();
@@ -381,8 +377,7 @@ void DisplayManager::DisplayItemsUnlocked()
         SetDebugFontColor(_unlockStatus.blueEmerald ? _blueEmeraldColor : _blueEmeraldColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "                B");
     }
-
-
+    
     //Show Level information
     if (CurrentLevel > LevelIDs_HedgehogHammer && CurrentLevel <= LevelIDs_HotShelter)
     {
@@ -496,14 +491,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.sonicLightShoesUnlocked ? "LS " : "   ");
         buffer.append(_unlockStatus.sonicCrystalRingUnlocked ? "CR " : "   ");
         buffer.append(_unlockStatus.sonicAncientLightUnlocked ? "AL" : "  ");
-        if (_unlockStatus.sonicUnlocked && _options.sonicActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (_unlockStatus.sonicUnlocked && _options.sonicActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.sonicLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.sonicLevelsTotal));
         }
-        if (_unlockStatus.sonicUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (_unlockStatus.sonicUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.sonicMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.sonicMissionsTotal));
@@ -516,14 +509,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(!_unlockStatus.sonicLightShoesUnlocked ? "LS " : "   ");
         buffer.append(!_unlockStatus.sonicCrystalRingUnlocked ? "CR " : "   ");
         buffer.append(!_unlockStatus.sonicAncientLightUnlocked ? "AL" : "  ");
-        if (!_unlockStatus.sonicUnlocked && _options.sonicActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (!_unlockStatus.sonicUnlocked && _options.sonicActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.sonicLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.sonicLevelsTotal));
         }
-        if (!_unlockStatus.sonicUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (!_unlockStatus.sonicUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.sonicMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.sonicMissionsTotal));
@@ -540,14 +531,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.tailsUnlocked ? "T  " : "   ");
         buffer.append(_unlockStatus.tailsJetAnkletUnlocked ? "JA " : "   ");
         buffer.append(_unlockStatus.tailsRhythmBadgeUnlocked ? "RB" : "  ");
-        if (_unlockStatus.tailsUnlocked && _options.tailsActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (_unlockStatus.tailsUnlocked && _options.tailsActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.tailsLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.tailsLevelsTotal));
         }
-        if (_unlockStatus.tailsUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (_unlockStatus.tailsUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.tailsMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.tailsMissionsTotal));
@@ -558,14 +547,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(!_unlockStatus.tailsUnlocked ? "T: " : " : ");
         buffer.append(!_unlockStatus.tailsJetAnkletUnlocked ? "JA " : "   ");
         buffer.append(!_unlockStatus.tailsRhythmBadgeUnlocked ? "RB" : "  ");
-        if (!_unlockStatus.tailsUnlocked && _options.tailsActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (!_unlockStatus.tailsUnlocked && _options.tailsActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.tailsLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.tailsLevelsTotal));
         }
-        if (!_unlockStatus.tailsUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (!_unlockStatus.tailsUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.tailsMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.tailsMissionsTotal));
@@ -581,14 +568,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.knucklesUnlocked ? "K  " : "   ");
         buffer.append(_unlockStatus.knucklesShovelClawUnlocked ? "SC " : "   ");
         buffer.append(_unlockStatus.knucklesFightingGlovesUnlocked ? "FG" : "  ");
-        if (_unlockStatus.knucklesUnlocked && _options.knucklesActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (_unlockStatus.knucklesUnlocked && _options.knucklesActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.knucklesLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.knucklesLevelsTotal));
         }
-        if (_unlockStatus.knucklesUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (_unlockStatus.knucklesUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.knucklesMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.knucklesMissionsTotal));
@@ -599,14 +584,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(!_unlockStatus.knucklesUnlocked ? "K: " : " : ");
         buffer.append(!_unlockStatus.knucklesShovelClawUnlocked ? "SC " : "   ");
         buffer.append(!_unlockStatus.knucklesFightingGlovesUnlocked ? "FG" : "  ");
-        if (!_unlockStatus.knucklesUnlocked && _options.knucklesActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (!_unlockStatus.knucklesUnlocked && _options.knucklesActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.knucklesLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.knucklesLevelsTotal));
         }
-        if (!_unlockStatus.knucklesUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (!_unlockStatus.knucklesUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.knucklesMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.knucklesMissionsTotal));
@@ -622,14 +605,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.amyUnlocked ? "A  " : "   ");
         buffer.append(_unlockStatus.amyLongHammerUnlocked ? "LH " : "   ");
         buffer.append(_unlockStatus.amyWarriorFeatherUnlocked ? "WF" : "  ");
-        if (_unlockStatus.amyUnlocked && _options.amyActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (_unlockStatus.amyUnlocked && _options.amyActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.amyLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.amyLevelsTotal));
         }
-        if (_unlockStatus.amyUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (_unlockStatus.amyUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.amyMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.amyMissionsTotal));
@@ -640,14 +621,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(!_unlockStatus.amyUnlocked ? "A: " : " : ");
         buffer.append(!_unlockStatus.amyLongHammerUnlocked ? "LH " : "   ");
         buffer.append(!_unlockStatus.amyWarriorFeatherUnlocked ? "WF" : "  ");
-        if (!_unlockStatus.amyUnlocked && _options.amyActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (!_unlockStatus.amyUnlocked && _options.amyActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.amyLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.amyLevelsTotal));
         }
-        if (!_unlockStatus.amyUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (!_unlockStatus.amyUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.amyMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.amyMissionsTotal));
@@ -664,14 +643,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.bigLifeBeltUnlocked ? "LB " : "   ");
         buffer.append(_unlockStatus.bigPowerRodUnlocked ? "PR " : "   ");
         buffer.append(_unlockStatus.bigLureQuantity > 0 ? "L" + std::to_string(_unlockStatus.bigLureQuantity) : "  ");
-        if (_unlockStatus.bigUnlocked && _options.bigActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (_unlockStatus.bigUnlocked && _options.bigActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.bigLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.bigLevelsTotal));
         }
-        if (_unlockStatus.bigUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (_unlockStatus.bigUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.bigMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.bigMissionsTotal));
@@ -683,14 +660,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(!_unlockStatus.bigLifeBeltUnlocked ? "LB " : "   ");
         buffer.append(!_unlockStatus.bigPowerRodUnlocked ? "PR " : "   ");
         buffer.append(_unlockStatus.bigLureQuantity == 0 ? "L0" : "  ");
-        if (!_unlockStatus.bigUnlocked && _options.bigActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (!_unlockStatus.bigUnlocked && _options.bigActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.bigLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.bigLevelsTotal));
         }
-        if (!_unlockStatus.bigUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (!_unlockStatus.bigUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.bigMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.bigMissionsTotal));
@@ -705,14 +680,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_unlockStatus.gammaUnlocked ? "G  " : "   ");
         buffer.append(_unlockStatus.gammaJetBoosterUnlocked ? "JB " : "   ");
         buffer.append(_unlockStatus.gammaLaserBlasterUnlocked ? "LB" : "  ");
-        if (_unlockStatus.gammaUnlocked && _options.gammaActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (_unlockStatus.gammaUnlocked && _options.gammaActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.gammaLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.gammaLevelsTotal));
         }
-        if (_unlockStatus.gammaUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (_unlockStatus.gammaUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.gammaMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.gammaMissionsTotal));
@@ -723,14 +696,12 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(!_unlockStatus.gammaUnlocked ? "G: " : " : ");
         buffer.append(!_unlockStatus.gammaJetBoosterUnlocked ? "JB " : "   ");
         buffer.append(!_unlockStatus.gammaLaserBlasterUnlocked ? "LB" : "  ");
-        if (!_unlockStatus.gammaUnlocked && _options.gammaActionStageMissions > 0
-            && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+        if (!_unlockStatus.gammaUnlocked && _options.gammaActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" " + std::to_string(_levelStatus.gammaLevelsCompleted)
                 + "/" + std::to_string(_levelStatus.gammaLevelsTotal));
         }
-        if (!_unlockStatus.gammaUnlocked && _options.missionModeEnabled
-            && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+        if (!_unlockStatus.gammaUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
             buffer.append(" " + std::to_string(_missionStatus.gammaMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.gammaMissionsTotal));

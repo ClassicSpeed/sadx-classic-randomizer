@@ -17,8 +17,7 @@ void Randomizer::OnCheckFound(const int checkId) const
     _archipelagoMessenger.CheckLocation(checkId);
 
     _displayManager.UpdateChecks(_locationRepository.GetLocations());
-    if (check.type == LocationLevel && check.mission == MISSION_C
-        && (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt))
+    if (check.type == LocationLevel && check.mission == MISSION_C && _options.goalRequiresLevels)
     {
         const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
         _displayManager.UpdateLevelStatus(levelStatus);
@@ -27,8 +26,7 @@ void Randomizer::OnCheckFound(const int checkId) const
             && AreLastStoryRequirementsCompleted())
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
-    if (check.type == LocationMission
-        && (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt))
+    if (check.type == LocationMission && _options.goalRequiresMissions)
     {
         const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
         _displayManager.UpdateMissionStatus(missionStatus);
@@ -664,7 +662,7 @@ void Randomizer::UpdateMissionBlacklist(const std::vector<int>& missionBlacklist
     _options.missionBlacklist = missionBlacklist;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
-    if (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt)
+    if (_options.goalRequiresMissions)
     {
         const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
         _displayManager.UpdateMissionStatus(missionStatus);
@@ -733,33 +731,27 @@ void Randomizer::SetReceiveDeathLinkChance(const int receiveDeathLinkChance)
     _receiveDeathLinkChance = Clamp(receiveDeathLinkChance, 1, 100);
 }
 
+
 bool Randomizer::AreLastStoryRequirementsCompleted() const
 {
-    if (_options.goal == GoalLevels)
-        return _locationRepository.GetLevelStatus(_options).levelsCompleted >= _options.levelGoal;
+    bool levelsCompleted = true;
+    bool emblemsCompleted = true;
+    bool chaosEmeraldsCompleted = true;
+    bool missionsCompleted = true;
+    
+    if (_options.goalRequiresLevels)
+        levelsCompleted = _locationRepository.GetLevelStatus(_options).levelsCompleted >= _options.levelGoal;
 
-    if (_options.goal == GoalEmblems)
-        return _itemRepository.GetEmblemCount() >= _options.emblemGoal;
+    if (_options.goalRequiresEmblems)
+        emblemsCompleted = _itemRepository.GetEmblemCount() >= _options.emblemGoal;
 
+    if (_options.goalRequiresMissions)
+        missionsCompleted = _locationRepository.GetMissionStatus(_options).missionsCompleted >= _options.missionGoal;
 
-    if (_options.goal == GoalMissions)
-        return _locationRepository.GetMissionStatus(_options).missionsCompleted >= _options.missionGoal;
+    if (_options.goalRequiresChaosEmeralds)
+        chaosEmeraldsCompleted = _itemRepository.GetUnlockStatus().GotAllChaosEmeralds();
 
-    if (_options.goal == GoalEmeraldHunt)
-        return _itemRepository.GetUnlockStatus().GotAllChaosEmeralds();
-
-    if (_options.goal == GoalLevelsAndEmeraldHunt)
-        return _locationRepository.GetLevelStatus(_options).levelsCompleted >= _options.levelGoal &&
-            _itemRepository.GetUnlockStatus().GotAllChaosEmeralds();
-
-    if (_options.goal == GoalEmblemsAndEmeraldHunt)
-        return _itemRepository.GetEmblemCount() >= _options.emblemGoal &&
-            _itemRepository.GetUnlockStatus().GotAllChaosEmeralds();
-
-    if (_options.goal == GoalMissionsAndEmeraldHunt)
-        return _locationRepository.GetMissionStatus(_options).missionsCompleted >= _options.missionGoal &&
-            _itemRepository.GetUnlockStatus().GotAllChaosEmeralds();
-    return false;
+    return levelsCompleted && emblemsCompleted && chaosEmeraldsCompleted && missionsCompleted;
 }
 
 
@@ -918,30 +910,44 @@ void Randomizer::ShowStatusInformation(std::string information)
 void Randomizer::QueueNewMessage(std::string information)
 {
     _displayManager.QueueMessage(information);
-}
-
-void Randomizer::OnGoalSet(const Goal goal)
-{
-    _options.goal = goal;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
-    if (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt)
-    {
-        const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
-        _displayManager.UpdateLevelStatus(levelStatus);
-    }
-    else if (_options.goal == GoalMissions || _options.goal == GoalMissionsAndEmeraldHunt)
-    {
-        const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
-        _displayManager.UpdateMissionStatus(missionStatus);
-    }
-
-    if (_options.goal != GoalEmeraldHunt && _options.goal != GoalLevelsAndEmeraldHunt && _options.goal !=
-        GoalEmblemsAndEmeraldHunt && _options.goal != GoalMissionsAndEmeraldHunt)
-    {
-        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
-    }
 }
+
+void Randomizer::OnGoalRequiresLevelsSet(const bool goalRequiresLevels)
+{
+    _options.goalRequiresLevels = goalRequiresLevels;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+
+    const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
+    _displayManager.UpdateLevelStatus(levelStatus);
+}
+
+void Randomizer::OnGoalRequiresChaosEmeraldsSet(const bool goalRequiresChaosEmeralds)
+{
+    _options.goalRequiresChaosEmeralds = goalRequiresChaosEmeralds;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::OnGoalRequiresEmblems(const bool goalRequiresEmblems)
+{
+    _options.goalRequiresEmblems = goalRequiresEmblems;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+    SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
+}
+
+void Randomizer::OnGoalRequiresMissionsSet(const bool goalRequiresMissions)
+{
+    _options.goalRequiresMissions = goalRequiresMissions;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+    const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
+    _displayManager.UpdateMissionStatus(missionStatus);
+}
+
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
 {
@@ -998,7 +1004,7 @@ void Randomizer::SetActionStageMissions(const Characters characters, const int m
     _options.SetActionStageMissions(characters, missions);
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
-    if (_options.goal == GoalLevels || _options.goal == GoalLevelsAndEmeraldHunt)
+    if (_options.goalRequiresLevels)
     {
         const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
         _displayManager.UpdateLevelStatus(levelStatus);

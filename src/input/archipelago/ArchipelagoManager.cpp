@@ -140,9 +140,21 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
     }
 }
 
-void SADX_Goal(const int goal)
+void SADX_GoalRequiresLevels(const int goalRequiresLevels)
 {
-    randomizerPtr->OnGoalSet(static_cast<Goal>(goal));
+    randomizerPtr->OnGoalRequiresLevelsSet(goalRequiresLevels);
+}
+void SADX_GoalRequiresChaosEmeralds(const int goalRequiresChaosEmeralds)
+{
+    randomizerPtr->OnGoalRequiresChaosEmeraldsSet(goalRequiresChaosEmeralds);
+}
+void SADX_GoalRequiresEmblems(const int goalRequiresEmblems)
+{
+    randomizerPtr->OnGoalRequiresEmblems(goalRequiresEmblems);
+}
+void SADX_GoalRequiresMissions(const int goalRequiresMissions)
+{
+    randomizerPtr->OnGoalRequiresMissionsSet(goalRequiresMissions);
 }
 
 void SADX_CompareModVersion(const int version)
@@ -435,7 +447,10 @@ void ArchipelagoManager::Connect()
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
-    AP_RegisterSlotDataIntCallback("Goal", &SADX_Goal);
+    AP_RegisterSlotDataIntCallback("GoalRequiresLevels", &SADX_GoalRequiresLevels);
+    AP_RegisterSlotDataIntCallback("GoalRequiresChaosEmeralds", &SADX_GoalRequiresChaosEmeralds);
+    AP_RegisterSlotDataIntCallback("GoalRequiresEmblems", &SADX_GoalRequiresEmblems);
+    AP_RegisterSlotDataIntCallback("GoalRequiresMissions", &SADX_GoalRequiresMissions);
     AP_RegisterSlotDataIntCallback("ModVersion", &SADX_CompareModVersion);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("LevelForPerfectChaos", &SADX_LevelForPerfectChaos);
