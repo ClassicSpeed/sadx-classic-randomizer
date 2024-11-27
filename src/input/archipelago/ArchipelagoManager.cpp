@@ -156,6 +156,11 @@ void SADX_GoalRequiresMissions(const int goalRequiresMissions)
 {
     randomizerPtr->OnGoalRequiresMissionsSet(goalRequiresMissions);
 }
+void SADX_GoalRequiresBosses(const int goalRequiresBosses)
+{
+    randomizerPtr->OnGoalRequiresBossesSet(goalRequiresBosses);
+}
+
 
 void SADX_CompareModVersion(const int version)
 {
@@ -175,6 +180,10 @@ void SADX_LevelForPerfectChaos(const int levelGoal)
 void SADX_MissionForPerfectChaos(const int missionGoal)
 {
     randomizerPtr->OnMissionGoalSet(missionGoal);
+}
+void SADX_BossesForPerfectChaos(const int bossesGoal)
+{
+    randomizerPtr->OnBossesGoalSet(bossesGoal);
 }
 
 void SADX_MissionModeChecks(const int missionModeEnabled)
@@ -451,10 +460,12 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("GoalRequiresChaosEmeralds", &SADX_GoalRequiresChaosEmeralds);
     AP_RegisterSlotDataIntCallback("GoalRequiresEmblems", &SADX_GoalRequiresEmblems);
     AP_RegisterSlotDataIntCallback("GoalRequiresMissions", &SADX_GoalRequiresMissions);
+    AP_RegisterSlotDataIntCallback("GoalRequiresBosses", &SADX_GoalRequiresBosses);
     AP_RegisterSlotDataIntCallback("ModVersion", &SADX_CompareModVersion);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("LevelForPerfectChaos", &SADX_LevelForPerfectChaos);
     AP_RegisterSlotDataIntCallback("MissionForPerfectChaos", &SADX_MissionForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("BossesForPerfectChaos", &SADX_BossesForPerfectChaos);
     AP_RegisterSlotDataIntCallback("MissionModeChecks", &SADX_MissionModeChecks);
     AP_RegisterSlotDataMapIntIntCallback("MissionBlackList", &SADX_MissionBlackList);
 

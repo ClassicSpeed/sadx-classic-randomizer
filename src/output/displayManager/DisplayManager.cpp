@@ -61,6 +61,11 @@ void DisplayManager::UpdateMissionStatus(MissionStatus missionStatus)
     this->_missionStatus = missionStatus;
 }
 
+void DisplayManager::UpdateBossesStatus(BossesStatus bossesStatus)
+{
+    this->_bossesStatus = bossesStatus;
+}
+
 void DisplayManager::UpdateVisitedLevels(VisitedLevels visitedLevels)
 {
     this->_visitedLevels = visitedLevels;
@@ -195,8 +200,11 @@ void DisplayManager::DisplayGoalStatus()
 
     if (_options.goalRequiresMissions)
         buffer.append(" Missions: " + std::to_string(_missionStatus.missionsCompleted) + "/"
-            + std::to_string(_options.missionGoal));
+        + std::to_string(_options.missionGoal));
 
+    if (_options.goalRequiresBosses)
+        buffer.append(" Bosses: " + std::to_string(_bossesStatus.bossesCompleted) + "/"
+            + std::to_string(_options.bossesGoal));
 
     DisplayDebugString(
         NJM_LOCATION(2, this->_startLine - 1), buffer.c_str());
@@ -337,6 +345,14 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.clear();
         buffer.append("Missions: " + std::to_string(_missionStatus.missionsCompleted) + "/"
             + std::to_string(_options.missionGoal));
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    }
+    if (_options.goalRequiresBosses)
+    {
+        displayOffset++;
+        buffer.clear();
+        buffer.append("Bosses: " + std::to_string(_bossesStatus.bossesCompleted) + "/"
+            + std::to_string(_options.bossesGoal));
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
     
@@ -501,6 +517,11 @@ void DisplayManager::DisplayItemsUnlocked()
             buffer.append(" " + std::to_string(_missionStatus.sonicMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.sonicMissionsTotal));
         }
+        if (_unlockStatus.sonicUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.sonicBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.sonicBossesTotal));
+        }
 
         SetDebugFontColor(this->_sonicColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -518,6 +539,11 @@ void DisplayManager::DisplayItemsUnlocked()
         {
             buffer.append(" " + std::to_string(_missionStatus.sonicMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.sonicMissionsTotal));
+        }
+        if (!_unlockStatus.sonicUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.sonicBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.sonicBossesTotal));
         }
 
         SetDebugFontColor(this->_sonicColor & 0x00FFFFFF | 0x66000000);
@@ -541,6 +567,11 @@ void DisplayManager::DisplayItemsUnlocked()
             buffer.append(" " + std::to_string(_missionStatus.tailsMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.tailsMissionsTotal));
         }
+        if (_unlockStatus.tailsUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.tailsBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.tailsBossesTotal));
+        }
         SetDebugFontColor(this->_tailsColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
@@ -556,6 +587,11 @@ void DisplayManager::DisplayItemsUnlocked()
         {
             buffer.append(" " + std::to_string(_missionStatus.tailsMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.tailsMissionsTotal));
+        }
+        if (!_unlockStatus.tailsUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.tailsBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.tailsBossesTotal));
         }
         SetDebugFontColor(this->_tailsColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -578,6 +614,11 @@ void DisplayManager::DisplayItemsUnlocked()
             buffer.append(" " + std::to_string(_missionStatus.knucklesMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.knucklesMissionsTotal));
         }
+        if (_unlockStatus.knucklesUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.knucklesBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.knucklesBossesTotal));
+        }
         SetDebugFontColor(this->_knucklesColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
@@ -593,6 +634,11 @@ void DisplayManager::DisplayItemsUnlocked()
         {
             buffer.append(" " + std::to_string(_missionStatus.knucklesMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.knucklesMissionsTotal));
+        }
+        if (!_unlockStatus.knucklesUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.knucklesBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.knucklesBossesTotal));
         }
         SetDebugFontColor(this->_knucklesColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -615,6 +661,11 @@ void DisplayManager::DisplayItemsUnlocked()
             buffer.append(" " + std::to_string(_missionStatus.amyMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.amyMissionsTotal));
         }
+        if (_unlockStatus.amyUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.amyBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.amyBossesTotal));
+        }
         SetDebugFontColor(this->_amyColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
@@ -630,6 +681,11 @@ void DisplayManager::DisplayItemsUnlocked()
         {
             buffer.append(" " + std::to_string(_missionStatus.amyMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.amyMissionsTotal));
+        }
+        if (!_unlockStatus.amyUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.amyBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.amyBossesTotal));
         }
         SetDebugFontColor(this->_amyColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -653,6 +709,11 @@ void DisplayManager::DisplayItemsUnlocked()
             buffer.append(" " + std::to_string(_missionStatus.bigMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.bigMissionsTotal));
         }
+        if (_unlockStatus.bigUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.bigBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.bigBossesTotal));
+        }
         SetDebugFontColor(this->_bigColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
@@ -669,6 +730,11 @@ void DisplayManager::DisplayItemsUnlocked()
         {
             buffer.append(" " + std::to_string(_missionStatus.bigMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.bigMissionsTotal));
+        }
+        if (!_unlockStatus.bigUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.bigBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.bigBossesTotal));
         }
         SetDebugFontColor(this->_bigColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -690,6 +756,11 @@ void DisplayManager::DisplayItemsUnlocked()
             buffer.append(" " + std::to_string(_missionStatus.gammaMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.gammaMissionsTotal));
         }
+        if (_unlockStatus.gammaUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.gammaBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.gammaBossesTotal));
+        }
         SetDebugFontColor(this->_gammaColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
@@ -705,6 +776,11 @@ void DisplayManager::DisplayItemsUnlocked()
         {
             buffer.append(" " + std::to_string(_missionStatus.gammaMissionsCompleted)
                 + "/" + std::to_string(_missionStatus.gammaMissionsTotal));
+        }
+        if (!_unlockStatus.gammaUnlocked && _options.bossChecks && _options.goalRequiresBosses)
+        {
+            buffer.append(" " + std::to_string(_bossesStatus.gammaBossesCompleted)
+                + "/" + std::to_string(_bossesStatus.gammaBossesTotal));
         }
         SetDebugFontColor(this->_gammaColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());

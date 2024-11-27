@@ -35,6 +35,15 @@ void Randomizer::OnCheckFound(const int checkId) const
             && AreLastStoryRequirementsCompleted())
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
+    if (check.type == LocationBossFight && _options.goalRequiresBosses)
+    {
+        const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
+        _displayManager.UpdateBossesStatus(bossesStatus);
+        _displayManager.ShowGoalStatus();
+        if (_options.bossesGoal == bossesStatus.bossesCompleted
+            && AreLastStoryRequirementsCompleted())
+            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+    }
 }
 
 void Randomizer::MarkCheckedLocation(const int64_t checkId) const
@@ -44,6 +53,8 @@ void Randomizer::MarkCheckedLocation(const int64_t checkId) const
     _displayManager.UpdateLevelStatus(levelStatus);
     const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
     _displayManager.UpdateMissionStatus(missionStatus);
+    const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
+    _displayManager.UpdateBossesStatus(bossesStatus);
 }
 
 
@@ -738,7 +749,8 @@ bool Randomizer::AreLastStoryRequirementsCompleted() const
     bool emblemsCompleted = true;
     bool chaosEmeraldsCompleted = true;
     bool missionsCompleted = true;
-    
+    bool bossesCompleted = true;
+
     if (_options.goalRequiresLevels)
         levelsCompleted = _locationRepository.GetLevelStatus(_options).levelsCompleted >= _options.levelGoal;
 
@@ -751,7 +763,10 @@ bool Randomizer::AreLastStoryRequirementsCompleted() const
     if (_options.goalRequiresChaosEmeralds)
         chaosEmeraldsCompleted = _itemRepository.GetUnlockStatus().GotAllChaosEmeralds();
 
-    return levelsCompleted && emblemsCompleted && chaosEmeraldsCompleted && missionsCompleted;
+    if (_options.goalRequiresBosses)
+        bossesCompleted = _locationRepository.GetBossesStatus(_options).bossesCompleted >= _options.bossesGoal;
+
+    return levelsCompleted && emblemsCompleted && chaosEmeraldsCompleted && missionsCompleted && bossesCompleted;
 }
 
 
@@ -922,6 +937,9 @@ void Randomizer::OnGoalRequiresLevelsSet(const bool goalRequiresLevels)
 
     const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
     _displayManager.UpdateLevelStatus(levelStatus);
+
+    if (!_options.goalRequiresChaosEmeralds)
+        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
 }
 
 void Randomizer::OnGoalRequiresChaosEmeraldsSet(const bool goalRequiresChaosEmeralds)
@@ -936,7 +954,9 @@ void Randomizer::OnGoalRequiresEmblems(const bool goalRequiresEmblems)
     _options.goalRequiresEmblems = goalRequiresEmblems;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
-    SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
+
+    if (!_options.goalRequiresChaosEmeralds)
+        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
 }
 
 void Randomizer::OnGoalRequiresMissionsSet(const bool goalRequiresMissions)
@@ -946,6 +966,22 @@ void Randomizer::OnGoalRequiresMissionsSet(const bool goalRequiresMissions)
     _displayManager.UpdateOptions(_options);
     const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
     _displayManager.UpdateMissionStatus(missionStatus);
+
+    if (!_options.goalRequiresChaosEmeralds)
+        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
+}
+
+void Randomizer::OnGoalRequiresBossesSet(const bool goalRequiresBosses)
+{
+    _options.goalRequiresBosses = goalRequiresBosses;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+
+    const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
+    _displayManager.UpdateBossesStatus(bossesStatus);
+
+    if (!_options.goalRequiresChaosEmeralds)
+        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
 }
 
 
@@ -956,16 +992,23 @@ void Randomizer::OnEmblemGoalSet(const int emblemGoal)
     _displayManager.UpdateOptions(_options);
 }
 
-void Randomizer::OnLevelGoalSet(int levelGoal)
+void Randomizer::OnLevelGoalSet(const int levelGoal)
 {
     _options.levelGoal = max(1, levelGoal);
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
 
-void Randomizer::OnMissionGoalSet(int missionGoal)
+void Randomizer::OnMissionGoalSet(const int missionGoal)
 {
     _options.missionGoal = max(1, missionGoal);
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::OnBossesGoalSet(const int bossesGoal)
+{
+    _options.bossesGoal = max(1, bossesGoal);
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
@@ -1060,16 +1103,31 @@ void Randomizer::SetBossChecks(const bool bossChecks)
 void Randomizer::SetUnifyChaos4(const bool unifyChaos4)
 {
     _options.unifyChaos4 = unifyChaos4;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+    
+    const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
+    _displayManager.UpdateBossesStatus(bossesStatus);
 }
 
 void Randomizer::SetUnifyChaos6(const bool unifyChaos6)
 {
     _options.unifyChaos6 = unifyChaos6;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+    
+    const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
+    _displayManager.UpdateBossesStatus(bossesStatus);
 }
 
 void Randomizer::SetUnifyEggHornet(const bool unifyEggHornet)
 {
     _options.unifyEggHornet = unifyEggHornet;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+    
+    const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
+    _displayManager.UpdateBossesStatus(bossesStatus);
 }
 
 Options Randomizer::GetOptions() const

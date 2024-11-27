@@ -37,10 +37,10 @@ public:
     void OnGameCompleted();
     void ShowStatusInformation(std::string information);
     void QueueNewMessage(std::string information);
-    void OnGoalSet(Goal goal);
     void OnEmblemGoalSet(int emblemGoal);
     void OnLevelGoalSet(int levelGoal);
     void OnMissionGoalSet(int missionGoal);
+    void OnBossesGoalSet(int bossesGoal);
     void SetCharacterStatingArea(Characters characters, StartingArea startingArea);
     void SetPlayableCharacter(Characters character, bool playable);
     void SetActionStageMissions(Characters characters, int missions);
@@ -87,6 +87,7 @@ public:
     void OnGoalRequiresChaosEmeraldsSet(bool goalRequiresChaosEmeralds);
     void OnGoalRequiresEmblems(bool goalRequiresEmblems);
     void OnGoalRequiresMissionsSet(bool goalRequiresMissions);
+    void OnGoalRequiresBossesSet(bool goalRequiresBosses);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;
