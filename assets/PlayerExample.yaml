@@ -60,6 +60,8 @@ Sonic Adventure DX:
   random_starting_location_per_character: 'true'
   # Ensures access to a level from the start, even if it means giving you an item.
   guaranteed_level: 'false'
+  # Ensures at least this many checks in your starting location if possible.
+  guaranteed_starting_checks: 2
   # Randomizes the entrances to action stages.
   # This means that the entrance to an action stage could be different from the original game.
   # If a given entrance is closed (e.g., doors not opening), it indicates that the level behind that entrance is not accessible.

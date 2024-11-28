@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - All 3 secret chao eggs are now location checks. You have to bring them to the chao garden to get the check.
 - Chao stats multiplier in the mod's settings (default is 1, up to 50).
 - The goal setting is now separated into multiple goal requirements (levels, emblems, chaos emeralds, and missions).
+- Setting to guarantee a number of checks in the starting location.
 
 ### Changed
 
