@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file.
     - If the goal contains levels and there are no levels in the settings, they will be enabled with a warning message.
     - If the goal contains missions and the missions are disabled in the settings, they will be enabled with a warning
       message.
-- Changed example yaml accessibility setting to 0.
+- Changed example yaml accessibility setting to Locations (0).
 
 ### Fixed
 
