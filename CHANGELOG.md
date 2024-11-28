@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
     - If the goal contains missions and the missions are disabled in the settings, they will be enabled with a warning
       message.
 - Changed example yaml accessibility setting to Locations (0).
+- Removed extra collision from city hall in the DC conversion to allow Sonic to do the same skip as in DX.
 
 ### Fixed
 
