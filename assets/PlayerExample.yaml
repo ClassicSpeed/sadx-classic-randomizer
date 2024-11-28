@@ -19,7 +19,7 @@ Sonic Adventure DX:
   # - **Locations (0):** ensure everything can be reached and acquired.
   # - **Items (1):** ensure all logically relevant items can be acquired.
   # - **Minimal (2):** ensure what is needed to reach your goal can be acquired.
-  accessibility: 1
+  accessibility: 0
   
   # When you die, everyone dies. Of course the reverse is true too.
   death_link: 'false'
