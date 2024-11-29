@@ -56,12 +56,15 @@ void ArchipelagoManager::OnFrame()
 }
 
 
-void ArchipelagoManager::SetServerConfiguration(const std::string& serverIP, const std::string& playerNameConfig,
-                                                const std::string& serverPassword)
+void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
+                                                const std::string& serverPassword, const LinkOverride newDeathLinkOverride,
+                                                const LinkOverride newRingLinkOverride)
 {
-    this->_serverIP = serverIP;
-    this->playerName = playerNameConfig;
+    this->_serverIP = serverIp;
+    this->playerName = newPlayerName;
     this->_serverPassword = serverPassword;
+    this->deathLinkOverride = newDeathLinkOverride;
+    this->ringLinkOverride = newRingLinkOverride;
 }
 
 
@@ -144,18 +147,22 @@ void SADX_GoalRequiresLevels(const int goalRequiresLevels)
 {
     randomizerPtr->OnGoalRequiresLevelsSet(goalRequiresLevels);
 }
+
 void SADX_GoalRequiresChaosEmeralds(const int goalRequiresChaosEmeralds)
 {
     randomizerPtr->OnGoalRequiresChaosEmeraldsSet(goalRequiresChaosEmeralds);
 }
+
 void SADX_GoalRequiresEmblems(const int goalRequiresEmblems)
 {
     randomizerPtr->OnGoalRequiresEmblems(goalRequiresEmblems);
 }
+
 void SADX_GoalRequiresMissions(const int goalRequiresMissions)
 {
     randomizerPtr->OnGoalRequiresMissionsSet(goalRequiresMissions);
 }
+
 void SADX_GoalRequiresBosses(const int goalRequiresBosses)
 {
     randomizerPtr->OnGoalRequiresBossesSet(goalRequiresBosses);
@@ -181,6 +188,7 @@ void SADX_MissionForPerfectChaos(const int missionGoal)
 {
     randomizerPtr->OnMissionGoalSet(missionGoal);
 }
+
 void SADX_BossesForPerfectChaos(const int bossesGoal)
 {
     randomizerPtr->OnBossesGoalSet(bossesGoal);
@@ -307,8 +315,14 @@ void SADX_SetEntranceRandomizer(const int enableEntranceRandomizer)
 
 void SADX_SetDeathLink(const int deathLinkActive)
 {
-    randomizerPtr->SetDeathLink(deathLinkActive);
+    if (archipelagoManagerPtr->deathLinkOverride == ForceEnabled)
+        randomizerPtr->SetDeathLink(true);
+    else if (archipelagoManagerPtr->deathLinkOverride == ForceDisabled)
+        randomizerPtr->SetDeathLink(false);
+    else
+        randomizerPtr->SetDeathLink(deathLinkActive);
 }
+
 void SADX_SendDeathLinkChance(const int sendDeathLinkChance)
 {
     randomizerPtr->SetSendDeathLinkChance(sendDeathLinkChance);
@@ -322,7 +336,12 @@ void SADX_ReceiveDeathLinkChance(const int receiveDeathLinkChance)
 
 void SADX_SetRingLink(const int ringLinkActive)
 {
-    randomizerPtr->SetRingLink(ringLinkActive);
+    if (archipelagoManagerPtr->ringLinkOverride == ForceEnabled)
+        randomizerPtr->SetRingLink(true);
+    else if (archipelagoManagerPtr->ringLinkOverride == ForceDisabled)
+        randomizerPtr->SetRingLink(false);
+    else
+        randomizerPtr->SetRingLink(ringLinkActive);
 }
 
 void SADX_SetCasinopolisRingLink(const int casinopolisRingLink)
@@ -494,7 +513,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
     AP_RegisterSlotDataIntCallback("SendDeathLinkChance", &SADX_SendDeathLinkChance);
     AP_RegisterSlotDataIntCallback("ReceiveDeathLinkChance", &SADX_ReceiveDeathLinkChance);
-    
+
     AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);
     AP_RegisterSlotDataIntCallback("CasinopolisRingLink", &SADX_SetCasinopolisRingLink);
     AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);

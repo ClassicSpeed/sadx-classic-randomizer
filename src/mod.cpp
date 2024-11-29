@@ -136,7 +136,12 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
     const std::string playerName = settingsIni->getString("AP", "PlayerName");
     const std::string serverPassword = settingsIni->getString("AP", "Password");
 
-    archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword);
+    const int deathLinkOverride = settingsIni->getInt("AP", "DeathLinkOverride", 0);
+    const int ringLinkOverride = settingsIni->getInt("AP", "RingLinkOverride", 0);
+
+    archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword,
+                                              static_cast<LinkOverride>(deathLinkOverride),
+                                              static_cast<LinkOverride>(ringLinkOverride));
 }
 
 void LoadDisplayMessageSettings(const IniFile* settingsIni)

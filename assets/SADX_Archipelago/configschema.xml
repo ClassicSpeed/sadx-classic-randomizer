@@ -12,6 +12,12 @@
             <Property name="Password" type="string" defaultvalue="" display="Server Password">
                 <HelpText>Enter the Password for the Multiworld Host</HelpText>
             </Property>
+            <Property name="DeathLinkOverride" type="DeathLinkIndex" defaultvalue="0" display="Death Link Override">
+                <HelpText>You can override the Death Link setting from the yaml.</HelpText>
+            </Property>
+            <Property name="RingLinkOverride" type="DeathLinkIndex" defaultvalue="0" display="Ring Link Override">
+                <HelpText>You can override the Ring Link setting from the yaml.</HelpText>
+            </Property>
         </Group>
         <Group name="Messages" display="Messages Settings">
             <Property name="MessageDisplayDuration" type="float" defaultvalue="5" minvalue="3" maxvalue="15"
@@ -110,6 +116,13 @@
             </Property>
         </Group>
     </Groups>
+    <Enums>
+        <Enum name="DeathLinkIndex">
+            <EnumMember name="0" display="Default"/>
+            <EnumMember name="1" display="Force Enabled"/>
+            <EnumMember name="2" display="Force Disabled"/>
+        </Enum>
+    </Enums>
     <Enums>
         <Enum name="CharacterVoiceIndex">
             <EnumMember name="-1" display="Random"/>
