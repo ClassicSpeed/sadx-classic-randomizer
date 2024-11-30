@@ -152,6 +152,11 @@ Sonic Adventure DX:
   field_emblems_checks: 'true'
   # Determines whether getting the 3 secret chao eggs grants checks (3 Locations).
   chao_egg_checks: 'true'
+  # Determines whether winning the chao races grants checks (5 Locations).
+  chao_races_checks: 'false'
+  # Percentage of the available levels accessible for the chao races to be in logic.
+  # Higher values means races are required later in the game.
+  chao_races_levels_to_access_percentage: 100
   # Determines whether completing missions grants checks (60 Locations).
   mission_mode_checks: 'false'
   # Determines whether missions will start already activated.

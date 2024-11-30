@@ -253,6 +253,13 @@ LocationRepository::LocationRepository()
         {901, LocationData::ChaoEggLocation(FLAG_GET_SILVEREGG, "Silver Chao Egg")},
         {902, LocationData::ChaoEggLocation(FLAG_GET_BLACKEGG, "Black Chao Egg")},
 
+        {905, LocationData::ChaoRaceLocation(106, "Pearl Course")},
+        {906, LocationData::ChaoRaceLocation(107, "Amethyst Course")},
+        {907, LocationData::ChaoRaceLocation(108, "Sapphire Course")},
+        {908, LocationData::ChaoRaceLocation(109, "Ruby Course")},
+        {909, LocationData::ChaoRaceLocation(110, "Emerald Course")},
+        
+
     };
 
     _lifeCapsules = {
