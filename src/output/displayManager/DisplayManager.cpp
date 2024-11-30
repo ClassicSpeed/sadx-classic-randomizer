@@ -66,6 +66,11 @@ void DisplayManager::UpdateBossesStatus(BossesStatus bossesStatus)
     this->_bossesStatus = bossesStatus;
 }
 
+void DisplayManager::UpdateChaoStatus(const ChaoStatus chaoStatus)
+{
+    this->_chaoStatus = chaoStatus;
+}
+
 void DisplayManager::UpdateVisitedLevels(VisitedLevels visitedLevels)
 {
     this->_visitedLevels = visitedLevels;
@@ -204,7 +209,11 @@ void DisplayManager::DisplayGoalStatus()
 
     if (_options.goalRequiresBosses)
         buffer.append(" Bosses: " + std::to_string(_bossesStatus.bossesCompleted) + "/"
-            + std::to_string(_options.bossesGoal));
+        + std::to_string(_options.bossesGoal));
+    
+    if (_options.goalRequiresChaoRaces)
+        buffer.append(" Races: " + std::to_string(_chaoStatus.racesCompleted) + "/"
+            + std::to_string(_chaoStatus.racesTotal));
 
     DisplayDebugString(
         NJM_LOCATION(2, this->_startLine - 1), buffer.c_str());
@@ -353,6 +362,14 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.clear();
         buffer.append("Bosses:   " + std::to_string(_bossesStatus.bossesCompleted) + "/"
             + std::to_string(_options.bossesGoal));
+        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    }
+    if (_options.goalRequiresChaoRaces)
+    {
+        displayOffset++;
+        buffer.clear();
+        buffer.append("Races:    " + std::to_string(_chaoStatus.racesCompleted) + "/"
+            + std::to_string(_chaoStatus.racesTotal));
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 

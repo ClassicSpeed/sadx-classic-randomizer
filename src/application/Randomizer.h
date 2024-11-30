@@ -88,6 +88,7 @@ public:
     void OnGoalRequiresEmblems(bool goalRequiresEmblems);
     void OnGoalRequiresMissionsSet(bool goalRequiresMissions);
     void OnGoalRequiresBossesSet(bool goalRequiresBosses);
+    void OnGoalRequiresChaoRacesSet(bool goalRequiresChaoRaces);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;

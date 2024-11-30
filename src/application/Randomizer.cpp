@@ -44,6 +44,15 @@ void Randomizer::OnCheckFound(const int checkId) const
             && AreLastStoryRequirementsCompleted())
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
+    PrintDebug("Check found: %s, and type: %d\n", check.displayName.c_str(), check.type);
+    if (check.type == LocationChaoRace && _options.goalRequiresChaoRaces)
+    {
+        const ChaoStatus chaoStatus = _locationRepository.GetChaoStatus();
+        _displayManager.UpdateChaoStatus(chaoStatus);
+        _displayManager.ShowGoalStatus();
+        if (chaoStatus.racesTotal >= chaoStatus.racesCompleted && AreLastStoryRequirementsCompleted())
+            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+    }
 }
 
 void Randomizer::MarkCheckedLocation(const int64_t checkId) const
@@ -55,6 +64,8 @@ void Randomizer::MarkCheckedLocation(const int64_t checkId) const
     _displayManager.UpdateMissionStatus(missionStatus);
     const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
     _displayManager.UpdateBossesStatus(bossesStatus);
+    const ChaoStatus chaoStatus = _locationRepository.GetChaoStatus();
+    _displayManager.UpdateChaoStatus(chaoStatus);
 }
 
 
@@ -750,6 +761,7 @@ bool Randomizer::AreLastStoryRequirementsCompleted() const
     bool chaosEmeraldsCompleted = true;
     bool missionsCompleted = true;
     bool bossesCompleted = true;
+    bool chaoRacesCompleted = true;
 
     if (_options.goalRequiresLevels)
         levelsCompleted = _locationRepository.GetLevelStatus(_options).levelsCompleted >= _options.levelGoal;
@@ -766,7 +778,12 @@ bool Randomizer::AreLastStoryRequirementsCompleted() const
     if (_options.goalRequiresBosses)
         bossesCompleted = _locationRepository.GetBossesStatus(_options).bossesCompleted >= _options.bossesGoal;
 
-    return levelsCompleted && emblemsCompleted && chaosEmeraldsCompleted && missionsCompleted && bossesCompleted;
+    if (_options.goalRequiresChaoRaces)
+        chaoRacesCompleted = _locationRepository.GetChaoStatus().racesCompleted >= _locationRepository.GetChaoStatus().
+            racesTotal;
+
+    return levelsCompleted && emblemsCompleted && chaosEmeraldsCompleted && missionsCompleted && bossesCompleted &&
+        chaoRacesCompleted;
 }
 
 
@@ -984,6 +1001,19 @@ void Randomizer::OnGoalRequiresBossesSet(const bool goalRequiresBosses)
         SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
 }
 
+void Randomizer::OnGoalRequiresChaoRacesSet(const bool goalRequiresChaoRaces)
+{
+    _options.goalRequiresChaoRaces = goalRequiresChaoRaces;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+
+    const ChaoStatus chaoStatus = _locationRepository.GetChaoStatus();
+    _displayManager.UpdateChaoStatus(chaoStatus);
+
+    if (!_options.goalRequiresChaosEmeralds)
+        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
+}
+
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
 {
@@ -1105,7 +1135,7 @@ void Randomizer::SetUnifyChaos4(const bool unifyChaos4)
     _options.unifyChaos4 = unifyChaos4;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
-    
+
     const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
     _displayManager.UpdateBossesStatus(bossesStatus);
 }
@@ -1115,7 +1145,7 @@ void Randomizer::SetUnifyChaos6(const bool unifyChaos6)
     _options.unifyChaos6 = unifyChaos6;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
-    
+
     const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
     _displayManager.UpdateBossesStatus(bossesStatus);
 }
@@ -1125,7 +1155,7 @@ void Randomizer::SetUnifyEggHornet(const bool unifyEggHornet)
     _options.unifyEggHornet = unifyEggHornet;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
-    
+
     const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
     _displayManager.UpdateBossesStatus(bossesStatus);
 }

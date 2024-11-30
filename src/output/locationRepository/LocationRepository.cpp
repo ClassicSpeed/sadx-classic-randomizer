@@ -729,3 +729,20 @@ BossesStatus LocationRepository::GetBossesStatus(const Options& options)
     
     return bossesStatus;
 }
+
+ChaoStatus LocationRepository::GetChaoStatus()
+{
+    auto chaoStatus = ChaoStatus();
+    if(_checkData[905].checked)
+        chaoStatus.racesCompleted++;
+    if(_checkData[906].checked)
+        chaoStatus.racesCompleted++;
+    if(_checkData[907].checked)
+        chaoStatus.racesCompleted++;
+    if(_checkData[908].checked)
+        chaoStatus.racesCompleted++;
+    if(_checkData[909].checked)
+        chaoStatus.racesCompleted++;
+    
+    return chaoStatus;
+}

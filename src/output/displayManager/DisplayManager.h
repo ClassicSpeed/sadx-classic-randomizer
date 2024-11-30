@@ -7,9 +7,11 @@
 #include "../../application/structs/LevelStatus.h"
 #include "../../application/structs/MissionStatus.h"
 #include "../../application/structs/BossesStatus.h"
+#include "../../application/structs/ChaoStatus.h"
 #include "../../application/structs/VisitedLevels.h"
 #include "../../application/structs/Options.h"
 #include "../../application/structs/LocationData.h"
+
 
 struct LocationData;
 
@@ -23,6 +25,7 @@ public:
     void UpdateLevelStatus(LevelStatus levelStatus);
     void UpdateMissionStatus(MissionStatus missionStatus);
     void UpdateBossesStatus(BossesStatus bossesStatus);
+    void UpdateChaoStatus(ChaoStatus chaoStatus);
     void UpdateVisitedLevels(VisitedLevels visitedLevels);
     void UpdateOptions(Options options);
     void OnFrame();
@@ -68,6 +71,7 @@ private:
     LevelStatus _levelStatus;
     MissionStatus _missionStatus;
     BossesStatus _bossesStatus;
+    ChaoStatus _chaoStatus;
     VisitedLevels _visitedLevels;
     Options _options;
 
@@ -92,5 +96,4 @@ private:
 
 
     mutable std::map<int, LocationData> _checkData;
-    
 };

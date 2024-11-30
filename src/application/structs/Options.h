@@ -56,6 +56,7 @@ struct Options
     bool goalRequiresChaosEmeralds = false;
     bool goalRequiresMissions = false;
     bool goalRequiresBosses = false;
+    bool goalRequiresChaoRaces = false;
     int emblemGoal = -1;
     int levelGoal = -1;
     int missionGoal = -1;

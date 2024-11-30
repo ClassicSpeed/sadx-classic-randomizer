@@ -49,6 +49,8 @@ Sonic Adventure DX:
   mission_percentage: 100
   # If enabled, you have to beat all the bosses to unlock the last fight.
   goal_requires_bosses: 'false'
+  # If enabled, you have to beat all the chao races to unlock the last fight.
+  goal_requires_chao_races: 'false'
   # Determines the logic the randomizer will use.
   # Normal Logic (0): Very forgiving, ideal if you are not used to this game or its location checks.
   # Hard Logic (1): Less forgiving logic, some checks require performing spindash jumps or dying to get the check.

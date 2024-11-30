@@ -167,6 +167,10 @@ void SADX_GoalRequiresBosses(const int goalRequiresBosses)
 {
     randomizerPtr->OnGoalRequiresBossesSet(goalRequiresBosses);
 }
+void SADX_GoalRequiresChaoRaces(const int goalRequiresChaoRaces)
+{
+    randomizerPtr->OnGoalRequiresChaoRacesSet(goalRequiresChaoRaces);
+}
 
 
 void SADX_CompareModVersion(const int version)
@@ -480,6 +484,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("GoalRequiresEmblems", &SADX_GoalRequiresEmblems);
     AP_RegisterSlotDataIntCallback("GoalRequiresMissions", &SADX_GoalRequiresMissions);
     AP_RegisterSlotDataIntCallback("GoalRequiresBosses", &SADX_GoalRequiresBosses);
+    AP_RegisterSlotDataIntCallback("GoalRequiresChaoRaces", &SADX_GoalRequiresChaoRaces);
     AP_RegisterSlotDataIntCallback("ModVersion", &SADX_CompareModVersion);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("LevelForPerfectChaos", &SADX_LevelForPerfectChaos);
