@@ -249,6 +249,16 @@ LocationRepository::LocationRepository()
         {859, LocationData::MissionLocation(Characters_Knuckles, 59)},
         {860, LocationData::MissionLocation(Characters_Big, 60)},
 
+        {900, LocationData::ChaoEggLocation(FLAG_GET_GOLDEGG, "Gold Chao Egg")},
+        {901, LocationData::ChaoEggLocation(FLAG_GET_SILVEREGG, "Silver Chao Egg")},
+        {902, LocationData::ChaoEggLocation(FLAG_GET_BLACKEGG, "Black Chao Egg")},
+
+        {905, LocationData::ChaoRaceLocation(106, "Pearl Course")},
+        {906, LocationData::ChaoRaceLocation(107, "Amethyst Course")},
+        {907, LocationData::ChaoRaceLocation(108, "Sapphire Course")},
+        {908, LocationData::ChaoRaceLocation(109, "Ruby Course")},
+        {909, LocationData::ChaoRaceLocation(110, "Emerald Course")},
+        
 
     };
 
@@ -539,9 +549,9 @@ MissionStatus LocationRepository::GetMissionStatus(Options options)
     auto vector = options.missionBlacklist;
     for (int index = 801; index <= 860; index++)
     {
-        if(std::find(vector.begin(), vector.end(), _checkData[index].missionNumber)!=vector.end())
+        if (std::find(vector.begin(), vector.end(), _checkData[index].missionNumber) != vector.end())
             continue;
-        
+
         if (_checkData[index].character == Characters_Sonic)
         {
             missionStatus.sonicMissionsTotal++;
@@ -582,4 +592,157 @@ MissionStatus LocationRepository::GetMissionStatus(Options options)
             missionStatus.missionsCompleted++;
     }
     return missionStatus;
+}
+
+
+BossesStatus LocationRepository::GetBossesStatus(const Options& options)
+{
+    auto bossesStatus = BossesStatus();
+    //Chaos 0
+    if (_checkData[700].checked)
+    {
+        bossesStatus.sonicBossesCompleted++;
+        bossesStatus.bossesCompleted++;
+    }
+    //Chaos 2
+    if (_checkData[710].checked)
+    {
+        bossesStatus.knucklesBossesCompleted++;
+        bossesStatus.bossesCompleted++;
+    }
+    //Egg Walker
+    if (_checkData[720].checked)
+    {
+        bossesStatus.tailsBossesCompleted++;
+        bossesStatus.bossesCompleted++;
+    }
+    //Egg Hornet 
+    if (options.unifyEggHornet)
+    {
+        if (_checkData[739].checked)
+        {
+            bossesStatus.sonicBossesCompleted++;
+            bossesStatus.tailsBossesCompleted++;
+            bossesStatus.bossesCompleted++;
+        }
+    }
+    else
+    {
+        if (_checkData[730].checked)
+        {
+            bossesStatus.sonicBossesCompleted++;
+            bossesStatus.bossesCompleted++;
+        }
+        if (_checkData[731].checked)
+        {
+            bossesStatus.tailsBossesCompleted++;
+            bossesStatus.bossesCompleted++;
+        }
+    }
+
+    //Chaos 4 
+    if (options.unifyChaos4)
+    {
+        if (_checkData[749].checked)
+        {
+            bossesStatus.sonicBossesCompleted++;
+            bossesStatus.tailsBossesCompleted++;
+            bossesStatus.knucklesBossesCompleted++;
+            bossesStatus.bossesCompleted++;
+        }
+    }
+    else
+    {
+        if (_checkData[740].checked)
+        {
+            bossesStatus.sonicBossesCompleted++;
+            bossesStatus.bossesCompleted++;
+        }
+        if (_checkData[741].checked)
+        {
+            bossesStatus.tailsBossesCompleted++;
+            bossesStatus.bossesCompleted++;
+        }
+        if (_checkData[742].checked)
+        {
+            bossesStatus.knucklesBossesCompleted++;
+            bossesStatus.bossesCompleted++;
+        }
+    }
+    //Egg Viper
+    if (_checkData[750].checked)
+    {
+        bossesStatus.sonicBossesCompleted++;
+        bossesStatus.bossesCompleted++;
+    }
+    //Beta
+    if (_checkData[760].checked)
+    {
+        bossesStatus.gammaBossesCompleted++;
+        bossesStatus.bossesCompleted++;
+    }
+
+    //Chaos 6 
+    if (options.unifyChaos6)
+    {
+        if (_checkData[779].checked)
+        {
+            bossesStatus.sonicBossesCompleted++;
+            bossesStatus.knucklesBossesCompleted++;
+            bossesStatus.bigBossesCompleted++;
+            bossesStatus.bossesCompleted++;
+        }
+    }
+    else
+    {
+        if (_checkData[770].checked)
+        {
+            bossesStatus.sonicBossesCompleted++;
+            bossesStatus.bossesCompleted++;
+        }
+
+        if (_checkData[771].checked)
+        {
+            bossesStatus.knucklesBossesCompleted++;
+            bossesStatus.bossesCompleted++;
+        }
+
+        if (_checkData[772].checked)
+        {
+            bossesStatus.bigBossesCompleted++;
+            bossesStatus.bossesCompleted++;
+        }
+    }
+    //Beta 2
+    if (_checkData[780].checked)
+    {
+        bossesStatus.gammaBossesCompleted++;
+        bossesStatus.bossesCompleted++;
+    }
+
+    //Zero
+    if (_checkData[790].checked)
+    {
+        bossesStatus.amyBossesCompleted++;
+        bossesStatus.bossesCompleted++;
+    }
+    
+    return bossesStatus;
+}
+
+ChaoStatus LocationRepository::GetChaoStatus()
+{
+    auto chaoStatus = ChaoStatus();
+    if(_checkData[905].checked)
+        chaoStatus.racesCompleted++;
+    if(_checkData[906].checked)
+        chaoStatus.racesCompleted++;
+    if(_checkData[907].checked)
+        chaoStatus.racesCompleted++;
+    if(_checkData[908].checked)
+        chaoStatus.racesCompleted++;
+    if(_checkData[909].checked)
+        chaoStatus.racesCompleted++;
+    
+    return chaoStatus;
 }

@@ -11,6 +11,13 @@ enum ConnectionStatus
     BadSaveFile,
 };
 
+enum LinkOverride
+{
+    Default = 0,
+    ForceEnabled = 1,
+    ForceDisabled = 2,
+};
+
 class ArchipelagoManager
 {
 public:
@@ -21,12 +28,15 @@ public:
     void OnFrame();
     bool IsWaitingForSaveFile();
     void OnSaveFileLoaded();
-    void SetServerConfiguration(const std::string& serverIP, const std::string& playerName,
-                                const std::string& serverPassword);
+    void SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
+                                const std::string& serverPassword, LinkOverride newDeathLinkOverride,
+                                LinkOverride newRingLinkOverride);
 
     std::string playerName;
     int instanceId = 0;
     int64_t baseId;
+    LinkOverride deathLinkOverride;
+    LinkOverride ringLinkOverride;
 
 private:
     void ManageMessages();
@@ -43,5 +53,4 @@ private:
 
     const float _suggestChangingConfigWaitTime = 2.5f;
     std::clock_t _connectedAt = -1;
-
 };

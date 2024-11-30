@@ -21,6 +21,7 @@ public:
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
     VisitedLevels GetVisitedLevels(int visitedLevel);
     void SetEggCarrierTransformationCutscene(bool eggCarrierTransformation);
+    void SetChaoStatsMultiplier(int chaoStatsMultiplier);
     Options options;
     UnlockStatus unlockStatus;
     bool eggCarrierTransformationCutscene = true;

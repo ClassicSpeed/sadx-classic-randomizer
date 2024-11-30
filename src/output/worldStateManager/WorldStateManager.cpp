@@ -129,6 +129,28 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
         onCollisionCube.Original(tp);
 });
 
+FunctionHook<void, task*> onCollisionCylinder(0x4D4770, [](task* tp) -> void
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
+    {
+        //We find the cylinder collision that prevent sonic from clipping into the city hall in the DC conversion
+        if (tp->twp->pos.x < 324 && tp->twp->pos.x > 320
+            && tp->twp->pos.y < -10 && tp->twp->pos.y > -20
+            && tp->twp->pos.z < 250 && tp->twp->pos.z > 240)
+            FreeTask(tp);
+    } else  if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
+    {
+        //We find the cylinder collision that prevent sonic from clipping into the city hall in the DC conversion
+        if (tp->twp->pos.x < 218 && tp->twp->pos.x > 215
+            && tp->twp->pos.y < -10 && tp->twp->pos.y > -20
+            && tp->twp->pos.z < 250 && tp->twp->pos.z > 240)
+            FreeTask(tp);
+    }
+    
+    else
+        onCollisionCube.Original(tp);
+});
+
 static void __cdecl HandleSpeedHighwayEntrance();
 static void __cdecl HandleWindyValleyEntrance();
 UsercallFuncVoid(onSceneChangeMr_t, (int a1), (a1), 0x539220, rEBX);
@@ -510,6 +532,19 @@ void WorldStateManager::SetEggCarrierTransformationCutscene(const bool eggCarrie
     this->eggCarrierTransformationCutscene = eggCarrierTransformation;
 }
 
+DataArray(int16_t, ChaoStatValues, 0x8895C8, 0x402);
+
+void WorldStateManager::SetChaoStatsMultiplier(const int chaoStatsMultiplier)
+{
+    if (chaoStatsMultiplier > 1 && chaoStatsMultiplier <= 50)
+    {
+        for (int i = 0x00; i < 0x402; i++)
+        {
+            ChaoStatValues[i] = ChaoStatValues[i] * chaoStatsMultiplier;
+        }
+    }
+}
+
 typedef struct
 {
     int x;
@@ -664,6 +699,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     //Speed Highway (City Hall)
     AddSetToLevel(CITY_HALL_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Big);
+    AddSetToLevel(CITY_HALL_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Sonic);
 
     if (worldStateManagerPtr->options.bossChecks)
     {

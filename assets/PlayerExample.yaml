@@ -19,49 +19,51 @@ Sonic Adventure DX:
   # - **Locations (0):** ensure everything can be reached and acquired.
   # - **Items (1):** ensure all logically relevant items can be acquired.
   # - **Minimal (2):** ensure what is needed to reach your goal can be acquired.
-  accessibility: 1
+  accessibility: 0
   
   # When you die, everyone dies. Of course the reverse is true too.
   death_link: 'false'
-  
   # When dying, the chance of sending a death link to another player.
   send_death_link_chance: 100
   # When receiving a death link, the chance of dying.
   receive_death_link_chance: 100
-
-  # Determines the goal of the seed.
-  # Levels (0): Complete action stages available to unlock the Perfect Chaos Fight.
-  # Emblems (1): Collect a certain number of emblems to unlock the Perfect Chaos Fight.
-  # Chaos Emerald Hunt (2): Collect all 7 Chaos Emeralds to unlock the Perfect Chaos Fight.
-  # Levels and Chaos Emerald Hunt (3): Beat action stages and collect the emeralds to fight Perfect Chaos.
-  # Emblems and Chaos Emerald Hunt (4): Collect both emblems and the emeralds to fight Perfect Chaos.
-  # Missions (5): Complete missions to unlock the Perfect Chaos Fight.
-  # Missions and Chaos Emerald Hunt (6): Complete and collect the emeralds to fight Perfect Chaos.
-  # 
+  
+  # If enabled, you have to complete action stages to unlock the last fight.
+  goal_requires_levels: 'true'
+  # If Levels are part of the goal, Percentage of the available levels that needed to be completed to unlock the final story.
+  # Minimum value is 25, maximum value is 100
+  levels_percentage: 100
+  # If enabled, you have to collect all the Chaos Emeralds to unlock the last fight.
   # Keep in mind selecting emerald hunt will require enough checks to add the 7 emeralds to the pool.
-  # Also, selecting emblems will require at least 5 checks to add the 5 emblems to the pool.
-  # Some options will fail to generate a seed if there are not enough checks to add the emeralds.
-  goal: 0
+  goal_requires_chaos_emeralds: 'false'
+  # If enabled, you have to collect a certain number of emblems to unlock the last fight.
+  # Enabling this will require at least 5 checks to add the 5 emblems to the pool.
+  goal_requires_emblems: 'false'
+  # Percentage of the available emblems needed to unlock the final story.
+  # Minimum value is 1, maximum value is 80
+  emblems_percentage: 80
+  # If enabled, you have to complete missions to unlock the last fight.
+  goal_requires_missions: 'false'
+  # If Missions are part of the goal, Percentage of the available missions that needed to be completed to unlock the final story.
+  # Minimum value is 25, maximum value is 100
+  mission_percentage: 100
+  # If enabled, you have to beat all the bosses to unlock the last fight.
+  goal_requires_bosses: 'false'
+  # If enabled, you have to beat all the chao races to unlock the last fight.
+  goal_requires_chao_races: 'false'
   # Determines the logic the randomizer will use.
   # Normal Logic (0): Very forgiving, ideal if you are not used to this game or its location checks.
   # Hard Logic (1): Less forgiving logic, some checks require performing spindash jumps or dying to get the check.
   # Expert Logic (2): The most unforgiving logic, some checks require performing out-of-bounds jumps.
   logic_level: 0
-  # Percentage of the available emblems needed to unlock the final story.
-  # Minimum value is 1, maximum value is 80
-  emblems_percentage: 80
-  # If Levels are part of the goal, Percentage of the available levels that needed to be completed to unlock the final story.
-  # Minimum value is 25, maximum value is 100
-  levels_percentage: 100
-  # If Missions are part of the goal, Percentage of the available missions that needed to be completed to unlock the final story.
-  # Minimum value is 25, maximum value is 100
-  mission_percentage: 100
   # Randomize starting location. If false, you will start at Station Square.
   random_starting_location: 'true'
   # If randomize starting location is enabled, each character will start in a random location.
   random_starting_location_per_character: 'true'
   # Ensures access to a level from the start, even if it means giving you an item.
   guaranteed_level: 'false'
+  # Ensures at least this many checks in your starting location if possible.
+  guaranteed_starting_checks: 2
   # Randomizes the entrances to action stages.
   # This means that the entrance to an action stage could be different from the original game.
   # If a given entrance is closed (e.g., doors not opening), it indicates that the level behind that entrance is not accessible.
@@ -150,6 +152,13 @@ Sonic Adventure DX:
   
   # Determines whether collecting field emblems grants checks (12 Locations).
   field_emblems_checks: 'true'
+  # Determines whether getting the 3 secret chao eggs grants checks (3 Locations).
+  chao_egg_checks: 'true'
+  # Determines whether winning the chao races grants checks (5 Locations).
+  chao_races_checks: 'false'
+  # Percentage of the available levels accessible for the chao races to be in logic.
+  # Higher values means races are required later in the game.
+  chao_races_levels_to_access_percentage: 100
   # Determines whether completing missions grants checks (60 Locations).
   mission_mode_checks: 'false'
   # Determines whether missions will start already activated.

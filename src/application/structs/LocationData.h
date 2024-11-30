@@ -12,6 +12,8 @@ enum LocationType
     LocationLifeCapsule,
     LocationBossFight,
     LocationMission,
+    LocationChaoEgg,
+    LocationChaoRace,
     LocationUnknown
 };
 
@@ -100,6 +102,21 @@ struct LocationData
         return LocationData(static_cast<StoryFlags>(0x0), character, -1, -1, -1, missionNumber, LocationMission, false,
                             "Mission " + std::to_string(missionNumber), -1);
     }
+
+
+    static LocationData ChaoEggLocation(const StoryFlags eventFlag, const std::string& displayName)
+    {
+        return LocationData(eventFlag, -1, -1, -1, -1, -1, LocationChaoEgg, false,
+                            displayName,
+                            -1);
+    }
+
+    static LocationData ChaoRaceLocation(const int emblemId, const std::string& displayName)
+    {
+        return LocationData(static_cast<StoryFlags>(0x0), -1, -1, -1, emblemId, -1, LocationChaoRace, false,
+                            displayName, -1);
+    }
+
 
     StoryFlags eventFlag;
 

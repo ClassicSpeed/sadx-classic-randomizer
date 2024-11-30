@@ -56,12 +56,15 @@ void ArchipelagoManager::OnFrame()
 }
 
 
-void ArchipelagoManager::SetServerConfiguration(const std::string& serverIP, const std::string& playerNameConfig,
-                                                const std::string& serverPassword)
+void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
+                                                const std::string& serverPassword, const LinkOverride newDeathLinkOverride,
+                                                const LinkOverride newRingLinkOverride)
 {
-    this->_serverIP = serverIP;
-    this->playerName = playerNameConfig;
+    this->_serverIP = serverIp;
+    this->playerName = newPlayerName;
     this->_serverPassword = serverPassword;
+    this->deathLinkOverride = newDeathLinkOverride;
+    this->ringLinkOverride = newRingLinkOverride;
 }
 
 
@@ -140,10 +143,35 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
     }
 }
 
-void SADX_Goal(const int goal)
+void SADX_GoalRequiresLevels(const int goalRequiresLevels)
 {
-    randomizerPtr->OnGoalSet(static_cast<Goal>(goal));
+    randomizerPtr->OnGoalRequiresLevelsSet(goalRequiresLevels);
 }
+
+void SADX_GoalRequiresChaosEmeralds(const int goalRequiresChaosEmeralds)
+{
+    randomizerPtr->OnGoalRequiresChaosEmeraldsSet(goalRequiresChaosEmeralds);
+}
+
+void SADX_GoalRequiresEmblems(const int goalRequiresEmblems)
+{
+    randomizerPtr->OnGoalRequiresEmblems(goalRequiresEmblems);
+}
+
+void SADX_GoalRequiresMissions(const int goalRequiresMissions)
+{
+    randomizerPtr->OnGoalRequiresMissionsSet(goalRequiresMissions);
+}
+
+void SADX_GoalRequiresBosses(const int goalRequiresBosses)
+{
+    randomizerPtr->OnGoalRequiresBossesSet(goalRequiresBosses);
+}
+void SADX_GoalRequiresChaoRaces(const int goalRequiresChaoRaces)
+{
+    randomizerPtr->OnGoalRequiresChaoRacesSet(goalRequiresChaoRaces);
+}
+
 
 void SADX_CompareModVersion(const int version)
 {
@@ -163,6 +191,11 @@ void SADX_LevelForPerfectChaos(const int levelGoal)
 void SADX_MissionForPerfectChaos(const int missionGoal)
 {
     randomizerPtr->OnMissionGoalSet(missionGoal);
+}
+
+void SADX_BossesForPerfectChaos(const int bossesGoal)
+{
+    randomizerPtr->OnBossesGoalSet(bossesGoal);
 }
 
 void SADX_MissionModeChecks(const int missionModeEnabled)
@@ -286,8 +319,14 @@ void SADX_SetEntranceRandomizer(const int enableEntranceRandomizer)
 
 void SADX_SetDeathLink(const int deathLinkActive)
 {
-    randomizerPtr->SetDeathLink(deathLinkActive);
+    if (archipelagoManagerPtr->deathLinkOverride == ForceEnabled)
+        randomizerPtr->SetDeathLink(true);
+    else if (archipelagoManagerPtr->deathLinkOverride == ForceDisabled)
+        randomizerPtr->SetDeathLink(false);
+    else
+        randomizerPtr->SetDeathLink(deathLinkActive);
 }
+
 void SADX_SendDeathLinkChance(const int sendDeathLinkChance)
 {
     randomizerPtr->SetSendDeathLinkChance(sendDeathLinkChance);
@@ -301,7 +340,12 @@ void SADX_ReceiveDeathLinkChance(const int receiveDeathLinkChance)
 
 void SADX_SetRingLink(const int ringLinkActive)
 {
-    randomizerPtr->SetRingLink(ringLinkActive);
+    if (archipelagoManagerPtr->ringLinkOverride == ForceEnabled)
+        randomizerPtr->SetRingLink(true);
+    else if (archipelagoManagerPtr->ringLinkOverride == ForceDisabled)
+        randomizerPtr->SetRingLink(false);
+    else
+        randomizerPtr->SetRingLink(ringLinkActive);
 }
 
 void SADX_SetCasinopolisRingLink(const int casinopolisRingLink)
@@ -435,11 +479,17 @@ void ArchipelagoManager::Connect()
     AP_SetItemRecvCallback(&SADX_RecvItem);
     AP_SetLocationCheckedCallback(&SADX_CheckLocation);
     AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
-    AP_RegisterSlotDataIntCallback("Goal", &SADX_Goal);
+    AP_RegisterSlotDataIntCallback("GoalRequiresLevels", &SADX_GoalRequiresLevels);
+    AP_RegisterSlotDataIntCallback("GoalRequiresChaosEmeralds", &SADX_GoalRequiresChaosEmeralds);
+    AP_RegisterSlotDataIntCallback("GoalRequiresEmblems", &SADX_GoalRequiresEmblems);
+    AP_RegisterSlotDataIntCallback("GoalRequiresMissions", &SADX_GoalRequiresMissions);
+    AP_RegisterSlotDataIntCallback("GoalRequiresBosses", &SADX_GoalRequiresBosses);
+    AP_RegisterSlotDataIntCallback("GoalRequiresChaoRaces", &SADX_GoalRequiresChaoRaces);
     AP_RegisterSlotDataIntCallback("ModVersion", &SADX_CompareModVersion);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("LevelForPerfectChaos", &SADX_LevelForPerfectChaos);
     AP_RegisterSlotDataIntCallback("MissionForPerfectChaos", &SADX_MissionForPerfectChaos);
+    AP_RegisterSlotDataIntCallback("BossesForPerfectChaos", &SADX_BossesForPerfectChaos);
     AP_RegisterSlotDataIntCallback("MissionModeChecks", &SADX_MissionModeChecks);
     AP_RegisterSlotDataMapIntIntCallback("MissionBlackList", &SADX_MissionBlackList);
 
@@ -468,7 +518,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
     AP_RegisterSlotDataIntCallback("SendDeathLinkChance", &SADX_SendDeathLinkChance);
     AP_RegisterSlotDataIntCallback("ReceiveDeathLinkChance", &SADX_ReceiveDeathLinkChance);
-    
+
     AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);
     AP_RegisterSlotDataIntCallback("CasinopolisRingLink", &SADX_SetCasinopolisRingLink);
     AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);

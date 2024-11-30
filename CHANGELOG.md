@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.9.0] - 2024-11-30
+
+### Added
+
+- All 3 secret *Chao Eggs* are now location checks. You have to bring them to the Chao Garden to get the check.
+- Added the 5 *Chao Races* emblems as checks.
+    - You can select what percentage of action stages you have access to before the races are in logic.
+- *Chao stats multiplier* in the mod's settings (default is 1, up to 50).
+    - To use a separate save file for the Chao Garden when playing AP, set `RedirectChaoSave` to true in the `mod.ini`.
+- Added location groups for "Chao Races" and "Chao Eggs".
+- The goal setting is now separated into multiple goal requirements, with the goal always being the Perfect Chaos fight.
+    - The requirements can be levels, emblems, Chaos Emeralds, missions, bosses, and Chao Races.
+- Options to force enable/disable both Death Link and Ring Link in the mod's settings.
+- Setting in the world configuration to guarantee a number of checks in the starting location.
+
+### Changed
+
+- The settings for the logic will now be checked early to ensure that a world is able to generate correctly:
+    - With all characters disabled, Sonic will be enabled as a failsafe with a warning message.
+    - If there is no goal requirement set, the goal will be set to levels with a warning message.
+    - If the goal requires levels and there are no levels in the settings, they will be enabled with a warning message.
+    - If the goal requires missions and the missions are disabled, they will be enabled with a warning message.
+    - If the goal requires Chao Races and they are disabled, they will be enabled with a warning message.
+    - If the Chao Races are enabled with no levels in the settings, they will be enabled with a warning message.
+- Changed example YAML accessibility setting to Locations (0).
+- Removed extra collision from City Hall in the DC conversion to allow Sonic to do the same skip as in DX.
+
+### Fixed
+
+- Logic regarding level/mission goals not working correctly.
+
 ## [v0.8.8] - 2024-11-03
 
 ### Added
