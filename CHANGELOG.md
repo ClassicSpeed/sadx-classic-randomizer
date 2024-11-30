@@ -7,7 +7,11 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - All 3 secret chao eggs are now location checks. You have to bring them to the chao garden to get the check.
+- Added the chao races emblems as checks.
+    - You can select how many actions stages you have access to before the races being in logic.
 - Chao stats multiplier in the mod's settings (default is 1, up to 50).
+    - To have a separate save file for the chao garden when playing AP, set `RedirectChaoSave` to true in the mod.ini.
+- Added Location groups for "Chao Races" and "Chao Eggs"
 - Options to force enabled/disabled both death link and ring link in the mod's settings.
 - The goal setting is now separated into multiple goal requirements (levels, emblems, chaos emeralds, and missions).
 - Setting in the world configuration to guarantee a number of checks in the starting location.
@@ -18,8 +22,8 @@ All notable changes to this project will be documented in this file.
     - With all characters disabled, Sonic will be enabled as a failsafe with a warning message.
     - If there is no goal requirement set, the goal will be set to levels with a warning message.
     - If the goal contains levels and there are no levels in the settings, they will be enabled with a warning message.
-    - If the goal contains missions and the missions are disabled in the settings, they will be enabled with a warning
-      message.
+    - If the goal requires missions and the missions are disabled, they will be enabled with a warning message.
+    - If the chao races are enabled with no levels in the settings, they will be enabled with a warning message.
 - Changed example yaml accessibility setting to Locations (0).
 - Removed extra collision from city hall in the DC conversion to allow Sonic to do the same skip as in DX.
 
