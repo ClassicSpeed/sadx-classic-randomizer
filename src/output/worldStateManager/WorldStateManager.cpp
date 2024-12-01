@@ -138,7 +138,8 @@ FunctionHook<void, task*> onCollisionCylinder(0x4D4770, [](task* tp) -> void
             && tp->twp->pos.y < -10 && tp->twp->pos.y > -20
             && tp->twp->pos.z < 250 && tp->twp->pos.z > 240)
             FreeTask(tp);
-    } else  if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
+    }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
     {
         //We find the cylinder collision that prevent sonic from clipping into the city hall in the DC conversion
         if (tp->twp->pos.x < 218 && tp->twp->pos.x > 215
@@ -146,9 +147,9 @@ FunctionHook<void, task*> onCollisionCylinder(0x4D4770, [](task* tp) -> void
             && tp->twp->pos.z < 250 && tp->twp->pos.z > 240)
             FreeTask(tp);
     }
-    
+
     else
-        onCollisionCube.Original(tp);
+        onCollisionCylinder.Original(tp);
 });
 
 static void __cdecl HandleSpeedHighwayEntrance();
