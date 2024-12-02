@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.9.1] - 2024-12-?
+
+### Fixed
+
+- Fixed Black and Silver Egg logic.
+
 ## [v0.9.0b] - 2024-12-01
 
 ### Fixed
