@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [v0.9.1] - 2024-12-?
 
 ### Fixed
+
 - Fixed item link adding random important items into the pool instead of filler.
+- Fixed non-deterministic behaviour when generating the same seed multiple times.
 
 ## [v0.9.0b] - 2024-12-01
 
