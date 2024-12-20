@@ -5,8 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [v0.9.1] - 2024-12-?
 
 ### Fixed
-
-- Fixed Black and Silver Egg logic.
+- Fixed item link adding random important items into the pool instead of filler.
 
 ## [v0.9.0b] - 2024-12-01
 
@@ -15,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Fixed problems with collisions in multiple levels.
 - Removed Gamma from Silver Egg's logic.
 - Fixed Golden Egg's logic. It now requires either the Hotel Keys, the Station Keys, or the Casino District Keys.
+- Fixed Black and Silver Egg logic.
 
 ## [v0.9.0] - 2024-11-30
 
