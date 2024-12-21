@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Fixed item link adding random important items into the pool instead of filler.
-- Fixed non-deterministic behaviour when generating the same seed multiple times.
+- Fixed non-deterministic behavior when generating the same seed multiple times.
 - Fixed Chao Races not sending checks.
 
 ## [v0.9.0b] - 2024-12-01
