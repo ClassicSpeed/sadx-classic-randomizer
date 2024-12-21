@@ -202,12 +202,12 @@ void EventDetector::OnLevelEmblem(const int character, const int level, const in
         checkData = randomizer.GetCheckData();
 }
 
-void EventDetector::OnGenericEmblem(signed int index)
+void EventDetector::OnGenericEmblem(const signed int index)
 {
     bool checksFound = false;
     for (const auto& check : checkData)
     {
-        if (check.second.type == LocationFieldEmblem && !check.second.checked
+        if ((check.second.type == LocationFieldEmblem || check.second.type == LocationChaoRace )&& !check.second.checked
             && check.second.emblemId == index)
         {
             randomizer.OnCheckFound(check.first);
