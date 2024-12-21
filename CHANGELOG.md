@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.9.1] - 2024-12-21
+
+### Fixed
+
+- Fixed item link adding random important items into the pool instead of filler.
+- Fixed non-deterministic behaviour when generating the same seed multiple times.
+- Fixed Chao Races not sending checks.
+
 ## [v0.9.0b] - 2024-12-01
 
 ### Fixed
@@ -9,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Fixed problems with collisions in multiple levels.
 - Removed Gamma from Silver Egg's logic.
 - Fixed Golden Egg's logic. It now requires either the Hotel Keys, the Station Keys, or the Casino District Keys.
+- Fixed Black and Silver Egg logic.
 
 ## [v0.9.0] - 2024-11-30
 
