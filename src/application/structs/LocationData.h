@@ -21,7 +21,7 @@ enum LocationType
 
 enum CapsuleType
 {
-    SpeedUpCapsule, InvincibilityCapsule, FiveRingsCapsule, TenRingsCapsule, RandomRingsCapsule, ShieldCapsule, ExtraLifeCapsule, EnemyBombCapsule, ElectricShieldCapsule
+    SpeedUpCapsule, InvincibilityCapsule, FiveRingsCapsule, TenRingsCapsule, RandomRingsCapsule, ShieldCapsule, ExtraLifeCapsule, EnemyBombCapsule, MagneticShieldCapsule
 };
 
 struct LifeBoxLocationData

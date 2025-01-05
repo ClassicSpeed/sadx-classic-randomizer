@@ -482,6 +482,55 @@ void CheckEnemy(task* tp)
         const int enemyId = GetEnemyFromPosition(tp->twp->pos);
         eventDetectorPtr->enemyTaskMap[tp->twp] = enemyId;
     }
+    else
+    {
+        const auto test = eventDetectorPtr->checkData.find(it->second);
+        if (!test->second.checked)
+        {
+            const EntityData1* player = EntityData1Ptrs[0];
+            const double dz = player->Position.z - tp->twp->pos.z;
+            const double dy = player->Position.y - tp->twp->pos.y;
+            const double dx = player->Position.x - tp->twp->pos.x;
+            const double distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+            constexpr double MIN_DISTANCE = 110.0;
+            constexpr double MAX_DISTANCE = 150.0;
+            constexpr int OFFSET_WHEN_FAR = 20;
+
+            int verticalOffset = OFFSET_WHEN_FAR;
+            if (distance <= MIN_DISTANCE)
+            {
+                verticalOffset = 0;
+            }
+            else if (distance >= MAX_DISTANCE)
+            {
+                verticalOffset = OFFSET_WHEN_FAR;
+            }
+            else
+            {
+                verticalOffset = static_cast<int>((distance - MIN_DISTANCE) / (MAX_DISTANCE - MIN_DISTANCE) *
+                    OFFSET_WHEN_FAR);
+            }
+
+            NJS_POINT3 point[] = {
+                {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 16, tp->twp->pos.z},
+                {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z + 3},
+                {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z - 3},
+                {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 16, tp->twp->pos.z},
+                {tp->twp->pos.x + 3, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z},
+                {tp->twp->pos.x - 3, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z}
+            };
+            NJS_COLOR color;
+            color.argb = {0, 0, 0, 255};
+            NJS_POINT3COL point3Col;
+            point3Col.p = point;
+            point3Col.num = 6;
+            point3Col.col = &color;
+            NJS_TEX tex = {1, 1};
+            point3Col.tex = &tex;
+            late_DrawTriangle3D(&point3Col, 6, 0xF0000000, LATE_MAT);
+        }
+    }
 }
 
 FunctionHook<BOOL, taskwk*, enemywk*> onEnemyCheckDamage(0x4CE030, [](taskwk* twp, enemywk* ewp)-> BOOL
@@ -489,17 +538,18 @@ FunctionHook<BOOL, taskwk*, enemywk*> onEnemyCheckDamage(0x4CE030, [](taskwk* tw
     const BOOL result = onEnemyCheckDamage.Original(twp, ewp);
     if (result)
     {
-        PrintDebug("Enemy check damage in position: %f %f %f\n", twp->pos.x, twp->pos.y, twp->pos.z);
+        // PrintDebug("Enemy check damage in position: %f %f %f\n", twp->pos.x, twp->pos.y, twp->pos.z);
         const auto it = eventDetectorPtr->enemyTaskMap.find(twp);
-        PrintDebug("---AAA\n");
+        // PrintDebug("---AAA\n");
         if (it != eventDetectorPtr->enemyTaskMap.end())
         {
-            PrintDebug("---BBB\n");
+            // PrintDebug("---BBB\n");
             int enemyLocationId = it->second;
             const auto test = eventDetectorPtr->checkData.find(enemyLocationId);
             if (!test->second.checked)
             {
-                PrintDebug("---CCC\n");
+                // PrintDebug("---CCC\n");
+                PrintDebug("Enemy check damage in position: %f %f %f\n", twp->pos.x, twp->pos.y, twp->pos.z);
                 eventDetectorPtr->randomizer.OnCheckFound(enemyLocationId);
                 eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
             }
@@ -521,8 +571,31 @@ FunctionHook<void, task*> onKikiLoad(0x4AD140, [](task* tp)-> void
     onKikiLoad.Original(tp);
 });
 
+FunctionHook<void, task*> onKikiMain(0x4ACF80, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onKikiMain.Original(tp);
+});
+
 FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
 {
     CheckEnemy(tp);
     onWaterSpiderLoad.Original(tp);
+});
+FunctionHook<void, task*> onWaterSpiderMain(0x7AA870, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onWaterSpiderMain.Original(tp);
+});
+
+FunctionHook<void, task*> onBoaBoaLoad(0x7A0330, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onBoaBoaLoad.Original(tp);
+});
+
+FunctionHook<void, task*> onLeonLoad(0x4A85C0, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onLeonLoad.Original(tp);
 });
