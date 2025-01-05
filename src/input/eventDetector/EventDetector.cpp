@@ -509,16 +509,20 @@ FunctionHook<BOOL, taskwk*, enemywk*> onEnemyCheckDamage(0x4CE030, [](taskwk* tw
     return result;
 });
 
-// TaskFunc(EnemySai, 0x7A1380); // Rhinotank
-FunctionHook<void, task*> onRhinotankMain(0x7A1380, [](task* tp)-> void
+FunctionHook<void, task*> onRhinotankLoad(0x7A1380, [](task* tp)-> void
 {
     CheckEnemy(tp);
-    onRhinotankMain.Original(tp);
+    onRhinotankLoad.Original(tp);
 });
 
-// TaskFunc(EnemySaru, 0x4AD140); // Kiki
-FunctionHook<void, task*> onKikiMain(0x4AD140, [](task* tp)-> void
+FunctionHook<void, task*> onKikiLoad(0x4AD140, [](task* tp)-> void
 {
     CheckEnemy(tp);
-    onKikiMain.Original(tp);
+    onKikiLoad.Original(tp);
+});
+
+FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onWaterSpiderLoad.Original(tp);
 });
