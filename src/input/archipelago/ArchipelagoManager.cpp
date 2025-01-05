@@ -220,45 +220,98 @@ void SADX_AutoStartMissions(const int autoStartMissions)
     randomizerPtr->SetAutoStartMissions(autoStartMissions);
 }
 
-void SADX_LifeSanity(const int lifeSanity)
+void SADX_EnemySanity(const int enemySanity)
 {
-    randomizerPtr->OnLifeSanitySet(lifeSanity);
+    randomizerPtr->OnEnemySanitySet(enemySanity);
 }
 
-void SADX_PinballLifeCapsules(const int pinballLifeCapsules)
+void SADX_SonicEnemySanity(const int characterEnemySanity)
 {
-    randomizerPtr->OnPinballLifeCapsulesSet(pinballLifeCapsules);
+    randomizerPtr->SetCharacterEnemySanity(Characters_Sonic, characterEnemySanity);
 }
 
-void SADX_SonicLifeSanity(const int lifeSanity)
+void SADX_TailsEnemySanity(const int characterEnemySanity)
 {
-    randomizerPtr->SetCharacterLifeSanity(Characters_Sonic, lifeSanity);
+    randomizerPtr->SetCharacterEnemySanity(Characters_Tails, characterEnemySanity);
 }
 
-void SADX_TailsLifeSanity(const int lifeSanity)
+void SADX_KnucklesEnemySanity(const int characterEnemySanity)
 {
-    randomizerPtr->SetCharacterLifeSanity(Characters_Tails, lifeSanity);
+    randomizerPtr->SetCharacterEnemySanity(Characters_Knuckles, characterEnemySanity);
 }
 
-void SADX_KnucklesLifeSanity(const int lifeSanity)
+void SADX_AmyEnemySanity(const int characterEnemySanity)
 {
-    randomizerPtr->SetCharacterLifeSanity(Characters_Knuckles, lifeSanity);
+    randomizerPtr->SetCharacterEnemySanity(Characters_Amy, characterEnemySanity);
 }
 
-void SADX_AmyLifeSanity(const int lifeSanity)
+void SADX_GammaEnemySanity(const int characterEnemySanity)
 {
-    randomizerPtr->SetCharacterLifeSanity(Characters_Amy, lifeSanity);
+    randomizerPtr->SetCharacterEnemySanity(Characters_Gamma, characterEnemySanity);
 }
 
-void SADX_GammaLifeSanity(const int lifeSanity)
+void SADX_BigEnemySanity(const int characterEnemySanity)
 {
-    randomizerPtr->SetCharacterLifeSanity(Characters_Gamma, lifeSanity);
+    randomizerPtr->SetCharacterEnemySanity(Characters_Big, characterEnemySanity);
 }
 
-void SADX_BigLifeSanity(const int lifeSanity)
+void SADX_CapsuleSanity(const int capsuleSanity)
 {
-    randomizerPtr->SetCharacterLifeSanity(Characters_Big, lifeSanity);
+    randomizerPtr->OnCapsuleSanitySet(capsuleSanity);
 }
+
+void SADX_PinballCapsules(const int includePinballCapsules)
+{
+    randomizerPtr->OnPinballCapsulesSet(includePinballCapsules);
+}
+
+void SADX_SonicCapsuleSanity(const int characterCapsuleSanity)
+{
+    randomizerPtr->SetCharacterCapsuleSanity(Characters_Sonic, characterCapsuleSanity);
+}
+
+void SADX_TailsCapsuleSanity(const int characterCapsuleSanity)
+{
+    randomizerPtr->SetCharacterCapsuleSanity(Characters_Tails, characterCapsuleSanity);
+}
+
+void SADX_KnucklesCapsuleSanity(const int characterCapsuleSanity)
+{
+    randomizerPtr->SetCharacterCapsuleSanity(Characters_Knuckles, characterCapsuleSanity);
+}
+
+void SADX_AmyCapsuleSanity(const int characterCapsuleSanity)
+{
+    randomizerPtr->SetCharacterCapsuleSanity(Characters_Amy, characterCapsuleSanity);
+}
+
+void SADX_GammaCapsuleSanity(const int characterCapsuleSanity)
+{
+    randomizerPtr->SetCharacterCapsuleSanity(Characters_Gamma, characterCapsuleSanity);
+}
+
+void SADX_BigCapsuleSanity(const int characterCapsuleSanity)
+{
+    randomizerPtr->SetCharacterCapsuleSanity(Characters_Big, characterCapsuleSanity);
+}
+
+void SADX_LifeCapsuleSanity(const int lifeCapsuleSanity)
+{
+    randomizerPtr->OnLifeCapsuleSanitySet(lifeCapsuleSanity);
+}
+void SADX_ShieldCapsuleSanity(const int shieldCapsuleSanity)
+{
+    randomizerPtr->OnShieldCapsuleSanitySet(shieldCapsuleSanity);
+}
+void SADX_PowerUpCapsuleSanity(const int powerUpCapsuleSanity)
+{
+    randomizerPtr->OnPowerUpCapsuleSanitySet(powerUpCapsuleSanity);
+}
+void SADX_RingCapsuleSanity(const int ringCapsuleSanity)
+{
+    randomizerPtr->OnRingCapsuleSanitySet(ringCapsuleSanity);
+}
+
 
 
 void SADX_StartingCharacter(const int startingCharacterIndex)
@@ -495,14 +548,29 @@ void ArchipelagoManager::Connect()
 
     AP_RegisterSlotDataIntCallback("AutoStartMissions", &SADX_AutoStartMissions);
 
-    AP_RegisterSlotDataIntCallback("LifeSanity", &SADX_LifeSanity);
-    AP_RegisterSlotDataIntCallback("PinballLifeCapsules", &SADX_PinballLifeCapsules);
-    AP_RegisterSlotDataIntCallback("SonicLifeSanity", &SADX_SonicLifeSanity);
-    AP_RegisterSlotDataIntCallback("TailsLifeSanity", &SADX_TailsLifeSanity);
-    AP_RegisterSlotDataIntCallback("KnucklesLifeSanity", &SADX_KnucklesLifeSanity);
-    AP_RegisterSlotDataIntCallback("AmyLifeSanity", &SADX_AmyLifeSanity);
-    AP_RegisterSlotDataIntCallback("BigLifeSanity", &SADX_BigLifeSanity);
-    AP_RegisterSlotDataIntCallback("GammaLifeSanity", &SADX_GammaLifeSanity);
+    AP_RegisterSlotDataIntCallback("EnemySanity", &SADX_EnemySanity);
+    
+    AP_RegisterSlotDataIntCallback("SonicEnemySanity", &SADX_SonicEnemySanity);
+    AP_RegisterSlotDataIntCallback("TailsEnemySanity", &SADX_TailsEnemySanity);
+    AP_RegisterSlotDataIntCallback("KnucklesEnemySanity", &SADX_KnucklesEnemySanity);
+    AP_RegisterSlotDataIntCallback("AmyEnemySanity", &SADX_AmyEnemySanity);
+    AP_RegisterSlotDataIntCallback("BigEnemySanity", &SADX_BigEnemySanity);
+    AP_RegisterSlotDataIntCallback("GammaEnemySanity", &SADX_GammaEnemySanity);
+    
+    AP_RegisterSlotDataIntCallback("CapsuleSanity", &SADX_CapsuleSanity);
+    AP_RegisterSlotDataIntCallback("PinballCapsules", &SADX_PinballCapsules);
+        
+    AP_RegisterSlotDataIntCallback("sonicCapsuleSanity", &SADX_SonicCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("tailsCapsuleSanity", &SADX_TailsCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("knucklesCapsuleSanity", &SADX_KnucklesCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("amyCapsuleSanity", &SADX_AmyCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("bigCapsuleSanity", &SADX_BigCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("gammaCapsuleSanity", &SADX_GammaCapsuleSanity);
+    
+    AP_RegisterSlotDataIntCallback("LifeCapsuleSanity", &SADX_LifeCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("ShieldCapsuleSanity", &SADX_ShieldCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("PowerUpCapsuleSanity", &SADX_PowerUpCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("RingCapsuleSanity", &SADX_RingCapsuleSanity);
 
     AP_RegisterSlotDataIntCallback("StartingCharacter", &SADX_StartingCharacter);
     AP_RegisterSlotDataIntCallback("SonicStartingArea", &SADX_SonicStartingArea);

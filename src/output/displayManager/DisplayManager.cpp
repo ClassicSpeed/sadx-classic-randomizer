@@ -475,22 +475,23 @@ void DisplayManager::DisplayItemsUnlocked()
                               : "  " + this->GetMissionATarget(true));
         buffer.append(" ");
 
-        if (_options.lifeSanity && _options.GetCharacterLifeSanity(static_cast<Characters>(CurrentCharacter)))
-        {
-            buffer.append(" Lives: ");
-            for (const auto& check : _checkData)
-            {
-                if (check.second.character == CurrentCharacter && check.second.type == LocationLifeCapsule &&
-                    GET_LEVEL(check.second.level) == CurrentLevel)
-                {
-                    if (!_options.includePinballCapsules && (check.first == 1211 || check.first == 1212))
-                        continue;
-                    buffer.append(check.second.checked ? "X" : "-");
-                }
-            }
-            SetDebugFontColor(currentColor);
-            DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
-        }
+        // TODO: Print capsules
+        // if (_options.lifeSanity && _options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+        // {
+        //     buffer.append(" Lives: ");
+        //     for (const auto& check : _checkData)
+        //     {
+        //         if (check.second.character == CurrentCharacter && check.second.type == LocationLifeCapsule &&
+        //             GET_LEVEL(check.second.level) == CurrentLevel)
+        //         {
+        //             if (!_options.includePinballCapsules && (check.first == 1211 || check.first == 1212))
+        //                 continue;
+        //             buffer.append(check.second.checked ? "X" : "-");
+        //         }
+        //     }
+        //     SetDebugFontColor(currentColor);
+        //     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        // }
 
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 

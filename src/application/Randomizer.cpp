@@ -826,9 +826,14 @@ std::map<int, LocationData> Randomizer::GetCheckData() const
     return _locationRepository.GetLocations();
 }
 
-std::vector<LifeBoxLocationData> Randomizer::GetLifeCapsules()
+std::vector<CapsuleLocationData> Randomizer::GetCapsules()
 {
-    return _locationRepository.GetLifeCapsules();
+    return _locationRepository.GetCapsuleLocations();
+}
+
+std::vector<EnemyLocationData> Randomizer::GetEnemies()
+{
+    return _locationRepository.GetEnemyLocations();
 }
 
 
@@ -1043,20 +1048,72 @@ void Randomizer::OnBossesGoalSet(const int bossesGoal)
     _displayManager.UpdateOptions(_options);
 }
 
-void Randomizer::OnLifeSanitySet(const bool lifeSanity)
+
+void Randomizer::OnEnemySanitySet(const bool enemySanity)
 {
-    _options.lifeSanity = lifeSanity;
+    _options.enemySanity = enemySanity;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetCharacterEnemySanity(const Characters character, const bool characterEnemySanity)
+{
+    _options.SetCharacterEnemySanity(character, characterEnemySanity);
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
 
 
-void Randomizer::OnPinballLifeCapsulesSet(const bool pinballLifeCapsules)
+void Randomizer::OnCapsuleSanitySet(const bool capsuleSanity)
 {
-    _options.includePinballCapsules = pinballLifeCapsules;
+    _options.capsuleSanity = capsuleSanity;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }
+
+void Randomizer::OnPinballCapsulesSet(const bool includePinballCapsules)
+{
+    _options.includePinballCapsules = includePinballCapsules;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetCharacterCapsuleSanity(const Characters character, const bool characterCapsuleSanity)
+{
+    _options.SetCharacterCapsuleSanity(character, characterCapsuleSanity);
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
+
+void Randomizer::OnLifeCapsuleSanitySet(const bool lifeCapsuleSanity)
+{
+    _options.lifeCapsuleSanity = lifeCapsuleSanity;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::OnShieldCapsuleSanitySet(const bool shieldCapsuleSanity)
+{
+    _options.shieldCapsuleSanity = shieldCapsuleSanity;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::OnPowerUpCapsuleSanitySet(const bool powerUpCapsuleSanity)
+{
+    _options.powerUpCapsuleSanity = powerUpCapsuleSanity;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::OnRingCapsuleSanitySet(const bool ringCapsuleSanity)
+{
+    _options.ringCapsuleSanity = ringCapsuleSanity;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
 
 void Randomizer::SetCharacterStatingArea(const Characters character, const StartingArea startingArea)
 {
@@ -1084,12 +1141,6 @@ void Randomizer::SetActionStageMissions(const Characters characters, const int m
     }
 }
 
-void Randomizer::SetCharacterLifeSanity(const Characters character, const bool characterLifeSanity)
-{
-    _options.SetCharacterLifeSanity(character, characterLifeSanity);
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
 
 void Randomizer::SetDeathLink(const bool deathLinkActive)
 {

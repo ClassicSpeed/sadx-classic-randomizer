@@ -65,23 +65,38 @@ struct Options
     
     bool entranceRandomizer = false;
 
-
     StartingArea sonicStartingArea = NoStatingArea;
     StartingArea tailsStartingArea = NoStatingArea;
     StartingArea knucklesStartingArea = NoStatingArea;
     StartingArea amyStartingArea = NoStatingArea;
     StartingArea bigStartingArea = NoStatingArea;
     StartingArea gammaStartingArea = NoStatingArea;
+    
+    bool enemySanity = false;
+    
+    bool sonicEnemySanity = true;
+    bool tailsEnemySanity = true;
+    bool knucklesEnemySanity = true;
+    bool amyEnemySanity = true;
+    bool bigEnemySanity = true;
+    bool gammaEnemySanity = true;
 
-    bool lifeSanity = false;
-    bool sonicLifeSanity = true;
-    bool tailsLifeSanity = true;
-    bool knucklesLifeSanity = true;
-    bool amyLifeSanity = true;
-    bool bigLifeSanity = true;
-    bool gammaLifeSanity = true;
-
+    bool capsuleSanity = false;
     bool includePinballCapsules = false;
+    
+    bool sonicCapsuleSanity = true;
+    bool tailsCapsuleSanity = true;
+    bool knucklesCapsuleSanity = true;
+    bool amyCapsuleSanity = true;
+    bool bigCapsuleSanity = true;
+    bool gammaCapsuleSanity = true;
+    
+    bool lifeCapsuleSanity = false;
+    bool shieldCapsuleSanity = false;
+    bool powerUpCapsuleSanity = false;
+    bool ringCapsuleSanity = false;
+    
+    
     bool deathLinkActive = false;
     bool ringLinkActive = false;
     bool casinopolisRingLink = false;
@@ -139,28 +154,27 @@ struct Options
             break;
         }
     }
-
-    void SetCharacterLifeSanity(const Characters character, const bool characterLifeSanity)
+    void SetCharacterEnemySanity(const Characters character, const bool characterEnemySanity)
     {
         switch (character)
         {
         case Characters_Sonic:
-            this->sonicLifeSanity = characterLifeSanity;
+            this->sonicEnemySanity = characterEnemySanity;
             break;
         case Characters_Tails:
-            this->tailsLifeSanity = characterLifeSanity;
+            this->tailsEnemySanity = characterEnemySanity;
             break;
         case Characters_Knuckles:
-            this->knucklesLifeSanity = characterLifeSanity;
+            this->knucklesEnemySanity = characterEnemySanity;
             break;
         case Characters_Amy:
-            this->amyLifeSanity = characterLifeSanity;
+            this->amyEnemySanity = characterEnemySanity;
             break;
         case Characters_Big:
-            this->bigLifeSanity = characterLifeSanity;
+            this->bigEnemySanity = characterEnemySanity;
             break;
         case Characters_Gamma:
-            this->gammaLifeSanity = characterLifeSanity;
+            this->gammaEnemySanity = characterEnemySanity;
             break;
         case Characters_Eggman:
         case Characters_Tikal:
@@ -169,22 +183,75 @@ struct Options
         }
     }
 
-    bool GetCharacterLifeSanity(const Characters character) const
+    bool GetCharacterEnemySanity(const Characters character) const
     {
         switch (character)
         {
         case Characters_Sonic:
-            return this->sonicLifeSanity;
+            return this->sonicEnemySanity;
         case Characters_Tails:
-            return this->tailsLifeSanity;
+            return this->tailsEnemySanity;
         case Characters_Knuckles:
-            return this->knucklesLifeSanity;
+            return this->knucklesEnemySanity;
         case Characters_Amy:
-            return this->amyLifeSanity;
+            return this->amyEnemySanity;
         case Characters_Big:
-            return this->bigLifeSanity;
+            return this->bigEnemySanity;
         case Characters_Gamma:
-            return this->gammaLifeSanity;
+            return this->gammaEnemySanity;
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+        return false;
+    }
+
+    void SetCharacterCapsuleSanity(const Characters character, const bool characterCapsuleSanity)
+    {
+        switch (character)
+        {
+        case Characters_Sonic:
+            this->sonicCapsuleSanity = characterCapsuleSanity;
+            break;
+        case Characters_Tails:
+            this->tailsCapsuleSanity = characterCapsuleSanity;
+            break;
+        case Characters_Knuckles:
+            this->knucklesCapsuleSanity = characterCapsuleSanity;
+            break;
+        case Characters_Amy:
+            this->amyCapsuleSanity = characterCapsuleSanity;
+            break;
+        case Characters_Big:
+            this->bigCapsuleSanity = characterCapsuleSanity;
+            break;
+        case Characters_Gamma:
+            this->gammaCapsuleSanity = characterCapsuleSanity;
+            break;
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+    }
+
+    bool GetCharacterCapsuleSanity(const Characters character) const
+    {
+        switch (character)
+        {
+        case Characters_Sonic:
+            return this->sonicCapsuleSanity;
+        case Characters_Tails:
+            return this->tailsCapsuleSanity;
+        case Characters_Knuckles:
+            return this->knucklesCapsuleSanity;
+        case Characters_Amy:
+            return this->amyCapsuleSanity;
+        case Characters_Big:
+            return this->bigCapsuleSanity;
+        case Characters_Gamma:
+            return this->gammaCapsuleSanity;
         case Characters_Eggman:
         case Characters_Tikal:
         case Characters_MetalSonic:

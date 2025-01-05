@@ -16,7 +16,8 @@ EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
     PlayCharacterDeathSound_t.Hook(HandlePlayCharacterDeathSound);
     CheckMissionRequirements_t.Hook(HandleCheckMissionRequirements);
     checkData = randomizer.GetCheckData();
-    lifeCapsules = randomizer.GetLifeCapsules();
+    capsules = randomizer.GetCapsules();
+    enemies = randomizer.GetEnemies();
     eventDetectorPtr = this;
 }
 
@@ -207,7 +208,7 @@ void EventDetector::OnGenericEmblem(const signed int index)
     bool checksFound = false;
     for (const auto& check : checkData)
     {
-        if ((check.second.type == LocationFieldEmblem || check.second.type == LocationChaoRace )&& !check.second.checked
+        if ((check.second.type == LocationFieldEmblem || check.second.type == LocationChaoRace) && !check.second.checked
             && check.second.emblemId == index)
         {
             randomizer.OnCheckFound(check.first);
@@ -259,72 +260,88 @@ FunctionHook<BOOL> onMissionMenuRenderHook(0x506410, []()-> BOOL
 });
 
 
-int GetLifeCapsuleFromPosition(const NJS_VECTOR& position)
+int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
 {
-    for (const auto& lifeCapsule : eventDetectorPtr->lifeCapsules)
+    for (const auto& capsule : eventDetectorPtr->capsules)
     {
-        if (lifeCapsule.character != CurrentCharacter)
+        if (capsule.character != CurrentCharacter)
             continue;
 
-        if (lifeCapsule.level != CurrentStageAndAct)
+        if (capsule.level != CurrentStageAndAct)
             continue;
 
-        const float dx = position.x - lifeCapsule.x;
-        const float dy = position.y - lifeCapsule.y;
-        const float dz = position.z - lifeCapsule.z;
+        const float dx = position.x - capsule.x;
+        const float dy = position.y - capsule.y;
+        const float dz = position.z - capsule.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
         if (distance <= 5.0)
-            return lifeCapsule.locationId;
+            return capsule.locationId;
     }
     return -1;
 }
 
-FunctionHook<void, EntityData1*> onBrokenGenericLifeCapsule(0x4D6D40, [](EntityData1* entity)-> void
+void CheckCapsule(EntityData1* entity, bool specificCapsule)
 {
-    onBrokenGenericLifeCapsule.Original(entity);
     if (DemoPlaying > 0)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().lifeSanity)
+    if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+        return;
+    if (!specificCapsule)
         return;
 
-    const int locationId = GetLifeCapsuleFromPosition(entity->Position);
+    const int locationId = GetCapsuleCapsuleFromPosition(entity->Position);
     if (locationId > 0)
     {
         eventDetectorPtr->randomizer.OnCheckFound(locationId);
         eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
     }
-});
+}
 
-
-FunctionHook<void, task*> onBrokenGroundLifeCapsule(0x4D6F10, [](task* tp)-> void
+FunctionHook<void, EntityData1*> onSpeedUpCapsuleBroken(0x4D6BF0, [](EntityData1* entity)-> void
 {
-    onBrokenGroundLifeCapsule.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().lifeSanity)
-        return;
-
-    const int locationId = GetLifeCapsuleFromPosition(tp->twp->pos);
-    if (locationId > 0)
-    {
-        const auto test = eventDetectorPtr->checkData.find(locationId);
-        if (test->second.checked)
-            FreeTask(tp);
-    }
+    onSpeedUpCapsuleBroken.Original(entity);
+    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity);
 });
-
-FunctionHook<void, task*> onBrokenAirLifeCapsule(0x4C07D0, [](task* tp)-> void
+FunctionHook<void, EntityData1*> onInvincibilityCapsuleBroken(0x4D6D80, [](EntityData1* entity)-> void
 {
-    onBrokenAirLifeCapsule.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().lifeSanity)
-        return;
-
-    const int locationId = GetLifeCapsuleFromPosition(tp->twp->pos);
-    if (locationId > 0)
-    {
-        const auto test = eventDetectorPtr->checkData.find(locationId);
-        if (test->second.checked)
-            FreeTask(tp);
-    }
+    onInvincibilityCapsuleBroken.Original(entity);
+    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity);
+});
+FunctionHook<void, EntityData1*> onFiveRingsCapsuleBroken(0x4D6C50, [](EntityData1* entity)-> void
+{
+    onFiveRingsCapsuleBroken.Original(entity);
+    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity);
+});
+FunctionHook<void, EntityData1*> onTenRingsCapsule(0x4D6C90, [](EntityData1* entity)-> void
+{
+    onTenRingsCapsule.Original(entity);
+    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity);
+});
+FunctionHook<void, EntityData1*> onRandomRingsCapsuleBroken(0x4D6CD0, [](EntityData1* entity)-> void
+{
+    onRandomRingsCapsuleBroken.Original(entity);
+    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity);
+});
+FunctionHook<void, EntityData1*> onShieldCapsuleBroken(0x4D6DC0, [](EntityData1* entity)-> void
+{
+    onShieldCapsuleBroken.Original(entity);
+    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity);
+});
+FunctionHook<void, EntityData1*> onExtraLifeCapsuleBroken(0x4D6D40, [](EntityData1* entity)-> void
+{
+    onExtraLifeCapsuleBroken.Original(entity);
+    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().lifeCapsuleSanity);
+});
+FunctionHook<void, EntityData1*> onBombCapsuleBroken(0x4D6E00, [](EntityData1* entity)-> void
+{
+    onBombCapsuleBroken.Original(entity);
+    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity);
+});
+FunctionHook<void, EntityData1*> onElectricShieldCapsuleBroken(0x4D6E40, [](EntityData1* entity)-> void
+{
+    onElectricShieldCapsuleBroken.Original(entity);
+    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity);
 });
 
 FunctionHook<void, unsigned short> onKillHimP(0x440CD0, [](const unsigned short a1)-> void
@@ -433,4 +450,75 @@ FunctionHook<void, ObjectMaster*> onClearMission(0x5923C0, [](ObjectMaster* obj)
     }
     if (checksFound)
         eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
+});
+
+
+int GetEnemyFromPosition(const NJS_VECTOR& position)
+{
+    for (const auto& enemy : eventDetectorPtr->enemies)
+    {
+        if (enemy.character != CurrentCharacter)
+            continue;
+
+        if (enemy.level != CurrentStageAndAct)
+            continue;
+
+        const float dx = position.x - enemy.x;
+        const float dy = position.y - enemy.y;
+        const float dz = position.z - enemy.z;
+        const float distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (distance <= 5.0)
+            return enemy.locationId;
+    }
+    return -1;
+}
+
+void CheckEnemy(task* tp)
+{
+    const auto it = eventDetectorPtr->enemyTaskMap.find(tp->twp);
+    if (it == eventDetectorPtr->enemyTaskMap.end())
+    {
+        const int enemyId = GetEnemyFromPosition(tp->twp->pos);
+        eventDetectorPtr->enemyTaskMap[tp->twp] = enemyId;
+    }
+}
+
+FunctionHook<BOOL, taskwk*, enemywk*> onEnemyCheckDamage(0x4CE030, [](taskwk* twp, enemywk* ewp)-> BOOL
+{
+    const BOOL result = onEnemyCheckDamage.Original(twp, ewp);
+    if (result)
+    {
+        PrintDebug("Enemy check damage in position: %f %f %f\n", twp->pos.x, twp->pos.y, twp->pos.z);
+        const auto it = eventDetectorPtr->enemyTaskMap.find(twp);
+        PrintDebug("---AAA\n");
+        if (it != eventDetectorPtr->enemyTaskMap.end())
+        {
+            PrintDebug("---BBB\n");
+            int enemyLocationId = it->second;
+            const auto test = eventDetectorPtr->checkData.find(enemyLocationId);
+            if (!test->second.checked)
+            {
+                PrintDebug("---CCC\n");
+                eventDetectorPtr->randomizer.OnCheckFound(enemyLocationId);
+                eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
+            }
+        }
+    }
+
+    return result;
+});
+
+// TaskFunc(EnemySai, 0x7A1380); // Rhinotank
+FunctionHook<void, task*> onRhinotankMain(0x7A1380, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onRhinotankMain.Original(tp);
+});
+
+// TaskFunc(EnemySaru, 0x4AD140); // Kiki
+FunctionHook<void, task*> onKikiMain(0x4AD140, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onKikiMain.Original(tp);
 });

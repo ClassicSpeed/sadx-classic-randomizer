@@ -3,6 +3,7 @@
 
 #include "../../application/Randomizer.h"
 #include "../../application/structs/LocationData.h"
+#include <unordered_map>
 
 enum LastStoryState
 {
@@ -20,11 +21,16 @@ public:
     void OnLevelEmblem(int character, int level, int mission);
     void OnGenericEmblem(int index);
     void SetMultipleMissions(bool completeMultipleMissions);
+    void addTaskwk(taskwk* key, int value);
+    int getTaskwkValue(taskwk* key);
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
-    std::vector<LifeBoxLocationData> lifeCapsules;
+    std::vector<CapsuleLocationData> capsules;
+    std::vector<EnemyLocationData> enemies;
     mutable std::map<int, LocationData> checkData;
     Randomizer& randomizer;
     float deathDetectionCooldown = 0.5f;
     std::clock_t deathCooldownTimer = -1;
+    
+    std::unordered_map<taskwk*, int> enemyTaskMap;
 };
