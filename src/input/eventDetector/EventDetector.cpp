@@ -474,6 +474,82 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
     return -1;
 }
 
+void DrawIndicator(task* tp)
+{
+    const EntityData1* player = EntityData1Ptrs[0];
+    const double dz = player->Position.z - tp->twp->pos.z;
+    const double dy = player->Position.y - tp->twp->pos.y;
+    const double dx = player->Position.x - tp->twp->pos.x;
+    const double distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+    constexpr double MIN_DISTANCE = 110.0;
+    constexpr double MAX_DISTANCE = 150.0;
+    constexpr int OFFSET_WHEN_FAR = 20;
+
+    int verticalOffset = OFFSET_WHEN_FAR;
+    if (distance <= MIN_DISTANCE)
+    {
+        verticalOffset = 0;
+    }
+    else if (distance >= MAX_DISTANCE)
+    {
+        verticalOffset = OFFSET_WHEN_FAR;
+    }
+    else
+    {
+        verticalOffset = static_cast<int>((distance - MIN_DISTANCE) / (MAX_DISTANCE - MIN_DISTANCE) *
+            OFFSET_WHEN_FAR);
+    }
+
+    NJS_POINT3 point[] = {
+        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 16, tp->twp->pos.z},
+        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z + 3},
+        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z - 3},
+        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 16, tp->twp->pos.z},
+        {tp->twp->pos.x + 3, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z},
+        {tp->twp->pos.x - 3, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z}
+    };
+    NJS_COLOR color;
+    color.argb = {0, 0, 0, 255};
+    NJS_POINT3COL point3Col;
+    point3Col.p = point;
+    point3Col.num = 6;
+    point3Col.col = &color;
+    NJS_TEX tex = {1, 1};
+    point3Col.tex = &tex;
+    late_DrawTriangle3D(&point3Col, 6, 0xF0000000, LATE_MAT);
+}
+
+FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
+{
+    OnItemBoxMain.Original(tp);
+    if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+        return;
+
+    const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
+    if (locationId > 0)
+    {
+        const auto test = eventDetectorPtr->checkData.find(locationId);
+        if (!test->second.checked)
+            DrawIndicator(tp);
+    }
+});
+
+FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
+{
+    OnAirItemBoxMain.Original(tp);
+    if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+        return;
+
+    const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
+    if (locationId > 0)
+    {
+        const auto test = eventDetectorPtr->checkData.find(locationId);
+        if (!test->second.checked)
+            DrawIndicator(tp);
+    }
+});
+
 void CheckEnemy(task* tp)
 {
     const auto it = eventDetectorPtr->enemyTaskMap.find(tp->twp);
@@ -487,48 +563,7 @@ void CheckEnemy(task* tp)
         const auto test = eventDetectorPtr->checkData.find(it->second);
         if (!test->second.checked)
         {
-            const EntityData1* player = EntityData1Ptrs[0];
-            const double dz = player->Position.z - tp->twp->pos.z;
-            const double dy = player->Position.y - tp->twp->pos.y;
-            const double dx = player->Position.x - tp->twp->pos.x;
-            const double distance = sqrt(dx * dx + dy * dy + dz * dz);
-
-            constexpr double MIN_DISTANCE = 110.0;
-            constexpr double MAX_DISTANCE = 150.0;
-            constexpr int OFFSET_WHEN_FAR = 20;
-
-            int verticalOffset = OFFSET_WHEN_FAR;
-            if (distance <= MIN_DISTANCE)
-            {
-                verticalOffset = 0;
-            }
-            else if (distance >= MAX_DISTANCE)
-            {
-                verticalOffset = OFFSET_WHEN_FAR;
-            }
-            else
-            {
-                verticalOffset = static_cast<int>((distance - MIN_DISTANCE) / (MAX_DISTANCE - MIN_DISTANCE) *
-                    OFFSET_WHEN_FAR);
-            }
-
-            NJS_POINT3 point[] = {
-                {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 16, tp->twp->pos.z},
-                {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z + 3},
-                {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z - 3},
-                {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 16, tp->twp->pos.z},
-                {tp->twp->pos.x + 3, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z},
-                {tp->twp->pos.x - 3, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z}
-            };
-            NJS_COLOR color;
-            color.argb = {0, 0, 0, 255};
-            NJS_POINT3COL point3Col;
-            point3Col.p = point;
-            point3Col.num = 6;
-            point3Col.col = &color;
-            NJS_TEX tex = {1, 1};
-            point3Col.tex = &tex;
-            late_DrawTriangle3D(&point3Col, 6, 0xF0000000, LATE_MAT);
+            DrawIndicator(tp);
         }
     }
 }
