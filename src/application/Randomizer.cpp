@@ -44,7 +44,7 @@ void Randomizer::OnCheckFound(const int checkId) const
             && AreLastStoryRequirementsCompleted())
             _displayManager.QueueMessage("You can now fight Perfect Chaos!");
     }
-    PrintDebug("Check found: %s, and type: %d\n", check.displayName.c_str(), check.type);
+    PrintDebug("Check found: %d %s, and type: %d\n", checkId, check.displayName.c_str(), check.type);
     if (check.type == LocationChaoRace && _options.goalRequiresChaoRaces)
     {
         const ChaoStatus chaoStatus = _locationRepository.GetChaoStatus();

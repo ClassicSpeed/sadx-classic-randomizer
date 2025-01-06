@@ -11,10 +11,15 @@ UsercallFunc(bool, CheckMissionRequirements_t, (int mission, int character, int 
 static bool __cdecl HandleCheckMissionRequirements(int mission, int character, int level);
 
 
+UsercallFuncVoid(OnBoaBoaPartDestroyed_t, (task * tp), (tp), 0x79F8F0, rEAX);
+static void __cdecl HandleOnBoaBoaPartDestroyed(task* tp);
+
+
 EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
 {
     PlayCharacterDeathSound_t.Hook(HandlePlayCharacterDeathSound);
     CheckMissionRequirements_t.Hook(HandleCheckMissionRequirements);
+    OnBoaBoaPartDestroyed_t.Hook(HandleOnBoaBoaPartDestroyed);
     checkData = randomizer.GetCheckData();
     capsules = randomizer.GetCapsules();
     enemies = randomizer.GetEnemies();
@@ -556,7 +561,8 @@ void CheckEnemy(task* tp)
     if (it == eventDetectorPtr->enemyTaskMap.end())
     {
         const int enemyId = GetEnemyFromPosition(tp->twp->pos);
-        eventDetectorPtr->enemyTaskMap[tp->twp] = enemyId;
+        if (enemyId > 0)
+            eventDetectorPtr->enemyTaskMap[tp->twp] = enemyId;
     }
     else
     {
@@ -568,31 +574,6 @@ void CheckEnemy(task* tp)
     }
 }
 
-FunctionHook<BOOL, taskwk*, enemywk*> onEnemyCheckDamage(0x4CE030, [](taskwk* twp, enemywk* ewp)-> BOOL
-{
-    const BOOL result = onEnemyCheckDamage.Original(twp, ewp);
-    if (result)
-    {
-        // PrintDebug("Enemy check damage in position: %f %f %f\n", twp->pos.x, twp->pos.y, twp->pos.z);
-        const auto it = eventDetectorPtr->enemyTaskMap.find(twp);
-        // PrintDebug("---AAA\n");
-        if (it != eventDetectorPtr->enemyTaskMap.end())
-        {
-            // PrintDebug("---BBB\n");
-            int enemyLocationId = it->second;
-            const auto test = eventDetectorPtr->checkData.find(enemyLocationId);
-            if (!test->second.checked)
-            {
-                // PrintDebug("---CCC\n");
-                PrintDebug("Enemy check damage in position: %f %f %f\n", twp->pos.x, twp->pos.y, twp->pos.z);
-                eventDetectorPtr->randomizer.OnCheckFound(enemyLocationId);
-                eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
-            }
-        }
-    }
-
-    return result;
-});
 
 FunctionHook<void, task*> onRhinotankLoad(0x7A1380, [](task* tp)-> void
 {
@@ -623,14 +604,51 @@ FunctionHook<void, task*> onWaterSpiderMain(0x7AA870, [](task* tp)-> void
     onWaterSpiderMain.Original(tp);
 });
 
-FunctionHook<void, task*> onBoaBoaLoad(0x7A0330, [](task* tp)-> void
+FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
 {
     CheckEnemy(tp);
-    onBoaBoaLoad.Original(tp);
+    onBoaBoaHeadLoad.Original(tp);
 });
 
 FunctionHook<void, task*> onLeonLoad(0x4A85C0, [](task* tp)-> void
 {
     CheckEnemy(tp);
     onLeonLoad.Original(tp);
+});
+FunctionHook<void, task*> onLeonMain(0x4A83D0, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onLeonMain.Original(tp);
+});
+
+
+void CheckDestroyedEnemy(taskwk* twp)
+{
+    // PrintDebug("Enemy check damage in position: %f %f %f\n", twp->pos.x, twp->pos.y, twp->pos.z);
+    const auto it = eventDetectorPtr->enemyTaskMap.find(twp);
+    if (it != eventDetectorPtr->enemyTaskMap.end())
+    {
+        int enemyLocationId = it->second;
+        PrintDebug("Enemy check damage in position: %d\n", enemyLocationId);
+        const auto test = eventDetectorPtr->checkData.find(enemyLocationId);
+        if (!test->second.checked)
+        {
+            eventDetectorPtr->randomizer.OnCheckFound(enemyLocationId);
+            eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
+        }
+    }
+}
+
+void HandleOnBoaBoaPartDestroyed(task* tp)
+{
+    OnBoaBoaPartDestroyed_t.Original(tp);
+    CheckDestroyedEnemy(tp->twp);
+}
+
+FunctionHook<BOOL, taskwk*, enemywk*> onEnemyCheckDamage(0x4CE030, [](taskwk* twp, enemywk* ewp)-> BOOL
+{
+    const BOOL result = onEnemyCheckDamage.Original(twp, ewp);
+    if (result)
+        CheckDestroyedEnemy(twp);
+    return result;
 });
