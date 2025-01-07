@@ -22,7 +22,7 @@ enum LocationType
 enum CapsuleType
 {
     SpeedUpCapsule, InvincibilityCapsule, FiveRingsCapsule, TenRingsCapsule, RandomRingsCapsule, ShieldCapsule,
-    ExtraLifeCapsule, EnemyBombCapsule, MagneticShieldCapsule
+    ExtraLifeCapsule, BombCapsule, MagneticShieldCapsule
 };
 
 enum EnemyType

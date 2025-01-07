@@ -372,6 +372,97 @@ LocationRepository::LocationRepository()
         {2541.89f, -567.00f, -812.66f, LevelAndActIDs_WindyValley1, Characters_Gamma, BoaBoa, 52010},
         {2747.72f, -640.00f, -1229.67f, LevelAndActIDs_WindyValley1, Characters_Gamma, Rhinotank, 52011}, //DX
         {2747.72f, -642.00f, -1229.67f, LevelAndActIDs_WindyValley1, Characters_Gamma, Rhinotank, 52011}, //DC
+
+
+        {-1982.93f, 1755.00f, -769.43f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14001}, //DX
+        {-1971.96f, 1754.10f, -770.24f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14001}, //DC
+        {-2033.90f, 1755.00f, -767.52f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14002}, //DX
+        {-2033.90f, 1754.10f, -767.52f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14002}, //DC
+        {-3247.01f, 416.63f, 7572.08f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14003}, //DX
+        {-3243.05f, 415.93f, 7571.55f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14003}, //DC
+        {-3248.17f, 416.63f, 7605.05f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14004}, //DX
+        {-3248.17f, 415.93f, 7605.05f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14004}, //DC
+        {-3249.33f, 416.63f, 7638.03f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14005}, //DX
+        {-3250.47f, 416.03f, 7641.86f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14005}, //DC
+        {-1509.83f, -1235.37f, 7553.54f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14006}, //DX
+        {-1510.42f, -1235.87f, 7557.50f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14006}, //DC
+        {-1517.38f, -1235.37f, 7600.94f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14007}, //DX
+        {-1514.78f, -1235.57f, 7603.98f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14007}, //DC
+        {-1524.46f, -1235.37f, 7645.39f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14008}, //DX
+        {-1523.57f, -1234.87f, 7645.85f, LevelAndActIDs_TwinklePark1, Characters_Sonic, Kiki, 14008}, //DC
+        {347.55f, 0.00f, 795.28f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Buyon, 14009},
+        {310.11f, 0.00f, 729.57f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Buyon, 14010},
+        {69.85f, 227.89f, 589.59f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14011},
+        {-79.09f, -8.43f, 625.06f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14012},
+        {-62.73f, -8.43f, 579.43f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14013}, //DX
+        {-79.09f, -8.43f, 625.06f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14013}, //DC
+        {354.83f, 676.10f, 111.23f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14014}, //DX
+        {354.25f, 676.10f, 110.42f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14014}, //DC
+        {558.73f, 123.02f, 327.69f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14015},
+        {621.39f, 123.02f, 321.89f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14016},
+        {308.56f, 676.10f, 107.27f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14017},
+        {327.81f, 670.20f, 105.67f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Buyon, 14018},
+        {-93.91f, -0.17f, 348.40f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Buyon, 14019},
+        {878.49f, 20.81f, 147.29f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14020},
+        {877.60f, 33.81f, 103.17f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14021},
+        {881.68f, 38.81f, 85.38f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14022},
+        {32.18f, 223.00f, -36.76f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14023}, //DX
+        {31.55f, 223.00f, -37.54f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14023}, //DC
+        {406.95f, 405.00f, -229.85f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14024},
+        {362.85f, 253.90f, -291.32f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14025},
+        {372.35f, 272.01f, -362.17f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14026}, //DX
+        {373.52f, 272.01f, -360.54f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14026}, //DC
+        {-111.94f, 322.80f, -366.16f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14027},
+        {76.41f, 3.76f, -469.09f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14028}, //DX
+        {109.58f, 3.76f, -461.62f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14028}, //DC
+        {-60.34f, 22.70f, -729.07f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14029},
+        {-119.90f, 22.58f, -737.66f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14030},
+        {220.32f, 5.89f, -934.72f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14031}, //DX
+        {220.64f, 5.89f, -933.77f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14031}, //DC
+        {495.82f, 5.89f, -971.56f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14032}, //DX
+        {496.82f, 5.89f, -971.55f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14032}, //DC
+        {231.68f, 5.89f, -964.77f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14033}, //DX
+        {234.71f, 5.89f, -968.75f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14033}, //DC
+        {206.99f, 5.89f, -972.61f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14034}, //DX
+        {206.05f, 5.89f, -972.96f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14034}, //DC
+
+        {583.34f, 256.02f, -366.16f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40001}, //DX
+        {569.57f, 254.02f, -380.67f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40001}, //DC
+        {543.06f, 256.02f, -334.05f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40002}, //DX
+        {537.77f, 254.02f, -348.08f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40002}, //DC
+        {518.45f, 256.02f, -303.80f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40003}, //DX
+        {504.05f, 254.02f, -289.92f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40003}, //DC
+        {274.99f, 272.02f, -302.59f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40004}, //DX
+        {266.85f, 272.02f, -298.75f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40004}, //DC
+        {878.49f, 20.81f, 147.29f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40005}, //DX
+        {875.92f, 18.01f, 151.58f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40005}, //DC
+        {468.82f, 4.25f, -971.19f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40006}, //DX
+        {468.95f, 4.25f, -972.18f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40006}, //DC
+        {712.42f, 103.85f, 374.58f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40007}, //DX
+        {711.95f, 103.85f, 373.70f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40007}, //DC
+        {284.69f, 3.66f, -979.10f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40008}, //DX
+        {285.46f, 3.96f, -978.46f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40008}, //DC
+        {570.10f, 100.02f, 406.06f, LevelAndActIDs_TwinklePark2, Characters_Amy, Buyon, 40009},
+        {108.82f, 3.96f, -839.80f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40010}, //DX
+        {108.98f, 3.96f, -839.26f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40010}, //DC
+        {-76.50f, 4.99f, -552.86f, LevelAndActIDs_TwinklePark3, Characters_Amy, Kiki, 40011}, //DX
+        {-76.17f, 3.99f, -542.86f, LevelAndActIDs_TwinklePark3, Characters_Amy, Kiki, 40011}, //DC
+        {-89.49f, 4.99f, -559.12f, LevelAndActIDs_TwinklePark3, Characters_Amy, Kiki, 40012}, //DX
+        {-89.04f, 3.99f, -558.23f, LevelAndActIDs_TwinklePark3, Characters_Amy, Kiki, 40012}, //DC
+        {203.54f, 4.00f, -99.29f, LevelAndActIDs_TwinklePark3, Characters_Amy, Kiki, 40013}, //DX
+        {204.35f, 4.00f, -98.70f, LevelAndActIDs_TwinklePark3, Characters_Amy, Kiki, 40013}, //DC
+        {796.20f, -35.00f, -451.74f, LevelAndActIDs_TwinklePark3, Characters_Amy, Buyon, 40014},
+        {-85.46f, 105.00f, 487.88f, LevelAndActIDs_TwinklePark3, Characters_Amy, Kiki, 40015}, //DX
+        {-85.00f, 104.00f, 486.99f, LevelAndActIDs_TwinklePark3, Characters_Amy, Kiki, 40015}, //DC
+        {124.76f, 100.00f, 675.01f, LevelAndActIDs_TwinklePark3, Characters_Amy, Buyon, 40016},
+        {87.39f, 100.00f, 691.81f, LevelAndActIDs_TwinklePark3, Characters_Amy, Buyon, 40017},
+
+        {68.07f, 6.00f, -454.61f, LevelAndActIDs_TwinklePark2, Characters_Big, Kiki, 60001}, //DX
+        {68.07f, 4.00f, -454.61f, LevelAndActIDs_TwinklePark2, Characters_Big, Kiki, 60001}, //DC
+        {165.72f, 6.00f, -887.51f, LevelAndActIDs_TwinklePark2, Characters_Big, Kiki, 60002},
+        {660.64f, 6.00f, -561.42f, LevelAndActIDs_TwinklePark2, Characters_Big, Kiki, 60003}, //DX
+        {660.64f, 4.00f, -561.42f, LevelAndActIDs_TwinklePark2, Characters_Big, Kiki, 60003}, //DC
+        {322.83f, 6.00f, -985.34f, LevelAndActIDs_TwinklePark2, Characters_Big, Kiki, 60004},
     };
 
     _capsules = {
@@ -460,8 +551,8 @@ LocationRepository::LocationRepository()
         {5686.74f, -10755.00f, -792.74f, LevelAndActIDs_WindyValley3, Characters_Tails, RandomRingsCapsule, 20510},
 
         {635.30f, -61.00f, 247.38f, LevelAndActIDs_WindyValley1, Characters_Gamma, ExtraLifeCapsule, 52501},
-        {803.36f, -310.50f, -72.85f, LevelAndActIDs_WindyValley1, Characters_Gamma, MagneticShieldCapsule, 52502}, //DX
-        {803.36f, -311.00f, -72.85f, LevelAndActIDs_WindyValley1, Characters_Gamma, MagneticShieldCapsule, 52502}, //DC
+        {803.36f, -310.50f, -72.85f, LevelAndActIDs_WindyValley1, Characters_Gamma, SpeedUpCapsule, 52502}, //DX
+        {803.36f, -311.00f, -72.85f, LevelAndActIDs_WindyValley1, Characters_Gamma, SpeedUpCapsule, 52502}, //DC
         {979.54f, -177.81f, -160.69f, LevelAndActIDs_WindyValley1, Characters_Gamma, TenRingsCapsule, 52503}, //DX
         {979.54f, -178.31f, -160.69f, LevelAndActIDs_WindyValley1, Characters_Gamma, TenRingsCapsule, 52503}, //DC
         {1072.98f, -157.81f, -25.14f, LevelAndActIDs_WindyValley1, Characters_Gamma, FiveRingsCapsule, 52504}, //DX
@@ -472,6 +563,60 @@ LocationRepository::LocationRepository()
         {2028.11f, -467.00f, 6.60f, LevelAndActIDs_WindyValley1, Characters_Gamma, ExtraLifeCapsule, 52508},
         {2043.06f, -467.00f, 7.89f, LevelAndActIDs_WindyValley1, Characters_Gamma, RandomRingsCapsule, 52509},
         {2897.02f, -461.03f, -1274.20f, LevelAndActIDs_WindyValley1, Characters_Gamma, RandomRingsCapsule, 52510},
+
+        {-2039.84f, 1520.50f, 1362.67f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14501},
+        {-2909.14f, 1294.00f, 2272.62f, LevelAndActIDs_TwinklePark1, Characters_Sonic, TenRingsCapsule, 14502},
+        {-2960.27f, 1223.00f, 3272.37f, LevelAndActIDs_TwinklePark1, Characters_Sonic, RandomRingsCapsule, 14503},
+        {-2957.79f, 725.00f, 5216.49f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14504},
+        {-3037.67f, 740.00f, 6360.84f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14505},
+        {-3205.38f, 745.00f, 6808.61f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14506},
+        {-3051.10f, 745.00f, 7214.05f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14507},
+        {-2537.78f, -208.31f, 7597.23f, LevelAndActIDs_TwinklePark1, Characters_Sonic, ExtraLifeCapsule, 14508},
+        {-1815.37f, -1177.00f, 7632.06f, LevelAndActIDs_TwinklePark1, Characters_Sonic, BombCapsule, 14509},
+        {119.35f, -1519.96f, 7602.92f, LevelAndActIDs_TwinklePark1, Characters_Sonic, ExtraLifeCapsule, 14510},
+        {1921.49f, -1715.19f, 8560.98f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14511},
+        {2158.00f, -1715.19f, 8640.33f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14512},
+        {2571.95f, -1715.19f, 8561.77f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14513},
+        {-261.12f, -2430.25f, 9345.16f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14514},
+        {3294.22f, -1821.26f, 8926.81f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14515},
+        {2222.65f, -2229.00f, 9362.36f, LevelAndActIDs_TwinklePark1, Characters_Sonic, TenRingsCapsule, 14516},
+        {-6256.02f, -4875.18f, 16102.47f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14517},
+        {-6333.45f, -4887.18f, 16118.63f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14518},
+        {-6397.05f, -4894.18f, 16121.53f, LevelAndActIDs_TwinklePark1, Characters_Sonic, FiveRingsCapsule, 14519},
+        {164.42f, 403.80f, 594.07f, LevelAndActIDs_TwinklePark2, Characters_Sonic, InvincibilityCapsule, 14520},
+        {616.04f, 140.60f, 536.35f, LevelAndActIDs_TwinklePark2, Characters_Sonic, FiveRingsCapsule, 14521},
+        {685.65f, 159.60f, 383.72f, LevelAndActIDs_TwinklePark2, Characters_Sonic, InvincibilityCapsule, 14522},
+        {446.45f, 620.00f, 160.82f, LevelAndActIDs_TwinklePark2, Characters_Sonic, FiveRingsCapsule, 14523},
+        {426.48f, 620.00f, 161.95f, LevelAndActIDs_TwinklePark2, Characters_Sonic, FiveRingsCapsule, 14524},
+        {466.41f, 620.00f, 159.69f, LevelAndActIDs_TwinklePark2, Characters_Sonic, FiveRingsCapsule, 14525},
+        {-24.25f, 425.30f, 125.35f, LevelAndActIDs_TwinklePark2, Characters_Sonic, ExtraLifeCapsule, 14526},
+        {767.00f, 82.39f, -129.81f, LevelAndActIDs_TwinklePark2, Characters_Sonic, FiveRingsCapsule, 14527},
+        {967.21f, 93.39f, -106.72f, LevelAndActIDs_TwinklePark2, Characters_Sonic, FiveRingsCapsule, 14528},
+        {763.90f, 81.39f, -221.39f, LevelAndActIDs_TwinklePark2, Characters_Sonic, FiveRingsCapsule, 14529},
+        {-300.68f, 310.00f, -183.25f, LevelAndActIDs_TwinklePark2, Characters_Sonic, TenRingsCapsule, 14530},
+        {990.39f, 87.39f, -212.64f, LevelAndActIDs_TwinklePark2, Characters_Sonic, ShieldCapsule, 14531},
+        {372.47f, 317.02f, -363.36f, LevelAndActIDs_TwinklePark2, Characters_Sonic, ExtraLifeCapsule, 14532},
+        {965.93f, 93.39f, -284.82f, LevelAndActIDs_TwinklePark2, Characters_Sonic, FiveRingsCapsule, 14533},
+        {109.96f, 200.02f, -371.39f, LevelAndActIDs_TwinklePark2, Characters_Sonic, RandomRingsCapsule, 14534},
+        {703.07f, -0.11f, -511.70f, LevelAndActIDs_TwinklePark2, Characters_Sonic, RandomRingsCapsule, 14535},
+        {688.49f, -0.11f, -532.23f, LevelAndActIDs_TwinklePark2, Characters_Sonic, RandomRingsCapsule, 14536},
+        {709.47f, -0.11f, -535.84f, LevelAndActIDs_TwinklePark2, Characters_Sonic, RandomRingsCapsule, 14537},
+        {314.77f, 66.26f, -591.00f, LevelAndActIDs_TwinklePark2, Characters_Sonic, RandomRingsCapsule, 14538},
+        {-162.02f, 0.00f, -579.30f, LevelAndActIDs_TwinklePark2, Characters_Sonic, RandomRingsCapsule, 14539},
+        {-51.71f, 0.01f, -1034.34f, LevelAndActIDs_TwinklePark2, Characters_Sonic, FiveRingsCapsule, 14540},
+
+        {703.07f, -0.11f, -511.70f, LevelAndActIDs_TwinklePark2, Characters_Amy, RandomRingsCapsule, 40501},
+        {688.49f, -0.11f, -532.23f, LevelAndActIDs_TwinklePark2, Characters_Amy, RandomRingsCapsule, 40502},
+        {709.47f, -0.11f, -535.84f, LevelAndActIDs_TwinklePark2, Characters_Amy, RandomRingsCapsule, 40503},
+        {435.98f, 297.02f, -255.54f, LevelAndActIDs_TwinklePark2, Characters_Amy, TenRingsCapsule, 40504},
+        {267.40f, 306.02f, -297.65f, LevelAndActIDs_TwinklePark2, Characters_Amy, ExtraLifeCapsule, 40505},
+        {619.40f, 41.96f, -871.16f, LevelAndActIDs_TwinklePark2, Characters_Amy, SpeedUpCapsule, 40506},
+        {18.14f, 0.00f, -631.67f, LevelAndActIDs_TwinklePark2, Characters_Amy, ShieldCapsule, 40507},
+        {779.32f, 120.00f, 408.08f, LevelAndActIDs_TwinklePark2, Characters_Amy, RandomRingsCapsule, 40508},
+        {611.41f, 145.00f, 551.92f, LevelAndActIDs_TwinklePark2, Characters_Amy, RandomRingsCapsule, 40509},
+
+        {69.93f, 0.00f, -442.74f, LevelAndActIDs_TwinklePark2, Characters_Big, RandomRingsCapsule, 60501},
+        {643.80f, 0.00f, -565.22f, LevelAndActIDs_TwinklePark2, Characters_Big, RandomRingsCapsule, 60502},
 
     };
 

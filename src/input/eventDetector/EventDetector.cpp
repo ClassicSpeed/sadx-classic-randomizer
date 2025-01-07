@@ -598,10 +598,17 @@ FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
     CheckEnemy(tp);
     onWaterSpiderLoad.Original(tp);
 });
+
 FunctionHook<void, task*> onWaterSpiderMain(0x7AA870, [](task* tp)-> void
 {
     CheckEnemy(tp);
     onWaterSpiderMain.Original(tp);
+});
+
+FunctionHook<void, task*> onBuyonMain(0x7B2E00, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onBuyonMain.Original(tp);
 });
 
 FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
