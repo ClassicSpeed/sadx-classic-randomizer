@@ -86,13 +86,15 @@ struct LocationData
                      type(LocationUnknown),
                      checked(false),
                      displayName(std::string("Unknown")),
-                     originalItemId(-1)
+                     originalItemId(-1),
+                     x(0), y(0), z(0)
     {
     }
 
     LocationData(const StoryFlags eventFlag, const int character, const int level, const int mission,
                  const int emblemId, const int missionNumber, const LocationType type, const bool checked,
-                 const std::string& displayName, const int originalItemId, const int capsuleType, const int enemyType)
+                 const std::string& displayName, const int originalItemId, const int capsuleType, const int enemyType,
+                 const float x, const float y, const float z)
         : eventFlag(eventFlag),
           character(character),
           level(level),
@@ -104,57 +106,60 @@ struct LocationData
           displayName(displayName),
           originalItemId(originalItemId),
           capsuleType(capsuleType),
-          enemyType(enemyType)
+          enemyType(enemyType),
+          x(x), y(y), z(z)
     {
     }
 
     static LocationData UpgradeLocation(StoryFlags eventFlag, const std::string& displayName, const int originalItemId)
     {
-        return LocationData(eventFlag, -1, -1, -1, -1, -1, LocationUpgrade, false, displayName, originalItemId, -1, -1);
+        return LocationData(eventFlag, -1, -1, -1, -1, -1, LocationUpgrade, false, displayName, originalItemId, -1, -1,
+                            0, 0, 0);
     }
 
     static LocationData LevelLocation(const int character, const int level, const int mission)
     {
         return LocationData(static_cast<StoryFlags>(0x0), character, level, mission, -1, -1, LocationLevel, false,
-                            std::to_string(character) + std::to_string(level) + std::to_string(mission), -1, -1, -1);
+                            std::to_string(character) + std::to_string(level) + std::to_string(mission), -1, -1, -1, 0,
+                            0, 0);
     }
 
     static LocationData SubLevelLocation(const int level, const int mission)
     {
         return LocationData(static_cast<StoryFlags>(0x0), -1, level, mission, -1, -1, LocationSubLevel, false,
-                            std::to_string(level) + std::to_string(mission), -1, -1, -1);
+                            std::to_string(level) + std::to_string(mission), -1, -1, -1, 0, 0, 0);
     }
 
     static LocationData FieldEmblemLocation(const int emblemId, const std::string& displayName)
     {
         return LocationData(static_cast<StoryFlags>(0x0), -1, -1, -1, emblemId, -1, LocationFieldEmblem, false,
-                            displayName, -1, -1, -1);
+                            displayName, -1, -1, -1, 0, 0, 0);
     }
 
 
     static LocationData BossFightLocation(const int character, const int level)
     {
         return LocationData(static_cast<StoryFlags>(0x0), character, level, -1, -1, -1, LocationBossFight, false,
-                            std::to_string(character) + std::to_string(level), -1, -1, -1);
+                            std::to_string(character) + std::to_string(level), -1, -1, -1, 0, 0, 0);
     }
 
     static LocationData MissionLocation(const int character, const int missionNumber)
     {
         return LocationData(static_cast<StoryFlags>(0x0), character, -1, -1, -1, missionNumber, LocationMission, false,
-                            "Mission " + std::to_string(missionNumber), -1, -1, -1);
+                            "Mission " + std::to_string(missionNumber), -1, -1, -1, 0, 0, 0);
     }
 
 
     static LocationData ChaoEggLocation(const StoryFlags eventFlag, const std::string& displayName)
     {
         return LocationData(eventFlag, -1, -1, -1, -1, -1, LocationChaoEgg, false,
-                            displayName, -1, -1, -1);
+                            displayName, -1, -1, -1, 0, 0, 0);
     }
 
     static LocationData ChaoRaceLocation(const int emblemId, const std::string& displayName)
     {
         return LocationData(static_cast<StoryFlags>(0x0), -1, -1, -1, emblemId, -1, LocationChaoRace, false,
-                            displayName, -1, -1, -1);
+                            displayName, -1, -1, -1, 0, 0, 0);
     }
 
 
@@ -163,7 +168,7 @@ struct LocationData
         return LocationData(static_cast<StoryFlags>(0x0), enemy.character, enemy.level, -1, -1, -1, LocationEnemy,
                             false,
                             "Enemy " + std::to_string(enemy.character) + " - " + std::to_string(enemy.level), -1, -1,
-                            enemy.enemyType);
+                            enemy.enemyType, enemy.x, enemy.y, enemy.z);
     }
 
     static LocationData CapsuleLocation(const CapsuleLocationData& capsule)
@@ -171,7 +176,7 @@ struct LocationData
         return LocationData(static_cast<StoryFlags>(0x0), capsule.character, capsule.level, -1, -1, -1, LocationCapsule,
                             false,
                             "Enemy " + std::to_string(capsule.character) + " - " + std::to_string(capsule.level), -1,
-                            capsule.capsuleType, -1);
+                            capsule.capsuleType, -1, capsule.x, capsule.y, capsule.z);
     }
 
 
@@ -190,4 +195,8 @@ struct LocationData
     int originalItemId;
     int capsuleType;
     int enemyType;
+
+    float x;
+    float y;
+    float z;
 };

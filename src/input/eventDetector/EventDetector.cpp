@@ -169,6 +169,7 @@ void EventDetector::OnPlayingFrame() const
     if (GameMode != GameModes_Mission)
         return;
 
+
     bool checksFound = false;
     for (const auto& check : checkData)
     {
@@ -181,6 +182,129 @@ void EventDetector::OnPlayingFrame() const
     }
     if (checksFound)
         checkData = randomizer.GetCheckData();
+
+    if (CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
+    {
+        NJS_VECTOR playerPosition = EntityData1Ptrs[0]->Position;
+        playerPosition.y += 15.0f; // Adjust for player height
+        float closestDistance = 1000000.0f;
+        LocationData* closestLocation = nullptr;
+
+        for (auto& check : checkData)
+        {
+            const LocationData& location = check.second;
+            if ((location.type == LocationEnemy || location.type == LocationCapsule) &&
+                location.character == CurrentCharacter &&
+                location.level == CurrentStageAndAct &&
+                !location.checked)
+            {
+                float dx = playerPosition.x - location.x;
+                float dy = playerPosition.y - location.y;
+                float dz = playerPosition.z - location.z;
+                float distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestLocation = &check.second;
+                }
+            }
+        }
+
+        if (closestLocation != nullptr)
+        {
+            // Calculate direction vector from player to enemy
+            NJS_VECTOR direction;
+            direction.x = closestLocation->x - playerPosition.x;
+            direction.y = closestLocation->y - playerPosition.y;
+            direction.z = closestLocation->z - playerPosition.z;
+
+            // Normalize the direction vector
+            float length = sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
+            direction.x /= length;
+            direction.y /= length;
+            direction.z /= length;
+
+            float height = 5.0f; // Distance from player to triangle tip
+            float baseWidth = 2.5f; // Width of the base of the triangle
+
+            NJS_POINT3 tip;
+            tip.x = playerPosition.x + direction.x * height;
+            tip.y = playerPosition.y + direction.y * height;
+            tip.z = playerPosition.z + direction.z * height;
+
+
+            NJS_VECTOR up = {0.0f, 1.0f, 0.0f}; // Arbitrary up vector, change if needed
+            NJS_VECTOR right;
+
+            // Cross product to get the perpendicular vector (right vector)
+            right.x = up.y * direction.z - up.z * direction.y;
+            right.y = up.z * direction.x - up.x * direction.z;
+            right.z = up.x * direction.y - up.y * direction.x;
+
+            // Normalize the right vector
+            length = sqrt(right.x * right.x + right.y * right.y + right.z * right.z);
+            right.x /= length;
+            right.y /= length;
+            right.z /= length;
+
+            NJS_POINT3 leftBase, rightBase;
+
+            // Left base point
+            leftBase.x = playerPosition.x - right.x * baseWidth / 2;
+            leftBase.y = playerPosition.y - right.y * baseWidth / 2;
+            leftBase.z = playerPosition.z - right.z * baseWidth / 2;
+
+            // Right base point
+            rightBase.x = playerPosition.x + right.x * baseWidth / 2;
+            rightBase.y = playerPosition.y + right.y * baseWidth / 2;
+            rightBase.z = playerPosition.z + right.z * baseWidth / 2;
+
+            // Calculate the second perpendicular vector
+            NJS_VECTOR forward;
+            forward.x = direction.y * right.z - direction.z * right.y;
+            forward.y = direction.z * right.x - direction.x * right.z;
+            forward.z = direction.x * right.y - direction.y * right.x;
+
+            // Normalize the forward vector
+            length = sqrt(forward.x * forward.x + forward.y * forward.y + forward.z * forward.z);
+            forward.x /= length;
+            forward.y /= length;
+            forward.z /= length;
+
+            NJS_POINT3 frontBase, backBase;
+
+            // Front base point
+            frontBase.x = playerPosition.x - forward.x * baseWidth / 2;
+            frontBase.y = playerPosition.y - forward.y * baseWidth / 2;
+            frontBase.z = playerPosition.z - forward.z * baseWidth / 2;
+
+            // Back base point
+            backBase.x = playerPosition.x + forward.x * baseWidth / 2;
+            backBase.y = playerPosition.y + forward.y * baseWidth / 2;
+            backBase.z = playerPosition.z + forward.z * baseWidth / 2;
+
+            // Calculate the arrow points
+            NJS_POINT3 point[] = {
+                {tip.x, tip.y, tip.z}, // Tip of the triangle (pointing towards the enemy)
+                {leftBase.x, leftBase.y, leftBase.z}, // Left base point
+                {rightBase.x, rightBase.y, rightBase.z}, // Right base point
+                {tip.x, tip.y, tip.z}, // Tip of the second triangle
+                {frontBase.x, frontBase.y, frontBase.z}, // Front base point
+                {backBase.x, backBase.y, backBase.z} // Back base point
+            };
+
+            NJS_COLOR color;
+            color.argb = {0, 0, 0, 255};
+            NJS_POINT3COL point3Col;
+            point3Col.p = point;
+            point3Col.num = 6;
+            point3Col.col = &color;
+            NJS_TEX tex = {1, 1};
+            point3Col.tex = &tex;
+            njDrawTriangle3D(&point3Col, 6, 0xF0000000);
+        }
+    }
 }
 
 void EventDetector::OnLevelEmblem(const int character, const int level, const int mission)
