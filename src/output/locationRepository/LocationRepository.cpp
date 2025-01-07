@@ -433,7 +433,6 @@ LocationRepository::LocationRepository()
         {285.46f, 3.96f, -978.46f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40002}, //DC
         {108.82f, 3.96f, -839.80f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40003}, //DX
         {108.98f, 3.96f, -839.26f, LevelAndActIDs_TwinklePark2, Characters_Amy, Kiki, 40003}, //DC
-        
         {-76.50f, 4.99f, -552.86f, LevelAndActIDs_TwinklePark3, Characters_Amy, Kiki, 40004}, //DX
         {-76.17f, 3.99f, -542.86f, LevelAndActIDs_TwinklePark3, Characters_Amy, Kiki, 40004}, //DC
         {-89.49f, 4.99f, -559.12f, LevelAndActIDs_TwinklePark3, Characters_Amy, Kiki, 40005}, //DX
@@ -463,6 +462,110 @@ LocationRepository::LocationRepository()
         {660.64f, 6.00f, -561.42f, LevelAndActIDs_TwinklePark2, Characters_Big, Kiki, 60003}, //DX
         {660.64f, 4.00f, -561.42f, LevelAndActIDs_TwinklePark2, Characters_Big, Kiki, 60003}, //DC
         {322.83f, 6.00f, -985.34f, LevelAndActIDs_TwinklePark2, Characters_Big, Kiki, 60004},
+
+        {2238.86f, -1353.74f, 702.69f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15001},
+        {2242.16f, -1353.74f, 835.26f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15002},
+        {2386.12f, -1287.96f, 720.86f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15003},
+        {2386.27f, -1287.96f, 807.07f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15004},
+        {1905.58f, -1317.00f, 1829.89f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15005}, //DX
+        {1905.58f, -1326.00f, 1829.89f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15005}, //DC
+        {1902.47f, -1317.00f, 1916.31f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15006},
+        {1974.44f, -1314.00f, 1902.25f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15007},
+        {1902.45f, -1317.00f, 2021.69f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15008}, //DX
+        {1902.45f, -1326.00f, 2021.69f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15008}, //DC
+        {1940.67f, -1314.00f, 2021.50f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15009},
+        {3659.03f, -1422.00f, -226.08f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, SpikySpinner, 15010},
+        {3855.70f, -1360.03f, 190.91f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15011},
+        {3999.61f, -1418.00f, -251.88f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, SpikySpinner, 15012},
+        {4063.51f, -1665.00f, 1682.75f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, SpikySpinner, 15013},
+        {2600.07f, -2015.00f, 3745.23f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15014},
+        {4558.23f, -1372.00f, -67.18f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15015},
+        {4557.01f, -1372.00f, -178.73f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15016},
+        {4589.17f, -1356.00f, -280.92f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15017},
+        {4635.70f, -1356.00f, -31.89f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15018},
+        {2864.16f, -2015.00f, 3676.78f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15019},
+        {2801.76f, -2015.00f, 3860.93f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15020},
+        {3156.90f, -2015.00f, 3678.87f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15021}, //DX
+        {3156.90f, -2021.00f, 3678.87f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15021}, //DC
+        {3082.82f, -2015.00f, 3773.65f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15022},
+        {3078.14f, -2015.00f, 3862.94f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15023}, //DX
+        {3078.14f, -2021.00f, 3862.94f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15023}, //DC
+        {3923.75f, -1311.76f, 3828.35f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15024},
+        {3956.97f, -1335.76f, 3879.56f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15025},
+        {3998.51f, -1351.76f, 3923.08f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15026},
+        {4051.44f, -1385.76f, 3944.83f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15027},
+        {4101.71f, -1419.18f, 3973.65f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15028},
+        {4148.65f, -1446.76f, 4012.70f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15029},
+        {4179.59f, -1470.76f, 4060.56f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15030},
+        {4239.51f, -1889.26f, 4190.74f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15031},
+        {4378.04f, -1858.98f, 4084.22f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, Spinner, 15032},
+        {4328.01f, -1889.26f, 4170.71f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15033},
+        {4346.98f, -1889.26f, 4259.18f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, CopSpeeder, 15034},
+        {88.53f, 3.43f, -87.53f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, CopSpeeder, 15035},
+        {53.53f, 3.43f, -87.53f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, CopSpeeder, 15036},
+        {-201.50f, 7.56f, -269.79f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, ElectroSpinner, 15037},
+        {-103.78f, 3.56f, -330.75f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, ElectroSpinner, 15038},
+        {-330.74f, 19.43f, -558.42f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, Spinner, 15039},
+        {-358.65f, 74.43f, -918.45f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, Spinner, 15040},
+        {-845.43f, 38.92f, -864.73f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, CopSpeeder, 15041},
+        {-43.32f, 2.92f, -1438.94f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, CopSpeeder, 15042},
+        {-649.72f, 22.92f, -1291.16f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, CopSpeeder, 15043},
+        {-1158.87f, 74.92f, -977.14f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, CopSpeeder, 15044},
+        {-1498.36f, 114.92f, -872.50f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, CopSpeeder, 15045},
+        {-1278.33f, 80.92f, -1290.84f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, CopSpeeder, 15046},
+        {-1701.65f, 103.92f, -1015.31f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, CopSpeeder, 15047},
+        {-1742.79f, 114.92f, -1356.76f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, CopSpeeder, 15048},
+
+        {2238.86f, -1353.74f, 702.69f, LevelAndActIDs_SpeedHighway1, Characters_Tails, Spinner, 24001},
+        {2242.16f, -1353.74f, 835.26f, LevelAndActIDs_SpeedHighway1, Characters_Tails, Spinner, 24002},
+        {2386.12f, -1287.96f, 720.86f, LevelAndActIDs_SpeedHighway1, Characters_Tails, Spinner, 24003},
+        {2386.27f, -1287.96f, 807.07f, LevelAndActIDs_SpeedHighway1, Characters_Tails, Spinner, 24004},
+        {3659.03f, -1422.00f, -226.08f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpikySpinner, 24005},
+        {3565.09f, -1325.32f, 1356.11f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24006},
+        {3568.86f, -1325.32f, 1462.95f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24007},
+        {3855.70f, -1360.03f, 190.91f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24008},
+        {3999.61f, -1418.00f, -251.88f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpikySpinner, 24009},
+        {4063.51f, -1665.00f, 1682.75f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpikySpinner, 24010},
+        {2600.07f, -2015.00f, 3745.23f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24011},
+        {4558.23f, -1372.00f, -67.18f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24012},
+        {4557.01f, -1372.00f, -178.73f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24013},
+        {3532.16f, -1489.98f, 3109.60f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24014},
+        {4589.17f, -1356.00f, -280.92f, LevelAndActIDs_SpeedHighway1, Characters_Tails, Spinner, 24015},
+        {4635.70f, -1356.00f, -31.89f, LevelAndActIDs_SpeedHighway1, Characters_Tails, Spinner, 24016},
+        {2864.16f, -2015.00f, 3676.78f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24017},
+        {2801.76f, -2015.00f, 3860.93f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24018},
+        {3156.90f, -2015.00f, 3678.87f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24019}, //DX
+        {3156.90f, -2021.00f, 3678.87f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24019}, //DC
+        {3082.82f, -2015.00f, 3773.65f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24020},
+        {3078.14f, -2015.00f, 3862.94f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24021}, //DX
+        {3078.14f, -2021.00f, 3862.94f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24021}, //DC
+        {4239.51f, -1889.26f, 4190.74f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24022},
+        {4328.01f, -1889.26f, 4170.71f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24023},
+        {4346.98f, -1889.26f, 4259.18f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24024},
+        {6065.16f, -1940.02f, 5376.01f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpikySpinner, 24025},
+        {6092.91f, -1940.02f, 5443.40f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpikySpinner, 24026},
+        {6162.83f, -1940.02f, 5361.14f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpikySpinner, 24027},
+        {6752.76f, -1988.12f, 6556.21f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24028},
+        {5234.11f, -2325.00f, 7913.96f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpikySpinner, 24029},
+        {5421.58f, -2318.00f, 7954.07f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpikySpinner, 24030},
+        {6586.68f, -1988.12f, 7246.36f, LevelAndActIDs_SpeedHighway1, Characters_Tails, CopSpeeder, 24031},
+
+        {-43.32f, 2.92f, -1438.94f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, CopSpeeder, 30001},
+        {-649.72f, 22.92f, -1291.16f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, CopSpeeder, 30002},
+        {-20.85f, 2.92f, -1034.02f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, CopSpeeder, 30003},
+        {-70.81f, 207.81f, -930.16f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, Spinner, 30004},
+        {-753.86f, 216.36f, -1092.37f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, SpikySpinner, 30005},
+        {-845.43f, 38.92f, -864.73f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, CopSpeeder, 30006},
+        {-1278.33f, 80.92f, -1290.84f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, CopSpeeder, 30007},
+        {-139.13f, 146.36f, -578.40f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, SpikySpinner, 30008},
+        {-1158.87f, 74.92f, -977.14f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, CopSpeeder, 30009},
+        {-1391.75f, 296.36f, -1179.12f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, SpikySpinner, 30010},
+        {-229.12f, 43.56f, -288.38f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, ElectroSpinner, 30011},
+        {-103.80f, 21.56f, -294.30f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, ElectroSpinner, 30012},
+        {-1498.36f, 114.92f, -872.50f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, CopSpeeder, 30013},
+        {-1742.79f, 114.92f, -1356.76f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, CopSpeeder, 30014},
+        {-1656.19f, 254.36f, -1083.73f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, SpikySpinner, 30015},
+        {67.70f, 3.43f, -87.48f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, CopSpeeder, 30016},
     };
 
     _capsules = {
@@ -618,6 +721,90 @@ LocationRepository::LocationRepository()
         {69.93f, 0.00f, -442.74f, LevelAndActIDs_TwinklePark2, Characters_Big, RandomRingsCapsule, 60501},
         {643.80f, 0.00f, -565.22f, LevelAndActIDs_TwinklePark2, Characters_Big, RandomRingsCapsule, 60502},
 
+        {791.85f, -565.00f, 411.87f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, MagneticShieldCapsule, 15501},
+        {1772.14f, -683.00f, 286.35f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, FiveRingsCapsule, 15502}, //DX
+        {1772.14f, -683.18f, 286.35f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, FiveRingsCapsule, 15502}, //DC
+        {1772.14f, -683.00f, 304.35f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, ExtraLifeCapsule, 15503}, //DX
+        {1772.14f, -683.18f, 304.35f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, ExtraLifeCapsule, 15503}, //DC
+        {1772.14f, -683.00f, 322.35f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, FiveRingsCapsule, 15504}, //DX
+        {1772.14f, -683.18f, 322.35f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, FiveRingsCapsule, 15504}, //DC
+        {1904.17f, -93.17f, 21.84f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, ExtraLifeCapsule, 15505},
+        {1912.92f, -93.17f, 594.75f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, ExtraLifeCapsule, 15506},
+        {1848.73f, -1326.00f, 1866.06f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, SpeedUpCapsule, 15507},
+        {3365.33f, -1432.48f, -305.32f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, SpeedUpCapsule, 15508}, //DX
+        {3367.83f, -1430.48f, -305.32f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, SpeedUpCapsule, 15508}, //DC
+        {3762.78f, -1125.00f, -313.84f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, InvincibilityCapsule, 15509},
+        {3831.56f, -850.00f, -313.26f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, SpeedUpCapsule, 15510},
+        {3798.50f, -1370.00f, 159.90f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, ExtraLifeCapsule, 15511},
+        {3917.88f, -1675.00f, 1665.49f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, RandomRingsCapsule, 15512},
+        {2718.36f, -1997.00f, 3664.15f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, FiveRingsCapsule, 15513},
+        {2921.09f, -1997.00f, 3660.93f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, FiveRingsCapsule, 15514},
+        {2820.73f, -1997.00f, 3764.18f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, FiveRingsCapsule, 15515},
+        {4790.28f, -1380.00f, -317.21f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, TenRingsCapsule, 15516},
+        {4808.28f, -1380.00f, -317.21f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, ShieldCapsule, 15517},
+        {4626.20f, -1675.00f, 1667.93f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, ExtraLifeCapsule, 15518},
+        {4726.38f, -1444.33f, 1652.14f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, SpeedUpCapsule, 15519},
+        {3127.95f, -2020.60f, 3960.12f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, ShieldCapsule, 15520}, //DX
+        {3127.95f, -2021.10f, 3960.12f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, ShieldCapsule, 15520}, //DC
+        {4955.38f, -1676.00f, 1441.51f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, RandomRingsCapsule, 15521},
+        {4271.06f, -1525.98f, 4152.68f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, ExtraLifeCapsule, 15522},
+        {4380.14f, -1838.98f, 4081.59f, LevelAndActIDs_SpeedHighway1, Characters_Sonic, BombCapsule, 15523},
+        {1.35f, -4080.00f, -100.40f, LevelAndActIDs_SpeedHighway2, Characters_Sonic, SpeedUpCapsule, 15524},
+        {1.00f, -4962.00f, -55.40f, LevelAndActIDs_SpeedHighway2, Characters_Sonic, FiveRingsCapsule, 15525},
+        {1.00f, -5565.00f, -55.40f, LevelAndActIDs_SpeedHighway2, Characters_Sonic, ExtraLifeCapsule, 15526},
+        {-0.17f, -6886.00f, 97.60f, LevelAndActIDs_SpeedHighway2, Characters_Sonic, TenRingsCapsule, 15527},
+        {-2.80f, -8650.00f, -48.68f, LevelAndActIDs_SpeedHighway2, Characters_Sonic, RandomRingsCapsule, 15528},
+        {-0.73f, -11978.00f, -1.75f, LevelAndActIDs_SpeedHighway2, Characters_Sonic, FiveRingsCapsule, 15529},
+        {-0.94f, -12372.00f, -51.66f, LevelAndActIDs_SpeedHighway2, Characters_Sonic, RandomRingsCapsule, 15530},
+        {-4.83f, -14692.00f, 89.20f, LevelAndActIDs_SpeedHighway2, Characters_Sonic, FiveRingsCapsule, 15531},
+        {-1.69f, -17743.00f, -91.20f, LevelAndActIDs_SpeedHighway2, Characters_Sonic, MagneticShieldCapsule, 15532},
+        {-110.45f, 100.00f, -164.45f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, SpeedUpCapsule, 15533},
+        {-359.64f, 62.50f, -356.49f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, ShieldCapsule, 15534},
+        {-85.23f, 145.00f, -499.37f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, FiveRingsCapsule, 15535},
+        {-138.84f, 185.00f, -1014.24f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, ExtraLifeCapsule, 15536},
+        {-641.95f, 210.00f, -1200.72f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, FiveRingsCapsule, 15537},
+        {-641.76f, 210.00f, -1239.20f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, FiveRingsCapsule, 15538},
+        {14.83f, 0.00f, -1688.95f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, ExtraLifeCapsule, 15539},
+        {-1649.65f, 290.00f, -1383.52f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, RandomRingsCapsule, 15540},
+        {-1674.69f, 223.07f, -1386.02f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, SpeedUpCapsule, 15541},
+        {-1674.79f, 290.00f, -1379.44f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, RandomRingsCapsule, 15542},
+        {-1699.09f, 290.00f, -1374.88f, LevelAndActIDs_SpeedHighway3, Characters_Sonic, RandomRingsCapsule, 15543},
+
+        {791.10f, -565.00f, 411.21f, LevelAndActIDs_SpeedHighway1, Characters_Tails, MagneticShieldCapsule, 24501},
+        {3365.33f, -1432.48f, -305.32f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpeedUpCapsule, 24502}, //DX
+        {3367.83f, -1430.48f, -305.32f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpeedUpCapsule, 24502}, //DC
+        {3798.50f, -1370.00f, 159.90f, LevelAndActIDs_SpeedHighway1, Characters_Tails, ShieldCapsule, 24503},
+        {3917.88f, -1675.00f, 1665.49f, LevelAndActIDs_SpeedHighway1, Characters_Tails, RandomRingsCapsule, 24504},
+        {2718.36f, -1997.00f, 3664.15f, LevelAndActIDs_SpeedHighway1, Characters_Tails, FiveRingsCapsule, 24505},
+        {2921.09f, -1997.00f, 3660.93f, LevelAndActIDs_SpeedHighway1, Characters_Tails, FiveRingsCapsule, 24506},
+        {2820.73f, -1997.00f, 3764.18f, LevelAndActIDs_SpeedHighway1, Characters_Tails, FiveRingsCapsule, 24507},
+        {4790.28f, -1380.00f, -317.21f, LevelAndActIDs_SpeedHighway1, Characters_Tails, TenRingsCapsule, 24508},
+        {4808.28f, -1380.00f, -317.21f, LevelAndActIDs_SpeedHighway1, Characters_Tails, ShieldCapsule, 24509},
+        {4626.20f, -1675.00f, 1667.93f, LevelAndActIDs_SpeedHighway1, Characters_Tails, ExtraLifeCapsule, 24510},
+        {4730.87f, -1446.33f, 1650.32f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpeedUpCapsule, 24511},
+        {3127.95f, -2021.10f, 3960.12f, LevelAndActIDs_SpeedHighway1, Characters_Tails, ShieldCapsule, 24512},
+        {4956.11f, -1714.00f, 1364.51f, LevelAndActIDs_SpeedHighway1, Characters_Tails, ExtraLifeCapsule, 24513},
+        {4247.71f, -1910.00f, 4001.48f, LevelAndActIDs_SpeedHighway1, Characters_Tails, TenRingsCapsule, 24514},
+        {4241.26f, -1910.00f, 4012.77f, LevelAndActIDs_SpeedHighway1, Characters_Tails, MagneticShieldCapsule, 24515},
+        {4234.79f, -1910.00f, 4024.05f, LevelAndActIDs_SpeedHighway1, Characters_Tails, TenRingsCapsule, 24516},
+        {4259.64f, -1704.04f, 4095.85f, LevelAndActIDs_SpeedHighway1, Characters_Tails, ExtraLifeCapsule, 24517}, //DX
+        {4259.64f, -1705.34f, 4095.85f, LevelAndActIDs_SpeedHighway1, Characters_Tails, ExtraLifeCapsule, 24517}, //DC
+        {4261.77f, -1890.00f, 4273.03f, LevelAndActIDs_SpeedHighway1, Characters_Tails, RandomRingsCapsule, 24518},
+        {5434.11f, -2332.00f, 7538.42f, LevelAndActIDs_SpeedHighway1, Characters_Tails, MagneticShieldCapsule, 24519},
+        {5406.19f, -2332.00f, 7667.90f, LevelAndActIDs_SpeedHighway1, Characters_Tails, FiveRingsCapsule, 24520},
+        {5246.12f, -2332.00f, 7842.45f, LevelAndActIDs_SpeedHighway1, Characters_Tails, ExtraLifeCapsule, 24521},
+        {5462.74f, -2332.00f, 7888.70f, LevelAndActIDs_SpeedHighway1, Characters_Tails, RandomRingsCapsule, 24522},
+        {6087.48f, -1900.00f, 8040.36f, LevelAndActIDs_SpeedHighway1, Characters_Tails, SpeedUpCapsule, 24523},
+
+        {-347.94f, 110.00f, -1696.57f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, ShieldCapsule, 30501},
+        {14.83f, 0.00f, -1688.95f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, ExtraLifeCapsule, 30502},
+        {-138.84f, 185.00f, -1014.24f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, ExtraLifeCapsule, 30503},
+        {-85.23f, 145.00f, -499.37f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, RandomRingsCapsule, 30504},
+        {-359.64f, 62.50f, -356.49f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, MagneticShieldCapsule, 30505},
+        {-1455.19f, 282.00f, -1026.87f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, TenRingsCapsule, 30506},
+        {-1779.31f, 290.00f, -1326.34f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, ShieldCapsule, 30507},
+        {70.51f, 24.50f, 223.17f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, ExtraLifeCapsule, 30508}, //DX
+        {70.51f, 24.40f, 223.17f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, ExtraLifeCapsule, 30508}, //DC
     };
 
 

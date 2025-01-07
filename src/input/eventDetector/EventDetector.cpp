@@ -752,6 +752,63 @@ FunctionHook<void, task*> onLeonMain(0x4A83D0, [](task* tp)-> void
     onLeonMain.Original(tp);
 });
 
+FunctionHook<void, task*> onSpinnerAMain(0x4B0DF0, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onSpinnerAMain.Original(tp);
+});
+FunctionHook<void, task*> onSpinnerBMain(0x4B0F40, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onSpinnerBMain.Original(tp);
+});
+//Electric Spinner
+FunctionHook<void, task*> onSpinnerCMain(0x4B1090, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onSpinnerCMain.Original(tp);
+});
+FunctionHook<void, task*> onPoliceLoad(0x4B3210, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onPoliceLoad.Original(tp);
+});
+FunctionHook<void, task*> onPoliceMain(0x4B30E0, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onPoliceMain.Original(tp);
+});
+FunctionHook<void, task*> onSpikeBallSpinnerALoad(0x4AF190, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onSpikeBallSpinnerALoad.Original(tp);
+});
+FunctionHook<void, task*> onSpikeBallSpinnerAMain(0x4AF030, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onSpikeBallSpinnerAMain.Original(tp);
+});
+FunctionHook<void, task*> onSpikeBallSpinnerBLoad(0x4AF500, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onSpikeBallSpinnerBLoad.Original(tp);
+});
+FunctionHook<void, task*> onSpikeBallSpinnerBMain(0x4AF3D0, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onSpikeBallSpinnerBMain.Original(tp);
+});
+FunctionHook<void, task*> onSpikeBallSpinnerCLoad(0x4AF860, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onSpikeBallSpinnerCLoad.Original(tp);
+});
+FunctionHook<void, task*> onSpikeBallSpinnerCMain(0x4AF770, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onSpikeBallSpinnerCMain.Original(tp);
+});
+
 
 void CheckDestroyedEnemy(taskwk* twp)
 {

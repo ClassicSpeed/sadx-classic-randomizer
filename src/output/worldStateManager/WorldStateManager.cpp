@@ -99,11 +99,11 @@ FunctionHook<void, int, float, float, float> onCreateAnimal(0x4BE610, [](int e_n
 });
 
 //We delete the police enemy when transitioning between levels
-FunctionHook<void, task*> onPoliceMain(0x4B30E0, [](task* tp) -> void
+FunctionHook<void, task*> onPoliceEnemyMain(0x4B30E0, [](task* tp) -> void
 {
     if (CutsceneMode == 3)
         return FreeTask(tp);
-    onPoliceMain.Original(tp);
+    onPoliceEnemyMain.Original(tp);
 });
 
 FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
