@@ -186,7 +186,10 @@ void EventDetector::OnPlayingFrame() const
     if (CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
     {
         NJS_VECTOR playerPosition = EntityData1Ptrs[0]->Position;
-        playerPosition.y += 15.0f; // Adjust for player height
+        if (CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Big)
+            playerPosition.y += 25.0f;
+        else
+            playerPosition.y += 15.0f;
         float closestDistance = 1000000.0f;
         LocationData* closestLocation = nullptr;
 
@@ -404,7 +407,7 @@ int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - capsule.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 5.0)
+        if (distance <= 2.0)
             return capsule.locationId;
     }
     return -1;
@@ -597,13 +600,13 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - enemy.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 5.0)
+        if (distance <= 2.0)
             return enemy.locationId;
     }
     return -1;
 }
 
-void DrawIndicator(task* tp)
+void DrawIndicator(task* tp, bool tallElement)
 {
     const EntityData1* player = EntityData1Ptrs[0];
     const double dz = player->Position.z - tp->twp->pos.z;
@@ -629,6 +632,8 @@ void DrawIndicator(task* tp)
         verticalOffset = static_cast<int>((distance - MIN_DISTANCE) / (MAX_DISTANCE - MIN_DISTANCE) *
             OFFSET_WHEN_FAR);
     }
+    if (tallElement)
+        verticalOffset += 10;
 
     NJS_POINT3 point[] = {
         {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 16, tp->twp->pos.z},
@@ -660,7 +665,7 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
     {
         const auto test = eventDetectorPtr->checkData.find(locationId);
         if (!test->second.checked)
-            DrawIndicator(tp);
+            DrawIndicator(tp, false);
     }
 });
 
@@ -675,7 +680,7 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
     {
         const auto test = eventDetectorPtr->checkData.find(locationId);
         if (!test->second.checked)
-            DrawIndicator(tp);
+            DrawIndicator(tp, true);
     }
 });
 
@@ -693,7 +698,7 @@ void CheckEnemy(task* tp)
         const auto test = eventDetectorPtr->checkData.find(it->second);
         if (!test->second.checked)
         {
-            DrawIndicator(tp);
+            DrawIndicator(tp, false);
         }
     }
 }

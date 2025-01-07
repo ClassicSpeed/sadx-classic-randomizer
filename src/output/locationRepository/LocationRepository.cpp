@@ -566,6 +566,152 @@ LocationRepository::LocationRepository()
         {-1742.79f, 114.92f, -1356.76f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, CopSpeeder, 30014},
         {-1656.19f, 254.36f, -1083.73f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, SpikySpinner, 30015},
         {67.70f, 3.43f, -87.48f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, CopSpeeder, 30016},
+
+
+        {-118.27f, 57.67f, 590.19f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16001}, //DX
+        {-118.27f, 58.37f, 590.19f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16001}, //DC
+        {-102.97f, 77.87f, 552.55f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16002}, //DX
+        {-102.97f, 78.87f, 552.55f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16002}, //DC
+        {-145.27f, 37.37f, 647.86f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16003}, //DX
+        {-145.27f, 36.37f, 647.86f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16003}, //DC
+        {-105.57f, 45.16f, 396.78f, LevelAndActIDs_RedMountain1, Characters_Sonic, Gola, 16004},
+        {52.16f, 518.31f, 562.97f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16005},
+        {51.36f, 523.31f, 523.84f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16006},
+        {-55.70f, 545.70f, 672.85f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16007}, //DX
+        {-55.70f, 545.62f, 672.85f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16007}, //DC
+        {-206.70f, 928.62f, 18.85f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16008},
+        {75.32f, 988.42f, -118.25f, LevelAndActIDs_RedMountain1, Characters_Sonic, Gola, 16009},
+        {-34.59f, 1084.09f, -40.96f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16010},
+        {-74.11f, 1084.09f, -112.26f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16011},
+        {-878.09f, 866.93f, -940.67f, LevelAndActIDs_RedMountain1, Characters_Sonic, Gola, 16012},
+        {-2994.64f, 161.49f, -1388.64f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16013},
+        {-2984.10f, 137.49f, -1406.55f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16014},
+        {-3172.22f, 457.64f, -1270.04f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16015},
+        {-3214.98f, 454.00f, -1233.59f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16016},
+        {-3274.66f, 454.00f, -1251.58f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16017},
+        {-3317.32f, 454.00f, -1210.60f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16018},
+        {-3282.50f, 158.38f, -1500.64f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16019},
+        {-3251.29f, 766.32f, -1581.19f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16020},
+        {-3339.85f, 158.38f, -1573.27f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16021}, //DX
+        {-3339.85f, 161.38f, -1573.27f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16021}, //DC
+        {-3536.73f, 381.00f, -1489.59f, LevelAndActIDs_RedMountain1, Characters_Sonic, Gola, 16022},
+        {-3697.63f, 405.51f, -1801.91f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16023},
+        {-3723.72f, 380.51f, -1793.37f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16024},
+        {-3759.29f, 407.51f, -1780.18f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16025},
+        {-3807.46f, 443.51f, -1717.80f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16026},
+        {-3784.29f, 422.51f, -1779.85f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16027},
+        {-3781.81f, 435.51f, -1787.10f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16028},
+        {-3801.93f, 403.51f, -1785.33f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16029},
+        {-3843.96f, 467.51f, -1803.13f, LevelAndActIDs_RedMountain1, Characters_Sonic, Spinner, 16030},
+        {-4001.92f, 581.37f, -1831.20f, LevelAndActIDs_RedMountain1, Characters_Sonic, Gola, 16031}, //DX
+        {-3873.77f, 594.07f, -1806.53f, LevelAndActIDs_RedMountain1, Characters_Sonic, Gola, 16031}, //DC
+        {-3932.06f, 1138.58f, -1932.72f, LevelAndActIDs_RedMountain1, Characters_Sonic, Kiki, 16032},
+        {-1106.40f, 529.74f, 2077.08f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16033},
+        {-1119.21f, 526.74f, 2034.03f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16034},
+        {-1118.80f, 543.74f, 2116.72f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16035},
+        {-186.39f, 162.87f, 727.24f, LevelAndActIDs_RedMountain2, Characters_Sonic, Gola, 16036},
+        {-1072.66f, 306.72f, 1127.21f, LevelAndActIDs_RedMountain2, Characters_Sonic, Gola, 16037},
+        {-1113.24f, 286.72f, 1151.29f, LevelAndActIDs_RedMountain2, Characters_Sonic, Gola, 16038},
+        {-1408.08f, 439.01f, 1645.99f, LevelAndActIDs_RedMountain2, Characters_Sonic, Kiki, 16039},
+        {-1486.02f, 439.01f, 1663.27f, LevelAndActIDs_RedMountain2, Characters_Sonic, Kiki, 16040},
+        {-1056.85f, 302.20f, 614.94f, LevelAndActIDs_RedMountain2, Characters_Sonic, Gola, 16041},
+        {-1480.65f, 444.12f, 773.75f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16042},
+        {-1469.75f, 433.12f, 738.30f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16043},
+        {-1479.59f, 423.12f, 713.27f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16044},
+        {-1898.55f, 272.52f, 1479.17f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16045},
+        {-1901.36f, 438.23f, 982.26f, LevelAndActIDs_RedMountain2, Characters_Sonic, Kiki, 16046},
+        {-2034.97f, 258.52f, 1416.83f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16047},
+        {-2057.54f, 258.52f, 1448.72f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16048},
+        {-2060.58f, 258.52f, 1411.26f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16049},
+        {-1942.72f, 438.23f, 975.09f, LevelAndActIDs_RedMountain2, Characters_Sonic, Kiki, 16050},
+        {-1756.76f, 170.00f, 607.26f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16051},
+        {-1824.22f, 180.00f, 632.07f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16052},
+        {-1795.67f, 175.00f, 594.86f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16053},
+        {-2227.86f, 258.52f, 1401.49f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16054},
+        {-2249.64f, 258.52f, 1355.47f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16055},
+        {-1932.18f, 186.00f, 671.41f, LevelAndActIDs_RedMountain2, Characters_Sonic, Kiki, 16056},
+        {-1906.08f, 186.00f, 609.62f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16057},
+        {-1930.32f, 444.48f, 485.50f, LevelAndActIDs_RedMountain2, Characters_Sonic, Kiki, 16058},
+        {-2004.25f, 447.23f, 524.97f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16059},
+        {-2067.65f, 461.23f, 561.00f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16060},
+        {-2369.89f, 258.52f, 1315.16f, LevelAndActIDs_RedMountain2, Characters_Sonic, Spinner, 16061},
+
+        {-3214.98f, 454.00f, -1233.59f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32001},
+        {-3274.66f, 454.00f, -1251.58f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32002},
+        {-3317.32f, 454.00f, -1210.60f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32003},
+        {-3518.36f, 404.37f, -1445.95f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32004},
+        {-2691.88f, 543.91f, -1524.21f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Kiki, 32005}, //DX
+        {-2691.88f, 545.91f, -1524.21f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Kiki, 32005}, //DC
+        {-3547.60f, 412.37f, -1481.48f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32006},
+        {-3607.03f, 466.37f, -1389.01f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32007},
+        {-2949.62f, 118.49f, -1462.17f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32008},
+        {-3390.69f, 138.23f, -1534.23f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Gola, 32009},
+        {-2901.37f, 53.37f, -1616.52f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32010},
+        {-3826.61f, 1085.04f, -1842.77f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Kiki, 32011},
+        {-3494.02f, 501.37f, -2153.79f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32012},
+        {-3693.75f, 1268.66f, -2014.14f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32013},
+        {-4001.92f, 581.37f, -1831.20f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Gola, 32014},
+        {-3658.23f, 1268.66f, -2126.34f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32015},
+        {-2514.94f, 64.21f, -1837.96f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32016},
+        {-3757.22f, 1154.66f, -2248.79f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32017},
+        {-3663.04f, 1117.66f, -2322.18f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Kiki, 32018}, //DX
+        {-3663.04f, 1119.66f, -2322.18f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Kiki, 32018}, //DC
+        {-3781.63f, 1160.66f, -2232.32f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32019},
+        {-3947.98f, 1220.04f, -2137.93f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Kiki, 32020},
+        {-2276.92f, 65.37f, -1853.73f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Spinner, 32021},
+        {-2240.40f, 55.93f, -1921.60f, LevelAndActIDs_RedMountain3, Characters_Knuckles, Kiki, 32022},
+
+        {-307.15f, 574.43f, 1581.80f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53001},
+        {-387.12f, 547.43f, 1562.41f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53002},
+        {-390.58f, 373.43f, 1339.84f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53003},
+        {-405.56f, 337.43f, 1325.24f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53004},
+        {-379.60f, 336.43f, 1299.16f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53005},
+        {-395.43f, 337.43f, 1268.63f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53006},
+        {-305.70f, 192.80f, 921.48f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53007},
+        {-292.32f, 174.01f, 827.76f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53008},
+        {-212.62f, 160.41f, 817.80f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53009},
+        {-158.97f, 157.21f, 771.06f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53010},
+        {-234.63f, 166.32f, 759.20f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53011},
+        {-292.08f, 201.01f, 699.69f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53012},
+        {-1572.18f, 54.34f, 1619.20f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53013},
+        {-1612.72f, 68.21f, 1848.19f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53014},
+        {-214.35f, 221.80f, 290.65f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53015},
+        {-1285.41f, 284.60f, 742.68f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53016},
+        {-226.45f, 233.80f, 250.42f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53017},
+        {-227.79f, 197.80f, 262.57f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53018},
+        {-198.82f, 248.80f, 230.17f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53019},
+        {-1289.11f, 269.60f, 716.79f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53020},
+        {-1675.39f, 92.90f, 2290.92f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53021},
+        {-205.57f, 206.80f, 236.90f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53022},
+        {-1724.23f, 105.90f, 2250.72f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53023},
+        {-1666.59f, 143.77f, 1312.34f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53024},
+        {-1686.70f, 143.77f, 1363.54f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53025},
+        {-1017.06f, 221.19f, 366.05f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53026},
+        {-989.02f, 229.19f, 345.36f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53027},
+        {-980.27f, 199.19f, 328.65f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53028},
+        {-1012.74f, 203.19f, 340.59f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53029},
+        {-1514.25f, 171.57f, 622.81f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53030},
+        {-1872.62f, 98.90f, 2587.91f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53031},
+        {-1875.14f, 113.90f, 2611.16f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53032},
+        {-1917.08f, 130.99f, 1270.75f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53033},
+        {-1546.91f, 171.57f, 604.22f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53034},
+        {-1522.62f, 167.77f, 568.59f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53035},
+        {-1956.86f, 96.90f, 2562.43f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53036},
+        {-1961.67f, 76.90f, 2580.04f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53037},
+        {-1991.32f, 184.77f, 1210.32f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53038},
+        {-1970.55f, 160.77f, 1161.36f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53039},
+        {-1998.07f, 149.77f, 1183.84f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53040},
+        {-1821.91f, 168.62f, 653.27f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53041},
+        {-1954.66f, 175.30f, 771.49f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53042},
+        {-1993.30f, 249.30f, 758.33f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53043},
+        {-1957.66f, 168.30f, 678.41f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53044},
+        {-1946.08f, 167.90f, 631.53f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53045},
+        {-2427.11f, 181.00f, 780.85f, LevelAndActIDs_RedMountain2, Characters_Gamma, Kiki, 53046},
+        {-2609.23f, 175.99f, 1038.43f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53047},
+        {-2597.82f, 140.99f, 984.99f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53048},
+        {-2629.84f, 165.99f, 974.42f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53049},
+        {-2657.98f, 175.99f, 997.54f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53050},
+        {-2635.87f, 150.99f, 931.62f, LevelAndActIDs_RedMountain2, Characters_Gamma, Spinner, 53051},
     };
 
     _capsules = {
@@ -805,6 +951,101 @@ LocationRepository::LocationRepository()
         {-1779.31f, 290.00f, -1326.34f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, ShieldCapsule, 30507},
         {70.51f, 24.50f, 223.17f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, ExtraLifeCapsule, 30508}, //DX
         {70.51f, 24.40f, 223.17f, LevelAndActIDs_SpeedHighway3, Characters_Knuckles, ExtraLifeCapsule, 30508}, //DC
+
+        {-254.40f, 595.97f, 592.58f, LevelAndActIDs_RedMountain1, Characters_Sonic, TenRingsCapsule, 16501}, //DX
+        {-254.40f, 595.97f, 571.58f, LevelAndActIDs_RedMountain1, Characters_Sonic, TenRingsCapsule, 16501}, //DC
+        {-211.72f, 1023.13f, -88.97f, LevelAndActIDs_RedMountain1, Characters_Sonic, SpeedUpCapsule, 16502}, //DX
+        {-225.72f, 1021.53f, -88.97f, LevelAndActIDs_RedMountain1, Characters_Sonic, SpeedUpCapsule, 16502}, //DC
+        {-534.08f, 1255.30f, -170.27f, LevelAndActIDs_RedMountain1, Characters_Sonic, ExtraLifeCapsule, 16503}, //DX
+        {-534.08f, 1254.21f, -170.27f, LevelAndActIDs_RedMountain1, Characters_Sonic, ExtraLifeCapsule, 16503}, //DC
+        {-551.98f, 1255.30f, -161.34f, LevelAndActIDs_RedMountain1, Characters_Sonic, RandomRingsCapsule, 16504}, //DX
+        {-551.98f, 1254.21f, -161.34f, LevelAndActIDs_RedMountain1, Characters_Sonic, RandomRingsCapsule, 16504}, //DC
+        {-553.44f, 1255.30f, -183.68f, LevelAndActIDs_RedMountain1, Characters_Sonic, RandomRingsCapsule, 16505}, //DX
+        {-553.44f, 1254.21f, -183.68f, LevelAndActIDs_RedMountain1, Characters_Sonic, RandomRingsCapsule, 16505}, //DC
+        {-855.52f, 1096.57f, -347.76f, LevelAndActIDs_RedMountain1, Characters_Sonic, ExtraLifeCapsule, 16506},
+        {-1084.28f, 601.55f, -1327.18f, LevelAndActIDs_RedMountain1, Characters_Sonic, TenRingsCapsule, 16507},
+        {-2719.90f, 121.20f, -1774.73f, LevelAndActIDs_RedMountain1, Characters_Sonic, TenRingsCapsule, 16508},
+        {-3035.25f, 173.02f, -1385.02f, LevelAndActIDs_RedMountain1, Characters_Sonic, ExtraLifeCapsule, 16509}, //DX
+        {-3035.25f, 172.22f, -1385.02f, LevelAndActIDs_RedMountain1, Characters_Sonic, ExtraLifeCapsule, 16509}, //DC
+        {-2781.22f, 39.84f, -1740.92f, LevelAndActIDs_RedMountain1, Characters_Sonic, FiveRingsCapsule, 16510},
+        {-2954.26f, 884.30f, -1751.26f, LevelAndActIDs_RedMountain1, Characters_Sonic, ExtraLifeCapsule, 16511},
+        {-2969.36f, 884.30f, -1738.15f, LevelAndActIDs_RedMountain1, Characters_Sonic, ExtraLifeCapsule, 16512},
+        {-3452.31f, 134.38f, -1580.31f, LevelAndActIDs_RedMountain1, Characters_Sonic, ExtraLifeCapsule, 16513},
+        {-3604.83f, 451.69f, -1487.25f, LevelAndActIDs_RedMountain1, Characters_Sonic, TenRingsCapsule, 16514},
+        {-3550.27f, 231.43f, -1940.90f, LevelAndActIDs_RedMountain1, Characters_Sonic, TenRingsCapsule, 16515}, //DX
+        {-3576.10f, 240.07f, -1910.75f, LevelAndActIDs_RedMountain1, Characters_Sonic, TenRingsCapsule, 16515}, //DC
+        {-3767.93f, 1221.38f, -1908.67f, LevelAndActIDs_RedMountain1, Characters_Sonic, ExtraLifeCapsule, 16516}, //DX
+        {-3767.93f, 1226.38f, -1929.57f, LevelAndActIDs_RedMountain1, Characters_Sonic, ExtraLifeCapsule, 16516}, //DC
+        {-4106.05f, 648.92f, -1948.05f, LevelAndActIDs_RedMountain1, Characters_Sonic, RandomRingsCapsule, 16517},
+        {-3864.85f, 1115.91f, -2271.23f, LevelAndActIDs_RedMountain1, Characters_Sonic, RandomRingsCapsule, 16518},
+        {-1232.38f, 433.08f, 1497.01f, LevelAndActIDs_RedMountain2, Characters_Sonic, RandomRingsCapsule, 16519}, //DX
+        {-1232.38f, 432.28f, 1497.01f, LevelAndActIDs_RedMountain2, Characters_Sonic, RandomRingsCapsule, 16519}, //DC
+        {-1248.04f, 432.28f, 1474.47f, LevelAndActIDs_RedMountain2, Characters_Sonic, TenRingsCapsule, 16520},
+        {-1258.02f, 432.28f, 1501.33f, LevelAndActIDs_RedMountain2, Characters_Sonic, RandomRingsCapsule, 16521},
+        {-980.78f, 285.65f, 1114.55f, LevelAndActIDs_RedMountain2, Characters_Sonic, RandomRingsCapsule, 16522}, //DX
+        {-980.78f, 286.65f, 1114.55f, LevelAndActIDs_RedMountain2, Characters_Sonic, RandomRingsCapsule, 16522}, //DC
+        {-1158.70f, 287.55f, 1088.07f, LevelAndActIDs_RedMountain2, Characters_Sonic, TenRingsCapsule, 16523}, //DX
+        {-1158.70f, 286.65f, 1088.07f, LevelAndActIDs_RedMountain2, Characters_Sonic, TenRingsCapsule, 16523}, //DC
+        {-907.53f, 137.85f, 871.08f, LevelAndActIDs_RedMountain2, Characters_Sonic, ExtraLifeCapsule, 16524}, //DX
+        {-907.53f, 137.65f, 871.08f, LevelAndActIDs_RedMountain2, Characters_Sonic, ExtraLifeCapsule, 16524}, //DC
+        {-251.83f, 239.00f, 529.82f, LevelAndActIDs_RedMountain2, Characters_Sonic, SpeedUpCapsule, 16525},
+        {-1721.42f, 515.36f, 1399.58f, LevelAndActIDs_RedMountain2, Characters_Sonic, TenRingsCapsule, 16526},
+        {-1785.81f, 479.11f, 765.20f, LevelAndActIDs_RedMountain2, Characters_Sonic, TenRingsCapsule, 16527},
+        {-1624.23f, 164.82f, 599.80f, LevelAndActIDs_RedMountain2, Characters_Sonic, ShieldCapsule, 16528}, //DX
+        {-1624.23f, 163.82f, 599.80f, LevelAndActIDs_RedMountain2, Characters_Sonic, ShieldCapsule, 16528}, //DC
+        {-2508.08f, 278.55f, 1304.08f, LevelAndActIDs_RedMountain2, Characters_Sonic, ShieldCapsule, 16529},
+
+        {-3248.85f, 760.02f, -1531.15f, LevelAndActIDs_RedMountain3, Characters_Knuckles, TenRingsCapsule, 32501},
+        {-3109.15f, 697.02f, -1124.04f, LevelAndActIDs_RedMountain3, Characters_Knuckles, TenRingsCapsule, 32502},
+        {-3143.69f, 424.02f, -1560.80f, LevelAndActIDs_RedMountain3, Characters_Knuckles, RandomRingsCapsule, 32503},
+        {-2883.10f, 649.02f, -1662.80f, LevelAndActIDs_RedMountain3, Characters_Knuckles, TenRingsCapsule, 32504},
+        {-3153.36f, 277.05f, -1303.56f, LevelAndActIDs_RedMountain3, Characters_Knuckles, FiveRingsCapsule, 32505},
+        {-3148.07f, 865.02f, -1875.48f, LevelAndActIDs_RedMountain3, Characters_Knuckles, TenRingsCapsule, 32506},
+        {-3252.81f, 547.02f, -1840.57f, LevelAndActIDs_RedMountain3, Characters_Knuckles, ShieldCapsule, 32507},
+        {-3349.60f, 206.00f, -1142.93f, LevelAndActIDs_RedMountain3, Characters_Knuckles, ExtraLifeCapsule, 32508}, //DX
+        {-3349.60f, 205.25f, -1142.93f, LevelAndActIDs_RedMountain3, Characters_Knuckles, ExtraLifeCapsule, 32508}, //DC
+        {-3653.56f, 287.42f, -1317.51f, LevelAndActIDs_RedMountain3, Characters_Knuckles, RandomRingsCapsule, 32509},
+        //DX
+        {-3653.56f, 286.92f, -1317.51f, LevelAndActIDs_RedMountain3, Characters_Knuckles, RandomRingsCapsule, 32509},
+        //DC
+        {-3618.18f, 382.02f, -1752.26f, LevelAndActIDs_RedMountain3, Characters_Knuckles, TenRingsCapsule, 32510},
+        {-3542.00f, 335.18f, -1955.67f, LevelAndActIDs_RedMountain3, Characters_Knuckles, InvincibilityCapsule, 32511},
+        //DX
+        {-3537.00f, 334.18f, -1956.67f, LevelAndActIDs_RedMountain3, Characters_Knuckles, InvincibilityCapsule, 32511},
+        //DC
+        {-3537.53f, 507.76f, -2067.51f, LevelAndActIDs_RedMountain3, Characters_Knuckles, TenRingsCapsule, 32512},
+        {-2463.27f, 124.02f, -1627.66f, LevelAndActIDs_RedMountain3, Characters_Knuckles, TenRingsCapsule, 32513},
+        {-3804.06f, 1122.98f, -2094.58f, LevelAndActIDs_RedMountain3, Characters_Knuckles, ExtraLifeCapsule, 32514},
+        {-4106.05f, 648.92f, -1948.05f, LevelAndActIDs_RedMountain3, Characters_Knuckles, RandomRingsCapsule, 32515},
+        //DX
+        {-4080.00f, 592.98f, -1980.95f, LevelAndActIDs_RedMountain3, Characters_Knuckles, RandomRingsCapsule, 32515},
+        //DC
+        {-4067.33f, 977.00f, -2006.24f, LevelAndActIDs_RedMountain3, Characters_Knuckles, RandomRingsCapsule, 32516},
+        //DX
+        {-4067.33f, 976.24f, -2006.24f, LevelAndActIDs_RedMountain3, Characters_Knuckles, RandomRingsCapsule, 32516},
+        //DC
+        {-3726.38f, 342.76f, -2333.64f, LevelAndActIDs_RedMountain3, Characters_Knuckles, TenRingsCapsule, 32517},
+        {-4086.43f, 553.02f, -2111.23f, LevelAndActIDs_RedMountain3, Characters_Knuckles, FiveRingsCapsule, 32518}, //DX
+        {-4086.43f, 552.22f, -2111.23f, LevelAndActIDs_RedMountain3, Characters_Knuckles, FiveRingsCapsule, 32518}, //DC
+        {-4119.10f, 894.76f, -2169.29f, LevelAndActIDs_RedMountain3, Characters_Knuckles, TenRingsCapsule, 32519},
+        {-3666.69f, 63.45f, -2346.65f, LevelAndActIDs_RedMountain3, Characters_Knuckles, ExtraLifeCapsule, 32520}, //DX
+        {-3666.69f, 62.20f, -2346.65f, LevelAndActIDs_RedMountain3, Characters_Knuckles, ExtraLifeCapsule, 32520}, //DC
+        {-2136.42f, 69.02f, -1937.02f, LevelAndActIDs_RedMountain3, Characters_Knuckles, TenRingsCapsule, 32521},
+        {-1895.37f, 58.92f, -1854.58f, LevelAndActIDs_RedMountain3, Characters_Knuckles, ExtraLifeCapsule, 32522}, //DX
+        {-1895.37f, 58.32f, -1854.58f, LevelAndActIDs_RedMountain3, Characters_Knuckles, ExtraLifeCapsule, 32522}, //DC
+        {-3825.48f, 867.02f, -2772.23f, LevelAndActIDs_RedMountain3, Characters_Knuckles, TenRingsCapsule, 32523},
+
+        {-253.36f, 239.01f, 549.60f, LevelAndActIDs_RedMountain2, Characters_Gamma, ExtraLifeCapsule, 53501}, //DX
+        {-253.36f, 238.51f, 549.60f, LevelAndActIDs_RedMountain2, Characters_Gamma, ExtraLifeCapsule, 53501}, //DC
+        {-1307.60f, 263.59f, 761.86f, LevelAndActIDs_RedMountain2, Characters_Gamma, FiveRingsCapsule, 53502},
+        {-1334.64f, 278.59f, 743.83f, LevelAndActIDs_RedMountain2, Characters_Gamma, FiveRingsCapsule, 53503},
+        {-1322.05f, 260.59f, 712.15f, LevelAndActIDs_RedMountain2, Characters_Gamma, FiveRingsCapsule, 53504},
+        {-224.25f, 213.46f, 196.32f, LevelAndActIDs_RedMountain2, Characters_Gamma, ShieldCapsule, 53505},
+        {-1974.16f, 69.70f, 2310.23f, LevelAndActIDs_RedMountain2, Characters_Gamma, FiveRingsCapsule, 53506},
+        {-1622.49f, 164.67f, 613.90f, LevelAndActIDs_RedMountain2, Characters_Gamma, TenRingsCapsule, 53507},
+        {-1806.52f, 158.33f, 561.50f, LevelAndActIDs_RedMountain2, Characters_Gamma, TenRingsCapsule, 53508},
+        {-2125.88f, 215.77f, 742.30f, LevelAndActIDs_RedMountain2, Characters_Gamma, RandomRingsCapsule, 53509},
+        {-2114.25f, 214.12f, 712.83f, LevelAndActIDs_RedMountain2, Characters_Gamma, TenRingsCapsule, 53510},
     };
 
 
