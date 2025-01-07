@@ -770,16 +770,14 @@ void CheckDestroyedEnemy(taskwk* twp)
     }
 }
 
+FunctionHook<void, task*> onDeadOut(0x46C150, [](task* tp)-> void
+{
+    CheckDestroyedEnemy(tp->twp);
+    onDeadOut.Original(tp);
+});
+
 void HandleOnBoaBoaPartDestroyed(task* tp)
 {
     OnBoaBoaPartDestroyed_t.Original(tp);
     CheckDestroyedEnemy(tp->twp);
 }
-
-FunctionHook<BOOL, taskwk*, enemywk*> onEnemyCheckDamage(0x4CE030, [](taskwk* twp, enemywk* ewp)-> BOOL
-{
-    const BOOL result = onEnemyCheckDamage.Original(twp, ewp);
-    if (result)
-        CheckDestroyedEnemy(twp);
-    return result;
-});
