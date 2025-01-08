@@ -945,6 +945,192 @@ LocationRepository::LocationRepository()
 
         {1263.64f, -3257.57f, -414.80f, LevelAndActIDs_FinalEgg3, Characters_Gamma, EggKeeper, 50001},
         {1264.49f, -3257.57f, -411.34f, LevelAndActIDs_FinalEgg3, Characters_Gamma, EggKeeper, 50002},
+
+        {-37.40f, 19.00f, -205.30f, LevelAndActIDs_HotShelter1, Characters_Amy, Kiki, 41001},
+        {-251.27f, 12.00f, -373.29f, LevelAndActIDs_HotShelter1, Characters_Amy, EggKeeper, 41002},
+        {44.98f, 4.00f, -659.85f, LevelAndActIDs_HotShelter1, Characters_Amy, Kiki, 41003},
+        {511.62f, 4.00f, -639.13f, LevelAndActIDs_HotShelter1, Characters_Amy, Kiki, 41004},
+        {513.42f, 4.00f, -670.16f, LevelAndActIDs_HotShelter1, Characters_Amy, Kiki, 41005},
+        {161.06f, 261.97f, -256.63f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41006},
+        {159.12f, 261.97f, -216.25f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41007},
+        {-309.37f, 261.96f, -258.77f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41008},
+        {-308.94f, 261.96f, -218.05f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41009},
+        {55.72f, -206.00f, -617.66f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41010},
+        {-81.70f, -210.00f, -536.05f, LevelAndActIDs_HotShelter2, Characters_Amy, Leon, 41011},
+        {-0.66f, 82.00f, -1188.09f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41012},
+        {18.71f, 82.00f, -1228.70f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41013},
+        {51.80f, 113.00f, -1251.34f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41014},
+        {665.58f, 82.00f, -1791.25f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41015},
+        {622.20f, 82.00f, -1811.97f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41016},
+        {666.48f, 82.00f, -1834.25f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41017},
+        {620.73f, 10.00f, -2051.97f, LevelAndActIDs_HotShelter2, Characters_Amy, Leon, 41018},
+        {540.14f, 153.00f, -2321.49f, LevelAndActIDs_HotShelter2, Characters_Amy, Leon, 41019}, //DX
+        {540.14f, 150.00f, -2321.49f, LevelAndActIDs_HotShelter2, Characters_Amy, Leon, 41019}, //DC
+        {511.26f, 153.98f, -2356.89f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41020}, //DX
+        {511.26f, 153.00f, -2356.89f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41020}, //DC
+        {563.57f, 153.98f, -2366.54f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41021}, //DX
+        {563.57f, 153.00f, -2366.54f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41021}, //DC
+        {481.95f, 153.01f, -3085.07f, LevelAndActIDs_HotShelter2, Characters_Amy, EggKeeper, 41022},
+        {986.50f, 219.01f, -3097.79f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41023},
+        {171.49f, 374.00f, -3589.12f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41024},
+        {131.49f, 374.00f, -3589.12f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41025},
+        {91.49f, 374.00f, -3589.12f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41026},
+        {151.28f, 374.00f, -3615.77f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41027},
+        {111.85f, 374.00f, -3614.94f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41028},
+        {171.49f, 374.00f, -3639.12f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41029},
+        {131.49f, 374.00f, -3639.12f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41030},
+        {91.49f, 374.00f, -3639.12f, LevelAndActIDs_HotShelter2, Characters_Amy, Kiki, 41031},
+
+        {-20.58f, 266.00f, -188.43f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54001},
+        {75.31f, 255.00f, -165.60f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54002}, //DX
+        {75.31f, 254.00f, -165.60f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54002}, //DC
+        {-122.83f, 253.00f, -166.60f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54003}, //DX
+        {-122.83f, 254.00f, -166.60f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54003}, //DC
+        {-41.63f, 254.00f, -270.51f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54004},
+        {-0.21f, 254.00f, -272.51f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54005},
+        {160.47f, 260.58f, -257.00f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54006},
+        {213.39f, 255.03f, -223.64f, LevelAndActIDs_HotShelter3, Characters_Gamma, Leon, 54007},
+        {-201.75f, 255.03f, -261.89f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54008}, //DX
+        {-201.75f, 254.03f, -261.89f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54008}, //DC
+        {-201.04f, 255.03f, -288.80f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54009}, //DX
+        {-201.04f, 254.03f, -288.80f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54009}, //DC
+        {-308.42f, 262.58f, -216.99f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54010},
+        {269.15f, 260.58f, -217.48f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54011},
+        {159.46f, 260.58f, -297.45f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54012},
+        {-309.17f, 262.58f, -257.84f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54013},
+        {269.90f, 260.58f, -257.47f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54014},
+        {-308.30f, 262.58f, -297.59f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54015}, //DX
+        {-308.30f, 261.58f, -297.59f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54015}, //DC
+        {270.65f, 260.58f, -297.47f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54016},
+        {82.71f, -100.00f, -734.68f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54017}, //DX
+        {82.71f, -101.00f, -734.68f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54017}, //DC
+        {115.92f, -100.00f, -738.61f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54018}, //DX
+        {115.92f, -101.00f, -738.61f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54018}, //DC
+        {128.69f, -101.00f, -763.98f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54019},
+        {28.49f, 113.00f, -1170.84f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54020}, //DX
+        {28.49f, 112.50f, -1170.84f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54020}, //DC
+        {-61.03f, 113.00f, -1219.66f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54021}, //DX
+        {-61.03f, 112.50f, -1219.66f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54021}, //DC
+        {51.62f, 113.00f, -1250.73f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54022}, //DX
+        {51.62f, 112.60f, -1250.53f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54022}, //DC
+        {-51.01f, 113.00f, -1318.92f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54023}, //DX
+        {-51.01f, 112.60f, -1318.92f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54023}, //DC
+        {50.71f, 113.00f, -1319.09f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54024}, //DX
+        {50.71f, 112.40f, -1319.09f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54024}, //DC
+        {2.40f, 88.00f, -1323.69f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54025}, //DX
+        {2.40f, 78.00f, -1323.69f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54025}, //DC
+        {-773.12f, 50.00f, -1470.84f, LevelAndActIDs_HotShelter3, Characters_Gamma, Leon, 54026},
+        {-527.72f, 84.00f, -1768.76f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54027},
+        {-528.59f, 84.00f, -1791.33f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54028},
+        {-529.35f, 84.00f, -1812.64f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54029},
+        {-531.12f, 84.00f, -1832.11f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54030},
+        {-529.57f, 84.00f, -1855.65f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54031},
+        {-752.34f, 204.01f, -1910.78f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54032},
+        {-779.33f, 204.01f, -1911.57f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54033},
+        {-804.50f, 204.01f, -1910.20f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54034},
+        {-1520.78f, 184.00f, -1488.54f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54035},
+        {-1499.72f, 178.00f, -1578.83f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54036},
+        {-1267.32f, 180.00f, -1769.52f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54037}, //DX
+        {-1267.32f, 170.00f, -1769.52f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54037}, //DC
+        {-1508.86f, 218.00f, -1609.84f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54038},
+        {-1497.87f, 178.00f, -1642.36f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54039},
+        {-1535.44f, 180.00f, -1611.01f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54040},
+        {-1519.58f, 138.00f, -1642.16f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54041},
+        {-1264.85f, 180.00f, -1849.32f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54042}, //DX
+        {-1264.85f, 170.00f, -1849.32f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54042}, //DC
+        {-692.16f, 285.00f, -2286.30f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54043},
+        {-746.38f, 283.00f, -2288.08f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54044},
+        {-815.21f, 283.00f, -2283.63f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54045}, //DX
+        {-815.21f, 284.30f, -2283.63f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54045}, //DC
+        {-723.41f, 282.00f, -2491.67f, LevelAndActIDs_HotShelter3, Characters_Gamma, Leon, 54046},
+        {-832.87f, 282.00f, -2480.38f, LevelAndActIDs_HotShelter3, Characters_Gamma, Leon, 54047},
+        {-870.06f, 174.00f, -3561.43f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54048},
+        {-798.07f, 1034.00f, -3552.88f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54049},
+        {-901.78f, 174.00f, -3563.60f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54050},
+        {-842.90f, 174.00f, -3578.11f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54051},
+        {-899.36f, 1034.00f, -3551.49f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54052},
+        {-938.03f, 174.00f, -3577.60f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54053},
+        {-769.14f, 1034.00f, -3594.38f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54054},
+        {-932.76f, 1034.00f, -3596.56f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54055},
+        {-769.15f, 1034.00f, -3645.44f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54056},
+        {-841.98f, 174.00f, -3660.54f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54057},
+        {-933.54f, 174.00f, -3663.29f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54058},
+        {-783.68f, 1534.00f, -3566.24f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54059},
+        {-932.91f, 1034.00f, -3644.77f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54060},
+        {-872.37f, 174.00f, -3689.94f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54061},
+        {-799.65f, 1034.00f, -3686.79f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54062},
+        {-906.61f, 174.00f, -3690.32f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54063},
+        {-768.64f, 1534.00f, -3600.32f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54064},
+        {-915.80f, 1534.00f, -3567.49f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54065},
+        {-897.09f, 1034.00f, -3692.40f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54066},
+        {-767.82f, 1534.00f, -3637.49f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54067},
+        {-931.99f, 1534.00f, -3602.80f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54068},
+        {-930.60f, 1534.00f, -3640.78f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54069},
+        {-788.67f, 1534.00f, -3674.65f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54070},
+        {-912.36f, 1534.00f, -3675.10f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54071},
+        {-786.21f, 2034.00f, -3561.35f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54072},
+        {-914.27f, 2034.00f, -3560.86f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54073},
+        {-771.20f, 2034.00f, -3605.07f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54074},
+        {-769.25f, 2034.00f, -3635.77f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54075},
+        {-932.65f, 2034.00f, -3606.55f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54076},
+        {-931.42f, 2034.00f, -3635.53f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54077},
+        {-785.88f, 2034.00f, -3679.65f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54078},
+        {-913.74f, 2034.00f, -3679.95f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54079},
+        {-829.91f, 3008.98f, -3393.70f, LevelAndActIDs_HotShelter3, Characters_Gamma, Leon, 54080},
+        {-866.07f, 3008.98f, -3395.74f, LevelAndActIDs_HotShelter3, Characters_Gamma, Leon, 54081},
+        {-849.69f, 3008.98f, -3452.16f, LevelAndActIDs_HotShelter3, Characters_Gamma, Leon, 54082},
+        {-783.75f, 3004.00f, -3563.80f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54083},
+        {-919.37f, 3004.00f, -3569.17f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54084},
+        {-60.07f, 10010.99f, 11.41f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54085},
+        {-34.70f, 10010.99f, -24.71f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54086},
+        {-71.70f, 10010.99f, -22.67f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54087},
+        {-39.02f, 10011.02f, 640.86f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54088},
+        {-67.19f, 10011.02f, 639.78f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54089},
+        {-25.28f, 10011.02f, 665.86f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54090},
+        {-79.90f, 10011.02f, 662.98f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54091},
+        {-51.46f, 10011.02f, 692.40f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54092},
+        {-37.34f, 10037.30f, 368.58f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54093},
+        {-67.77f, 10038.80f, 367.99f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54094},
+        {-47.07f, 10012.99f, 1010.07f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54095},
+        {-48.58f, 10013.99f, 1034.02f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54096}, //DX
+        {-48.58f, 10012.99f, 1034.02f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54096}, //DC
+        {-62.39f, 10012.99f, 1175.95f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54097},
+        {-45.68f, 10012.99f, 1187.22f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54098},
+        {-45.34f, 10012.99f, 1204.25f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54099},
+        {-58.99f, 10012.99f, 1211.36f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54100},
+        {-47.64f, 10020.99f, 1357.48f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54101},
+        {-45.93f, 10020.99f, 1382.42f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54102},
+        {-51.56f, 10020.99f, 1522.88f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54103},
+        {-49.50f, 10020.99f, 1552.81f, LevelAndActIDs_HotShelter3, Characters_Gamma, EggKeeper, 54104},
+        {-33.59f, 10072.00f, 1344.36f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54105},
+        {-37.97f, 10072.00f, 1385.83f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54106},
+        {-37.04f, 10072.00f, 1518.81f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54107},
+        {-32.11f, 10072.00f, 1562.76f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54108},
+        {-68.49f, 10040.80f, 1854.24f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54109},
+        {-38.53f, 10040.80f, 1855.84f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54110},
+        {-55.00f, 10040.80f, 1866.10f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54111},
+        {-57.48f, 10011.10f, 3028.14f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54112}, //DX
+        {-57.48f, 10011.10f, 3028.14f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54112}, //DC
+        {-68.40f, 10011.10f, 3064.61f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54113}, //DX
+        {-68.40f, 10012.80f, 3064.61f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54113}, //DC
+        {-32.33f, 10011.10f, 3074.86f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54114}, //DX
+        {-32.33f, 10011.10f, 3074.86f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54114}, //DC
+        {-42.81f, 10011.10f, 3123.20f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54115}, //DX
+        {-42.81f, 10011.10f, 3123.20f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54115}, //DC
+        {-75.63f, 10011.10f, 3128.27f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54116}, //DX
+        {-75.63f, 10011.10f, 3128.27f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54116}, //DC
+        {-51.79f, 10058.00f, 3306.52f, LevelAndActIDs_HotShelter3, Characters_Gamma, Kiki, 54117},
+
+        {-242.09f, 3.99f, -361.62f, LevelAndActIDs_HotShelter1, Characters_Big, Kiki, 63001}, //DX
+        {-242.09f, 4.20f, -361.62f, LevelAndActIDs_HotShelter1, Characters_Big, Kiki, 63001}, //DC
+        {172.89f, 5.00f, -659.14f, LevelAndActIDs_HotShelter1, Characters_Big, Kiki, 63002}, //DX
+        {172.89f, 5.20f, -659.14f, LevelAndActIDs_HotShelter1, Characters_Big, Kiki, 63002}, //DC
+        {-173.22f, 85.98f, -500.13f, LevelAndActIDs_HotShelter1, Characters_Big, Kiki, 63003}, //DX
+        {-173.22f, 85.20f, -500.13f, LevelAndActIDs_HotShelter1, Characters_Big, Kiki, 63003}, //DC
+        {-233.30f, 85.98f, -790.48f, LevelAndActIDs_HotShelter1, Characters_Big, Kiki, 63004}, //DX
+        {-233.30f, 84.20f, -790.48f, LevelAndActIDs_HotShelter1, Characters_Big, Kiki, 63004}, //DC
+        {-300.33f, 85.98f, -772.62f, LevelAndActIDs_HotShelter1, Characters_Big, Kiki, 63005}, //DX
+        {-300.33f, 84.20f, -772.62f, LevelAndActIDs_HotShelter1, Characters_Big, Kiki, 63005}, //DC
     };
 
     _capsules = {
@@ -1696,6 +1882,98 @@ LocationRepository::LocationRepository()
         {1453.49f, -3173.76f, -219.26f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50508},
         {1453.49f, -3173.76f, -199.26f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50509},
         {1453.49f, -3173.76f, -179.26f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50510},
+
+        {51.64f, -0.03f, -377.60f, LevelAndActIDs_HotShelter1, Characters_Amy, ShieldCapsule, 41501},
+        {-226.93f, 0.00f, -628.42f, LevelAndActIDs_HotShelter1, Characters_Amy, SpeedUpCapsule, 41502},
+        {-227.14f, 0.00f, -650.42f, LevelAndActIDs_HotShelter1, Characters_Amy, ShieldCapsule, 41503},
+        {445.91f, 32.00f, -649.46f, LevelAndActIDs_HotShelter1, Characters_Amy, BombCapsule, 41504},
+        {750.31f, -80.00f, -516.03f, LevelAndActIDs_HotShelter1, Characters_Amy, TenRingsCapsule, 41505},
+        {744.53f, -80.00f, -778.16f, LevelAndActIDs_HotShelter1, Characters_Amy, TenRingsCapsule, 41506},
+        {1608.51f, 35.01f, -623.03f, LevelAndActIDs_HotShelter1, Characters_Amy, RandomRingsCapsule, 41507},
+        {1717.26f, 34.01f, -676.35f, LevelAndActIDs_HotShelter1, Characters_Amy, RandomRingsCapsule, 41508},
+        {147.80f, 250.00f, -286.64f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41509}, //DX
+        {147.80f, 253.95f, -286.64f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41509}, //DC
+        {282.17f, 250.00f, -207.25f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41510}, //DX
+        {282.17f, 253.95f, -207.25f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41510}, //DC
+        {-20.48f, 230.99f, -360.05f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41511},
+        {-14.14f, 50.78f, -437.43f, LevelAndActIDs_HotShelter2, Characters_Amy, InvincibilityCapsule, 41512},
+        {-29.18f, 50.78f, -437.51f, LevelAndActIDs_HotShelter2, Characters_Amy, ExtraLifeCapsule, 41513},
+        {-20.66f, 250.00f, -140.47f, LevelAndActIDs_HotShelter2, Characters_Amy, ShieldCapsule, 41514},
+        {-7.56f, -210.02f, -310.00f, LevelAndActIDs_HotShelter2, Characters_Amy, SpeedUpCapsule, 41515},
+        {-20.54f, -210.02f, -309.41f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41516},
+        {-33.25f, -210.02f, -308.73f, LevelAndActIDs_HotShelter2, Characters_Amy, SpeedUpCapsule, 41517},
+        {-320.14f, 250.00f, -248.29f, LevelAndActIDs_HotShelter2, Characters_Amy, ExtraLifeCapsule, 41518}, //DX
+        {-320.14f, 253.95f, -248.29f, LevelAndActIDs_HotShelter2, Characters_Amy, ExtraLifeCapsule, 41518}, //DC
+        {146.41f, -105.00f, -971.53f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41519},
+        {18.51f, -12.00f, -1082.97f, LevelAndActIDs_HotShelter2, Characters_Amy, FiveRingsCapsule, 41520},
+        {-216.95f, 78.00f, -1020.74f, LevelAndActIDs_HotShelter2, Characters_Amy, SpeedUpCapsule, 41521},
+        {-57.49f, -12.00f, -1082.97f, LevelAndActIDs_HotShelter2, Characters_Amy, FiveRingsCapsule, 41522},
+        {-233.44f, 78.00f, -1021.03f, LevelAndActIDs_HotShelter2, Characters_Amy, InvincibilityCapsule, 41523},
+        {-185.03f, -105.00f, -972.24f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41524},
+        {18.51f, -12.00f, -1122.97f, LevelAndActIDs_HotShelter2, Characters_Amy, FiveRingsCapsule, 41525},
+        {-57.49f, -12.00f, -1122.97f, LevelAndActIDs_HotShelter2, Characters_Amy, FiveRingsCapsule, 41526},
+        {783.78f, 150.00f, -1808.93f, LevelAndActIDs_HotShelter2, Characters_Amy, ShieldCapsule, 41527},
+        {538.82f, 247.00f, -2162.60f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41528},
+        {538.82f, 547.00f, -2202.60f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41529},
+        {538.82f, 1040.00f, -2092.60f, LevelAndActIDs_HotShelter2, Characters_Amy, ExtraLifeCapsule, 41530},
+        {538.82f, 840.00f, -2182.60f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41531},
+        {786.87f, 428.24f, -3293.38f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41532},
+        {841.84f, 428.24f, -3295.21f, LevelAndActIDs_HotShelter2, Characters_Amy, ExtraLifeCapsule, 41533},
+        {129.97f, 370.00f, -3615.42f, LevelAndActIDs_HotShelter2, Characters_Amy, BombCapsule, 41534},
+        {1089.12f, 246.00f, -3601.65f, LevelAndActIDs_HotShelter2, Characters_Amy, InvincibilityCapsule, 41535}, //DX
+        {1089.12f, 245.60f, -3601.65f, LevelAndActIDs_HotShelter2, Characters_Amy, InvincibilityCapsule, 41535}, //DC
+        {1087.79f, 246.00f, -3658.55f, LevelAndActIDs_HotShelter2, Characters_Amy, SpeedUpCapsule, 41536},
+        {1087.13f, 246.00f, -3709.75f, LevelAndActIDs_HotShelter2, Characters_Amy, ShieldCapsule, 41537},
+
+        {160.82f, 261.58f, -218.85f, LevelAndActIDs_HotShelter3, Characters_Gamma, RandomRingsCapsule, 54501},
+        {-28.29f, 50.78f, -433.41f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54502},
+        {-13.45f, 50.78f, -433.88f, LevelAndActIDs_HotShelter3, Characters_Gamma, SpeedUpCapsule, 54503},
+        {-34.67f, -210.00f, -307.87f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54504},
+        {-19.68f, -210.00f, -308.24f, LevelAndActIDs_HotShelter3, Characters_Gamma, ShieldCapsule, 54505},
+        {-3.68f, -210.00f, -308.62f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54506},
+        {-21.97f, 53.99f, -609.04f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54507},
+        {8.03f, 53.99f, -609.04f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54508},
+        {-51.97f, 53.99f, -609.04f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54509},
+        {38.03f, 53.99f, -609.04f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54510},
+        {-81.97f, 53.99f, -609.04f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54511},
+        {-1197.13f, 170.00f, -1783.91f, LevelAndActIDs_HotShelter3, Characters_Gamma, RandomRingsCapsule, 54512},
+        {-1237.13f, 170.00f, -1783.91f, LevelAndActIDs_HotShelter3, Characters_Gamma, FiveRingsCapsule, 54513},
+        {-1197.13f, 170.00f, -1835.91f, LevelAndActIDs_HotShelter3, Characters_Gamma, RandomRingsCapsule, 54514},
+        {-1237.13f, 170.00f, -1835.91f, LevelAndActIDs_HotShelter3, Characters_Gamma, RandomRingsCapsule, 54515},
+        {-750.62f, 343.99f, -2116.79f, LevelAndActIDs_HotShelter3, Characters_Gamma, SpeedUpCapsule, 54516},
+        {-808.61f, 343.99f, -2115.52f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54517},
+        {-664.08f, 474.02f, -3583.48f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54518}, //DX
+        {-664.08f, 474.15f, -3583.48f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54518}, //DC
+        {-706.70f, 471.16f, -3612.63f, LevelAndActIDs_HotShelter3, Characters_Gamma, SpeedUpCapsule, 54519}, //DX
+        {-706.70f, 471.87f, -3612.63f, LevelAndActIDs_HotShelter3, Characters_Gamma, SpeedUpCapsule, 54519}, //DC
+        {-666.77f, 473.84f, -3643.03f, LevelAndActIDs_HotShelter3, Characters_Gamma, InvincibilityCapsule, 54520}, //DX
+        {-666.77f, 473.63f, -3643.03f, LevelAndActIDs_HotShelter3, Characters_Gamma, InvincibilityCapsule, 54520}, //DC
+        {-848.50f, 825.00f, -3620.10f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54521}, //DX
+        {-848.50f, 820.00f, -3620.10f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54521}, //DC
+        {-1028.33f, 180.00f, -3595.32f, LevelAndActIDs_HotShelter3, Characters_Gamma, FiveRingsCapsule, 54522},
+        {-1031.73f, 180.00f, -3643.27f, LevelAndActIDs_HotShelter3, Characters_Gamma, FiveRingsCapsule, 54523},
+        {-848.11f, 1969.00f, -3625.07f, LevelAndActIDs_HotShelter3, Characters_Gamma, ShieldCapsule, 54524},
+        {-744.75f, 2999.94f, -3290.73f, LevelAndActIDs_HotShelter3, Characters_Gamma, FiveRingsCapsule, 54525},
+        {-767.47f, 2530.00f, -3599.93f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54526},
+        {-946.51f, 2999.94f, -3290.35f, LevelAndActIDs_HotShelter3, Characters_Gamma, FiveRingsCapsule, 54527},
+        {-934.88f, 2530.00f, -3599.41f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54528},
+        {-767.47f, 2530.00f, -3639.93f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54529},
+        {-932.47f, 2530.00f, -3639.93f, LevelAndActIDs_HotShelter3, Characters_Gamma, MagneticShieldCapsule, 54530},
+        {-38.48f, 10006.99f, 38.92f, LevelAndActIDs_HotShelter3, Characters_Gamma, ShieldCapsule, 54531},
+        {-68.48f, 10006.99f, 38.92f, LevelAndActIDs_HotShelter3, Characters_Gamma, BombCapsule, 54532},
+        {-52.09f, 10023.02f, 849.39f, LevelAndActIDs_HotShelter3, Characters_Gamma, ShieldCapsule, 54533}, //DX
+        {-52.09f, 10017.02f, 849.39f, LevelAndActIDs_HotShelter3, Characters_Gamma, ShieldCapsule, 54533}, //DC
+
+        {51.64f, -0.03f, -377.60f, LevelAndActIDs_HotShelter1, Characters_Big, ShieldCapsule, 63501},
+        {-226.93f, 0.00f, -628.42f, LevelAndActIDs_HotShelter1, Characters_Big, SpeedUpCapsule, 63502},
+        {-227.14f, 0.00f, -650.42f, LevelAndActIDs_HotShelter1, Characters_Big, ShieldCapsule, 63503},
+        {750.31f, -80.00f, -516.03f, LevelAndActIDs_HotShelter1, Characters_Big, TenRingsCapsule, 63504},
+        {744.53f, -80.00f, -778.16f, LevelAndActIDs_HotShelter1, Characters_Big, TenRingsCapsule, 63505},
+        {932.88f, 0.99f, -639.38f, LevelAndActIDs_HotShelter1, Characters_Big, RandomRingsCapsule, 63506},
+        {931.23f, 0.99f, -659.31f, LevelAndActIDs_HotShelter1, Characters_Big, ExtraLifeCapsule, 63507},
+        {-89.14f, 80.00f, -113.88f, LevelAndActIDs_HotShelter1, Characters_Big, SpeedUpCapsule, 63508},
+        {-32.62f, 80.00f, -399.02f, LevelAndActIDs_HotShelter1, Characters_Big, TenRingsCapsule, 63509},
+        {28.30f, 80.00f, -402.01f, LevelAndActIDs_HotShelter1, Characters_Big, TenRingsCapsule, 63510},
     };
 
 
