@@ -798,6 +798,58 @@ LocationRepository::LocationRepository()
         {-793.19f, -100.00f, -332.40f, LevelAndActIDs_SkyDeck3, Characters_Knuckles, ElectroSpinner, 34015},
         {-786.90f, -184.00f, -350.03f, LevelAndActIDs_SkyDeck3, Characters_Knuckles, ElectroSpinner, 34016},
 
+
+        {-42.44f, -33.98f, -165.24f, LevelAndActIDs_LostWorld1, Characters_Sonic, BoaBoa, 18001},
+        {80.85f, -81.00f, -137.54f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18002}, //DX
+        {80.85f, -86.00f, -137.54f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18002}, //DC
+        {132.58f, -73.00f, 98.30f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18003}, //DX
+        {132.58f, -80.00f, 98.30f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18003}, //DC
+        {77.06f, -28.00f, 199.77f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18004}, //DX
+        {77.06f, -34.00f, 199.77f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18004}, //DC
+        {4459.89f, -2729.00f, 1337.04f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18005},
+        {5213.02f, -2673.00f, 1243.67f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18006}, //DX
+        {5213.02f, -2678.00f, 1243.67f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18006}, //DC
+        {5454.85f, -2546.00f, 983.92f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18007},
+        {5743.55f, -2673.00f, 1051.82f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18008}, //DX
+        {5743.55f, -2678.00f, 1051.82f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18008}, //DC
+        {5598.13f, -2674.00f, 1683.36f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18009},
+        {5856.45f, -2457.01f, 1472.63f, LevelAndActIDs_LostWorld1, Characters_Sonic, Gola, 18010}, //DX
+        {5856.45f, -2457.01f, 1472.63f, LevelAndActIDs_LostWorld1, Characters_Sonic, Gola, 18010}, //DC
+        {5847.13f, -2674.00f, 1501.81f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18011}, //DX
+        {5847.13f, -2674.00f, 1501.81f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18011}, //DC
+        {5870.85f, -2674.00f, 1412.47f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18012}, //DX
+        {5870.85f, -2674.00f, 1412.47f, LevelAndActIDs_LostWorld1, Characters_Sonic, Leon, 18012}, //DC
+        {261.89f, 135.01f, -60.93f, LevelAndActIDs_LostWorld2, Characters_Sonic, Gola, 18013},
+        {462.41f, 156.01f, 600.37f, LevelAndActIDs_LostWorld2, Characters_Sonic, Gola, 18014},
+        {357.45f, 152.00f, 1438.32f, LevelAndActIDs_LostWorld2, Characters_Sonic, Leon, 18015}, //DX
+        {357.45f, 147.00f, 1438.32f, LevelAndActIDs_LostWorld2, Characters_Sonic, Leon, 18015}, //DC
+        {319.85f, 152.00f, 1511.19f, LevelAndActIDs_LostWorld2, Characters_Sonic, Leon, 18016}, //DX
+        {319.85f, 147.00f, 1511.19f, LevelAndActIDs_LostWorld2, Characters_Sonic, Leon, 18016}, //DC
+        {7141.35f, -2331.96f, 785.31f, LevelAndActIDs_LostWorld2, Characters_Sonic, Gola, 18017},
+        {7352.91f, -2661.96f, 976.08f, LevelAndActIDs_LostWorld2, Characters_Sonic, Gola, 18018},
+        {7441.25f, -2685.96f, 704.31f, LevelAndActIDs_LostWorld2, Characters_Sonic, Leon, 18019}, //DX
+        {7441.25f, -2697.96f, 704.31f, LevelAndActIDs_LostWorld2, Characters_Sonic, Leon, 18019}, //DC
+        {7482.70f, -2671.96f, 731.77f, LevelAndActIDs_LostWorld2, Characters_Sonic, Gola, 18020},
+        {7290.57f, -2666.00f, 1369.67f, LevelAndActIDs_LostWorld2, Characters_Sonic, BoaBoa, 18021},
+        {7602.73f, -2593.79f, 674.61f, LevelAndActIDs_LostWorld2, Characters_Sonic, Leon, 18022},
+        {7644.03f, -2685.96f, 894.60f, LevelAndActIDs_LostWorld2, Characters_Sonic, Leon, 18023}, //DX
+        {7644.03f, -2694.96f, 894.60f, LevelAndActIDs_LostWorld2, Characters_Sonic, Leon, 18023}, //DC
+
+        {7375.19f, -2665.96f, 940.11f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33001},
+        {7644.03f, -2682.96f, 894.60f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33002}, //DX
+        {7644.03f, -2693.96f, 894.60f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33002}, //DC
+        {7441.25f, -2680.96f, 704.31f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33003}, //DX
+        {7441.25f, -2693.96f, 704.31f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33003}, //DC
+        {7597.67f, -2589.79f, 709.35f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33004}, //DX
+        {7597.67f, -2593.79f, 709.35f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33004}, //DC
+        {7251.10f, -2669.96f, 1065.83f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33005}, //DX
+        {7251.10f, -2673.96f, 1065.83f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33005}, //DC
+        {7526.26f, -2379.00f, 720.66f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Gola, 33006},
+        {7771.88f, -2427.00f, 955.95f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Gola, 33007},
+        {7127.74f, -2328.00f, 781.67f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Gola, 33008},
+        {7290.57f, -2700.00f, 1369.67f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Gola, 33009},
+        {7055.46f, -2329.96f, 819.02f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33010}, //DX
+        {7055.46f, -2339.96f, 819.02f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33010}, //DC
     };
 
     _capsules = {
@@ -1272,6 +1324,48 @@ LocationRepository::LocationRepository()
         {-865.65f, -199.00f, 323.07f, LevelAndActIDs_SkyDeck3, Characters_Knuckles, TenRingsCapsule, 34510}, //DC
         {-1013.48f, -100.30f, -305.27f, LevelAndActIDs_SkyDeck3, Characters_Knuckles, RandomRingsCapsule, 34511},
         {-1044.14f, -100.30f, -304.02f, LevelAndActIDs_SkyDeck3, Characters_Knuckles, ShieldCapsule, 34512},
+
+        {4066.71f, -2818.00f, 1305.42f, LevelAndActIDs_LostWorld1, Characters_Sonic, SpeedUpCapsule, 18501},
+        {4284.63f, -2721.00f, 1339.32f, LevelAndActIDs_LostWorld1, Characters_Sonic, TenRingsCapsule, 18502},
+        {5300.60f, -2514.00f, 1215.86f, LevelAndActIDs_LostWorld1, Characters_Sonic, MagneticShieldCapsule, 18503},
+        {5259.94f, -2662.49f, 1544.19f, LevelAndActIDs_LostWorld1, Characters_Sonic, FiveRingsCapsule, 18504}, //DX
+        {5259.94f, -2663.29f, 1544.19f, LevelAndActIDs_LostWorld1, Characters_Sonic, FiveRingsCapsule, 18504}, //DC
+        {5709.06f, -2619.00f, 1157.37f, LevelAndActIDs_LostWorld1, Characters_Sonic, RandomRingsCapsule, 18505},
+        {5607.78f, -2545.00f, 1675.57f, LevelAndActIDs_LostWorld1, Characters_Sonic, MagneticShieldCapsule, 18506},
+        {5629.72f, -2545.00f, 1672.61f, LevelAndActIDs_LostWorld1, Characters_Sonic, ExtraLifeCapsule, 18507}, //DX
+        {5629.72f, -2545.20f, 1672.61f, LevelAndActIDs_LostWorld1, Characters_Sonic, ExtraLifeCapsule, 18507}, //DC
+        {5771.92f, -2480.00f, 1582.92f, LevelAndActIDs_LostWorld1, Characters_Sonic, TenRingsCapsule, 18508},
+        {520.78f, 137.00f, -5.51f, LevelAndActIDs_LostWorld2, Characters_Sonic, ShieldCapsule, 18509},
+        {660.24f, 177.00f, 379.51f, LevelAndActIDs_LostWorld2, Characters_Sonic, MagneticShieldCapsule, 18510},
+        {1446.97f, -1325.60f, 1219.04f, LevelAndActIDs_LostWorld2, Characters_Sonic, ShieldCapsule, 18511}, //DX
+        {1446.97f, -1326.00f, 1219.04f, LevelAndActIDs_LostWorld2, Characters_Sonic, ShieldCapsule, 18511}, //DC
+        {3476.32f, -1692.00f, 1381.89f, LevelAndActIDs_LostWorld2, Characters_Sonic, RandomRingsCapsule, 18512},
+        {5310.11f, -2239.00f, 1350.63f, LevelAndActIDs_LostWorld2, Characters_Sonic, MagneticShieldCapsule, 18513},
+        {6123.63f, -2531.00f, 1358.49f, LevelAndActIDs_LostWorld2, Characters_Sonic, RandomRingsCapsule, 18514},
+        {7117.84f, -2340.05f, 854.00f, LevelAndActIDs_LostWorld2, Characters_Sonic, FiveRingsCapsule, 18515}, //DX
+        {7117.84f, -2340.07f, 854.00f, LevelAndActIDs_LostWorld2, Characters_Sonic, FiveRingsCapsule, 18515}, //DC
+        {7223.73f, -2644.98f, 662.76f, LevelAndActIDs_LostWorld2, Characters_Sonic, RandomRingsCapsule, 18516},
+        {7215.16f, -2540.19f, 1047.94f, LevelAndActIDs_LostWorld2, Characters_Sonic, TenRingsCapsule, 18517}, //DX
+        {7215.16f, -2540.59f, 1047.94f, LevelAndActIDs_LostWorld2, Characters_Sonic, TenRingsCapsule, 18517}, //DC
+        {7214.43f, -2540.19f, 1066.19f, LevelAndActIDs_LostWorld2, Characters_Sonic, TenRingsCapsule, 18518}, //DX
+        {7214.43f, -2540.59f, 1066.19f, LevelAndActIDs_LostWorld2, Characters_Sonic, TenRingsCapsule, 18518}, //DC
+        {7207.14f, -2639.03f, 1100.62f, LevelAndActIDs_LostWorld2, Characters_Sonic, FiveRingsCapsule, 18519}, //DX
+        {7207.14f, -2639.59f, 1100.62f, LevelAndActIDs_LostWorld2, Characters_Sonic, FiveRingsCapsule, 18519}, //DC
+        {7663.00f, -2346.52f, 640.49f, LevelAndActIDs_LostWorld2, Characters_Sonic, RandomRingsCapsule, 18520}, //DX
+        {7663.00f, -2346.92f, 640.49f, LevelAndActIDs_LostWorld2, Characters_Sonic, RandomRingsCapsule, 18520}, //DC
+        {7412.23f, -2614.99f, 1369.26f, LevelAndActIDs_LostWorld2, Characters_Sonic, ShieldCapsule, 18521},
+        {7539.95f, -2545.00f, 1097.54f, LevelAndActIDs_LostWorld2, Characters_Sonic, ExtraLifeCapsule, 18522}, //DX
+        {7539.95f, -2545.53f, 1097.54f, LevelAndActIDs_LostWorld2, Characters_Sonic, ExtraLifeCapsule, 18522}, //DC
+        {7671.74f, -2650.98f, 755.59f, LevelAndActIDs_LostWorld2, Characters_Sonic, RandomRingsCapsule, 18523},
+
+        {7539.95f, -2545.53f, 1097.54f, LevelAndActIDs_LostWorld2, Characters_Knuckles, TenRingsCapsule, 33501},
+        {7671.74f, -2650.98f, 755.59f, LevelAndActIDs_LostWorld2, Characters_Knuckles, RandomRingsCapsule, 33502},
+        {7232.20f, -2644.98f, 659.70f, LevelAndActIDs_LostWorld2, Characters_Knuckles, RandomRingsCapsule, 33503},
+        {7178.01f, -2440.00f, 982.54f, LevelAndActIDs_LostWorld2, Characters_Knuckles, RandomRingsCapsule, 33504},
+        {7176.45f, -2440.00f, 1000.28f, LevelAndActIDs_LostWorld2, Characters_Knuckles, RandomRingsCapsule, 33505},
+        {7663.00f, -2346.92f, 640.49f, LevelAndActIDs_LostWorld2, Characters_Knuckles, RandomRingsCapsule, 33506},
+        {7416.14f, -2420.30f, 1334.53f, LevelAndActIDs_LostWorld2, Characters_Knuckles, BombCapsule, 33507},
+
     };
 
 
