@@ -407,7 +407,7 @@ int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - capsule.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 4.0)
+        if (distance <= 3.0)
             return capsule.locationId;
     }
     return -1;
@@ -600,7 +600,7 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - enemy.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 4.0)
+        if (distance <= 3.0)
             return enemy.locationId;
     }
     return -1;
@@ -803,6 +803,7 @@ FunctionHook<void, task*> onSpikeBallSpinnerBMain(0x4AF3D0, [](task* tp)-> void
     CheckEnemy(tp);
     onSpikeBallSpinnerBMain.Original(tp);
 });
+//Gola (Fire)
 FunctionHook<void, task*> onSpikeBallSpinnerCLoad(0x4AF860, [](task* tp)-> void
 {
     CheckEnemy(tp);
