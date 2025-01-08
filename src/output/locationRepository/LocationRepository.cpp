@@ -892,6 +892,59 @@ LocationRepository::LocationRepository()
         {406.91f, -165.04f, -175.83f, LevelAndActIDs_Casinopolis1, Characters_Knuckles, Spinner, 31014},
         {434.36f, -186.04f, -173.14f, LevelAndActIDs_Casinopolis1, Characters_Knuckles, Spinner, 31015},
         {474.99f, -195.04f, -192.50f, LevelAndActIDs_Casinopolis1, Characters_Knuckles, ElectroSpinner, 31016},
+
+        {168.11f, -167.00f, 366.54f, LevelAndActIDs_FinalEgg1, Characters_Sonic, EggKeeper, 19001},
+        {194.58f, -164.99f, 68.81f, LevelAndActIDs_FinalEgg1, Characters_Sonic, Spinner, 19002},
+        {133.93f, -166.99f, 22.11f, LevelAndActIDs_FinalEgg1, Characters_Sonic, Spinner, 19003},
+        {171.32f, -165.99f, -42.43f, LevelAndActIDs_FinalEgg1, Characters_Sonic, Spinner, 19004},
+        {193.69f, -207.02f, -1416.53f, LevelAndActIDs_FinalEgg1, Characters_Sonic, EggKeeper, 19005},
+        {193.10f, -207.02f, -1527.57f, LevelAndActIDs_FinalEgg1, Characters_Sonic, EggKeeper, 19006},
+        {1632.65f, 259.00f, -1295.62f, LevelAndActIDs_FinalEgg1, Characters_Sonic, Spinner, 19007},
+        {1642.55f, 275.00f, -1330.14f, LevelAndActIDs_FinalEgg1, Characters_Sonic, Spinner, 19008},
+        {1614.26f, 227.18f, -1407.40f, LevelAndActIDs_FinalEgg1, Characters_Sonic, ElectroSpinner, 19009},
+        {1637.60f, 227.18f, -1443.32f, LevelAndActIDs_FinalEgg1, Characters_Sonic, ElectroSpinner, 19010},
+        {2072.58f, 209.99f, -1122.12f, LevelAndActIDs_FinalEgg1, Characters_Sonic, Spinner, 19011},
+        {2056.54f, 209.99f, -1145.05f, LevelAndActIDs_FinalEgg1, Characters_Sonic, Spinner, 19012},
+        {1598.22f, 199.18f, -1570.78f, LevelAndActIDs_FinalEgg1, Characters_Sonic, ElectroSpinner, 19013},
+        {1016.90f, 589.76f, -900.88f, LevelAndActIDs_FinalEgg2, Characters_Sonic, Spinner, 19014},
+        {1011.43f, 585.76f, -931.80f, LevelAndActIDs_FinalEgg2, Characters_Sonic, Spinner, 19015},
+        {995.03f, 110.58f, -753.03f, LevelAndActIDs_FinalEgg2, Characters_Sonic, Spinner, 19016},
+        {1019.03f, 110.58f, -804.24f, LevelAndActIDs_FinalEgg2, Characters_Sonic, Spinner, 19017},
+        {985.52f, 110.58f, -840.31f, LevelAndActIDs_FinalEgg2, Characters_Sonic, Spinner, 19018},
+        {1089.07f, -470.03f, -915.66f, LevelAndActIDs_FinalEgg2, Characters_Sonic, Spinner, 19019},
+        {1125.81f, -470.03f, -924.36f, LevelAndActIDs_FinalEgg2, Characters_Sonic, Spinner, 19020},
+        {1125.86f, -470.03f, -962.16f, LevelAndActIDs_FinalEgg2, Characters_Sonic, Spinner, 19021},
+        {829.14f, -844.00f, -820.80f, LevelAndActIDs_FinalEgg2, Characters_Sonic, Spinner, 19022},
+        {786.01f, -844.00f, -856.85f, LevelAndActIDs_FinalEgg2, Characters_Sonic, Spinner, 19023},
+        {829.49f, -844.00f, -891.03f, LevelAndActIDs_FinalEgg2, Characters_Sonic, Spinner, 19024},
+        {1747.05f, -286.72f, -1738.09f, LevelAndActIDs_FinalEgg3, Characters_Sonic, Spinner, 19025},
+        {1703.82f, -277.72f, -1772.17f, LevelAndActIDs_FinalEgg3, Characters_Sonic, Spinner, 19026},
+        {2115.24f, -361.42f, -1778.67f, LevelAndActIDs_FinalEgg3, Characters_Sonic, Spinner, 19027},
+        {2171.50f, -361.42f, -1736.75f, LevelAndActIDs_FinalEgg3, Characters_Sonic, Spinner, 19028},
+        {1263.64f, -3257.57f, -414.80f, LevelAndActIDs_FinalEgg3, Characters_Sonic, EggKeeper, 19029},
+        {1264.49f, -3257.57f, -411.34f, LevelAndActIDs_FinalEgg3, Characters_Sonic, EggKeeper, 19030},
+        {1277.25f, -3262.57f, -416.35f, LevelAndActIDs_FinalEgg3, Characters_Sonic, EggKeeper, 19031},
+        {1733.96f, -3279.19f, -220.39f, LevelAndActIDs_FinalEgg3, Characters_Sonic, EggKeeper, 19032},
+        {167.63f, -3229.66f, -241.14f, LevelAndActIDs_FinalEgg3, Characters_Sonic, Spinner, 19033},
+        {1661.08f, -3295.57f, -197.40f, LevelAndActIDs_FinalEgg3, Characters_Sonic, Spinner, 19034},
+        {1751.27f, -3287.57f, -283.31f, LevelAndActIDs_FinalEgg3, Characters_Sonic, Spinner, 19035},
+        {111.02f, -3222.66f, -292.67f, LevelAndActIDs_FinalEgg3, Characters_Sonic, EggKeeper, 19036},
+        {124.71f, -3229.66f, -256.40f, LevelAndActIDs_FinalEgg3, Characters_Sonic, Spinner, 19037},
+        {96.68f, -3229.66f, -224.39f, LevelAndActIDs_FinalEgg3, Characters_Sonic, Spinner, 19038},
+        {36.73f, -3222.66f, -275.10f, LevelAndActIDs_FinalEgg3, Characters_Sonic, EggKeeper, 19039},
+        {1828.13f, -3290.57f, -201.58f, LevelAndActIDs_FinalEgg3, Characters_Sonic, Spinner, 19040},
+
+
+        {150.91f, -165.99f, -77.09f, LevelAndActIDs_FinalEgg1, Characters_Amy, Spinner, 42001},
+        {198.21f, -166.99f, -96.23f, LevelAndActIDs_FinalEgg1, Characters_Amy, Spinner, 42002},
+        {208.75f, -204.01f, -1445.04f, LevelAndActIDs_FinalEgg1, Characters_Amy, EggKeeper, 42003},
+        {272.32f, -204.01f, -1567.91f, LevelAndActIDs_FinalEgg1, Characters_Amy, EggKeeper, 42004},
+        {1628.82f, 228.00f, -1441.37f, LevelAndActIDs_FinalEgg1, Characters_Amy, Spinner, 42005},
+        {1734.73f, 249.00f, -1421.21f, LevelAndActIDs_FinalEgg1, Characters_Amy, Spinner, 42006},
+        {2546.98f, 5270.01f, -2095.50f, LevelAndActIDs_FinalEgg1, Characters_Amy, Spinner, 42007},
+
+        {1263.64f, -3257.57f, -414.80f, LevelAndActIDs_FinalEgg3, Characters_Gamma, EggKeeper, 50001},
+        {1264.49f, -3257.57f, -411.34f, LevelAndActIDs_FinalEgg3, Characters_Gamma, EggKeeper, 50002},
     };
 
     _capsules = {
@@ -1549,6 +1602,100 @@ LocationRepository::LocationRepository()
         {510.50f, 165.89f, -304.94f, LevelAndActIDs_Casinopolis1, Characters_Knuckles, ExtraLifeCapsule, 31514},
         {782.74f, -133.06f, -381.49f, LevelAndActIDs_Casinopolis1, Characters_Knuckles, ShieldCapsule, 31515},
         {826.23f, -133.06f, -286.71f, LevelAndActIDs_Casinopolis1, Characters_Knuckles, FiveRingsCapsule, 31516},
+
+        {177.63f, -102.98f, -144.15f, LevelAndActIDs_FinalEgg1, Characters_Sonic, ExtraLifeCapsule, 19501},
+        {159.63f, -102.98f, -144.15f, LevelAndActIDs_FinalEgg1, Characters_Sonic, MagneticShieldCapsule, 19502},
+        {1504.74f, 203.00f, -1297.96f, LevelAndActIDs_FinalEgg1, Characters_Sonic, TenRingsCapsule, 19503},
+        {1486.61f, 203.00f, -1314.31f, LevelAndActIDs_FinalEgg1, Characters_Sonic, ExtraLifeCapsule, 19504},
+        {1470.60f, 203.00f, -1329.75f, LevelAndActIDs_FinalEgg1, Characters_Sonic, TenRingsCapsule, 19505},
+        {1898.63f, 203.99f, -1051.96f, LevelAndActIDs_FinalEgg1, Characters_Sonic, RandomRingsCapsule, 19506},
+        {1898.99f, 203.99f, -1066.92f, LevelAndActIDs_FinalEgg1, Characters_Sonic, ExtraLifeCapsule, 19507},
+        {1897.98f, 203.99f, -1082.86f, LevelAndActIDs_FinalEgg1, Characters_Sonic, RandomRingsCapsule, 19508},
+        {1936.61f, 197.70f, -1459.90f, LevelAndActIDs_FinalEgg1, Characters_Sonic, RandomRingsCapsule, 19509},
+        {1938.96f, 197.91f, -1477.75f, LevelAndActIDs_FinalEgg1, Characters_Sonic, RandomRingsCapsule, 19510},
+        {1941.32f, 197.90f, -1495.59f, LevelAndActIDs_FinalEgg1, Characters_Sonic, RandomRingsCapsule, 19511},
+        {2225.85f, 197.89f, -1201.02f, LevelAndActIDs_FinalEgg1, Characters_Sonic, TenRingsCapsule, 19512},
+        {2225.97f, 197.89f, -1221.71f, LevelAndActIDs_FinalEgg1, Characters_Sonic, TenRingsCapsule, 19513},
+        {944.42f, 559.19f, -992.26f, LevelAndActIDs_FinalEgg2, Characters_Sonic, FiveRingsCapsule, 19514},
+        {942.18f, 86.56f, -744.57f, LevelAndActIDs_FinalEgg2, Characters_Sonic, ExtraLifeCapsule, 19515}, //DX
+        {942.18f, 88.93f, -744.57f, LevelAndActIDs_FinalEgg2, Characters_Sonic, ExtraLifeCapsule, 19515}, //DC
+        {806.08f, 509.33f, -1127.56f, LevelAndActIDs_FinalEgg2, Characters_Sonic, TenRingsCapsule, 19516},
+        {799.51f, 90.78f, -1108.67f, LevelAndActIDs_FinalEgg2, Characters_Sonic, ExtraLifeCapsule, 19517},
+        {1018.62f, -387.63f, -715.43f, LevelAndActIDs_FinalEgg2, Characters_Sonic, TenRingsCapsule, 19518}, //DX
+        {1018.62f, -388.33f, -715.43f, LevelAndActIDs_FinalEgg2, Characters_Sonic, TenRingsCapsule, 19518}, //DC
+        {1093.73f, -850.00f, -1072.55f, LevelAndActIDs_FinalEgg2, Characters_Sonic, FiveRingsCapsule, 19519},
+        {1093.73f, -850.00f, -1092.55f, LevelAndActIDs_FinalEgg2, Characters_Sonic, FiveRingsCapsule, 19520},
+        {1093.73f, -850.00f, -1112.55f, LevelAndActIDs_FinalEgg2, Characters_Sonic, FiveRingsCapsule, 19521},
+        {899.22f, 47.18f, -814.03f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19522},
+        {1073.71f, -10.62f, -826.69f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19523},
+        {1093.70f, -10.62f, -826.47f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19524},
+        {1052.70f, -10.62f, -826.92f, LevelAndActIDs_FinalEgg3, Characters_Sonic, MagneticShieldCapsule, 19525},
+        {899.22f, 47.18f, -834.03f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19526},
+        {899.22f, 47.18f, -854.03f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19527},
+        {1209.16f, 111.17f, -980.11f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19528},
+        {1317.62f, -297.22f, -1461.64f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19529},
+        {1139.24f, -257.00f, -1559.41f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19530},
+        {1034.24f, -257.00f, -1562.28f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19531},
+        {1097.08f, -257.00f, -1563.25f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19532},
+        {994.90f, -257.00f, -1566.10f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19533},
+        {1468.63f, -357.65f, -1444.59f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19534},
+        {1729.31f, -184.15f, -1831.08f, LevelAndActIDs_FinalEgg3, Characters_Sonic, MagneticShieldCapsule, 19535},
+        {1749.31f, -184.15f, -1831.08f, LevelAndActIDs_FinalEgg3, Characters_Sonic, FiveRingsCapsule, 19536},
+        {1769.31f, -184.15f, -1831.08f, LevelAndActIDs_FinalEgg3, Characters_Sonic, SpeedUpCapsule, 19537},
+        {2090.62f, -343.53f, -1864.78f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19538}, //DX
+        {2090.62f, -343.53f, -1869.78f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19538}, //DC
+        {2147.62f, -343.53f, -1864.78f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19539}, //DX
+        {2147.62f, -343.53f, -1869.78f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19539}, //DC
+        {2772.57f, -525.82f, -994.46f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19540},
+        {2615.32f, -278.90f, -1629.70f, LevelAndActIDs_FinalEgg3, Characters_Sonic, SpeedUpCapsule, 19541},
+        {2615.22f, -278.90f, -1764.73f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19542},
+        {2260.76f, -2739.37f, -1175.08f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19543},
+        {2283.76f, -2739.37f, -1175.08f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19544},
+        {16.42f, -3003.81f, -298.32f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19545},
+        {856.85f, -3171.44f, -489.48f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19546}, //DX
+        {856.85f, -3171.89f, -489.48f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19546}, //DC
+        {16.42f, -3003.81f, -278.32f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19547},
+        {-3.58f, -3003.81f, -298.32f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19548},
+        {778.08f, -3171.82f, -461.07f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19549}, //DX
+        {778.08f, -3171.89f, -461.07f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19549}, //DC
+        {-3.58f, -3003.81f, -278.32f, LevelAndActIDs_FinalEgg3, Characters_Sonic, ExtraLifeCapsule, 19550},
+        {745.32f, -3171.89f, -416.49f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19551}, //DX
+        {745.32f, -3171.89f, -416.49f, LevelAndActIDs_FinalEgg3, Characters_Sonic, RandomRingsCapsule, 19551}, //DC
+        {1725.38f, -3173.75f, -231.65f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19552},
+        {1750.38f, -3173.75f, -231.65f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19553},
+        {2269.04f, -3002.76f, -1048.76f, LevelAndActIDs_FinalEgg3, Characters_Sonic, SpeedUpCapsule, 19554},
+        {2648.57f, -2888.19f, -942.62f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19555},
+        {2660.11f, -2888.19f, -926.67f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19556},
+        {2660.71f, -2888.19f, -957.56f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19557},
+        {2673.09f, -2888.19f, -940.41f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19558},
+        {2824.94f, -2973.00f, -988.95f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19559},
+        {2824.94f, -2973.00f, -1008.95f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19560},
+        {2824.94f, -2973.00f, -1028.95f, LevelAndActIDs_FinalEgg3, Characters_Sonic, TenRingsCapsule, 19561},
+
+        {548.45f, -232.00f, -1552.75f, LevelAndActIDs_FinalEgg1, Characters_Amy, ExtraLifeCapsule, 42501},
+        {1629.58f, 240.00f, -1319.99f, LevelAndActIDs_FinalEgg1, Characters_Amy, ExtraLifeCapsule, 42502},
+        {1595.75f, 185.73f, -1573.47f, LevelAndActIDs_FinalEgg1, Characters_Amy, TenRingsCapsule, 42503},
+        {2871.52f, 5253.00f, -2060.12f, LevelAndActIDs_FinalEgg1, Characters_Amy, RandomRingsCapsule, 42504},
+        {2871.94f, 5253.00f, -2079.11f, LevelAndActIDs_FinalEgg1, Characters_Amy, RandomRingsCapsule, 42505},
+        {2872.41f, 5253.00f, -2100.11f, LevelAndActIDs_FinalEgg1, Characters_Amy, RandomRingsCapsule, 42506},
+        {2873.06f, 5253.00f, -2115.67f, LevelAndActIDs_FinalEgg1, Characters_Amy, RandomRingsCapsule, 42507},
+
+
+        {763.98f, -3172.31f, -440.43f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50501}, //DX
+        {763.98f, -3170.90f, -440.43f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50501}, //DC
+        {785.93f, -3172.81f, -454.29f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50502}, //DX
+        {785.93f, -3170.90f, -454.29f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50502}, //DC
+        {806.39f, -3172.63f, -465.75f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50503}, //DX
+        {806.39f, -3170.90f, -465.75f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50503}, //DC
+        {823.06f, -3172.69f, -472.81f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50504}, //DX
+        {823.06f, -3170.90f, -472.81f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50504}, //DC
+        {873.90f, -3181.86f, -322.29f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50505},
+        {843.19f, -3172.38f, -478.83f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50506}, //DX
+        {843.19f, -3170.90f, -478.83f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50506}, //DC
+        {928.87f, -3181.86f, -321.90f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50507},
+        {1453.49f, -3173.76f, -219.26f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50508},
+        {1453.49f, -3173.76f, -199.26f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50509},
+        {1453.49f, -3173.76f, -179.26f, LevelAndActIDs_FinalEgg3, Characters_Gamma, TenRingsCapsule, 50510},
     };
 
 

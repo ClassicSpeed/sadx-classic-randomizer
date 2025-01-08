@@ -831,6 +831,17 @@ FunctionHook<void, task*> onIceBallMainB(0x4C8DD0, [](task* tp)-> void
     onIceBallMainB.Original(tp);
 });
 
+FunctionHook<void, task*> onEggKeeperLoad(0x4A6700, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onEggKeeperLoad.Original(tp);
+});
+FunctionHook<void, task*> onEggKeeperMain(0x4A6420, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onEggKeeperMain.Original(tp);
+});
+
 
 void CheckDestroyedEnemy(taskwk* twp)
 {
