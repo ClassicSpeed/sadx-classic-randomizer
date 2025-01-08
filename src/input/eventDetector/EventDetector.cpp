@@ -407,7 +407,7 @@ int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - capsule.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 2.0)
+        if (distance <= 4.0)
             return capsule.locationId;
     }
     return -1;
@@ -600,7 +600,7 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - enemy.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 2.0)
+        if (distance <= 4.0)
             return enemy.locationId;
     }
     return -1;
@@ -812,6 +812,22 @@ FunctionHook<void, task*> onSpikeBallSpinnerCMain(0x4AF770, [](task* tp)-> void
 {
     CheckEnemy(tp);
     onSpikeBallSpinnerCMain.Original(tp);
+});
+
+FunctionHook<void, task*> onIceBallLoad(0x4C8FB0, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onIceBallLoad.Original(tp);
+});
+FunctionHook<void, task*> onIceBallMainA(0x4C8AC0, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onIceBallMainA.Original(tp);
+});
+FunctionHook<void, task*> onIceBallMainB(0x4C8DD0, [](task* tp)-> void
+{
+    CheckEnemy(tp);
+    onIceBallMainB.Original(tp);
 });
 
 

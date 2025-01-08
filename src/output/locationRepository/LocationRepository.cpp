@@ -850,6 +850,16 @@ LocationRepository::LocationRepository()
         {7290.57f, -2700.00f, 1369.67f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Gola, 33009},
         {7055.46f, -2329.96f, 819.02f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33010}, //DX
         {7055.46f, -2339.96f, 819.02f, LevelAndActIDs_LostWorld2, Characters_Knuckles, Leon, 33010}, //DC
+
+        {1436.74f, -26.36f, 1144.80f, LevelAndActIDs_IceCap1, Characters_Sonic, IceBall, 13001},
+        {517.95f, 41.54f, 945.41f, LevelAndActIDs_IceCap1, Characters_Sonic, IceBall, 13002},
+        {509.80f, 42.28f, 961.87f, LevelAndActIDs_IceCap1, Characters_Sonic, IceBall, 13003}, //DX
+        {509.80f, 33.28f, 961.87f, LevelAndActIDs_IceCap1, Characters_Sonic, IceBall, 13003}, //DC
+        {1328.80f, 27.68f, -109.74f, LevelAndActIDs_IceCap2, Characters_Sonic, BoaBoa, 13004},
+        {1387.97f, -18.11f, -154.65f, LevelAndActIDs_IceCap2, Characters_Sonic, IceBall, 13005}, //DX
+        {1298.29f, 183.56f, -323.83f, LevelAndActIDs_IceCap2, Characters_Sonic, IceBall, 13005}, //DC
+        {1298.29f, 186.56f, -323.83f, LevelAndActIDs_IceCap2, Characters_Sonic, IceBall, 13006}, //DX
+        {1298.29f, 183.56f, -323.83f, LevelAndActIDs_IceCap2, Characters_Sonic, IceBall, 13006}, //DC
     };
 
     _capsules = {
@@ -1366,6 +1376,31 @@ LocationRepository::LocationRepository()
         {7663.00f, -2346.92f, 640.49f, LevelAndActIDs_LostWorld2, Characters_Knuckles, RandomRingsCapsule, 33506},
         {7416.14f, -2420.30f, 1334.53f, LevelAndActIDs_LostWorld2, Characters_Knuckles, BombCapsule, 33507},
 
+        {487.79f, 250.67f, 1149.06f, LevelAndActIDs_IceCap1, Characters_Sonic, ExtraLifeCapsule, 13501}, //DX
+        {487.79f, 249.67f, 1149.06f, LevelAndActIDs_IceCap1, Characters_Sonic, ExtraLifeCapsule, 13501}, //DC
+        {425.06f, 156.33f, 1017.03f, LevelAndActIDs_IceCap1, Characters_Sonic, TenRingsCapsule, 13502},
+        {660.97f, 457.59f, 206.05f, LevelAndActIDs_IceCap1, Characters_Sonic, RandomRingsCapsule, 13503},
+        {625.70f, 457.76f, 215.63f, LevelAndActIDs_IceCap1, Characters_Sonic, RandomRingsCapsule, 13504},
+        {1582.49f, 276.69f, 0.68f, LevelAndActIDs_IceCap2, Characters_Sonic, TenRingsCapsule, 13505}, //DX
+        {1582.49f, 276.29f, 0.68f, LevelAndActIDs_IceCap2, Characters_Sonic, TenRingsCapsule, 13505}, //DC
+        {1518.92f, 302.20f, -140.47f, LevelAndActIDs_IceCap2, Characters_Sonic, TenRingsCapsule, 13506},
+        {1545.58f, 363.10f, 85.26f, LevelAndActIDs_IceCap2, Characters_Sonic, TenRingsCapsule, 13507},
+        {1556.39f, 363.10f, 71.18f, LevelAndActIDs_IceCap2, Characters_Sonic, TenRingsCapsule, 13508},
+        {1566.28f, 363.10f, 57.45f, LevelAndActIDs_IceCap2, Characters_Sonic, TenRingsCapsule, 13509},
+
+        {1453.84f, 328.20f, -51.93f, LevelAndActIDs_IceCap4, Characters_Big, RandomRingsCapsule, 61501},
+        {1191.96f, 332.79f, -257.73f, LevelAndActIDs_IceCap4, Characters_Big, RandomRingsCapsule, 61502},
+        {1174.01f, 332.79f, -256.39f, LevelAndActIDs_IceCap4, Characters_Big, ExtraLifeCapsule, 61503},
+        {1154.02f, 332.79f, -257.60f, LevelAndActIDs_IceCap4, Characters_Big, RandomRingsCapsule, 61504},
+        {1302.02f, 183.14f, -317.41f, LevelAndActIDs_IceCap4, Characters_Big, TenRingsCapsule, 61505},
+        {1532.63f, 231.83f, -142.15f, LevelAndActIDs_IceCap4, Characters_Big, SpeedUpCapsule, 61506}, //DX
+        {1532.63f, 230.83f, -142.15f, LevelAndActIDs_IceCap4, Characters_Big, SpeedUpCapsule, 61506}, //DC
+        {1374.67f, 230.65f, -325.60f, LevelAndActIDs_IceCap4, Characters_Big, SpeedUpCapsule, 61507},
+        {1551.38f, 362.79f, 71.25f, LevelAndActIDs_IceCap4, Characters_Big, RandomRingsCapsule, 61508},
+        {1579.57f, 362.79f, 68.37f, LevelAndActIDs_IceCap4, Characters_Big, RandomRingsCapsule, 61509},
+        {2006.77f, -6.00f, 137.09f, LevelAndActIDs_IceCap4, Characters_Big, InvincibilityCapsule, 61510},
+        {2216.39f, -127.00f, -400.81f, LevelAndActIDs_IceCap4, Characters_Big, FiveRingsCapsule, 61511},
+        {2235.29f, -142.00f, -340.28f, LevelAndActIDs_IceCap4, Characters_Big, FiveRingsCapsule, 61512},
     };
 
 
