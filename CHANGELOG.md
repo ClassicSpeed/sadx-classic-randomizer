@@ -10,9 +10,17 @@ All notable changes to this project will be documented in this file.
 - Added Capsule-sanity (692 checks in total).
 - When playing Enemy or Capsule sanity, things that would grant a check will be marked with an arrow.
 - You can enable another arrow over the player that points towards the next capsule in the settings.
+- Added Sky Deck location group.
+
+## Changed
+
+- Changed name format of levels checks:
+    - Now it's "Level (Character) - Location" instead of "Level (Character - Location)".
 
 ## Enemy-sanity
+
 - Enemy-sanity can be enabled separately for different characters.
+- The location name will include the enemy number and what enemy it is.
 - Some enemies won't count as a check:
     - Every enemy that is not in both SADX and SADC.
     - Enemies that only spawn during missions.
@@ -23,21 +31,22 @@ All notable changes to this project will be documented in this file.
     - Beats (the infinite-spawning enemy) in Sonic's Final Egg.
     - Spinners in the wrong paths at the end of Amy's Final Egg.
     - Dolls in Gamma's Final Egg.
-- Sometimes, enemies won't spawn, most of the time, restarting from the last checkpoint will fix it.
+- Sometimes, enemies won't spawn; most of the time, restarting from the last checkpoint will fix it.
 
 ## Capsule-sanity
 
 - Capsule-sanity can be enabled separately for different characters.
+- The location name will include the capsule number and what kind of capsule it is.
 - You can toggle the 5 capsules in Sonic's Pinball (off by default).
-- Capsules are divided in 4 groups, each can be toggled separately:
+- Capsules are divided into 4 groups, each can be toggled separately:
     - Life capsules: extra lives (103 checks).
     - Shield capsules: shields and magnetic shields (78 checks).
     - Power-up capsules: invincibility, speed up and bombs (70 checks).
     - Ring capsules: 5 rings, 10 rings and ? rings (441 checks).
 - Some capsules won't count as a check:
-    - Capsules that is not in both SADX and SADC
-    - Capsules in Twinkle Circuit
-    - Capsules found when digging as Knuckles
+    - Capsules that are not in both SADX and SADC.
+    - Capsules in Twinkle Circuit.
+    - Capsules found when digging as Knuckles.
 - Sonic can break capsules while playing as Tails and that won't count as a check.
     - Keep in mind that capsules won't respawn until you leave and enter the level again.
 
