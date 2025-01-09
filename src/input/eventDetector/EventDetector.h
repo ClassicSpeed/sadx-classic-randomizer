@@ -12,6 +12,15 @@ enum LastStoryState
     LastStoryCompleted
 };
 
+constexpr double MIN_INDICATOR_DISTANCE = 130.0;
+constexpr double MAX_INDICATOR_DISTANCE = 170.0;
+
+constexpr int INDICATOR_HEIGHT = 14;
+constexpr int EXTRA_INDICATOR_HEIGHT = 20;
+
+constexpr int HEIGHT_SIZE = 4;
+constexpr int EXTRA_HEIGHT_SIZE = 6;
+
 
 class EventDetector
 {

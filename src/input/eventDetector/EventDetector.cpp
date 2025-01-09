@@ -613,45 +613,40 @@ void DrawIndicator(task* tp, bool tallElement)
     const double dy = player->Position.y - tp->twp->pos.y;
     const double dx = player->Position.x - tp->twp->pos.x;
     const double distance = sqrt(dx * dx + dy * dy + dz * dz);
+    
+    float extraPercentage;
 
-    constexpr double MIN_DISTANCE = 110.0;
-    constexpr double MAX_DISTANCE = 150.0;
-    constexpr int OFFSET_WHEN_FAR = 20;
-
-    int verticalOffset = OFFSET_WHEN_FAR;
-    if (distance <= MIN_DISTANCE)
-    {
-        verticalOffset = 0;
-    }
-    else if (distance >= MAX_DISTANCE)
-    {
-        verticalOffset = OFFSET_WHEN_FAR;
-    }
+    if (distance <= MIN_INDICATOR_DISTANCE)
+        extraPercentage = 0;
+    else if (distance >= MAX_INDICATOR_DISTANCE)
+        extraPercentage = 1;
     else
-    {
-        verticalOffset = static_cast<int>((distance - MIN_DISTANCE) / (MAX_DISTANCE - MIN_DISTANCE) *
-            OFFSET_WHEN_FAR);
-    }
+        extraPercentage = (distance - MIN_INDICATOR_DISTANCE) / (MAX_INDICATOR_DISTANCE - MIN_INDICATOR_DISTANCE);
+
+
+    int verticalOffset = INDICATOR_HEIGHT + EXTRA_INDICATOR_HEIGHT * extraPercentage;
+    const float arrowSize = HEIGHT_SIZE + EXTRA_HEIGHT_SIZE * extraPercentage;
     if (tallElement)
         verticalOffset += 10;
 
     NJS_POINT3 point[] = {
-        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 16, tp->twp->pos.z},
-        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z + 3},
-        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z - 3},
-        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + 16, tp->twp->pos.z},
-        {tp->twp->pos.x + 3, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z},
-        {tp->twp->pos.x - 3, tp->twp->pos.y + verticalOffset + 22, tp->twp->pos.z}
+        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset, tp->twp->pos.z},
+        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + arrowSize, tp->twp->pos.z + arrowSize / 2},
+        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + arrowSize, tp->twp->pos.z - arrowSize / 2},
+        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset, tp->twp->pos.z},
+        {tp->twp->pos.x + arrowSize / 2, tp->twp->pos.y + verticalOffset + arrowSize, tp->twp->pos.z},
+        {tp->twp->pos.x - arrowSize / 2, tp->twp->pos.y + verticalOffset + arrowSize, tp->twp->pos.z}
     };
-    NJS_COLOR color;
-    color.argb = {0, 0, 0, 255};
+
     NJS_POINT3COL point3Col;
     point3Col.p = point;
-    point3Col.num = 6;
+
+    NJS_COLOR color;
+    color.argb = {0, 0, 255, 255};
     point3Col.col = &color;
-    NJS_TEX tex = {1, 1};
+    NJS_TEX tex = {};
     point3Col.tex = &tex;
-    late_DrawTriangle3D(&point3Col, 6, 0xF0000000, LATE_MAT);
+    njDrawTriangle3D(&point3Col, 6, 0x0);
 }
 
 FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
