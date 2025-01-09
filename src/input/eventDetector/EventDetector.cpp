@@ -407,7 +407,7 @@ int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - capsule.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 3.0)
+        if (distance <= 4.0)
             return capsule.locationId;
     }
     return -1;
@@ -600,20 +600,23 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - enemy.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 3.0)
+        if (distance <= 4.0)
             return enemy.locationId;
     }
     return -1;
 }
 
-void DrawIndicator(task* tp, bool tallElement)
-{
+void DrawIndicator(const task* tp, const bool tallElement)
+{    
+    if(!cameraready)
+        return;
+    
     const EntityData1* player = EntityData1Ptrs[0];
     const double dz = player->Position.z - tp->twp->pos.z;
     const double dy = player->Position.y - tp->twp->pos.y;
     const double dx = player->Position.x - tp->twp->pos.x;
     const double distance = sqrt(dx * dx + dy * dy + dz * dz);
-    
+
     float extraPercentage;
 
     if (distance <= MIN_INDICATOR_DISTANCE)
@@ -623,19 +626,47 @@ void DrawIndicator(task* tp, bool tallElement)
     else
         extraPercentage = (distance - MIN_INDICATOR_DISTANCE) / (MAX_INDICATOR_DISTANCE - MIN_INDICATOR_DISTANCE);
 
-
     int verticalOffset = INDICATOR_HEIGHT + EXTRA_INDICATOR_HEIGHT * extraPercentage;
     const float arrowSize = HEIGHT_SIZE + EXTRA_HEIGHT_SIZE * extraPercentage;
     if (tallElement)
         verticalOffset += 10;
 
+    // Calculate direction from enemy to camera
+    NJS_VECTOR direction;
+    direction.x = camera_twp->pos.x - tp->twp->pos.x;
+    direction.y = camera_twp->pos.y - tp->twp->pos.y;
+    direction.z = camera_twp->pos.z - tp->twp->pos.z;
+
+    // Normalize the direction vector
+    float length = sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
+    direction.x /= length;
+    direction.y /= length;
+    direction.z /= length;
+
+    // Calculate the right vector (perpendicular to the direction vector)
+    NJS_VECTOR up = {0.0f, 1.0f, 0.0f}; // Arbitrary up vector, change if needed
+    NJS_VECTOR right;
+    right.x = up.y * direction.z - up.z * direction.y;
+    right.y = up.z * direction.x - up.x * direction.z;
+    right.z = up.x * direction.y - up.y * direction.x;
+
+    // Normalize the right vector
+    length = sqrt(right.x * right.x + right.y * right.y + right.z * right.z);
+    right.x /= length;
+    right.y /= length;
+    right.z /= length;
+
+    // Calculate the points of the triangle
     NJS_POINT3 point[] = {
-        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset, tp->twp->pos.z},
-        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + arrowSize, tp->twp->pos.z + arrowSize / 2},
-        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset + arrowSize, tp->twp->pos.z - arrowSize / 2},
-        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset, tp->twp->pos.z},
-        {tp->twp->pos.x + arrowSize / 2, tp->twp->pos.y + verticalOffset + arrowSize, tp->twp->pos.z},
-        {tp->twp->pos.x - arrowSize / 2, tp->twp->pos.y + verticalOffset + arrowSize, tp->twp->pos.z}
+        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset, tp->twp->pos.z}, // Tip of the triangle
+        {
+            tp->twp->pos.x - right.x * arrowSize / 2, tp->twp->pos.y + verticalOffset + arrowSize,
+            tp->twp->pos.z - right.z * arrowSize / 2
+        }, // Left base point
+        {
+            tp->twp->pos.x + right.x * arrowSize / 2, tp->twp->pos.y + verticalOffset + arrowSize,
+            tp->twp->pos.z + right.z * arrowSize / 2
+        } // Right base point
     };
 
     NJS_POINT3COL point3Col;
@@ -646,7 +677,7 @@ void DrawIndicator(task* tp, bool tallElement)
     point3Col.col = &color;
     NJS_TEX tex = {};
     point3Col.tex = &tex;
-    njDrawTriangle3D(&point3Col, 6, 0x0);
+    njDrawTriangle3D(&point3Col, 3, 0x0);
 }
 
 FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
@@ -680,7 +711,7 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
 });
 
 void CheckEnemy(task* tp)
-{
+{    
     const auto it = eventDetectorPtr->enemyTaskMap.find(tp->twp);
     if (it == eventDetectorPtr->enemyTaskMap.end())
     {
