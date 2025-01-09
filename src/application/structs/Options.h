@@ -91,10 +91,10 @@ struct Options
     bool bigCapsuleSanity = true;
     bool gammaCapsuleSanity = true;
     
-    bool lifeCapsuleSanity = false;
-    bool shieldCapsuleSanity = false;
-    bool powerUpCapsuleSanity = false;
-    bool ringCapsuleSanity = false;
+    bool lifeCapsuleSanity = true;
+    bool shieldCapsuleSanity = true;
+    bool powerUpCapsuleSanity = true;
+    bool ringCapsuleSanity = true;
     
     
     bool deathLinkActive = false;

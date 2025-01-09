@@ -164,7 +164,7 @@ void EventDetector::OnPlayingFrame() const
 {
     if (DemoPlaying > 0)
         return;
-
+    
     //Ignore events given by the mod itself
     if (GameMode != GameModes_Mission)
         return;
@@ -607,10 +607,10 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
 }
 
 void DrawIndicator(const task* tp, const bool tallElement)
-{    
-    if(!cameraready)
+{
+    if (!cameraready)
         return;
-    
+
     const EntityData1* player = EntityData1Ptrs[0];
     const double dz = player->Position.z - tp->twp->pos.z;
     const double dy = player->Position.y - tp->twp->pos.y;
@@ -631,42 +631,37 @@ void DrawIndicator(const task* tp, const bool tallElement)
     if (tallElement)
         verticalOffset += 10;
 
-    // Calculate direction from enemy to camera
     NJS_VECTOR direction;
     direction.x = camera_twp->pos.x - tp->twp->pos.x;
     direction.y = camera_twp->pos.y - tp->twp->pos.y;
     direction.z = camera_twp->pos.z - tp->twp->pos.z;
 
-    // Normalize the direction vector
     float length = sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
     direction.x /= length;
     direction.y /= length;
     direction.z /= length;
 
-    // Calculate the right vector (perpendicular to the direction vector)
-    NJS_VECTOR up = {0.0f, 1.0f, 0.0f}; // Arbitrary up vector, change if needed
+    NJS_VECTOR up = {0.0f, 1.0f, 0.0f};
     NJS_VECTOR right;
     right.x = up.y * direction.z - up.z * direction.y;
     right.y = up.z * direction.x - up.x * direction.z;
     right.z = up.x * direction.y - up.y * direction.x;
 
-    // Normalize the right vector
     length = sqrt(right.x * right.x + right.y * right.y + right.z * right.z);
     right.x /= length;
     right.y /= length;
     right.z /= length;
 
-    // Calculate the points of the triangle
     NJS_POINT3 point[] = {
-        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset, tp->twp->pos.z}, // Tip of the triangle
+        {tp->twp->pos.x, tp->twp->pos.y + verticalOffset, tp->twp->pos.z},
         {
             tp->twp->pos.x - right.x * arrowSize / 2, tp->twp->pos.y + verticalOffset + arrowSize,
             tp->twp->pos.z - right.z * arrowSize / 2
-        }, // Left base point
+        }, 
         {
             tp->twp->pos.x + right.x * arrowSize / 2, tp->twp->pos.y + verticalOffset + arrowSize,
             tp->twp->pos.z + right.z * arrowSize / 2
-        } // Right base point
+        } 
     };
 
     NJS_POINT3COL point3Col;
@@ -685,6 +680,9 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
     OnItemBoxMain.Original(tp);
     if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
         return;
+    
+    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+        return;
 
     const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
     if (locationId > 0)
@@ -700,6 +698,10 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
     OnAirItemBoxMain.Original(tp);
     if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
         return;
+    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+        return;
+    
+    //TODO: check capsule type
 
     const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
     if (locationId > 0)
@@ -711,7 +713,13 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
 });
 
 void CheckEnemy(task* tp)
-{    
+{
+    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+        return;
+
+    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+        return;
+
     const auto it = eventDetectorPtr->enemyTaskMap.find(tp->twp);
     if (it == eventDetectorPtr->enemyTaskMap.end())
     {
@@ -871,12 +879,16 @@ FunctionHook<void, task*> onEggKeeperMain(0x4A6420, [](task* tp)-> void
 
 void CheckDestroyedEnemy(taskwk* twp)
 {
-    // PrintDebug("Enemy check damage in position: %f %f %f\n", twp->pos.x, twp->pos.y, twp->pos.z);
+    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+        return;
+
+    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+        return;
+
     const auto it = eventDetectorPtr->enemyTaskMap.find(twp);
     if (it != eventDetectorPtr->enemyTaskMap.end())
     {
         int enemyLocationId = it->second;
-        PrintDebug("Enemy check damage in position: %d\n", enemyLocationId);
         const auto test = eventDetectorPtr->checkData.find(enemyLocationId);
         if (!test->second.checked)
         {
