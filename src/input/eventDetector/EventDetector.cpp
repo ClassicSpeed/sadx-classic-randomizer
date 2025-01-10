@@ -861,9 +861,40 @@ FunctionHook<void, task*> onBuyonMain(0x7B2E00, [](task* tp)-> void
     onBuyonMain.Original(tp);
 });
 
+FunctionHook<void, task*> onBoaBoaMain(0x7A0330, [](task* tp)-> void
+{
+    if (eventDetectorPtr->randomizer.GetOptions().enemySanity)
+    {
+        if (eventDetectorPtr->randomizer.GetOptions().
+                              GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+        {
+            const auto it = eventDetectorPtr->enemyTaskMap.find(tp->twp);
+            if (it == eventDetectorPtr->enemyTaskMap.end())
+            {
+                const int enemyId = GetEnemyFromPosition(tp->twp->pos);
+                if (enemyId > 0)
+                    eventDetectorPtr->enemyTaskMap[tp->twp] = enemyId;
+            }
+        }
+    }
+    onBoaBoaMain.Original(tp);
+});
+
 FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
 {
-    CheckEnemy(tp);
+    if (eventDetectorPtr->randomizer.GetOptions().enemySanity)
+    {
+        if (eventDetectorPtr->randomizer.GetOptions().
+                              GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+        {
+            const auto it = eventDetectorPtr->enemyTaskMap.find(tp->ptp->twp);
+            if (it != eventDetectorPtr->enemyTaskMap.end())
+            {
+                const auto test = eventDetectorPtr->checkData.find(it->second);
+                DrawIndicator(tp, false, test->second.checked);
+            }
+        }
+    }
     onBoaBoaHeadLoad.Original(tp);
 });
 
@@ -994,5 +1025,5 @@ FunctionHook<void, task*> onDeadOut(0x46C150, [](task* tp)-> void
 void HandleOnBoaBoaPartDestroyed(task* tp)
 {
     OnBoaBoaPartDestroyed_t.Original(tp);
-    CheckDestroyedEnemy(tp->twp);
+    CheckDestroyedEnemy(tp->ptp->twp);
 }
