@@ -297,15 +297,19 @@ void EventDetector::OnPlayingFrame() const
                 {backBase.x, backBase.y, backBase.z} // Back base point
             };
 
-            NJS_COLOR color;
-            color.argb = {0, 0, 0, 255};
+
+            NJS_COLOR colors[] = {
+                {0xFF0000FF},
+                {0xFF0000FF},
+                {0xFF0000FF},
+                {0xFF0000FF},
+                {0xFF0000FF},
+                {0xFF0000FF},
+            };
             NJS_POINT3COL point3Col;
             point3Col.p = point;
-            point3Col.num = 6;
-            point3Col.col = &color;
-            NJS_TEX tex = {1, 1};
-            point3Col.tex = &tex;
-            njDrawTriangle3D(&point3Col, 6, 0xF0000000);
+            point3Col.col = colors;
+            njDrawTriangle3D(&point3Col, 6, 0X0);
         }
     }
 }
@@ -657,22 +661,22 @@ void DrawIndicator(const task* tp, const bool tallElement)
         {
             tp->twp->pos.x - right.x * arrowSize / 2, tp->twp->pos.y + verticalOffset + arrowSize,
             tp->twp->pos.z - right.z * arrowSize / 2
-        }, 
+        },
         {
             tp->twp->pos.x + right.x * arrowSize / 2, tp->twp->pos.y + verticalOffset + arrowSize,
             tp->twp->pos.z + right.z * arrowSize / 2
-        } 
+        }
     };
 
+    NJS_COLOR colors[] = {
+        {0x00000FFFF},
+        {0x00000FFFF},
+        {0x00000FFFF},
+    };
     NJS_POINT3COL point3Col;
     point3Col.p = point;
-
-    NJS_COLOR color;
-    color.argb = {0, 0, 255, 255};
-    point3Col.col = &color;
-    NJS_TEX tex = {};
-    point3Col.tex = &tex;
-    njDrawTriangle3D(&point3Col, 3, 0x0);
+    point3Col.col = colors;
+    njDrawTriangle3D(&point3Col, 3, NJD_TRANSPARENT);
 }
 
 FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
@@ -680,7 +684,7 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
     OnItemBoxMain.Original(tp);
     if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
         return;
-    
+
     if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
@@ -700,7 +704,7 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
         return;
     if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
-    
+
     //TODO: check capsule type
 
     const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
