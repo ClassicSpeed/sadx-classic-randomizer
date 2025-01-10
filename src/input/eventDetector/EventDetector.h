@@ -18,8 +18,8 @@ constexpr double MAX_INDICATOR_DISTANCE = 170.0;
 constexpr int INDICATOR_HEIGHT = 15;
 constexpr int EXTRA_INDICATOR_HEIGHT = 20;
 
-constexpr int HEIGHT_SIZE = 4;
-constexpr int EXTRA_HEIGHT_SIZE = 6;
+constexpr int HEIGHT_SIZE = 3;
+constexpr int EXTRA_HEIGHT_SIZE = 7;
 
 
 class EventDetector

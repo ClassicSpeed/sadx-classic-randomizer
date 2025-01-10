@@ -299,17 +299,17 @@ void EventDetector::OnPlayingFrame() const
 
 
             NJS_COLOR colors[] = {
-                {0xFF0000FF},
-                {0xFF0000FF},
-                {0xFF0000FF},
-                {0xFF0000FF},
-                {0xFF0000FF},
-                {0xFF0000FF},
+                {0xAA00FF00},
+                {0xAA00FF00},
+                {0xAA00FF00},
+                {0xAA00FF00},
+                {0xAA00FF00},
+                {0xAA00FF00},
             };
             NJS_POINT3COL point3Col;
             point3Col.p = point;
             point3Col.col = colors;
-            njDrawTriangle3D(&point3Col, 6, 0X0);
+            njDrawTriangle3D(&point3Col, 6, NJD_TRANSPARENT);
         }
     }
 }
@@ -609,7 +609,6 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
     }
     return -1;
 }
-
 void DrawIndicator(const task* tp, const bool tallElement)
 {
     if (!cameraready)
@@ -669,14 +668,14 @@ void DrawIndicator(const task* tp, const bool tallElement)
     };
 
     NJS_COLOR colors[] = {
-        {0x00000FFFF},
-        {0x00000FFFF},
-        {0x00000FFFF},
+        {0xFFFF1400},
+        {0xFFFF1400},
+        {0xFFFF1400},
     };
     NJS_POINT3COL point3Col;
     point3Col.p = point;
     point3Col.col = colors;
-    njDrawTriangle3D(&point3Col, 3, NJD_TRANSPARENT);
+    njDrawTriangle3D(&point3Col, 3, 0x0);
 }
 
 FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
