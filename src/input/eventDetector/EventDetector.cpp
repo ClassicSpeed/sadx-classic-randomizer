@@ -160,11 +160,55 @@ FunctionHook<void, SaveFileData*, signed int> OnGenericEmblemCollected(
     });
 
 
+bool EventDetector::IsTargetableCheck(const LocationData& location) const
+{
+    if (location.character != CurrentCharacter)
+        return false;
+    if (location.level != CurrentStageAndAct)
+        return false;
+    if (location.checked)
+        return false;
+
+    if (location.type == LocationEnemy)
+    {
+        if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+            return false;
+
+        if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(
+            static_cast<Characters>(CurrentCharacter)))
+            return false;
+        return true;
+    }
+    if (location.type == LocationCapsule)
+    {
+        if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+            return false;
+        if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(
+            static_cast<Characters>(CurrentCharacter)))
+            return false;
+        if (!eventDetectorPtr->randomizer.GetOptions().lifeCapsuleSanity && location.capsuleType == ExtraLifeCapsule)
+            return false;
+        if (!eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity
+            && (location.capsuleType == MagneticShieldCapsule || location.capsuleType == ShieldCapsule))
+            return false;
+        if (!eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity
+            && (location.capsuleType == SpeedUpCapsule || location.capsuleType == BombCapsule || location.capsuleType ==
+                InvincibilityCapsule))
+            return false;
+        if (!eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity
+            && (location.capsuleType == FiveRingsCapsule || location.capsuleType == TenRingsCapsule || location.
+                capsuleType == RandomRingsCapsule))
+            return false;
+        return true;
+    }
+    return false;
+}
+
 void EventDetector::OnPlayingFrame() const
 {
     if (DemoPlaying > 0)
         return;
-    
+
     //Ignore events given by the mod itself
     if (GameMode != GameModes_Mission)
         return;
@@ -196,10 +240,7 @@ void EventDetector::OnPlayingFrame() const
         for (auto& check : checkData)
         {
             const LocationData& location = check.second;
-            if ((location.type == LocationEnemy || location.type == LocationCapsule) &&
-                location.character == CurrentCharacter &&
-                location.level == CurrentStageAndAct &&
-                !location.checked)
+            if (IsTargetableCheck(location))
             {
                 float dx = playerPosition.x - location.x;
                 float dy = playerPosition.y - location.y;
@@ -408,11 +449,13 @@ int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
     return -1;
 }
 
-void CheckCapsule(EntityData1* entity, bool specificCapsule)
+void CheckCapsule(const EntityData1* entity, const bool specificCapsule)
 {
     if (DemoPlaying > 0)
         return;
     if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+        return;
+    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
     if (!specificCapsule)
         return;
@@ -668,6 +711,27 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked)
     njDrawTriangle3D(&point3Col, 3, 0x0);
 }
 
+bool GetCapsuleTypeOption(const Float type)
+{
+    switch (static_cast<int>(std::floor(type)))
+    {
+    case 6:
+        return eventDetectorPtr->randomizer.GetOptions().lifeCapsuleSanity;
+    case 5:
+    case 8:
+        return eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity;
+    case 2:
+    case 3:
+    case 4:
+        return eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity;
+    case 1:
+    case 7:
+    case 0:
+    default:
+        return eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity;
+    }
+}
+
 FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
 {
     OnItemBoxMain.Original(tp);
@@ -675,6 +739,9 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
         return;
 
     if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+        return;
+
+    if (!GetCapsuleTypeOption(tp->twp->scl.x))
         return;
 
     const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
@@ -695,8 +762,9 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
         return;
     if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
+    if (!GetCapsuleTypeOption(tp->twp->scl.x))
+        return;
 
-    //TODO: check capsule type
 
     const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
     if (locationId > 0)
@@ -705,6 +773,7 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
         DrawIndicator(tp, true, test->second.checked);
     }
 });
+
 
 void CheckEnemy(task* tp)
 {

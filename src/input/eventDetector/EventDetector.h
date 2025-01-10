@@ -27,6 +27,7 @@ class EventDetector
 {
 public:
     explicit EventDetector(Randomizer& randomizer);
+    bool IsTargetableCheck(const LocationData& location) const;
     void OnPlayingFrame() const;
     void OnLevelEmblem(int character, int level, int mission);
     void OnGenericEmblem(int index);
