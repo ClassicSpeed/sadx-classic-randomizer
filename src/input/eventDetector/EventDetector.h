@@ -18,8 +18,9 @@ constexpr double MAX_INDICATOR_DISTANCE = 170.0;
 constexpr int INDICATOR_HEIGHT = 15;
 constexpr int EXTRA_INDICATOR_HEIGHT = 20;
 
-constexpr int HEIGHT_SIZE = 3;
+constexpr int HEIGHT_SIZE = 4;
 constexpr int EXTRA_HEIGHT_SIZE = 7;
+
 
 
 class EventDetector
@@ -42,4 +43,25 @@ public:
     std::clock_t deathCooldownTimer = -1;
     
     std::unordered_map<taskwk*, int> enemyTaskMap;
+    
+
+    NJS_COLOR arrowColor[6] = {
+        {0xAA00FF00},
+        {0xAA00FF00},
+        {0xAA00FF00},
+        {0xAA00FF00},
+        {0xAA00FF00},
+        {0xAA00FF00},
+    };
+    
+    NJS_COLOR indicatorColor[3] = {
+        {0xFFFF1400},
+        {0xFFFF1400},
+        {0xFFFF1400},
+    };
+    NJS_COLOR disabledIndicatorColor[3] = {
+        {0xFF222222},
+        {0xFF222222},
+        {0xFF222222},
+    };
 };

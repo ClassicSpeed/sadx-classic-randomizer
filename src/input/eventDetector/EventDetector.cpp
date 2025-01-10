@@ -297,18 +297,9 @@ void EventDetector::OnPlayingFrame() const
                 {backBase.x, backBase.y, backBase.z} // Back base point
             };
 
-
-            NJS_COLOR colors[] = {
-                {0xAA00FF00},
-                {0xAA00FF00},
-                {0xAA00FF00},
-                {0xAA00FF00},
-                {0xAA00FF00},
-                {0xAA00FF00},
-            };
             NJS_POINT3COL point3Col;
             point3Col.p = point;
-            point3Col.col = colors;
+            point3Col.col = eventDetectorPtr->arrowColor;
             njDrawTriangle3D(&point3Col, 6, NJD_TRANSPARENT);
         }
     }
@@ -609,7 +600,8 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
     }
     return -1;
 }
-void DrawIndicator(const task* tp, const bool tallElement)
+
+void DrawIndicator(const task* tp, const bool tallElement, const bool checked)
 {
     if (!cameraready)
         return;
@@ -622,7 +614,7 @@ void DrawIndicator(const task* tp, const bool tallElement)
 
     float extraPercentage;
 
-    if (distance <= MIN_INDICATOR_DISTANCE)
+    if (distance <= MIN_INDICATOR_DISTANCE || checked)
         extraPercentage = 0;
     else if (distance >= MAX_INDICATOR_DISTANCE)
         extraPercentage = 1;
@@ -667,14 +659,12 @@ void DrawIndicator(const task* tp, const bool tallElement)
         }
     };
 
-    NJS_COLOR colors[] = {
-        {0xFFFF1400},
-        {0xFFFF1400},
-        {0xFFFF1400},
-    };
     NJS_POINT3COL point3Col;
     point3Col.p = point;
-    point3Col.col = colors;
+    if (checked)
+        point3Col.col = eventDetectorPtr->disabledIndicatorColor;
+    else
+        point3Col.col = eventDetectorPtr->indicatorColor;
     njDrawTriangle3D(&point3Col, 3, 0x0);
 }
 
@@ -690,9 +680,11 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
     const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
     if (locationId > 0)
     {
+        if (tp->twp->mode == 4)
+            return;
+
         const auto test = eventDetectorPtr->checkData.find(locationId);
-        if (!test->second.checked)
-            DrawIndicator(tp, false);
+        DrawIndicator(tp, false, test->second.checked);
     }
 });
 
@@ -710,8 +702,7 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
     if (locationId > 0)
     {
         const auto test = eventDetectorPtr->checkData.find(locationId);
-        if (!test->second.checked)
-            DrawIndicator(tp, true);
+        DrawIndicator(tp, true, test->second.checked);
     }
 });
 
@@ -733,10 +724,7 @@ void CheckEnemy(task* tp)
     else
     {
         const auto test = eventDetectorPtr->checkData.find(it->second);
-        if (!test->second.checked)
-        {
-            DrawIndicator(tp, false);
-        }
+        DrawIndicator(tp, false, test->second.checked);
     }
 }
 

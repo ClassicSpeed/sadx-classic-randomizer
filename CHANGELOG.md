@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Added Enemy-sanity (710 checks in total).
 - Added Capsule-sanity (692 checks in total).
 - When playing Enemy or Capsule sanity, things that would grant a check will be marked with an arrow.
+    - The arrow will be red (default) if the check is available, and gray if it's already collected.
 - You can enable another arrow over the player that points towards the next capsule in the settings.
 - Added Sky Deck location group.
 
