@@ -235,12 +235,12 @@ void EventDetector::OnPlayingFrame() const
         else
             playerPosition.y += 15.0f;
         float closestDistance = 1000000.0f;
-        LocationData* closestLocation = nullptr;
 
-        for (auto& check : checkData)
+
+        LocationData* closestLocation = nullptr;
+        if (!possibleChecks.empty())
         {
-            const LocationData& location = check.second;
-            if (IsTargetableCheck(location))
+            for (auto& location : possibleChecks)
             {
                 float dx = playerPosition.x - location.x;
                 float dy = playerPosition.y - location.y;
@@ -250,7 +250,31 @@ void EventDetector::OnPlayingFrame() const
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
-                    closestLocation = &check.second;
+                    closestLocation = new LocationData();
+                    closestLocation->x = location.x;
+                    closestLocation->y = location.y;
+                    closestLocation->z = location.z;
+                }
+            }
+            possibleChecks.clear();
+        }
+        else
+        {
+            for (auto& check : checkData)
+            {
+                const LocationData& location = check.second;
+                if (IsTargetableCheck(location))
+                {
+                    float dx = playerPosition.x - location.x;
+                    float dy = playerPosition.y - location.y;
+                    float dz = playerPosition.z - location.z;
+                    float distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestLocation = &check.second;
+                    }
                 }
             }
         }
@@ -648,6 +672,9 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked)
 {
     if (!cameraready)
         return;
+
+    if (!checked)
+        eventDetectorPtr->possibleChecks.push_back({tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z});
 
     const EntityData1* player = EntityData1Ptrs[0];
     const double dz = player->Position.z - tp->twp->pos.z;

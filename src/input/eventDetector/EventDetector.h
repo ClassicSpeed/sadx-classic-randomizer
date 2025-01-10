@@ -39,6 +39,7 @@ public:
     std::vector<CapsuleLocationData> capsules;
     std::vector<EnemyLocationData> enemies;
     mutable std::map<int, LocationData> checkData;
+    mutable std::vector<NJS_POINT3> possibleChecks;
     Randomizer& randomizer;
     float deathDetectionCooldown = 0.5f;
     std::clock_t deathCooldownTimer = -1;
