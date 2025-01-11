@@ -560,12 +560,12 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("CapsuleSanity", &SADX_CapsuleSanity);
     AP_RegisterSlotDataIntCallback("PinballCapsules", &SADX_PinballCapsules);
         
-    AP_RegisterSlotDataIntCallback("sonicCapsuleSanity", &SADX_SonicCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("tailsCapsuleSanity", &SADX_TailsCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("knucklesCapsuleSanity", &SADX_KnucklesCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("amyCapsuleSanity", &SADX_AmyCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("bigCapsuleSanity", &SADX_BigCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("gammaCapsuleSanity", &SADX_GammaCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("SonicCapsuleSanity", &SADX_SonicCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("TailsCapsuleSanity", &SADX_TailsCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("KnucklesCapsuleSanity", &SADX_KnucklesCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("AmyCapsuleSanity", &SADX_AmyCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("BigCapsuleSanity", &SADX_BigCapsuleSanity);
+    AP_RegisterSlotDataIntCallback("GammaCapsuleSanity", &SADX_GammaCapsuleSanity);
     
     AP_RegisterSlotDataIntCallback("LifeCapsuleSanity", &SADX_LifeCapsuleSanity);
     AP_RegisterSlotDataIntCallback("ShieldCapsuleSanity", &SADX_ShieldCapsuleSanity);
