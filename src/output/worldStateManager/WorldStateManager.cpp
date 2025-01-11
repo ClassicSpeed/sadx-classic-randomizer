@@ -181,6 +181,8 @@ static int __cdecl HandleSkyDeckDoor(EntityData1* a1);
 UsercallFuncVoid(onLostWorldEntranceCollision_t, (int a1), (a1), 0x532960, rEDI);
 static void __cdecl HandleLostWorldEntranceCollision(int a1);
 
+char LeonTimer1 = 10;
+char LeonTimer2 = 30;
 WorldStateManager::WorldStateManager()
 {
     _visitedLevels = VisitedLevels();
@@ -217,6 +219,11 @@ WorldStateManager::WorldStateManager()
     ObjList_MRuins[EMBLEM_MYSTIC_RUINS].UseDistance = 1;
     ObjList_ECarrier0[WARP_EGG_CARRIER_OUTSIDE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_Past[WARP_PAST] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
+    
+    WriteData<1>((char*)0x004A6B8C, LeonTimer1); // Leon timer 1
+    WriteData<1>((char*)0x004A81C1, LeonTimer2); // Leon timer 2
+    WriteData((float**)0x004CD75A, &_nj_screen_.w); // From SADXFE
+    WriteData((float**)0x004CD77C, &_nj_screen_.h); // From SADXFE
 }
 
 

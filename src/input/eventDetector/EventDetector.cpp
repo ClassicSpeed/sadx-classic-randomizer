@@ -895,19 +895,18 @@ FunctionHook<void, task*> onKikiMain(0x4ACF80, [](task* tp)-> void
     onKikiMain.Original(tp);
 });
 
+FunctionHook<float, float, float, float, Angle3*> onGetShadowPosOnWalter(
+    0x49EAD0, [](const float x, const float y, const float z, Angle3* ang)-> float
+    {
+        float result = onGetShadowPosOnWalter.Original(x, y, z, ang);
+        if (result == -1000000.0f)
+            result = y;
+
+        return result;
+    });
+
 FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
 {
-    //We change the spider location for sadx
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_TwinklePark2
-        && tp->twp->pos.x > -3 && tp->twp->pos.x < -2
-        && tp->twp->pos.y > -9 && tp->twp->pos.y < -8
-        && tp->twp->pos.z > 703 && tp->twp->pos.z < 704)
-    {
-        tp->twp->pos.x = -62.73f;
-        tp->twp->pos.y = -8.43f;
-        tp->twp->pos.z = 579.43f;
-    }
-
     CheckEnemy(tp);
     onWaterSpiderLoad.Original(tp);
 });
