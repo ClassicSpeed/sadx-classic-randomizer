@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.0b] - 2025-01-11
+
+## Changed
+
+- Fixed Sweep not spawning in SADX version of Twinkle Park.
+- Fixed some enemies not being identified correctly in Final Egg and other levels.
+- Fixed Leon not spawning correctly in SADX.
+- Fixed multiple enemies not spawning in SADX.
+
 ## [v1.0.0] - 2025-01-11
 
 ## Added
