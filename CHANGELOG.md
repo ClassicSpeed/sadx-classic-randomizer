@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
     - This also means that Sand Hill is no longer in logic for Sonic in normal level logic.
 
 ## Removed
+
 - Removed life-sanity (in favour of adding capsule-sanity).
 - Removed auto-win button from the mod and settings.
 
@@ -56,6 +57,7 @@ All notable changes to this project will be documented in this file.
     - Shield capsules: shields and magnetic shields (78 checks).
     - Power-up capsules: invincibility, speed up and bombs (70 checks).
     - Ring capsules: 5 rings, 10 rings and ? rings (441 checks).
+- If Capsule-sanity is enabled but all capsules type are disable, life capsules will be enabled as a failsafe.
 - Some capsules won't count as a check:
     - Capsules that are not in both SADX and SADC.
     - Capsules in Twinkle Circuit.
