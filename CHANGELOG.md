@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 - Changed name format of levels checks:
     - Now it's "Level (Character) - Location" instead of "Level (Character - Location)".
 - Updated wiki to use the actual location names for the field emblems.
+- The traps/filler option for adventure field now applies to the Chao Garden as well.
 
 ## Removed
 
