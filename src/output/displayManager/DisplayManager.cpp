@@ -502,9 +502,8 @@ void DisplayManager::DisplayItemsUnlocked()
 
         if (_options.enemySanity && _options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         {
-            displayOffset++;
             buffer.clear();
-            buffer.append("Enemies: ");
+            buffer.append("Enemies:  ");
             int enemyCount = 0;
             int enemyTotal = 0;
             int actCount[5] = {0, 0, 0, 0, 0};
@@ -527,21 +526,95 @@ void DisplayManager::DisplayItemsUnlocked()
                         enemyCount++;
                 }
             }
-
-            buffer.append(std::to_string(enemyCount) + "/" + std::to_string(enemyTotal) + " (");
-            for (int i = 0; i < 5; i++)
-            {
-                if (actTotal[i] == 0)
-                    continue;
-
+            int actsWithEnemies = 0;
+            for (int i : actTotal)
                 if (i > 0)
-                    buffer.append("-");
-                buffer.append(std::to_string(actCount[i]) + "/" + std::to_string(actTotal[i]));
-            }
-            buffer.append(")");
+                    actsWithEnemies++;
 
-            SetDebugFontColor(currentColor);
-            DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount + displayOffset), buffer.c_str());
+
+            buffer.append(std::to_string(enemyCount) + "/" + std::to_string(enemyTotal));
+            if (actsWithEnemies > 1)
+            {
+                bool firstActShow = false;
+                buffer.append(" (");
+                for (int i = 0; i < 5; i++)
+                {
+                    if (actTotal[i] == 0)
+                        continue;
+                    if (firstActShow)
+                        buffer.append("-");
+                    else
+                        firstActShow = true;
+                    buffer.append(std::to_string(actCount[i]) + "/" + std::to_string(actTotal[i]));
+                }
+                buffer.append(")");
+            }
+
+            if (enemyTotal > 0)
+            {
+                displayOffset++;
+                SetDebugFontColor(currentColor);
+                DisplayDebugString(
+                    NJM_LOCATION(2, this->_startLine + this->_displayCount + displayOffset), buffer.c_str());
+            }
+        }
+
+
+        if (_options.capsuleSanity && _options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+        {
+            buffer.clear();
+            buffer.append("Capsules: ");
+            int capsuleCount = 0;
+            int capsuleTotal = 0;
+            int actCount[5] = {0, 0, 0, 0, 0};
+            int actTotal[5] = {0, 0, 0, 0, 0};
+
+            for (const auto& check : _checkData)
+            {
+                if (check.second.character == CurrentCharacter && check.second.type == LocationCapsule &&
+                    GET_LEVEL(check.second.level) == CurrentLevel)
+                {
+                    int act = GET_ACT(check.second.level);
+                    if (act >= 0 && act < 5)
+                    {
+                        actTotal[act]++;
+                        if (check.second.checked)
+                            actCount[act]++;
+                    }
+                    capsuleTotal++;
+                    if (check.second.checked)
+                        capsuleCount++;
+                }
+            }
+            int actsWithEnemies = 0;
+            for (int i : actTotal)
+                if (i > 0)
+                    actsWithEnemies++;
+            buffer.append(std::to_string(capsuleCount) + "/" + std::to_string(capsuleTotal));
+            if (actsWithEnemies > 1)
+            {
+                bool firstActShow = false;
+                buffer.append(" (");
+                for (int i = 0; i < 5; i++)
+                {
+                    if (actTotal[i] == 0)
+                        continue;
+                    if (firstActShow)
+                        buffer.append("-");
+                    else
+                        firstActShow = true;
+
+                    buffer.append(std::to_string(actCount[i]) + "/" + std::to_string(actTotal[i]));
+                }
+                buffer.append(")");
+            }
+            if (capsuleTotal > 0)
+            {
+                displayOffset++;
+                SetDebugFontColor(currentColor);
+                DisplayDebugString(
+                    NJM_LOCATION(2, this->_startLine + this->_displayCount + displayOffset), buffer.c_str());
+            }
         }
     }
 
