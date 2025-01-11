@@ -455,26 +455,50 @@ void DisplayManager::DisplayItemsUnlocked()
         else
             missionName = "C";
 
-        const std::string levelInfo = levelName + " (" + characterName + " - " + missionName + ")";
+        const std::string levelInfo = levelName + " (" + characterName + ") - " + missionName;
         SetDebugFontColor(currentColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), levelInfo.c_str());
 
-        // Show missions checked
-        displayOffset++;
-        buffer.clear();
-        buffer.append(" ");
         if (missionsEnabled > 0)
-            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
-        if (missionsEnabled > 1)
-            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
-                              ? " B" + this->GetMissionBTarget(true)
-                              : "  " + this->GetMissionBTarget(true));
-        if (missionsEnabled > 2)
-            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
-                              ? " A" + this->GetMissionATarget(true)
-                              : "  " + this->GetMissionATarget(true));
+        {
+            // Show missions checked
+            displayOffset++;
+            buffer.clear();
+            buffer.append(" ");
+            if (missionsEnabled > 0)
+                buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C)
+                                  ? "C"
+                                  : " ");
+            if (missionsEnabled > 1)
+                buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
+                                  ? " B" + this->GetMissionBTarget(true)
+                                  : "  " + this->GetMissionBTarget(true));
+            if (missionsEnabled > 2)
+                buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
+                                  ? " A" + this->GetMissionATarget(true)
+                                  : "  " + this->GetMissionATarget(true));
 
-        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+            DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+
+            buffer.clear();
+            buffer.append("[");
+            if (missionsEnabled > 0)
+                buffer.append(
+                    !GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
+            if (missionsEnabled > 1)
+                buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
+                                  ? "-B" + this->GetMissionBTarget(false)
+                                  : "- " + this->GetMissionBTarget(false));
+            if (missionsEnabled > 2)
+                buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
+                                  ? "-A" + this->GetMissionATarget(false)
+                                  : "- " + this->GetMissionATarget(false));
+            buffer.append("]");
+
+            SetDebugFontColor(currentColor & 0x00FFFFFF | 0x66000000);
+            DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        }
 
         if (_options.enemySanity && _options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         {
@@ -483,43 +507,45 @@ void DisplayManager::DisplayItemsUnlocked()
             buffer.append("Enemies: ");
             int enemyCount = 0;
             int enemyTotal = 0;
+            int actCount[5] = {0, 0, 0, 0, 0};
+            int actTotal[5] = {0, 0, 0, 0, 0};
+
             for (const auto& check : _checkData)
             {
                 if (check.second.character == CurrentCharacter && check.second.type == LocationEnemy &&
                     GET_LEVEL(check.second.level) == CurrentLevel)
                 {
+                    int act = GET_ACT(check.second.level);
+                    if (act >= 0 && act < 5)
+                    {
+                        actTotal[act]++;
+                        if (check.second.checked)
+                            actCount[act]++;
+                    }
                     enemyTotal++;
                     if (check.second.checked)
                         enemyCount++;
                 }
             }
-            buffer.append(std::to_string(enemyCount) + "/" + std::to_string(enemyTotal));
+
+            buffer.append(std::to_string(enemyCount) + "/" + std::to_string(enemyTotal) + " (");
+            for (int i = 0; i < 5; i++)
+            {
+                if (actTotal[i] == 0)
+                    continue;
+
+                if (i > 0)
+                    buffer.append("-");
+                buffer.append(std::to_string(actCount[i]) + "/" + std::to_string(actTotal[i]));
+            }
+            buffer.append(")");
+
             SetDebugFontColor(currentColor);
-            DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+            DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount + displayOffset), buffer.c_str());
         }
-
-
-        buffer.clear();
-        buffer.append("[");
-        if (missionsEnabled > 0)
-            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
-        if (missionsEnabled > 1)
-            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
-                              ? "-B" + this->GetMissionBTarget(false)
-                              : "- " + this->GetMissionBTarget(false));
-        if (missionsEnabled > 2)
-            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
-                              ? "-A" + this->GetMissionATarget(false)
-                              : "- " + this->GetMissionATarget(false));
-        buffer.append("]");
-
-        SetDebugFontColor(currentColor & 0x00FFFFFF | 0x66000000);
-        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
-
-
-        displayOffset++;
     }
 
+    displayOffset++;
 
     if (_options.playableSonic)
     {
