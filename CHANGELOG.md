@@ -27,8 +27,8 @@ All notable changes to this project will be documented in this file.
     - This also means that Sand Hill is no longer in logic for Sonic in normal level logic.
 
 ## Removed
-
-- Removed auto-win button from the mod and settings
+- Removed life-sanity (in favour of adding capsule-sanity).
+- Removed auto-win button from the mod and settings.
 
 ## Enemy-sanity
 
