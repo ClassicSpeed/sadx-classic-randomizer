@@ -158,6 +158,7 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_BLUECUBE));
 
     //Sand Hill
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_SANDBOARD));
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_SANDBOARD));
 
     //FinalEgg

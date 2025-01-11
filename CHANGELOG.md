@@ -23,6 +23,8 @@ All notable changes to this project will be documented in this file.
     - Now it's "Level (Character) - Location" instead of "Level (Character - Location)".
 - Updated wiki to use the actual location names for the field emblems.
 - The traps/filler option for adventure field now applies to the Chao Garden as well.
+- Sand Hill entrance will start closed for Sonic from the start (like Tails).
+    - This also means that Sand Hill is no longer in logic for Sonic in normal level logic.
 
 ## Removed
 
