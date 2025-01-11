@@ -57,9 +57,6 @@
             <Property name="SkippableCredits" type="bool" defaultvalue="True" display="Skippable Credits">
                 <HelpText>Allow skipping credits.</HelpText>
             </Property>
-            <Property name="AutoWinButton" type="bool" defaultvalue="False" display="Auto-Win Button">
-                <HelpText>For debugging purposes. Win the current level/boss by pressing the whistle button</HelpText>
-            </Property>
         </Group>
 
 
@@ -112,8 +109,68 @@
         </Group>
         <Group name="Chao" display="Chao Settings">
             <Property name="StatGainMultiplier" type="int" defaultvalue="1" minvalue="1" maxvalue="50" display="Stat Gain Multiplier">
-                <HelpText>How much animals, and fruits increase chao stats. Note: do not mix with the Mod Manager Code.</HelpText>
+                <HelpText>How much the animals, and fruits increase chao stats. Note: do not mix with the Mod Manager Code.</HelpText>
             </Property>
+        </Group>
+        <Group name="Sanity" display="Enemy/Capsule-Sanity">
+            
+            <Property name="TrackerArrow" type="bool" defaultvalue="True"
+                      display="Tracker Arrow">
+                <HelpText>Show a tracker arrow that points towards the closest unchecked enemy/capsule.</HelpText>
+            </Property>
+            <Property name="TrackerArrowToggleable" type="bool" defaultvalue="True"
+                      display="Toggleable Tracker Arrow">
+                <HelpText>Allows to toggle the tracker arrow by pressing the whistle button.</HelpText>
+            </Property>
+            <Property name="TrackerArrowR" type="int" defaultvalue="0" minvalue="0" maxvalue="255"
+                      display="Tracker Arrow Color Red">
+                <HelpText>Red value of color for the tracking arrow.</HelpText>
+            </Property>
+            <Property name="TrackerArrowG" type="int" defaultvalue="0" minvalue="0" maxvalue="255"
+                      display="Tracker Arrow Color Green">
+                <HelpText>Green value of color for the tracking arrow.</HelpText>
+            </Property>
+            <Property name="TrackerArrowB" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Tracker Arrow Color Blue">
+                <HelpText>Blue value of color for the tracking arrow.</HelpText>
+            </Property>
+
+            <Property name="EnemyIndicator" type="bool" defaultvalue="True"
+                      display="Enemy indicator">
+                <HelpText>Show an indicator over the enemies to help track you them.</HelpText>
+            </Property>
+            <Property name="EnemyIndicatorR" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Enemy Indicator Color Red">
+                <HelpText>Red value of color for the enemy indicator.</HelpText>
+            </Property>
+            <Property name="EnemyIndicatorG" type="int" defaultvalue="0" minvalue="0" maxvalue="255"
+                      display="Enemy Indicator Color Green">
+                <HelpText>Green value of color for the enemy indicator.</HelpText>
+            </Property>
+            <Property name="EnemyIndicatorB" type="int" defaultvalue="0" minvalue="0" maxvalue="255"
+                      display="Enemy Indicator Color Blue">
+                <HelpText>Blue value of color for the enemy indicator.</HelpText>
+            </Property>
+
+            <Property name="CapsuleIndicator" type="bool" defaultvalue="True"
+                      display="Capsule indicator">
+                <HelpText>Show an indicator over the capsules to help track you them.</HelpText>
+            </Property>
+            <Property name="CapsuleIndicatorR" type="int" defaultvalue="0" minvalue="0" maxvalue="255"
+                      display="Capsule Indicator Color Red">
+                <HelpText>Red value of color for the capsule indicator.</HelpText>
+            </Property>
+            <Property name="CapsuleIndicatorG" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Capsule Indicator Color Green">
+                <HelpText>Green value of color for the capsule indicator.</HelpText>
+            </Property>
+            <Property name="CapsuleIndicatorB" type="int" defaultvalue="0" minvalue="0" maxvalue="255"
+                      display="Capsule Indicator Color Blue">
+                <HelpText>Blue value of color for the capsule indicator.</HelpText>
+            </Property>
+            
+            
+            
         </Group>
     </Groups>
     <Enums>

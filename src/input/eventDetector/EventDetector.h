@@ -22,7 +22,6 @@ constexpr int HEIGHT_SIZE = 4;
 constexpr int EXTRA_HEIGHT_SIZE = 7;
 
 
-
 class EventDetector
 {
 public:
@@ -32,8 +31,9 @@ public:
     void OnLevelEmblem(int character, int level, int mission);
     void OnGenericEmblem(int index);
     void SetMultipleMissions(bool completeMultipleMissions);
-    void addTaskwk(taskwk* key, int value);
-    int getTaskwkValue(taskwk* key);
+    void SetSanitySettings(bool trackerArrow, int trackerArrowColor, bool trackerArrowToggleable,
+                           bool enemyIndicator, int enemyIndicatorColor,
+                           bool capsuleIndicator, int capsuleIndicatorColor);
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
     std::vector<CapsuleLocationData> capsules;
@@ -43,9 +43,13 @@ public:
     Randomizer& randomizer;
     float deathDetectionCooldown = 0.5f;
     std::clock_t deathCooldownTimer = -1;
-    
+    mutable bool trackerArrow = true;
+    bool trackerArrowToggleable= true;
+    bool enemyIndicator= true;
+    bool capsuleIndicator= true;
+
     std::unordered_map<taskwk*, int> enemyTaskMap;
-    
+
 
     NJS_COLOR arrowColor[6] = {
         {0xAA00FF00},
@@ -55,8 +59,13 @@ public:
         {0xAA00FF00},
         {0xAA00FF00},
     };
-    
-    NJS_COLOR indicatorColor[3] = {
+
+    NJS_COLOR enemyIndicatorColor[3] = {
+        {0xFFFF1400},
+        {0xFFFF1400},
+        {0xFFFF1400},
+    };
+    NJS_COLOR capsuleIndicatorColor[3] = {
         {0xFFFF1400},
         {0xFFFF1400},
         {0xFFFF1400},

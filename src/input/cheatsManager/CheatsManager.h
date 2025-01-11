@@ -10,10 +10,8 @@ public:
         
     }
 
-    void OnPlayingFrame() const;
-    void SetCheatsConfiguration(bool autoSkipCutscenes, bool skipCredits, bool winButtonEnabled);
+    void SetCheatsConfiguration(bool autoSkipCutscenes, bool skipCredits);
 
 private:
     Randomizer& _randomizer;
-    bool _winButtonEnabled = false;
 };

@@ -9,8 +9,12 @@ All notable changes to this project will be documented in this file.
 - Added Enemy-sanity (710 checks in total).
 - Added Capsule-sanity (692 checks in total).
 - When playing Enemy or Capsule sanity, things that would grant a check will be marked with a triangle.
-    - The triangle will be red (default) if the check is available, and gray if it's already collected.
-- You can enable another arrow over the player that points towards the next capsule in the settings.
+    - The triangle will be red/green (default) if the check is available, and gray if it's already collected.
+    - You can disable it and change its color in the mod's settings.
+- An arrow will be shown over the player that points towards the next capsule.
+    - You can disable it, change it color and make it toggleable in the mod's settings.
+- The in-game tracker will show the number of collected capsules and enemies.
+    - The progress will be also shown by act if applicable.
 - Added Sky Deck location group.
 
 ## Changed
@@ -18,6 +22,10 @@ All notable changes to this project will be documented in this file.
 - Changed name format of levels checks:
     - Now it's "Level (Character) - Location" instead of "Level (Character - Location)".
 - Updated wiki to use the actual location names for the field emblems.
+
+## Removed
+
+- Removed auto-win button from the mod and settings
 
 ## Enemy-sanity
 

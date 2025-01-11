@@ -222,6 +222,13 @@ void EventDetector::OnPlayingFrame() const
 
     if (CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
     {
+        if (trackerArrowToggleable)
+            for (const auto& button : PressedButtons)
+                if (button & WhistleButtons && Current_CharObj2 != nullptr)
+                    trackerArrow = !trackerArrow;
+
+        if (!trackerArrow)
+            return;
         NJS_VECTOR playerPosition = EntityData1Ptrs[0]->Position;
         if (CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Big)
             playerPosition.y += 25.0f;
@@ -358,7 +365,7 @@ void EventDetector::OnPlayingFrame() const
             NJS_POINT3COL point3Col;
             point3Col.p = point;
             point3Col.col = eventDetectorPtr->arrowColor;
-            njDrawTriangle3D(&point3Col, 6, NJD_TRANSPARENT);
+            njDrawTriangle3D(&point3Col, 6, 0x0);
         }
     }
 }
@@ -407,6 +414,31 @@ void EventDetector::OnGenericEmblem(const signed int index)
 void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
 {
     this->completeMultipleLevelMissions = completeMultipleMissions;
+}
+
+void EventDetector::SetSanitySettings(const bool trackerArrow, const int trackerArrowColor,
+                                      const bool trackerArrowToggleable,
+                                      const bool enemyIndicator, const int enemyIndicatorColor,
+                                      const bool capsuleIndicator, const int capsuleIndicatorColor)
+{
+    this->trackerArrow = trackerArrow;
+    this->trackerArrowToggleable = trackerArrowToggleable;
+    this->arrowColor[0].color = trackerArrowColor;
+    this->arrowColor[1].color = trackerArrowColor;
+    this->arrowColor[2].color = trackerArrowColor;
+    this->arrowColor[3].color = trackerArrowColor;
+    this->arrowColor[4].color = trackerArrowColor;
+    this->arrowColor[5].color = trackerArrowColor;
+
+    this->enemyIndicator = enemyIndicator;
+    this->enemyIndicatorColor[0].color = enemyIndicatorColor;
+    this->enemyIndicatorColor[1].color = enemyIndicatorColor;
+    this->enemyIndicatorColor[2].color = enemyIndicatorColor;
+
+    this->capsuleIndicator = capsuleIndicator;
+    this->capsuleIndicatorColor[0].color = capsuleIndicatorColor;
+    this->capsuleIndicatorColor[1].color = capsuleIndicatorColor;
+    this->capsuleIndicatorColor[2].color = capsuleIndicatorColor;
 }
 
 
@@ -476,7 +508,8 @@ void CheckCapsule(const EntityData1* entity, const bool specificCapsule)
         return;
     if (!specificCapsule)
         return;
-    if(!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel == LevelAndActIDs_Casinopolis3)
+    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel ==
+        LevelAndActIDs_Casinopolis3)
         return;
 
     const int locationId = GetCapsuleCapsuleFromPosition(entity->Position);
@@ -663,13 +696,17 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
     return -1;
 }
 
-void DrawIndicator(const task* tp, const bool tallElement, const bool checked)
+void DrawIndicator(const task* tp, const bool tallElement, const bool checked, const bool enemy)
 {
     if (!cameraready)
         return;
-
     if (!checked)
         eventDetectorPtr->possibleChecks.push_back({tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z});
+
+    if (enemy && !eventDetectorPtr->enemyIndicator)
+        return;
+    if (!enemy && !eventDetectorPtr->capsuleIndicator)
+        return;
 
     const EntityData1* player = EntityData1Ptrs[0];
     const double dz = player->Position.z - tp->twp->pos.z;
@@ -726,10 +763,14 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked)
 
     NJS_POINT3COL point3Col;
     point3Col.p = point;
-    if (checked)
-        point3Col.col = eventDetectorPtr->disabledIndicatorColor;
+    if (!checked)
+        if (enemy)
+            point3Col.col = eventDetectorPtr->enemyIndicatorColor;
+        else
+            point3Col.col = eventDetectorPtr->capsuleIndicatorColor;
     else
-        point3Col.col = eventDetectorPtr->indicatorColor;
+        point3Col.col = eventDetectorPtr->disabledIndicatorColor;
+
     njDrawTriangle3D(&point3Col, 3, 0x0);
 }
 
@@ -763,7 +804,8 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
         return;
     if (!GetCapsuleTypeOption(tp->twp->scl.x))
         return;
-    if(!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel == LevelAndActIDs_Casinopolis3)
+    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel ==
+        LevelAndActIDs_Casinopolis3)
         return;
 
     const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
@@ -773,7 +815,7 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
             return;
 
         const auto test = eventDetectorPtr->checkData.find(locationId);
-        DrawIndicator(tp, false, test->second.checked);
+        DrawIndicator(tp, false, test->second.checked, false);
     }
 });
 
@@ -786,7 +828,8 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
         return;
     if (!GetCapsuleTypeOption(tp->twp->scl.x))
         return;
-    if(!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel == LevelAndActIDs_Casinopolis3)
+    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel ==
+        LevelAndActIDs_Casinopolis3)
         return;
 
 
@@ -794,7 +837,7 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
     if (locationId > 0)
     {
         const auto test = eventDetectorPtr->checkData.find(locationId);
-        DrawIndicator(tp, true, test->second.checked);
+        DrawIndicator(tp, true, test->second.checked, false);
     }
 });
 
@@ -817,7 +860,7 @@ void CheckEnemy(task* tp)
     else
     {
         const auto test = eventDetectorPtr->checkData.find(it->second);
-        DrawIndicator(tp, false, test->second.checked);
+        DrawIndicator(tp, false, test->second.checked, true);
     }
 }
 
@@ -888,7 +931,7 @@ FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
             if (it != eventDetectorPtr->enemyTaskMap.end())
             {
                 const auto test = eventDetectorPtr->checkData.find(it->second);
-                DrawIndicator(tp, false, test->second.checked);
+                DrawIndicator(tp, false, test->second.checked, true);
             }
         }
     }

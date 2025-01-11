@@ -90,7 +90,6 @@ __declspec(dllexport) void __cdecl OnFrame()
     saveFileManager.OnFrame();
     archipelagoManager.OnFrame();
     displayManager.OnFrame();
-    cheatsManager.OnPlayingFrame();
     worldStateManager.OnFrame();
     if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
     {
@@ -164,7 +163,6 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool eggCarrierTransformationCutscene = settingsIni->getBool("GameSettings",
                                                                        "EggCarrierTransformationCutscene", true);
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
-    const bool winButtonEnabled = settingsIni->getBool("GameSettings", "AutoWinButton", false);
 
     const int voiceMenuIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
     const bool eggmanCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnTrap", true);
@@ -185,9 +183,30 @@ void LoadGameSettings(const IniFile* settingsIni)
 
     const int chaoStatsMultiplier = settingsIni->getInt("Chao", "StatGainMultiplier");
 
+    const bool trackerArrow = settingsIni->getBool("Sanity", "TrackerArrow", true);
+    const bool trackerArrowToggleable = settingsIni->getBool("Sanity", "TrackerArrowToggleable", true);
+    const int trackerArrowR = settingsIni->getInt("Sanity", "TrackerArrowR", 0);
+    const int trackerArrowG = settingsIni->getInt("Sanity", "TrackerArrowG", 0);
+    const int trackerArrowB = settingsIni->getInt("Sanity", "TrackerArrowB", 255);
+    const int trackerArrowColor = 0xFF << 24 | trackerArrowR << 16 | trackerArrowG << 8 | trackerArrowB;
+
+    const bool enemyIndicator = settingsIni->getBool("Sanity", "EnemyIndicator", true);
+    const int enemyIndicatorR = settingsIni->getInt("Sanity", "EnemyIndicatorR", 255);
+    const int enemyIndicatorG = settingsIni->getInt("Sanity", "EnemyIndicatorG", 0);
+    const int enemyIndicatorB = settingsIni->getInt("Sanity", "EnemyIndicatorB", 0);
+    const int enemyIndicatorColor = 0xFF << 24 | enemyIndicatorR << 16 | enemyIndicatorG << 8 | enemyIndicatorB;
+
+    const bool capsuleIndicator = settingsIni->getBool("Sanity", "CapsuleIndicator", true);
+    const int capsuleIndicatorR = settingsIni->getInt("Sanity", "CapsuleIndicatorR", 0);
+    const int capsuleIndicatorG = settingsIni->getInt("Sanity", "CapsuleIndicatorG", 255);
+    const int capsuleIndicatorB = settingsIni->getInt("Sanity", "CapsuleIndicatorB", 0);
+    const int capsuleIndicatorColor = 0xFF << 24 | capsuleIndicatorR << 16 | capsuleIndicatorG << 8 | capsuleIndicatorB;
+
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
-    cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, winButtonEnabled);
+    cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
+    eventDetector.SetSanitySettings(trackerArrow, trackerArrowColor,trackerArrowToggleable,  enemyIndicator,
+                                      enemyIndicatorColor, capsuleIndicator, capsuleIndicatorColor);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
     worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);
     characterManager.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,
