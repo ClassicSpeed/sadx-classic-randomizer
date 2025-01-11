@@ -502,7 +502,7 @@ int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - capsule.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 4.0)
+        if (distance <= 0.5)
             return capsule.locationId;
     }
     return -1;
@@ -700,7 +700,7 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - enemy.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 4.0)
+        if (distance <= 0.5)
             return enemy.locationId;
     }
     return -1;
@@ -897,6 +897,17 @@ FunctionHook<void, task*> onKikiMain(0x4ACF80, [](task* tp)-> void
 
 FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
 {
+    //We change the spider location for sadx
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_TwinklePark2
+        && tp->twp->pos.x > -3 && tp->twp->pos.x < -2
+        && tp->twp->pos.y > -9 && tp->twp->pos.y < -8
+        && tp->twp->pos.z > 703 && tp->twp->pos.z < 704)
+    {
+        tp->twp->pos.x = -62.73f;
+        tp->twp->pos.y = -8.43f;
+        tp->twp->pos.z = 579.43f;
+    }
+
     CheckEnemy(tp);
     onWaterSpiderLoad.Original(tp);
 });

@@ -394,8 +394,9 @@ LocationRepository::LocationRepository()
         {310.11f, 0.00f, 729.57f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Buyon, 14010},
         {69.85f, 227.89f, 589.59f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14011},
         {-79.09f, -8.43f, 625.06f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14012},
-        {-62.73f, -8.43f, 579.43f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14013}, //DX
-        {-79.09f, -8.43f, 625.06f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14013}, //DC
+        {-62.73f, -8.43f, 579.43f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14013}, //DC
+        {-2.73f, -8.43f, 703.43f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14013}, //DX
+        
         {354.83f, 676.10f, 111.23f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14014}, //DX
         {354.25f, 676.10f, 110.42f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14014}, //DC
         {558.73f, 123.02f, 327.69f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14015},
