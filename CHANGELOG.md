@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - Sand Hill entrance will start closed for Sonic from the start (like Tails).
     - This also means that Sand Hill is no longer in logic for Sonic in normal level logic.
 - The Casino Emblem is now in logic for Sonic in hard/expert logic.
+- Added multiple changes in expert logic. (Credit to Labrys for the footage).
 
 ## Removed
 
