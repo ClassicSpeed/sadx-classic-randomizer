@@ -13,7 +13,13 @@ static bool __cdecl HandleCheckMissionRequirements(int mission, int character, i
 
 UsercallFuncVoid(OnBoaBoaPartDestroyed_t, (task * tp), (tp), 0x79F8F0, rEAX);
 static void __cdecl HandleOnBoaBoaPartDestroyed(task* tp);
-
+float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
+{
+    float result = GetShadowPos(x, y, z, rotation);
+    if (result == -1000000.0f)
+        result = y;
+    return result;
+}
 
 EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
 {
@@ -24,6 +30,12 @@ EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
     capsules = randomizer.GetCapsules();
     enemies = randomizer.GetEnemies();
     eventDetectorPtr = this;
+    
+    // Fix badniks not spawning
+    WriteCall((void*)0x0049EFE7, GetShadowPos_r); // Egg Keeper
+    WriteCall((void*)0x007A05EF, GetShadowPos_r); // Rhinotank
+    WriteCall((void*)0x004C9012, GetShadowPos_r); // Snowman
+    WriteCall((void*)0x006F7F3B, GetShadowPos_r); // Station Square cars (Egg Walker cutscene)
 }
 
 DataPointer(int, NumberOfHintsUsed, 0x3B0F138);
@@ -1044,6 +1056,16 @@ FunctionHook<void, task*> onIceBallMainB(0x4C8DD0, [](task* tp)-> void
     CheckEnemy(tp);
     onIceBallMainB.Original(tp);
 });
+
+// FunctionHook<float, float, float, float, Angle3*> onGetShadowPos(
+//     0x0049EFE7, [](const float x, const float y, const float z, Angle3* ang)-> float
+//     {
+//         float result = onGetShadowPos.Original(x, y, z, ang);
+//         if (result == -1000000.0f)
+//             result = y;
+//
+//         return result;
+//     });
 
 FunctionHook<void, task*> onEggKeeperLoad(0x4A6700, [](task* tp)-> void
 {
