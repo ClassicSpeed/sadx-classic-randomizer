@@ -16,7 +16,8 @@ public:
     LocationData SetLocationChecked(int checkId);
     LocationData GetLocation(int checkId);
     std::map<int, LocationData> GetLocations();
-    std::vector<LifeBoxLocationData> GetLifeCapsules();
+    std::vector<CapsuleLocationData> GetCapsuleLocations();
+    std::vector<EnemyLocationData> GetEnemyLocations();
     LevelStatus GetLevelStatus(Options options);
     MissionStatus GetMissionStatus(Options options);
     BossesStatus GetBossesStatus(const Options& options);
@@ -24,5 +25,6 @@ public:
 
 private:
     std::map<int, LocationData> _checkData;
-    std::vector<LifeBoxLocationData> _lifeCapsules;
+    std::vector<EnemyLocationData> _enemies;
+    std::vector<CapsuleLocationData> _capsules;
 };

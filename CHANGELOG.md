@@ -2,12 +2,77 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.0] - 2025-01-11
+
+## Added
+
+- Added Enemy-sanity (710 checks in total).
+- Added Capsule-sanity (692 checks in total).
+- When playing Enemy or Capsule sanity, things that would grant a check will be marked with a triangle.
+    - The triangle will be red/green (default) if the check is available, and gray if it's already collected.
+    - You can disable it and change its color in the mod's settings.
+- An arrow will be shown over the player that points towards the next capsule.
+    - You can disable it, change its color, and make it toggleable in the mod's settings.
+- The in-game tracker will show the number of collected capsules and enemies.
+    - The progress will also be shown by act if applicable.
+- Added Sky Deck location group.
+
+## Changed
+
+- Changed name format of level checks:
+    - Now it's "Level (Character) - Location" instead of "Level (Character - Location)".
+- Updated wiki to use the actual location names for the field emblems.
+- The traps/filler option for adventure field now applies to the Chao Garden as well.
+- Sand Hill entrance will start closed for Sonic from the start (like Tails).
+    - This also means that Sand Hill is no longer in logic for Sonic in normal level logic.
+- The Casino Emblem is now in logic for Sonic in hard/expert logic.
+- Added multiple changes in expert logic. (Credit to Labrys for the footage).
+
+## Removed
+
+- Removed life-sanity (in favor of adding capsule-sanity).
+- Removed auto-win button from the mod and settings.
+
+## Enemy-sanity
+
+- Enemy-sanity can be enabled separately for different characters.
+- The location name will include the enemy number and what enemy it is.
+- Some enemies won't count as a check:
+    - Every enemy that is not in both SADX and SADC.
+    - Enemies that only spawn during missions.
+    - Enemies spawned by traps.
+    - Enemy-karts in Twinkle Park.
+    - Rhinos attached to the bridges for Gamma's Windy Valley.
+    - Pirates in Knuckles' Casinopolis.
+    - Beats (the infinite-spawning enemy) in Sonic's Final Egg.
+    - Spinners in the wrong paths at the end of Amy's Final Egg.
+    - Dolls in Gamma's Final Egg.
+- Sometimes, enemies won't spawn; most of the time, restarting from the last checkpoint will fix it.
+
+## Capsule-sanity
+
+- Capsule-sanity can be enabled separately for different characters.
+- The location name will include the capsule number and what kind of capsule it is.
+- You can toggle the 5 capsules in Sonic's Pinball (off by default).
+- Capsules are divided into 4 groups, each can be toggled separately:
+    - Life capsules: extra lives (103 checks).
+    - Shield capsules: shields and magnetic shields (78 checks).
+    - Power-up capsules: invincibility, speed up and bombs (70 checks).
+    - Ring capsules: 5 rings, 10 rings and ? rings (441 checks).
+- If Capsule-sanity is enabled but all capsule types are disabled, life capsules will be enabled as a failsafe.
+- Some capsules won't count as a check:
+    - Capsules that are not in both SADX and SADC.
+    - Capsules in Twinkle Circuit.
+    - Capsules found when digging as Knuckles.
+- Sonic can break capsules while playing as Tails and that won't count as a check.
+    - Keep in mind that capsules won't respawn until you leave and enter the level again.
+
 ## [v0.9.1] - 2024-12-21
 
 ### Fixed
 
 - Fixed item link adding random important items into the pool instead of filler.
-- Fixed non-deterministic behaviour when generating the same seed multiple times.
+- Fixed non-deterministic behavior when generating the same seed multiple times.
 - Fixed Chao Races not sending checks.
 
 ## [v0.9.0b] - 2024-12-01

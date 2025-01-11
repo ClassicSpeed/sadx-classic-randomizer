@@ -179,22 +179,47 @@ Sonic Adventure DX:
   # Determines whether beating the harder (points-based) Sky Chase Act 1 and 2 missions grants checks (2 Locations).
   # Only works if Sky Chase checks are enabled.
   sky_chase_checks_hard: 'false'
-  # Determines whether collecting life capsules grants checks (102 Locations).
-  life_sanity: 'false'
-  # Determines whether pinball's life capsules grant checks (2 Locations).
-  pinball_life_capsules: 'false'
-  # If life-sanity is on, determines whether Sonic's life capsules are part of the randomizer.
-  sonic_life_sanity: 'true'
-  # If life-sanity is on, determines whether Tails' life capsules are part of the randomizer.
-  tails_life_sanity: 'true'
-  # If life-sanity is on, determines whether Knuckles' life capsules are part of the randomizer.
-  knuckles_life_sanity: 'true'
-  # If life-sanity is on, determines whether Amy's life capsules are part of the randomizer.
-  amy_life_sanity: 'true'
-  # If life-sanity is on, determines whether Big's life capsules are part of the randomizer.
-  big_life_sanity: 'true'
-  # If life-sanity is on, determines whether Gamma's life capsules are part of the randomizer.
-  gamma_life_sanity: 'true'
+  
+  # Determines whether destroying enemies grants checks (710 Locations).
+  enemy_sanity: 'false'
+  # If enemy-sanity is on, determines whether Sonic's enemies are part of the randomizer (308 Locations).
+  sonic_enemy_sanity: 'true'
+  # If enemy-sanity is on, determines whether Tails' enemies are part of the randomizer (46 Locations).
+  tails_enemy_sanity: 'true'
+  # If enemy-sanity is on, determines whether Knuckles' enemies are part of the randomizer (80 Locations).
+  knuckles_enemy_sanity: 'true'
+  # If enemy-sanity is on, determines whether Amy's enemies are part of the randomizer (54 Locations).
+  amy_enemy_sanity: 'true'
+  # If enemy-sanity is on, determines whether Big's enemies are part of the randomizer (12 Locations).
+  big_enemy_sanity: 'true'
+  # If enemy-sanity is on, determines whether Gamma's enemies are part of the randomizer (210 Locations).
+  gamma_enemy_sanity: 'true'
+  
+  # Determines whether destroying capsules grants checks (692 Locations).
+  capsule_sanity: 'false'
+  # Determines whether pinball's capsules grant checks (5 Locations).
+  pinball_capsules: 'false'
+  # If capsule-sanity is on, determines whether Sonic's capsules are part of the randomizer (360 Locations).
+  sonic_capsule_sanity: 'true'
+  # If capsule-sanity is on, determines whether Tails' capsules are part of the randomizer (111 Locations).
+  tails_capsule_sanity: 'true'
+  # If capsule-sanity is on, determines whether Knuckles' capsules are part of the randomizer (66 Locations).
+  knuckles_capsule_sanity: 'true'
+  # If capsule-sanity is on, determines whether Amy's capsules are part of the randomizer (53 Locations).
+  amy_capsule_sanity: 'true'
+  # If capsule-sanity is on, determines whether Big's capsules are part of the randomizer (26 Locations).
+  big_capsule_sanity: 'true'
+  # If capsule-sanity is on, determines whether Gamma's capsules are part of the randomizer (76 Locations).
+  gamma_capsule_sanity: 'true'
+  
+  # If capsule-sanity is on, the randomizer will include Life Capsules (103 Locations).
+  life_capsule_sanity: 'true'
+  # If capsule-sanity is on, the randomizer will include  Shields and Magnetic Shields (78 Locations).
+  shield_capsule_sanity: 'true'
+  # If capsule-sanity is on, the randomizer will include Invincibility, Speed Up and Bomb Capsules (70 Locations).
+  powerup_capsule_sanity: 'true'
+  # If capsule-sanity is on, the randomizer will include 5, 10 and ? capsules (441 Locations).
+  ring_capsule_sanity: 'true'
   
   # Junk Options
   

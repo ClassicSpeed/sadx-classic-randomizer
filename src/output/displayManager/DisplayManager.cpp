@@ -209,8 +209,8 @@ void DisplayManager::DisplayGoalStatus()
 
     if (_options.goalRequiresBosses)
         buffer.append(" Bosses: " + std::to_string(_bossesStatus.bossesCompleted) + "/"
-        + std::to_string(_options.bossesGoal));
-    
+            + std::to_string(_options.bossesGoal));
+
     if (_options.goalRequiresChaoRaces)
         buffer.append(" Races: " + std::to_string(_chaoStatus.racesCompleted) + "/"
             + std::to_string(_chaoStatus.racesTotal));
@@ -455,66 +455,176 @@ void DisplayManager::DisplayItemsUnlocked()
         else
             missionName = "C";
 
-        const std::string levelInfo = levelName + " (" + characterName + " - " + missionName + ")";
+        const std::string levelInfo = levelName + " (" + characterName + ") - " + missionName;
         SetDebugFontColor(currentColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), levelInfo.c_str());
 
-        // Show missions checked
-        displayOffset++;
-        buffer.clear();
-        buffer.append(" ");
         if (missionsEnabled > 0)
-            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
-        if (missionsEnabled > 1)
-            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
-                              ? " B" + this->GetMissionBTarget(true)
-                              : "  " + this->GetMissionBTarget(true));
-        if (missionsEnabled > 2)
-            buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
-                              ? " A" + this->GetMissionATarget(true)
-                              : "  " + this->GetMissionATarget(true));
-        buffer.append(" ");
-
-        if (_options.lifeSanity && _options.GetCharacterLifeSanity(static_cast<Characters>(CurrentCharacter)))
         {
-            buffer.append(" Lives: ");
-            for (const auto& check : _checkData)
-            {
-                if (check.second.character == CurrentCharacter && check.second.type == LocationLifeCapsule &&
-                    GET_LEVEL(check.second.level) == CurrentLevel)
-                {
-                    if (!_options.includePinballCapsules && (check.first == 1211 || check.first == 1212))
-                        continue;
-                    buffer.append(check.second.checked ? "X" : "-");
-                }
-            }
-            SetDebugFontColor(currentColor);
+            // Show missions checked
+            displayOffset++;
+            buffer.clear();
+            buffer.append(" ");
+            if (missionsEnabled > 0)
+                buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C)
+                                  ? "C"
+                                  : " ");
+            if (missionsEnabled > 1)
+                buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
+                                  ? " B" + this->GetMissionBTarget(true)
+                                  : "  " + this->GetMissionBTarget(true));
+            if (missionsEnabled > 2)
+                buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
+                                  ? " A" + this->GetMissionATarget(true)
+                                  : "  " + this->GetMissionATarget(true));
+
+            DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+
+            buffer.clear();
+            buffer.append("[");
+            if (missionsEnabled > 0)
+                buffer.append(
+                    !GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
+            if (missionsEnabled > 1)
+                buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
+                                  ? "-B" + this->GetMissionBTarget(false)
+                                  : "- " + this->GetMissionBTarget(false));
+            if (missionsEnabled > 2)
+                buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
+                                  ? "-A" + this->GetMissionATarget(false)
+                                  : "- " + this->GetMissionATarget(false));
+            buffer.append("]");
+
+            SetDebugFontColor(currentColor & 0x00FFFFFF | 0x66000000);
             DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         }
 
-        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        if (_options.enemySanity && _options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+        {
+            buffer.clear();
+            buffer.append("Enemies:  ");
+            int enemyCount = 0;
+            int enemyTotal = 0;
+            int actCount[5] = {0, 0, 0, 0, 0};
+            int actTotal[5] = {0, 0, 0, 0, 0};
 
-        buffer.clear();
-        buffer.append("[");
-        if (missionsEnabled > 0)
-            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_C) ? "C" : " ");
-        if (missionsEnabled > 1)
-            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_B)
-                              ? "-B" + this->GetMissionBTarget(false)
-                              : "- " + this->GetMissionBTarget(false));
-        if (missionsEnabled > 2)
-            buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
-                              ? "-A" + this->GetMissionATarget(false)
-                              : "- " + this->GetMissionATarget(false));
-        buffer.append("]");
+            for (const auto& check : _checkData)
+            {
+                if (check.second.character == CurrentCharacter && check.second.type == LocationEnemy &&
+                    GET_LEVEL(check.second.level) == CurrentLevel)
+                {
+                    int act = GET_ACT(check.second.level);
+                    if (act >= 0 && act < 5)
+                    {
+                        actTotal[act]++;
+                        if (check.second.checked)
+                            actCount[act]++;
+                    }
+                    enemyTotal++;
+                    if (check.second.checked)
+                        enemyCount++;
+                }
+            }
+            int actsWithEnemies = 0;
+            for (int i : actTotal)
+                if (i > 0)
+                    actsWithEnemies++;
 
-        SetDebugFontColor(currentColor & 0x00FFFFFF | 0x66000000);
-        DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+            buffer.append(std::to_string(enemyCount) + "/" + std::to_string(enemyTotal));
+            if (actsWithEnemies > 1)
+            {
+                bool firstActShow = false;
+                buffer.append(" (");
+                for (int i = 0; i < 5; i++)
+                {
+                    if (actTotal[i] == 0)
+                        continue;
+                    if (firstActShow)
+                        buffer.append("-");
+                    else
+                        firstActShow = true;
+                    buffer.append(std::to_string(actCount[i]) + "/" + std::to_string(actTotal[i]));
+                }
+                buffer.append(")");
+            }
+
+            if (enemyTotal > 0)
+            {
+                displayOffset++;
+                SetDebugFontColor(currentColor);
+                DisplayDebugString(
+                    NJM_LOCATION(2, this->_startLine + this->_displayCount + displayOffset), buffer.c_str());
+            }
+        }
 
 
-        displayOffset++;
+        if (_options.capsuleSanity && _options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+        {
+            buffer.clear();
+            buffer.append("Capsules: ");
+            int capsuleCount = 0;
+            int capsuleTotal = 0;
+            int actCount[5] = {0, 0, 0, 0, 0};
+            int actTotal[5] = {0, 0, 0, 0, 0};
+
+            for (const auto& check : _checkData)
+            {
+                if (check.second.character == CurrentCharacter && check.second.type == LocationCapsule &&
+                    GET_LEVEL(check.second.level) == CurrentLevel)
+                {
+                    if (!_options.GetSpecificCapsuleSanity(static_cast<CapsuleType>(check.second.capsuleType)))
+                        continue;
+
+                    if(!_options.includePinballCapsules && check.second.level == LevelAndActIDs_Casinopolis3)
+                        continue;
+
+                    int act = GET_ACT(check.second.level);
+                    if (act >= 0 && act < 5)
+                    {
+                        actTotal[act]++;
+                        if (check.second.checked)
+                            actCount[act]++;
+                    }
+                    capsuleTotal++;
+                    if (check.second.checked)
+                        capsuleCount++;
+                }
+            }
+            int actsWithEnemies = 0;
+            for (int i : actTotal)
+                if (i > 0)
+                    actsWithEnemies++;
+            buffer.append(std::to_string(capsuleCount) + "/" + std::to_string(capsuleTotal));
+            if (actsWithEnemies > 1)
+            {
+                bool firstActShow = false;
+                buffer.append(" (");
+                for (int i = 0; i < 5; i++)
+                {
+                    if (actTotal[i] == 0)
+                        continue;
+                    if (firstActShow)
+                        buffer.append("-");
+                    else
+                        firstActShow = true;
+
+                    buffer.append(std::to_string(actCount[i]) + "/" + std::to_string(actTotal[i]));
+                }
+                buffer.append(")");
+            }
+            if (capsuleTotal > 0)
+            {
+                displayOffset++;
+                SetDebugFontColor(currentColor);
+                DisplayDebugString(
+                    NJM_LOCATION(2, this->_startLine + this->_displayCount + displayOffset), buffer.c_str());
+            }
+        }
     }
 
+    displayOffset++;
 
     if (_options.playableSonic)
     {
