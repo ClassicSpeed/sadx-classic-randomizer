@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.9.1] - 2025-01-??
+## [v1.0.0] - 2025-01-11
 
 ## Added
 
@@ -12,14 +12,14 @@ All notable changes to this project will be documented in this file.
     - The triangle will be red/green (default) if the check is available, and gray if it's already collected.
     - You can disable it and change its color in the mod's settings.
 - An arrow will be shown over the player that points towards the next capsule.
-    - You can disable it, change it color and make it toggleable in the mod's settings.
+    - You can disable it, change its color, and make it toggleable in the mod's settings.
 - The in-game tracker will show the number of collected capsules and enemies.
-    - The progress will be also shown by act if applicable.
+    - The progress will also be shown by act if applicable.
 - Added Sky Deck location group.
 
 ## Changed
 
-- Changed name format of levels checks:
+- Changed name format of level checks:
     - Now it's "Level (Character) - Location" instead of "Level (Character - Location)".
 - Updated wiki to use the actual location names for the field emblems.
 - The traps/filler option for adventure field now applies to the Chao Garden as well.
@@ -30,7 +30,7 @@ All notable changes to this project will be documented in this file.
 
 ## Removed
 
-- Removed life-sanity (in favour of adding capsule-sanity).
+- Removed life-sanity (in favor of adding capsule-sanity).
 - Removed auto-win button from the mod and settings.
 
 ## Enemy-sanity
@@ -59,7 +59,7 @@ All notable changes to this project will be documented in this file.
     - Shield capsules: shields and magnetic shields (78 checks).
     - Power-up capsules: invincibility, speed up and bombs (70 checks).
     - Ring capsules: 5 rings, 10 rings and ? rings (441 checks).
-- If Capsule-sanity is enabled but all capsules type are disable, life capsules will be enabled as a failsafe.
+- If Capsule-sanity is enabled but all capsule types are disabled, life capsules will be enabled as a failsafe.
 - Some capsules won't count as a check:
     - Capsules that are not in both SADX and SADC.
     - Capsules in Twinkle Circuit.
