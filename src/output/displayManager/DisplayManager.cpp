@@ -574,6 +574,9 @@ void DisplayManager::DisplayItemsUnlocked()
                 if (check.second.character == CurrentCharacter && check.second.type == LocationCapsule &&
                     GET_LEVEL(check.second.level) == CurrentLevel)
                 {
+                    if (!_options.GetSpecificCapsuleSanity(static_cast<CapsuleType>(check.second.capsuleType)))
+                        continue;
+
                     int act = GET_ACT(check.second.level);
                     if (act >= 0 && act < 5)
                     {

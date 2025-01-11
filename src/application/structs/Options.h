@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "LocationData.h"
 
 enum Goal
 {
@@ -259,6 +260,27 @@ struct Options
         }
         return false;
     }
+    
+    bool GetSpecificCapsuleSanity(const CapsuleType capsuleType) const
+    {
+        switch (capsuleType)
+        {
+        case ExtraLifeCapsule:
+            return this->lifeCapsuleSanity;
+        case ShieldCapsule:
+        case MagneticShieldCapsule:
+            return this->shieldCapsuleSanity;
+        case SpeedUpCapsule:
+        case InvincibilityCapsule:
+        case BombCapsule:
+            return this->powerUpCapsuleSanity;
+        case FiveRingsCapsule:
+        case TenRingsCapsule:
+        case RandomRingsCapsule:
+            return this->ringCapsuleSanity;
+        }
+        return false;
+    }
 
     void SetCharacterStatingArea(const Characters character, const StartingArea startingArea)
     {
@@ -365,5 +387,4 @@ struct Options
         }
         return false;
     }
-
 };

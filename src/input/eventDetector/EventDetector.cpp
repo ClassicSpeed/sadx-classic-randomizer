@@ -186,18 +186,8 @@ bool EventDetector::IsTargetableCheck(const LocationData& location) const
         if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(
             static_cast<Characters>(CurrentCharacter)))
             return false;
-        if (!eventDetectorPtr->randomizer.GetOptions().lifeCapsuleSanity && location.capsuleType == ExtraLifeCapsule)
-            return false;
-        if (!eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity
-            && (location.capsuleType == MagneticShieldCapsule || location.capsuleType == ShieldCapsule))
-            return false;
-        if (!eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity
-            && (location.capsuleType == SpeedUpCapsule || location.capsuleType == BombCapsule || location.capsuleType ==
-                InvincibilityCapsule))
-            return false;
-        if (!eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity
-            && (location.capsuleType == FiveRingsCapsule || location.capsuleType == TenRingsCapsule || location.
-                capsuleType == RandomRingsCapsule))
+        if (!eventDetectorPtr->randomizer.GetOptions().GetSpecificCapsuleSanity(
+            static_cast<CapsuleType>(location.capsuleType)))
             return false;
         return true;
     }
