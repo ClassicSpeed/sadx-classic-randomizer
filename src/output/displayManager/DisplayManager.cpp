@@ -209,8 +209,8 @@ void DisplayManager::DisplayGoalStatus()
 
     if (_options.goalRequiresBosses)
         buffer.append(" Bosses: " + std::to_string(_bossesStatus.bossesCompleted) + "/"
-        + std::to_string(_options.bossesGoal));
-    
+            + std::to_string(_options.bossesGoal));
+
     if (_options.goalRequiresChaoRaces)
         buffer.append(" Races: " + std::to_string(_chaoStatus.racesCompleted) + "/"
             + std::to_string(_chaoStatus.racesTotal));
@@ -473,27 +473,31 @@ void DisplayManager::DisplayItemsUnlocked()
             buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
                               ? " A" + this->GetMissionATarget(true)
                               : "  " + this->GetMissionATarget(true));
-        buffer.append(" ");
-
-        // TODO: Print capsules
-        // if (_options.lifeSanity && _options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
-        // {
-        //     buffer.append(" Lives: ");
-        //     for (const auto& check : _checkData)
-        //     {
-        //         if (check.second.character == CurrentCharacter && check.second.type == LocationLifeCapsule &&
-        //             GET_LEVEL(check.second.level) == CurrentLevel)
-        //         {
-        //             if (!_options.includePinballCapsules && (check.first == 1211 || check.first == 1212))
-        //                 continue;
-        //             buffer.append(check.second.checked ? "X" : "-");
-        //         }
-        //     }
-        //     SetDebugFontColor(currentColor);
-        //     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
-        // }
 
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+        if (_options.enemySanity && _options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+        {
+            displayOffset++;
+            buffer.clear();
+            buffer.append("Enemies: ");
+            int enemyCount = 0;
+            int enemyTotal = 0;
+            for (const auto& check : _checkData)
+            {
+                if (check.second.character == CurrentCharacter && check.second.type == LocationEnemy &&
+                    GET_LEVEL(check.second.level) == CurrentLevel)
+                {
+                    enemyTotal++;
+                    if (check.second.checked)
+                        enemyCount++;
+                }
+            }
+            buffer.append(std::to_string(enemyCount) + "/" + std::to_string(enemyTotal));
+            SetDebugFontColor(currentColor);
+            DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+        }
+
 
         buffer.clear();
         buffer.append("[");
