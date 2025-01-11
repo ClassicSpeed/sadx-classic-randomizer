@@ -122,6 +122,10 @@
                       display="Toggleable Tracker Arrow">
                 <HelpText>Allows to toggle the tracker arrow by pressing the whistle button.</HelpText>
             </Property>
+            <Property name="TrackerArrowOverrideColor" type="bool" defaultvalue="False"
+                      display="Override Tracker Arrow Color">
+                <HelpText>Overrides the arrow color with the indicator color of whatever it's targeting.</HelpText>
+            </Property>
             <Property name="TrackerArrowR" type="int" defaultvalue="0" minvalue="0" maxvalue="255"
                       display="Tracker Arrow Color Red">
                 <HelpText>Red value of color for the tracking arrow.</HelpText>

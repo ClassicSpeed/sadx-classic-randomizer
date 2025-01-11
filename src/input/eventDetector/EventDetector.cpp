@@ -242,18 +242,19 @@ void EventDetector::OnPlayingFrame() const
         {
             for (auto& location : possibleChecks)
             {
-                float dx = playerPosition.x - location.x;
-                float dy = playerPosition.y - location.y;
-                float dz = playerPosition.z - location.z;
+                float dx = playerPosition.x - location.point.x;
+                float dy = playerPosition.y - location.point.y;
+                float dz = playerPosition.z - location.point.z;
                 float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
                     closestLocation = new LocationData();
-                    closestLocation->x = location.x;
-                    closestLocation->y = location.y;
-                    closestLocation->z = location.z;
+                    closestLocation->x = location.point.x;
+                    closestLocation->y = location.point.y;
+                    closestLocation->z = location.point.z;
+                    closestLocation->type = location.type;
                 }
             }
             possibleChecks.clear();
@@ -364,6 +365,14 @@ void EventDetector::OnPlayingFrame() const
 
             NJS_POINT3COL point3Col;
             point3Col.p = point;
+            if (trackerArrowOverrideColor)
+                if (closestLocation->type == LocationEnemy)
+                    for (int i = 0; i < 6; ++i)
+                        eventDetectorPtr->arrowColor[i] = enemyIndicatorColor[0];
+                else
+                    for (int i = 0; i < 6; ++i)
+                        eventDetectorPtr->arrowColor[i] = capsuleIndicatorColor[0];
+
             point3Col.col = eventDetectorPtr->arrowColor;
             njDrawTriangle3D(&point3Col, 6, 0x0);
         }
@@ -417,12 +426,13 @@ void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
 }
 
 void EventDetector::SetSanitySettings(const bool trackerArrow, const int trackerArrowColor,
-                                      const bool trackerArrowToggleable,
+                                      const bool trackerArrowToggleable, const bool trackerArrowOverrideColor,
                                       const bool enemyIndicator, const int enemyIndicatorColor,
                                       const bool capsuleIndicator, const int capsuleIndicatorColor)
 {
     this->trackerArrow = trackerArrow;
     this->trackerArrowToggleable = trackerArrowToggleable;
+    this->trackerArrowOverrideColor = trackerArrowOverrideColor;
     this->arrowColor[0].color = trackerArrowColor;
     this->arrowColor[1].color = trackerArrowColor;
     this->arrowColor[2].color = trackerArrowColor;
@@ -701,7 +711,9 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     if (!cameraready)
         return;
     if (!checked)
-        eventDetectorPtr->possibleChecks.push_back({tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z});
+        eventDetectorPtr->possibleChecks.push_back({
+            tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z, enemy ? LocationEnemy : LocationCapsule
+        });
 
     if (enemy && !eventDetectorPtr->enemyIndicator)
         return;

@@ -12,6 +12,12 @@ enum LastStoryState
     LastStoryCompleted
 };
 
+struct ArrowTarget
+{
+    NJS_POINT3 point;
+    LocationType type;
+};
+
 constexpr double MIN_INDICATOR_DISTANCE = 130.0;
 constexpr double MAX_INDICATOR_DISTANCE = 170.0;
 
@@ -31,7 +37,8 @@ public:
     void OnLevelEmblem(int character, int level, int mission);
     void OnGenericEmblem(int index);
     void SetMultipleMissions(bool completeMultipleMissions);
-    void SetSanitySettings(bool trackerArrow, int trackerArrowColor, bool trackerArrowToggleable,
+    void SetSanitySettings(bool trackerArrow, int trackerArrowColor,
+                           bool trackerArrowToggleable, bool trackerArrowOverrideColor,
                            bool enemyIndicator, int enemyIndicatorColor,
                            bool capsuleIndicator, int capsuleIndicatorColor);
     LastStoryState lastStoryState = LastStoryNotStarted;
@@ -39,14 +46,15 @@ public:
     std::vector<CapsuleLocationData> capsules;
     std::vector<EnemyLocationData> enemies;
     mutable std::map<int, LocationData> checkData;
-    mutable std::vector<NJS_POINT3> possibleChecks;
+    mutable std::vector<ArrowTarget> possibleChecks;
     Randomizer& randomizer;
     float deathDetectionCooldown = 0.5f;
     std::clock_t deathCooldownTimer = -1;
     mutable bool trackerArrow = true;
-    bool trackerArrowToggleable= true;
-    bool enemyIndicator= true;
-    bool capsuleIndicator= true;
+    bool trackerArrowToggleable = true;
+    bool trackerArrowOverrideColor = true;
+    bool enemyIndicator = true;
+    bool capsuleIndicator = true;
 
     std::unordered_map<taskwk*, int> enemyTaskMap;
 
