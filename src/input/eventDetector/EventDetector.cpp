@@ -189,6 +189,9 @@ bool EventDetector::IsTargetableCheck(const LocationData& location) const
         if (!eventDetectorPtr->randomizer.GetOptions().GetSpecificCapsuleSanity(
             static_cast<CapsuleType>(location.capsuleType)))
             return false;
+        if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && location.level ==
+            LevelAndActIDs_Casinopolis3)
+            return false;
         return true;
     }
     return false;
@@ -473,6 +476,8 @@ void CheckCapsule(const EntityData1* entity, const bool specificCapsule)
         return;
     if (!specificCapsule)
         return;
+    if(!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel == LevelAndActIDs_Casinopolis3)
+        return;
 
     const int locationId = GetCapsuleCapsuleFromPosition(entity->Position);
     if (locationId > 0)
@@ -754,11 +759,11 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
     OnItemBoxMain.Original(tp);
     if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
         return;
-
     if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
-
     if (!GetCapsuleTypeOption(tp->twp->scl.x))
+        return;
+    if(!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel == LevelAndActIDs_Casinopolis3)
         return;
 
     const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
@@ -780,6 +785,8 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
     if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
     if (!GetCapsuleTypeOption(tp->twp->scl.x))
+        return;
+    if(!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel == LevelAndActIDs_Casinopolis3)
         return;
 
 

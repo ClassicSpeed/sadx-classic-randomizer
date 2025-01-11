@@ -577,6 +577,9 @@ void DisplayManager::DisplayItemsUnlocked()
                     if (!_options.GetSpecificCapsuleSanity(static_cast<CapsuleType>(check.second.capsuleType)))
                         continue;
 
+                    if(!_options.includePinballCapsules && check.second.level == LevelAndActIDs_Casinopolis3)
+                        continue;
+
                     int act = GET_ACT(check.second.level);
                     if (act >= 0 && act < 5)
                     {
