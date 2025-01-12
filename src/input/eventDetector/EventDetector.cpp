@@ -13,6 +13,7 @@ static bool __cdecl HandleCheckMissionRequirements(int mission, int character, i
 
 UsercallFuncVoid(OnBoaBoaPartDestroyed_t, (task * tp), (tp), 0x79F8F0, rEAX);
 static void __cdecl HandleOnBoaBoaPartDestroyed(task* tp);
+
 float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
 {
     float result = GetShadowPos(x, y, z, rotation);
@@ -30,7 +31,7 @@ EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
     capsules = randomizer.GetCapsules();
     enemies = randomizer.GetEnemies();
     eventDetectorPtr = this;
-    
+
     // Fix badniks not spawning
     WriteCall((void*)0x0049EFE7, GetShadowPos_r); // Egg Keeper
     WriteCall((void*)0x007A05EF, GetShadowPos_r); // Rhinotank
@@ -1044,6 +1045,13 @@ FunctionHook<void, task*> onSpikeBallSpinnerCMain(0x4AF770, [](task* tp)-> void
 FunctionHook<void, task*> onIceBallLoad(0x4C8FB0, [](task* tp)-> void
 {
     CheckEnemy(tp);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_IceCap1
+        && tp->twp->pos.x > 509 && tp->twp->pos.x < 510
+        && tp->twp->pos.y > 32 && tp->twp->pos.y < 34
+        && tp->twp->pos.z > 960 && tp->twp->pos.z < 962)
+    {
+        tp->twp->pos.y = 42.28f;
+    }
     onIceBallLoad.Original(tp);
 });
 FunctionHook<void, task*> onIceBallMainA(0x4C8AC0, [](task* tp)-> void
