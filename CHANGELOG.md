@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.1] - 2025-01-?
+
+## Changed
+
+- Fixed Ice Ball not spawning in sadx version of Ice Cap.
+
 ## [v1.0.0b] - 2025-01-11
 
 ## Changed
