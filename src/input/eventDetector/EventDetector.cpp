@@ -1053,8 +1053,18 @@ FunctionHook<void, task*> onSpikeBallSpinnerBMain(0x4AF3D0, [](task* tp)-> void
 FunctionHook<void, task*> onSpikeBallSpinnerCLoad(0x4AF860, [](task* tp)-> void
 {
     CheckEnemy(tp);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_RedMountain1
+        && tp->twp->pos.x > -3874 && tp->twp->pos.x < -3872
+        && tp->twp->pos.y > 593 && tp->twp->pos.y < 595
+        && tp->twp->pos.z > -1807 && tp->twp->pos.z < -1805)
+    {
+        tp->twp->pos.x = -4001.92f;
+        tp->twp->pos.y = 581.37f;
+        tp->twp->pos.z = -1831.20f;
+    }
     onSpikeBallSpinnerCLoad.Original(tp);
 });
+
 FunctionHook<void, task*> onSpikeBallSpinnerCMain(0x4AF770, [](task* tp)-> void
 {
     CheckEnemy(tp);
