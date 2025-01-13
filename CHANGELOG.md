@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ## Changed
 
+- Fixed the mod mixing up enemies locations.
 - Fixed Ice Ball not spawning in sadx version of Ice Cap.
 
 ## [v1.0.0b] - 2025-01-11
