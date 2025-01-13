@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.0c] - 2025-01-13
+
+## Changed
+
+- Fixed the mod mixing up enemies locations.
+- Fixed Ice Ball not spawning in SADX version of Ice Cap.
+- Fixed Cop Speeder not spawning in SADX version of Speed Highway.
+- Fixed Leon and Rhinotank not spawning in Windy Valley for Sonic and Tails in SADX.
+- Fixed Gola not spawning in SADX version of Red Mountain.
+- Fixed Arrow following pinball capsules even when disabled.
+
 ## [v1.0.0b] - 2025-01-11
 
 ## Changed

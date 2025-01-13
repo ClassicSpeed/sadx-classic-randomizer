@@ -13,6 +13,7 @@ static bool __cdecl HandleCheckMissionRequirements(int mission, int character, i
 
 UsercallFuncVoid(OnBoaBoaPartDestroyed_t, (task * tp), (tp), 0x79F8F0, rEAX);
 static void __cdecl HandleOnBoaBoaPartDestroyed(task* tp);
+
 float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
 {
     float result = GetShadowPos(x, y, z, rotation);
@@ -30,7 +31,7 @@ EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
     capsules = randomizer.GetCapsules();
     enemies = randomizer.GetEnemies();
     eventDetectorPtr = this;
-    
+
     // Fix badniks not spawning
     WriteCall((void*)0x0049EFE7, GetShadowPos_r); // Egg Keeper
     WriteCall((void*)0x007A05EF, GetShadowPos_r); // Rhinotank
@@ -514,7 +515,7 @@ int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - capsule.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 0.5)
+        if (distance <= 0.1)
             return capsule.locationId;
     }
     return -1;
@@ -530,7 +531,7 @@ void CheckCapsule(const EntityData1* entity, const bool specificCapsule)
         return;
     if (!specificCapsule)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel ==
+    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
@@ -712,7 +713,7 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - enemy.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 0.5)
+        if (distance <= 0.1)
             return enemy.locationId;
     }
     return -1;
@@ -828,7 +829,7 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
         return;
     if (!GetCapsuleTypeOption(tp->twp->scl.x))
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel ==
+    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
@@ -852,10 +853,9 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
         return;
     if (!GetCapsuleTypeOption(tp->twp->scl.x))
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel ==
+    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
-
 
     const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
     if (locationId > 0)
@@ -888,10 +888,23 @@ void CheckEnemy(task* tp)
     }
 }
 
+FunctionHook<void, task*> onFreeTask(0x40B6C0, [](task* tp)-> void
+{
+    eventDetectorPtr->enemyTaskMap.erase(tp->twp);
+    onFreeTask.Original(tp);
+});
+
 
 FunctionHook<void, task*> onRhinotankLoad(0x7A1380, [](task* tp)-> void
 {
     CheckEnemy(tp);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_WindyValley3
+        && tp->twp->pos.x > 1347 && tp->twp->pos.x < 1349
+        && tp->twp->pos.y > -2662 && tp->twp->pos.y < -2660
+        && tp->twp->pos.z > 1384 && tp->twp->pos.z < 1386)
+    {
+        tp->twp->pos.y = -2650.1;
+    }
     onRhinotankLoad.Original(tp);
 });
 
@@ -906,19 +919,18 @@ FunctionHook<void, task*> onKikiMain(0x4ACF80, [](task* tp)-> void
     CheckEnemy(tp);
     onKikiMain.Original(tp);
 });
-
-FunctionHook<float, float, float, float, Angle3*> onGetShadowPosOnWalter(
-    0x49EAD0, [](const float x, const float y, const float z, Angle3* ang)-> float
-    {
-        float result = onGetShadowPosOnWalter.Original(x, y, z, ang);
-        if (result == -1000000.0f)
-            result = y;
-
-        return result;
-    });
-
 FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
 {
+    //We change the spider location for sadx
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_TwinklePark2
+        && tp->twp->pos.x > -3 && tp->twp->pos.x < -2
+        && tp->twp->pos.y > -9 && tp->twp->pos.y < -8
+        && tp->twp->pos.z > 703 && tp->twp->pos.z < 704)
+    {
+        tp->twp->pos.x = -62.73f;
+        tp->twp->pos.y = -8.43f;
+        tp->twp->pos.z = 579.43f;
+    }
     CheckEnemy(tp);
     onWaterSpiderLoad.Original(tp);
 });
@@ -975,6 +987,13 @@ FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
 FunctionHook<void, task*> onLeonLoad(0x4A85C0, [](task* tp)-> void
 {
     CheckEnemy(tp);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_WindyValley3 and CurrentCharacter == Characters_Tails
+        && tp->twp->pos.x > 408 && tp->twp->pos.x < 410
+        && tp->twp->pos.y > -406 && tp->twp->pos.y < -403
+        && tp->twp->pos.z > -1370 && tp->twp->pos.z < -1368)
+    {
+        tp->twp->pos.y = -401;
+    }
     onLeonLoad.Original(tp);
 });
 FunctionHook<void, task*> onLeonMain(0x4A83D0, [](task* tp)-> void
@@ -1033,8 +1052,18 @@ FunctionHook<void, task*> onSpikeBallSpinnerBMain(0x4AF3D0, [](task* tp)-> void
 FunctionHook<void, task*> onSpikeBallSpinnerCLoad(0x4AF860, [](task* tp)-> void
 {
     CheckEnemy(tp);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_RedMountain1
+        && tp->twp->pos.x > -3874 && tp->twp->pos.x < -3872
+        && tp->twp->pos.y > 593 && tp->twp->pos.y < 595
+        && tp->twp->pos.z > -1807 && tp->twp->pos.z < -1805)
+    {
+        tp->twp->pos.x = -4001.92f;
+        tp->twp->pos.y = 581.37f;
+        tp->twp->pos.z = -1831.20f;
+    }
     onSpikeBallSpinnerCLoad.Original(tp);
 });
+
 FunctionHook<void, task*> onSpikeBallSpinnerCMain(0x4AF770, [](task* tp)-> void
 {
     CheckEnemy(tp);
@@ -1044,6 +1073,13 @@ FunctionHook<void, task*> onSpikeBallSpinnerCMain(0x4AF770, [](task* tp)-> void
 FunctionHook<void, task*> onIceBallLoad(0x4C8FB0, [](task* tp)-> void
 {
     CheckEnemy(tp);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_IceCap1
+        && tp->twp->pos.x > 509 && tp->twp->pos.x < 510
+        && tp->twp->pos.y > 32 && tp->twp->pos.y < 34
+        && tp->twp->pos.z > 960 && tp->twp->pos.z < 962)
+    {
+        tp->twp->pos.y = 42.28f;
+    }
     onIceBallLoad.Original(tp);
 });
 FunctionHook<void, task*> onIceBallMainA(0x4C8AC0, [](task* tp)-> void
@@ -1056,16 +1092,6 @@ FunctionHook<void, task*> onIceBallMainB(0x4C8DD0, [](task* tp)-> void
     CheckEnemy(tp);
     onIceBallMainB.Original(tp);
 });
-
-// FunctionHook<float, float, float, float, Angle3*> onGetShadowPos(
-//     0x0049EFE7, [](const float x, const float y, const float z, Angle3* ang)-> float
-//     {
-//         float result = onGetShadowPos.Original(x, y, z, ang);
-//         if (result == -1000000.0f)
-//             result = y;
-//
-//         return result;
-//     });
 
 FunctionHook<void, task*> onEggKeeperLoad(0x4A6700, [](task* tp)-> void
 {
