@@ -889,10 +889,23 @@ void CheckEnemy(task* tp)
     }
 }
 
+FunctionHook<void, task*> onFreeTask(0x40B6C0, [](task* tp)-> void
+{
+    eventDetectorPtr->enemyTaskMap.erase(tp->twp);
+    onFreeTask.Original(tp);
+});
+
 
 FunctionHook<void, task*> onRhinotankLoad(0x7A1380, [](task* tp)-> void
 {
     CheckEnemy(tp);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_WindyValley3
+        && tp->twp->pos.x > 1347 && tp->twp->pos.x < 1349
+        && tp->twp->pos.y > -2662 && tp->twp->pos.y < -2660
+        && tp->twp->pos.z > 1384 && tp->twp->pos.z < 1386)
+    {
+        tp->twp->pos.y = -2650.1;
+    }
     onRhinotankLoad.Original(tp);
 });
 
@@ -907,13 +920,6 @@ FunctionHook<void, task*> onKikiMain(0x4ACF80, [](task* tp)-> void
     CheckEnemy(tp);
     onKikiMain.Original(tp);
 });
-
-FunctionHook<void, task*> onFreeTask(0x40B6C0, [](task* tp)-> void
-{
-    eventDetectorPtr->enemyTaskMap.erase(tp->twp);
-    onFreeTask.Original(tp);
-});
-
 FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
 {
     //We change the spider location for sadx
@@ -982,6 +988,13 @@ FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
 FunctionHook<void, task*> onLeonLoad(0x4A85C0, [](task* tp)-> void
 {
     CheckEnemy(tp);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_WindyValley3 and CurrentCharacter == Characters_Tails
+        && tp->twp->pos.x > 408 && tp->twp->pos.x < 410
+        && tp->twp->pos.y > -406 && tp->twp->pos.y < -403
+        && tp->twp->pos.z > -1370 && tp->twp->pos.z < -1368)
+    {
+        tp->twp->pos.y = -401;
+    }
     onLeonLoad.Original(tp);
 });
 FunctionHook<void, task*> onLeonMain(0x4A83D0, [](task* tp)-> void

@@ -7,7 +7,8 @@ All notable changes to this project will be documented in this file.
 ## Changed
 
 - Fixed the mod mixing up enemies locations.
-- Fixed Ice Ball not spawning in sadx version of Ice Cap.
+- Fixed Ice Ball not spawning in sadx version of Ice Cap in SADX.
+- Fixed Leon and Rhinotank not spawning in Windy Valley for Sonic and Tails in SADX.
 
 ## [v1.0.0b] - 2025-01-11
 
