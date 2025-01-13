@@ -515,7 +515,7 @@ int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - capsule.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 0.5)
+        if (distance <= 0.1)
             return capsule.locationId;
     }
     return -1;
@@ -713,7 +713,7 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
         const float dz = position.z - enemy.z;
         const float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (distance <= 0.5)
+        if (distance <= 0.1)
             return enemy.locationId;
     }
     return -1;
@@ -906,6 +906,12 @@ FunctionHook<void, task*> onKikiMain(0x4ACF80, [](task* tp)-> void
 {
     CheckEnemy(tp);
     onKikiMain.Original(tp);
+});
+
+FunctionHook<void, task*> onFreeTask(0x40B6C0, [](task* tp)-> void
+{
+    eventDetectorPtr->enemyTaskMap.erase(tp->twp);
+    onFreeTask.Original(tp);
 });
 
 FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
