@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Cop Speeder not spawning in SADX version of Speed Highway.
 - Fixed Leon and Rhinotank not spawning in Windy Valley for Sonic and Tails in SADX.
 - Fixed Gola not spawning in SADX version of Red Mountain.
+- Fixed Arrow following pinball capsules even when disabled.
 
 ## [v1.0.0b] - 2025-01-11
 

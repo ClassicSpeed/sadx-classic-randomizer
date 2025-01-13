@@ -531,7 +531,7 @@ void CheckCapsule(const EntityData1* entity, const bool specificCapsule)
         return;
     if (!specificCapsule)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel ==
+    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
@@ -829,7 +829,7 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
         return;
     if (!GetCapsuleTypeOption(tp->twp->scl.x))
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel ==
+    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
@@ -853,10 +853,9 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
         return;
     if (!GetCapsuleTypeOption(tp->twp->scl.x))
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && CurrentLevel ==
+    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
-
 
     const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
     if (locationId > 0)
