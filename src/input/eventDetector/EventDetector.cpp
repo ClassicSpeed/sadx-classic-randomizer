@@ -441,7 +441,8 @@ void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
 void EventDetector::SetSanitySettings(const bool trackerArrow, const int trackerArrowColor,
                                       const bool trackerArrowToggleable, const bool trackerArrowOverrideColor,
                                       const bool enemyIndicator, const int enemyIndicatorColor,
-                                      const bool capsuleIndicator, const int capsuleIndicatorColor)
+                                      const bool capsuleIndicator, const int capsuleIndicatorColor,
+                                      const bool progressionIndicator, const int progressionIndicatorColor)
 {
     this->trackerArrow = trackerArrow;
     this->trackerArrowToggleable = trackerArrowToggleable;
@@ -462,6 +463,11 @@ void EventDetector::SetSanitySettings(const bool trackerArrow, const int tracker
     this->capsuleIndicatorColor[0].color = capsuleIndicatorColor;
     this->capsuleIndicatorColor[1].color = capsuleIndicatorColor;
     this->capsuleIndicatorColor[2].color = capsuleIndicatorColor;
+
+    this->progressionIndicator = progressionIndicator;
+    this->progressionItemIndicatorColor[0].color = progressionIndicatorColor;
+    this->progressionItemIndicatorColor[1].color = progressionIndicatorColor;
+    this->progressionItemIndicatorColor[2].color = progressionIndicatorColor;
 }
 
 
@@ -719,7 +725,7 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
     return -1;
 }
 
-void DrawIndicator(const task* tp, const bool tallElement, const bool checked, const bool enemy)
+void DrawIndicator(const task* tp, const bool tallElement, const bool checked, const bool enemy, const int locationId)
 {
     if (!cameraready)
         return;
@@ -789,7 +795,10 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     NJS_POINT3COL point3Col;
     point3Col.p = point;
     if (!checked)
-        if (enemy)
+        if (eventDetectorPtr->progressionIndicator && eventDetectorPtr->randomizer.GetOptions().
+                                                                        LocationHasProgressiveItem(locationId))
+            point3Col.col = eventDetectorPtr->progressionItemIndicatorColor;
+        else if (enemy)
             point3Col.col = eventDetectorPtr->enemyIndicatorColor;
         else
             point3Col.col = eventDetectorPtr->capsuleIndicatorColor;
@@ -840,7 +849,7 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
             return;
 
         const auto test = eventDetectorPtr->checkData.find(locationId);
-        DrawIndicator(tp, false, test->second.checked, false);
+        DrawIndicator(tp, false, test->second.checked, false, test->first);
     }
 });
 
@@ -861,7 +870,7 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
     if (locationId > 0)
     {
         const auto test = eventDetectorPtr->checkData.find(locationId);
-        DrawIndicator(tp, true, test->second.checked, false);
+        DrawIndicator(tp, true, test->second.checked, false, test->first);
     }
 });
 
@@ -884,7 +893,7 @@ void CheckEnemy(task* tp)
     else
     {
         const auto test = eventDetectorPtr->checkData.find(it->second);
-        DrawIndicator(tp, false, test->second.checked, true);
+        DrawIndicator(tp, false, test->second.checked, true, test->first);
     }
 }
 
@@ -977,7 +986,7 @@ FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
             if (it != eventDetectorPtr->enemyTaskMap.end())
             {
                 const auto test = eventDetectorPtr->checkData.find(it->second);
-                DrawIndicator(tp, false, test->second.checked, true);
+                DrawIndicator(tp, false, test->second.checked, true, test->first);
             }
         }
     }

@@ -203,11 +203,20 @@ void LoadGameSettings(const IniFile* settingsIni)
     const int capsuleIndicatorB = settingsIni->getInt("Sanity", "CapsuleIndicatorB", 0);
     const int capsuleIndicatorColor = 0xFF << 24 | capsuleIndicatorR << 16 | capsuleIndicatorG << 8 | capsuleIndicatorB;
 
+    const bool progressionIndicator = settingsIni->getBool("Sanity", "ProgressionItemIndicator", true);
+    const int progressionIndicatorR = settingsIni->getInt("Sanity", "ProgressionIndicatorR", 212);
+    const int progressionIndicatorG = settingsIni->getInt("Sanity", "ProgressionIndicatorG", 175);
+    const int progressionIndicatorB = settingsIni->getInt("Sanity", "ProgressionIndicatorB", 55);
+    const int progressionIndicatorColor = 0xFF << 24 | progressionIndicatorR << 16 | progressionIndicatorG << 8 |
+        progressionIndicatorB;
+
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
-    eventDetector.SetSanitySettings(trackerArrow, trackerArrowColor,trackerArrowToggleable, trackerArrowOverrideColor, enemyIndicator,
-                                      enemyIndicatorColor, capsuleIndicator, capsuleIndicatorColor);
+    eventDetector.SetSanitySettings(trackerArrow, trackerArrowColor, trackerArrowToggleable, trackerArrowOverrideColor,
+                                    enemyIndicator, enemyIndicatorColor,
+                                    capsuleIndicator, capsuleIndicatorColor,
+                                    progressionIndicator, progressionIndicatorColor);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
     worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);
     characterManager.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,

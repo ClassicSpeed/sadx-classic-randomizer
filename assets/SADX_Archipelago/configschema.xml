@@ -177,6 +177,23 @@
                       display="Capsule Indicator Color Blue">
                 <HelpText>Blue value of the color for the capsule indicator.</HelpText>
             </Property>
+
+            <Property name="ProgressionItemIndicator" type="bool" defaultvalue="True"
+                      display="Progression Item Indicator">
+                <HelpText>Override the indicator's color when the check contains a progression item.</HelpText>
+            </Property>
+            <Property name="ProgressionIndicatorR" type="int" defaultvalue="212" minvalue="0" maxvalue="255"
+                      display="Progression Item Indicator Color Red">
+                <HelpText>Red value of the color for the progression item indicator.</HelpText>
+            </Property>
+            <Property name="ProgressionIndicatorG" type="int" defaultvalue="175" minvalue="0" maxvalue="255"
+                      display="Progression Item Indicator Color Green">
+                <HelpText>Green value of the color for the progression item indicator.</HelpText>
+            </Property>
+            <Property name="ProgressionIndicatorB" type="int" defaultvalue="55" minvalue="0" maxvalue="255"
+                      display="Progression Item Indicator Color Blue">
+                <HelpText>Blue value of the color for the progression item indicator.</HelpText>
+            </Property>
         </Group>
     </Groups>
     <Enums>

@@ -692,6 +692,13 @@ void Randomizer::UpdateMissionBlacklist(const std::vector<int>& missionBlacklist
     _worldStateManager.MarkBlacklistedMissionsAsCompleted(_options.missionBlacklist);
 }
 
+void Randomizer::UpdateProgressionItemsList(const std::vector<int>& progressionItemsList)
+{
+    _options.progressionItems = progressionItemsList;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
 void Randomizer::SetEntranceRandomizer(const bool enableEntranceRandomizer)
 {
     _options.entranceRandomizer = enableEntranceRandomizer;

@@ -40,7 +40,8 @@ public:
     void SetSanitySettings(bool trackerArrow, int trackerArrowColor,
                            bool trackerArrowToggleable, bool trackerArrowOverrideColor,
                            bool enemyIndicator, int enemyIndicatorColor,
-                           bool capsuleIndicator, int capsuleIndicatorColor);
+                           bool capsuleIndicator, int capsuleIndicatorColor,
+                           bool progressionIndicator, int progressionIndicatorColor);
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
     std::vector<CapsuleLocationData> capsules;
@@ -55,6 +56,7 @@ public:
     bool trackerArrowOverrideColor = true;
     bool enemyIndicator = true;
     bool capsuleIndicator = true;
+    bool progressionIndicator = true;
 
     std::unordered_map<taskwk*, int> enemyTaskMap;
 
@@ -82,5 +84,10 @@ public:
         {0xFF222222},
         {0xFF222222},
         {0xFF222222},
+    };
+    NJS_COLOR progressionItemIndicatorColor[3] = {
+        {0xFFD4AF37},
+        {0xFFD4AF37},
+        {0xFFD4AF37},
     };
 };

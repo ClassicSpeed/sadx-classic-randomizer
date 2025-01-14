@@ -2,9 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.1] - 2025-01-??
+
+### Added
+
+- When an enemy/capsules contains a progression item, the indicator will be yellow.
+    - The color (and the feature itself) can be changed in the mod settings.
+
 ## [v1.0.0c] - 2025-01-13
 
-## Changed
+### Changed
 
 - Fixed the mod mixing up enemies locations.
 - Fixed Ice Ball not spawning in SADX version of Ice Cap.
@@ -15,7 +22,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.0.0b] - 2025-01-11
 
-## Changed
+### Changed
 
 - Fixed Sweep not spawning in SADX version of Twinkle Park.
 - Fixed some enemies not being identified correctly in Final Egg and other levels.
@@ -24,7 +31,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.0.0] - 2025-01-11
 
-## Added
+### Added
 
 - Added Enemy-sanity (710 checks in total).
 - Added Capsule-sanity (692 checks in total).
@@ -37,7 +44,7 @@ All notable changes to this project will be documented in this file.
     - The progress will also be shown by act if applicable.
 - Added Sky Deck location group.
 
-## Changed
+### Changed
 
 - Changed name format of level checks:
     - Now it's "Level (Character) - Location" instead of "Level (Character - Location)".
@@ -48,12 +55,12 @@ All notable changes to this project will be documented in this file.
 - The Casino Emblem is now in logic for Sonic in hard/expert logic.
 - Added multiple changes in expert logic. (Credit to Labrys for the footage).
 
-## Removed
+### Removed
 
 - Removed life-sanity (in favor of adding capsule-sanity).
 - Removed auto-win button from the mod and settings.
 
-## Enemy-sanity
+### Enemy-sanity
 
 - Enemy-sanity can be enabled separately for different characters.
 - The location name will include the enemy number and what enemy it is.
@@ -69,7 +76,7 @@ All notable changes to this project will be documented in this file.
     - Dolls in Gamma's Final Egg.
 - Sometimes, enemies won't spawn; most of the time, restarting from the last checkpoint will fix it.
 
-## Capsule-sanity
+### Capsule-sanity
 
 - Capsule-sanity can be enabled separately for different characters.
 - The location name will include the capsule number and what kind of capsule it is.

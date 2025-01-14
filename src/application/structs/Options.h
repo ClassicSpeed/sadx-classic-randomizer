@@ -97,6 +97,7 @@ struct Options
     bool powerUpCapsuleSanity = true;
     bool ringCapsuleSanity = true;
     
+    std::vector<int> progressionItems = {};
     
     bool deathLinkActive = false;
     bool ringLinkActive = false;
@@ -386,5 +387,10 @@ struct Options
             break;
         }
         return false;
+    }
+
+    bool LocationHasProgressiveItem(int locationId)
+    {
+       return std::find(progressionItems.begin(), progressionItems.end(), locationId) != progressionItems.end();
     }
 };
