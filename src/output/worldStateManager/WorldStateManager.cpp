@@ -152,7 +152,6 @@ FunctionHook<void, task*> onCollisionCylinder(0x4D4770, [](task* tp) -> void
         onCollisionCylinder.Original(tp);
 });
 
-static void __cdecl HandleSpeedHighwayEntrance();
 static void __cdecl HandleWindyValleyEntrance();
 UsercallFuncVoid(onSceneChangeMr_t, (int a1), (a1), 0x539220, rEBX);
 static void __cdecl HandleMREntrance(int newScene);
@@ -183,6 +182,7 @@ static void __cdecl HandleLostWorldEntranceCollision(int a1);
 
 char LeonTimer1 = 10;
 char LeonTimer2 = 30;
+
 WorldStateManager::WorldStateManager()
 {
     _visitedLevels = VisitedLevels();
@@ -197,8 +197,6 @@ WorldStateManager::WorldStateManager()
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
 
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehogHammer);
-
-    WriteCall(reinterpret_cast<void*>(0x639198), &HandleSpeedHighwayEntrance);
 
     WriteCall(reinterpret_cast<void*>(0x537F52), &HandleWindyValleyEntrance);
     WriteCall(reinterpret_cast<void*>(0x537F64), &HandleWindyValleyEntrance);
@@ -219,7 +217,7 @@ WorldStateManager::WorldStateManager()
     ObjList_MRuins[EMBLEM_MYSTIC_RUINS].UseDistance = 1;
     ObjList_ECarrier0[WARP_EGG_CARRIER_OUTSIDE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_Past[WARP_PAST] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
-    
+
     WriteData<1>((char*)0x004A6B8C, LeonTimer1); // Leon timer 1
     WriteData<1>((char*)0x004A81C1, LeonTimer2); // Leon timer 2
     WriteData((float**)0x004CD75A, &_nj_screen_.w); // From SADXFE
@@ -1043,24 +1041,24 @@ FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-
 });
 
 // SpeedHighway (Mains Area)
-static void __cdecl HandleSpeedHighwayEntrance()
+FunctionHook<void, Uint8, Uint8> onSetNextLevelAndActCutsceneMode(0x4145D0, [](Uint8 level, Uint8 act)-> void
 {
-    if (worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
-        && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
-    {
-        const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
-            SpeedHighway, CurrentCharacter);
-        SetNextLevelAndAct_CutsceneMode(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
-    }
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5)
+    if (worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter) &&
+        levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
     {
         const EntityData1* player = EntityData1Ptrs[0];
-        if (player->Position.z < 1683)
-            SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos2, 0);
-        else
-            SetNextLevelAndAct_CutsceneMode(LevelIDs_SSGarden, 0);
+        if (player->Position.x > 400 && player->Position.x < 550
+            && player->Position.y > -10 && player->Position.y < 50
+            && player->Position.z > 1300 && player->Position.z < 1450)
+        {
+            const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
+                SpeedHighway, CurrentCharacter);
+            onSetNextLevelAndActCutsceneMode.Original(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
+            return;
+        }
     }
-}
+    onSetNextLevelAndActCutsceneMode.Original(level, act);
+});
 
 // WindyValley
 static void __cdecl HandleWindyValleyEntrance()

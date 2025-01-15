@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- Fixed Speed Highway entrance not working for random entrances after entering the Chao Garden.
 - Updated installation guide to include information about supported mods.
 - Added a warning about enemy-sanity not working correctly with SADX:FE.
 
