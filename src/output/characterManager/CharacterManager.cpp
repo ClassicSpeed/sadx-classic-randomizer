@@ -1,6 +1,7 @@
 #include "CharacterManager.h"
 
 CharacterManager* characterManagerPtr;
+DataPointer(int, TimerEnabled, 0x912DF0);
 
 
 CharacterManager::CharacterManager()
@@ -146,10 +147,17 @@ int CharacterManager::GetRingDifference()
         return lastRingAmount = 0;
     if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
         return lastRingAmount = 0;
-    if (GameMode == GameModes_Mission && TimeThing == 0 && !options.hardRingLinkActive)
-        return lastRingAmount = 0;
+
+    if (GameMode == GameModes_Mission && TimerEnabled == 0 && !options.hardRingLinkActive
+        && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
+    {
+        lastRingAmount = Rings;
+        return 0;
+    }
+
     if (!options.casinopolisRingLink && CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic)
         return lastRingAmount = 0;
+
 
     const int ringDifference = Rings - lastRingAmount;
     lastRingAmount = Rings;
@@ -187,7 +195,7 @@ void CharacterManager::OnPlayingFrame()
 
     if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past && !_trapsOnAdventureFields)
         return;
-    
+
     if (CurrentLevel >= LevelIDs_SSGarden && CurrentLevel <= LevelIDs_ChaoRace && !_trapsOnAdventureFields)
         return;
 

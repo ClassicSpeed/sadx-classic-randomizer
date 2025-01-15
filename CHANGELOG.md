@@ -8,10 +8,12 @@ All notable changes to this project will be documented in this file.
 
 - When an enemy/capsules contains a progression item, the indicator will be yellow.
     - The color (and the feature itself) can be changed in the mod settings.
+- Hard Ring Link will now send a ring loss after finishing a level.
 
 ### Changed
 
 - Fixed Speed Highway entrance not working for random entrances after entering the Chao Garden.
+- Fixed Ring Link sending duplicate rings when transitioning between adventure field areas.
 - Updated installation guide to include information about supported mods.
 - Added a warning about enemy-sanity not working correctly with SADX:FE.
 
