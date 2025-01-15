@@ -9,6 +9,11 @@ All notable changes to this project will be documented in this file.
 - When an enemy/capsules contains a progression item, the indicator will be yellow.
     - The color (and the feature itself) can be changed in the mod settings.
 
+### Changed
+
+- Updated installation guide to include information about supported mods.
+- Added a warning about enemy-sanity not working correctly with SADX:FE.
+
 ## [v1.0.0c] - 2025-01-13
 
 ### Changed
