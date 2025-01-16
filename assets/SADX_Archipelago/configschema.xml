@@ -127,6 +127,10 @@
                       display="Toggleable Tracker Arrow">
                 <HelpText>Allows toggling the tracker arrow by pressing the whistle button.</HelpText>
             </Property>
+            <Property name="TrackerArrowShowDistance" type="bool" defaultvalue="True"
+                      display="Show Distance of Tracker Arrow">
+                <HelpText>If enabled, the arrow will be smaller and transparent when the target is far away.</HelpText>
+            </Property>
             <Property name="TrackerArrowOverrideColor" type="bool" defaultvalue="False"
                       display="Override Tracker Arrow Color">
                 <HelpText>Overrides the arrow color with the indicator color of the target.</HelpText>

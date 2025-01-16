@@ -307,8 +307,33 @@ void EventDetector::OnPlayingFrame() const
             direction.y /= length;
             direction.z /= length;
 
-            float height = 5.0f; // Distance from player to triangle tip
-            float baseWidth = 2.5f; // Width of the base of the triangle
+            // Distance from player to triangle tip
+            float height = ARROW_HEIGHT + EXTRA_ARROW_HEIGHT;
+            // Width of the base of the triangle
+            float baseWidth = ARROW_BASE_WIDTH + EXTRA_BASE_WIDTH;
+            float extraPercentage;
+            if (trackerArrowShowDistance)
+            {
+                const EntityData1* player = EntityData1Ptrs[0];
+                const double dz = playerPosition.z - closestLocation->z;
+                const double dy = playerPosition.y - closestLocation->y;
+                const double dx = playerPosition.x - closestLocation->x;
+                const double distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+
+                if (distance <= MIN_ARROW_DISTANCE)
+                    extraPercentage = 0;
+                else if (distance >= MAX_ARROW_DISTANCE)
+                    extraPercentage = 1;
+                else
+                    extraPercentage = (distance - MIN_ARROW_DISTANCE) / (MAX_ARROW_DISTANCE - MIN_ARROW_DISTANCE);
+
+
+                // Distance from player to triangle tip
+                height = ARROW_HEIGHT + EXTRA_ARROW_HEIGHT * (1 - extraPercentage);
+                // Width of the base of the triangle
+                baseWidth = ARROW_BASE_WIDTH + EXTRA_BASE_WIDTH * (1 - extraPercentage);
+            }
 
             NJS_POINT3 tip;
             tip.x = playerPosition.x + direction.x * height;
@@ -386,8 +411,17 @@ void EventDetector::OnPlayingFrame() const
                     for (int i = 0; i < 6; ++i)
                         eventDetectorPtr->arrowColor[i] = capsuleIndicatorColor[0];
 
+            if (trackerArrowShowDistance)
+            {
+                uint8_t newAlpha = static_cast<uint8_t>(0xFF - (0xFF - 0x66) * extraPercentage);
+
+                for (int i = 0; i < 6; ++i)
+                {
+                    eventDetectorPtr->arrowColor[i].argb.a = newAlpha;
+                }
+            }
             point3Col.col = eventDetectorPtr->arrowColor;
-            njDrawTriangle3D(&point3Col, 6, 0x0);
+            njDrawTriangle3D(&point3Col, 6, NJD_TRANSPARENT);
         }
     }
 }
@@ -439,13 +473,15 @@ void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
 }
 
 void EventDetector::SetSanitySettings(const bool trackerArrow, const int trackerArrowColor,
-                                      const bool trackerArrowToggleable, const bool trackerArrowOverrideColor,
+                                      const bool trackerArrowToggleable,
+                                      const bool trackerArrowShowDistance, const bool trackerArrowOverrideColor,
                                       const bool enemyIndicator, const int enemyIndicatorColor,
                                       const bool capsuleIndicator, const int capsuleIndicatorColor,
                                       const bool progressionIndicator, const int progressionIndicatorColor)
 {
     this->trackerArrow = trackerArrow;
     this->trackerArrowToggleable = trackerArrowToggleable;
+    this->trackerArrowShowDistance = trackerArrowShowDistance;
     this->trackerArrowOverrideColor = trackerArrowOverrideColor;
     this->arrowColor[0].color = trackerArrowColor;
     this->arrowColor[1].color = trackerArrowColor;

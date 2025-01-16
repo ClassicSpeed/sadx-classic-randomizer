@@ -8,7 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - When an enemy/capsules contains a progression item, the indicator will be yellow.
     - The color (and the feature itself) can be changed in the mod settings.
-- Hard Ring Link will now send a ring loss after finishing a level.
+- The arrow will be smaller and more transparent when the next target is far away.
+    - This can be disabled in the mod settings.
 
 ### Changed
 

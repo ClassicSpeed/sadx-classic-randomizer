@@ -185,6 +185,7 @@ void LoadGameSettings(const IniFile* settingsIni)
 
     const bool trackerArrow = settingsIni->getBool("Sanity", "TrackerArrow", true);
     const bool trackerArrowToggleable = settingsIni->getBool("Sanity", "TrackerArrowToggleable", true);
+    const bool trackerArrowShowDistance = settingsIni->getBool("Sanity", "TrackerArrowShowDistance", true);
     const bool trackerArrowOverrideColor = settingsIni->getBool("Sanity", "TrackerArrowOverrideColor", false);
     const int trackerArrowR = settingsIni->getInt("Sanity", "TrackerArrowR", 0);
     const int trackerArrowG = settingsIni->getInt("Sanity", "TrackerArrowG", 0);
@@ -213,7 +214,8 @@ void LoadGameSettings(const IniFile* settingsIni)
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
-    eventDetector.SetSanitySettings(trackerArrow, trackerArrowColor, trackerArrowToggleable, trackerArrowOverrideColor,
+    eventDetector.SetSanitySettings(trackerArrow, trackerArrowColor, trackerArrowToggleable,
+                                    trackerArrowShowDistance, trackerArrowOverrideColor,
                                     enemyIndicator, enemyIndicatorColor,
                                     capsuleIndicator, capsuleIndicatorColor,
                                     progressionIndicator, progressionIndicatorColor);
