@@ -216,7 +216,7 @@ NJS_VECTOR CalculateArrowPosition(const NJS_VECTOR& playerPosition, const Rotati
     float pitch = playerRotation.x * (3.14 / 32768);  // Rotation around X-axis
     float yaw = playerRotation.y * (3.14 / 32768);     // Rotation around Y-axis
     float roll = playerRotation.z * (3.14 / 32768); ;   // Rotation around Z-axis
-¶
+
     // Default "up" vector (pointing upwards relative to the player)
     NJS_VECTOR up = {0.0f, 1.0f, 0.0f};
 
