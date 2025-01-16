@@ -57,6 +57,9 @@
             <Property name="SkippableCredits" type="bool" defaultvalue="True" display="Skippable Credits">
                 <HelpText>Allow skipping credits.</HelpText>
             </Property>
+            <Property name="NoLifeLossOnRestart" type="bool" defaultvalue="True" display="No Life Loss On Restart">
+                <HelpText>Prevent losing a life when restarting a level.</HelpText>
+            </Property>
         </Group>
 
 

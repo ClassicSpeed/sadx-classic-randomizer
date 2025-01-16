@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - The arrow will be smaller and more transparent when the next target is far away.
     - This can be disabled in the mod settings.
 - The arrow will now rotate with the character (specially noticeable when running on walls).
+- Added option in the mod settings to prevent losing a life when restarting a level.
 
 ### Changed
 

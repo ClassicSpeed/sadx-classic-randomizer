@@ -163,6 +163,7 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool eggCarrierTransformationCutscene = settingsIni->getBool("GameSettings",
                                                                        "EggCarrierTransformationCutscene", true);
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
+    const bool noLifeLossOnRestart = settingsIni->getBool("GameSettings", "NoLifeLossOnRestart", true);
 
     const int voiceMenuIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
     const bool eggmanCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnTrap", true);
@@ -212,7 +213,7 @@ void LoadGameSettings(const IniFile* settingsIni)
         progressionIndicatorB;
 
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
-    cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits);
+    cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, noLifeLossOnRestart);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
     eventDetector.SetSanitySettings(trackerArrow, trackerArrowColor, trackerArrowToggleable,
                                     trackerArrowShowDistance, trackerArrowOverrideColor,
