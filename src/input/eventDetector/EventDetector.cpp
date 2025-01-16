@@ -210,6 +210,43 @@ bool EventDetector::IsTargetableCheck(const LocationData& location) const
     return false;
 }
 
+// Function to calculate the rotated "up" vector based on player rotation
+NJS_VECTOR CalculateArrowPosition(const NJS_VECTOR& playerPosition, const Rotation3& playerRotation, float offset) {
+    // Assuming playerRotation contains angles in degrees for x, y, z axes
+    float pitch = playerRotation.x * (3.14 / 32768);  // Rotation around X-axis
+    float yaw = playerRotation.y * (3.14 / 32768);     // Rotation around Y-axis
+    float roll = playerRotation.z * (3.14 / 32768); ;   // Rotation around Z-axis
+¶
+    // Default "up" vector (pointing upwards relative to the player)
+    NJS_VECTOR up = {0.0f, 1.0f, 0.0f};
+
+    // Rotate "up" vector by player's rotation
+    // Apply yaw (rotation around Y-axis)
+    NJS_VECTOR rotatedUp;
+    rotatedUp.x = up.x * cos(yaw) - up.z * sin(yaw);
+    rotatedUp.z = up.x * sin(yaw) + up.z * cos(yaw);
+    rotatedUp.y = up.y;  // No change in Y for yaw
+
+    // Apply pitch (rotation around X-axis)
+    float tempY = rotatedUp.y;
+    rotatedUp.y = tempY * cos(pitch) - rotatedUp.z * sin(pitch);
+    rotatedUp.z = tempY * sin(pitch) + rotatedUp.z * cos(pitch);
+
+    // Apply roll (rotation around Z-axis)
+    float tempX = rotatedUp.x;
+    rotatedUp.x = tempX * cos(roll) - rotatedUp.y * sin(roll);
+    rotatedUp.y = tempX * sin(roll) + rotatedUp.y * cos(roll);
+
+    // Calculate arrow position by adding the rotated "up" vector to the player's position
+    NJS_VECTOR arrowPosition = playerPosition;
+    arrowPosition.x += rotatedUp.x * offset;
+    arrowPosition.y += rotatedUp.y * offset;
+    arrowPosition.z += rotatedUp.z * offset;
+
+    return arrowPosition;
+}
+
+
 void EventDetector::OnPlayingFrame() const
 {
     if (DemoPlaying > 0)
@@ -242,22 +279,21 @@ void EventDetector::OnPlayingFrame() const
 
         if (!trackerArrow)
             return;
+        
+        Rotation3 playerRotation = EntityData1Ptrs[0]->Rotation;
         NJS_VECTOR playerPosition = EntityData1Ptrs[0]->Position;
-        if (CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Big)
-            playerPosition.y += 25.0f;
-        else
-            playerPosition.y += 15.0f;
+        float offset = CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Big ? 25.0f : 15.0f;
+        NJS_VECTOR arrowPosition = CalculateArrowPosition(playerPosition, playerRotation, offset);
+        
         float closestDistance = 1000000.0f;
-
-
         LocationData* closestLocation = nullptr;
         if (!possibleChecks.empty())
         {
             for (auto& location : possibleChecks)
             {
-                float dx = playerPosition.x - location.point.x;
-                float dy = playerPosition.y - location.point.y;
-                float dz = playerPosition.z - location.point.z;
+                float dx = arrowPosition.x - location.point.x;
+                float dy = arrowPosition.y - location.point.y;
+                float dz = arrowPosition.z - location.point.z;
                 float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
                 if (distance < closestDistance)
@@ -279,9 +315,9 @@ void EventDetector::OnPlayingFrame() const
                 const LocationData& location = check.second;
                 if (IsTargetableCheck(location))
                 {
-                    float dx = playerPosition.x - location.x;
-                    float dy = playerPosition.y - location.y;
-                    float dz = playerPosition.z - location.z;
+                    float dx = arrowPosition.x - location.x;
+                    float dy = arrowPosition.y - location.y;
+                    float dz = arrowPosition.z - location.z;
                     float distance = sqrt(dx * dx + dy * dy + dz * dz);
 
                     if (distance < closestDistance)
@@ -297,9 +333,9 @@ void EventDetector::OnPlayingFrame() const
         {
             // Calculate direction vector from player to enemy
             NJS_VECTOR direction;
-            direction.x = closestLocation->x - playerPosition.x;
-            direction.y = closestLocation->y - playerPosition.y;
-            direction.z = closestLocation->z - playerPosition.z;
+            direction.x = closestLocation->x - arrowPosition.x;
+            direction.y = closestLocation->y - arrowPosition.y;
+            direction.z = closestLocation->z - arrowPosition.z;
 
             // Normalize the direction vector
             float length = sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
@@ -315,9 +351,9 @@ void EventDetector::OnPlayingFrame() const
             if (trackerArrowShowDistance)
             {
                 const EntityData1* player = EntityData1Ptrs[0];
-                const double dz = playerPosition.z - closestLocation->z;
-                const double dy = playerPosition.y - closestLocation->y;
-                const double dx = playerPosition.x - closestLocation->x;
+                const double dz = arrowPosition.z - closestLocation->z;
+                const double dy = arrowPosition.y - closestLocation->y;
+                const double dx = arrowPosition.x - closestLocation->x;
                 const double distance = sqrt(dx * dx + dy * dy + dz * dz);
 
 
@@ -336,9 +372,9 @@ void EventDetector::OnPlayingFrame() const
             }
 
             NJS_POINT3 tip;
-            tip.x = playerPosition.x + direction.x * height;
-            tip.y = playerPosition.y + direction.y * height;
-            tip.z = playerPosition.z + direction.z * height;
+            tip.x = arrowPosition.x + direction.x * height;
+            tip.y = arrowPosition.y + direction.y * height;
+            tip.z = arrowPosition.z + direction.z * height;
 
 
             NJS_VECTOR up = {0.0f, 1.0f, 0.0f}; // Arbitrary up vector, change if needed
@@ -358,14 +394,14 @@ void EventDetector::OnPlayingFrame() const
             NJS_POINT3 leftBase, rightBase;
 
             // Left base point
-            leftBase.x = playerPosition.x - right.x * baseWidth / 2;
-            leftBase.y = playerPosition.y - right.y * baseWidth / 2;
-            leftBase.z = playerPosition.z - right.z * baseWidth / 2;
+            leftBase.x = arrowPosition.x - right.x * baseWidth / 2;
+            leftBase.y = arrowPosition.y - right.y * baseWidth / 2;
+            leftBase.z = arrowPosition.z - right.z * baseWidth / 2;
 
             // Right base point
-            rightBase.x = playerPosition.x + right.x * baseWidth / 2;
-            rightBase.y = playerPosition.y + right.y * baseWidth / 2;
-            rightBase.z = playerPosition.z + right.z * baseWidth / 2;
+            rightBase.x = arrowPosition.x + right.x * baseWidth / 2;
+            rightBase.y = arrowPosition.y + right.y * baseWidth / 2;
+            rightBase.z = arrowPosition.z + right.z * baseWidth / 2;
 
             // Calculate the second perpendicular vector
             NJS_VECTOR forward;
@@ -382,14 +418,14 @@ void EventDetector::OnPlayingFrame() const
             NJS_POINT3 frontBase, backBase;
 
             // Front base point
-            frontBase.x = playerPosition.x - forward.x * baseWidth / 2;
-            frontBase.y = playerPosition.y - forward.y * baseWidth / 2;
-            frontBase.z = playerPosition.z - forward.z * baseWidth / 2;
+            frontBase.x = arrowPosition.x - forward.x * baseWidth / 2;
+            frontBase.y = arrowPosition.y - forward.y * baseWidth / 2;
+            frontBase.z = arrowPosition.z - forward.z * baseWidth / 2;
 
             // Back base point
-            backBase.x = playerPosition.x + forward.x * baseWidth / 2;
-            backBase.y = playerPosition.y + forward.y * baseWidth / 2;
-            backBase.z = playerPosition.z + forward.z * baseWidth / 2;
+            backBase.x = arrowPosition.x + forward.x * baseWidth / 2;
+            backBase.y = arrowPosition.y + forward.y * baseWidth / 2;
+            backBase.z = arrowPosition.z + forward.z * baseWidth / 2;
 
             // Calculate the arrow points
             NJS_POINT3 point[] = {

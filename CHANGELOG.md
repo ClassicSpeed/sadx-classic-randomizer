@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
     - The color (and the feature itself) can be changed in the mod settings.
 - The arrow will be smaller and more transparent when the next target is far away.
     - This can be disabled in the mod settings.
+- The arrow will now rotate with the character (specially noticeable when running on walls).
 
 ### Changed
 
