@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - Tails' Speed Highway entrance is now in logic without the Employee Key only in DX expert logic.
 - Sonic's Red Mountain double life capsule are now in logic without the Light Shoes in hard and expert logic.
 - Added missing light shoes requirement in multiple Sonic's Windy Valley's capsules for normal logic.
+- Added missing Life Belt requirement for some Big's Hot Shelter enemies.
 
 ## [v1.0.0c] - 2025-01-13
 
