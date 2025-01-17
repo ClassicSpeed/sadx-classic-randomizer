@@ -6,13 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- When an enemy/capsules contains a progression item, the indicator will be yellow.
+- When an enemy/capsule contains a progression item, the indicator will be yellow.
     - The color (and the feature itself) can be changed in the mod settings.
 - The arrow will be smaller and more transparent when the next target is far away.
     - This can be disabled in the mod settings.
-- The arrow will now rotate with the character (specially noticeable when running on walls).
+- The arrow will now rotate with the character (especially noticeable when running on walls).
 - Added option in the mod settings to prevent losing a life when restarting a level.
-- Separated expert logic in expert logic DC (DC Conversion) and expert logic DX (Vanilla).
+- Separated expert logic into expert logic DC (DC Conversion) and expert logic DX (Vanilla).
 
 ### Changed
 
@@ -20,14 +20,14 @@ All notable changes to this project will be documented in this file.
 - Fixed Ring Link sending duplicate rings when transitioning between adventure field areas.
 - Updated installation guide to include information about supported mods.
 - Added a warning about enemy-sanity not working correctly with SADX:FE.
-- Removed the JetBooster requirements from Gamma's Windy Valley Life capsules.
-- Knuckles is no longer in logic for the Hidden Bed or Spinning platform emblems.
-- Knuckles no longer requires the Shovel Claw for the City Hall Emblem in DC expert logic.
+- Removed the Jet Booster requirements from Gamma's Windy Valley life capsules.
+- Knuckles is no longer in logic for the Hidden Bed or Spinning Platform emblems.
+- Knuckles no longer requires the Shovel Claw for the City Hall emblem in DC expert logic.
 - Tails' Speed Highway entrance is now in logic without the Employee Key only in DX expert logic.
-- Sonic's Red Mountain double life capsule are now in logic without the Light Shoes in hard and expert logic.
-- Added missing light shoes requirement in multiple Sonic's Windy Valley's capsules for normal logic.
+- Sonic's Red Mountain two life capsules are now in logic without the Light Shoes in hard and expert logic.
+- Added missing Light Shoes requirement in multiple Sonic's Windy Valley capsules for normal logic.
 - Added missing Life Belt requirement for some Big's Hot Shelter enemies.
-- Removed Knuckles, Amy, Big and Gamma exiting Twinkle Park Lobby without the ticket in expert DX logic.
+- Removed Knuckles, Amy, Big, and Gamma exiting Twinkle Park Lobby without the ticket in expert DX logic.
 - Added Sonic and Tails exiting Twinkle Park Lobby without the ticket in expert DC logic.
 - Added Knuckles and Amy entering the station without the keys in expert DX logic.
 - Added Sonic and Tails entering the hotel from the casino without keys in both expert logics.
