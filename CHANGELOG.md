@@ -22,6 +22,10 @@ All notable changes to this project will be documented in this file.
 - Added a warning about enemy-sanity not working correctly with SADX:FE.
 - Removed the JetBooster requirements from Gamma's Windy Valley Life capsules.
 - Knuckles is no longer in logic for the Hidden Bed or Spinning platform emblems.
+- Knuckles no longer requires the Shovel Claw for the City Hall Emblem in DC expert logic.
+- Tails' Speed Highway entrance is now in logic without the Employee Key only in DX expert logic.
+- Sonic's Red Mountain double life capsule are now in logic without the Light Shoes in hard and expert logic.
+- Added missing light shoes requirement in multiple Sonic's Windy Valley's capsules for normal logic.
 
 ## [v1.0.0c] - 2025-01-13
 
