@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
     - This can be disabled in the mod settings.
 - The arrow will now rotate with the character (specially noticeable when running on walls).
 - Added option in the mod settings to prevent losing a life when restarting a level.
+- Separated expert logic in expert logic DC (DC Conversion) and expert logic DX (Vanilla).
 
 ### Changed
 
