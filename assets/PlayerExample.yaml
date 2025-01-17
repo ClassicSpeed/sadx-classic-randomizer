@@ -54,7 +54,8 @@ Sonic Adventure DX:
   # Determines the logic the randomizer will use.
   # Normal Logic (0): Very forgiving, ideal if you are not used to this game or its location checks.
   # Hard Logic (1): Less forgiving logic, some checks require performing spindash jumps or dying to get the check.
-  # Expert Logic (2): The most unforgiving logic, some checks require performing out-of-bounds jumps.
+  # Expert DC Logic (2): The most unforgiving logic, some checks require performing out-of-bounds jumps (DC conversion).
+  # Expert DX Logic (3): The most unforgiving logic, some checks require performing out-of-bounds jumps (vanilla DX).
   logic_level: 0
   # Randomize starting location. If false, you will start at Station Square.
   random_starting_location: 'true'
@@ -77,7 +78,7 @@ Sonic Adventure DX:
   # Whether your in-level ring gain/loss is linked to other players.
   ring_link: 'false'
   # Whether Ring Link is enabled while playing Sonic's Casinopolis.
-  casinopolis_ring_link: 'true'
+  casinopolis_ring_link: 'false'
   # If Ring Link is enabled, sends and receives rings in more situations.
   # Particularly, it will subtract rings when finishing a level and during the Perfect Chaos fight.
   hard_ring_link: 'false'

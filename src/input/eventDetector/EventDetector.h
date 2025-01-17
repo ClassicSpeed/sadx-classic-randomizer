@@ -18,6 +18,14 @@ struct ArrowTarget
     LocationType type;
 };
 
+constexpr double MIN_ARROW_DISTANCE = 300.0;
+constexpr double MAX_ARROW_DISTANCE = 1000.0;
+
+constexpr double ARROW_HEIGHT = 2.5;
+constexpr double EXTRA_ARROW_HEIGHT = 2.5;
+constexpr double ARROW_BASE_WIDTH = 1.25;
+constexpr double EXTRA_BASE_WIDTH = 1.25;
+
 constexpr double MIN_INDICATOR_DISTANCE = 130.0;
 constexpr double MAX_INDICATOR_DISTANCE = 170.0;
 
@@ -37,10 +45,11 @@ public:
     void OnLevelEmblem(int character, int level, int mission);
     void OnGenericEmblem(int index);
     void SetMultipleMissions(bool completeMultipleMissions);
-    void SetSanitySettings(bool trackerArrow, int trackerArrowColor,
-                           bool trackerArrowToggleable, bool trackerArrowOverrideColor,
+    void SetSanitySettings(bool trackerArrow, int trackerArrowColor, bool trackerArrowToggleable,
+                           bool trackerArrowShowDistance, bool trackerArrowOverrideColor,
                            bool enemyIndicator, int enemyIndicatorColor,
-                           bool capsuleIndicator, int capsuleIndicatorColor);
+                           bool capsuleIndicator, int capsuleIndicatorColor,
+                           bool progressionIndicator, int progressionIndicatorColor);
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
     std::vector<CapsuleLocationData> capsules;
@@ -53,19 +62,21 @@ public:
     mutable bool trackerArrow = true;
     bool trackerArrowToggleable = true;
     bool trackerArrowOverrideColor = true;
+    bool trackerArrowShowDistance = true;
     bool enemyIndicator = true;
     bool capsuleIndicator = true;
+    bool progressionIndicator = true;
 
     std::unordered_map<taskwk*, int> enemyTaskMap;
 
 
     NJS_COLOR arrowColor[6] = {
-        {0xAA00FF00},
-        {0xAA00FF00},
-        {0xAA00FF00},
-        {0xAA00FF00},
-        {0xAA00FF00},
-        {0xAA00FF00},
+        {0xFF00FF00},
+        {0xFF00FF00},
+        {0xFF00FF00},
+        {0xFF00FF00},
+        {0xFF00FF00},
+        {0xFF00FF00},
     };
 
     NJS_COLOR enemyIndicatorColor[3] = {
@@ -82,5 +93,10 @@ public:
         {0xFF222222},
         {0xFF222222},
         {0xFF222222},
+    };
+    NJS_COLOR progressionItemIndicatorColor[3] = {
+        {0xFFD4AF37},
+        {0xFFD4AF37},
+        {0xFFD4AF37},
     };
 };

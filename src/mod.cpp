@@ -163,6 +163,7 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool eggCarrierTransformationCutscene = settingsIni->getBool("GameSettings",
                                                                        "EggCarrierTransformationCutscene", true);
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
+    const bool noLifeLossOnRestart = settingsIni->getBool("GameSettings", "NoLifeLossOnRestart", true);
 
     const int voiceMenuIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
     const bool eggmanCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnTrap", true);
@@ -185,6 +186,7 @@ void LoadGameSettings(const IniFile* settingsIni)
 
     const bool trackerArrow = settingsIni->getBool("Sanity", "TrackerArrow", true);
     const bool trackerArrowToggleable = settingsIni->getBool("Sanity", "TrackerArrowToggleable", true);
+    const bool trackerArrowShowDistance = settingsIni->getBool("Sanity", "TrackerArrowShowDistance", true);
     const bool trackerArrowOverrideColor = settingsIni->getBool("Sanity", "TrackerArrowOverrideColor", false);
     const int trackerArrowR = settingsIni->getInt("Sanity", "TrackerArrowR", 0);
     const int trackerArrowG = settingsIni->getInt("Sanity", "TrackerArrowG", 0);
@@ -203,11 +205,21 @@ void LoadGameSettings(const IniFile* settingsIni)
     const int capsuleIndicatorB = settingsIni->getInt("Sanity", "CapsuleIndicatorB", 0);
     const int capsuleIndicatorColor = 0xFF << 24 | capsuleIndicatorR << 16 | capsuleIndicatorG << 8 | capsuleIndicatorB;
 
+    const bool progressionIndicator = settingsIni->getBool("Sanity", "ProgressionItemIndicator", true);
+    const int progressionIndicatorR = settingsIni->getInt("Sanity", "ProgressionIndicatorR", 212);
+    const int progressionIndicatorG = settingsIni->getInt("Sanity", "ProgressionIndicatorG", 175);
+    const int progressionIndicatorB = settingsIni->getInt("Sanity", "ProgressionIndicatorB", 55);
+    const int progressionIndicatorColor = 0xFF << 24 | progressionIndicatorR << 16 | progressionIndicatorG << 8 |
+        progressionIndicatorB;
+
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
-    cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits);
+    cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, noLifeLossOnRestart);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
-    eventDetector.SetSanitySettings(trackerArrow, trackerArrowColor,trackerArrowToggleable, trackerArrowOverrideColor, enemyIndicator,
-                                      enemyIndicatorColor, capsuleIndicator, capsuleIndicatorColor);
+    eventDetector.SetSanitySettings(trackerArrow, trackerArrowColor, trackerArrowToggleable,
+                                    trackerArrowShowDistance, trackerArrowOverrideColor,
+                                    enemyIndicator, enemyIndicatorColor,
+                                    capsuleIndicator, capsuleIndicatorColor,
+                                    progressionIndicator, progressionIndicatorColor);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
     worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);
     characterManager.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,

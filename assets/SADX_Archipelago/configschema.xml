@@ -57,6 +57,9 @@
             <Property name="SkippableCredits" type="bool" defaultvalue="True" display="Skippable Credits">
                 <HelpText>Allow skipping credits.</HelpText>
             </Property>
+            <Property name="NoLifeLossOnRestart" type="bool" defaultvalue="True" display="No Life Loss On Restart">
+                <HelpText>Prevent losing a life when restarting a level.</HelpText>
+            </Property>
         </Group>
 
 
@@ -127,6 +130,10 @@
                       display="Toggleable Tracker Arrow">
                 <HelpText>Allows toggling the tracker arrow by pressing the whistle button.</HelpText>
             </Property>
+            <Property name="TrackerArrowShowDistance" type="bool" defaultvalue="True"
+                      display="Show Distance of Tracker Arrow">
+                <HelpText>If enabled, the arrow will be smaller and transparent when the target is far away.</HelpText>
+            </Property>
             <Property name="TrackerArrowOverrideColor" type="bool" defaultvalue="False"
                       display="Override Tracker Arrow Color">
                 <HelpText>Overrides the arrow color with the indicator color of the target.</HelpText>
@@ -176,6 +183,23 @@
             <Property name="CapsuleIndicatorB" type="int" defaultvalue="0" minvalue="0" maxvalue="255"
                       display="Capsule Indicator Color Blue">
                 <HelpText>Blue value of the color for the capsule indicator.</HelpText>
+            </Property>
+
+            <Property name="ProgressionItemIndicator" type="bool" defaultvalue="True"
+                      display="Progression Item Indicator">
+                <HelpText>Override the indicator's color when the check contains a progression item.</HelpText>
+            </Property>
+            <Property name="ProgressionIndicatorR" type="int" defaultvalue="212" minvalue="0" maxvalue="255"
+                      display="Progression Item Indicator Color Red">
+                <HelpText>Red value of the color for the progression item indicator.</HelpText>
+            </Property>
+            <Property name="ProgressionIndicatorG" type="int" defaultvalue="175" minvalue="0" maxvalue="255"
+                      display="Progression Item Indicator Color Green">
+                <HelpText>Green value of the color for the progression item indicator.</HelpText>
+            </Property>
+            <Property name="ProgressionIndicatorB" type="int" defaultvalue="55" minvalue="0" maxvalue="255"
+                      display="Progression Item Indicator Color Blue">
+                <HelpText>Blue value of the color for the progression item indicator.</HelpText>
             </Property>
         </Group>
     </Groups>

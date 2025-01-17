@@ -2,9 +2,41 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.1] - 2025-01-17
+
+### Added
+
+- When an enemy/capsule contains a progression item, the indicator will be yellow.
+    - The color (and the feature itself) can be changed in the mod settings.
+- The arrow will be smaller and more transparent when the next target is far away.
+    - This can be disabled in the mod settings.
+- The arrow will now rotate with the character (especially noticeable when running on walls).
+- Added option in the mod settings to prevent losing a life when restarting a level.
+- Separated expert logic into expert logic DC (DC Conversion) and expert logic DX (Vanilla).
+
+### Changed
+
+- Fixed Speed Highway entrance not working for random entrances after entering the Chao Garden.
+- Fixed Ring Link sending duplicate rings when transitioning between adventure field areas.
+- Updated installation guide to include information about supported mods.
+- Added a warning about enemy-sanity not working correctly with SADX:FE.
+- Removed the Jet Booster requirements from Gamma's Windy Valley life capsules.
+- Knuckles is no longer in logic for the Hidden Bed or Spinning Platform emblems.
+- Knuckles no longer requires the Shovel Claw for the City Hall emblem in DC expert logic.
+- Tails' Speed Highway entrance is now in logic without the Employee Key only in DX expert logic.
+- Sonic's Red Mountain two life capsules are now in logic without the Light Shoes in hard and expert logic.
+- Added missing Light Shoes requirement in multiple Sonic's Windy Valley capsules for normal logic.
+- Added missing Life Belt requirement for some Big's Hot Shelter enemies.
+- Removed Knuckles, Amy, Big, and Gamma exiting Twinkle Park Lobby without the ticket in expert DX logic.
+- Added Sonic and Tails exiting Twinkle Park Lobby without the ticket in expert DC logic.
+- Added Knuckles and Amy entering the station without the keys in expert DX logic.
+- Added Sonic and Tails entering the hotel from the casino without keys in both expert logics.
+- Removed Tails skip from hotel to casino from expert logic.
+- Added Tails going from station to casino without the casino keys for both expert logics.
+
 ## [v1.0.0c] - 2025-01-13
 
-## Changed
+### Changed
 
 - Fixed the mod mixing up enemies locations.
 - Fixed Ice Ball not spawning in SADX version of Ice Cap.
@@ -15,7 +47,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.0.0b] - 2025-01-11
 
-## Changed
+### Changed
 
 - Fixed Sweep not spawning in SADX version of Twinkle Park.
 - Fixed some enemies not being identified correctly in Final Egg and other levels.
@@ -24,7 +56,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.0.0] - 2025-01-11
 
-## Added
+### Added
 
 - Added Enemy-sanity (710 checks in total).
 - Added Capsule-sanity (692 checks in total).
@@ -37,7 +69,7 @@ All notable changes to this project will be documented in this file.
     - The progress will also be shown by act if applicable.
 - Added Sky Deck location group.
 
-## Changed
+### Changed
 
 - Changed name format of level checks:
     - Now it's "Level (Character) - Location" instead of "Level (Character - Location)".
@@ -48,12 +80,12 @@ All notable changes to this project will be documented in this file.
 - The Casino Emblem is now in logic for Sonic in hard/expert logic.
 - Added multiple changes in expert logic. (Credit to Labrys for the footage).
 
-## Removed
+### Removed
 
 - Removed life-sanity (in favor of adding capsule-sanity).
 - Removed auto-win button from the mod and settings.
 
-## Enemy-sanity
+### Enemy-sanity
 
 - Enemy-sanity can be enabled separately for different characters.
 - The location name will include the enemy number and what enemy it is.
@@ -69,7 +101,7 @@ All notable changes to this project will be documented in this file.
     - Dolls in Gamma's Final Egg.
 - Sometimes, enemies won't spawn; most of the time, restarting from the last checkpoint will fix it.
 
-## Capsule-sanity
+### Capsule-sanity
 
 - Capsule-sanity can be enabled separately for different characters.
 - The location name will include the capsule number and what kind of capsule it is.

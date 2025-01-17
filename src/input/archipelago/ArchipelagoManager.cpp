@@ -57,7 +57,8 @@ void ArchipelagoManager::OnFrame()
 
 
 void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
-                                                const std::string& serverPassword, const LinkOverride newDeathLinkOverride,
+                                                const std::string& serverPassword,
+                                                const LinkOverride newDeathLinkOverride,
                                                 const LinkOverride newRingLinkOverride)
 {
     this->_serverIP = serverIp;
@@ -167,6 +168,7 @@ void SADX_GoalRequiresBosses(const int goalRequiresBosses)
 {
     randomizerPtr->OnGoalRequiresBossesSet(goalRequiresBosses);
 }
+
 void SADX_GoalRequiresChaoRaces(const int goalRequiresChaoRaces)
 {
     randomizerPtr->OnGoalRequiresChaoRacesSet(goalRequiresChaoRaces);
@@ -299,19 +301,33 @@ void SADX_LifeCapsuleSanity(const int lifeCapsuleSanity)
 {
     randomizerPtr->OnLifeCapsuleSanitySet(lifeCapsuleSanity);
 }
+
 void SADX_ShieldCapsuleSanity(const int shieldCapsuleSanity)
 {
     randomizerPtr->OnShieldCapsuleSanitySet(shieldCapsuleSanity);
 }
+
 void SADX_PowerUpCapsuleSanity(const int powerUpCapsuleSanity)
 {
     randomizerPtr->OnPowerUpCapsuleSanitySet(powerUpCapsuleSanity);
 }
+
 void SADX_RingCapsuleSanity(const int ringCapsuleSanity)
 {
     randomizerPtr->OnRingCapsuleSanitySet(ringCapsuleSanity);
 }
 
+void SADX_ProgressionItems(const std::map<int, int> progressionItems)
+{
+    if (progressionItems.empty())
+        return;
+    std::vector<int> progressionItemsList;
+
+    for (const auto& progressionItem : progressionItems)
+        progressionItemsList.push_back(progressionItem.first - archipelagoManagerPtr->baseId);
+
+    randomizerPtr->UpdateProgressionItemsList(progressionItemsList);
+}
 
 
 void SADX_StartingCharacter(const int startingCharacterIndex)
@@ -549,28 +565,30 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("AutoStartMissions", &SADX_AutoStartMissions);
 
     AP_RegisterSlotDataIntCallback("EnemySanity", &SADX_EnemySanity);
-    
+
     AP_RegisterSlotDataIntCallback("SonicEnemySanity", &SADX_SonicEnemySanity);
     AP_RegisterSlotDataIntCallback("TailsEnemySanity", &SADX_TailsEnemySanity);
     AP_RegisterSlotDataIntCallback("KnucklesEnemySanity", &SADX_KnucklesEnemySanity);
     AP_RegisterSlotDataIntCallback("AmyEnemySanity", &SADX_AmyEnemySanity);
     AP_RegisterSlotDataIntCallback("BigEnemySanity", &SADX_BigEnemySanity);
     AP_RegisterSlotDataIntCallback("GammaEnemySanity", &SADX_GammaEnemySanity);
-    
+
     AP_RegisterSlotDataIntCallback("CapsuleSanity", &SADX_CapsuleSanity);
     AP_RegisterSlotDataIntCallback("PinballCapsules", &SADX_PinballCapsules);
-        
+
     AP_RegisterSlotDataIntCallback("SonicCapsuleSanity", &SADX_SonicCapsuleSanity);
     AP_RegisterSlotDataIntCallback("TailsCapsuleSanity", &SADX_TailsCapsuleSanity);
     AP_RegisterSlotDataIntCallback("KnucklesCapsuleSanity", &SADX_KnucklesCapsuleSanity);
     AP_RegisterSlotDataIntCallback("AmyCapsuleSanity", &SADX_AmyCapsuleSanity);
     AP_RegisterSlotDataIntCallback("BigCapsuleSanity", &SADX_BigCapsuleSanity);
     AP_RegisterSlotDataIntCallback("GammaCapsuleSanity", &SADX_GammaCapsuleSanity);
-    
+
     AP_RegisterSlotDataIntCallback("LifeCapsuleSanity", &SADX_LifeCapsuleSanity);
     AP_RegisterSlotDataIntCallback("ShieldCapsuleSanity", &SADX_ShieldCapsuleSanity);
     AP_RegisterSlotDataIntCallback("PowerUpCapsuleSanity", &SADX_PowerUpCapsuleSanity);
     AP_RegisterSlotDataIntCallback("RingCapsuleSanity", &SADX_RingCapsuleSanity);
+
+    AP_RegisterSlotDataMapIntIntCallback("ProgressionItems", &SADX_ProgressionItems);
 
     AP_RegisterSlotDataIntCallback("StartingCharacter", &SADX_StartingCharacter);
     AP_RegisterSlotDataIntCallback("SonicStartingArea", &SADX_SonicStartingArea);
