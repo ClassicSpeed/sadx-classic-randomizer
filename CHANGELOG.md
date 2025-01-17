@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.0.1] - 2025-01-??
+## [v1.0.1] - 2025-01-17
 
 ### Added
 
@@ -27,6 +27,12 @@ All notable changes to this project will be documented in this file.
 - Sonic's Red Mountain double life capsule are now in logic without the Light Shoes in hard and expert logic.
 - Added missing light shoes requirement in multiple Sonic's Windy Valley's capsules for normal logic.
 - Added missing Life Belt requirement for some Big's Hot Shelter enemies.
+- Removed Knuckles, Amy, Big and Gamma exiting Twinkle Park Lobby without the ticket in expert DX logic.
+- Added Sonic and Tails exiting Twinkle Park Lobby without the ticket in expert DC logic.
+- Added Knuckles and Amy entering the station without the keys in expert DX logic.
+- Added Sonic and Tails entering the hotel from the casino without keys in both expert logics.
+- Removed Tails skip from hotel to casino from expert logic.
+- Added Tails going from station to casino without the casino keys for both expert logics.
 
 ## [v1.0.0c] - 2025-01-13
 
