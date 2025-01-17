@@ -20,6 +20,8 @@ All notable changes to this project will be documented in this file.
 - Fixed Ring Link sending duplicate rings when transitioning between adventure field areas.
 - Updated installation guide to include information about supported mods.
 - Added a warning about enemy-sanity not working correctly with SADX:FE.
+- Removed the JetBooster requirements from Gamma's Windy Valley Life capsules.
+- Knuckles is no longer in logic for the Hidden Bed or Spinning platform emblems.
 
 ## [v1.0.0c] - 2025-01-13
 
