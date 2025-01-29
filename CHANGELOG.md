@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.0] - 2025-??-??
+
+### Added
+
+- Chat messages are now shown in the bottom left corner of the screen.
+    - You can change the color, and disable some types of messages in the mod settings.
+
 ## [v1.0.1] - 2025-01-17
 
 ### Added

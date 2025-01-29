@@ -41,9 +41,19 @@ FunctionHook<SEQ_SECTIONTBL*, int> storySelectedHook(0x44EAF0, [](int playerno)-
     return ptr;
 });
 
-void DisplayManager::QueueMessage(const std::string& message)
+void DisplayManager::QueueItemMessage(const std::string& message)
 {
-    _messagesQueue.push(message);
+    _itemMessagesQueue.push(message);
+}
+
+void DisplayManager::QueueChatMessage(const std::string& message)
+{
+    if (_chatMessagesQueue.size() >= this->_chatDisplayCount)
+    {
+        _chatMessagesQueue.erase(_chatMessagesQueue.begin());
+    }
+    _chatMessagesQueue.push_back(message);
+    _lastMessageTime = std::clock();
 }
 
 void DisplayManager::UpdateUnlockStatus(const UnlockStatus unlockStatus)
@@ -89,7 +99,8 @@ void DisplayManager::OnFrame()
 
     AddNewMessages();
 
-    DisplayMessages();
+    DisplayItemMessages();
+    DisplayChatMessages();
 
     DisplayGoalStatus();
     DisplayItemsUnlocked();
@@ -121,14 +132,14 @@ void DisplayManager::RemoveExpiredMessages()
 
 void DisplayManager::AddNewMessages()
 {
-    while (!_messagesQueue.empty() && _currentMessages.size() < this->_displayCount)
+    while (!_itemMessagesQueue.empty() && _currentMessages.size() < this->_displayCount)
     {
-        _currentMessages.emplace_front(_messagesQueue.front());
-        _messagesQueue.pop();
+        _currentMessages.emplace_front(_itemMessagesQueue.front());
+        _itemMessagesQueue.pop();
     }
 }
 
-void DisplayManager::DisplayMessages() const
+void DisplayManager::DisplayItemMessages() const
 {
     for (size_t i = 0; i < this->_currentMessages.size(); i++)
     {
@@ -150,6 +161,39 @@ void DisplayManager::DisplayMessages() const
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + i), _currentMessages[i].message.c_str());
     }
 }
+
+void DisplayManager::DisplayChatMessages()
+{
+    if (_lastMessageTime < 0)
+        return;
+
+
+    const double timePassed = (std::clock() - this->_lastMessageTime) / static_cast<double>(CLOCKS_PER_SEC);
+    const double timeRemaining = _displayDuration - timePassed;
+    if (timeRemaining < 1)
+    {
+        int alpha = static_cast<int>(timeRemaining * 255);
+        //Fix for alpha value being too low and SADX showing it as solid color
+        if (alpha < 15)
+        {
+            _lastMessageTime = -1;
+            return;
+        }
+        const int fadedColor = _chatMessageColor & 0x00FFFFFF | alpha << 24;
+        SetDebugFontColor(fadedColor);
+    }
+    else
+        SetDebugFontColor(this->_chatMessageColor);
+
+    const int rows = VerticalResolution / this->_debugFontSize;
+    SetDebugFontSize(this->_debugFontSize);
+    for (size_t i = 0; i < this->_chatMessagesQueue.size(); ++i)
+    {
+        DisplayDebugString(
+            NJM_LOCATION(2, rows - 2 - this->_chatMessagesQueue.size() + i + 1), _chatMessagesQueue[i].c_str());
+    }
+}
+
 
 void DisplayManager::DisplayGoalStatus()
 {
@@ -297,11 +341,14 @@ void DisplayManager::UpdateChecks(const std::map<int, LocationData>& checkData)
 }
 
 void DisplayManager::SetMessageConfiguration(const float messageDisplayDuration, const int messageFontSize,
-                                             const int messageColor)
+
+                                             const int itemMessageColor,
+                                             const int chatMessageColor)
 {
     this->_displayDuration = messageDisplayDuration;
     this->_debugFontSize = messageFontSize;
-    this->_displayMessageColor = messageColor;
+    this->_displayMessageColor = itemMessageColor;
+    this->_chatMessageColor = chatMessageColor;
 }
 
 void DisplayManager::UpdateVoiceMenuCharacter(const int characterVoiceIndex)
@@ -577,7 +624,7 @@ void DisplayManager::DisplayItemsUnlocked()
                     if (!_options.GetSpecificCapsuleSanity(static_cast<CapsuleType>(check.second.capsuleType)))
                         continue;
 
-                    if(!_options.includePinballCapsules && check.second.level == LevelAndActIDs_Casinopolis3)
+                    if (!_options.includePinballCapsules && check.second.level == LevelAndActIDs_Casinopolis3)
                         continue;
 
                     int act = GET_ACT(check.second.level);

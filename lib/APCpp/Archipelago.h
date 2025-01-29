@@ -85,7 +85,7 @@ void AP_DeathLinkSend();
 /* Message Management Types */
 
 enum struct AP_MessageType {
-    Plaintext, ItemSend, ItemRecv, Hint, Countdown
+    Plaintext, ItemSend, ItemRecv, Hint, Countdown, Chat, PlayerConnection, GoalReached
 };
 
 struct AP_Message {

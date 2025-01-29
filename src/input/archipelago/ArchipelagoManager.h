@@ -30,7 +30,9 @@ public:
     void OnSaveFileLoaded();
     void SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
                                 const std::string& serverPassword, LinkOverride newDeathLinkOverride,
-                                LinkOverride newRingLinkOverride);
+                                LinkOverride newRingLinkOverride,
+                                bool showChatMessages, bool showGoalReached,
+                                bool showCountdowns, bool showPlayerConnections );
 
     std::string playerName;
     int instanceId = 0;
@@ -53,4 +55,9 @@ private:
 
     const float _suggestChangingConfigWaitTime = 2.5f;
     std::clock_t _connectedAt = -1;
+    
+    bool _showChatMessages = true;
+    bool _showGoalReached = true;
+    bool _showCountdowns = true;
+    bool _showPlayerConnections = false;
 };

@@ -759,6 +759,23 @@ bool parse_response(std::string msg, std::string &request) {
                 msg->timer = root[i]["countdown"].asInt();
                 msg->text = root[i]["data"][0]["text"].asString();
                 messageQueue.push_back(msg);
+            } else if (printType == "Chat" || printType == "ServerChat") {
+                AP_Message* msg = new AP_Message;
+                msg->type = AP_MessageType::Chat;
+                msg->text = root[i]["data"][0]["text"].asString();
+                messageQueue.push_back(msg);
+            } else if (printType == "Join" || printType == "Part") {
+                printf("AP: Connection!\n");
+                AP_Message* msg = new AP_Message;
+                msg->type = AP_MessageType::PlayerConnection;
+                msg->text = root[i]["data"][0]["text"].asString();
+                messageQueue.push_back(msg);
+            } else if (printType == "Goal") {
+                printf("AP: Connection!\n");
+                AP_Message* msg = new AP_Message;
+                msg->type = AP_MessageType::GoalReached;
+                msg->text = root[i]["data"][0]["text"].asString();
+                messageQueue.push_back(msg);
             } else {
                 AP_Message* msg = new AP_Message;
                 msg->text = "";

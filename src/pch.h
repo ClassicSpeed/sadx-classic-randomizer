@@ -8,8 +8,8 @@
 #define PCH_H
 
 #define SADX_AP_VERSION_MAJOR 1
-#define SADX_AP_VERSION_MINOR 0
-#define SADX_AP_VERSION_PATCH 1
+#define SADX_AP_VERSION_MINOR 1
+#define SADX_AP_VERSION_PATCH 0
 
 #define MISSION_C  2
 #define MISSION_B  1

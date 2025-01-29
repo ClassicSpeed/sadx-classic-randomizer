@@ -59,13 +59,20 @@ void ArchipelagoManager::OnFrame()
 void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
                                                 const std::string& serverPassword,
                                                 const LinkOverride newDeathLinkOverride,
-                                                const LinkOverride newRingLinkOverride)
+                                                const LinkOverride newRingLinkOverride,
+
+                                                const bool showChatMessages, const bool showGoalReached,
+                                                const bool showCountdowns, const bool showPlayerConnections)
 {
     this->_serverIP = serverIp;
     this->playerName = newPlayerName;
     this->_serverPassword = serverPassword;
     this->deathLinkOverride = newDeathLinkOverride;
     this->ringLinkOverride = newRingLinkOverride;
+    this->_showChatMessages = showChatMessages;
+    this->_showGoalReached = showGoalReached;
+    this->_showCountdowns = showCountdowns;
+    this->_showPlayerConnections = showPlayerConnections;
 }
 
 
@@ -704,14 +711,14 @@ void ArchipelagoManager::EnqueueMessage(AP_Message* msg)
             AP_ItemSendMessage* sendMsg = static_cast<AP_ItemSendMessage*>(msg);
             if (!sendMsg)
                 return;
-            return _randomizer.QueueNewMessage("Sent " + sendMsg->item + " to " + sendMsg->recvPlayer);
+            return _randomizer.QueueNewItemMessage("Sent " + sendMsg->item + " to " + sendMsg->recvPlayer);
         }
     case AP_MessageType::ItemRecv:
         {
             AP_ItemRecvMessage* recvMsg = static_cast<AP_ItemRecvMessage*>(msg);
             if (!recvMsg)
                 return;
-            return _randomizer.QueueNewMessage("Received " + recvMsg->item + " from " + recvMsg->sendPlayer);
+            return _randomizer.QueueNewItemMessage("Received " + recvMsg->item + " from " + recvMsg->sendPlayer);
         }
     case AP_MessageType::Hint:
         {
@@ -722,15 +729,37 @@ void ArchipelagoManager::EnqueueMessage(AP_Message* msg)
             if (hintMsg->checked)
                 return;
 
-            _randomizer.QueueNewMessage(
+            _randomizer.QueueNewItemMessage(
                 "  " + hintMsg->location + " in " + hintMsg->sendPlayer + "'s world. (not found)");
-            _randomizer.QueueNewMessage(hintMsg->recvPlayer + "'s " + hintMsg->item + " can be found at");
+            _randomizer.QueueNewItemMessage(hintMsg->recvPlayer + "'s " + hintMsg->item + " can be found at");
+            return;
+        }
+    case AP_MessageType::Chat:
+        {
+            if (this->_showChatMessages)
+                _randomizer.QueueNewChatMessage(msg->text);
+            return;
+        }
+    case AP_MessageType::Countdown:
+        {
+            if (this->_showCountdowns)
+                _randomizer.QueueNewChatMessage(msg->text);
+            return;
+        }
+    case AP_MessageType::PlayerConnection:
+        {
+            if (this->_showPlayerConnections)
+                _randomizer.QueueNewChatMessage(msg->text);
+            return;
+        }
+    case AP_MessageType::GoalReached:
+        {
+            if (this->_showGoalReached)
+                _randomizer.QueueNewChatMessage(msg->text);
             return;
         }
     case AP_MessageType::Plaintext:
-    case AP_MessageType::Countdown:
         {
-            // Do nothing, avoid spam
         }
     }
 }

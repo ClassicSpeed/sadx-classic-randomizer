@@ -24,7 +24,7 @@ void Randomizer::OnCheckFound(const int checkId) const
         _displayManager.ShowGoalStatus();
         if (_options.levelGoal == levelStatus.levelsCompleted
             && AreLastStoryRequirementsCompleted())
-            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
     }
     if (check.type == LocationMission && _options.goalRequiresMissions)
     {
@@ -33,7 +33,7 @@ void Randomizer::OnCheckFound(const int checkId) const
         _displayManager.ShowGoalStatus();
         if (_options.missionGoal == missionStatus.missionsCompleted
             && AreLastStoryRequirementsCompleted())
-            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
     }
     if (check.type == LocationBossFight && _options.goalRequiresBosses)
     {
@@ -42,7 +42,7 @@ void Randomizer::OnCheckFound(const int checkId) const
         _displayManager.ShowGoalStatus();
         if (_options.bossesGoal == bossesStatus.bossesCompleted
             && AreLastStoryRequirementsCompleted())
-            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
     }
     PrintDebug("Check found: %d %s, and type: %d\n", checkId, check.displayName.c_str(), check.type);
     if (check.type == LocationChaoRace && _options.goalRequiresChaoRaces)
@@ -51,7 +51,7 @@ void Randomizer::OnCheckFound(const int checkId) const
         _displayManager.UpdateChaoStatus(chaoStatus);
         _displayManager.ShowGoalStatus();
         if (chaoStatus.racesTotal >= chaoStatus.racesCompleted && AreLastStoryRequirementsCompleted())
-            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
     }
 }
 
@@ -100,19 +100,19 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
             if (_itemRepository.GetUnlockStatus().GotAllChaosEmeralds())
             {
                 SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
-                _displayManager.QueueMessage("You can now transform into Super Sonic!");
+                _displayManager.QueueItemMessage("You can now transform into Super Sonic!");
             }
         }
 
         if (AreLastStoryRequirementsCompleted())
-            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
     }
 
     else if (item.type == ItemEmblem)
     {
         _displayManager.ShowGoalStatus();
         if (unlockStatus.currentEmblems == _options.emblemGoal && AreLastStoryRequirementsCompleted())
-            _displayManager.QueueMessage("You can now fight Perfect Chaos!");
+            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
     }
 
     this->PlayRandomVoiceForItem(item, itemId);
@@ -657,7 +657,7 @@ void Randomizer::OnCheckVersion(int serverVersion)
             std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH);
         const std::string serverVersionString = std::to_string(serverVersion / 100) + "." +
             std::to_string((serverVersion / 10) % 10) + "." + std::to_string(serverVersion % 10);
-        _displayManager.QueueMessage(
+        _displayManager.QueueItemMessage(
             "Warning: Version mismatch! Server: v" + serverVersionString + " Mod: v" + modVersionString);
     }
 }
@@ -860,7 +860,7 @@ void Randomizer::ProcessDeath(const std::string& deathCause)
     {
         if (!CheckDeathLinkChance(_receiveDeathLinkChance))
         {
-            _displayManager.QueueMessage("You survived a Death Link!");
+            _displayManager.QueueItemMessage("You survived a Death Link!");
             return;
         }
 
@@ -890,7 +890,7 @@ void Randomizer::OnPlayingFrame()
     {
         _deathLinkCooldownTimer = std::clock();
         _characterManager.KillPlayer();
-        _displayManager.QueueMessage(_pendingDeathCause);
+        _displayManager.QueueItemMessage(_pendingDeathCause);
         _pendingDeathCause.clear();
         _deathPending = false;
     }
@@ -919,11 +919,11 @@ void Randomizer::OnDeath()
 
         if (!CheckDeathLinkChance(_sendDeathLinkChance))
         {
-            _displayManager.QueueMessage("Death Link not sent!");
+            _displayManager.QueueItemMessage("Death Link not sent!");
             return;
         }
         _archipelagoMessenger.SendDeath(_options.playerName);
-        _displayManager.QueueMessage("Death Sent");
+        _displayManager.QueueItemMessage("Death Sent");
     }
 }
 
@@ -937,12 +937,12 @@ void Randomizer::OnConnected(std::string playerName)
     _options.playerName = playerName;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
-    _displayManager.QueueMessage("Connected to Archipelago");
+    _displayManager.QueueItemMessage("Connected to Archipelago");
 }
 
 void Randomizer::OnGameCompleted()
 {
-    _displayManager.QueueMessage("Victory!");
+    _displayManager.QueueItemMessage("Victory!");
     _archipelagoMessenger.GameCompleted();
 }
 
@@ -951,9 +951,16 @@ void Randomizer::ShowStatusInformation(std::string information)
     _displayManager.ShowStatusInformation(information);
 }
 
-void Randomizer::QueueNewMessage(std::string information)
+void Randomizer::QueueNewItemMessage(std::string information)
 {
-    _displayManager.QueueMessage(information);
+    _displayManager.QueueItemMessage(information);
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
+void Randomizer::QueueNewChatMessage(std::string information)
+{
+    _displayManager.QueueChatMessage(information);
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
 }

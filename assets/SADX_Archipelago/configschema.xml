@@ -28,17 +28,46 @@
                       display="Message Font Size">
                 <HelpText>Font size for Archipelago messages</HelpText>
             </Property>
-            <Property name="MessageColorR" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
-                      display="Message Color Red">
-                <HelpText>Red value of color for Archipelago messages</HelpText>
+            <Property name="ItemMessageColorR" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
+                      display="Item Message Color Red">
+                <HelpText>Red value of color for Archipelago messages (item and hints).</HelpText>
             </Property>
-            <Property name="MessageColorG" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
-                      display="Message Color Green">
-                <HelpText>Green value of color for Archipelago messages</HelpText>
+            <Property name="ItemMessageColorG" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Item Message Color Green">
+                <HelpText>Green value of color for Archipelago messages (item and hints).</HelpText>
             </Property>
-            <Property name="MessageColorB" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
-                      display="Message Color Blue">
-                <HelpText>Blue value of color for Archipelago messages</HelpText>
+            <Property name="ItemMessageColorB" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
+                      display="Item Message Color Blue">
+                <HelpText>Blue value of color for Archipelago messages (item and hints).</HelpText>
+            </Property>
+
+            <Property name="ShowChatMessages" type="bool" defaultvalue="True" display="Show Chat Messages">
+                <HelpText>Display chats messages in the bottom left corner of the screen.</HelpText>
+            </Property>
+
+            <Property name="ShowGoalReached" type="bool" defaultvalue="True" display="Show Goal Reached">
+                <HelpText>Display a chat message when someone reaches their goal.</HelpText>
+            </Property>
+
+            <Property name="ShowCountdowns" type="bool" defaultvalue="True" display="Show Countdowns">
+                <HelpText>Display chat messages for the countdowns.</HelpText>
+            </Property>
+
+            <Property name="ShowPlayerConnections" type="bool" defaultvalue="False" display="Show Player Connections">
+                <HelpText>Display a chay message when players connect and disconnect.</HelpText>
+            </Property>
+
+            <Property name="ChatMessageColorR" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Chat Message Color Red">
+                <HelpText>Red value of color for Archipelago messages (chat and countdowns).</HelpText>
+            </Property>
+            <Property name="ChatMessageColorG" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Chat Message Color Green">
+                <HelpText>Green value of color for Archipelago messages (chat and countdowns).</HelpText>
+            </Property>
+            <Property name="ChatMessageColorB" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Chat Message Color Blue">
+                <HelpText>Blue value of color for Archipelago messages (chat and countdowns).</HelpText>
             </Property>
         </Group>
 

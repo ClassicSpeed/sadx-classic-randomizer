@@ -138,21 +138,39 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
     const int deathLinkOverride = settingsIni->getInt("AP", "DeathLinkOverride", 0);
     const int ringLinkOverride = settingsIni->getInt("AP", "RingLinkOverride", 0);
 
+    
+
+    const bool showChatMessages = settingsIni->getBool("Messages", "ShowChatMessages", true);
+    const bool showGoalReached = settingsIni->getBool("Messages", "ShowGoalReached", true);
+    const bool showCountdowns = settingsIni->getBool("Messages", "ShowCountdowns", true);
+    const bool showPlayerConnections = settingsIni->getBool("Messages", "ShowPlayerConnections", false);
+
     archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword,
                                               static_cast<LinkOverride>(deathLinkOverride),
-                                              static_cast<LinkOverride>(ringLinkOverride));
+                                              static_cast<LinkOverride>(ringLinkOverride),
+                                              showChatMessages, showGoalReached, showCountdowns, showPlayerConnections
+                                           );
 }
 
 void LoadDisplayMessageSettings(const IniFile* settingsIni)
 {
     const float messageDisplayDuration = settingsIni->getFloat("Messages", "MessageDisplayDuration", 5.0f);
     const int messageFontSize = settingsIni->getInt("Messages", "MessageFontSize", 21);
-    const int messageColorR = settingsIni->getInt("Messages", "MessageColorR", 33);
-    const int messageColorG = settingsIni->getInt("Messages", "MessageColorG", 255);
-    const int messageColorB = settingsIni->getInt("Messages", "MessageColorB", 33);
+    const int itemMessageColorR = settingsIni->getInt("Messages", "ItemMessageColorR", 33);
+    const int itemMessageColorG = settingsIni->getInt("Messages", "ItemMessageColorG", 255);
+    const int itemMessageColorB = settingsIni->getInt("Messages", "ItemMessageColorB", 33);
+
+
+    const int chatMessageColorR = settingsIni->getInt("Messages", "ChatMessageColorR", 255);
+    const int chatMessageColorG = settingsIni->getInt("Messages", "ChatMessageColorG", 255);
+    const int chatMessageColorB = settingsIni->getInt("Messages", "ChatMessageColorB", 255);
+
 
     displayManager.SetMessageConfiguration(messageDisplayDuration, messageFontSize,
-                                           (0xFF << 24) | messageColorR << 16 | messageColorG << 8 | messageColorB);
+                                           (0xFF << 24) | itemMessageColorR << 16 | itemMessageColorG << 8 |
+                                           itemMessageColorB,
+                                           (0xFF << 24) | chatMessageColorR << 16 | chatMessageColorG << 8 |
+                                           chatMessageColorB);
 }
 
 void LoadGameSettings(const IniFile* settingsIni)

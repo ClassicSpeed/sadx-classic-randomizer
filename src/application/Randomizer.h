@@ -36,7 +36,8 @@ public:
     void OnConnected(std::string playerName);
     void OnGameCompleted();
     void ShowStatusInformation(std::string information);
-    void QueueNewMessage(std::string information);
+    void QueueNewItemMessage(std::string information);
+    void QueueNewChatMessage(std::string information);
     void OnEmblemGoalSet(int emblemGoal);
     void OnLevelGoalSet(int levelGoal);
     void OnMissionGoalSet(int missionGoal);
