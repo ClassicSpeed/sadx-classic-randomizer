@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Subtitles will be shown when characters comment on items/traps.
     - You can disable this on the mod settings.
 - Mod version is now shown in the bottom right corner when pausing.
+- Game Gear unlock messages are no longer shown.
 
 ### Fixed
 
