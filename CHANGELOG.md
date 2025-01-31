@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
     - You can change the color, and disable some types of messages in the mod settings.
 - Subtitles will be shown when characters comment on items/traps.
     - You can disable this on the mod settings.
+- Mod version is now shown in the bottom right corner when pausing.
 
 ### Fixed
 
