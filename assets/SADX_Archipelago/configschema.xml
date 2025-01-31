@@ -97,6 +97,10 @@
                 <HelpText>Select which character's voice will be used for the menus.</HelpText>
             </Property>
 
+            <Property name="DisplaySubtitlesForVoiceReactions" type="bool" defaultvalue="True" display="Display Subtitles for Voice Reactions">
+                <HelpText>Display subtitles for the voice reactions when receiving items or traps.</HelpText>
+            </Property>
+            
             <Property name="EggmanOnTrap" type="bool" defaultvalue="True"
                       display="Eggman voice clips for traps">
                 <HelpText>Play an Eggman voice clip when receiving a trap. Note: turning off all trap voice lines will

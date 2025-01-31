@@ -2,6 +2,8 @@
 
 #include <random>
 
+const char* subtitleBuffer[] = {NULL, NULL};
+
 void Randomizer::OnCheckFound(const int checkId) const
 {
     const LocationData check = _locationRepository.GetLocation(checkId);
@@ -623,6 +625,15 @@ void Randomizer::PlayRandomVoiceForItem(const ItemData& item, const int64_t item
     {
         const int voice = selector.getRandomNumber();
         PlayVoice(voice);
+        if(_showCommentsSubtitles)
+        {
+            auto it = _commentMap.find(voice);
+            if (it != _commentMap.end() && GameMode != GameModes_Menu)
+            {
+                subtitleBuffer[0] = it->second.c_str();
+                DisplayHintText(subtitleBuffer, 60 + 5 * it->second.length());
+            }
+        }
     }
 }
 
@@ -708,7 +719,7 @@ void Randomizer::SetCharacterVoiceReactions(const bool eggmanCommentOnCharacterU
                                             const bool currentCharacterCommentOnCharacterUnlock,
                                             const bool unlockedCharacterCommentOnCharacterUnlock,
                                             const bool eggmanCommentOnKeyItems, const bool tikalCommentOnKeyItems,
-                                            const bool currentCharacterCommentOnKeyItems)
+                                            const bool currentCharacterCommentOnKeyItems, const bool showCommentsSubtitles)
 {
     _eggmanCommentOnCharacterUnlock = eggmanCommentOnCharacterUnlock;
     _currentCharacterCommentOnCharacterUnlock = currentCharacterCommentOnCharacterUnlock;
@@ -716,6 +727,7 @@ void Randomizer::SetCharacterVoiceReactions(const bool eggmanCommentOnCharacterU
     _eggmanCommentOnKeyItems = eggmanCommentOnKeyItems;
     _tikalCommentOnKeyItems = tikalCommentOnKeyItems;
     _currentCharacterCommentOnKeyItems = currentCharacterCommentOnKeyItems;
+    _showCommentsSubtitles = showCommentsSubtitles;
 }
 
 void Randomizer::SetReverseControlTrapDuration(const int reverseControlTrapDuration)

@@ -184,6 +184,8 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool noLifeLossOnRestart = settingsIni->getBool("GameSettings", "NoLifeLossOnRestart", true);
 
     const int voiceMenuIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
+
+    const bool showCommentsSubtitles  = settingsIni->getBool("CharacterVoiceReactions", "DisplaySubtitlesForVoiceReactions", true);
     const bool eggmanCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnTrap", true);
     const bool otherCharactersCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "OtherCharactersOnTrap",
                                                                    true);
@@ -241,11 +243,11 @@ void LoadGameSettings(const IniFile* settingsIni)
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
     worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);
     characterManager.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,
-                                                currentCharacterReactToTrap);
+                                                currentCharacterReactToTrap, showCommentsSubtitles);
 
     randomizer.SetCharacterVoiceReactions(eggmanCommentOnCharacterUnlock, currentCharacterCommentOnCharacterUnlock,
                                           unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
-                                          tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems);
+                                          tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems, showCommentsSubtitles);
 }
 
 #define ReplacePNG_Common(a) do { \

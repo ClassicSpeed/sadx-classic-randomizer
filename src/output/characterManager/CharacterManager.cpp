@@ -2,6 +2,7 @@
 
 CharacterManager* characterManagerPtr;
 DataPointer(int, TimerEnabled, 0x912DF0);
+const char* subtitleTrapBuffer[] = {NULL, NULL};
 
 
 CharacterManager::CharacterManager()
@@ -292,11 +293,13 @@ void CharacterManager::SetStartingCharacter(int startingCharacterIndex)
 
 void CharacterManager::SetCharacterVoiceReactions(const bool eggmanCommentOnTrap,
                                                   const bool otherCharactersCommentOnTrap,
-                                                  const bool currentCharacterReactToTrap)
+                                                  const bool currentCharacterReactToTrap,
+                                                  const bool showCommentsSubtitles)
 {
     _eggmanCommentOnTrap = eggmanCommentOnTrap;
     _otherCharactersCommentOnTrap = otherCharactersCommentOnTrap;
     _currentCharacterReactToTrap = currentCharacterReactToTrap;
+    _showCommentsSubtitles = showCommentsSubtitles;
 }
 
 void CharacterManager::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
@@ -604,6 +607,15 @@ void CharacterManager::PlayRandomTrapVoice(const FillerType filler)
     {
         const int voice = selector.getRandomNumber();
         PlayVoice(voice);
+        if(_showCommentsSubtitles)
+        {
+            auto it = _trapCommentMap.find(voice);
+            if (it != _trapCommentMap.end() && GameMode != GameModes_Menu)
+            {
+                subtitleTrapBuffer[0] = it->second.c_str();
+                DisplayHintText(subtitleTrapBuffer, 60 + 5 * it->second.length());
+            }
+        }
     }
 }
 

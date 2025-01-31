@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - Chat messages are now shown in the bottom left corner of the screen.
     - You can change the color, and disable some types of messages in the mod settings.
+- Subtitles will be shown when characters comment on items/traps.
+    - You can disable this on the mod settings.
 
 ### Fixed
 
