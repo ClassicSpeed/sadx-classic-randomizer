@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 - Chat messages are now shown in the bottom left corner of the screen.
     - You can change the color, and disable some types of messages in the mod settings.
 
+### Fixed
+
+- Fixed incorrect lines playing when getting a trap as Amy
+
 ## [v1.0.1] - 2025-01-17
 
 ### Added

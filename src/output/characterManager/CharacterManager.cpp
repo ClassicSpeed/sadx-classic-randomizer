@@ -433,7 +433,6 @@ void CharacterManager::PlayRandomTrapVoice(const FillerType filler)
         }
         else if (CurrentCharacter == Characters_Amy)
         {
-            selector.addNumber(563, 3); //Oh yes! Attack Sonic now!
             selector.addNumber(922, 3); //Where do you think you're going; Amy?
         }
         if (filler == PoliceTrap)
