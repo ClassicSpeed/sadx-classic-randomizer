@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 #### Hard
 
 - Sand Hill entrance is no longer in logic for Sonic (only in expert).
+- All Gamma's Windy Valley's level missions, enemies and capsules are now in logic without the Jet Booster.
 
 #### Expert (DC)
 
