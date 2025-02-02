@@ -21,6 +21,23 @@ All notable changes to this project will be documented in this file.
 
 - Fixed incorrect lines playing when getting a trap as Amy
 
+### Logic
+
+#### Hard
+
+- Sand Hill entrance is no longer in logic for Sonic (only in expert).
+
+#### Expert (DC)
+
+- Added skip from Hotel to SSMain for Sonic, Tails, Knuckles, Amy and Gamma.
+- Added skip from SSMain to Station for Tails.
+
+#### Expert (DX)
+
+- Added skip from Hotel to SSMain for Sonic.
+- Added skip from Hotel to Casino for Sonic.
+- Added skip from SSMain to TP Lobby for Sonic.
+
 ## [v1.0.1] - 2025-01-17
 
 ### Added
