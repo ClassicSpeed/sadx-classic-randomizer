@@ -30,13 +30,15 @@ enum StartingArea
     MysticRuinsMain,
     AngelIsland,
     Jungle,
-    EggCarrier,
+    EggCarrierOutside,
+    EggCarrierInside,
+    EggCarrierFrontDeck,
     NoStatingArea
 };
 
 enum Levels
 {
-    EmeraldCoast = 9,
+    EmeraldCoast = 11,
     WindyValley,
     Casinopolis,
     IceCap,

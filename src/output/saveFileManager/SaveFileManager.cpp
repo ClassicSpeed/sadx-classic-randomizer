@@ -122,8 +122,6 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ISLANDDOOR));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_ISLANDDOOR));
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ISLANDDOOR));
-
-
     
     //Ice Cap Stone
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ICESTONE));
@@ -164,6 +162,20 @@ void SaveFileManager::OnSaveFileCreated()
     //FinalEgg
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_FINALEGG));
     ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_ENTRANCE_FINALEGG));
+
+    //EggCarrier
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_MONORAIL));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_MONORAIL));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_MONORAIL));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_MONORAIL));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_MONORAIL));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_MONORAIL));
 
     //Chao Garden
     ClearEventFlag(static_cast<EventFlags>(FLAG_GET_GOLDEGG));

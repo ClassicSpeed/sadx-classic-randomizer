@@ -998,17 +998,29 @@ void DisplayManager::DisplayItemsUnlocked()
 
     displayOffset++;
     buffer.clear();
-    buffer.append("Keys  ");
-    buffer.append(_unlockStatus.keyStationKeys ? "Station " : "        ");
-    buffer.append(_unlockStatus.keyHotelKeys ? "Hotel " : "      ");
-    buffer.append(_unlockStatus.keyCasinoKeys ? "Casino" : "      ");
+    buffer.append("Hotel   ");
+    buffer.append(_unlockStatus.keyHotelFrontKeys? "Front " : "      ");
+    buffer.append(_unlockStatus.keyHotelBackKeys ? "Back" : "    ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     buffer.clear();
-    buffer.append("    : ");
-    buffer.append(!_unlockStatus.keyStationKeys ? "Station|" : "       |");
-    buffer.append(!_unlockStatus.keyHotelKeys ? "Hotel|" : "     |");
-    buffer.append(!_unlockStatus.keyCasinoKeys ? "Casino" : "      ");
+    buffer.append("     :  ");
+    buffer.append(!_unlockStatus.keyHotelFrontKeys ? "Front|" : "     |");
+    buffer.append(!_unlockStatus.keyHotelBackKeys ? "Back" : "    ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    
+    displayOffset++;
+    buffer.clear();
+    buffer.append("Station ");
+    buffer.append(_unlockStatus.keyStationFrontKeys? "Front " : "      ");
+    buffer.append(_unlockStatus.keyStationBackKeys ? "Back" : "    ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("       :");
+    buffer.append(!_unlockStatus.keyStationFrontKeys ? "Front|" : "     |");
+    buffer.append(!_unlockStatus.keyStationBackKeys ? "Back" : "    ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
@@ -1044,13 +1056,27 @@ void DisplayManager::DisplayItemsUnlocked()
     buffer.clear();
     buffer.append("MR  ");
     buffer.append(_unlockStatus.keyDynamite ? " Dynamite " : "         ");
-    buffer.append(_unlockStatus.jungleCart ? "Jungle Cart" : "           ");
+    buffer.append(_unlockStatus.keyJungleCart ? "Jungle Cart" : "           ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     buffer.clear();
     buffer.append("  : ");
     buffer.append(!_unlockStatus.keyDynamite ? " Dynamite|" : "        |");
-    buffer.append(!_unlockStatus.jungleCart ? "Jungle Cart" : "           ");
+    buffer.append(!_unlockStatus.keyJungleCart ? "Jungle Cart" : "           ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    
+    displayOffset++;
+    buffer.clear();
+    buffer.append("EC  ");
+    buffer.append(_unlockStatus.keyEgglift ? "  Egglift " : "          ");
+    buffer.append(_unlockStatus.keyMonorail ? "Monorail" : "        ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("  : ");
+    buffer.append(!_unlockStatus.keyEgglift ? "  Egglift|" : "         |");
+    buffer.append(!_unlockStatus.keyMonorail ? "Monorail" : "        ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     displayOffset++;

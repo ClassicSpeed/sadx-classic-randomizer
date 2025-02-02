@@ -290,26 +290,23 @@ FunctionHook<BOOL> isChaos2DoorOpen(0x638D50, []()-> BOOL
     return CurrentCharacter == Characters_Knuckles;
 });
 
-//We open the station door if we have the keys
 FunctionHook<BOOL> isStationDoorOpen(0x63AB70, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyStationKeys;
+    return worldStateManagerPtr->unlockStatus.keyStationFrontKeys;
 });
 
-//We open the main hotel door if we have the keys
 FunctionHook<BOOL> isHotelDoorOpen(0x630900, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyHotelKeys;
+    return worldStateManagerPtr->unlockStatus.keyHotelFrontKeys;
 });
 
-//We open both casino entrances if we have the casino district keys
 FunctionHook<BOOL> isCasinoHotelDoorOpen(0x630970, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyCasinoKeys;
+    return worldStateManagerPtr->unlockStatus.keyHotelBackKeys;
 });
 FunctionHook<BOOL> isCasinoStationDoorOpen(0x638880, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyCasinoKeys;
+    return worldStateManagerPtr->unlockStatus.keyStationBackKeys;
 });
 
 
@@ -435,13 +432,17 @@ void WorldStateManager::SetStartingArea()
     case Jungle:
         SetLevelAndAct(LevelIDs_MysticRuins, 2);
         break;
-    case EggCarrier:
+    case EggCarrierOutside:
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
+        break;
+    case EggCarrierInside:
+        SetLevelAndAct(LevelIDs_EggCarrierInside, 1);
         break;
     case AngelIsland:
         SetLevelAndAct(LevelIDs_MysticRuins, 1);
         SetEntranceNumber(1);
         break;
+    case EggCarrierFrontDeck:
     case NoStatingArea:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
         break;

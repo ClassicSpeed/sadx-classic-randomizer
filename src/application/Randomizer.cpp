@@ -422,7 +422,7 @@ void Randomizer::PlayRandomVoiceForItem(const ItemData& item, const int64_t item
                 selector.addNumber(1927, 2); //Take this boat to get to the Egg Carrier.
             }
             //Casino District Keys
-            else if (itemId == 84)
+            else if (itemId == 84 || itemId == 122)
             {
                 selector.addNumber(1921, 2); //Something good may happen at the Casino area.
                 selector.addNumber(1922, 2); //Why don't you try going to the Casino?
