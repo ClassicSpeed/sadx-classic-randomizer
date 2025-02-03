@@ -11,7 +11,10 @@ public:
     void SendDeath(std::string playerName);
     void UpdateTags(Options options);
     void SendRingUpdate(int ringDifference);
+    void SendHardRingUpdate(int ringDifference);
+
 private:
+    void SendRingPacket(int ringDifference, const std::string& tagName);
     int _instanceId = 0;
     int64_t _baseId;
 };

@@ -146,8 +146,8 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
     const bool showPlayerConnections = settingsIni->getBool("Messages", "ShowPlayerConnections", false);
 
     archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword,
-                                              static_cast<LinkOverride>(deathLinkOverride),
-                                              static_cast<LinkOverride>(ringLinkOverride),
+                                              static_cast<DeathLinkOverride>(deathLinkOverride),
+                                              static_cast<RingLinkOverride>(ringLinkOverride),
                                               showChatMessages, showGoalReached, showCountdowns, showPlayerConnections
                                            );
 }

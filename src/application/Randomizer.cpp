@@ -915,10 +915,10 @@ void Randomizer::OnSync()
 {
     if (!_options.ringLinkActive)
         return;
-    const int ringDifference = _characterManager.GetRingDifference();
-    if (ringDifference == 0)
-        return;
-    _archipelagoMessenger.SendRingUpdate(ringDifference);
+    const RingDifference ringDifference = _characterManager.GetRingDifference();
+    
+    _archipelagoMessenger.SendRingUpdate(ringDifference.ringDifference);
+    _archipelagoMessenger.SendHardRingUpdate(ringDifference.hardRingDifference);
 }
 
 void Randomizer::OnDeath()
@@ -1191,6 +1191,7 @@ void Randomizer::SetCasinopolisRingLink(const bool casinopolisRingLink)
 void Randomizer::SetHardRingLink(const bool hardRingLinkActive)
 {
     _options.hardRingLinkActive = hardRingLinkActive;
+    _archipelagoMessenger.UpdateTags(_options);
 }
 
 void Randomizer::SetRingLoss(const RingLoss ringLoss)

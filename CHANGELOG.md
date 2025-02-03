@@ -21,6 +21,9 @@ All notable changes to this project will be documented in this file.
 - You no longer need the YAML in the players folder to use UT.
     - Keep in mind that AP/UT requires at least one YAML of whatever game/slot name in the players folder to work.
 - Added an option to extend Ring Capacity to 5 digits. This mod setting is disabled by default.
+- Separated Ring Link and Hard Ring link packets. Perfect Chaos/end of the level updates are treated as "hard" updates.
+    - This means that only players with Hard Ring Link enabled will be affected by the Hard Ring Link updates.
+- Added an extra option for Ring Link Override in the mod settings for Hard Ring Link.
 
 ### Fixed
 

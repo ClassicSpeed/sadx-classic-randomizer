@@ -5,7 +5,8 @@ CharacterManager* characterManagerPtr;
 DataPointer(int, TimerEnabled, 0x912DF0);
 const char* subtitleTrapBuffer[] = {NULL, NULL};
 
-UsercallFuncVoid(HudDisplayRings_t, (signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud), (ringCount, digits, hud), 0x425960, rEAX, rBL, rESI);
+UsercallFuncVoid(HudDisplayRings_t, (signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud),
+                 (ringCount, digits, hud), 0x425960, rEAX, rBL, rESI);
 static void __cdecl HandleHudDisplayRings(signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud);
 
 
@@ -155,25 +156,39 @@ void CharacterManager::ProcessRings(const Sint16 amount)
     lastRingAmount = Rings;
 }
 
-int CharacterManager::GetRingDifference()
+RingDifference CharacterManager::GetRingDifference()
 {
+    RingDifference ringDifference = {0, 0};
     if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
-        return lastRingAmount = 0;
-    if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
-        return lastRingAmount = 0;
+        return {0, 0};
 
-    if (GameMode == GameModes_Mission && TimerEnabled == 0 && !options.hardRingLinkActive
+    if (CurrentLevel == LevelIDs_PerfectChaos)
+    {
+        if (!options.hardRingLinkActive)
+            return {0, 0};
+        ringDifference.hardRingDifference = Rings - lastRingAmount;
+        lastRingAmount = Rings;
+        return ringDifference;
+    }
+
+    if (GameMode == GameModes_Mission && TimerEnabled == 0
         && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
     {
+        if (!options.hardRingLinkActive)
+        {
+            lastRingAmount = Rings;
+            return {0, 0};
+        }
+        ringDifference.hardRingDifference = Rings - lastRingAmount;
         lastRingAmount = Rings;
-        return 0;
+        return ringDifference;
     }
 
     if (!options.casinopolisRingLink && CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic)
-        return lastRingAmount = 0;
+        return {0, 0};
 
 
-    const int ringDifference = Rings - lastRingAmount;
+    ringDifference.ringDifference = Rings - lastRingAmount;
     lastRingAmount = Rings;
     return ringDifference;
 }
@@ -620,7 +635,7 @@ void CharacterManager::PlayRandomTrapVoice(const FillerType filler)
     {
         const int voice = selector.getRandomNumber();
         PlayVoice(voice);
-        if(_showCommentsSubtitles)
+        if (_showCommentsSubtitles)
         {
             auto it = _trapCommentMap.find(voice);
             if (it != _trapCommentMap.end() && GameMode != GameModes_Menu)
@@ -804,7 +819,7 @@ FunctionHook<void, task*> onScoreDisplay_Main(0x42BCC0, [](task* tp)-> void
 
 void HandleHudDisplayRings(const signed int ringCount, unsigned char digits, NJS_SPRITE* hud)
 {
-    if(characterManagerPtr->extendRingCapacity)
+    if (characterManagerPtr->extendRingCapacity)
         HudDisplayRings_t.Original(ringCount, 5, hud);
     else
         HudDisplayRings_t.Original(ringCount, digits, hud);

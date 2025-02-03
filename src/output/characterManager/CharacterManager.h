@@ -11,6 +11,14 @@
 #define RING_LOSS_SOUND_ID 0
 #define RING_GAIN_SOUND_ID 7
 
+struct RingDifference
+{
+    int ringDifference;
+    int hardRingDifference;
+};
+
+     
+
 class CharacterManager
 {
 public:
@@ -23,7 +31,7 @@ public:
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
     void KillPlayer();
     void ProcessRings(Sint16 amount);
-    int GetRingDifference();
+    RingDifference GetRingDifference();
     void GiveFillerItem(FillerType filler);
     void OnPlayingFrame();
     void SetStartingCharacter(int startingCharacterIndex);

@@ -58,8 +58,8 @@ void ArchipelagoManager::OnFrame()
 
 void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
                                                 const std::string& serverPassword,
-                                                const LinkOverride newDeathLinkOverride,
-                                                const LinkOverride newRingLinkOverride,
+                                                const DeathLinkOverride newDeathLinkOverride,
+                                                const RingLinkOverride newRingLinkOverride,
 
                                                 const bool showChatMessages, const bool showGoalReached,
                                                 const bool showCountdowns, const bool showPlayerConnections)
@@ -137,6 +137,20 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
         if (!strcmp(tag.c_str(), "RingLink"))
         {
             if (!randomizerPtr->GetOptions().ringLinkActive)
+                return;
+
+            //Ignore our own ring link    
+            if (bounceData["source"].asInt() == archipelagoManagerPtr->instanceId)
+                break;
+
+            const int amount = bounceData["amount"].asInt();
+
+            randomizerPtr->ProcessRings(amount);
+            break;
+        }
+        if (!strcmp(tag.c_str(), "HardRingLink"))
+        {
+            if (!randomizerPtr->GetOptions().ringLinkActive || !randomizerPtr->GetOptions().hardRingLinkActive)
                 return;
 
             //Ignore our own ring link    
@@ -395,9 +409,9 @@ void SADX_SetEntranceRandomizer(const int enableEntranceRandomizer)
 
 void SADX_SetDeathLink(const int deathLinkActive)
 {
-    if (archipelagoManagerPtr->deathLinkOverride == ForceEnabled)
+    if (archipelagoManagerPtr->deathLinkOverride == DeathLinkForceEnabled)
         randomizerPtr->SetDeathLink(true);
-    else if (archipelagoManagerPtr->deathLinkOverride == ForceDisabled)
+    else if (archipelagoManagerPtr->deathLinkOverride == DeathLinkForceDisabled)
         randomizerPtr->SetDeathLink(false);
     else
         randomizerPtr->SetDeathLink(deathLinkActive);
@@ -416,9 +430,10 @@ void SADX_ReceiveDeathLinkChance(const int receiveDeathLinkChance)
 
 void SADX_SetRingLink(const int ringLinkActive)
 {
-    if (archipelagoManagerPtr->ringLinkOverride == ForceEnabled)
+    if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabled
+        || archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabledHard)
         randomizerPtr->SetRingLink(true);
-    else if (archipelagoManagerPtr->ringLinkOverride == ForceDisabled)
+    else if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceDisabled)
         randomizerPtr->SetRingLink(false);
     else
         randomizerPtr->SetRingLink(ringLinkActive);
@@ -431,7 +446,13 @@ void SADX_SetCasinopolisRingLink(const int casinopolisRingLink)
 
 void SADX_SetHardRingLink(const int hardRingLinkActive)
 {
-    randomizerPtr->SetHardRingLink(hardRingLinkActive);
+    if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabledHard)
+        randomizerPtr->SetHardRingLink(true);
+    else if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceDisabled
+        || archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabled)
+        randomizerPtr->SetHardRingLink(false);
+    else
+        randomizerPtr->SetHardRingLink(hardRingLinkActive);
 }
 
 void SADX_RingLoss(const int ringLoss)
@@ -443,6 +464,7 @@ void SADX_SkyChaseChecks(const int skyChaseChecks)
 {
     randomizerPtr->SetSkyChaseChecks(skyChaseChecks);
 }
+
 void SADX_SkyChaseChecksHard(const int skyChaseChecksHard)
 {
     randomizerPtr->SetSkyChaseChecksHard(skyChaseChecksHard);

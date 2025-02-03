@@ -15,7 +15,7 @@
             <Property name="DeathLinkOverride" type="DeathLinkIndex" defaultvalue="0" display="Death Link Override">
                 <HelpText>You can override the Death Link setting from the yaml.</HelpText>
             </Property>
-            <Property name="RingLinkOverride" type="DeathLinkIndex" defaultvalue="0" display="Ring Link Override">
+            <Property name="RingLinkOverride" type="RingLinkIndex" defaultvalue="0" display="Ring Link Override">
                 <HelpText>You can override the Ring Link setting from the yaml.</HelpText>
             </Property>
         </Group>
@@ -245,8 +245,12 @@
             <EnumMember name="1" display="Force Enabled"/>
             <EnumMember name="2" display="Force Disabled"/>
         </Enum>
-    </Enums>
-    <Enums>
+        <Enum name="RingLinkIndex">
+            <EnumMember name="0" display="Default"/>
+            <EnumMember name="1" display="Force Enabled"/>
+            <EnumMember name="2" display="Force Enabled (Hard)"/>
+            <EnumMember name="3" display="Force Disabled"/>
+        </Enum>
         <Enum name="CharacterVoiceIndex">
             <EnumMember name="-1" display="Random"/>
             <EnumMember name="0" display="Default"/>

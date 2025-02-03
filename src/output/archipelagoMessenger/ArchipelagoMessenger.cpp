@@ -19,6 +19,20 @@ void ArchipelagoMessenger::GameCompleted()
     AP_StoryComplete();
 }
 
+void ArchipelagoMessenger::UpdateTags(Options options)
+{
+    std::vector<std::string> tags;
+    if (options.deathLinkActive)
+        tags.emplace_back("DeathLink");
+    if (options.ringLinkActive)
+        tags.emplace_back("RingLink");
+    if (options.hardRingLinkActive)
+        tags.emplace_back("HardRingLink");
+
+    AP_SetTags(tags);
+}
+
+
 void ArchipelagoMessenger::SendDeath(std::string playerName)
 {
     const std::string characterName = CHARACTERS_MAP.at(CurrentCharacter);
@@ -37,19 +51,18 @@ void ArchipelagoMessenger::SendDeath(std::string playerName)
     AP_SendBounce(b);
 }
 
-void ArchipelagoMessenger::UpdateTags(Options options)
-{
-    std::vector<std::string> tags;
-    if (options.deathLinkActive)
-        tags.emplace_back("DeathLink");
-    if (options.ringLinkActive)
-        tags.emplace_back("RingLink");
 
-    AP_SetTags(tags);
+void ArchipelagoMessenger::SendRingUpdate(const int ringDifference) {
+    SendRingPacket(ringDifference, "RingLink");
 }
 
-void ArchipelagoMessenger::SendRingUpdate(int ringDifference)
-{
+void ArchipelagoMessenger::SendHardRingUpdate(const int ringDifference) {
+    SendRingPacket(ringDifference, "HardRingLink");
+}
+
+void ArchipelagoMessenger::SendRingPacket(const int ringDifference, const std::string& tagName) {
+    if(ringDifference == 0)
+        return;
     Json::FastWriter writer;
     std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
     AP_Bounce b;
@@ -60,7 +73,7 @@ void ArchipelagoMessenger::SendRingUpdate(int ringDifference)
     b.data = writer.write(v);
     b.slots = nullptr;
     b.games = nullptr;
-    std::vector<std::string> tags = {std::string("RingLink")};
+    std::vector<std::string> tags = { tagName };
     b.tags = &tags;
     AP_SendBounce(b);
 }
