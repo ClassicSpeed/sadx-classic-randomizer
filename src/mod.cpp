@@ -182,6 +182,8 @@ void LoadGameSettings(const IniFile* settingsIni)
                                                                        "EggCarrierTransformationCutscene", true);
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
     const bool noLifeLossOnRestart = settingsIni->getBool("GameSettings", "NoLifeLossOnRestart", true);
+    
+    const bool extendRingCapacity = settingsIni->getBool("GameSettings", "ExtendRingCapacity", false);
 
     const int voiceMenuIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
 
@@ -244,6 +246,7 @@ void LoadGameSettings(const IniFile* settingsIni)
     worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);
     characterManager.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,
                                                 currentCharacterReactToTrap, showCommentsSubtitles);
+    characterManager.SetExtendRingCapacity(extendRingCapacity);
 
     randomizer.SetCharacterVoiceReactions(eggmanCommentOnCharacterUnlock, currentCharacterCommentOnCharacterUnlock,
                                           unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,

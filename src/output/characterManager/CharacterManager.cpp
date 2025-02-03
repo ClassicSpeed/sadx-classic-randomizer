@@ -1,8 +1,12 @@
 #include "CharacterManager.h"
+#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
 
 CharacterManager* characterManagerPtr;
 DataPointer(int, TimerEnabled, 0x912DF0);
 const char* subtitleTrapBuffer[] = {NULL, NULL};
+
+UsercallFuncVoid(HudDisplayRings_t, (signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud), (ringCount, digits, hud), 0x425960, rEAX, rBL, rESI);
+static void __cdecl HandleHudDisplayRings(signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud);
 
 
 CharacterManager::CharacterManager()
@@ -25,6 +29,13 @@ CharacterManager::CharacterManager()
     //Re-enable pause after finishing a mission
     WriteCall((void*)0x592048, EnablePause);
     WriteCall((void*)0x5920AF, EnablePause);
+
+    HudDisplayRings_t.Hook(HandleHudDisplayRings);
+}
+
+void CharacterManager::SetExtendRingCapacity(const bool extendRingCapacity)
+{
+    this->extendRingCapacity = extendRingCapacity;
 }
 
 void CharacterManager::GiveUpgrade(const Upgrades upgrade)
@@ -133,7 +144,9 @@ void CharacterManager::ProcessRings(const Sint16 amount)
         Rings = newRingAmount;
     }
 
-    if (amount > 0 && Rings < 999)
+    const int maxRings = this->extendRingCapacity ? 99999 : 999;
+
+    if (amount > 0 && Rings < maxRings)
     {
         AddRings(amount);
         PlaySound(RING_GAIN_SOUND_ID, nullptr, 0, nullptr);
@@ -788,3 +801,11 @@ FunctionHook<void, task*> onScoreDisplay_Main(0x42BCC0, [](task* tp)-> void
     onScoreDisplay_Main.Original(tp);
     GameMode = bufferGameMode;
 });
+
+void HandleHudDisplayRings(const signed int ringCount, unsigned char digits, NJS_SPRITE* hud)
+{
+    if(characterManagerPtr->extendRingCapacity)
+        HudDisplayRings_t.Original(ringCount, 5, hud);
+    else
+        HudDisplayRings_t.Original(ringCount, digits, hud);
+}

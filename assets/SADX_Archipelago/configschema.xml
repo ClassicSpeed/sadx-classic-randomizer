@@ -89,6 +89,9 @@
             <Property name="NoLifeLossOnRestart" type="bool" defaultvalue="True" display="No Life Loss On Restart">
                 <HelpText>Prevent losing a life when restarting a level.</HelpText>
             </Property>
+            <Property name="ExtendRingCapacity" type="bool" defaultvalue="False" display="Extend Rings Capacity">
+                <HelpText>Changes ring capacity from 3 to 5 digits.</HelpText>
+            </Property>
         </Group>
 
 

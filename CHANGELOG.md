@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
     - After getting the check(s) from Act 1, the runway will close.
 - You no longer need the YAML in the players folder to use UT.
     - Keep in mind that AP/UT requires at least one YAML of whatever game/slot name in the players folder to work.
+- Added an option to extend Ring Capacity to 5 digits. This mod setting is disabled by default.
 
 ### Fixed
 
