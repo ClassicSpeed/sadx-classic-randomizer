@@ -60,6 +60,7 @@ public:
     void SetHardRingLink(bool hardRingLinkActive);
     void SetRingLoss(RingLoss ringLoss);
     void SetSkyChaseChecks(bool skyChaseChecks);
+    void SetSkyChaseChecksHard(bool skyChaseChecksHard);
     void SetBossChecks(bool bossChecks);
     void SetUnifyChaos4(bool unifyChaos4);
     void SetUnifyChaos6(bool unifyChaos6);

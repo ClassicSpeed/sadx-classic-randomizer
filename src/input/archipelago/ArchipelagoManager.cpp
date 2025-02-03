@@ -443,6 +443,10 @@ void SADX_SkyChaseChecks(const int skyChaseChecks)
 {
     randomizerPtr->SetSkyChaseChecks(skyChaseChecks);
 }
+void SADX_SkyChaseChecksHard(const int skyChaseChecksHard)
+{
+    randomizerPtr->SetSkyChaseChecksHard(skyChaseChecksHard);
+}
 
 void SADX_BossChecks(const int bossChecks)
 {
@@ -618,6 +622,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
 
     AP_RegisterSlotDataIntCallback("SkyChaseChecks", &SADX_SkyChaseChecks);
+    AP_RegisterSlotDataIntCallback("SkyChaseChecksHard", &SADX_SkyChaseChecksHard);
 
     AP_RegisterSlotDataIntCallback("BossChecks", &SADX_BossChecks);
     AP_RegisterSlotDataIntCallback("UnifyChaos4", &SADX_UnifyChaos4);

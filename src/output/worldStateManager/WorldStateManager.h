@@ -14,6 +14,8 @@ public:
     void UnlockSuperSonic();
     void UpdateOptions(Options newOptions);
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
+    void UpdateChecks(const std::map<int, LocationData>& checkData);
+    bool IsSkyChase1Enabled();
     void OnFrame();
     void SetStartingArea();
     void StartAllMissions();
@@ -40,4 +42,5 @@ public:
     };
 private:
     VisitedLevels _visitedLevels;
+    mutable std::map<int, LocationData> _checkData;
 };

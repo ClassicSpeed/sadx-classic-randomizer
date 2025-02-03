@@ -128,6 +128,7 @@ struct Options
     int gammaActionStageMissions = 0;
 
     bool skyChaseChecks = false;
+    bool skyChaseChecksHard = false;
     std::vector<int> missionBlacklist = {};
 
     void SetActionStageMissions(const Characters character, const int missions)

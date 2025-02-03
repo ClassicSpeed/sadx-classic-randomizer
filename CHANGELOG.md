@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file.
 - Renamed Hotel/Station Key to Hotel/Station Front Key.
 - Added two new key items: Egglift and Monorail.
 - The inside of the Egg Carrier is now one of the starting locations.
+- Tails' workshop runway will open if Sky Chase is enabled.
+    - After getting the check(s) from Act 1, the runway will close.
 
 ### Fixed
 

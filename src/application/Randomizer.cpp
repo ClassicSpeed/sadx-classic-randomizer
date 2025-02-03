@@ -19,6 +19,7 @@ void Randomizer::OnCheckFound(const int checkId) const
     _archipelagoMessenger.CheckLocation(checkId);
 
     _displayManager.UpdateChecks(_locationRepository.GetLocations());
+    _worldStateManager.UpdateChecks(_locationRepository.GetLocations());
     if (check.type == LocationLevel && check.mission == MISSION_C && _options.goalRequiresLevels)
     {
         const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
@@ -68,6 +69,8 @@ void Randomizer::MarkCheckedLocation(const int64_t checkId) const
     _displayManager.UpdateBossesStatus(bossesStatus);
     const ChaoStatus chaoStatus = _locationRepository.GetChaoStatus();
     _displayManager.UpdateChaoStatus(chaoStatus);
+    _displayManager.UpdateChecks(_locationRepository.GetLocations());
+    _worldStateManager.UpdateChecks(_locationRepository.GetLocations());
 }
 
 
@@ -1201,6 +1204,11 @@ void Randomizer::SetSkyChaseChecks(const bool skyChaseChecks)
 {
     _options.skyChaseChecks = skyChaseChecks;
 }
+void Randomizer::SetSkyChaseChecksHard(const bool skyChaseChecksHard)
+{
+    _options.skyChaseChecksHard = skyChaseChecksHard;
+}
+
 
 void Randomizer::SetBossChecks(const bool bossChecks)
 {

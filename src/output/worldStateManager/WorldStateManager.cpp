@@ -251,6 +251,22 @@ void WorldStateManager::UpdateUnlockStatus(UnlockStatus newUnlockStatus)
     this->unlockStatus = newUnlockStatus;
 }
 
+void WorldStateManager::UpdateChecks(const std::map<int, LocationData>& checkData)
+{
+    this->_checkData = checkData;
+}
+
+bool WorldStateManager::IsSkyChase1Enabled()
+{
+    if (!this->options.skyChaseChecks)
+        return false;
+
+    if ((this->options.skyChaseChecksHard && this->_checkData[28].checked) ||
+        (!this->options.skyChaseChecksHard && this->_checkData[27].checked))
+        return false;
+
+    return true;
+}
 
 void WorldStateManager::OnFrame()
 {
@@ -258,6 +274,10 @@ void WorldStateManager::OnFrame()
         return;
     if (CurrentLevel == LevelIDs_PerfectChaos)
         return;
+
+    if (IsSkyChase1Enabled())
+        EventFlagArray[33] = 1;
+
 
     if (this->eggCarrierTransformationCutscene)
     {
@@ -640,7 +660,7 @@ const SETEntry WARP_ZERO = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, 
 const SETEntry WARP_E101_MK2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, -385.69f});
 
 //Sky Chase
-const SETEntry WARP_SKY_CHASE_1 = CreateSetEntry(WARP_MYSTIC_RUINS, {1561, 191, 900}, {0, 0x1C00, 0});
+const SETEntry WARP_SKY_CHASE_1 = CreateSetEntry(WARP_MYSTIC_RUINS, {1561, 201, 900}, {0, 0x1C00, 0});
 const SETEntry WARP_SKY_CHASE_2_EC1 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 700, -1100});
 const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 650, -1100});
 
@@ -744,8 +764,11 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     if (worldStateManagerPtr->options.skyChaseChecks)
     {
         //Sky Chase
-        AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-        AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Tails);
+        if(worldStateManagerPtr->IsSkyChase1Enabled())
+        {
+            AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+            AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Tails);
+        }
 
         AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
         AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
