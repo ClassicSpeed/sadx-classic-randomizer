@@ -42,6 +42,7 @@ All notable changes to this project will be documented in this file.
 - Added skip from Hotel to SSMain for Sonic.
 - Added skip from Hotel to Casino for Sonic.
 - Added skip from SSMain to TP Lobby for Sonic.
+- Added skip from TP Lobby to SSMain for Big and Gamma.
 
 ## [v1.0.1] - 2025-01-17
 
