@@ -18,6 +18,8 @@ All notable changes to this project will be documented in this file.
 - The inside of the Egg Carrier is now one of the starting locations.
 - Tails' workshop runway will open if Sky Chase is enabled.
     - After getting the check(s) from Act 1, the runway will close.
+- You no longer need the YAML in the players folder to use UT.
+    - Keep in mind that AP/UT requires at least one YAML of whatever game/slot name in the players folder to work.
 
 ### Fixed
 
