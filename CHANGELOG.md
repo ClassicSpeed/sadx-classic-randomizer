@@ -20,6 +20,8 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Fixed incorrect lines playing when getting a trap as Amy
+- Some enemies with Progression items where not marked correctly when the item was also Useful or other type.
+- Emblem are now Progression Skip Balancing to prevent them from clogging up the balancing process.
 
 ### Logic
 
