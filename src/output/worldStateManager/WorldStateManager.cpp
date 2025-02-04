@@ -416,7 +416,6 @@ void WorldStateManager::ShowLevelEntranceArrows()
             DrawCorrectDoorIndicator(levelArrow.postion, levelArrow.angle);
         else
             DrawOtherDoorIndicator(levelArrow.postion, levelArrow.angle);
-
     }
 }
 
@@ -1053,7 +1052,7 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
 
 FunctionHook<void, task*> onEmployeeCard(0x63C370, [](task* tp)-> void
 {
-    // We prevent the Employee card from spawning if the player doesn't have the item or he can't use it
+    // We prevent the Employee card from spawning if the player doesn't have the item, or he can't use it
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4
         && (!worldStateManagerPtr->unlockStatus.keyEmployeeCard
             || !worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)))
@@ -1110,7 +1109,7 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
         FieldStartPos->YRot = 0x7AB7;
         break;
     case LevelIDs_SpeedHighway:
-        if (CurrentCharacter == Characters_Knuckles || CurrentCharacter == Characters_Big)
+        if (CurrentCharacter == Characters_Knuckles)
         {
             FieldStartPos->Position = {272.0, 4.0, 294.89999};
             FieldStartPos->YRot = 0x3D0C;
@@ -1225,8 +1224,7 @@ FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-
 // SpeedHighway (Mains Area)
 FunctionHook<void, Uint8, Uint8> onSetNextLevelAndActCutsceneMode(0x4145D0, [](Uint8 level, Uint8 act)-> void
 {
-    if (worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter) &&
-        levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
     {
         const EntityData1* player = EntityData1Ptrs[0];
         if (player->Position.x > 400 && player->Position.x < 550
@@ -1407,7 +1405,7 @@ FunctionHook<BOOL> isSpeedHighwayShutterOpen(0x63A2A0, []()-> BOOL
 
 FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
 {
-    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy)
+    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
         && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
         && worldStateManagerPtr->unlockStatus.keyEmployeeCard)
         FreeTask(tp);
@@ -1417,7 +1415,7 @@ FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
 
 FunctionHook<void, task*> loadSpeedHighwayShutter2(0x63A500, [](task* tp)-> void
 {
-    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy)
+    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
         && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
         && worldStateManagerPtr->unlockStatus.keyEmployeeCard)
         FreeTask(tp);
@@ -1425,17 +1423,14 @@ FunctionHook<void, task*> loadSpeedHighwayShutter2(0x63A500, [](task* tp)-> void
         loadSpeedHighwayShutter2.Original(tp);
 });
 
-FunctionHook<BOOL> isSpeedHighwayElevatorOpen(0x638CC0, []()-> BOOL
+FunctionHook<void, ObjectMaster*> onOHighEle(0x6393F0, [](ObjectMaster* tp)-> void
 {
-    return worldStateManagerPtr->unlockStatus.keyEmployeeCard;
+    OEleboxIn(tp);
 });
+
 
 FunctionHook<BOOL> isCityHallDoorOpen(0x636BF0, []()-> BOOL
 {
-    if (CurrentCharacter == Characters_Big)
-        return worldStateManagerPtr->unlockStatus.keyEmployeeCard
-            && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter);
-
     return worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter) && isCityHallDoorOpen.
         Original();
 });

@@ -128,11 +128,11 @@ private:
         },
         {
             LevelAndActIDs_StationSquare4, {380, 20, 1370}, 90, SpeedHighway,
-            {Characters_Sonic, Characters_Tails, Characters_Amy, Characters_Gamma}
+            {Characters_Sonic, Characters_Tails, Characters_Amy, Characters_Gamma,Characters_Big}
         },
         {
             LevelAndActIDs_StationSquare1, {270, 20, 255}, 0, SpeedHighway,
-            {Characters_Knuckles, Characters_Big}
+            {Characters_Knuckles}
         },
         {
             LevelAndActIDs_MysticRuins2, {-1955, -335, 1651.75f}, 268, RedMountain,

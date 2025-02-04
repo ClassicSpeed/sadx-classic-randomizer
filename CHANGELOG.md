@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
     - Red cross means the level is not for your character.
     - Orange side arrow means the level is accessible, but you need to use the other entrance.
     - Green upward arrow means the level is accessible.
+- Big no longer uses the city hall entrance for Speed Highway, now uses the same as Sonic.
 
 ### Fixed
 
