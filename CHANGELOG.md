@@ -24,6 +24,10 @@ All notable changes to this project will be documented in this file.
 - Separated Ring Link and Hard Ring link packets. Perfect Chaos/end of the level updates are treated as "hard" updates.
     - This means that only players with Hard Ring Link enabled will be affected by the Hard Ring Link updates.
 - Added an extra option for Ring Link Override in the mod settings for Hard Ring Link.
+- Added indicator for level entrances. This can be disabled in the mod settings.
+    - Red cross means the level is not for your character.
+    - Orange side arrow means the level is accessible, but you need to use the other entrance.
+    - Green upward arrow means the level is accessible.
 
 ### Fixed
 

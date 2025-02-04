@@ -138,7 +138,6 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
     const int deathLinkOverride = settingsIni->getInt("AP", "DeathLinkOverride", 0);
     const int ringLinkOverride = settingsIni->getInt("AP", "RingLinkOverride", 0);
 
-    
 
     const bool showChatMessages = settingsIni->getBool("Messages", "ShowChatMessages", true);
     const bool showGoalReached = settingsIni->getBool("Messages", "ShowGoalReached", true);
@@ -149,7 +148,7 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
                                               static_cast<DeathLinkOverride>(deathLinkOverride),
                                               static_cast<RingLinkOverride>(ringLinkOverride),
                                               showChatMessages, showGoalReached, showCountdowns, showPlayerConnections
-                                           );
+    );
 }
 
 void LoadDisplayMessageSettings(const IniFile* settingsIni)
@@ -182,12 +181,16 @@ void LoadGameSettings(const IniFile* settingsIni)
                                                                        "EggCarrierTransformationCutscene", true);
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
     const bool noLifeLossOnRestart = settingsIni->getBool("GameSettings", "NoLifeLossOnRestart", true);
-    
+
     const bool extendRingCapacity = settingsIni->getBool("GameSettings", "ExtendRingCapacity", false);
+
+    const bool showEntranceIndicators = settingsIni->getBool("GameSettings",
+                                                             "ShowEntranceIndicators", true);
 
     const int voiceMenuIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
 
-    const bool showCommentsSubtitles  = settingsIni->getBool("CharacterVoiceReactions", "DisplaySubtitlesForVoiceReactions", true);
+    const bool showCommentsSubtitles = settingsIni->getBool("CharacterVoiceReactions",
+                                                            "DisplaySubtitlesForVoiceReactions", true);
     const bool eggmanCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnTrap", true);
     const bool otherCharactersCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "OtherCharactersOnTrap",
                                                                    true);
@@ -234,6 +237,7 @@ void LoadGameSettings(const IniFile* settingsIni)
     const int progressionIndicatorColor = 0xFF << 24 | progressionIndicatorR << 16 | progressionIndicatorG << 8 |
         progressionIndicatorB;
 
+
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, noLifeLossOnRestart);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
@@ -242,6 +246,7 @@ void LoadGameSettings(const IniFile* settingsIni)
                                     enemyIndicator, enemyIndicatorColor,
                                     capsuleIndicator, capsuleIndicatorColor,
                                     progressionIndicator, progressionIndicatorColor);
+    worldStateManager.SetShowEntranceIndicators(showEntranceIndicators);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
     worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);
     characterManager.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,
@@ -250,7 +255,8 @@ void LoadGameSettings(const IniFile* settingsIni)
 
     randomizer.SetCharacterVoiceReactions(eggmanCommentOnCharacterUnlock, currentCharacterCommentOnCharacterUnlock,
                                           unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
-                                          tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems, showCommentsSubtitles);
+                                          tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems,
+                                          showCommentsSubtitles);
 }
 
 #define ReplacePNG_Common(a) do { \

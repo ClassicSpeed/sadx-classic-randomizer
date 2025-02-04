@@ -350,7 +350,6 @@ void EventDetector::OnPlayingFrame() const
             float extraPercentage;
             if (trackerArrowShowDistance)
             {
-                const EntityData1* player = EntityData1Ptrs[0];
                 const double dz = arrowPosition.z - closestLocation->z;
                 const double dy = arrowPosition.y - closestLocation->y;
                 const double dx = arrowPosition.x - closestLocation->x;

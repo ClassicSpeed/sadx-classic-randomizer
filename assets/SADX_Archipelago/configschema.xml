@@ -92,6 +92,9 @@
             <Property name="ExtendRingCapacity" type="bool" defaultvalue="False" display="Extend Rings Capacity">
                 <HelpText>Changes ring capacity from 3 to 5 digits.</HelpText>
             </Property>
+            <Property name="ShowEntranceIndicators" type="bool" defaultvalue="True" display="Show Entrance Indicators">
+                <HelpText>When random level entrance in is enabled, show helpful indicators over the levels' door.</HelpText>
+            </Property>
         </Group>
 
 
