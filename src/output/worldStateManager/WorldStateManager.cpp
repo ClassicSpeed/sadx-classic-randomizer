@@ -426,7 +426,7 @@ void WorldStateManager::OnFrame()
     if (CurrentLevel == LevelIDs_PerfectChaos)
         return;
 
-    if (IsSkyChase1Enabled())
+    if (IsSkyChase1Enabled() && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
         EventFlagArray[33] = 1;
 
     this->ShowLevelEntranceArrows();
@@ -979,6 +979,15 @@ FunctionHook<void> onMissionSetLoad(0x591A70, []()-> void
             {
                 objData->SETEntry->Position = {position.x, -70, position.z};
             }
+            
+            //We move the mission card 51 in the jungle, so Gamma can get it even if the Snake door is open
+            if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3
+                && position.x > -515 && position.x <  -510
+                && position.y > 204 && position.y < 206
+                && position.z > -1128 && position.z < -1120)
+            {
+                objData->SETEntry->Position = {-473.5, 91.5, -1026};
+            }
         }
     }
 });
@@ -1139,7 +1148,7 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
         break;
 
     case LevelIDs_LostWorld:
-        if (CurrentCharacter == Characters_Knuckles || CurrentCharacter == Characters_Gamma)
+        if (CurrentCharacter == Characters_Knuckles)
         {
             FieldStartPos->Position = {-515.90002, 16.6, -1446.0};
             FieldStartPos->YRot = 0xC000;
@@ -1508,8 +1517,6 @@ FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
         return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[
                 FLAG_KNUCKLES_MR_BLUECUBE]
             && worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
-    if (CurrentCharacter == Characters_Gamma)
-        return worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
 
     return false;
 });
@@ -1517,7 +1524,7 @@ FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
 //Allows everyone to enter Lost World
 FunctionHook<BOOL> isLostWorldFrontEntranceOpen(0x532E60, []()-> BOOL
 {
-    if (CurrentCharacter == Characters_Knuckles || CurrentCharacter == Characters_Gamma)
+    if (CurrentCharacter == Characters_Knuckles)
         return false;
     return worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
 });

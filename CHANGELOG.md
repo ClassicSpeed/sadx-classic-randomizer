@@ -29,6 +29,8 @@ All notable changes to this project will be documented in this file.
     - Orange side arrow means the level is accessible, but you need to use the other entrance.
     - Green upward arrow means the level is accessible.
 - Big no longer uses the city hall entrance for Speed Highway, now uses the same as Sonic.
+- Gamma no longer uses Knuckles' entrance for Lost World, now uses the same as Sonic.
+    - Mission 51 card was moved to the side of the snake head because of this.
 
 ### Fixed
 

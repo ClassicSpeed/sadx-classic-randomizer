@@ -148,11 +148,11 @@ private:
         },
         {
             LevelAndActIDs_MysticRuins3, {-516, 100, -994}, 180, LostWorld,
-            {Characters_Sonic, Characters_Tails, Characters_Amy, Characters_Big}
+            {Characters_Sonic, Characters_Tails, Characters_Amy, Characters_Big, Characters_Gamma}
         },
         {
             LevelAndActIDs_MysticRuins3, {-516, 103, -1327}, 180, LostWorld,
-            {Characters_Knuckles, Characters_Gamma}
+            {Characters_Knuckles}
         },
         {
             LevelAndActIDs_MysticRuins4, {0, 124, -155}, 0, FinalEgg,
