@@ -128,7 +128,7 @@ private:
         },
         {
             LevelAndActIDs_StationSquare4, {380, 20, 1370}, 90, SpeedHighway,
-            {Characters_Sonic, Characters_Tails, Characters_Amy, Characters_Gamma,Characters_Big}
+            {Characters_Sonic, Characters_Tails, Characters_Amy, Characters_Gamma, Characters_Big}
         },
         {
             LevelAndActIDs_StationSquare1, {270, 20, 255}, 0, SpeedHighway,
@@ -140,11 +140,11 @@ private:
         },
         {
             LevelAndActIDs_EggCarrierOutside2, {0, 767, 391}, 0, SkyDeck,
-            {Characters_Sonic, Characters_Tails, Characters_Big}
+            {Characters_Sonic, Characters_Tails, Characters_Amy, Characters_Big, Characters_Gamma}
         },
         {
             LevelAndActIDs_EggCarrierOutside6, {67, -54.5f, 0}, 90, SkyDeck,
-            {Characters_Knuckles, Characters_Amy, Characters_Gamma}
+            {Characters_Knuckles}
         },
         {
             LevelAndActIDs_MysticRuins3, {-516, 100, -994}, 180, LostWorld,

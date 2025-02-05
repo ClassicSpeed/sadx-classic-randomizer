@@ -877,7 +877,10 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     AddSetToLevel(ICE_CAP_SPRING, LevelAndActIDs_MysticRuins2, Characters_Amy);
 
+    AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Amy);
+    AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Knuckles);
     AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Big);
+    AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Gamma);
 
     //Emerald Coast
     AddSetToLevel(BEACH_GATE_SS, LevelAndActIDs_StationSquare5, Characters_Sonic);
@@ -1135,16 +1138,15 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
         FieldStartPos->YRot = 0x5F9;
         break;
     case LevelIDs_SkyDeck:
-        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails || CurrentCharacter ==
-            Characters_Big)
-        {
-            FieldStartPos->Position = {0.0, 655.0, 146.0};
-            FieldStartPos->YRot = 0x0C000;
-        }
-        else
+        if (CurrentCharacter == Characters_Knuckles)
         {
             FieldStartPos->Position = {290.0, 17.0, 0.0};
             FieldStartPos->YRot = 0x8000;
+        }
+        else
+        {
+            FieldStartPos->Position = {0.0, 655.0, 146.0};
+            FieldStartPos->YRot = 0x0C000;
         }
         break;
 
@@ -1640,9 +1642,6 @@ static int __cdecl HandleEggCarrierEggDoor(const int a1)
 
 static int __cdecl HandleEggCarrierOutsideDoor(const int a1)
 {
-    if (CurrentCharacter != Characters_Big)
-        return onEggCarrierOutsideDoor_t.Original(a1);
-
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierOutside1)
         return onEggCarrierOutsideDoor_t.Original(a1);
 
@@ -1662,8 +1661,7 @@ static int __cdecl HandleEggCarrierOutsideDoor(const int a1)
 
 FunctionHook<void, task*> onLoadPoolWater(0x51DC30, [](task* tp)-> void
 {
-    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
-        || CurrentCharacter == Characters_Big)
+    if (CurrentCharacter != Characters_Knuckles)
         return onLoadPoolWater.Original(tp);
 
     if (!worldStateManagerPtr->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
@@ -1674,8 +1672,7 @@ FunctionHook<void, task*> onLoadPoolWater(0x51DC30, [](task* tp)-> void
 
 FunctionHook<void, task*> onLoadPoolDoor(0x51E320, [](task* tp)-> void
 {
-    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
-        || CurrentCharacter == Characters_Big)
+    if (CurrentCharacter != Characters_Knuckles)
         return onLoadPoolDoor.Original(tp);
 
     if (!worldStateManagerPtr->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
@@ -1688,13 +1685,11 @@ int HandleSkyDeckDoor(EntityData1* a1)
     if (!worldStateManagerPtr->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
         return false;
 
-    if ((CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
-            || CurrentCharacter == Characters_Big)
+    if (CurrentCharacter != Characters_Knuckles
         && levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierOutside2)
         return false;
 
-    if ((CurrentCharacter == Characters_Knuckles || CurrentCharacter == Characters_Amy
-            || CurrentCharacter == Characters_Gamma)
+    if (CurrentCharacter == Characters_Knuckles
         && levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierOutside6)
         return false;
 

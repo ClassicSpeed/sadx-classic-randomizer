@@ -28,11 +28,16 @@ All notable changes to this project will be documented in this file.
     - Red cross means the level is not for your character.
     - Orange side arrow means the level is accessible, but you need to use the other entrance.
     - Green upward arrow means the level is accessible.
-- Big no longer uses the city hall entrance for Speed Highway, now uses the same as Sonic.
-- Gamma no longer uses Knuckles' entrance for Lost World, now uses the same as Sonic.
-    - Mission 51 card was moved to the side of the snake head because of this.
-- Tails, Knuckles and Big no longer uses Gamma's entrance for Final Egg, now uses the same as Sonic.
-    - Solving the door puzzle with any character will save the solved state.
+- Every character will now use Sonic's entrance for each level (except for vanilla alternative entrances).
+    - Big no longer uses Knuckles' entrance for Speed Highway.
+    - Gamma no longer uses Knuckles' entrance for Lost World.
+        - Mission 51 card was moved to the side of the snake head to make it accessible even when the door is open.
+    - Tails, Knuckles and Big no longer use Gamma's entrance for Final Egg.
+        - Solving the door puzzle with any character will save the solved state.
+    - Amy and Gamma no longer use Sonic's entrance for Sky Deck.
+- Everyone can transform the Egg Carrier now.
+    - The Hidden Bed Emblem is now in logic for everyone on hard+ logic.
+    - The Main Platform Emblem is now in logic for Knuckles on hard+ logic.
 
 ### Fixed
 
