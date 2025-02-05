@@ -429,7 +429,8 @@ void WorldStateManager::OnFrame()
     if (IsSkyChase1Enabled() && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
         EventFlagArray[33] = 1;
 
-    this->ShowLevelEntranceArrows();
+    if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
+        this->ShowLevelEntranceArrows();
 
     if (this->eggCarrierTransformationCutscene)
     {
@@ -979,10 +980,10 @@ FunctionHook<void> onMissionSetLoad(0x591A70, []()-> void
             {
                 objData->SETEntry->Position = {position.x, -70, position.z};
             }
-            
+
             //We move the mission card 51 in the jungle, so Gamma can get it even if the Snake door is open
             if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3
-                && position.x > -515 && position.x <  -510
+                && position.x > -515 && position.x < -510
                 && position.y > 204 && position.y < 206
                 && position.z > -1128 && position.z < -1120)
             {
@@ -1168,15 +1169,15 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
         FieldStartPos->YRot = 0x1F17;
         break;
     case LevelIDs_FinalEgg:
-        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
-        {
-            FieldStartPos->Position = {133.39999, 108.4, -7.1999998};
-            FieldStartPos->YRot = 0x70EF;
-        }
-        else
+        if (CurrentCharacter == Characters_Gamma)
         {
             FieldStartPos->Position = {-0.5, 108.8, -138.10001};
             FieldStartPos->YRot = 0x4537;
+        }
+        else
+        {
+            FieldStartPos->Position = {133.39999, 108.4, -7.1999998};
+            FieldStartPos->YRot = 0x70EF;
         }
         break;
     case LevelIDs_HotShelter:
@@ -1414,7 +1415,8 @@ FunctionHook<BOOL> isSpeedHighwayShutterOpen(0x63A2A0, []()-> BOOL
 
 FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
 {
-    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
+    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter ==
+            Characters_Big)
         && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
         && worldStateManagerPtr->unlockStatus.keyEmployeeCard)
         FreeTask(tp);
@@ -1424,7 +1426,8 @@ FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
 
 FunctionHook<void, task*> loadSpeedHighwayShutter2(0x63A500, [](task* tp)-> void
 {
-    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
+    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter ==
+            Characters_Big)
         && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
         && worldStateManagerPtr->unlockStatus.keyEmployeeCard)
         FreeTask(tp);
@@ -1468,7 +1471,7 @@ FunctionHook<BOOL, EntityData1*> isFinalEggGammaDoorOpen(0x53ED30, [](EntityData
 
     if (entity->Position.z < -150)
     {
-        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
+        if (CurrentCharacter != Characters_Gamma)
             return false;
         return worldStateManagerPtr->levelEntrances.canEnter(FinalEgg, CurrentCharacter);
     }
@@ -1479,7 +1482,7 @@ FunctionHook<BOOL, EntityData1*> isFinalEggGammaDoorOpen(0x53ED30, [](EntityData
 FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
 {
     // Final Egg
-    if ((CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
+    if ((CurrentCharacter != Characters_Gamma)
         && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && tp->twp->ang.x == 3)
     {
         if (!worldStateManagerPtr->levelEntrances.canEnter(FinalEgg, CurrentCharacter))
@@ -1499,7 +1502,15 @@ FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
 
     onLoadSceneChangeMr.Original(tp);
 });
-//
+
+FunctionHook<void, task*> onHiddenGate(0x53C3E0, [](task* tp)-> void
+{
+    const int bufferCharacter = CurrentCharacter;
+    CurrentCharacter = Characters_Sonic;
+    onHiddenGate.Original(tp);
+    CurrentCharacter = bufferCharacter;
+});
+
 FunctionHook<BOOL> isFinalEggTowerActive(0x538550, []()-> BOOL
 {
     return true;

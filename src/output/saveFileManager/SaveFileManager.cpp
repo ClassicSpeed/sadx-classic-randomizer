@@ -161,7 +161,6 @@ void SaveFileManager::OnSaveFileCreated()
 
     //FinalEgg
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_FINALEGG));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_ENTRANCE_FINALEGG));
 
     //EggCarrier
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_EGGLIFT));

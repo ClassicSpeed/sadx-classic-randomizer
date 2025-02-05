@@ -280,6 +280,9 @@ void EventDetector::OnPlayingFrame() const
         if (!trackerArrow)
             return;
         
+        if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
+            return;
+        
         Rotation3 playerRotation = EntityData1Ptrs[0]->Rotation;
         NJS_VECTOR playerPosition = EntityData1Ptrs[0]->Position;
         float offset = CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Big ? 25.0f : 15.0f;
@@ -800,10 +803,15 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
 {
     if (!cameraready)
         return;
+    
+    if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
+        return;
+    
     if (!checked)
         eventDetectorPtr->possibleChecks.push_back({
             tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z, enemy ? LocationEnemy : LocationCapsule
         });
+    
 
     if (enemy && !eventDetectorPtr->enemyIndicator)
         return;

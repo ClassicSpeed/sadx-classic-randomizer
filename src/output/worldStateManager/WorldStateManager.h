@@ -156,11 +156,11 @@ private:
         },
         {
             LevelAndActIDs_MysticRuins4, {0, 124, -155}, 0, FinalEgg,
-            {Characters_Tails, Characters_Knuckles, Characters_Big, Characters_Gamma}
+            {Characters_Gamma}
         },
         {
             LevelAndActIDs_MysticRuins4, {175, 135, -25.75}, 115, FinalEgg,
-            {Characters_Sonic, Characters_Amy,}
+            {Characters_Sonic, Characters_Tails, Characters_Knuckles, Characters_Amy, Characters_Big}
         },
         {
             LevelAndActIDs_EggCarrierInside2, {0, 15, 245}, 0, HotShelter,
