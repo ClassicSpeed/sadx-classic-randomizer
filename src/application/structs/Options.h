@@ -127,6 +127,9 @@ struct Options
     int bigActionStageMissions = 0;
     int gammaActionStageMissions = 0;
 
+    bool twinkleCircuitCheck = true;
+    bool multipleTwinkleCircuitChecks = true;
+    
     bool skyChaseChecks = false;
     bool skyChaseChecksHard = false;
     std::vector<int> missionBlacklist = {};

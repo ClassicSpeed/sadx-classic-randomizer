@@ -459,6 +459,15 @@ void SADX_RingLoss(const int ringLoss)
 {
     randomizerPtr->SetRingLoss(static_cast<RingLoss>(ringLoss));
 }
+void SADX_TwinkleCircuitCheck(const int twinkleCircuitCheck)
+{
+    randomizerPtr->SetTwinkleCircuitCheck(twinkleCircuitCheck);
+}
+
+void SADX_MultipleTwinkleCircuitChecks(const int multipleTwinkleCircuitChecks)
+{
+    randomizerPtr->SetMultipleTwinkleCircuitChecks(multipleTwinkleCircuitChecks);
+}
 
 void SADX_SkyChaseChecks(const int skyChaseChecks)
 {
@@ -643,6 +652,8 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);
     AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
 
+    AP_RegisterSlotDataIntCallback("TwinkleCircuitCheck", &SADX_TwinkleCircuitCheck);
+    AP_RegisterSlotDataIntCallback("MultipleTwinkleCircuitChecks", &SADX_MultipleTwinkleCircuitChecks);
     AP_RegisterSlotDataIntCallback("SkyChaseChecks", &SADX_SkyChaseChecks);
     AP_RegisterSlotDataIntCallback("SkyChaseChecksHard", &SADX_SkyChaseChecksHard);
 

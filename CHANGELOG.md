@@ -19,7 +19,6 @@ All notable changes to this project will be documented in this file.
 - Tails' workshop runway will open if Sky Chase is enabled.
     - After getting the check(s) from Act 1, the runway will close.
 - You no longer need the YAML in the players folder to use UT.
-    - Keep in mind that AP/UT requires at least one YAML of whatever game/slot name in the players folder to work.
 - Added an option to extend Ring Capacity to 5 digits. This mod setting is disabled by default.
 - Separated Ring Link and Hard Ring link packets. Perfect Chaos/end of the level updates are treated as "hard" updates.
     - This means that only players with Hard Ring Link enabled will be affected by the Hard Ring Link updates.
@@ -38,6 +37,8 @@ All notable changes to this project will be documented in this file.
 - Everyone can transform the Egg Carrier now.
     - The Hidden Bed Emblem is now in logic for everyone on hard+ logic.
     - The Main Platform Emblem is now in logic for Knuckles on hard+ logic.
+- Added 5 unused extra circuits to the Twinkle Circuit checks. You can do just the original or one for each character.
+- The Twinkle Circuit door will be closed when the Twinkle Circuit checks are disabled.
 
 ### Fixed
 

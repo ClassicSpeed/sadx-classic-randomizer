@@ -50,6 +50,7 @@ public:
                            bool enemyIndicator, int enemyIndicatorColor,
                            bool capsuleIndicator, int capsuleIndicatorColor,
                            bool progressionIndicator, int progressionIndicatorColor);
+    void OnTwinkleCircuitCompleted(int character);
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
     std::vector<CapsuleLocationData> capsules;

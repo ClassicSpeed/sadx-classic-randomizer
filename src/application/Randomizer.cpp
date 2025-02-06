@@ -1201,19 +1201,38 @@ void Randomizer::SetRingLoss(const RingLoss ringLoss)
     _characterManager.UpdateOptions(_options);
 }
 
+void Randomizer::SetTwinkleCircuitCheck(int twinkleCircuitCheck)
+{
+    _options.twinkleCircuitCheck = twinkleCircuitCheck;
+    _worldStateManager.UpdateOptions(_options);
+    _characterManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetMultipleTwinkleCircuitChecks(int multipleTwinkleCircuitChecks)
+{
+    _options.multipleTwinkleCircuitChecks = multipleTwinkleCircuitChecks;
+    _worldStateManager.UpdateOptions(_options);
+    _characterManager.UpdateOptions(_options);
+}
+
 void Randomizer::SetSkyChaseChecks(const bool skyChaseChecks)
 {
     _options.skyChaseChecks = skyChaseChecks;
+    _worldStateManager.UpdateOptions(_options);
+    _characterManager.UpdateOptions(_options);
 }
 void Randomizer::SetSkyChaseChecksHard(const bool skyChaseChecksHard)
 {
     _options.skyChaseChecksHard = skyChaseChecksHard;
+    _worldStateManager.UpdateOptions(_options);
+    _characterManager.UpdateOptions(_options);
 }
-
 
 void Randomizer::SetBossChecks(const bool bossChecks)
 {
     _options.bossChecks = bossChecks;
+    _worldStateManager.UpdateOptions(_options);
+    _characterManager.UpdateOptions(_options);
 }
 
 void Randomizer::SetUnifyChaos4(const bool unifyChaos4)

@@ -91,10 +91,6 @@ bool ManualMissionACheck(const int character, const int level)
 
 bool ManualSubLevelMissionACheck(const int level)
 {
-    //You can't fail the Twinkle Circuit mission A 
-    if (level == LevelIDs_TwinkleCircuit)
-        return true;
-
     if (level == LevelIDs_SandHill)
         return Score >= 10000;
 
@@ -147,7 +143,7 @@ FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
         if (!eventDetectorPtr->completeMultipleLevelMissions)
             return;
 
-        if (level >= LevelIDs_TwinkleCircuit && level <= LevelIDs_SandHill)
+        if (level >= LevelIDs_SkyChase1 && level <= LevelIDs_SandHill)
         {
             //sublevel - mission A
             if (mission == SUB_LEVEL_MISSION_B)
@@ -211,11 +207,12 @@ bool EventDetector::IsTargetableCheck(const LocationData& location) const
 }
 
 // Function to calculate the rotated "up" vector based on player rotation
-NJS_VECTOR CalculateArrowPosition(const NJS_VECTOR& playerPosition, const Rotation3& playerRotation, float offset) {
+NJS_VECTOR CalculateArrowPosition(const NJS_VECTOR& playerPosition, const Rotation3& playerRotation, float offset)
+{
     // Assuming playerRotation contains angles in degrees for x, y, z axes
-    float pitch = playerRotation.x * (3.14 / 32768);  // Rotation around X-axis
-    float yaw = playerRotation.y * (3.14 / 32768);     // Rotation around Y-axis
-    float roll = playerRotation.z * (3.14 / 32768); ;   // Rotation around Z-axis
+    float pitch = playerRotation.x * (3.14 / 32768); // Rotation around X-axis
+    float yaw = playerRotation.y * (3.14 / 32768); // Rotation around Y-axis
+    float roll = playerRotation.z * (3.14 / 32768);; // Rotation around Z-axis
 
     // Default "up" vector (pointing upwards relative to the player)
     NJS_VECTOR up = {0.0f, 1.0f, 0.0f};
@@ -225,7 +222,7 @@ NJS_VECTOR CalculateArrowPosition(const NJS_VECTOR& playerPosition, const Rotati
     NJS_VECTOR rotatedUp;
     rotatedUp.x = up.x * cos(yaw) - up.z * sin(yaw);
     rotatedUp.z = up.x * sin(yaw) + up.z * cos(yaw);
-    rotatedUp.y = up.y;  // No change in Y for yaw
+    rotatedUp.y = up.y; // No change in Y for yaw
 
     // Apply pitch (rotation around X-axis)
     float tempY = rotatedUp.y;
@@ -279,15 +276,15 @@ void EventDetector::OnPlayingFrame() const
 
         if (!trackerArrow)
             return;
-        
+
         if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
             return;
-        
+
         Rotation3 playerRotation = EntityData1Ptrs[0]->Rotation;
         NJS_VECTOR playerPosition = EntityData1Ptrs[0]->Position;
         float offset = CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Big ? 25.0f : 15.0f;
         NJS_VECTOR arrowPosition = CalculateArrowPosition(playerPosition, playerRotation, offset);
-        
+
         float closestDistance = 1000000.0f;
         LocationData* closestLocation = nullptr;
         if (!possibleChecks.empty())
@@ -803,15 +800,15 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
 {
     if (!cameraready)
         return;
-    
+
     if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
         return;
-    
+
     if (!checked)
         eventDetectorPtr->possibleChecks.push_back({
             tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z, enemy ? LocationEnemy : LocationCapsule
         });
-    
+
 
     if (enemy && !eventDetectorPtr->enemyIndicator)
         return;
@@ -1225,3 +1222,48 @@ void HandleOnBoaBoaPartDestroyed(task* tp)
     OnBoaBoaPartDestroyed_t.Original(tp);
     CheckDestroyedEnemy(tp->ptp->twp);
 }
+
+void EventDetector::OnTwinkleCircuitCompleted(const int character)
+{
+    if (!eventDetectorPtr->randomizer.GetOptions().twinkleCircuitCheck)
+        return;
+
+    if (eventDetectorPtr->randomizer.GetOptions().multipleTwinkleCircuitChecks)
+    {
+        switch (character)
+        {
+        case Characters_Sonic:
+            eventDetectorPtr->randomizer.OnCheckFound(40);
+            break;
+        case Characters_Tails:
+            eventDetectorPtr->randomizer.OnCheckFound(41);
+            break;
+        case Characters_Knuckles:
+            eventDetectorPtr->randomizer.OnCheckFound(42);
+            break;
+        case Characters_Amy:
+            eventDetectorPtr->randomizer.OnCheckFound(43);
+            break;
+        case Characters_Big:
+            eventDetectorPtr->randomizer.OnCheckFound(44);
+            break;
+        case Characters_Gamma:
+            eventDetectorPtr->randomizer.OnCheckFound(45);
+            break;
+
+        default:
+            break;
+        }
+    }
+    else
+    {
+        eventDetectorPtr->randomizer.OnCheckFound(15);
+    }
+
+}
+
+FunctionHook<signed int> onSaveTwinkleCircuitRecord(0x4B5BC0, []()-> signed int
+{
+    eventDetectorPtr->OnTwinkleCircuitCompleted(CurrentCharacter);
+    return onSaveTwinkleCircuitRecord.Original();
+});

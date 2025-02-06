@@ -170,11 +170,16 @@ Sonic Adventure DX:
   #   Mission 54 (Flags in the Snowboard section of Ice Cap).
   #   Mission 58 (Flags in the rolling bounce section of Lost World).
   mission_blacklist: [ "49", "53", "54", "58" ]
-  # Determines whether beating Twinkle Circuit and Sand Hill grants checks (2 Locations).
-  sub_level_checks: 'true'
-  # Determines whether beating the harder (points-based) Twinkle Circuit and Sand Hill missions grants checks (2 Locations).
-  # Only works if sublevel checks are enabled.
-  sub_level_checks_hard: 'false'
+  # Determines whether beating Twinkle Circuit grants a check.
+  twinkle_circuit_check: 'true'
+  # If enabled, each character will have their own Twinkle Circuit check (5 extra locations).
+  # Only works if Twinkle Circuit Check is enabled.
+  twinkle_circuit_multiple_check: 'true'
+  # Determines whether beating Sand Hill grants a check.
+  sand_hill_check: 'true'
+  # Determines whether beating the harder (points-based) Sand Hill mission grants a check.
+  # Only works if Sand Hill Check is enabled.
+  sand_hill_check_hard: 'false'
   # Determines whether beating Sky Chase Act 1 and 2 grants checks (2 Locations).
   sky_chase_checks: 'true'
   # Determines whether beating the harder (points-based) Sky Chase Act 1 and 2 missions grants checks (2 Locations).

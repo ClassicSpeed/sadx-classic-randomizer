@@ -159,6 +159,9 @@ static void __cdecl HandleMREntrance(int newScene);
 UsercallFunc(bool, onTwinkleParkDoor_t, (char tpChar), (tpChar), 0x63EA90, rEAX, rEAX);
 static bool __cdecl HandleTwinkleParkEntrance(char character);
 
+UsercallFunc(bool, onTwinkleCircuitDoor_t, (char tpChar), (tpChar), 0x63F810, rEAX, rEAX);
+static bool __cdecl HandleTwinkleCircuitEntrance(char character);
+
 
 UsercallFunc(int, onEggCarrierEggDoor_t, (int a1), (a1), 0x52B420, rEAX, rESI);
 static int __cdecl HandleEggCarrierEggDoor(int a1);
@@ -188,6 +191,7 @@ WorldStateManager::WorldStateManager()
     _visitedLevels = VisitedLevels();
     onSceneChangeMr_t.Hook(HandleMREntrance);
     onTwinkleParkDoor_t.Hook(HandleTwinkleParkEntrance);
+    onTwinkleCircuitDoor_t.Hook(HandleTwinkleCircuitEntrance);
     onEggCarrierEggDoor_t.Hook(HandleEggCarrierEggDoor);
     onEggCarrierOutsideDoor_t.Hook(HandleEggCarrierOutsideDoor);
     _onSceneChangeECInside_t.Hook(HandleSceneChangeEcInside);
@@ -1249,6 +1253,49 @@ FunctionHook<void, Uint8, Uint8> onSetNextLevelAndActCutsceneMode(0x4145D0, [](U
             return;
         }
     }
+
+    if (level == LevelIDs_TwinkleCircuit)
+    {
+        if (!worldStateManagerPtr->options.multipleTwinkleCircuitChecks)
+        {
+            onSetNextLevelAndActCutsceneMode.Original(level, 0);
+        }
+        else
+        {
+            switch (CurrentCharacter)
+            {
+            case Characters_Sonic:
+                // Samba GP Track
+                onSetNextLevelAndActCutsceneMode.Original(level, 2);
+                break;
+            case Characters_Tails:
+                //Similar to original but with more stuff
+                onSetNextLevelAndActCutsceneMode.Original(level, 1);
+                break;
+            case Characters_Knuckles:
+                //Harder Track with many sharp curves
+                onSetNextLevelAndActCutsceneMode.Original(level, 5);
+                break;
+            case Characters_Amy:
+                //Original Track
+                onSetNextLevelAndActCutsceneMode.Original(level, 0);
+                break;
+            case Characters_Gamma:
+                //Easier, round Track
+                onSetNextLevelAndActCutsceneMode.Original(level, 4);
+                break;
+            case Characters_Big:
+                //Track with large walls
+                onSetNextLevelAndActCutsceneMode.Original(level, 3);
+                break;
+
+            default:
+                onSetNextLevelAndActCutsceneMode.Original(level, 0);
+                break;
+            }
+        }
+        return;
+    }
     onSetNextLevelAndActCutsceneMode.Original(level, act);
 });
 
@@ -1400,10 +1447,16 @@ FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
 });
 
 
-// Handles the Twinkle Park entrance
+// Handles the Twinkle Park door
 static bool __cdecl HandleTwinkleParkEntrance(const char character)
 {
     return worldStateManagerPtr->levelEntrances.canEnter(TwinklePark, CurrentCharacter);
+}
+
+// Handles the Twinkle Circuit door
+static bool __cdecl HandleTwinkleCircuitEntrance(const char character)
+{
+    return worldStateManagerPtr->options.twinkleCircuitCheck;
 }
 
 // Speed Highway

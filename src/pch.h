@@ -16,9 +16,16 @@
 #define MISSION_A  0
 
 
+#define TWINKLE_CIRCUIT_GAMMA  7
+#define TWINKLE_CIRCUIT_BIG  6
+#define TWINKLE_CIRCUIT_AMY  5
+#define TWINKLE_CIRCUIT_KNUCKLES  4
+#define TWINKLE_CIRCUIT_TAILS  3
+#define TWINKLE_CIRCUIT_SONIC  2
 #define SUB_LEVEL_MISSION_B  1
 #define SUB_LEVEL_MISSION_A  0
-// add headers that you want to pre-compile here
+
+// Pre-compiled headers
 #include "framework.h"
 #include "../lib/sadx-mod-loader/SADXModLoader/include/SADXModLoader.h"
 #include "../lib/sadx-mod-loader/SADXModLoader/include/FunctionHook.h"

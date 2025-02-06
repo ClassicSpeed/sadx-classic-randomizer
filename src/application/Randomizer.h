@@ -59,6 +59,8 @@ public:
     void SetCasinopolisRingLink(bool casinopolisRingLink);
     void SetHardRingLink(bool hardRingLinkActive);
     void SetRingLoss(RingLoss ringLoss);
+    void SetTwinkleCircuitCheck(int twinkleCircuitCheck);
+    void SetMultipleTwinkleCircuitChecks(int multipleTwinkleCircuitChecks);
     void SetSkyChaseChecks(bool skyChaseChecks);
     void SetSkyChaseChecksHard(bool skyChaseChecksHard);
     void SetBossChecks(bool bossChecks);

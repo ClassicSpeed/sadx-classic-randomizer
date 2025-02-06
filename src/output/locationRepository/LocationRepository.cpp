@@ -136,17 +136,22 @@ LocationRepository::LocationRepository()
         {6302, LocationData::LevelLocation(Characters_Big, LevelIDs_HotShelter, MISSION_C)},
 
         //Sub levels
-        {15, LocationData::SubLevelLocation(LevelIDs_TwinkleCircuit, MISSION_B)},
-        {16, LocationData::SubLevelLocation(LevelIDs_TwinkleCircuit, MISSION_A)},
+        {15, LocationData::SubLevelLocation(LevelIDs_TwinkleCircuit, SUB_LEVEL_MISSION_B)},
+        {40, LocationData::SubLevelLocation(LevelIDs_TwinkleCircuit, TWINKLE_CIRCUIT_SONIC)},
+        {41, LocationData::SubLevelLocation(LevelIDs_TwinkleCircuit, TWINKLE_CIRCUIT_TAILS)},
+        {42, LocationData::SubLevelLocation(LevelIDs_TwinkleCircuit, TWINKLE_CIRCUIT_KNUCKLES)},
+        {43, LocationData::SubLevelLocation(LevelIDs_TwinkleCircuit, TWINKLE_CIRCUIT_AMY)},
+        {44, LocationData::SubLevelLocation(LevelIDs_TwinkleCircuit, TWINKLE_CIRCUIT_BIG)},
+        {45, LocationData::SubLevelLocation(LevelIDs_TwinkleCircuit, TWINKLE_CIRCUIT_GAMMA)},
 
-        {25, LocationData::SubLevelLocation(LevelIDs_SandHill, MISSION_B)},
-        {26, LocationData::SubLevelLocation(LevelIDs_SandHill, MISSION_A)},
+        {25, LocationData::SubLevelLocation(LevelIDs_SandHill, SUB_LEVEL_MISSION_B)},
+        {26, LocationData::SubLevelLocation(LevelIDs_SandHill, SUB_LEVEL_MISSION_A)},
 
-        {27, LocationData::SubLevelLocation(LevelIDs_SkyChase1, MISSION_B)},
-        {28, LocationData::SubLevelLocation(LevelIDs_SkyChase1, MISSION_A)},
+        {27, LocationData::SubLevelLocation(LevelIDs_SkyChase1, SUB_LEVEL_MISSION_B)},
+        {28, LocationData::SubLevelLocation(LevelIDs_SkyChase1, SUB_LEVEL_MISSION_A)},
 
-        {35, LocationData::SubLevelLocation(LevelIDs_SkyChase2, MISSION_B)},
-        {36, LocationData::SubLevelLocation(LevelIDs_SkyChase2, MISSION_A)},
+        {35, LocationData::SubLevelLocation(LevelIDs_SkyChase2, SUB_LEVEL_MISSION_B)},
+        {36, LocationData::SubLevelLocation(LevelIDs_SkyChase2, SUB_LEVEL_MISSION_A)},
 
         // Field Emblems
         {10, LocationData::FieldEmblemLocation(119, "Station Emblem")},
