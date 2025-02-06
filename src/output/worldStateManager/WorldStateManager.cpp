@@ -450,6 +450,7 @@ void WorldStateManager::OnFrame()
         GameMode = GameModes_Mission;
 }
 
+
 //Enable all GameGear Games
 FunctionHook<int> onHowManyGameGearGames(0x6FDA90, []()-> int
 {
@@ -1045,6 +1046,11 @@ FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
         SetNextLevelAndAct(LevelIDs_MysticRuins, 3);
         SetEntranceNumber(3);
     }
+    else if (CurrentLevel == LevelIDs_TwinkleCircuit)
+    {
+        SetNextLevelAndAct(LevelIDs_StationSquare, 5);
+        SetEntranceNumber(2);
+    }
     return response;
 });
 
@@ -1298,6 +1304,20 @@ FunctionHook<void, Uint8, Uint8> onSetNextLevelAndActCutsceneMode(0x4145D0, [](U
     }
     onSetNextLevelAndActCutsceneMode.Original(level, act);
 });
+
+DataPointer(int, ShowExitMenuTwinkleCircuit, 0x3C5D430);
+FunctionHook<void, task*> onTwinkleCircuitResultsMaybe(0x4DAFB0, [](task* tp)-> void
+{
+    if (CurrentLevel == LevelIDs_TwinkleCircuit && ShowExitMenuTwinkleCircuit == 1)
+    {
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_StationSquare, GET_ACT(LevelAndActIDs_StationSquare6));
+        ShowExitMenuTwinkleCircuit = 0;
+        return;
+    }
+
+    return onTwinkleCircuitResultsMaybe.Original(tp);
+});
+
 
 // WindyValley
 static void __cdecl HandleWindyValleyEntrance()
