@@ -156,11 +156,11 @@ static void __cdecl HandleWindyValleyEntrance();
 UsercallFuncVoid(onSceneChangeMr_t, (int a1), (a1), 0x539220, rEBX);
 static void __cdecl HandleMREntrance(int newScene);
 
-UsercallFunc(bool, onTwinkleParkDoor_t, (char tpChar), (tpChar), 0x63EA90, rEAX, rEAX);
-static bool __cdecl HandleTwinkleParkEntrance(char character);
+UsercallFunc(int, onTwinkleParkDoor_t, (char tpChar), (tpChar), 0x63EA90, rEAX, rESI);
+static int __cdecl HandleTwinkleParkEntrance(char character);
 
-UsercallFunc(bool, onTwinkleCircuitDoor_t, (char tpChar), (tpChar), 0x63F810, rEAX, rEAX);
-static bool __cdecl HandleTwinkleCircuitEntrance(char character);
+UsercallFunc(int, onTwinkleCircuitDoor_t, (char tpChar), (tpChar), 0x63F810, rEAX, rESI);
+static int __cdecl HandleTwinkleCircuitEntrance(char character);
 
 
 UsercallFunc(int, onEggCarrierEggDoor_t, (int a1), (a1), 0x52B420, rEAX, rESI);
@@ -1468,13 +1468,13 @@ FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
 
 
 // Handles the Twinkle Park door
-static bool __cdecl HandleTwinkleParkEntrance(const char character)
+static int __cdecl HandleTwinkleParkEntrance(const char character)
 {
     return worldStateManagerPtr->levelEntrances.canEnter(TwinklePark, CurrentCharacter);
 }
 
 // Handles the Twinkle Circuit door
-static bool __cdecl HandleTwinkleCircuitEntrance(const char character)
+static int __cdecl HandleTwinkleCircuitEntrance(const char character)
 {
     return worldStateManagerPtr->options.twinkleCircuitCheck;
 }
