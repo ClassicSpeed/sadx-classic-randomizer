@@ -834,7 +834,10 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     int verticalOffset = INDICATOR_HEIGHT + EXTRA_INDICATOR_HEIGHT * extraPercentage;
     const float arrowSize = HEIGHT_SIZE + EXTRA_HEIGHT_SIZE * extraPercentage;
     if (tallElement)
-        verticalOffset += 10;
+        if(enemy)
+            verticalOffset += 25;
+        else
+            verticalOffset += 15;
 
     NJS_VECTOR direction;
     direction.x = camera_twp->pos.x - tp->twp->pos.x;
@@ -985,7 +988,8 @@ void CheckEnemy(task* tp)
     if (enemyId > ENEMY_STARTING_ID)
     {
         const auto check = eventDetectorPtr->checkData.find(enemyId);
-        DrawIndicator(tp, false, check->second.checked, true, check->first);
+        const bool isTallEnemy = check->second.enemyType == Buyon;
+        DrawIndicator(tp, isTallEnemy, check->second.checked, true, check->first);
     }
     else if (enemyId != ENEMY_INVALID_ID)
     {

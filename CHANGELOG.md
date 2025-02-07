@@ -46,6 +46,8 @@ All notable changes to this project will be documented in this file.
 - Fixed incorrect lines playing when getting a trap as Amy
 - Some enemies with Progression items where not marked correctly when the item was also Useful or other type.
 - Emblem are now Progression Skip Balancing to prevent them from clogging up the balancing process.
+- Changed how the enemy tracking works, this should fix problems with tracking and random checks being sent.
+- The indicator for Buyon is drawn higher to prevent it from being hidden inside the model.
 
 ### Logic
 
