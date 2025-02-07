@@ -49,6 +49,10 @@ All notable changes to this project will be documented in this file.
 - Changed how the enemy tracking works, this should fix problems with tracking and random checks being sent.
 - The indicator for Buyon is drawn higher to prevent it from being hidden inside the model.
 
+### Changed
+
+- Removed the archipelago image from life capsules.
+
 ### Logic
 
 #### Hard
