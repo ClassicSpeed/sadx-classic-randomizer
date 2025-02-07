@@ -277,7 +277,7 @@ void EventDetector::OnPlayingFrame() const
         if (!trackerArrow)
             return;
 
-        if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
+        if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
             return;
 
         Rotation3 playerRotation = EntityData1Ptrs[0]->Rotation;
@@ -793,7 +793,7 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
         if (distance <= 0.1)
             return enemy.locationId;
     }
-    return -1;
+    return ENEMY_INVALID_ID;
 }
 
 void DrawIndicator(const task* tp, const bool tallElement, const bool checked, const bool enemy, const int locationId)
@@ -801,8 +801,9 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     if (!cameraready)
         return;
 
-    if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
+    if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
         return;
+
 
     if (!checked)
         eventDetectorPtr->possibleChecks.push_back({
@@ -950,6 +951,26 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
     }
 });
 
+void __cdecl EmptyTrackerFunction(task* obj)
+{
+}
+
+int FindEnemyTrackerId(task* tp)
+{
+    int enemyId = ENEMY_SEARCHING_ID;
+    const task* child = tp->ctp;
+    while (child != nullptr)
+    {
+        if (child->awp != nullptr)
+        {
+            const int possibleId = child->awp->work.sl[0];
+            if (possibleId == ENEMY_STARTING_ID || possibleId > ENEMY_STARTING_ID)
+                enemyId = possibleId;
+        }
+        child = child->next;
+    }
+    return enemyId;
+}
 
 void CheckEnemy(task* tp)
 {
@@ -959,26 +980,20 @@ void CheckEnemy(task* tp)
     if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
-    const auto it = eventDetectorPtr->enemyTaskMap.find(tp->twp);
-    if (it == eventDetectorPtr->enemyTaskMap.end())
+    int enemyId = FindEnemyTrackerId(tp);
+
+    if (enemyId > ENEMY_STARTING_ID)
     {
-        const int enemyId = GetEnemyFromPosition(tp->twp->pos);
-        if (enemyId > 0)
-            eventDetectorPtr->enemyTaskMap[tp->twp] = enemyId;
+        const auto check = eventDetectorPtr->checkData.find(enemyId);
+        DrawIndicator(tp, false, check->second.checked, true, check->first);
     }
-    else
+    else if (enemyId != ENEMY_INVALID_ID)
     {
-        const auto test = eventDetectorPtr->checkData.find(it->second);
-        DrawIndicator(tp, false, test->second.checked, true, test->first);
+        const task* childTask = CreateChildTask(LoadObj_UnknownB, EmptyTrackerFunction, tp);
+        enemyId = GetEnemyFromPosition(tp->twp->pos);
+        childTask->awp->work.sl[0] = enemyId;
     }
 }
-
-FunctionHook<void, task*> onFreeTask(0x40B6C0, [](task* tp)-> void
-{
-    eventDetectorPtr->enemyTaskMap.erase(tp->twp);
-    onFreeTask.Original(tp);
-});
-
 
 FunctionHook<void, task*> onRhinotankLoad(0x7A1380, [](task* tp)-> void
 {
@@ -1034,39 +1049,56 @@ FunctionHook<void, task*> onBuyonMain(0x7B2E00, [](task* tp)-> void
 
 FunctionHook<void, task*> onBoaBoaMain(0x7A0330, [](task* tp)-> void
 {
-    if (eventDetectorPtr->randomizer.GetOptions().enemySanity)
+    onBoaBoaMain.Original(tp);
+
+    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+        return;
+    if (!eventDetectorPtr->randomizer.GetOptions().
+                           GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+        return;
+
+    const int enemyId = ENEMY_SEARCHING_ID;
+    const task* child = tp->ctp;
+    while (child != nullptr)
     {
-        if (eventDetectorPtr->randomizer.GetOptions().
-                              GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+        const task* grandchild = child->ctp;
+        while (grandchild != nullptr)
         {
-            const auto it = eventDetectorPtr->enemyTaskMap.find(tp->twp);
-            if (it == eventDetectorPtr->enemyTaskMap.end())
+            if (grandchild->awp != nullptr)
             {
-                const int enemyId = GetEnemyFromPosition(tp->twp->pos);
-                if (enemyId > 0)
-                    eventDetectorPtr->enemyTaskMap[tp->twp] = enemyId;
+                const int possibleId = grandchild->awp->work.sl[0];
+                if ((possibleId == ENEMY_STARTING_ID || possibleId > ENEMY_STARTING_ID) && child->next ==
+                    nullptr)
+                {
+                    const auto check = eventDetectorPtr->checkData.find(enemyId);
+                    DrawIndicator(child, false, check->second.checked, true, check->first);
+                    return;
+                }
+
+                grandchild = grandchild->next;
             }
         }
+        child = child->next;
     }
-    onBoaBoaMain.Original(tp);
 });
 
 FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
 {
-    if (eventDetectorPtr->randomizer.GetOptions().enemySanity)
-    {
-        if (eventDetectorPtr->randomizer.GetOptions().
-                              GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
-        {
-            const auto it = eventDetectorPtr->enemyTaskMap.find(tp->ptp->twp);
-            if (it != eventDetectorPtr->enemyTaskMap.end())
-            {
-                const auto test = eventDetectorPtr->checkData.find(it->second);
-                DrawIndicator(tp, false, test->second.checked, true, test->first);
-            }
-        }
-    }
     onBoaBoaHeadLoad.Original(tp);
+    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+        return;
+    if (!eventDetectorPtr->randomizer.GetOptions().
+                           GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+        return;
+
+    int enemyId = FindEnemyTrackerId(tp);
+
+    if (enemyId <= ENEMY_STARTING_ID && enemyId != ENEMY_INVALID_ID)
+    {
+        const task* childTask = CreateChildTask(LoadObj_UnknownB, EmptyTrackerFunction, tp);
+        enemyId = GetEnemyFromPosition(tp->ptp->twp->pos);
+        childTask->awp->work.sl[0] = enemyId;
+    }
 });
 
 FunctionHook<void, task*> onLeonLoad(0x4A85C0, [](task* tp)-> void
@@ -1190,7 +1222,7 @@ FunctionHook<void, task*> onEggKeeperMain(0x4A6420, [](task* tp)-> void
 });
 
 
-void CheckDestroyedEnemy(taskwk* twp)
+void CheckDestroyedEnemy(task* tp)
 {
     if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
         return;
@@ -1198,14 +1230,14 @@ void CheckDestroyedEnemy(taskwk* twp)
     if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
-    const auto it = eventDetectorPtr->enemyTaskMap.find(twp);
-    if (it != eventDetectorPtr->enemyTaskMap.end())
+    const int enemyId = FindEnemyTrackerId(tp);
+
+    if (enemyId > ENEMY_STARTING_ID)
     {
-        int enemyLocationId = it->second;
-        const auto test = eventDetectorPtr->checkData.find(enemyLocationId);
+        const auto test = eventDetectorPtr->checkData.find(enemyId);
         if (!test->second.checked)
         {
-            eventDetectorPtr->randomizer.OnCheckFound(enemyLocationId);
+            eventDetectorPtr->randomizer.OnCheckFound(enemyId);
             eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
         }
     }
@@ -1213,14 +1245,14 @@ void CheckDestroyedEnemy(taskwk* twp)
 
 FunctionHook<void, task*> onDeadOut(0x46C150, [](task* tp)-> void
 {
-    CheckDestroyedEnemy(tp->twp);
+    CheckDestroyedEnemy(tp);
     onDeadOut.Original(tp);
 });
 
 void HandleOnBoaBoaPartDestroyed(task* tp)
 {
     OnBoaBoaPartDestroyed_t.Original(tp);
-    CheckDestroyedEnemy(tp->ptp->twp);
+    CheckDestroyedEnemy(tp);
 }
 
 void EventDetector::OnTwinkleCircuitCompleted(const int character)
@@ -1259,7 +1291,6 @@ void EventDetector::OnTwinkleCircuitCompleted(const int character)
     {
         eventDetectorPtr->randomizer.OnCheckFound(15);
     }
-
 }
 
 FunctionHook<signed int> onSaveTwinkleCircuitRecord(0x4B5BC0, []()-> signed int

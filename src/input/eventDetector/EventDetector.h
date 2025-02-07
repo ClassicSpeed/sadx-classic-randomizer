@@ -35,6 +35,10 @@ constexpr int EXTRA_INDICATOR_HEIGHT = 20;
 constexpr int HEIGHT_SIZE = 4;
 constexpr int EXTRA_HEIGHT_SIZE = 7;
 
+constexpr int ENEMY_STARTING_ID = 10000;
+constexpr int ENEMY_INVALID_ID = -1;
+constexpr int ENEMY_SEARCHING_ID = -2;
+
 
 class EventDetector
 {
@@ -68,7 +72,6 @@ public:
     bool capsuleIndicator = true;
     bool progressionIndicator = true;
 
-    std::unordered_map<taskwk*, int> enemyTaskMap;
 
 
     NJS_COLOR arrowColor[6] = {
