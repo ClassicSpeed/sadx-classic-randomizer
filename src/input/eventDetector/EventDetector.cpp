@@ -1047,41 +1047,6 @@ FunctionHook<void, task*> onBuyonMain(0x7B2E00, [](task* tp)-> void
     onBuyonMain.Original(tp);
 });
 
-FunctionHook<void, task*> onBoaBoaMain(0x7A0330, [](task* tp)-> void
-{
-    onBoaBoaMain.Original(tp);
-
-    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
-        return;
-    if (!eventDetectorPtr->randomizer.GetOptions().
-                           GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
-        return;
-
-    const int enemyId = ENEMY_SEARCHING_ID;
-    const task* child = tp->ctp;
-    while (child != nullptr)
-    {
-        const task* grandchild = child->ctp;
-        while (grandchild != nullptr)
-        {
-            if (grandchild->awp != nullptr)
-            {
-                const int possibleId = grandchild->awp->work.sl[0];
-                if ((possibleId == ENEMY_INVALID_ID || possibleId > ENEMY_STARTING_ID) && child->next ==
-                    nullptr)
-                {
-                    const auto check = eventDetectorPtr->checkData.find(enemyId);
-                    DrawIndicator(child, false, check->second.checked, true, check->first);
-                    return;
-                }
-
-                grandchild = grandchild->next;
-            }
-        }
-        child = child->next;
-    }
-});
-
 FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
 {
     onBoaBoaHeadLoad.Original(tp);
@@ -1093,7 +1058,12 @@ FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
 
     int enemyId = FindEnemyTrackerId(tp);
 
-    if (enemyId <= ENEMY_STARTING_ID && enemyId != ENEMY_INVALID_ID)
+    if (enemyId > ENEMY_STARTING_ID)
+    {
+        const auto check = eventDetectorPtr->checkData.find(enemyId);
+        DrawIndicator(tp, false, check->second.checked, true, check->first);
+    }
+    else if (enemyId != ENEMY_INVALID_ID)
     {
         const task* childTask = CreateChildTask(LoadObj_UnknownB, EmptyTrackerFunction, tp);
         enemyId = GetEnemyFromPosition(tp->ptp->twp->pos);
