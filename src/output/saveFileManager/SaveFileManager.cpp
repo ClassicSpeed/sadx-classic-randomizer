@@ -117,11 +117,6 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_WINDYSTONE));
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_WINDY));
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_WINDYSTONE));
-
-    //Angel Island Shrine door
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ISLANDDOOR));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_ISLANDDOOR));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ISLANDDOOR));
     
     //Ice Cap Stone
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ICESTONE));

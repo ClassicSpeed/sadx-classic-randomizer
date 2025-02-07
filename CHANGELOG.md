@@ -39,6 +39,7 @@ All notable changes to this project will be documented in this file.
     - The Main Platform Emblem is now in logic for Knuckles on hard+ logic.
 - Added 5 unused extra circuits to the Twinkle Circuit checks. You can do just the original or one for each character.
 - The Twinkle Circuit door will be closed when the Twinkle Circuit checks are disabled.
+- The mountain door near the Master Emerald shrine won't be closed anymore.
 
 ### Fixed
 
@@ -57,6 +58,7 @@ All notable changes to this project will be documented in this file.
 
 - Added skip from Hotel to SSMain for Sonic, Tails, Knuckles, Amy and Gamma.
 - Added skip from SSMain to Station for Tails.
+- Added skip from MRMain to AngelIsland (and back) for Tails and Knuckles.
 
 #### Expert (DX)
 
@@ -64,6 +66,7 @@ All notable changes to this project will be documented in this file.
 - Added skip from Hotel to Casino for Sonic.
 - Added skip from SSMain to TP Lobby for Sonic.
 - Added skip from TP Lobby to SSMain for Big and Gamma.
+- Added skip from MRMain to AngelIsland (and back) for Tails and Knuckles.
 
 ## [v1.0.1] - 2025-01-17
 

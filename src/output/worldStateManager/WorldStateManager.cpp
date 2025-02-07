@@ -13,6 +13,7 @@ constexpr int WARP_MYSTIC_RUINS = 6;
 constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
 constexpr int WARP_PAST = 10;
 
+constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
 constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
 constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
 constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
@@ -124,6 +125,16 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
             && tp->twp->pos.z < 2769 && tp->twp->pos.z > 2765)
             FreeTask(tp);
     }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
+        && worldStateManagerPtr->unlockStatus.keyDynamite)
+    {
+        //We find the cube collision that we created for the dynamite and delete it
+        if (tp->twp->pos.x < -394 && tp->twp->pos.x > -392
+            && tp->twp->pos.y < 121 && tp->twp->pos.y > 118
+            && tp->twp->pos.z < 891 && tp->twp->pos.z > 889)
+            FreeTask(tp);
+    }
+
 
     else
         onCollisionCube.Original(tp);
@@ -208,11 +219,6 @@ WorldStateManager::WorldStateManager()
 
     worldStateManagerPtr = this;
 
-    //We allow Tails and Big to enter the Master Emerald Shrine
-    DataArray(int, islandDoorFlags, 0x111E010, 8);
-    islandDoorFlags[Characters_Tails] = FLAG_SONIC_MR_ISLANDDOOR;
-    islandDoorFlags[Characters_Big] = FLAG_SONIC_MR_ISLANDDOOR;
-    islandDoorFlags[Characters_Amy] = FLAG_SONIC_MR_ISLANDDOOR;
 
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
@@ -774,6 +780,9 @@ const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f
 const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635},
                                               {0, 0, 0}, {0.3f, 0, 51});
 
+
+const SETEntry COLLISION_CUBE_MR = CreateSetEntry(COLLISION_CUBE_MYSTIC_RUINS, {-393.62f, 120, 890.06f},
+                                                  {0xFEFF, 0x4BF1, 0xFD6A}, {60, 80, 10});
 const SETEntry RED_MOUNTAIN_SCENE_CHANGE_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {-2100, -304, 1650},
                                                              {0, 0, 0}, {40, 50, 0});
 
@@ -867,6 +876,13 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
+    
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Tails);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Big);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Gamma);
 
     AddSetToLevel(RED_MOUNTAIN_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Tails);
     AddSetToLevel(RED_MOUNTAIN_DOOR_MR, LevelAndActIDs_MysticRuins2, Characters_Tails);
