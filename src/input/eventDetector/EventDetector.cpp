@@ -964,7 +964,7 @@ int FindEnemyTrackerId(task* tp)
         if (child->awp != nullptr)
         {
             const int possibleId = child->awp->work.sl[0];
-            if (possibleId == ENEMY_STARTING_ID || possibleId > ENEMY_STARTING_ID)
+            if (possibleId == ENEMY_INVALID_ID || possibleId > ENEMY_STARTING_ID)
                 enemyId = possibleId;
         }
         child = child->next;
@@ -1067,7 +1067,7 @@ FunctionHook<void, task*> onBoaBoaMain(0x7A0330, [](task* tp)-> void
             if (grandchild->awp != nullptr)
             {
                 const int possibleId = grandchild->awp->work.sl[0];
-                if ((possibleId == ENEMY_STARTING_ID || possibleId > ENEMY_STARTING_ID) && child->next ==
+                if ((possibleId == ENEMY_INVALID_ID || possibleId > ENEMY_STARTING_ID) && child->next ==
                     nullptr)
                 {
                     const auto check = eventDetectorPtr->checkData.find(enemyId);
@@ -1247,6 +1247,14 @@ FunctionHook<void, task*> onDeadOut(0x46C150, [](task* tp)-> void
 {
     CheckDestroyedEnemy(tp);
     onDeadOut.Original(tp);
+});
+
+FunctionHook<void, task*> onBuyonDestroyChildren(0x7B1500, [](task* tp)-> void
+{
+    //We check the player actually destroyed the enemy, and it wasn't destroyed by a restart
+    if (tp->twp->mode == 6)
+        CheckDestroyedEnemy(tp);
+    onBuyonDestroyChildren.Original(tp);
 });
 
 void HandleOnBoaBoaPartDestroyed(task* tp)
