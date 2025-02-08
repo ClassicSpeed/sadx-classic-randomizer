@@ -40,6 +40,7 @@ All notable changes to this project will be documented in this file.
 - Added 5 unused extra circuits to the Twinkle Circuit checks. You can do just the original or one for each character.
 - The Twinkle Circuit door will be closed when the Twinkle Circuit checks are disabled.
 - The mountain door near the Master Emerald shrine won't be closed anymore.
+- Added a location group for each character's level, for example, "Emerald Coast (Sonic)".
 
 ### Fixed
 
