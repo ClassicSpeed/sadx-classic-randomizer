@@ -50,6 +50,7 @@ All notable changes to this project will be documented in this file.
 - Emblem are now Progression Skip Balancing to prevent them from clogging up the balancing process.
 - Changed how the enemy tracking works, this should fix problems with tracking and random checks being sent.
 - The indicator for Buyon is drawn higher to prevent it from being hidden inside the model.
+- Updated wording for the emblem goal setting to be more clear and changed its max value to 90%.
 
 ### Changed
 

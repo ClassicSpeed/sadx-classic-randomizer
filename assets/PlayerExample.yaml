@@ -37,11 +37,12 @@ Sonic Adventure DX:
   # Keep in mind selecting emerald hunt will require enough checks to add the 7 emeralds to the pool.
   goal_requires_chaos_emeralds: 'false'
   # If enabled, you have to collect a certain number of emblems to unlock the last fight.
-  # Enabling this will require at least 5 checks to add the 5 emblems to the pool.
+  # The emblems are extra items added to the item pool, so they scale with the number of checks.
   goal_requires_emblems: 'false'
-  # Percentage of the available emblems needed to unlock the final story.
-  # Minimum value is 1, maximum value is 80
-  emblems_percentage: 80
+  # If Emblems are part of the goal, percentage of the available emblems needed to unlock the final story.
+  # 75 means that from all of your remaining checks (after adding key items/characters/etc.), 75% will be emblems.
+  # Minimum value is 1, maximum value is 90
+  emblems_percentage: 75
   # If enabled, you have to complete missions to unlock the last fight.
   goal_requires_missions: 'false'
   # If Missions are part of the goal, Percentage of the available missions that needed to be completed to unlock the final story.
