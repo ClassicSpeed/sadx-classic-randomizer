@@ -1035,6 +1035,13 @@ FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
         tp->twp->pos.y = -8.43f;
         tp->twp->pos.z = 579.43f;
     }
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EmeraldCoast2
+        && tp->twp->pos.x > 712 && tp->twp->pos.x < 714
+        && tp->twp->pos.y > 540 && tp->twp->pos.y < 541
+        && tp->twp->pos.z > -818 && tp->twp->pos.z < -816)
+    {
+        tp->twp->pos.z = -869.65f;
+    }
     CheckEnemy(tp);
     onWaterSpiderLoad.Original(tp);
 });
