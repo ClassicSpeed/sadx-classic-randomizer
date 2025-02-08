@@ -18,7 +18,8 @@ All notable changes to this project will be documented in this file.
 - The inside of the Egg Carrier is now one of the starting locations.
 - Tails' workshop runway will open if Sky Chase is enabled.
     - After getting the check(s) from Act 1, the runway will close.
-- You no longer need the YAML in the players folder to use UT.
+- You no longer need the YAML in the players folder to use Universal Tracker.
+- Added a version check (between the installed apworld and the one used to generate) when using Universal Tracker.
 - Added an option to extend Ring Capacity to 5 digits. This mod setting is disabled by default.
 - Separated Ring Link and Hard Ring link packets. Perfect Chaos/end of the level updates are treated as "hard" updates.
     - This means that only players with Hard Ring Link enabled will be affected by the Hard Ring Link updates.
