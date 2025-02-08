@@ -51,6 +51,7 @@ All notable changes to this project will be documented in this file.
 - Changed how the enemy tracking works, this should fix problems with tracking and random checks being sent.
 - The indicator for Buyon is drawn higher to prevent it from being hidden inside the model.
 - Updated wording for the emblem goal setting to be more clear and changed its max value to 90%.
+- Removed 6th enemy from logic for Sonic's Ice Cap since it was DC only.
 
 ### Changed
 

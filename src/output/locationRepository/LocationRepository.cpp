@@ -862,10 +862,8 @@ LocationRepository::LocationRepository()
         {509.80f, 42.28f, 961.87f, LevelAndActIDs_IceCap1, Characters_Sonic, IceBall, 13003}, //DC
         {509.80f, 33.28f, 961.87f, LevelAndActIDs_IceCap1, Characters_Sonic, IceBall, 13003}, //DX
         {1328.80f, 27.68f, -109.74f, LevelAndActIDs_IceCap2, Characters_Sonic, BoaBoa, 13004},
-        {1387.97f, -18.11f, -154.65f, LevelAndActIDs_IceCap2, Characters_Sonic, IceBall, 13005}, //DC
+        {1298.29f, 186.56f, -323.83f, LevelAndActIDs_IceCap2, Characters_Sonic, IceBall, 13005}, //DC
         {1298.29f, 183.56f, -323.83f, LevelAndActIDs_IceCap2, Characters_Sonic, IceBall, 13005}, //DX
-        {1298.29f, 186.56f, -323.83f, LevelAndActIDs_IceCap2, Characters_Sonic, IceBall, 13006}, //DC
-        {1298.29f, 183.56f, -323.83f, LevelAndActIDs_IceCap2, Characters_Sonic, IceBall, 13006}, //DX
 
         {-246.47f, -1808.00f, 2853.75f, LevelAndActIDs_Casinopolis2, Characters_Sonic, Spinner, 12001},
         {-290.29f, -1769.00f, 2884.71f, LevelAndActIDs_Casinopolis2, Characters_Sonic, Spinner, 12002},
