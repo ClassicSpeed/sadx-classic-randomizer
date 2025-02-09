@@ -167,12 +167,12 @@ void DisplayManager::DisplayChatMessages()
     if (_lastMessageTime < 0)
         return;
 
-
     const double timePassed = (std::clock() - this->_lastMessageTime) / static_cast<double>(CLOCKS_PER_SEC);
     const double timeRemaining = _displayDuration - timePassed;
+    int alpha = 255;
     if (timeRemaining < 1)
     {
-        int alpha = static_cast<int>(timeRemaining * 255);
+      alpha = static_cast<int>(timeRemaining * 255);
         //Fix for alpha value being too low and SADX showing it as solid color
         if (alpha < 15)
         {
@@ -187,11 +187,30 @@ void DisplayManager::DisplayChatMessages()
 
     const int rows = VerticalResolution / this->_debugFontSize;
     SetDebugFontSize(this->_debugFontSize);
+
+    int longestMessageSize = 0;
     for (size_t i = 0; i < this->_chatMessagesQueue.size(); ++i)
     {
-        DisplayDebugString(
-            NJM_LOCATION(2, rows - 2 - this->_chatMessagesQueue.size() + i + 1), _chatMessagesQueue[i].c_str());
+        int linesFromTop = rows - 2 - this->_chatMessagesQueue.size() + i + 1;
+        DisplayDebugString(NJM_LOCATION(2, linesFromTop), _chatMessagesQueue[i].c_str());
+        if (longestMessageSize < _chatMessagesQueue[i].size())
+            longestMessageSize = _chatMessagesQueue[i].size();
     }
+
+    njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+
+    int linesFromTop = rows - 1 - _chatDisplayCount;
+    DrawRect_Queue(1.5f * this->_debugFontSize,
+                   (linesFromTop - 0.5f) * this->_debugFontSize,
+                   (2 + longestMessageSize + 0.5) * this->_debugFontSize,
+                   (linesFromTop + _chatDisplayCount + 0.5) * this->_debugFontSize, 62041.496f,
+                   0x5F0000FF & 0x00FFFFFF | alpha/3 << 24,
+                   QueuedModelFlagsB_EnableZWrite);
+
+
+    njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
 }
 
 
@@ -706,7 +725,6 @@ void DisplayManager::DisplayItemsUnlocked()
                 DisplayDebugString(
                     NJM_LOCATION(2, this->_startLine + this->_displayCount + displayOffset), buffer.c_str());
             }
-            
         }
     }
 
