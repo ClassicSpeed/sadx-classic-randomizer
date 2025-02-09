@@ -391,6 +391,9 @@ void DisplayManager::DisplayItemsUnlocked()
     //Show Items Unlock on Pause menu or Character select screen
     if (!(GameState == MD_GAME_PAUSE || (GameMode == GameModes_Menu && this->_inCharacterSelectScreen)))
         return;
+    // We don't show the tracker on the mission screen
+    if(MissionScreenState > 0)
+        return;
 
     if (this->_inCharacterSelectScreen)
     {
