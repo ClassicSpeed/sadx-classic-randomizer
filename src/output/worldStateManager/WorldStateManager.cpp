@@ -476,21 +476,21 @@ FunctionHook<BOOL> isChaos2DoorOpen(0x638D50, []()-> BOOL
 
 FunctionHook<BOOL> isStationDoorOpen(0x63AB70, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyStationFrontKeys;
+    return worldStateManagerPtr->unlockStatus.keyStationFrontKey;
 });
 
 FunctionHook<BOOL> isHotelDoorOpen(0x630900, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyHotelFrontKeys;
+    return worldStateManagerPtr->unlockStatus.keyHotelFrontKey;
 });
 
 FunctionHook<BOOL> isCasinoHotelDoorOpen(0x630970, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyHotelBackKeys;
+    return worldStateManagerPtr->unlockStatus.keyHotelBackKey;
 });
 FunctionHook<BOOL> isCasinoStationDoorOpen(0x638880, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyStationBackKeys;
+    return worldStateManagerPtr->unlockStatus.keyStationBackKey;
 });
 
 

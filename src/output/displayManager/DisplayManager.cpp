@@ -1029,28 +1029,28 @@ void DisplayManager::DisplayItemsUnlocked()
     displayOffset++;
     buffer.clear();
     buffer.append("Hotel   ");
-    buffer.append(_unlockStatus.keyHotelFrontKeys ? "Front " : "      ");
-    buffer.append(_unlockStatus.keyHotelBackKeys ? "Back" : "    ");
+    buffer.append(_unlockStatus.keyHotelFrontKey ? "Front " : "      ");
+    buffer.append(_unlockStatus.keyHotelBackKey ? "Back" : "    ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     buffer.clear();
     buffer.append("     :  ");
-    buffer.append(!_unlockStatus.keyHotelFrontKeys ? "Front|" : "     |");
-    buffer.append(!_unlockStatus.keyHotelBackKeys ? "Back" : "    ");
+    buffer.append(!_unlockStatus.keyHotelFrontKey ? "Front|" : "     |");
+    buffer.append(!_unlockStatus.keyHotelBackKey ? "Back" : "    ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
     displayOffset++;
     buffer.clear();
     buffer.append("Station ");
-    buffer.append(_unlockStatus.keyStationFrontKeys ? "Front " : "      ");
-    buffer.append(_unlockStatus.keyStationBackKeys ? "Back" : "    ");
+    buffer.append(_unlockStatus.keyStationFrontKey ? "Front " : "      ");
+    buffer.append(_unlockStatus.keyStationBackKey ? "Back" : "    ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     buffer.clear();
     buffer.append("       :");
-    buffer.append(!_unlockStatus.keyStationFrontKeys ? "Front|" : "     |");
-    buffer.append(!_unlockStatus.keyStationBackKeys ? "Back" : "    ");
+    buffer.append(!_unlockStatus.keyStationFrontKey ? "Front|" : "     |");
+    buffer.append(!_unlockStatus.keyStationBackKey ? "Back" : "    ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 

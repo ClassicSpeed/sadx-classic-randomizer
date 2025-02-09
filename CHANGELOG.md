@@ -80,6 +80,7 @@ All notable changes to this project will be documented in this file.
 - Added skip from SSMain to TP Lobby for Sonic.
 - Added skip from TP Lobby to SSMain for Big and Gamma.
 - Added skip from MRMain to AngelIsland (and back) for Tails and Knuckles.
+- Added alternative requirement from Hotel to Casino for Tails (with hotel front key).
 
 ## [v1.0.1] - 2025-01-17
 

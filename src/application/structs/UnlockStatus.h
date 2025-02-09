@@ -41,10 +41,10 @@ struct UnlockStatus
     bool keyTrain;
     bool keyBoat;
     bool keyRaft;
-    bool keyStationFrontKeys;
-    bool keyStationBackKeys;
-    bool keyHotelFrontKeys;
-    bool keyHotelBackKeys;
+    bool keyStationFrontKey;
+    bool keyStationBackKey;
+    bool keyHotelFrontKey;
+    bool keyHotelBackKey;
     bool keyTwinkleParkTicket;
     bool keyEmployeeCard;
     bool keyDynamite;

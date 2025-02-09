@@ -62,8 +62,8 @@ ItemRepository::ItemRepository()
                                       FLAG_AMY_RAFT, FLAG_E102_RAFT, FLAG_BIG_RAFT
                                   }, "Raft")
         },
-        {83, ItemData::KeyItem({}, "Hotel Front Keys")},
-        {84, ItemData::KeyItem({}, "Hotel Back Keys")},
+        {83, ItemData::KeyItem({}, "Hotel Front Key")},
+        {84, ItemData::KeyItem({}, "Hotel Back Key")},
         {
             85, ItemData::KeyItem({
                                       FLAG_SONIC_SS_TPARK_ELEVATOR,
@@ -103,8 +103,8 @@ ItemRepository::ItemRepository()
 
 
         {120, ItemData::KeyItem({}, "Wind Stone")},
-        {121, ItemData::KeyItem({}, "Station Front Keys")},
-        {122, ItemData::KeyItem({}, "Station Back Keys")},
+        {121, ItemData::KeyItem({}, "Station Front Key")},
+        {122, ItemData::KeyItem({}, "Station Back Key")},
         {
             123, ItemData::KeyItem({
                                        FLAG_SONIC_EC_EGGLIFT, FLAG_MILES_EC_EGGLIFT, FLAG_KNUCKLES_EC_EGGLIFT,
@@ -205,16 +205,16 @@ UnlockStatus ItemRepository::GetUnlockStatus()
     unlockStatus.keyTrain = _itemData[80].obtained;
     unlockStatus.keyBoat = _itemData[81].obtained;
     unlockStatus.keyRaft = _itemData[82].obtained;
-    unlockStatus.keyHotelFrontKeys = _itemData[83].obtained;
-    unlockStatus.keyHotelBackKeys = _itemData[84].obtained;
+    unlockStatus.keyHotelFrontKey = _itemData[83].obtained;
+    unlockStatus.keyHotelBackKey = _itemData[84].obtained;
     unlockStatus.keyTwinkleParkTicket = _itemData[85].obtained;
     unlockStatus.keyEmployeeCard = _itemData[86].obtained;
     unlockStatus.keyIceStone = _itemData[87].obtained;
     unlockStatus.keyWindStone = _itemData[120].obtained;
     unlockStatus.keyDynamite = _itemData[88].obtained;
     unlockStatus.keyJungleCart = _itemData[89].obtained;
-    unlockStatus.keyStationFrontKeys = _itemData[121].obtained;
-    unlockStatus.keyStationBackKeys = _itemData[122].obtained;
+    unlockStatus.keyStationFrontKey = _itemData[121].obtained;
+    unlockStatus.keyStationBackKey = _itemData[122].obtained;
     unlockStatus.keyEgglift = _itemData[123].obtained;
     unlockStatus.keyMonorail = _itemData[124].obtained;
     return unlockStatus;
