@@ -86,6 +86,8 @@ struct Options
 
     bool capsuleSanity = false;
     bool includePinballCapsules = false;
+
+    bool fishSanity = false;
     
     bool sonicCapsuleSanity = true;
     bool tailsCapsuleSanity = true;

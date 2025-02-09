@@ -42,6 +42,9 @@ All notable changes to this project will be documented in this file.
 - The Twinkle Circuit door will be closed when the Twinkle Circuit checks are disabled.
 - The mountain door near the Master Emerald shrine won't be closed anymore.
 - Added a location group for each character's level, for example, "Emerald Coast (Sonic)".
+- Added Fish-sanity.
+    - You can toggle an indicator (and its colors) for fish in the mod settings.
+- Added location group Fish and fish are included in the character's level specific group.
 
 ### Fixed
 

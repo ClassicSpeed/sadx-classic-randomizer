@@ -1085,6 +1085,13 @@ void Randomizer::OnEnemySanitySet(const bool enemySanity)
     _displayManager.UpdateOptions(_options);
 }
 
+void Randomizer::OnFishSanitySet(const bool fishSanity)
+{
+    _options.fishSanity = fishSanity;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
 void Randomizer::SetCharacterEnemySanity(const Characters character, const bool characterEnemySanity)
 {
     _options.SetCharacterEnemySanity(character, characterEnemySanity);

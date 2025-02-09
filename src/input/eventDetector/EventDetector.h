@@ -40,6 +40,13 @@ constexpr int ENEMY_INVALID_ID = -1;
 constexpr int ENEMY_SEARCHING_ID = -2;
 
 
+enum IndicatorType
+{
+    EnemyIndicator,
+    CapsuleIndicator,
+    FishIndicator,
+}; 
+
 class EventDetector
 {
 public:
@@ -53,6 +60,7 @@ public:
                            bool trackerArrowShowDistance, bool trackerArrowOverrideColor,
                            bool enemyIndicator, int enemyIndicatorColor,
                            bool capsuleIndicator, int capsuleIndicatorColor,
+                           bool fishIndicator, int fishIndicatorColor,
                            bool progressionIndicator, int progressionIndicatorColor);
     void OnTwinkleCircuitCompleted(int character);
     LastStoryState lastStoryState = LastStoryNotStarted;
@@ -70,6 +78,7 @@ public:
     bool trackerArrowShowDistance = true;
     bool enemyIndicator = true;
     bool capsuleIndicator = true;
+    bool fishIndicator = true;
     bool progressionIndicator = true;
 
 
@@ -89,6 +98,11 @@ public:
         {0xFFFF1400},
     };
     NJS_COLOR capsuleIndicatorColor[3] = {
+        {0xFFFF1400},
+        {0xFFFF1400},
+        {0xFFFF1400},
+    };
+    NJS_COLOR fishIndicatorColor[3] = {
         {0xFFFF1400},
         {0xFFFF1400},
         {0xFFFF1400},

@@ -229,6 +229,12 @@ void LoadGameSettings(const IniFile* settingsIni)
     const int capsuleIndicatorG = settingsIni->getInt("Sanity", "CapsuleIndicatorG", 255);
     const int capsuleIndicatorB = settingsIni->getInt("Sanity", "CapsuleIndicatorB", 0);
     const int capsuleIndicatorColor = 0xFF << 24 | capsuleIndicatorR << 16 | capsuleIndicatorG << 8 | capsuleIndicatorB;
+    
+    const bool fishIndicator = settingsIni->getBool("Sanity", "FishIndicator", true);
+    const int fishIndicatorR = settingsIni->getInt("Sanity", "FishIndicatorR", 0);
+    const int fishIndicatorG = settingsIni->getInt("Sanity", "FishIndicatorG", 255);
+    const int fishIndicatorB = settingsIni->getInt("Sanity", "FishIndicatorB", 255);
+    const int fishIndicatorColor = 0xFF << 24 | fishIndicatorR << 16 | fishIndicatorG << 8 | fishIndicatorB;
 
     const bool progressionIndicator = settingsIni->getBool("Sanity", "ProgressionItemIndicator", true);
     const int progressionIndicatorR = settingsIni->getInt("Sanity", "ProgressionIndicatorR", 212);
@@ -245,6 +251,7 @@ void LoadGameSettings(const IniFile* settingsIni)
                                     trackerArrowShowDistance, trackerArrowOverrideColor,
                                     enemyIndicator, enemyIndicatorColor,
                                     capsuleIndicator, capsuleIndicatorColor,
+                                    fishIndicator, fishIndicatorColor,
                                     progressionIndicator, progressionIndicatorColor);
     worldStateManager.SetShowEntranceIndicators(showEntranceIndicators);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);

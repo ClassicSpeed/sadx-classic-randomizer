@@ -442,9 +442,12 @@ void EventDetector::OnPlayingFrame() const
                 if (closestLocation->type == LocationEnemy)
                     for (int i = 0; i < 6; ++i)
                         eventDetectorPtr->arrowColor[i] = enemyIndicatorColor[0];
-                else
+                else if (closestLocation->type == LocationCapsule)
                     for (int i = 0; i < 6; ++i)
                         eventDetectorPtr->arrowColor[i] = capsuleIndicatorColor[0];
+                else
+                    for (int i = 0; i < 6; ++i)
+                        eventDetectorPtr->arrowColor[i] = fishIndicatorColor[0];
 
             if (trackerArrowShowDistance)
             {
@@ -512,6 +515,7 @@ void EventDetector::SetSanitySettings(const bool trackerArrow, const int tracker
                                       const bool trackerArrowShowDistance, const bool trackerArrowOverrideColor,
                                       const bool enemyIndicator, const int enemyIndicatorColor,
                                       const bool capsuleIndicator, const int capsuleIndicatorColor,
+                                      const bool fishIndicator, const int fishIndicatorColor,
                                       const bool progressionIndicator, const int progressionIndicatorColor)
 {
     this->trackerArrow = trackerArrow;
@@ -534,11 +538,17 @@ void EventDetector::SetSanitySettings(const bool trackerArrow, const int tracker
     this->capsuleIndicatorColor[0].color = capsuleIndicatorColor;
     this->capsuleIndicatorColor[1].color = capsuleIndicatorColor;
     this->capsuleIndicatorColor[2].color = capsuleIndicatorColor;
+    
+    this->fishIndicator = fishIndicator;
+    this->fishIndicatorColor[0].color = fishIndicatorColor;
+    this->fishIndicatorColor[1].color = fishIndicatorColor;
+    this->fishIndicatorColor[2].color = fishIndicatorColor;
 
     this->progressionIndicator = progressionIndicator;
     this->progressionItemIndicatorColor[0].color = progressionIndicatorColor;
     this->progressionItemIndicatorColor[1].color = progressionIndicatorColor;
     this->progressionItemIndicatorColor[2].color = progressionIndicatorColor;
+    
 }
 
 
@@ -796,7 +806,8 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
     return ENEMY_INVALID_ID;
 }
 
-void DrawIndicator(const task* tp, const bool tallElement, const bool checked, const bool enemy, const int locationId)
+void DrawIndicator(const task* tp, const bool tallElement, const bool checked, const IndicatorType indicatorType,
+                   const int locationId)
 {
     if (!cameraready)
         return;
@@ -806,14 +817,23 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
 
 
     if (!checked)
-        eventDetectorPtr->possibleChecks.push_back({
-            tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z, enemy ? LocationEnemy : LocationCapsule
-        });
+    {
+        LocationType locationType;
+        if (indicatorType == EnemyIndicator)
+            locationType = LocationEnemy;
+        else if (indicatorType == CapsuleIndicator)
+            locationType = LocationCapsule;
+        else
+            locationType = LocationFish;
+        eventDetectorPtr->possibleChecks.push_back({tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z, locationType});
+    }
 
 
-    if (enemy && !eventDetectorPtr->enemyIndicator)
+    if (indicatorType == EnemyIndicator && !eventDetectorPtr->enemyIndicator)
         return;
-    if (!enemy && !eventDetectorPtr->capsuleIndicator)
+    if (indicatorType == CapsuleIndicator && !eventDetectorPtr->capsuleIndicator)
+        return;
+    if (indicatorType == FishIndicator && !eventDetectorPtr->capsuleIndicator)
         return;
 
     const EntityData1* player = EntityData1Ptrs[0];
@@ -834,7 +854,7 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     int verticalOffset = INDICATOR_HEIGHT + EXTRA_INDICATOR_HEIGHT * extraPercentage;
     const float arrowSize = HEIGHT_SIZE + EXTRA_HEIGHT_SIZE * extraPercentage;
     if (tallElement)
-        if(enemy)
+        if (indicatorType == EnemyIndicator)
             verticalOffset += 25;
         else
             verticalOffset += 15;
@@ -878,10 +898,12 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
         if (eventDetectorPtr->progressionIndicator && eventDetectorPtr->randomizer.GetOptions().
                                                                         LocationHasProgressiveItem(locationId))
             point3Col.col = eventDetectorPtr->progressionItemIndicatorColor;
-        else if (enemy)
+        else if (indicatorType == EnemyIndicator)
             point3Col.col = eventDetectorPtr->enemyIndicatorColor;
-        else
+        else if (indicatorType == CapsuleIndicator)
             point3Col.col = eventDetectorPtr->capsuleIndicatorColor;
+        else 
+            point3Col.col = eventDetectorPtr->fishIndicatorColor;
     else
         point3Col.col = eventDetectorPtr->disabledIndicatorColor;
 
@@ -929,7 +951,7 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
             return;
 
         const auto test = eventDetectorPtr->checkData.find(locationId);
-        DrawIndicator(tp, false, test->second.checked, false, test->first);
+        DrawIndicator(tp, false, test->second.checked, CapsuleIndicator, test->first);
     }
 });
 
@@ -950,7 +972,7 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
     if (locationId > 0)
     {
         const auto test = eventDetectorPtr->checkData.find(locationId);
-        DrawIndicator(tp, true, test->second.checked, false, test->first);
+        DrawIndicator(tp, true, test->second.checked, CapsuleIndicator, test->first);
     }
 });
 
@@ -989,7 +1011,7 @@ void CheckEnemy(task* tp)
     {
         const auto check = eventDetectorPtr->checkData.find(enemyId);
         const bool isTallEnemy = check->second.enemyType == Buyon;
-        DrawIndicator(tp, isTallEnemy, check->second.checked, true, check->first);
+        DrawIndicator(tp, isTallEnemy, check->second.checked, EnemyIndicator, check->first);
     }
     else if (enemyId != ENEMY_INVALID_ID)
     {
@@ -1072,7 +1094,7 @@ FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
     if (enemyId > ENEMY_STARTING_ID)
     {
         const auto check = eventDetectorPtr->checkData.find(enemyId);
-        DrawIndicator(tp, false, check->second.checked, true, check->first);
+        DrawIndicator(tp, false, check->second.checked, EnemyIndicator, check->first);
     }
     else if (enemyId != ENEMY_INVALID_ID)
     {
@@ -1244,6 +1266,7 @@ void HandleOnBoaBoaPartDestroyed(task* tp)
     CheckDestroyedEnemy(tp);
 }
 
+
 void EventDetector::OnTwinkleCircuitCompleted(const int character)
 {
     if (!eventDetectorPtr->randomizer.GetOptions().twinkleCircuitCheck)
@@ -1286,4 +1309,54 @@ FunctionHook<signed int> onSaveTwinkleCircuitRecord(0x4B5BC0, []()-> signed int
 {
     eventDetectorPtr->OnTwinkleCircuitCompleted(CurrentCharacter);
     return onSaveTwinkleCircuitRecord.Original();
+});
+
+FunctionHook<void, task*> onFishMain(0x597010, [](task* tp)-> void
+{
+    onFishMain.Original(tp);
+    const int fishType = tp->twp->value.w[1];
+
+    for (const auto& check : eventDetectorPtr->checkData)
+    {
+        if (check.second.type != LocationFish)
+            continue;
+
+        if (check.second.level != CurrentLevel)
+            continue;
+
+        if (check.second.fishType == fishType)
+        {
+            DrawIndicator(tp, false, check.second.checked, FishIndicator, check.first);
+            break;
+        }
+    }
+});
+
+
+FunctionHook<void, task*> onFishCaught(0x470160, [](task* tp)-> void
+{
+    onFishCaught.Original(tp);
+    if (!eventDetectorPtr->randomizer.GetOptions().fishSanity)
+        return;
+    
+    const auto* v1 = reinterpret_cast<int*>(tp->twp);
+    const int fishType = v1[2];
+
+    bool checksFound = false;
+    for (const auto& check : eventDetectorPtr->checkData)
+    {
+        if (check.second.type != LocationFish)
+            continue;
+
+        if (check.second.level != CurrentLevel)
+            continue;
+
+        if (check.second.fishType == fishType && !check.second.checked)
+        {
+            eventDetectorPtr->randomizer.OnCheckFound(check.first);
+            checksFound = true;
+        }
+    }
+    if (checksFound)
+        eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
 });

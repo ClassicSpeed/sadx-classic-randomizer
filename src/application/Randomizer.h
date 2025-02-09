@@ -46,6 +46,7 @@ public:
     void SetPlayableCharacter(Characters character, bool playable);
     void SetActionStageMissions(Characters characters, int missions);
     void OnEnemySanitySet(bool enemySanity);
+    void OnFishSanitySet(bool fishSanity);
     void SetCharacterEnemySanity(Characters character, bool characterEnemySanity);
     void OnCapsuleSanitySet(bool capsuleSanity);
     void OnPinballCapsulesSet(bool includePinballCapsules);

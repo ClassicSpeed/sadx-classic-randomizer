@@ -159,7 +159,7 @@
                 </HelpText>
             </Property>
         </Group>
-        <Group name="Sanity" display="Enemy/Capsule-Sanity">
+        <Group name="Sanity" display="Enemy/Capsule/Fish-Sanity">
 
             <Property name="TrackerArrow" type="bool" defaultvalue="True"
                       display="Tracker Arrow">
@@ -222,6 +222,23 @@
             <Property name="CapsuleIndicatorB" type="int" defaultvalue="0" minvalue="0" maxvalue="255"
                       display="Capsule Indicator Color Blue">
                 <HelpText>Blue value of the color for the capsule indicator.</HelpText>
+            </Property>
+
+            <Property name="FishIndicator" type="bool" defaultvalue="True"
+                      display="Fish Indicator">
+                <HelpText>Show an indicator over the fish to help track them.</HelpText>
+            </Property>
+            <Property name="FishIndicatorR" type="int" defaultvalue="0" minvalue="0" maxvalue="255"
+                      display="Fish Indicator Color Red">
+                <HelpText>Red value of the color for the fish indicator.</HelpText>
+            </Property>
+            <Property name="FishIndicatorG" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Fish Indicator Color Green">
+                <HelpText>Green value of the color for the fish indicator.</HelpText>
+            </Property>
+            <Property name="FishIndicatorB" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Fish Indicator Color Blue">
+                <HelpText>Blue value of the color for the fish indicator.</HelpText>
             </Property>
 
             <Property name="ProgressionItemIndicator" type="bool" defaultvalue="True"

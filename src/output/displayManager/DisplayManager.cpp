@@ -387,9 +387,9 @@ void DisplayManager::DisplayItemsUnlocked()
     const int rows = VerticalResolution / this->_debugFontSize;
     const int columns = HorizontalResolution / this->_debugFontSize;
     const std::string modVersionString = "v" + std::to_string(SADX_AP_VERSION_MAJOR) + "." +
-           std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH);
+        std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH);
     DisplayDebugString(NJM_LOCATION(columns-7, rows-2), modVersionString.c_str());
-    
+
     SetDebugFontColor(this->_displayEmblemColor);
     std::string buffer;
 
@@ -677,6 +677,36 @@ void DisplayManager::DisplayItemsUnlocked()
                 DisplayDebugString(
                     NJM_LOCATION(2, this->_startLine + this->_displayCount + displayOffset), buffer.c_str());
             }
+        }
+
+        if (_options.fishSanity)
+        {
+            buffer.clear();
+            buffer.append("Fish:     ");
+            int fishCount = 0;
+            int fishTotal = 0;
+
+            for (const auto& check : _checkData)
+            {
+                if (CurrentCharacter == Characters_Big && check.second.type == LocationFish
+                    && check.second.level == CurrentLevel)
+                {
+                    fishTotal++;
+                    if (check.second.checked)
+                        fishCount++;
+                }
+            }
+
+            buffer.append(std::to_string(fishCount) + "/" + std::to_string(fishTotal));
+
+            if (fishTotal > 0)
+            {
+                displayOffset++;
+                SetDebugFontColor(currentColor);
+                DisplayDebugString(
+                    NJM_LOCATION(2, this->_startLine + this->_displayCount + displayOffset), buffer.c_str());
+            }
+            
         }
     }
 
@@ -999,7 +1029,7 @@ void DisplayManager::DisplayItemsUnlocked()
     displayOffset++;
     buffer.clear();
     buffer.append("Hotel   ");
-    buffer.append(_unlockStatus.keyHotelFrontKeys? "Front " : "      ");
+    buffer.append(_unlockStatus.keyHotelFrontKeys ? "Front " : "      ");
     buffer.append(_unlockStatus.keyHotelBackKeys ? "Back" : "    ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1009,11 +1039,11 @@ void DisplayManager::DisplayItemsUnlocked()
     buffer.append(!_unlockStatus.keyHotelBackKeys ? "Back" : "    ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
-    
+
     displayOffset++;
     buffer.clear();
     buffer.append("Station ");
-    buffer.append(_unlockStatus.keyStationFrontKeys? "Front " : "      ");
+    buffer.append(_unlockStatus.keyStationFrontKeys ? "Front " : "      ");
     buffer.append(_unlockStatus.keyStationBackKeys ? "Back" : "    ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1065,7 +1095,7 @@ void DisplayManager::DisplayItemsUnlocked()
     buffer.append(!_unlockStatus.keyJungleCart ? "Jungle Cart" : "           ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
-    
+
     displayOffset++;
     buffer.clear();
     buffer.append("EC  ");

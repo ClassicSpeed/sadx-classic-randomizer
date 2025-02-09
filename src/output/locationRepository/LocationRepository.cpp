@@ -264,6 +264,31 @@ LocationRepository::LocationRepository()
         {908, LocationData::ChaoRaceLocation(109, "Ruby Course")},
         {909, LocationData::ChaoRaceLocation(110, "Emerald Course")},
 
+
+        {950, LocationData::FishLocation(LevelIDs_TwinklePark, LargemouthBass)},
+        {951, LocationData::FishLocation(LevelIDs_TwinklePark, Piranha)},
+        {952, LocationData::FishLocation(LevelIDs_TwinklePark, MechaFish)},
+        {953, LocationData::FishLocation(LevelIDs_EmeraldCoast, Hammerhead)},
+        {954, LocationData::FishLocation(LevelIDs_EmeraldCoast, StripedBeakfish)},
+        {955, LocationData::FishLocation(LevelIDs_EmeraldCoast, MechaFish)},
+        {956, LocationData::FishLocation(LevelIDs_EmeraldCoast, Shark)},
+        {957, LocationData::FishLocation(LevelIDs_EmeraldCoast, SeaBass)},
+        {958, LocationData::FishLocation(LevelIDs_EmeraldCoast, RedSeaBream)},
+        {959, LocationData::FishLocation(LevelIDs_EmeraldCoast, MorayEel)},
+        {960, LocationData::FishLocation(LevelIDs_EmeraldCoast, BlueMarlin)},
+        {961, LocationData::FishLocation(LevelIDs_IceCap, Hammerhead)},
+        {962, LocationData::FishLocation(LevelIDs_IceCap, MechaFish)},
+        {963, LocationData::FishLocation(LevelIDs_IceCap, LargemouthBass)},
+        {964, LocationData::FishLocation(LevelIDs_IceCap, Salmon)},
+        {965, LocationData::FishLocation(LevelIDs_IceCap, Shark)},
+        {966, LocationData::FishLocation(LevelIDs_IceCap, JapaneseEel)},
+        {967, LocationData::FishLocation(LevelIDs_HotShelter, AnglerFish)},
+        {968, LocationData::FishLocation(LevelIDs_HotShelter, Hammerhead)},
+        {969, LocationData::FishLocation(LevelIDs_HotShelter, Oarfish)},
+        {970, LocationData::FishLocation(LevelIDs_HotShelter, Shark)},
+        {971, LocationData::FishLocation(LevelIDs_HotShelter, Coelacanth)},
+        {972, LocationData::FishLocation(LevelIDs_HotShelter, MorayEel)},
+
     };
 
     _enemies = {
@@ -401,7 +426,7 @@ LocationRepository::LocationRepository()
         {-79.09f, -8.43f, 625.06f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14012},
         {-62.73f, -8.43f, 579.43f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14013}, //DC
         {-2.73f, -8.43f, 703.43f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Sweep, 14013}, //DX
-        
+
         {354.83f, 676.10f, 111.23f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14014}, //DC
         {354.25f, 676.10f, 110.42f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14014}, //DX
         {558.73f, 123.02f, 327.69f, LevelAndActIDs_TwinklePark2, Characters_Sonic, Kiki, 14015},

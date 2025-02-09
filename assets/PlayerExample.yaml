@@ -228,6 +228,9 @@ Sonic Adventure DX:
   # If capsule-sanity is on, the randomizer will include 5, 10 and ? capsules (441 Locations).
   ring_capsule_sanity: 'true'
   
+  # Determines whether catching every type of fish grants checks (23 Locations).
+  fish_sanity: 'false'
+  
   # Junk Options
   
   # Replace a percentage of non-required emblems in the item pool with random junk items.
