@@ -472,14 +472,14 @@ void EventDetector::OnLevelEmblem(const int character, const int level, const in
         if (check.second.type == LocationLevel && !check.second.checked
             && check.second.character == character
             && check.second.level == level
-            && check.second.mission == mission)
+            && check.second.levelMission == mission)
         {
             randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
         if (check.second.type == LocationSubLevel && !check.second.checked
             && check.second.level == level
-            && check.second.mission == mission)
+            && check.second.levelMission == mission)
         {
             randomizer.OnCheckFound(check.first);
             checksFound = true;

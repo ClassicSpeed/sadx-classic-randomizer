@@ -45,6 +45,7 @@ All notable changes to this project will be documented in this file.
 - Added Fish-sanity.
     - You can toggle an indicator (and its colors) for fish in the mod settings.
 - Added location group Fish and fish are included in the character's level specific group.
+- When creating a new safe file for an existing slot, the completed missions will be marked as completed.
 
 ### Fixed
 

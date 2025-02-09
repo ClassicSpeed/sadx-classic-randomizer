@@ -6,6 +6,7 @@
 #include "../output/characterManager/CharacterManager.h"
 #include "../output/worldStateManager/WorldStateManager.h"
 #include "../output/archipelagoMessenger/ArchipelagoMessenger.h"
+#include "../output/saveFileManager/SaveFileManager.h"
 #include "structs/LocationData.h"
 #include "structs/Options.h"
 
@@ -14,13 +15,14 @@ class Randomizer
 public:
     Randomizer(DisplayManager& displayManager, CharacterManager& characterManager, WorldStateManager& menuManager,
                ItemRepository& itemRepository, LocationRepository& locationRepository,
-               ArchipelagoMessenger& archipelagoMessenger)
+               ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager)
         : _displayManager(displayManager),
           _characterManager(characterManager),
           _worldStateManager(menuManager),
           _itemRepository(itemRepository),
           _locationRepository(locationRepository),
-          _archipelagoMessenger(archipelagoMessenger), _deathPending(false)
+          _archipelagoMessenger(archipelagoMessenger),
+          _saveFileManager(saveFileManager), _deathPending(false)
 
     {
         _displayManager.UpdateChecks(locationRepository.GetLocations());
@@ -112,6 +114,7 @@ private:
     ItemRepository& _itemRepository;
     LocationRepository& _locationRepository;
     ArchipelagoMessenger& _archipelagoMessenger;
+    SaveFileManager& _saveFileManager;
 
     Options _options;
     std::string _pendingDeathCause;

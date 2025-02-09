@@ -101,7 +101,7 @@ struct LocationData
     LocationData() : eventFlag(static_cast<StoryFlags>(0x00)),
                      character(0),
                      level(0),
-                     mission(0),
+                     levelMission(0),
                      emblemId(0),
                      missionNumber(0),
                      type(LocationUnknown),
@@ -119,7 +119,7 @@ struct LocationData
         : eventFlag(eventFlag),
           character(character),
           level(level),
-          mission(mission),
+          levelMission(mission),
           emblemId(emblemId),
           missionNumber(missionNumber),
           type(type),
@@ -214,7 +214,7 @@ struct LocationData
 
     int character;
     int level;
-    int mission;
+    int levelMission;
 
     int emblemId;
     int missionNumber;

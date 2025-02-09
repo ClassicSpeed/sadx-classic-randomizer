@@ -633,18 +633,6 @@ void WorldStateManager::SetStartingArea()
     }
 }
 
-void WorldStateManager::StartAllMissions()
-{
-    for (int i = 0; i < 60; i++)
-    {
-        if (!(MissionFlags[i] & MissionFlags_Complete))
-        {
-            MissionFlags[i] |= MissionFlags_Found;
-            MissionFlags[i] |= MissionFlags_Started;
-        }
-    }
-    WriteSaveFile();
-}
 
 void WorldStateManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist)
 {

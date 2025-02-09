@@ -51,7 +51,6 @@ public:
     void ShowLevelEntranceArrows();
     void OnFrame();
     void SetStartingArea();
-    void StartAllMissions();
     void MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist);
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
     VisitedLevels GetVisitedLevels(int visitedLevel);

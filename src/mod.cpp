@@ -33,19 +33,20 @@ WorldStateManager worldStateManager = WorldStateManager();
 ItemRepository itemRepository = ItemRepository();
 LocationRepository checkRepository = LocationRepository();
 ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger(INSTANCE_ID, BASE_ID);
+SaveFileManager saveFileManager = SaveFileManager();
 
 Randomizer randomizer = Randomizer(displayManager,
                                    characterManager,
                                    worldStateManager,
                                    itemRepository,
                                    checkRepository,
-                                   archipelagoMessenger);
+                                   archipelagoMessenger,
+                                   saveFileManager);
 
 CheatsManager cheatsManager = CheatsManager(randomizer);
 ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer, INSTANCE_ID, BASE_ID);
 EventDetector eventDetector = EventDetector(randomizer);
 CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(randomizer);
-SaveFileManager saveFileManager = SaveFileManager();
 
 
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
@@ -229,7 +230,7 @@ void LoadGameSettings(const IniFile* settingsIni)
     const int capsuleIndicatorG = settingsIni->getInt("Sanity", "CapsuleIndicatorG", 255);
     const int capsuleIndicatorB = settingsIni->getInt("Sanity", "CapsuleIndicatorB", 0);
     const int capsuleIndicatorColor = 0xFF << 24 | capsuleIndicatorR << 16 | capsuleIndicatorG << 8 | capsuleIndicatorB;
-    
+
     const bool fishIndicator = settingsIni->getBool("Sanity", "FishIndicator", true);
     const int fishIndicatorR = settingsIni->getInt("Sanity", "FishIndicatorR", 0);
     const int fishIndicatorG = settingsIni->getInt("Sanity", "FishIndicatorG", 255);

@@ -20,7 +20,7 @@ void Randomizer::OnCheckFound(const int checkId) const
 
     _displayManager.UpdateChecks(_locationRepository.GetLocations());
     _worldStateManager.UpdateChecks(_locationRepository.GetLocations());
-    if (check.type == LocationLevel && check.mission == MISSION_C && _options.goalRequiresLevels)
+    if (check.type == LocationLevel && check.levelMission == MISSION_C && _options.goalRequiresLevels)
     {
         const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
         _displayManager.UpdateLevelStatus(levelStatus);
@@ -60,7 +60,10 @@ void Randomizer::OnCheckFound(const int checkId) const
 
 void Randomizer::MarkCheckedLocation(const int64_t checkId) const
 {
-    _locationRepository.SetLocationChecked(checkId);
+    LocationData locationData = _locationRepository.SetLocationChecked(checkId);
+    if(locationData.type == LocationMission)
+        _saveFileManager.SetMissionCompleted(locationData.missionNumber);
+    
     const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
     _displayManager.UpdateLevelStatus(levelStatus);
     const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
@@ -660,7 +663,7 @@ void Randomizer::SetMissionMode(const int missionModeEnabled)
 void Randomizer::SetAutoStartMissions(const int autoStartMissions)
 {
     if (autoStartMissions)
-        _worldStateManager.StartAllMissions();
+        _saveFileManager.StartAllMissions();
 }
 
 void Randomizer::OnCheckVersion(int serverVersion)
