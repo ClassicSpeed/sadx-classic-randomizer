@@ -7,9 +7,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Chat messages are now shown in the bottom left corner of the screen.
-    - You can change the color, and disable some types of messages in the mod settings.
+    - You can change the color and disable some types of messages in the mod settings.
 - Subtitles will be shown when characters comment on items/traps.
-    - You can disable this on the mod settings.
+    - You can disable this in the mod settings.
 - Mod version is now shown in the bottom right corner when pausing.
 - Game Gear unlock messages are no longer shown.
 - Replaced Casino District Keys with Hotel Back Key and Station Back Key.
@@ -21,7 +21,7 @@ All notable changes to this project will be documented in this file.
 - You no longer need the YAML in the players folder to use Universal Tracker.
 - Added a version check (between the installed apworld and the one used to generate) when using Universal Tracker.
 - Added an option to extend Ring Capacity to 5 digits. This mod setting is disabled by default.
-- Separated Ring Link and Hard Ring link packets. Perfect Chaos/end of the level updates are treated as "hard" updates.
+- Separated Ring Link and Hard Ring Link packets. Perfect Chaos/end of the level updates are treated as "hard" updates.
     - This means that only players with Hard Ring Link enabled will be affected by the Hard Ring Link updates.
 - Added an extra option for Ring Link Override in the mod settings for Hard Ring Link.
 - Added indicator for level entrances. This can be disabled in the mod settings.
@@ -32,7 +32,7 @@ All notable changes to this project will be documented in this file.
     - Big no longer uses Knuckles' entrance for Speed Highway.
     - Gamma no longer uses Knuckles' entrance for Lost World.
         - Mission 51 card was moved to the side of the snake head to make it accessible even when the door is open.
-    - Tails, Knuckles and Big no longer use Gamma's entrance for Final Egg.
+    - Tails, Knuckles, and Big no longer use Gamma's entrance for Final Egg.
         - Solving the door puzzle with any character will save the solved state.
     - Amy and Gamma no longer use Sonic's entrance for Sky Deck.
 - Everyone can transform the Egg Carrier now.
@@ -44,21 +44,21 @@ All notable changes to this project will be documented in this file.
 - Added a location group for each character's level, for example, "Emerald Coast (Sonic)".
 - Added Fish-sanity.
     - You can toggle an indicator (and its colors) for fish in the mod settings.
-- Added location group Fish and fish are included in the character's level specific group.
-- When creating a new safe file for an existing slot, the completed missions will be marked as completed.
+- Added location group Fish and fish are included in the character's level-specific group.
+- When creating a new save file for an existing slot, the completed missions will be marked as completed.
 - Start inventory items are now removed from the item pool.
 - Added option to select starting character.
 
 ### Fixed
 
-- Fixed incorrect lines playing when getting a trap as Amy
-- Some enemies with Progression items where not marked correctly when the item was also Useful or other type.
-- Emblem are now Progression Skip Balancing to prevent them from clogging up the balancing process.
+- Fixed incorrect lines playing when getting a trap as Amy.
+- Some enemies with Progression items were not marked correctly when the item was also Useful or other type.
+- Emblems are now Progression Skip Balancing to prevent them from clogging up the balancing process.
 - Changed how the enemy tracking works, this should fix problems with tracking and random checks being sent.
 - The indicator for Buyon is drawn higher to prevent it from being hidden inside the model.
 - Updated wording for the emblem goal setting to be more clear and changed its max value to 90%.
 - Removed 6th enemy from logic for Sonic's Ice Cap since it was DC only.
-- The tracker is no longer show on the mission screen.
+- The tracker is no longer shown on the mission screen.
 
 ### Removed
 
@@ -70,11 +70,11 @@ All notable changes to this project will be documented in this file.
 #### Hard
 
 - Sand Hill entrance is no longer in logic for Sonic (only in expert).
-- All Gamma's Windy Valley's level missions, enemies and capsules are now in logic without the Jet Booster.
+- All Gamma's Windy Valley level missions, enemies, and capsules are now in logic without the Jet Booster.
 
 #### Expert (DC)
 
-- Added skip from Hotel to SSMain for Sonic, Tails, Knuckles, Amy and Gamma.
+- Added skip from Hotel to SSMain for Sonic, Tails, Knuckles, Amy, and Gamma.
 - Added skip from SSMain to Station for Tails.
 - Added skip from MRMain to AngelIsland (and back) for Tails and Knuckles.
 
