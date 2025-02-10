@@ -47,6 +47,7 @@ All notable changes to this project will be documented in this file.
 - Added location group Fish and fish are included in the character's level specific group.
 - When creating a new safe file for an existing slot, the completed missions will be marked as completed.
 - Start inventory items are now removed from the item pool.
+- Added option to select starting character.
 
 ### Fixed
 

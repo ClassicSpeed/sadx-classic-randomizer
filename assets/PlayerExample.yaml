@@ -58,6 +58,10 @@ Sonic Adventure DX:
   # Expert DC Logic (2): The most unforgiving logic, some checks require performing out-of-bounds jumps (DC conversion).
   # Expert DX Logic (3): The most unforgiving logic, some checks require performing out-of-bounds jumps (vanilla DX).
   logic_level: 0
+  
+  # Select which the character you will start with.
+  # Choose between Random (0), Sonic (1), Tails (2), Knuckles (3), Amy (4), Big (5), and Gamma (6).
+  starting_character: 0
   # Randomize starting location. If false, you will start at Station Square.
   random_starting_location: 'true'
   # If randomize starting location is enabled, each character will start in a random location.
