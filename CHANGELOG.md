@@ -47,7 +47,7 @@ All notable changes to this project will be documented in this file.
 - Added location group Fish and fish are included in the character's level-specific group.
 - When creating a new save file for an existing slot, the completed missions will be marked as completed.
 - Start inventory items are now removed from the item pool.
-- Added option to select starting character.
+- Added option to select the starting character.
 
 ### Fixed
 
@@ -63,7 +63,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 
 - Removed the archipelago image from life capsules.
-- Guaranteed level option.
+- Removed the Guaranteed level option (and the generation will no longer grant any extra items).
 
 ### Logic
 
