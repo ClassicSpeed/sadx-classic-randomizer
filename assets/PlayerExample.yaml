@@ -66,8 +66,6 @@ Sonic Adventure DX:
   random_starting_location: 'true'
   # If randomize starting location is enabled, each character will start in a random location.
   random_starting_location_per_character: 'true'
-  # Ensures access to a level from the start, even if it means giving you an item.
-  guaranteed_level: 'false'
   # Ensures at least this many checks in your starting location if possible.
   guaranteed_starting_checks: 2
   # Randomizes the entrances to action stages.

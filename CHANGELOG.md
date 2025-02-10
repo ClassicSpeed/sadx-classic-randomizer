@@ -60,9 +60,10 @@ All notable changes to this project will be documented in this file.
 - Removed 6th enemy from logic for Sonic's Ice Cap since it was DC only.
 - The tracker is no longer show on the mission screen.
 
-### Changed
+### Removed
 
 - Removed the archipelago image from life capsules.
+- Guaranteed level option.
 
 ### Logic
 
