@@ -41,9 +41,19 @@ FunctionHook<SEQ_SECTIONTBL*, int> storySelectedHook(0x44EAF0, [](int playerno)-
     return ptr;
 });
 
-void DisplayManager::QueueMessage(const std::string& message)
+void DisplayManager::QueueItemMessage(const std::string& message)
 {
-    _messagesQueue.push(message);
+    _itemMessagesQueue.push(message);
+}
+
+void DisplayManager::QueueChatMessage(const std::string& message)
+{
+    if (_chatMessagesQueue.size() >= this->_chatDisplayCount)
+    {
+        _chatMessagesQueue.erase(_chatMessagesQueue.begin());
+    }
+    _chatMessagesQueue.push_back(message);
+    _lastMessageTime = std::clock();
 }
 
 void DisplayManager::UpdateUnlockStatus(const UnlockStatus unlockStatus)
@@ -89,7 +99,8 @@ void DisplayManager::OnFrame()
 
     AddNewMessages();
 
-    DisplayMessages();
+    DisplayItemMessages();
+    DisplayChatMessages();
 
     DisplayGoalStatus();
     DisplayItemsUnlocked();
@@ -121,14 +132,14 @@ void DisplayManager::RemoveExpiredMessages()
 
 void DisplayManager::AddNewMessages()
 {
-    while (!_messagesQueue.empty() && _currentMessages.size() < this->_displayCount)
+    while (!_itemMessagesQueue.empty() && _currentMessages.size() < this->_displayCount)
     {
-        _currentMessages.emplace_front(_messagesQueue.front());
-        _messagesQueue.pop();
+        _currentMessages.emplace_front(_itemMessagesQueue.front());
+        _itemMessagesQueue.pop();
     }
 }
 
-void DisplayManager::DisplayMessages() const
+void DisplayManager::DisplayItemMessages() const
 {
     for (size_t i = 0; i < this->_currentMessages.size(); i++)
     {
@@ -150,6 +161,58 @@ void DisplayManager::DisplayMessages() const
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + i), _currentMessages[i].message.c_str());
     }
 }
+
+void DisplayManager::DisplayChatMessages()
+{
+    if (_lastMessageTime < 0)
+        return;
+
+    const double timePassed = (std::clock() - this->_lastMessageTime) / static_cast<double>(CLOCKS_PER_SEC);
+    const double timeRemaining = _displayDuration - timePassed;
+    int alpha = 255;
+    if (timeRemaining < 1)
+    {
+        alpha = static_cast<int>(timeRemaining * 255);
+        //Fix for alpha value being too low and SADX showing it as solid color
+        if (alpha < 15)
+        {
+            _lastMessageTime = -1;
+            return;
+        }
+        const int fadedColor = _chatMessageColor & 0x00FFFFFF | alpha << 24;
+        SetDebugFontColor(fadedColor);
+    }
+    else
+        SetDebugFontColor(this->_chatMessageColor);
+
+    const int rows = VerticalResolution / this->_debugFontSize;
+    SetDebugFontSize(this->_debugFontSize);
+
+    int longestMessageSize = 0;
+    for (size_t i = 0; i < this->_chatMessagesQueue.size(); ++i)
+    {
+        int linesFromTop = rows - 2 - this->_chatMessagesQueue.size() + i + 1;
+        DisplayDebugString(NJM_LOCATION(2, linesFromTop), _chatMessagesQueue[i].c_str());
+        if (longestMessageSize < _chatMessagesQueue[i].size())
+            longestMessageSize = _chatMessagesQueue[i].size();
+    }
+
+    njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+
+    int linesFromTop = rows - 1 - _chatDisplayCount;
+    DrawRect_Queue(1.5f * this->_debugFontSize,
+                   (linesFromTop - 0.5f) * this->_debugFontSize,
+                   (2 + longestMessageSize + 0.5) * this->_debugFontSize,
+                   (linesFromTop + _chatDisplayCount + 0.5) * this->_debugFontSize, 62041.496f,
+                   0x5F0000FF & 0x00FFFFFF | alpha / 3 << 24,
+                   QueuedModelFlagsB_EnableZWrite);
+
+
+    njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+}
+
 
 void DisplayManager::DisplayGoalStatus()
 {
@@ -239,32 +302,79 @@ std::string DisplayManager::GetMissionBTarget(const bool showTarget)
 
 std::string DisplayManager::GetMissionATarget(const bool showTarget)
 {
+    int targetTime;
+
+    switch (CurrentCharacter)
+    {
+    case Characters_Sonic:
+            targetTime = std::get<TIME_A_RANK>(SONIC_TARGET_TIMES.at(CurrentLevel));
+        break;
+    case Characters_Tails:
+            targetTime = std::get<TIME_A_RANK>(TAILS_TARGET_TIMES.at(CurrentLevel));
+        break;
+    case Characters_Knuckles:
+            targetTime = std::get<TIME_A_RANK>(KNUCKLES_TARGET_TIMES.at(CurrentLevel));
+        break;
+    case Characters_Amy:
+            targetTime = std::get<TIME_A_RANK>(AMY_TARGET_TIMES.at(CurrentLevel));
+        break;
+    case Characters_Gamma:
+            targetTime = std::get<TIME_A_RANK>(GAMMA_TARGET_TIMES.at(CurrentLevel));
+        break;
+    case Characters_Big:
+        return showTarget ? " 2000g " : "(     )";
+
+    default: return "";
+    }
+    const int minutes = targetTime / 60 / 60;
+    const int seconds = targetTime / 60 % 60;
+    const std::string formattedTime = " " + std::to_string(minutes) + ":" + (seconds < 10 ? "0" : "") +
+        std::to_string(seconds) + " ";
+
+    if (showTarget)
+        return formattedTime;
+    else
+        return "(" + std::string(formattedTime.length() - 2, ' ') + ")";
+}
+
+std::string DisplayManager::GetMissionSTarget(const bool showTarget, const bool expertMode)
+{
     int targetTime = 0;
 
     switch (CurrentCharacter)
     {
     case Characters_Sonic:
-        if (SONIC_TARGET_TIMES.find(CurrentLevel) != SONIC_TARGET_TIMES.end())
-            targetTime = SONIC_TARGET_TIMES.at(CurrentLevel);
+        if (expertMode)
+            targetTime = std::get<TIME_S_RANK_EXPERT>(SONIC_TARGET_TIMES.at(CurrentLevel));
+        else
+            targetTime = std::get<TIME_S_RANK>(SONIC_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Tails:
-        if (TAILS_TARGET_TIMES.find(CurrentLevel) != TAILS_TARGET_TIMES.end())
-            targetTime = TAILS_TARGET_TIMES.at(CurrentLevel);
+        if (expertMode)
+            targetTime = std::get<TIME_S_RANK_EXPERT>(TAILS_TARGET_TIMES.at(CurrentLevel));
+        else
+            targetTime = std::get<TIME_S_RANK>(TAILS_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Knuckles:
-        if (KNUCKLES_TARGET_TIMES.find(CurrentLevel) != KNUCKLES_TARGET_TIMES.end())
-            targetTime = KNUCKLES_TARGET_TIMES.at(CurrentLevel);
+        if (expertMode)
+            targetTime = std::get<TIME_S_RANK_EXPERT>(KNUCKLES_TARGET_TIMES.at(CurrentLevel));
+        else
+            targetTime = std::get<TIME_S_RANK>(KNUCKLES_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Amy:
-        if (AMY_TARGET_TIMES.find(CurrentLevel) != AMY_TARGET_TIMES.end())
-            targetTime = AMY_TARGET_TIMES.at(CurrentLevel);
+        if (expertMode)
+            targetTime = std::get<TIME_S_RANK_EXPERT>(AMY_TARGET_TIMES.at(CurrentLevel));
+        else
+            targetTime = std::get<TIME_S_RANK>(AMY_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Gamma:
-        if (GAMMA_TARGET_TIMES.find(CurrentLevel) != GAMMA_TARGET_TIMES.end())
-            targetTime = GAMMA_TARGET_TIMES.at(CurrentLevel);
+        if (expertMode)
+            targetTime = std::get<TIME_S_RANK_EXPERT>(GAMMA_TARGET_TIMES.at(CurrentLevel));
+        else
+            targetTime = std::get<TIME_S_RANK>(GAMMA_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Big:
-        return showTarget ? " 2000g " : "(     )";
+        return showTarget ? " 2000g + 5000g " : "(             )";
 
     default: return "";
     }
@@ -297,11 +407,14 @@ void DisplayManager::UpdateChecks(const std::map<int, LocationData>& checkData)
 }
 
 void DisplayManager::SetMessageConfiguration(const float messageDisplayDuration, const int messageFontSize,
-                                             const int messageColor)
+
+                                             const int itemMessageColor,
+                                             const int chatMessageColor)
 {
     this->_displayDuration = messageDisplayDuration;
     this->_debugFontSize = messageFontSize;
-    this->_displayMessageColor = messageColor;
+    this->_displayMessageColor = itemMessageColor;
+    this->_chatMessageColor = chatMessageColor;
 }
 
 void DisplayManager::UpdateVoiceMenuCharacter(const int characterVoiceIndex)
@@ -325,6 +438,9 @@ void DisplayManager::DisplayItemsUnlocked()
     //Show Items Unlock on Pause menu or Character select screen
     if (!(GameState == MD_GAME_PAUSE || (GameMode == GameModes_Menu && this->_inCharacterSelectScreen)))
         return;
+    // We don't show the tracker on the mission screen
+    if (MissionScreenState > 0)
+        return;
 
     if (this->_inCharacterSelectScreen)
     {
@@ -333,7 +449,16 @@ void DisplayManager::DisplayItemsUnlocked()
         if (timePassed < _unlockStatusDelay)
             return;
     }
+
     SetDebugFontSize(this->_debugFontSize);
+    SetDebugFontColor(0x88FFFFFF);
+
+    const int rows = VerticalResolution / this->_debugFontSize;
+    const int columns = HorizontalResolution / this->_debugFontSize;
+    const std::string modVersionString = "v" + std::to_string(SADX_AP_VERSION_MAJOR) + "." +
+        std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH);
+    DisplayDebugString(NJM_LOCATION(columns-7, rows-2), modVersionString.c_str());
+
     SetDebugFontColor(this->_displayEmblemColor);
     std::string buffer;
 
@@ -477,6 +602,10 @@ void DisplayManager::DisplayItemsUnlocked()
                 buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
                                   ? " A" + this->GetMissionATarget(true)
                                   : "  " + this->GetMissionATarget(true));
+            if (missionsEnabled > 3)
+                buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
+                                  ? " S" + this->GetMissionSTarget(true, _options.expertMode)
+                                  : "  " + this->GetMissionSTarget(true, _options.expertMode));
 
             DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
@@ -494,6 +623,10 @@ void DisplayManager::DisplayItemsUnlocked()
                 buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
                                   ? "-A" + this->GetMissionATarget(false)
                                   : "- " + this->GetMissionATarget(false));
+            if (missionsEnabled > 3)
+                buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
+                                  ? "-S" + this->GetMissionSTarget(false, _options.expertMode)
+                                  : "- " + this->GetMissionSTarget(false, _options.expertMode));
             buffer.append("]");
 
             SetDebugFontColor(currentColor & 0x00FFFFFF | 0x66000000);
@@ -577,7 +710,7 @@ void DisplayManager::DisplayItemsUnlocked()
                     if (!_options.GetSpecificCapsuleSanity(static_cast<CapsuleType>(check.second.capsuleType)))
                         continue;
 
-                    if(!_options.includePinballCapsules && check.second.level == LevelAndActIDs_Casinopolis3)
+                    if (!_options.includePinballCapsules && check.second.level == LevelAndActIDs_Casinopolis3)
                         continue;
 
                     int act = GET_ACT(check.second.level);
@@ -615,6 +748,35 @@ void DisplayManager::DisplayItemsUnlocked()
                 buffer.append(")");
             }
             if (capsuleTotal > 0)
+            {
+                displayOffset++;
+                SetDebugFontColor(currentColor);
+                DisplayDebugString(
+                    NJM_LOCATION(2, this->_startLine + this->_displayCount + displayOffset), buffer.c_str());
+            }
+        }
+
+        if (_options.fishSanity)
+        {
+            buffer.clear();
+            buffer.append("Fish:     ");
+            int fishCount = 0;
+            int fishTotal = 0;
+
+            for (const auto& check : _checkData)
+            {
+                if (CurrentCharacter == Characters_Big && check.second.type == LocationFish
+                    && check.second.level == CurrentLevel)
+                {
+                    fishTotal++;
+                    if (check.second.checked)
+                        fishCount++;
+                }
+            }
+
+            buffer.append(std::to_string(fishCount) + "/" + std::to_string(fishTotal));
+
+            if (fishTotal > 0)
             {
                 displayOffset++;
                 SetDebugFontColor(currentColor);
@@ -942,17 +1104,29 @@ void DisplayManager::DisplayItemsUnlocked()
 
     displayOffset++;
     buffer.clear();
-    buffer.append("Keys  ");
-    buffer.append(_unlockStatus.keyStationKeys ? "Station " : "        ");
-    buffer.append(_unlockStatus.keyHotelKeys ? "Hotel " : "      ");
-    buffer.append(_unlockStatus.keyCasinoKeys ? "Casino" : "      ");
+    buffer.append("Hotel   ");
+    buffer.append(_unlockStatus.keyHotelFrontKey ? "Front " : "      ");
+    buffer.append(_unlockStatus.keyHotelBackKey ? "Back" : "    ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     buffer.clear();
-    buffer.append("    : ");
-    buffer.append(!_unlockStatus.keyStationKeys ? "Station|" : "       |");
-    buffer.append(!_unlockStatus.keyHotelKeys ? "Hotel|" : "     |");
-    buffer.append(!_unlockStatus.keyCasinoKeys ? "Casino" : "      ");
+    buffer.append("     :  ");
+    buffer.append(!_unlockStatus.keyHotelFrontKey ? "Front|" : "     |");
+    buffer.append(!_unlockStatus.keyHotelBackKey ? "Back" : "    ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+    displayOffset++;
+    buffer.clear();
+    buffer.append("Station ");
+    buffer.append(_unlockStatus.keyStationFrontKey ? "Front " : "      ");
+    buffer.append(_unlockStatus.keyStationBackKey ? "Back" : "    ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("       :");
+    buffer.append(!_unlockStatus.keyStationFrontKey ? "Front|" : "     |");
+    buffer.append(!_unlockStatus.keyStationBackKey ? "Back" : "    ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
@@ -988,13 +1162,27 @@ void DisplayManager::DisplayItemsUnlocked()
     buffer.clear();
     buffer.append("MR  ");
     buffer.append(_unlockStatus.keyDynamite ? " Dynamite " : "         ");
-    buffer.append(_unlockStatus.jungleCart ? "Jungle Cart" : "           ");
+    buffer.append(_unlockStatus.keyJungleCart ? "Jungle Cart" : "           ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     buffer.clear();
     buffer.append("  : ");
     buffer.append(!_unlockStatus.keyDynamite ? " Dynamite|" : "        |");
-    buffer.append(!_unlockStatus.jungleCart ? "Jungle Cart" : "           ");
+    buffer.append(!_unlockStatus.keyJungleCart ? "Jungle Cart" : "           ");
+    SetDebugFontColor(disabledKeyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+
+    displayOffset++;
+    buffer.clear();
+    buffer.append("EC  ");
+    buffer.append(_unlockStatus.keyEgglift ? "  Egglift " : "          ");
+    buffer.append(_unlockStatus.keyMonorail ? "Monorail" : "        ");
+    SetDebugFontColor(_keyItemColor);
+    DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
+    buffer.clear();
+    buffer.append("  : ");
+    buffer.append(!_unlockStatus.keyEgglift ? "  Egglift|" : "         |");
+    buffer.append(!_unlockStatus.keyMonorail ? "Monorail" : "        ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     displayOffset++;

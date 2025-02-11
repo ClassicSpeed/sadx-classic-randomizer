@@ -61,25 +61,15 @@ bool ManualMissionACheck(const int character, const int level)
     switch (character)
     {
     case Characters_Sonic:
-        if (SONIC_TARGET_TIMES.find(level) != SONIC_TARGET_TIMES.end())
-            return time <= SONIC_TARGET_TIMES.at(level);
-        break;
+            return time <= std::get<TIME_A_RANK>(SONIC_TARGET_TIMES.at(level));
     case Characters_Tails:
-        if (TAILS_TARGET_TIMES.find(level) != TAILS_TARGET_TIMES.end())
-            return time <= TAILS_TARGET_TIMES.at(level);
-        break;
+            return time <= std::get<TIME_A_RANK>(TAILS_TARGET_TIMES.at(level));
     case Characters_Knuckles:
-        if (KNUCKLES_TARGET_TIMES.find(level) != KNUCKLES_TARGET_TIMES.end())
-            return time <= KNUCKLES_TARGET_TIMES.at(level);
-        break;
+            return time <= std::get<TIME_A_RANK>(KNUCKLES_TARGET_TIMES.at(level));
     case Characters_Amy:
-        if (AMY_TARGET_TIMES.find(level) != AMY_TARGET_TIMES.end())
-            return time <= AMY_TARGET_TIMES.at(level);
-        break;
+            return time <= std::get<TIME_A_RANK>(AMY_TARGET_TIMES.at(level));
     case Characters_Gamma:
-        if (GAMMA_TARGET_TIMES.find(level) != GAMMA_TARGET_TIMES.end())
-            return time > GAMMA_TARGET_TIMES.at(level);
-        break;
+            return time > std::get<TIME_A_RANK>(GAMMA_TARGET_TIMES.at(level));
     case Characters_Big:
         return BigWeightRecord >= 2000;
 
@@ -88,13 +78,41 @@ bool ManualMissionACheck(const int character, const int level)
     return false;
 }
 
+bool ManualMissionSCheck(const int character, const int level, const bool expertMode)
+{
+    const int time = TimeFrames + 60 * (TimeSeconds + 60 * TimeMinutes);
+    switch (character)
+    {
+    case Characters_Sonic:
+        if (expertMode)
+            return time <= std::get<TIME_S_RANK_EXPERT>(SONIC_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_S_RANK>(SONIC_TARGET_TIMES.at(level));
+    case Characters_Tails:
+        if (expertMode)
+            return time <= std::get<TIME_S_RANK_EXPERT>(TAILS_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_S_RANK>(TAILS_TARGET_TIMES.at(level));
+    case Characters_Knuckles:
+        if (expertMode)
+            return time <= std::get<TIME_S_RANK_EXPERT>(KNUCKLES_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_S_RANK>(KNUCKLES_TARGET_TIMES.at(level));
+    case Characters_Amy:
+        if (expertMode)
+            return time <= std::get<TIME_S_RANK_EXPERT>(AMY_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_S_RANK>(AMY_TARGET_TIMES.at(level));
+    case Characters_Gamma:
+        if (expertMode)
+            return time > std::get<TIME_S_RANK_EXPERT>(GAMMA_TARGET_TIMES.at(level));
+        return time > std::get<TIME_S_RANK>(GAMMA_TARGET_TIMES.at(level));
+    case Characters_Big:
+        return BigWeightRecord >= 2000 && Big_Sakana_Weight >= 5000;
+
+    default: return false;
+    }
+    return false;
+}
 
 bool ManualSubLevelMissionACheck(const int level)
 {
-    //You can't fail the Twinkle Circuit mission A 
-    if (level == LevelIDs_TwinkleCircuit)
-        return true;
-
     if (level == LevelIDs_SandHill)
         return Score >= 10000;
 
@@ -132,6 +150,14 @@ bool HandleCheckMissionRequirements(const int mission, const int character, cons
                 eventDetectorPtr->OnLevelEmblem(character, level, MISSION_A);
             }
         }
+        
+        if (ManualMissionSCheck(character, level, eventDetectorPtr->randomizer.GetOptions().expertMode))
+        {
+            SetLevelEmblemCollected(&SaveFile, character, level, MISSION_S);
+            eventDetectorPtr->OnLevelEmblem(character, level, MISSION_S);
+        }
+
+        
     }
     return CheckMissionRequirements_t.Original(mission, character, level);
 }
@@ -147,7 +173,7 @@ FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
         if (!eventDetectorPtr->completeMultipleLevelMissions)
             return;
 
-        if (level >= LevelIDs_TwinkleCircuit && level <= LevelIDs_SandHill)
+        if (level >= LevelIDs_SkyChase1 && level <= LevelIDs_SandHill)
         {
             //sublevel - mission A
             if (mission == SUB_LEVEL_MISSION_B)
@@ -211,11 +237,12 @@ bool EventDetector::IsTargetableCheck(const LocationData& location) const
 }
 
 // Function to calculate the rotated "up" vector based on player rotation
-NJS_VECTOR CalculateArrowPosition(const NJS_VECTOR& playerPosition, const Rotation3& playerRotation, float offset) {
+NJS_VECTOR CalculateArrowPosition(const NJS_VECTOR& playerPosition, const Rotation3& playerRotation, float offset)
+{
     // Assuming playerRotation contains angles in degrees for x, y, z axes
-    float pitch = playerRotation.x * (3.14 / 32768);  // Rotation around X-axis
-    float yaw = playerRotation.y * (3.14 / 32768);     // Rotation around Y-axis
-    float roll = playerRotation.z * (3.14 / 32768); ;   // Rotation around Z-axis
+    float pitch = playerRotation.x * (3.14 / 32768); // Rotation around X-axis
+    float yaw = playerRotation.y * (3.14 / 32768); // Rotation around Y-axis
+    float roll = playerRotation.z * (3.14 / 32768);; // Rotation around Z-axis
 
     // Default "up" vector (pointing upwards relative to the player)
     NJS_VECTOR up = {0.0f, 1.0f, 0.0f};
@@ -225,7 +252,7 @@ NJS_VECTOR CalculateArrowPosition(const NJS_VECTOR& playerPosition, const Rotati
     NJS_VECTOR rotatedUp;
     rotatedUp.x = up.x * cos(yaw) - up.z * sin(yaw);
     rotatedUp.z = up.x * sin(yaw) + up.z * cos(yaw);
-    rotatedUp.y = up.y;  // No change in Y for yaw
+    rotatedUp.y = up.y; // No change in Y for yaw
 
     // Apply pitch (rotation around X-axis)
     float tempY = rotatedUp.y;
@@ -279,12 +306,15 @@ void EventDetector::OnPlayingFrame() const
 
         if (!trackerArrow)
             return;
-        
+
+        if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
+            return;
+
         Rotation3 playerRotation = EntityData1Ptrs[0]->Rotation;
         NJS_VECTOR playerPosition = EntityData1Ptrs[0]->Position;
         float offset = CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Big ? 25.0f : 15.0f;
         NJS_VECTOR arrowPosition = CalculateArrowPosition(playerPosition, playerRotation, offset);
-        
+
         float closestDistance = 1000000.0f;
         LocationData* closestLocation = nullptr;
         if (!possibleChecks.empty())
@@ -350,7 +380,6 @@ void EventDetector::OnPlayingFrame() const
             float extraPercentage;
             if (trackerArrowShowDistance)
             {
-                const EntityData1* player = EntityData1Ptrs[0];
                 const double dz = arrowPosition.z - closestLocation->z;
                 const double dy = arrowPosition.y - closestLocation->y;
                 const double dx = arrowPosition.x - closestLocation->x;
@@ -443,9 +472,12 @@ void EventDetector::OnPlayingFrame() const
                 if (closestLocation->type == LocationEnemy)
                     for (int i = 0; i < 6; ++i)
                         eventDetectorPtr->arrowColor[i] = enemyIndicatorColor[0];
-                else
+                else if (closestLocation->type == LocationCapsule)
                     for (int i = 0; i < 6; ++i)
                         eventDetectorPtr->arrowColor[i] = capsuleIndicatorColor[0];
+                else
+                    for (int i = 0; i < 6; ++i)
+                        eventDetectorPtr->arrowColor[i] = fishIndicatorColor[0];
 
             if (trackerArrowShowDistance)
             {
@@ -470,14 +502,14 @@ void EventDetector::OnLevelEmblem(const int character, const int level, const in
         if (check.second.type == LocationLevel && !check.second.checked
             && check.second.character == character
             && check.second.level == level
-            && check.second.mission == mission)
+            && check.second.levelMission == mission)
         {
             randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
         if (check.second.type == LocationSubLevel && !check.second.checked
             && check.second.level == level
-            && check.second.mission == mission)
+            && check.second.levelMission == mission)
         {
             randomizer.OnCheckFound(check.first);
             checksFound = true;
@@ -513,6 +545,7 @@ void EventDetector::SetSanitySettings(const bool trackerArrow, const int tracker
                                       const bool trackerArrowShowDistance, const bool trackerArrowOverrideColor,
                                       const bool enemyIndicator, const int enemyIndicatorColor,
                                       const bool capsuleIndicator, const int capsuleIndicatorColor,
+                                      const bool fishIndicator, const int fishIndicatorColor,
                                       const bool progressionIndicator, const int progressionIndicatorColor)
 {
     this->trackerArrow = trackerArrow;
@@ -535,11 +568,17 @@ void EventDetector::SetSanitySettings(const bool trackerArrow, const int tracker
     this->capsuleIndicatorColor[0].color = capsuleIndicatorColor;
     this->capsuleIndicatorColor[1].color = capsuleIndicatorColor;
     this->capsuleIndicatorColor[2].color = capsuleIndicatorColor;
+    
+    this->fishIndicator = fishIndicator;
+    this->fishIndicatorColor[0].color = fishIndicatorColor;
+    this->fishIndicatorColor[1].color = fishIndicatorColor;
+    this->fishIndicatorColor[2].color = fishIndicatorColor;
 
     this->progressionIndicator = progressionIndicator;
     this->progressionItemIndicatorColor[0].color = progressionIndicatorColor;
     this->progressionItemIndicatorColor[1].color = progressionIndicatorColor;
     this->progressionItemIndicatorColor[2].color = progressionIndicatorColor;
+    
 }
 
 
@@ -794,21 +833,37 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
         if (distance <= 0.1)
             return enemy.locationId;
     }
-    return -1;
+    return ENEMY_INVALID_ID;
 }
 
-void DrawIndicator(const task* tp, const bool tallElement, const bool checked, const bool enemy, const int locationId)
+void DrawIndicator(const task* tp, const bool tallElement, const bool checked, const IndicatorType indicatorType,
+                   const int locationId)
 {
     if (!cameraready)
         return;
-    if (!checked)
-        eventDetectorPtr->possibleChecks.push_back({
-            tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z, enemy ? LocationEnemy : LocationCapsule
-        });
 
-    if (enemy && !eventDetectorPtr->enemyIndicator)
+    if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
         return;
-    if (!enemy && !eventDetectorPtr->capsuleIndicator)
+
+
+    if (!checked)
+    {
+        LocationType locationType;
+        if (indicatorType == EnemyIndicator)
+            locationType = LocationEnemy;
+        else if (indicatorType == CapsuleIndicator)
+            locationType = LocationCapsule;
+        else
+            locationType = LocationFish;
+        eventDetectorPtr->possibleChecks.push_back({tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z, locationType});
+    }
+
+
+    if (indicatorType == EnemyIndicator && !eventDetectorPtr->enemyIndicator)
+        return;
+    if (indicatorType == CapsuleIndicator && !eventDetectorPtr->capsuleIndicator)
+        return;
+    if (indicatorType == FishIndicator && !eventDetectorPtr->capsuleIndicator)
         return;
 
     const EntityData1* player = EntityData1Ptrs[0];
@@ -829,7 +884,10 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     int verticalOffset = INDICATOR_HEIGHT + EXTRA_INDICATOR_HEIGHT * extraPercentage;
     const float arrowSize = HEIGHT_SIZE + EXTRA_HEIGHT_SIZE * extraPercentage;
     if (tallElement)
-        verticalOffset += 10;
+        if (indicatorType == EnemyIndicator)
+            verticalOffset += 25;
+        else
+            verticalOffset += 15;
 
     NJS_VECTOR direction;
     direction.x = camera_twp->pos.x - tp->twp->pos.x;
@@ -870,10 +928,12 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
         if (eventDetectorPtr->progressionIndicator && eventDetectorPtr->randomizer.GetOptions().
                                                                         LocationHasProgressiveItem(locationId))
             point3Col.col = eventDetectorPtr->progressionItemIndicatorColor;
-        else if (enemy)
+        else if (indicatorType == EnemyIndicator)
             point3Col.col = eventDetectorPtr->enemyIndicatorColor;
-        else
+        else if (indicatorType == CapsuleIndicator)
             point3Col.col = eventDetectorPtr->capsuleIndicatorColor;
+        else 
+            point3Col.col = eventDetectorPtr->fishIndicatorColor;
     else
         point3Col.col = eventDetectorPtr->disabledIndicatorColor;
 
@@ -921,7 +981,7 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
             return;
 
         const auto test = eventDetectorPtr->checkData.find(locationId);
-        DrawIndicator(tp, false, test->second.checked, false, test->first);
+        DrawIndicator(tp, false, test->second.checked, CapsuleIndicator, test->first);
     }
 });
 
@@ -942,10 +1002,30 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
     if (locationId > 0)
     {
         const auto test = eventDetectorPtr->checkData.find(locationId);
-        DrawIndicator(tp, true, test->second.checked, false, test->first);
+        DrawIndicator(tp, true, test->second.checked, CapsuleIndicator, test->first);
     }
 });
 
+void __cdecl EmptyTrackerFunction(task* obj)
+{
+}
+
+int FindEnemyTrackerId(task* tp)
+{
+    int enemyId = ENEMY_SEARCHING_ID;
+    const task* child = tp->ctp;
+    while (child != nullptr)
+    {
+        if (child->awp != nullptr)
+        {
+            const int possibleId = child->awp->work.sl[0];
+            if (possibleId == ENEMY_INVALID_ID || possibleId > ENEMY_STARTING_ID)
+                enemyId = possibleId;
+        }
+        child = child->next;
+    }
+    return enemyId;
+}
 
 void CheckEnemy(task* tp)
 {
@@ -955,26 +1035,21 @@ void CheckEnemy(task* tp)
     if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
-    const auto it = eventDetectorPtr->enemyTaskMap.find(tp->twp);
-    if (it == eventDetectorPtr->enemyTaskMap.end())
+    int enemyId = FindEnemyTrackerId(tp);
+
+    if (enemyId > ENEMY_STARTING_ID)
     {
-        const int enemyId = GetEnemyFromPosition(tp->twp->pos);
-        if (enemyId > 0)
-            eventDetectorPtr->enemyTaskMap[tp->twp] = enemyId;
+        const auto check = eventDetectorPtr->checkData.find(enemyId);
+        const bool isTallEnemy = check->second.enemyType == Buyon;
+        DrawIndicator(tp, isTallEnemy, check->second.checked, EnemyIndicator, check->first);
     }
-    else
+    else if (enemyId != ENEMY_INVALID_ID)
     {
-        const auto test = eventDetectorPtr->checkData.find(it->second);
-        DrawIndicator(tp, false, test->second.checked, true, test->first);
+        const task* childTask = CreateChildTask(LoadObj_UnknownB, EmptyTrackerFunction, tp);
+        enemyId = GetEnemyFromPosition(tp->twp->pos);
+        childTask->awp->work.sl[0] = enemyId;
     }
 }
-
-FunctionHook<void, task*> onFreeTask(0x40B6C0, [](task* tp)-> void
-{
-    eventDetectorPtr->enemyTaskMap.erase(tp->twp);
-    onFreeTask.Original(tp);
-});
-
 
 FunctionHook<void, task*> onRhinotankLoad(0x7A1380, [](task* tp)-> void
 {
@@ -1012,6 +1087,13 @@ FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
         tp->twp->pos.y = -8.43f;
         tp->twp->pos.z = 579.43f;
     }
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EmeraldCoast2
+        && tp->twp->pos.x > 712 && tp->twp->pos.x < 714
+        && tp->twp->pos.y > 540 && tp->twp->pos.y < 541
+        && tp->twp->pos.z > -818 && tp->twp->pos.z < -816)
+    {
+        tp->twp->pos.z = -869.65f;
+    }
     CheckEnemy(tp);
     onWaterSpiderLoad.Original(tp);
 });
@@ -1028,41 +1110,28 @@ FunctionHook<void, task*> onBuyonMain(0x7B2E00, [](task* tp)-> void
     onBuyonMain.Original(tp);
 });
 
-FunctionHook<void, task*> onBoaBoaMain(0x7A0330, [](task* tp)-> void
-{
-    if (eventDetectorPtr->randomizer.GetOptions().enemySanity)
-    {
-        if (eventDetectorPtr->randomizer.GetOptions().
-                              GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
-        {
-            const auto it = eventDetectorPtr->enemyTaskMap.find(tp->twp);
-            if (it == eventDetectorPtr->enemyTaskMap.end())
-            {
-                const int enemyId = GetEnemyFromPosition(tp->twp->pos);
-                if (enemyId > 0)
-                    eventDetectorPtr->enemyTaskMap[tp->twp] = enemyId;
-            }
-        }
-    }
-    onBoaBoaMain.Original(tp);
-});
-
 FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
 {
-    if (eventDetectorPtr->randomizer.GetOptions().enemySanity)
-    {
-        if (eventDetectorPtr->randomizer.GetOptions().
-                              GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
-        {
-            const auto it = eventDetectorPtr->enemyTaskMap.find(tp->ptp->twp);
-            if (it != eventDetectorPtr->enemyTaskMap.end())
-            {
-                const auto test = eventDetectorPtr->checkData.find(it->second);
-                DrawIndicator(tp, false, test->second.checked, true, test->first);
-            }
-        }
-    }
     onBoaBoaHeadLoad.Original(tp);
+    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+        return;
+    if (!eventDetectorPtr->randomizer.GetOptions().
+                           GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+        return;
+
+    int enemyId = FindEnemyTrackerId(tp);
+
+    if (enemyId > ENEMY_STARTING_ID)
+    {
+        const auto check = eventDetectorPtr->checkData.find(enemyId);
+        DrawIndicator(tp, false, check->second.checked, EnemyIndicator, check->first);
+    }
+    else if (enemyId != ENEMY_INVALID_ID)
+    {
+        const task* childTask = CreateChildTask(LoadObj_UnknownB, EmptyTrackerFunction, tp);
+        enemyId = GetEnemyFromPosition(tp->ptp->twp->pos);
+        childTask->awp->work.sl[0] = enemyId;
+    }
 });
 
 FunctionHook<void, task*> onLeonLoad(0x4A85C0, [](task* tp)-> void
@@ -1186,7 +1255,7 @@ FunctionHook<void, task*> onEggKeeperMain(0x4A6420, [](task* tp)-> void
 });
 
 
-void CheckDestroyedEnemy(taskwk* twp)
+void CheckDestroyedEnemy(task* tp)
 {
     if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
         return;
@@ -1194,14 +1263,14 @@ void CheckDestroyedEnemy(taskwk* twp)
     if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
-    const auto it = eventDetectorPtr->enemyTaskMap.find(twp);
-    if (it != eventDetectorPtr->enemyTaskMap.end())
+    const int enemyId = FindEnemyTrackerId(tp);
+
+    if (enemyId > ENEMY_STARTING_ID)
     {
-        int enemyLocationId = it->second;
-        const auto test = eventDetectorPtr->checkData.find(enemyLocationId);
+        const auto test = eventDetectorPtr->checkData.find(enemyId);
         if (!test->second.checked)
         {
-            eventDetectorPtr->randomizer.OnCheckFound(enemyLocationId);
+            eventDetectorPtr->randomizer.OnCheckFound(enemyId);
             eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
         }
     }
@@ -1209,12 +1278,115 @@ void CheckDestroyedEnemy(taskwk* twp)
 
 FunctionHook<void, task*> onDeadOut(0x46C150, [](task* tp)-> void
 {
-    CheckDestroyedEnemy(tp->twp);
+    CheckDestroyedEnemy(tp);
     onDeadOut.Original(tp);
+});
+
+FunctionHook<void, task*> onBuyonDestroyChildren(0x7B1500, [](task* tp)-> void
+{
+    //We check the player actually destroyed the enemy, and it wasn't destroyed by a restart
+    if (tp->twp->mode == 6)
+        CheckDestroyedEnemy(tp);
+    onBuyonDestroyChildren.Original(tp);
 });
 
 void HandleOnBoaBoaPartDestroyed(task* tp)
 {
     OnBoaBoaPartDestroyed_t.Original(tp);
-    CheckDestroyedEnemy(tp->ptp->twp);
+    CheckDestroyedEnemy(tp);
 }
+
+
+void EventDetector::OnTwinkleCircuitCompleted(const int character)
+{
+    if (!eventDetectorPtr->randomizer.GetOptions().twinkleCircuitCheck)
+        return;
+
+    if (eventDetectorPtr->randomizer.GetOptions().multipleTwinkleCircuitChecks)
+    {
+        switch (character)
+        {
+        case Characters_Sonic:
+            eventDetectorPtr->randomizer.OnCheckFound(40);
+            break;
+        case Characters_Tails:
+            eventDetectorPtr->randomizer.OnCheckFound(41);
+            break;
+        case Characters_Knuckles:
+            eventDetectorPtr->randomizer.OnCheckFound(42);
+            break;
+        case Characters_Amy:
+            eventDetectorPtr->randomizer.OnCheckFound(43);
+            break;
+        case Characters_Big:
+            eventDetectorPtr->randomizer.OnCheckFound(44);
+            break;
+        case Characters_Gamma:
+            eventDetectorPtr->randomizer.OnCheckFound(45);
+            break;
+
+        default:
+            break;
+        }
+    }
+    else
+    {
+        eventDetectorPtr->randomizer.OnCheckFound(15);
+    }
+}
+
+FunctionHook<signed int> onSaveTwinkleCircuitRecord(0x4B5BC0, []()-> signed int
+{
+    eventDetectorPtr->OnTwinkleCircuitCompleted(CurrentCharacter);
+    return onSaveTwinkleCircuitRecord.Original();
+});
+
+FunctionHook<void, task*> onFishMain(0x597010, [](task* tp)-> void
+{
+    onFishMain.Original(tp);
+    const int fishType = tp->twp->value.w[1];
+
+    for (const auto& check : eventDetectorPtr->checkData)
+    {
+        if (check.second.type != LocationFish)
+            continue;
+
+        if (check.second.level != CurrentLevel)
+            continue;
+
+        if (check.second.fishType == fishType)
+        {
+            DrawIndicator(tp, false, check.second.checked, FishIndicator, check.first);
+            break;
+        }
+    }
+});
+
+
+FunctionHook<void, task*> onFishCaught(0x470160, [](task* tp)-> void
+{
+    onFishCaught.Original(tp);
+    if (!eventDetectorPtr->randomizer.GetOptions().fishSanity)
+        return;
+    
+    const auto* v1 = reinterpret_cast<int*>(tp->twp);
+    const int fishType = v1[2];
+
+    bool checksFound = false;
+    for (const auto& check : eventDetectorPtr->checkData)
+    {
+        if (check.second.type != LocationFish)
+            continue;
+
+        if (check.second.level != CurrentLevel)
+            continue;
+
+        if (check.second.fishType == fishType && !check.second.checked)
+        {
+            eventDetectorPtr->randomizer.OnCheckFound(check.first);
+            checksFound = true;
+        }
+    }
+    if (checksFound)
+        eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
+});

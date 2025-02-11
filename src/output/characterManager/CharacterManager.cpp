@@ -1,7 +1,13 @@
 #include "CharacterManager.h"
+#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
 
 CharacterManager* characterManagerPtr;
 DataPointer(int, TimerEnabled, 0x912DF0);
+const char* subtitleTrapBuffer[] = {NULL, NULL};
+
+UsercallFuncVoid(HudDisplayRings_t, (signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud),
+                 (ringCount, digits, hud), 0x425960, rEAX, rBL, rESI);
+static void __cdecl HandleHudDisplayRings(signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud);
 
 
 CharacterManager::CharacterManager()
@@ -24,6 +30,13 @@ CharacterManager::CharacterManager()
     //Re-enable pause after finishing a mission
     WriteCall((void*)0x592048, EnablePause);
     WriteCall((void*)0x5920AF, EnablePause);
+
+    HudDisplayRings_t.Hook(HandleHudDisplayRings);
+}
+
+void CharacterManager::SetExtendRingCapacity(const bool extendRingCapacity)
+{
+    this->extendRingCapacity = extendRingCapacity;
 }
 
 void CharacterManager::GiveUpgrade(const Upgrades upgrade)
@@ -86,12 +99,34 @@ static void __cdecl HandleRingLoss()
             Set0Rings();
         break;
     case OneHitKnockOut:
+    case OneHitKnockOutNoShields:
         Set0Rings();
         KillHimP(0);
         break;
     }
     characterManagerPtr->lastRingAmount = lastRingAmountBuffer;
 }
+
+FunctionHook<void, char> onGiveBarrier(0x441EA0, [](const char character)-> void
+{
+    if (characterManagerPtr->options.ringLoss == OneHitKnockOutNoShields)
+        return;
+    onGiveBarrier.Original(character);
+});
+
+FunctionHook<void, char> onGiveMagneticBarrier(0x441E30, [](const char character)-> void
+{
+    if (characterManagerPtr->options.ringLoss == OneHitKnockOutNoShields)
+        return;
+    onGiveMagneticBarrier.Original(character);
+});
+
+FunctionHook<void, char> onGiveInvincibility(0x441F10, [](const char character)-> void
+{
+    if (characterManagerPtr->options.ringLoss == OneHitKnockOutNoShields)
+        return;
+    onGiveInvincibility.Original(character);
+});
 
 void CharacterManager::UpdateOptions(const Options newOptions)
 {
@@ -132,7 +167,9 @@ void CharacterManager::ProcessRings(const Sint16 amount)
         Rings = newRingAmount;
     }
 
-    if (amount > 0 && Rings < 999)
+    const int maxRings = this->extendRingCapacity ? 99999 : 999;
+
+    if (amount > 0 && Rings < maxRings)
     {
         AddRings(amount);
         PlaySound(RING_GAIN_SOUND_ID, nullptr, 0, nullptr);
@@ -141,25 +178,39 @@ void CharacterManager::ProcessRings(const Sint16 amount)
     lastRingAmount = Rings;
 }
 
-int CharacterManager::GetRingDifference()
+RingDifference CharacterManager::GetRingDifference()
 {
+    RingDifference ringDifference = {0, 0};
     if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
-        return lastRingAmount = 0;
-    if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
-        return lastRingAmount = 0;
+        return {0, 0};
 
-    if (GameMode == GameModes_Mission && TimerEnabled == 0 && !options.hardRingLinkActive
+    if (CurrentLevel == LevelIDs_PerfectChaos)
+    {
+        if (!options.hardRingLinkActive)
+            return {0, 0};
+        ringDifference.hardRingDifference = Rings - lastRingAmount;
+        lastRingAmount = Rings;
+        return ringDifference;
+    }
+
+    if (GameMode == GameModes_Mission && TimerEnabled == 0
         && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
     {
+        if (!options.hardRingLinkActive)
+        {
+            lastRingAmount = Rings;
+            return {0, 0};
+        }
+        ringDifference.hardRingDifference = Rings - lastRingAmount;
         lastRingAmount = Rings;
-        return 0;
+        return ringDifference;
     }
 
     if (!options.casinopolisRingLink && CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic)
-        return lastRingAmount = 0;
+        return {0, 0};
 
 
-    const int ringDifference = Rings - lastRingAmount;
+    ringDifference.ringDifference = Rings - lastRingAmount;
     lastRingAmount = Rings;
     return ringDifference;
 }
@@ -201,6 +252,10 @@ void CharacterManager::OnPlayingFrame()
 
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
         return;
+
+    if (options.lazyFishing && unlockStatus.bigPowerRodUnlocked)
+        RodTension = 0;
+
     if (PauseEnabled == 0)
         return;
 
@@ -292,11 +347,13 @@ void CharacterManager::SetStartingCharacter(int startingCharacterIndex)
 
 void CharacterManager::SetCharacterVoiceReactions(const bool eggmanCommentOnTrap,
                                                   const bool otherCharactersCommentOnTrap,
-                                                  const bool currentCharacterReactToTrap)
+                                                  const bool currentCharacterReactToTrap,
+                                                  const bool showCommentsSubtitles)
 {
     _eggmanCommentOnTrap = eggmanCommentOnTrap;
     _otherCharactersCommentOnTrap = otherCharactersCommentOnTrap;
     _currentCharacterReactToTrap = currentCharacterReactToTrap;
+    _showCommentsSubtitles = showCommentsSubtitles;
 }
 
 void CharacterManager::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
@@ -433,7 +490,6 @@ void CharacterManager::PlayRandomTrapVoice(const FillerType filler)
         }
         else if (CurrentCharacter == Characters_Amy)
         {
-            selector.addNumber(563, 3); //Oh yes! Attack Sonic now!
             selector.addNumber(922, 3); //Where do you think you're going; Amy?
         }
         if (filler == PoliceTrap)
@@ -605,6 +661,15 @@ void CharacterManager::PlayRandomTrapVoice(const FillerType filler)
     {
         const int voice = selector.getRandomNumber();
         PlayVoice(voice);
+        if (_showCommentsSubtitles)
+        {
+            auto it = _trapCommentMap.find(voice);
+            if (it != _trapCommentMap.end() && GameMode != GameModes_Menu)
+            {
+                subtitleTrapBuffer[0] = it->second.c_str();
+                DisplayHintText(subtitleTrapBuffer, 60 + 5 * it->second.length());
+            }
+        }
     }
 }
 
@@ -777,3 +842,11 @@ FunctionHook<void, task*> onScoreDisplay_Main(0x42BCC0, [](task* tp)-> void
     onScoreDisplay_Main.Original(tp);
     GameMode = bufferGameMode;
 });
+
+void HandleHudDisplayRings(const signed int ringCount, unsigned char digits, NJS_SPRITE* hud)
+{
+    if (characterManagerPtr->extendRingCapacity)
+        HudDisplayRings_t.Original(ringCount, 5, hud);
+    else
+        HudDisplayRings_t.Original(ringCount, digits, hud);
+}

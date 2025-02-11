@@ -41,15 +41,18 @@ struct UnlockStatus
     bool keyTrain;
     bool keyBoat;
     bool keyRaft;
-    bool keyStationKeys;
-    bool keyHotelKeys;
-    bool keyCasinoKeys;
+    bool keyStationFrontKey;
+    bool keyStationBackKey;
+    bool keyHotelFrontKey;
+    bool keyHotelBackKey;
     bool keyTwinkleParkTicket;
     bool keyEmployeeCard;
     bool keyDynamite;
     bool keyIceStone;
     bool keyWindStone;
-    bool jungleCart;
+    bool keyJungleCart;
+    bool keyEgglift;
+    bool keyMonorail;
 
     bool GotAllChaosEmeralds()
     {

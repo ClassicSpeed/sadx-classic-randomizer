@@ -13,6 +13,7 @@ constexpr int WARP_MYSTIC_RUINS = 6;
 constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
 constexpr int WARP_PAST = 10;
 
+constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
 constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
 constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
 constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
@@ -124,6 +125,16 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
             && tp->twp->pos.z < 2769 && tp->twp->pos.z > 2765)
             FreeTask(tp);
     }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
+        && worldStateManagerPtr->unlockStatus.keyDynamite)
+    {
+        //We find the cube collision that we created for the dynamite and delete it
+        if (tp->twp->pos.x < -394 && tp->twp->pos.x > -392
+            && tp->twp->pos.y < 121 && tp->twp->pos.y > 118
+            && tp->twp->pos.z < 891 && tp->twp->pos.z > 889)
+            FreeTask(tp);
+    }
+
 
     else
         onCollisionCube.Original(tp);
@@ -156,8 +167,11 @@ static void __cdecl HandleWindyValleyEntrance();
 UsercallFuncVoid(onSceneChangeMr_t, (int a1), (a1), 0x539220, rEBX);
 static void __cdecl HandleMREntrance(int newScene);
 
-UsercallFunc(bool, onTwinkleParkDoor_t, (char tpChar), (tpChar), 0x63EA90, rEAX, rEAX);
-static bool __cdecl HandleTwinkleParkEntrance(char character);
+UsercallFunc(int, onTwinkleParkDoor_t, (char tpChar), (tpChar), 0x63EA90, rEAX, rESI);
+static int __cdecl HandleTwinkleParkEntrance(char character);
+
+UsercallFunc(int, onTwinkleCircuitDoor_t, (char tpChar), (tpChar), 0x63F810, rEAX, rESI);
+static int __cdecl HandleTwinkleCircuitEntrance(char character);
 
 
 UsercallFunc(int, onEggCarrierEggDoor_t, (int a1), (a1), 0x52B420, rEAX, rESI);
@@ -188,6 +202,7 @@ WorldStateManager::WorldStateManager()
     _visitedLevels = VisitedLevels();
     onSceneChangeMr_t.Hook(HandleMREntrance);
     onTwinkleParkDoor_t.Hook(HandleTwinkleParkEntrance);
+    onTwinkleCircuitDoor_t.Hook(HandleTwinkleCircuitEntrance);
     onEggCarrierEggDoor_t.Hook(HandleEggCarrierEggDoor);
     onEggCarrierOutsideDoor_t.Hook(HandleEggCarrierOutsideDoor);
     _onSceneChangeECInside_t.Hook(HandleSceneChangeEcInside);
@@ -204,11 +219,6 @@ WorldStateManager::WorldStateManager()
 
     worldStateManagerPtr = this;
 
-    //We allow Tails and Big to enter the Master Emerald Shrine
-    DataArray(int, islandDoorFlags, 0x111E010, 8);
-    islandDoorFlags[Characters_Tails] = FLAG_SONIC_MR_ISLANDDOOR;
-    islandDoorFlags[Characters_Big] = FLAG_SONIC_MR_ISLANDDOOR;
-    islandDoorFlags[Characters_Amy] = FLAG_SONIC_MR_ISLANDDOOR;
 
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
@@ -251,6 +261,173 @@ void WorldStateManager::UpdateUnlockStatus(UnlockStatus newUnlockStatus)
     this->unlockStatus = newUnlockStatus;
 }
 
+void WorldStateManager::UpdateChecks(const std::map<int, LocationData>& checkData)
+{
+    this->_checkData = checkData;
+}
+
+bool WorldStateManager::IsSkyChase1Enabled()
+{
+    if (!this->options.skyChaseChecks)
+        return false;
+
+    if ((this->options.skyChaseChecksHard && this->_checkData[28].checked) ||
+        (!this->options.skyChaseChecksHard && this->_checkData[27].checked))
+        return false;
+
+    return true;
+}
+
+void WorldStateManager::DrawDisableDoorIndicator(const NJS_POINT3 basePoint, const float angle)
+{
+    NJS_POINT3COL point3Col;
+    NJS_POINT3 point[] = {
+        {basePoint.x, basePoint.y + CROSS_SIZE_MIN, basePoint.z},
+        {basePoint.x + CROSS_SIZE_DIFF, basePoint.y + CROSS_SIZE_MAX, basePoint.z},
+        {basePoint.x + CROSS_SIZE_MAX, basePoint.y + CROSS_SIZE_DIFF, basePoint.z},
+        {basePoint.x + CROSS_SIZE_MIN, basePoint.y, basePoint.z},
+        {basePoint.x + CROSS_SIZE_MAX, basePoint.y - CROSS_SIZE_DIFF, basePoint.z},
+        {basePoint.x + CROSS_SIZE_DIFF, basePoint.y - CROSS_SIZE_MAX, basePoint.z},
+        {basePoint.x, basePoint.y - CROSS_SIZE_MIN, basePoint.z},
+        {basePoint.x - CROSS_SIZE_DIFF, basePoint.y - CROSS_SIZE_MAX, basePoint.z},
+        {basePoint.x - CROSS_SIZE_MAX, basePoint.y - CROSS_SIZE_DIFF, basePoint.z},
+        {basePoint.x - CROSS_SIZE_MIN, basePoint.y, basePoint.z},
+        {basePoint.x - CROSS_SIZE_MAX, basePoint.y + CROSS_SIZE_DIFF, basePoint.z},
+        {basePoint.x - CROSS_SIZE_DIFF, basePoint.y + CROSS_SIZE_MAX, basePoint.z},
+    };
+    // Rotation angle in radians
+    const float theta = angle * (3.14 / 180.0f);
+    const float cosTheta = cos(theta);
+    const float sinTheta = sin(theta);
+
+    // Rotate each point around the Y axis
+    for (auto& p : point)
+    {
+        float x = p.x - basePoint.x;
+        float z = p.z - basePoint.z;
+
+        p.x = x * cosTheta + z * sinTheta + basePoint.x;
+        p.z = -x * sinTheta + z * cosTheta + basePoint.z;
+    }
+
+    point3Col.p = point;
+    point3Col.tex = nullptr;
+    point3Col.col = this->_wrongDoorColor;
+    late_DrawPolygon3D(&point3Col, 12, NJD_TRANSPARENT, LATE_LIG);
+}
+
+void WorldStateManager::DrawCorrectDoorIndicator(const NJS_POINT3 basePoint, const float angle)
+{
+    NJS_POINT3COL point3Col;
+    NJS_POINT3 point[] = {
+        {basePoint.x, basePoint.y + ARROW_SIZE_MAX, basePoint.z},
+        {basePoint.x + ARROW_SIZE_MIN, basePoint.y + ARROW_SIZE_MAX - ARROW_SIZE_MIN, basePoint.z},
+        {basePoint.x + ARROW_SIZE_MIN / 3, basePoint.y + ARROW_SIZE_MAX - ARROW_SIZE_MIN, basePoint.z},
+        {basePoint.x + ARROW_SIZE_MIN / 3, basePoint.y - ARROW_SIZE_MAX, basePoint.z},
+        {basePoint.x - ARROW_SIZE_MIN / 3, basePoint.y - ARROW_SIZE_MAX, basePoint.z},
+        {basePoint.x - ARROW_SIZE_MIN / 3, basePoint.y + ARROW_SIZE_MAX - ARROW_SIZE_MIN, basePoint.z},
+        {basePoint.x - ARROW_SIZE_MIN, basePoint.y + ARROW_SIZE_MAX - ARROW_SIZE_MIN, basePoint.z},
+    };
+    // Rotation angle in radians
+    const float theta = angle * (3.14 / 180.0f);
+    const float cosTheta = cos(theta);
+    const float sinTheta = sin(theta);
+
+    // Rotate each point around the Y axis
+    for (auto& p : point)
+    {
+        float x = p.x - basePoint.x;
+        float z = p.z - basePoint.z;
+
+        p.x = x * cosTheta + z * sinTheta + basePoint.x;
+        p.z = -x * sinTheta + z * cosTheta + basePoint.z;
+    }
+
+    const EntityData1* player = EntityData1Ptrs[0];
+    const double dz = basePoint.z - player->Position.z;
+    const double dy = basePoint.y - player->Position.y;
+    const double dx = basePoint.x - player->Position.x;
+    const double distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+    float extraPercentage;
+    if (distance <= MIN_DRAW_DOOR_ARROW_DISTANCE)
+        extraPercentage = 0;
+    else if (distance >= MAX_DRAW_DOOR_ARROW_DISTANCE)
+        extraPercentage = 1;
+    else
+        extraPercentage = (distance - MIN_DRAW_DOOR_ARROW_DISTANCE) / (MAX_DRAW_DOOR_ARROW_DISTANCE -
+            MIN_DRAW_DOOR_ARROW_DISTANCE);
+
+    uint8_t newAlpha = static_cast<uint8_t>(0xAA - 0xAA * (1 - extraPercentage));
+    _arrowColor.argb.a = newAlpha;
+
+    NJS_COLOR arrowColor[7] = {
+        _arrowColor,
+        _arrowColor,
+        _arrowColor,
+        _arrowColor,
+        _arrowColor,
+        _arrowColor,
+        _arrowColor,
+    };
+
+    point3Col.p = point;
+    point3Col.tex = nullptr;
+    point3Col.col = arrowColor;
+    late_DrawPolygon3D(&point3Col, 7, NJD_TRANSPARENT, LATE_LIG);
+}
+
+void WorldStateManager::DrawOtherDoorIndicator(const NJS_POINT3 basePoint, const float angle)
+{
+    NJS_POINT3COL point3Col;
+    NJS_POINT3 point[] = {
+        {basePoint.x + ARROW_SIZE_MAX, basePoint.y, basePoint.z},
+        {basePoint.x + ARROW_SIZE_MAX - ARROW_SIZE_MIN, basePoint.y + ARROW_SIZE_MIN, basePoint.z},
+        {basePoint.x + ARROW_SIZE_MAX - ARROW_SIZE_MIN, basePoint.y + ARROW_SIZE_MIN / 3, basePoint.z},
+        {basePoint.x - ARROW_SIZE_MAX, basePoint.y + ARROW_SIZE_MIN / 3, basePoint.z},
+        {basePoint.x - ARROW_SIZE_MAX, basePoint.y - ARROW_SIZE_MIN / 3, basePoint.z},
+        {basePoint.x + ARROW_SIZE_MAX - ARROW_SIZE_MIN, basePoint.y - ARROW_SIZE_MIN / 3, basePoint.z},
+        {basePoint.x + ARROW_SIZE_MAX - ARROW_SIZE_MIN, basePoint.y - ARROW_SIZE_MIN, basePoint.z},
+    };
+    // Rotation angle in radians
+    const float theta = angle * (3.14 / 180.0f);
+    const float cosTheta = cos(theta);
+    const float sinTheta = sin(theta);
+
+    // Rotate each point around the Y axis
+    for (auto& p : point)
+    {
+        float x = p.x - basePoint.x;
+        float z = p.z - basePoint.z;
+
+        p.x = x * cosTheta + z * sinTheta + basePoint.x;
+        p.z = -x * sinTheta + z * cosTheta + basePoint.z;
+    }
+    point3Col.p = point;
+    point3Col.tex = nullptr;
+    point3Col.col = this->_otherDoorColor;
+    late_DrawPolygon3D(&point3Col, 7, NJD_TRANSPARENT, LATE_LIG);
+}
+
+void WorldStateManager::ShowLevelEntranceArrows()
+{
+    if (!this->options.entranceRandomizer)
+        return;
+    if (!this->_showEntranceIndicators)
+        return;
+    for (LevelArrow levelArrow : _levelArrows)
+    {
+        if (CurrentStageAndAct != levelArrow.levelAndAct)
+            continue;
+
+        if (!worldStateManagerPtr->levelEntrances.canEnter(levelArrow.entrance, CurrentCharacter))
+            DrawDisableDoorIndicator(levelArrow.postion, levelArrow.angle);
+        else if (levelArrow.isForCharacter(static_cast<Characters>(CurrentCharacter)))
+            DrawCorrectDoorIndicator(levelArrow.postion, levelArrow.angle);
+        else
+            DrawOtherDoorIndicator(levelArrow.postion, levelArrow.angle);
+    }
+}
 
 void WorldStateManager::OnFrame()
 {
@@ -258,6 +435,12 @@ void WorldStateManager::OnFrame()
         return;
     if (CurrentLevel == LevelIDs_PerfectChaos)
         return;
+
+    if (IsSkyChase1Enabled() && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
+        EventFlagArray[33] = 1;
+
+    if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
+        this->ShowLevelEntranceArrows();
 
     if (this->eggCarrierTransformationCutscene)
     {
@@ -272,6 +455,7 @@ void WorldStateManager::OnFrame()
     else if (GameMode == GameModes_Adventure_Field || GameMode == GameModes_Adventure_ActionStg)
         GameMode = GameModes_Mission;
 }
+
 
 //Enable all GameGear Games
 FunctionHook<int> onHowManyGameGearGames(0x6FDA90, []()-> int
@@ -290,26 +474,23 @@ FunctionHook<BOOL> isChaos2DoorOpen(0x638D50, []()-> BOOL
     return CurrentCharacter == Characters_Knuckles;
 });
 
-//We open the station door if we have the keys
 FunctionHook<BOOL> isStationDoorOpen(0x63AB70, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyStationKeys;
+    return worldStateManagerPtr->unlockStatus.keyStationFrontKey;
 });
 
-//We open the main hotel door if we have the keys
 FunctionHook<BOOL> isHotelDoorOpen(0x630900, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyHotelKeys;
+    return worldStateManagerPtr->unlockStatus.keyHotelFrontKey;
 });
 
-//We open both casino entrances if we have the casino district keys
 FunctionHook<BOOL> isCasinoHotelDoorOpen(0x630970, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyCasinoKeys;
+    return worldStateManagerPtr->unlockStatus.keyHotelBackKey;
 });
 FunctionHook<BOOL> isCasinoStationDoorOpen(0x638880, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyCasinoKeys;
+    return worldStateManagerPtr->unlockStatus.keyStationBackKey;
 });
 
 
@@ -435,31 +616,23 @@ void WorldStateManager::SetStartingArea()
     case Jungle:
         SetLevelAndAct(LevelIDs_MysticRuins, 2);
         break;
-    case EggCarrier:
+    case EggCarrierOutside:
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
+        break;
+    case EggCarrierInside:
+        SetLevelAndAct(LevelIDs_EggCarrierInside, 1);
         break;
     case AngelIsland:
         SetLevelAndAct(LevelIDs_MysticRuins, 1);
         SetEntranceNumber(1);
         break;
+    case EggCarrierFrontDeck:
     case NoStatingArea:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
         break;
     }
 }
 
-void WorldStateManager::StartAllMissions()
-{
-    for (int i = 0; i < 60; i++)
-    {
-        if (!(MissionFlags[i] & MissionFlags_Complete))
-        {
-            MissionFlags[i] |= MissionFlags_Found;
-            MissionFlags[i] |= MissionFlags_Started;
-        }
-    }
-    WriteSaveFile();
-}
 
 void WorldStateManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist)
 {
@@ -551,6 +724,11 @@ void WorldStateManager::SetChaoStatsMultiplier(const int chaoStatsMultiplier)
     }
 }
 
+void WorldStateManager::SetShowEntranceIndicators(const bool showEntranceIndicators)
+{
+    this->_showEntranceIndicators = showEntranceIndicators;
+}
+
 typedef struct
 {
     int x;
@@ -590,6 +768,9 @@ const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f
 const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635},
                                               {0, 0, 0}, {0.3f, 0, 51});
 
+
+const SETEntry COLLISION_CUBE_MR = CreateSetEntry(COLLISION_CUBE_MYSTIC_RUINS, {-393.62f, 120, 890.06f},
+                                                  {0xFEFF, 0x4BF1, 0xFD6A}, {60, 80, 10});
 const SETEntry RED_MOUNTAIN_SCENE_CHANGE_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {-2100, -304, 1650},
                                                              {0, 0, 0}, {40, 50, 0});
 
@@ -639,7 +820,7 @@ const SETEntry WARP_ZERO = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, 
 const SETEntry WARP_E101_MK2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, -385.69f});
 
 //Sky Chase
-const SETEntry WARP_SKY_CHASE_1 = CreateSetEntry(WARP_MYSTIC_RUINS, {1561, 191, 900}, {0, 0x1C00, 0});
+const SETEntry WARP_SKY_CHASE_1 = CreateSetEntry(WARP_MYSTIC_RUINS, {1561, 201, 900}, {0, 0x1C00, 0});
 const SETEntry WARP_SKY_CHASE_2_EC1 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 700, -1100});
 const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 650, -1100});
 
@@ -683,6 +864,13 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
+    
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Tails);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Big);
+    AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Gamma);
 
     AddSetToLevel(RED_MOUNTAIN_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Tails);
     AddSetToLevel(RED_MOUNTAIN_DOOR_MR, LevelAndActIDs_MysticRuins2, Characters_Tails);
@@ -698,7 +886,10 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     AddSetToLevel(ICE_CAP_SPRING, LevelAndActIDs_MysticRuins2, Characters_Amy);
 
+    AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Amy);
+    AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Knuckles);
     AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Big);
+    AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Gamma);
 
     //Emerald Coast
     AddSetToLevel(BEACH_GATE_SS, LevelAndActIDs_StationSquare5, Characters_Sonic);
@@ -743,8 +934,11 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     if (worldStateManagerPtr->options.skyChaseChecks)
     {
         //Sky Chase
-        AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-        AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Tails);
+        if (worldStateManagerPtr->IsSkyChase1Enabled())
+        {
+            AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+            AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Tails);
+        }
 
         AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
         AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
@@ -798,6 +992,15 @@ FunctionHook<void> onMissionSetLoad(0x591A70, []()-> void
             {
                 objData->SETEntry->Position = {position.x, -70, position.z};
             }
+
+            //We move the mission card 51 in the jungle, so Gamma can get it even if the Snake door is open
+            if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3
+                && position.x > -515 && position.x < -510
+                && position.y > 204 && position.y < 206
+                && position.z > -1128 && position.z < -1120)
+            {
+                objData->SETEntry->Position = {-515.9674, 70.18237, -989.24146};
+            }
         }
     }
 });
@@ -847,6 +1050,11 @@ FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
         SetNextLevelAndAct(LevelIDs_MysticRuins, 3);
         SetEntranceNumber(3);
     }
+    else if (CurrentLevel == LevelIDs_TwinkleCircuit)
+    {
+        SetNextLevelAndAct(LevelIDs_StationSquare, 5);
+        SetEntranceNumber(2);
+    }
     return response;
 });
 
@@ -871,7 +1079,7 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
 
 FunctionHook<void, task*> onEmployeeCard(0x63C370, [](task* tp)-> void
 {
-    // We prevent the Employee card from spawning if the player doesn't have the item or he can't use it
+    // We prevent the Employee card from spawning if the player doesn't have the item, or he can't use it
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4
         && (!worldStateManagerPtr->unlockStatus.keyEmployeeCard
             || !worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)))
@@ -928,7 +1136,7 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
         FieldStartPos->YRot = 0x7AB7;
         break;
     case LevelIDs_SpeedHighway:
-        if (CurrentCharacter == Characters_Knuckles || CurrentCharacter == Characters_Big)
+        if (CurrentCharacter == Characters_Knuckles)
         {
             FieldStartPos->Position = {272.0, 4.0, 294.89999};
             FieldStartPos->YRot = 0x3D0C;
@@ -944,21 +1152,20 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
         FieldStartPos->YRot = 0x5F9;
         break;
     case LevelIDs_SkyDeck:
-        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails || CurrentCharacter ==
-            Characters_Big)
-        {
-            FieldStartPos->Position = {0.0, 655.0, 146.0};
-            FieldStartPos->YRot = 0x0C000;
-        }
-        else
+        if (CurrentCharacter == Characters_Knuckles)
         {
             FieldStartPos->Position = {290.0, 17.0, 0.0};
             FieldStartPos->YRot = 0x8000;
         }
+        else
+        {
+            FieldStartPos->Position = {0.0, 655.0, 146.0};
+            FieldStartPos->YRot = 0x0C000;
+        }
         break;
 
     case LevelIDs_LostWorld:
-        if (CurrentCharacter == Characters_Knuckles || CurrentCharacter == Characters_Gamma)
+        if (CurrentCharacter == Characters_Knuckles)
         {
             FieldStartPos->Position = {-515.90002, 16.6, -1446.0};
             FieldStartPos->YRot = 0xC000;
@@ -978,15 +1185,15 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
         FieldStartPos->YRot = 0x1F17;
         break;
     case LevelIDs_FinalEgg:
-        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
-        {
-            FieldStartPos->Position = {133.39999, 108.4, -7.1999998};
-            FieldStartPos->YRot = 0x70EF;
-        }
-        else
+        if (CurrentCharacter == Characters_Gamma)
         {
             FieldStartPos->Position = {-0.5, 108.8, -138.10001};
             FieldStartPos->YRot = 0x4537;
+        }
+        else
+        {
+            FieldStartPos->Position = {133.39999, 108.4, -7.1999998};
+            FieldStartPos->YRot = 0x70EF;
         }
         break;
     case LevelIDs_HotShelter:
@@ -1043,8 +1250,7 @@ FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-
 // SpeedHighway (Mains Area)
 FunctionHook<void, Uint8, Uint8> onSetNextLevelAndActCutsceneMode(0x4145D0, [](Uint8 level, Uint8 act)-> void
 {
-    if (worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter) &&
-        levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
     {
         const EntityData1* player = EntityData1Ptrs[0];
         if (player->Position.x > 400 && player->Position.x < 550
@@ -1057,8 +1263,65 @@ FunctionHook<void, Uint8, Uint8> onSetNextLevelAndActCutsceneMode(0x4145D0, [](U
             return;
         }
     }
+
+    if (level == LevelIDs_TwinkleCircuit)
+    {
+        if (!worldStateManagerPtr->options.multipleTwinkleCircuitChecks)
+        {
+            onSetNextLevelAndActCutsceneMode.Original(level, 0);
+        }
+        else
+        {
+            switch (CurrentCharacter)
+            {
+            case Characters_Sonic:
+                // Samba GP Track
+                onSetNextLevelAndActCutsceneMode.Original(level, 2);
+                break;
+            case Characters_Tails:
+                //Similar to original but with more stuff
+                onSetNextLevelAndActCutsceneMode.Original(level, 1);
+                break;
+            case Characters_Knuckles:
+                //Harder Track with many sharp curves
+                onSetNextLevelAndActCutsceneMode.Original(level, 5);
+                break;
+            case Characters_Amy:
+                //Original Track
+                onSetNextLevelAndActCutsceneMode.Original(level, 0);
+                break;
+            case Characters_Gamma:
+                //Easier, round Track
+                onSetNextLevelAndActCutsceneMode.Original(level, 4);
+                break;
+            case Characters_Big:
+                //Track with large walls
+                onSetNextLevelAndActCutsceneMode.Original(level, 3);
+                break;
+
+            default:
+                onSetNextLevelAndActCutsceneMode.Original(level, 0);
+                break;
+            }
+        }
+        return;
+    }
     onSetNextLevelAndActCutsceneMode.Original(level, act);
 });
+
+DataPointer(int, ShowExitMenuTwinkleCircuit, 0x3C5D430);
+FunctionHook<void, task*> onTwinkleCircuitResultsMaybe(0x4DAFB0, [](task* tp)-> void
+{
+    if (CurrentLevel == LevelIDs_TwinkleCircuit && ShowExitMenuTwinkleCircuit == 1)
+    {
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_StationSquare, GET_ACT(LevelAndActIDs_StationSquare6));
+        ShowExitMenuTwinkleCircuit = 0;
+        return;
+    }
+
+    return onTwinkleCircuitResultsMaybe.Original(tp);
+});
+
 
 // WindyValley
 static void __cdecl HandleWindyValleyEntrance()
@@ -1208,10 +1471,16 @@ FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
 });
 
 
-// Handles the Twinkle Park entrance
-static bool __cdecl HandleTwinkleParkEntrance(const char character)
+// Handles the Twinkle Park door
+static int __cdecl HandleTwinkleParkEntrance(const char character)
 {
     return worldStateManagerPtr->levelEntrances.canEnter(TwinklePark, CurrentCharacter);
+}
+
+// Handles the Twinkle Circuit door
+static int __cdecl HandleTwinkleCircuitEntrance(const char character)
+{
+    return worldStateManagerPtr->options.twinkleCircuitCheck;
 }
 
 // Speed Highway
@@ -1225,7 +1494,8 @@ FunctionHook<BOOL> isSpeedHighwayShutterOpen(0x63A2A0, []()-> BOOL
 
 FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
 {
-    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy)
+    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter ==
+            Characters_Big)
         && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
         && worldStateManagerPtr->unlockStatus.keyEmployeeCard)
         FreeTask(tp);
@@ -1235,7 +1505,8 @@ FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
 
 FunctionHook<void, task*> loadSpeedHighwayShutter2(0x63A500, [](task* tp)-> void
 {
-    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy)
+    if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter ==
+            Characters_Big)
         && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
         && worldStateManagerPtr->unlockStatus.keyEmployeeCard)
         FreeTask(tp);
@@ -1243,17 +1514,14 @@ FunctionHook<void, task*> loadSpeedHighwayShutter2(0x63A500, [](task* tp)-> void
         loadSpeedHighwayShutter2.Original(tp);
 });
 
-FunctionHook<BOOL> isSpeedHighwayElevatorOpen(0x638CC0, []()-> BOOL
+FunctionHook<void, ObjectMaster*> onOHighEle(0x6393F0, [](ObjectMaster* tp)-> void
 {
-    return worldStateManagerPtr->unlockStatus.keyEmployeeCard;
+    OEleboxIn(tp);
 });
+
 
 FunctionHook<BOOL> isCityHallDoorOpen(0x636BF0, []()-> BOOL
 {
-    if (CurrentCharacter == Characters_Big)
-        return worldStateManagerPtr->unlockStatus.keyEmployeeCard
-            && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter);
-
     return worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter) && isCityHallDoorOpen.
         Original();
 });
@@ -1282,7 +1550,7 @@ FunctionHook<BOOL, EntityData1*> isFinalEggGammaDoorOpen(0x53ED30, [](EntityData
 
     if (entity->Position.z < -150)
     {
-        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
+        if (CurrentCharacter != Characters_Gamma)
             return false;
         return worldStateManagerPtr->levelEntrances.canEnter(FinalEgg, CurrentCharacter);
     }
@@ -1293,7 +1561,7 @@ FunctionHook<BOOL, EntityData1*> isFinalEggGammaDoorOpen(0x53ED30, [](EntityData
 FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
 {
     // Final Egg
-    if ((CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
+    if ((CurrentCharacter != Characters_Gamma)
         && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && tp->twp->ang.x == 3)
     {
         if (!worldStateManagerPtr->levelEntrances.canEnter(FinalEgg, CurrentCharacter))
@@ -1313,7 +1581,15 @@ FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
 
     onLoadSceneChangeMr.Original(tp);
 });
-//
+
+FunctionHook<void, task*> onHiddenGate(0x53C3E0, [](task* tp)-> void
+{
+    const int bufferCharacter = CurrentCharacter;
+    CurrentCharacter = Characters_Sonic;
+    onHiddenGate.Original(tp);
+    CurrentCharacter = bufferCharacter;
+});
+
 FunctionHook<BOOL> isFinalEggTowerActive(0x538550, []()-> BOOL
 {
     return true;
@@ -1331,8 +1607,6 @@ FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
         return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[
                 FLAG_KNUCKLES_MR_BLUECUBE]
             && worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
-    if (CurrentCharacter == Characters_Gamma)
-        return worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
 
     return false;
 });
@@ -1340,7 +1614,7 @@ FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
 //Allows everyone to enter Lost World
 FunctionHook<BOOL> isLostWorldFrontEntranceOpen(0x532E60, []()-> BOOL
 {
-    if (CurrentCharacter == Characters_Knuckles || CurrentCharacter == Characters_Gamma)
+    if (CurrentCharacter == Characters_Knuckles)
         return false;
     return worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
 });
@@ -1445,9 +1719,6 @@ static int __cdecl HandleEggCarrierEggDoor(const int a1)
 
 static int __cdecl HandleEggCarrierOutsideDoor(const int a1)
 {
-    if (CurrentCharacter != Characters_Big)
-        return onEggCarrierOutsideDoor_t.Original(a1);
-
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierOutside1)
         return onEggCarrierOutsideDoor_t.Original(a1);
 
@@ -1467,8 +1738,7 @@ static int __cdecl HandleEggCarrierOutsideDoor(const int a1)
 
 FunctionHook<void, task*> onLoadPoolWater(0x51DC30, [](task* tp)-> void
 {
-    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
-        || CurrentCharacter == Characters_Big)
+    if (CurrentCharacter != Characters_Knuckles)
         return onLoadPoolWater.Original(tp);
 
     if (!worldStateManagerPtr->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
@@ -1479,8 +1749,7 @@ FunctionHook<void, task*> onLoadPoolWater(0x51DC30, [](task* tp)-> void
 
 FunctionHook<void, task*> onLoadPoolDoor(0x51E320, [](task* tp)-> void
 {
-    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
-        || CurrentCharacter == Characters_Big)
+    if (CurrentCharacter != Characters_Knuckles)
         return onLoadPoolDoor.Original(tp);
 
     if (!worldStateManagerPtr->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
@@ -1493,13 +1762,11 @@ int HandleSkyDeckDoor(EntityData1* a1)
     if (!worldStateManagerPtr->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
         return false;
 
-    if ((CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
-            || CurrentCharacter == Characters_Big)
+    if (CurrentCharacter != Characters_Knuckles
         && levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierOutside2)
         return false;
 
-    if ((CurrentCharacter == Characters_Knuckles || CurrentCharacter == Characters_Amy
-            || CurrentCharacter == Characters_Gamma)
+    if (CurrentCharacter == Characters_Knuckles
         && levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierOutside6)
         return false;
 

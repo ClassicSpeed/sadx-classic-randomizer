@@ -37,11 +37,15 @@ Sonic Adventure DX:
   # Keep in mind selecting emerald hunt will require enough checks to add the 7 emeralds to the pool.
   goal_requires_chaos_emeralds: 'false'
   # If enabled, you have to collect a certain number of emblems to unlock the last fight.
-  # Enabling this will require at least 5 checks to add the 5 emblems to the pool.
+  # The emblems are extra items added to the item pool, so they scale with the number of checks.
   goal_requires_emblems: 'false'
-  # Percentage of the available emblems needed to unlock the final story.
-  # Minimum value is 1, maximum value is 80
-  emblems_percentage: 80
+  # If Emblems are part of the goal, determines the maximum number of emblems that can be in the item pool.
+  # If fewer available locations exist in the pool than this number, the number of available locations will be used instead.
+  # Minimum value is 20, maximum value is 1500
+  max_emblem_cap: 130
+  # If Emblems are part of the goal, percentage of the available emblems needed to unlock the final story.
+  # Minimum value is 1, maximum value is 90
+  emblems_percentage: 75
   # If enabled, you have to complete missions to unlock the last fight.
   goal_requires_missions: 'false'
   # If Missions are part of the goal, Percentage of the available missions that needed to be completed to unlock the final story.
@@ -49,6 +53,8 @@ Sonic Adventure DX:
   mission_percentage: 100
   # If enabled, you have to beat all the bosses to unlock the last fight.
   goal_requires_bosses: 'false'
+  # If Bosses are part of the goal, Percentage of the available bosses that needed to be completed to unlock the final story.
+  boss_percentage: 100
   # If enabled, you have to beat all the chao races to unlock the last fight.
   goal_requires_chao_races: 'false'
   # Determines the logic the randomizer will use.
@@ -57,12 +63,17 @@ Sonic Adventure DX:
   # Expert DC Logic (2): The most unforgiving logic, some checks require performing out-of-bounds jumps (DC conversion).
   # Expert DX Logic (3): The most unforgiving logic, some checks require performing out-of-bounds jumps (vanilla DX).
   logic_level: 0
-  # Randomize starting location. If false, you will start at Station Square.
-  random_starting_location: 'true'
-  # If randomize starting location is enabled, each character will start in a random location.
+  
+  # Select which the character you will start with.
+  # Choose between Random (0), Sonic (1), Tails (2), Knuckles (3), Amy (4), Big (5), and Gamma (6).
+  starting_character: 0
+  # Select in which location you would like to start.
+  # Keep in mind that if there are no checks in that location for your character, another one will be chosen.
+  # Choose between Random (0), Station Square (Main) (1), Station (2), Hotel (3), Casino (4), Twinkle Park Lobby (5),
+  # Mystic Ruins (Main) (6), Angel Island (7), Jungle (8) and EggCarrier (Outside) (9), EggCarrier (Inside) (10)
+  starting_location: 0
+  # If enabled, each character will start in a random location.
   random_starting_location_per_character: 'true'
-  # Ensures access to a level from the start, even if it means giving you an item.
-  guaranteed_level: 'false'
   # Ensures at least this many checks in your starting location if possible.
   guaranteed_starting_checks: 2
   # Randomizes the entrances to action stages.
@@ -86,6 +97,7 @@ Sonic Adventure DX:
   # Classic (0): You lose all of your rings when hit.
   # Modern (1): You lose 20 rings when hit.
   # One Hit K.O. (2): You die immediately when hit.
+  # One Hit K.O. No Shields (3): You die immediately when hit, and you can't use shields or invincibility power ups.
   ring_loss: 0
   
   # Playable Characters
@@ -105,11 +117,12 @@ Sonic Adventure DX:
 
   # Stage Options
   
-  # For missions, the options range from 3 to 0.
-  # 3 means Missions A, B, and C.
-  # 2 means Missions B and C.
-  # 1 means Mission C.
+  # For missions, the options range from 0 to 4.
   # 0 means no missions at all (You can still play the character if they are enabled).
+  # 1 means Mission C.
+  # 2 means Missions B and C.
+  # 3 means Missions A, B, and C.
+  # 4 means Missions S, A, B, and C. S missions are extra hard times added by the mod. Not available in normal logic.
   # Choose what action stage missions will be a location check for Sonic.
   sonic_action_stage_missions: 1
   # Choose what action stage missions will be a location check for Tails.
@@ -170,11 +183,16 @@ Sonic Adventure DX:
   #   Mission 54 (Flags in the Snowboard section of Ice Cap).
   #   Mission 58 (Flags in the rolling bounce section of Lost World).
   mission_blacklist: [ "49", "53", "54", "58" ]
-  # Determines whether beating Twinkle Circuit and Sand Hill grants checks (2 Locations).
-  sub_level_checks: 'true'
-  # Determines whether beating the harder (points-based) Twinkle Circuit and Sand Hill missions grants checks (2 Locations).
-  # Only works if sublevel checks are enabled.
-  sub_level_checks_hard: 'false'
+  # Determines whether beating Twinkle Circuit grants a check.
+  twinkle_circuit_check: 'true'
+  # If enabled, each character will have their own Twinkle Circuit check (5 extra locations).
+  # Only works if Twinkle Circuit Check is enabled.
+  twinkle_circuit_multiple_check: 'true'
+  # Determines whether beating Sand Hill grants a check.
+  sand_hill_check: 'true'
+  # Determines whether beating the harder (points-based) Sand Hill mission grants a check.
+  # Only works if Sand Hill Check is enabled.
+  sand_hill_check_hard: 'false'
   # Determines whether beating Sky Chase Act 1 and 2 grants checks (2 Locations).
   sky_chase_checks: 'true'
   # Determines whether beating the harder (points-based) Sky Chase Act 1 and 2 missions grants checks (2 Locations).
@@ -182,6 +200,7 @@ Sonic Adventure DX:
   sky_chase_checks_hard: 'false'
   
   # Determines whether destroying enemies grants checks (710 Locations).
+  # You need to enable enemy-sanity for some characters for it to work.
   enemy_sanity: 'false'
   # If enemy-sanity is on, determines whether Sonic's enemies are part of the randomizer (308 Locations).
   sonic_enemy_sanity: 'true'
@@ -197,6 +216,7 @@ Sonic Adventure DX:
   gamma_enemy_sanity: 'true'
   
   # Determines whether destroying capsules grants checks (692 Locations).
+  # You need to enable capsule-sanity for some characters and some types for it to work.
   capsule_sanity: 'false'
   # Determines whether pinball's capsules grant checks (5 Locations).
   pinball_capsules: 'false'
@@ -221,6 +241,13 @@ Sonic Adventure DX:
   powerup_capsule_sanity: 'true'
   # If capsule-sanity is on, the randomizer will include 5, 10 and ? capsules (441 Locations).
   ring_capsule_sanity: 'true'
+  
+  # Determines whether catching every type of fish grants checks (23 Locations).
+  fish_sanity: 'false'
+  # Enabling Lazy Fishing does two things:
+  # Grants infinite tension during fishing if you have the Power Rod upgrade.
+  # Adds the Power Rod as a logic requirement for all fish in fish-sanity, A/S ranks and every "Keeper" mission for Big.
+  lazy_fishing: 'false'
   
   # Junk Options
   

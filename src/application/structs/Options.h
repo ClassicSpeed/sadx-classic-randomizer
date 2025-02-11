@@ -17,7 +17,8 @@ enum RingLoss
 {
     Classic,
     Modern,
-    OneHitKnockOut
+    OneHitKnockOut,
+    OneHitKnockOutNoShields
 };
 
 enum StartingArea
@@ -30,13 +31,15 @@ enum StartingArea
     MysticRuinsMain,
     AngelIsland,
     Jungle,
-    EggCarrier,
+    EggCarrierOutside,
+    EggCarrierInside,
+    EggCarrierFrontDeck,
     NoStatingArea
 };
 
 enum Levels
 {
-    EmeraldCoast = 9,
+    EmeraldCoast = 11,
     WindyValley,
     Casinopolis,
     IceCap,
@@ -84,6 +87,9 @@ struct Options
 
     bool capsuleSanity = false;
     bool includePinballCapsules = false;
+
+    bool fishSanity = false;
+    bool lazyFishing = false;
     
     bool sonicCapsuleSanity = true;
     bool tailsCapsuleSanity = true;
@@ -125,8 +131,13 @@ struct Options
     int bigActionStageMissions = 0;
     int gammaActionStageMissions = 0;
 
+    bool twinkleCircuitCheck = true;
+    bool multipleTwinkleCircuitChecks = true;
+    
     bool skyChaseChecks = false;
+    bool skyChaseChecksHard = false;
     std::vector<int> missionBlacklist = {};
+    bool expertMode = false;
 
     void SetActionStageMissions(const Characters character, const int missions)
     {

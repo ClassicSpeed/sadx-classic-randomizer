@@ -20,7 +20,8 @@ class DisplayManager
 public:
     DisplayManager();
 
-    void QueueMessage(const std::string& message);
+    void QueueItemMessage(const std::string& message);
+    void QueueChatMessage(const std::string& message);
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
     void UpdateLevelStatus(LevelStatus levelStatus);
     void UpdateMissionStatus(MissionStatus missionStatus);
@@ -34,16 +35,19 @@ public:
     void OnEnterCharacterSelectScreen();
     void OnExitCharacterSelectScreen();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
-    void SetMessageConfiguration(float messageDisplayDuration, int messageFontSize, int messageColor);
+    void SetMessageConfiguration(float messageDisplayDuration, int messageFontSize,
+                                 int itemMessageColor, int chatMessageColor);
     void UpdateVoiceMenuCharacter(int characterVoiceIndex);
 
 private:
     void RemoveExpiredMessages();
     void AddNewMessages();
-    void DisplayMessages() const;
+    void DisplayItemMessages() const;
+    void DisplayChatMessages();
     void DisplayGoalStatus();
     std::string GetMissionBTarget(bool showTarget);
     std::string GetMissionATarget(bool showTarget);
+    std::string GetMissionSTarget(bool showTarget, bool expertMode);
     void DisplayItemsUnlocked();
 
     int _voiceMenuCharacter = 0;
@@ -59,8 +63,13 @@ private:
 
     float _displayDuration = 6.0f;
     unsigned __int16 _debugFontSize = 21;
-    std::queue<std::string> _messagesQueue;
+    std::queue<std::string> _itemMessagesQueue;
     std::deque<Message> _currentMessages;
+
+    int _chatMessageColor = 0xFFFFFFFF;
+    int _chatDisplayCount = 5;
+    std::vector<std::string> _chatMessagesQueue;
+    std::clock_t _lastMessageTime = -1;
 
     std::clock_t _goalTimer = -1;
 
@@ -85,7 +94,7 @@ private:
     int _bigColor = 0xFF7505f5;
     int _gammaColor = 0xFF827f80;
 
-    
+
     int _whiteEmeraldColor = 0xDDFFFFFF;
     int _redEmeraldColor = 0xDDFF0000;
     int _cyanEmeraldColor = 0xDD00FFFF;

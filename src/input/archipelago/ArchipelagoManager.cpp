@@ -55,17 +55,41 @@ void ArchipelagoManager::OnFrame()
     this->ManageMessages();
 }
 
+static std::string LeftTrim(std::string s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }));
+    return s;
+}
+
+static std::string RightTrim(std::string s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+    return s;
+}
+
+static std::string Trim(std::string s) {
+    return LeftTrim(RightTrim(std::move(s)));
+}
 
 void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
                                                 const std::string& serverPassword,
-                                                const LinkOverride newDeathLinkOverride,
-                                                const LinkOverride newRingLinkOverride)
+                                                const DeathLinkOverride newDeathLinkOverride,
+                                                const RingLinkOverride newRingLinkOverride,
+
+                                                const bool showChatMessages, const bool showGoalReached,
+                                                const bool showCountdowns, const bool showPlayerConnections)
 {
-    this->_serverIP = serverIp;
-    this->playerName = newPlayerName;
+    this->_serverIP = Trim(serverIp);
+    this->playerName = Trim(newPlayerName);
     this->_serverPassword = serverPassword;
     this->deathLinkOverride = newDeathLinkOverride;
     this->ringLinkOverride = newRingLinkOverride;
+    this->_showChatMessages = showChatMessages;
+    this->_showGoalReached = showGoalReached;
+    this->_showCountdowns = showCountdowns;
+    this->_showPlayerConnections = showPlayerConnections;
 }
 
 
@@ -141,6 +165,20 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
             randomizerPtr->ProcessRings(amount);
             break;
         }
+        if (!strcmp(tag.c_str(), "HardRingLink"))
+        {
+            if (!randomizerPtr->GetOptions().ringLinkActive || !randomizerPtr->GetOptions().hardRingLinkActive)
+                return;
+
+            //Ignore our own ring link    
+            if (bounceData["source"].asInt() == archipelagoManagerPtr->instanceId)
+                break;
+
+            const int amount = bounceData["amount"].asInt();
+
+            randomizerPtr->ProcessRings(amount);
+            break;
+        }
     }
 }
 
@@ -178,6 +216,11 @@ void SADX_GoalRequiresChaoRaces(const int goalRequiresChaoRaces)
 void SADX_CompareModVersion(const int version)
 {
     randomizerPtr->OnCheckVersion(version);
+}
+
+void SADX_LogicLevel(const int logicLevel)
+{
+    randomizerPtr->OnSetLogicLevel(logicLevel);
 }
 
 void SADX_EmblemsForPerfectChaos(const int emblemGoal)
@@ -316,6 +359,14 @@ void SADX_RingCapsuleSanity(const int ringCapsuleSanity)
 {
     randomizerPtr->OnRingCapsuleSanitySet(ringCapsuleSanity);
 }
+void SADX_FishSanity(const int fishSanity)
+{
+    randomizerPtr->OnFishSanitySet(fishSanity);
+}
+void SADX_LazyFishing(const int lazyFishing)
+{
+    randomizerPtr->OnLazyFishingSet(lazyFishing);
+}
 
 void SADX_ProgressionItems(const std::map<int, int> progressionItems)
 {
@@ -388,9 +439,9 @@ void SADX_SetEntranceRandomizer(const int enableEntranceRandomizer)
 
 void SADX_SetDeathLink(const int deathLinkActive)
 {
-    if (archipelagoManagerPtr->deathLinkOverride == ForceEnabled)
+    if (archipelagoManagerPtr->deathLinkOverride == DeathLinkForceEnabled)
         randomizerPtr->SetDeathLink(true);
-    else if (archipelagoManagerPtr->deathLinkOverride == ForceDisabled)
+    else if (archipelagoManagerPtr->deathLinkOverride == DeathLinkForceDisabled)
         randomizerPtr->SetDeathLink(false);
     else
         randomizerPtr->SetDeathLink(deathLinkActive);
@@ -409,9 +460,10 @@ void SADX_ReceiveDeathLinkChance(const int receiveDeathLinkChance)
 
 void SADX_SetRingLink(const int ringLinkActive)
 {
-    if (archipelagoManagerPtr->ringLinkOverride == ForceEnabled)
+    if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabled
+        || archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabledHard)
         randomizerPtr->SetRingLink(true);
-    else if (archipelagoManagerPtr->ringLinkOverride == ForceDisabled)
+    else if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceDisabled)
         randomizerPtr->SetRingLink(false);
     else
         randomizerPtr->SetRingLink(ringLinkActive);
@@ -424,17 +476,37 @@ void SADX_SetCasinopolisRingLink(const int casinopolisRingLink)
 
 void SADX_SetHardRingLink(const int hardRingLinkActive)
 {
-    randomizerPtr->SetHardRingLink(hardRingLinkActive);
+    if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabledHard)
+        randomizerPtr->SetHardRingLink(true);
+    else if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceDisabled
+        || archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabled)
+        randomizerPtr->SetHardRingLink(false);
+    else
+        randomizerPtr->SetHardRingLink(hardRingLinkActive);
 }
 
 void SADX_RingLoss(const int ringLoss)
 {
     randomizerPtr->SetRingLoss(static_cast<RingLoss>(ringLoss));
 }
+void SADX_TwinkleCircuitCheck(const int twinkleCircuitCheck)
+{
+    randomizerPtr->SetTwinkleCircuitCheck(twinkleCircuitCheck);
+}
+
+void SADX_MultipleTwinkleCircuitChecks(const int multipleTwinkleCircuitChecks)
+{
+    randomizerPtr->SetMultipleTwinkleCircuitChecks(multipleTwinkleCircuitChecks);
+}
 
 void SADX_SkyChaseChecks(const int skyChaseChecks)
 {
     randomizerPtr->SetSkyChaseChecks(skyChaseChecks);
+}
+
+void SADX_SkyChaseChecksHard(const int skyChaseChecksHard)
+{
+    randomizerPtr->SetSkyChaseChecksHard(skyChaseChecksHard);
 }
 
 void SADX_BossChecks(const int bossChecks)
@@ -555,6 +627,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("GoalRequiresBosses", &SADX_GoalRequiresBosses);
     AP_RegisterSlotDataIntCallback("GoalRequiresChaoRaces", &SADX_GoalRequiresChaoRaces);
     AP_RegisterSlotDataIntCallback("ModVersion", &SADX_CompareModVersion);
+    AP_RegisterSlotDataIntCallback("LogicLevel", &SADX_LogicLevel);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("LevelForPerfectChaos", &SADX_LevelForPerfectChaos);
     AP_RegisterSlotDataIntCallback("MissionForPerfectChaos", &SADX_MissionForPerfectChaos);
@@ -587,6 +660,9 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("ShieldCapsuleSanity", &SADX_ShieldCapsuleSanity);
     AP_RegisterSlotDataIntCallback("PowerUpCapsuleSanity", &SADX_PowerUpCapsuleSanity);
     AP_RegisterSlotDataIntCallback("RingCapsuleSanity", &SADX_RingCapsuleSanity);
+    
+    AP_RegisterSlotDataIntCallback("FishSanity", &SADX_FishSanity);
+    AP_RegisterSlotDataIntCallback("LazyFishing", &SADX_LazyFishing);
 
     AP_RegisterSlotDataMapIntIntCallback("ProgressionItems", &SADX_ProgressionItems);
 
@@ -610,7 +686,10 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);
     AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
 
+    AP_RegisterSlotDataIntCallback("TwinkleCircuitCheck", &SADX_TwinkleCircuitCheck);
+    AP_RegisterSlotDataIntCallback("MultipleTwinkleCircuitChecks", &SADX_MultipleTwinkleCircuitChecks);
     AP_RegisterSlotDataIntCallback("SkyChaseChecks", &SADX_SkyChaseChecks);
+    AP_RegisterSlotDataIntCallback("SkyChaseChecksHard", &SADX_SkyChaseChecksHard);
 
     AP_RegisterSlotDataIntCallback("BossChecks", &SADX_BossChecks);
     AP_RegisterSlotDataIntCallback("UnifyChaos4", &SADX_UnifyChaos4);
@@ -704,14 +783,14 @@ void ArchipelagoManager::EnqueueMessage(AP_Message* msg)
             AP_ItemSendMessage* sendMsg = static_cast<AP_ItemSendMessage*>(msg);
             if (!sendMsg)
                 return;
-            return _randomizer.QueueNewMessage("Sent " + sendMsg->item + " to " + sendMsg->recvPlayer);
+            return _randomizer.QueueNewItemMessage("Sent " + sendMsg->item + " to " + sendMsg->recvPlayer);
         }
     case AP_MessageType::ItemRecv:
         {
             AP_ItemRecvMessage* recvMsg = static_cast<AP_ItemRecvMessage*>(msg);
             if (!recvMsg)
                 return;
-            return _randomizer.QueueNewMessage("Received " + recvMsg->item + " from " + recvMsg->sendPlayer);
+            return _randomizer.QueueNewItemMessage("Received " + recvMsg->item + " from " + recvMsg->sendPlayer);
         }
     case AP_MessageType::Hint:
         {
@@ -722,15 +801,37 @@ void ArchipelagoManager::EnqueueMessage(AP_Message* msg)
             if (hintMsg->checked)
                 return;
 
-            _randomizer.QueueNewMessage(
+            _randomizer.QueueNewItemMessage(
                 "  " + hintMsg->location + " in " + hintMsg->sendPlayer + "'s world. (not found)");
-            _randomizer.QueueNewMessage(hintMsg->recvPlayer + "'s " + hintMsg->item + " can be found at");
+            _randomizer.QueueNewItemMessage(hintMsg->recvPlayer + "'s " + hintMsg->item + " can be found at");
+            return;
+        }
+    case AP_MessageType::Chat:
+        {
+            if (this->_showChatMessages)
+                _randomizer.QueueNewChatMessage(msg->text);
+            return;
+        }
+    case AP_MessageType::Countdown:
+        {
+            if (this->_showCountdowns)
+                _randomizer.QueueNewChatMessage(msg->text);
+            return;
+        }
+    case AP_MessageType::PlayerConnection:
+        {
+            if (this->_showPlayerConnections)
+                _randomizer.QueueNewChatMessage(msg->text);
+            return;
+        }
+    case AP_MessageType::GoalReached:
+        {
+            if (this->_showGoalReached)
+                _randomizer.QueueNewChatMessage(msg->text);
             return;
         }
     case AP_MessageType::Plaintext:
-    case AP_MessageType::Countdown:
         {
-            // Do nothing, avoid spam
         }
     }
 }

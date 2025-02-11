@@ -2,6 +2,112 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.0] - 2025-02-11
+
+### Added
+
+#### New Features
+
+- Added 5 unused **extra circuits** to the Twinkle Circuit checks. You can do just the original or one for each
+  character.
+    - The Twinkle Circuit door will now be closed when the Twinkle Circuit checks are disabled.
+- **Replaced Casino District Keys** with Hotel Back Key and Station Back Key.
+- Renamed Hotel/Station Key to Hotel/Station Front Key.
+- Added two new key items: **Egglift** and **Monorail**.
+- The inside of the Egg Carrier is now one of the starting locations.
+- Added a location group for each character's level, for example, "Emerald Coast (Sonic)".
+- Added **Fish-sanity**:
+    - You can toggle an indicator (and its colors) for fish in the mod settings.
+    - Added location group **Fish**. Also fish are included in the character's level-specific group.
+- Added **"Lazy Fishing"** option.
+    - Grants infinite tension during fishing if you have the Power Rod upgrade.
+    - Also adds the power rod as a logic requirement for every fish in fish-sanity, B/A/S ranks and "Keeper" missions.
+- Added option to select the preferred **starting character**.
+- Added option to select the preferred **starting location**.
+- Added **S-Rank missions** for action stages with harder times.
+    - These missions are not available in the normal logic.
+- Added **bosses percentage** for the level completion goal.
+- Added **max emblem cap** in the YAML.
+- Added extras Ring Loss option: **One Hit K.O (No Shields)*, similar to One Hit K.O but shields and invincibility won't
+  work.
+- Added an option to extend **Ring Capacity** to 5 digits. This mod setting is disabled by default.
+- Added an extra option for **Ring Link Override** in the mod settings for Hard Ring Link.
+- **Chat messages** are now shown in the bottom left corner of the screen.
+    - You can change the color or disable some message types in the mod settings.
+- **Subtitles** will be shown when characters comment on items/traps.
+    - You can disable this in the mod settings.
+
+#### Quality of Life
+
+- Added an **indicator for level entrances**. This can be disabled in the mod settings.
+    - Red cross means the level is not for your character.
+    - Orange side arrow means the level is accessible, but you need to use the other entrance.
+    - Green upward arrow means the level is accessible.
+- Mod version is now shown in the bottom right corner when pausing.
+- Game Gear unlock messages are no longer shown.
+- When creating a new save file for an existing slot, completed missions will be marked as completed.
+- IP and Player name are now trimmed to avoid issues with extra spaces when connecting.
+- You no longer need the YAML file in the players folder to use Universal Tracker.
+- Added a version check (between the installed apworld and the one used to generate) when using Universal Tracker.
+
+### Changed
+
+- Start inventory items are now removed from the item pool.
+- Every character now uses Sonic's entrance for each level (except for vanilla alternative entrances).
+    - Big no longer uses Knuckles' entrance for Speed Highway.
+    - Gamma no longer uses Knuckles' entrance for Lost World.
+        - Mission 51 card was moved in front of the snake head to make it accessible even when the door is open.
+    - Tails, Knuckles, and Big no longer use Gamma's entrance for Final Egg.
+        - Solving the door puzzle with any character will save the solved state.
+    - Amy and Gamma no longer use Sonic's entrance for Sky Deck.
+- Everyone can now transform the Egg Carrier.
+- The mountain door near the Master Emerald shrine won't be closed anymore.
+- Tails' workshop runway will open if Sky Chase is enabled.
+    - After getting the check(s) from Act 1, the runway will close.
+- Separated Ring Link and Hard Ring Link packets. Perfect Chaos/end-of-level updates are treated as "hard" updates,
+  meaning only players with Hard Ring Link enabled will be affected by them.
+
+### Fixed
+
+- Fixed incorrect lines playing when getting a trap as Amy.
+- Some enemies with progression items were not marked correctly when the item was also useful or of another type.
+- Emblems are now treated as Progression Skip Balancing to prevent clogging up the balancing process.
+- Adjusted how enemy tracking works, which should fix problems with tracking and random checks being sent.
+- The indicator for Buyon is drawn higher to prevent it from being hidden inside the model.
+- Updated wording for the emblem goal setting to make it clearer and changed its max value to 90%.
+- Updated wording for Enemy/Capsule-sanity to make it clearer that it depends on the other character values.
+- Removed the 6th enemy from logic for Sonic's Ice Cap (DC only).
+- The tracker is no longer shown on the mission screen.
+
+### Removed
+
+- Removed the archipelago image from life capsules.
+- Removed the Guaranteed level option (generation no longer grants extra items).
+
+### Logic
+
+#### Hard
+
+- Sand Hill entrance is no longer in logic for Sonic (only in expert).
+- All Gamma's Windy Valley level missions, enemies, and capsules are now in logic without the Jet Booster.
+- The Hidden Bed Emblem is now in logic for everyone in hard+ logic.
+- The Main Platform Emblem is now in logic for Knuckles in hard+ logic.
+
+#### Expert (DC)
+
+- Added skip from Hotel to SSMain for Sonic, Tails, Knuckles, Amy, and Gamma.
+- Added skip from SSMain to Station for Tails.
+- Added skip from MRMain to AngelIsland (and back) for Tails and Knuckles.
+
+#### Expert (DX)
+
+- Added skip from Hotel to SSMain for Sonic.
+- Added skip from Hotel to Casino for Sonic.
+- Added skip from SSMain to TP Lobby for Sonic.
+- Added skip from TP Lobby to SSMain for Big and Gamma.
+- Added skip from MRMain to AngelIsland (and back) for Tails and Knuckles.
+- Added alternative requirement from Hotel to Casino for Tails (with hotel front key).
+
 ## [v1.0.1] - 2025-01-17
 
 ### Added
@@ -140,7 +246,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- All 3 secret *Chao Eggs* are now location checks. You have to bring them to the Chao Garden to get the check.
+- All 3 secret *Chao Eggs** are now location checks. You have to bring them to the Chao Garden to get the check.
 - Added the 5 *Chao Races* emblems as checks.
     - You can select what percentage of action stages you have access to before the races are in logic.
 - *Chao stats multiplier* in the mod's settings (default is 1, up to 50).

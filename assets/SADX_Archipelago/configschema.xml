@@ -15,7 +15,7 @@
             <Property name="DeathLinkOverride" type="DeathLinkIndex" defaultvalue="0" display="Death Link Override">
                 <HelpText>You can override the Death Link setting from the yaml.</HelpText>
             </Property>
-            <Property name="RingLinkOverride" type="DeathLinkIndex" defaultvalue="0" display="Ring Link Override">
+            <Property name="RingLinkOverride" type="RingLinkIndex" defaultvalue="0" display="Ring Link Override">
                 <HelpText>You can override the Ring Link setting from the yaml.</HelpText>
             </Property>
         </Group>
@@ -28,17 +28,46 @@
                       display="Message Font Size">
                 <HelpText>Font size for Archipelago messages</HelpText>
             </Property>
-            <Property name="MessageColorR" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
-                      display="Message Color Red">
-                <HelpText>Red value of color for Archipelago messages</HelpText>
+            <Property name="ItemMessageColorR" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
+                      display="Item Message Color Red">
+                <HelpText>Red value of color for Archipelago messages (item and hints).</HelpText>
             </Property>
-            <Property name="MessageColorG" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
-                      display="Message Color Green">
-                <HelpText>Green value of color for Archipelago messages</HelpText>
+            <Property name="ItemMessageColorG" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Item Message Color Green">
+                <HelpText>Green value of color for Archipelago messages (item and hints).</HelpText>
             </Property>
-            <Property name="MessageColorB" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
-                      display="Message Color Blue">
-                <HelpText>Blue value of color for Archipelago messages</HelpText>
+            <Property name="ItemMessageColorB" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
+                      display="Item Message Color Blue">
+                <HelpText>Blue value of color for Archipelago messages (item and hints).</HelpText>
+            </Property>
+
+            <Property name="ShowChatMessages" type="bool" defaultvalue="True" display="Show Chat Messages">
+                <HelpText>Display chats messages in the bottom left corner of the screen.</HelpText>
+            </Property>
+
+            <Property name="ShowGoalReached" type="bool" defaultvalue="True" display="Show Goal Reached">
+                <HelpText>Display a chat message when someone reaches their goal.</HelpText>
+            </Property>
+
+            <Property name="ShowCountdowns" type="bool" defaultvalue="True" display="Show Countdowns">
+                <HelpText>Display chat messages for the countdowns.</HelpText>
+            </Property>
+
+            <Property name="ShowPlayerConnections" type="bool" defaultvalue="False" display="Show Player Connections">
+                <HelpText>Display a chay message when players connect and disconnect.</HelpText>
+            </Property>
+
+            <Property name="ChatMessageColorR" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Chat Message Color Red">
+                <HelpText>Red value of color for Archipelago messages (chat and countdowns).</HelpText>
+            </Property>
+            <Property name="ChatMessageColorG" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Chat Message Color Green">
+                <HelpText>Green value of color for Archipelago messages (chat and countdowns).</HelpText>
+            </Property>
+            <Property name="ChatMessageColorB" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Chat Message Color Blue">
+                <HelpText>Blue value of color for Archipelago messages (chat and countdowns).</HelpText>
             </Property>
         </Group>
 
@@ -60,6 +89,12 @@
             <Property name="NoLifeLossOnRestart" type="bool" defaultvalue="True" display="No Life Loss On Restart">
                 <HelpText>Prevent losing a life when restarting a level.</HelpText>
             </Property>
+            <Property name="ExtendRingCapacity" type="bool" defaultvalue="False" display="Extend Rings Capacity">
+                <HelpText>Changes ring capacity from 3 to 5 digits.</HelpText>
+            </Property>
+            <Property name="ShowEntranceIndicators" type="bool" defaultvalue="True" display="Show Entrance Indicators">
+                <HelpText>When random level entrance in is enabled, show helpful indicators over the levels' door.</HelpText>
+            </Property>
         </Group>
 
 
@@ -68,6 +103,10 @@
                 <HelpText>Select which character's voice will be used for the menus.</HelpText>
             </Property>
 
+            <Property name="DisplaySubtitlesForVoiceReactions" type="bool" defaultvalue="True" display="Display Subtitles for Voice Reactions">
+                <HelpText>Display subtitles for the voice reactions when receiving items or traps.</HelpText>
+            </Property>
+            
             <Property name="EggmanOnTrap" type="bool" defaultvalue="True"
                       display="Eggman voice clips for traps">
                 <HelpText>Play an Eggman voice clip when receiving a trap. Note: turning off all trap voice lines will
@@ -120,7 +159,7 @@
                 </HelpText>
             </Property>
         </Group>
-        <Group name="Sanity" display="Enemy/Capsule-Sanity">
+        <Group name="Sanity" display="Enemy/Capsule/Fish-Sanity">
 
             <Property name="TrackerArrow" type="bool" defaultvalue="True"
                       display="Tracker Arrow">
@@ -185,6 +224,23 @@
                 <HelpText>Blue value of the color for the capsule indicator.</HelpText>
             </Property>
 
+            <Property name="FishIndicator" type="bool" defaultvalue="True"
+                      display="Fish Indicator">
+                <HelpText>Show an indicator over the fish to help track them.</HelpText>
+            </Property>
+            <Property name="FishIndicatorR" type="int" defaultvalue="0" minvalue="0" maxvalue="255"
+                      display="Fish Indicator Color Red">
+                <HelpText>Red value of the color for the fish indicator.</HelpText>
+            </Property>
+            <Property name="FishIndicatorG" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Fish Indicator Color Green">
+                <HelpText>Green value of the color for the fish indicator.</HelpText>
+            </Property>
+            <Property name="FishIndicatorB" type="int" defaultvalue="255" minvalue="0" maxvalue="255"
+                      display="Fish Indicator Color Blue">
+                <HelpText>Blue value of the color for the fish indicator.</HelpText>
+            </Property>
+
             <Property name="ProgressionItemIndicator" type="bool" defaultvalue="True"
                       display="Progression Item Indicator">
                 <HelpText>Override the indicator's color when the check contains a progression item.</HelpText>
@@ -209,8 +265,12 @@
             <EnumMember name="1" display="Force Enabled"/>
             <EnumMember name="2" display="Force Disabled"/>
         </Enum>
-    </Enums>
-    <Enums>
+        <Enum name="RingLinkIndex">
+            <EnumMember name="0" display="Default"/>
+            <EnumMember name="1" display="Force Enabled"/>
+            <EnumMember name="2" display="Force Enabled (Hard)"/>
+            <EnumMember name="3" display="Force Disabled"/>
+        </Enum>
         <Enum name="CharacterVoiceIndex">
             <EnumMember name="-1" display="Random"/>
             <EnumMember name="0" display="Default"/>

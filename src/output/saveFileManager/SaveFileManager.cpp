@@ -118,13 +118,6 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_WINDY));
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_WINDYSTONE));
 
-    //Angel Island Shrine door
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ISLANDDOOR));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_ISLANDDOOR));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ISLANDDOOR));
-
-
-    
     //Ice Cap Stone
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ICESTONE));
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ICESTONE));
@@ -163,13 +156,26 @@ void SaveFileManager::OnSaveFileCreated()
 
     //FinalEgg
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_FINALEGG));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_ENTRANCE_FINALEGG));
+
+    //EggCarrier
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_EGGLIFT));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_MONORAIL));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_MONORAIL));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_MONORAIL));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_MONORAIL));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_MONORAIL));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_MONORAIL));
 
     //Chao Garden
     ClearEventFlag(static_cast<EventFlags>(FLAG_GET_GOLDEGG));
     ClearEventFlag(static_cast<EventFlags>(FLAG_GET_SILVEREGG));
     ClearEventFlag(static_cast<EventFlags>(FLAG_GET_BLACKEGG));
-    
+
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_SS));
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_MR));
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_EC));
@@ -188,5 +194,27 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_SS));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_MR));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_EC));
+    WriteSaveFile();
+}
+
+
+void SaveFileManager::StartAllMissions()
+{
+    for (int i = 0; i < 60; i++)
+    {
+        if (!(MissionFlags[i] & MissionFlags_Complete))
+        {
+            MissionFlags[i] |= MissionFlags_Found;
+            MissionFlags[i] |= MissionFlags_Started;
+        }
+    }
+    WriteSaveFile();
+}
+
+void SaveFileManager::SetMissionCompleted(const int mission)
+{
+    MissionFlags[mission - 1] |= MissionFlags_Found;
+    MissionFlags[mission - 1] &= ~MissionFlags_Started;
+    MissionFlags[mission - 1] |= MissionFlags_Complete;
     WriteSaveFile();
 }

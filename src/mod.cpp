@@ -33,19 +33,20 @@ WorldStateManager worldStateManager = WorldStateManager();
 ItemRepository itemRepository = ItemRepository();
 LocationRepository checkRepository = LocationRepository();
 ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger(INSTANCE_ID, BASE_ID);
+SaveFileManager saveFileManager = SaveFileManager();
 
 Randomizer randomizer = Randomizer(displayManager,
                                    characterManager,
                                    worldStateManager,
                                    itemRepository,
                                    checkRepository,
-                                   archipelagoMessenger);
+                                   archipelagoMessenger,
+                                   saveFileManager);
 
 CheatsManager cheatsManager = CheatsManager(randomizer);
 ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer, INSTANCE_ID, BASE_ID);
 EventDetector eventDetector = EventDetector(randomizer);
 CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(randomizer);
-SaveFileManager saveFileManager = SaveFileManager();
 
 
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
@@ -138,21 +139,38 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
     const int deathLinkOverride = settingsIni->getInt("AP", "DeathLinkOverride", 0);
     const int ringLinkOverride = settingsIni->getInt("AP", "RingLinkOverride", 0);
 
+
+    const bool showChatMessages = settingsIni->getBool("Messages", "ShowChatMessages", true);
+    const bool showGoalReached = settingsIni->getBool("Messages", "ShowGoalReached", true);
+    const bool showCountdowns = settingsIni->getBool("Messages", "ShowCountdowns", true);
+    const bool showPlayerConnections = settingsIni->getBool("Messages", "ShowPlayerConnections", false);
+
     archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword,
-                                              static_cast<LinkOverride>(deathLinkOverride),
-                                              static_cast<LinkOverride>(ringLinkOverride));
+                                              static_cast<DeathLinkOverride>(deathLinkOverride),
+                                              static_cast<RingLinkOverride>(ringLinkOverride),
+                                              showChatMessages, showGoalReached, showCountdowns, showPlayerConnections
+    );
 }
 
 void LoadDisplayMessageSettings(const IniFile* settingsIni)
 {
     const float messageDisplayDuration = settingsIni->getFloat("Messages", "MessageDisplayDuration", 5.0f);
     const int messageFontSize = settingsIni->getInt("Messages", "MessageFontSize", 21);
-    const int messageColorR = settingsIni->getInt("Messages", "MessageColorR", 33);
-    const int messageColorG = settingsIni->getInt("Messages", "MessageColorG", 255);
-    const int messageColorB = settingsIni->getInt("Messages", "MessageColorB", 33);
+    const int itemMessageColorR = settingsIni->getInt("Messages", "ItemMessageColorR", 33);
+    const int itemMessageColorG = settingsIni->getInt("Messages", "ItemMessageColorG", 255);
+    const int itemMessageColorB = settingsIni->getInt("Messages", "ItemMessageColorB", 33);
+
+
+    const int chatMessageColorR = settingsIni->getInt("Messages", "ChatMessageColorR", 255);
+    const int chatMessageColorG = settingsIni->getInt("Messages", "ChatMessageColorG", 255);
+    const int chatMessageColorB = settingsIni->getInt("Messages", "ChatMessageColorB", 255);
+
 
     displayManager.SetMessageConfiguration(messageDisplayDuration, messageFontSize,
-                                           (0xFF << 24) | messageColorR << 16 | messageColorG << 8 | messageColorB);
+                                           (0xFF << 24) | itemMessageColorR << 16 | itemMessageColorG << 8 |
+                                           itemMessageColorB,
+                                           (0xFF << 24) | chatMessageColorR << 16 | chatMessageColorG << 8 |
+                                           chatMessageColorB);
 }
 
 void LoadGameSettings(const IniFile* settingsIni)
@@ -165,7 +183,15 @@ void LoadGameSettings(const IniFile* settingsIni)
     const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
     const bool noLifeLossOnRestart = settingsIni->getBool("GameSettings", "NoLifeLossOnRestart", true);
 
+    const bool extendRingCapacity = settingsIni->getBool("GameSettings", "ExtendRingCapacity", false);
+
+    const bool showEntranceIndicators = settingsIni->getBool("GameSettings",
+                                                             "ShowEntranceIndicators", true);
+
     const int voiceMenuIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
+
+    const bool showCommentsSubtitles = settingsIni->getBool("CharacterVoiceReactions",
+                                                            "DisplaySubtitlesForVoiceReactions", true);
     const bool eggmanCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnTrap", true);
     const bool otherCharactersCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "OtherCharactersOnTrap",
                                                                    true);
@@ -205,12 +231,19 @@ void LoadGameSettings(const IniFile* settingsIni)
     const int capsuleIndicatorB = settingsIni->getInt("Sanity", "CapsuleIndicatorB", 0);
     const int capsuleIndicatorColor = 0xFF << 24 | capsuleIndicatorR << 16 | capsuleIndicatorG << 8 | capsuleIndicatorB;
 
+    const bool fishIndicator = settingsIni->getBool("Sanity", "FishIndicator", true);
+    const int fishIndicatorR = settingsIni->getInt("Sanity", "FishIndicatorR", 0);
+    const int fishIndicatorG = settingsIni->getInt("Sanity", "FishIndicatorG", 255);
+    const int fishIndicatorB = settingsIni->getInt("Sanity", "FishIndicatorB", 255);
+    const int fishIndicatorColor = 0xFF << 24 | fishIndicatorR << 16 | fishIndicatorG << 8 | fishIndicatorB;
+
     const bool progressionIndicator = settingsIni->getBool("Sanity", "ProgressionItemIndicator", true);
     const int progressionIndicatorR = settingsIni->getInt("Sanity", "ProgressionIndicatorR", 212);
     const int progressionIndicatorG = settingsIni->getInt("Sanity", "ProgressionIndicatorG", 175);
     const int progressionIndicatorB = settingsIni->getInt("Sanity", "ProgressionIndicatorB", 55);
     const int progressionIndicatorColor = 0xFF << 24 | progressionIndicatorR << 16 | progressionIndicatorG << 8 |
         progressionIndicatorB;
+
 
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, noLifeLossOnRestart);
@@ -219,15 +252,19 @@ void LoadGameSettings(const IniFile* settingsIni)
                                     trackerArrowShowDistance, trackerArrowOverrideColor,
                                     enemyIndicator, enemyIndicatorColor,
                                     capsuleIndicator, capsuleIndicatorColor,
+                                    fishIndicator, fishIndicatorColor,
                                     progressionIndicator, progressionIndicatorColor);
+    worldStateManager.SetShowEntranceIndicators(showEntranceIndicators);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
     worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);
     characterManager.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,
-                                                currentCharacterReactToTrap);
+                                                currentCharacterReactToTrap, showCommentsSubtitles);
+    characterManager.SetExtendRingCapacity(extendRingCapacity);
 
     randomizer.SetCharacterVoiceReactions(eggmanCommentOnCharacterUnlock, currentCharacterCommentOnCharacterUnlock,
                                           unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
-                                          tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems);
+                                          tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems,
+                                          showCommentsSubtitles);
 }
 
 #define ReplacePNG_Common(a) do { \

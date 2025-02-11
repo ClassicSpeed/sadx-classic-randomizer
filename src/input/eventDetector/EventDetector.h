@@ -35,6 +35,17 @@ constexpr int EXTRA_INDICATOR_HEIGHT = 20;
 constexpr int HEIGHT_SIZE = 4;
 constexpr int EXTRA_HEIGHT_SIZE = 7;
 
+constexpr int ENEMY_STARTING_ID = 10000;
+constexpr int ENEMY_INVALID_ID = -1;
+constexpr int ENEMY_SEARCHING_ID = -2;
+
+
+enum IndicatorType
+{
+    EnemyIndicator,
+    CapsuleIndicator,
+    FishIndicator,
+}; 
 
 class EventDetector
 {
@@ -49,7 +60,9 @@ public:
                            bool trackerArrowShowDistance, bool trackerArrowOverrideColor,
                            bool enemyIndicator, int enemyIndicatorColor,
                            bool capsuleIndicator, int capsuleIndicatorColor,
+                           bool fishIndicator, int fishIndicatorColor,
                            bool progressionIndicator, int progressionIndicatorColor);
+    void OnTwinkleCircuitCompleted(int character);
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
     std::vector<CapsuleLocationData> capsules;
@@ -65,9 +78,9 @@ public:
     bool trackerArrowShowDistance = true;
     bool enemyIndicator = true;
     bool capsuleIndicator = true;
+    bool fishIndicator = true;
     bool progressionIndicator = true;
 
-    std::unordered_map<taskwk*, int> enemyTaskMap;
 
 
     NJS_COLOR arrowColor[6] = {
@@ -85,6 +98,11 @@ public:
         {0xFFFF1400},
     };
     NJS_COLOR capsuleIndicatorColor[3] = {
+        {0xFFFF1400},
+        {0xFFFF1400},
+        {0xFFFF1400},
+    };
+    NJS_COLOR fishIndicatorColor[3] = {
         {0xFFFF1400},
         {0xFFFF1400},
         {0xFFFF1400},
