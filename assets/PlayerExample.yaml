@@ -67,9 +67,12 @@ Sonic Adventure DX:
   # Select which the character you will start with.
   # Choose between Random (0), Sonic (1), Tails (2), Knuckles (3), Amy (4), Big (5), and Gamma (6).
   starting_character: 0
-  # Randomize starting location. If false, you will start at Station Square.
-  random_starting_location: 'true'
-  # If randomize starting location is enabled, each character will start in a random location.
+  # Select in which location you would like to start.
+  # Keep in mind that if there are no checks in that location for your character, another one will be chosen.
+  # Choose between Random (0), Station Square (Main) (1), Station (2), Hotel (3), Casino (4), Twinkle Park Lobby (5),
+  # Mystic Ruins (Main) (6), Angel Island (7), Jungle (8) and EggCarrier (Outside) (9), EggCarrier (Inside) (10)
+  starting_location: 0
+  # If enabled, each character will start in a random location.
   random_starting_location_per_character: 'true'
   # Ensures at least this many checks in your starting location if possible.
   guaranteed_starting_checks: 2

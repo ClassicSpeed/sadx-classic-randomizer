@@ -47,7 +47,8 @@ All notable changes to this project will be documented in this file.
 - Added location group Fish and fish are included in the character's level-specific group.
 - When creating a new save file for an existing slot, the completed missions will be marked as completed.
 - Start inventory items are now removed from the item pool.
-- Added option to select the starting character.
+- Added option to select the preferred starting character.
+- Added option to select the preferred starting location.
 - Added S-Rank missions for actions stages with harder times.
     - These missions are not available in the normal logic.
 - Added "Lazy Fishing" option.
