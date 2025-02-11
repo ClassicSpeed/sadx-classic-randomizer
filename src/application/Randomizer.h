@@ -49,6 +49,7 @@ public:
     void SetActionStageMissions(Characters characters, int missions);
     void OnEnemySanitySet(bool enemySanity);
     void OnFishSanitySet(bool fishSanity);
+    void OnLazyFishingSet(bool lazyFishing);
     void SetCharacterEnemySanity(Characters character, bool characterEnemySanity);
     void OnCapsuleSanitySet(bool capsuleSanity);
     void OnPinballCapsulesSet(bool includePinballCapsules);

@@ -233,6 +233,10 @@ Sonic Adventure DX:
   
   # Determines whether catching every type of fish grants checks (23 Locations).
   fish_sanity: 'false'
+  # Enabling Lazy Fishing does two things:
+  # Grants infinite tension during fishing if you have the Power Rod upgrade.
+  # Adds the Power Rod as a logic requirement for all fish in fish-sanity, A/S ranks and every "Keeper" mission for Big.
+  lazy_fishing: 'false'
   
   # Junk Options
   

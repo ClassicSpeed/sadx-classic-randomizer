@@ -50,6 +50,9 @@ All notable changes to this project will be documented in this file.
 - Added option to select the starting character.
 - Added S-Rank missions for actions stages with harder times.
     - These missions are not available in the normal logic.
+- Added "Lazy Fishing" option.
+    - Grants infinite tension during fishing if you have the Power Rod upgrade.
+    - Also adds the power rod as a logic requirement for every fish in fish-sanity, B/A/S ranks and "Keeper" missions.
 
 ### Fixed
 

@@ -346,6 +346,10 @@ void SADX_FishSanity(const int fishSanity)
 {
     randomizerPtr->OnFishSanitySet(fishSanity);
 }
+void SADX_LazyFishing(const int lazyFishing)
+{
+    randomizerPtr->OnLazyFishingSet(lazyFishing);
+}
 
 void SADX_ProgressionItems(const std::map<int, int> progressionItems)
 {
@@ -641,6 +645,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("RingCapsuleSanity", &SADX_RingCapsuleSanity);
     
     AP_RegisterSlotDataIntCallback("FishSanity", &SADX_FishSanity);
+    AP_RegisterSlotDataIntCallback("LazyFishing", &SADX_LazyFishing);
 
     AP_RegisterSlotDataMapIntIntCallback("ProgressionItems", &SADX_ProgressionItems);
 

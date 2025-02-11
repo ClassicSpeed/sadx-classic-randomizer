@@ -230,6 +230,10 @@ void CharacterManager::OnPlayingFrame()
 
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
         return;
+
+    if (options.lazyFishing && unlockStatus.bigPowerRodUnlocked)
+        RodTension = 0;
+    
     if (PauseEnabled == 0)
         return;
 
