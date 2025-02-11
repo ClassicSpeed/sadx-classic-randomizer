@@ -200,6 +200,7 @@ Sonic Adventure DX:
   sky_chase_checks_hard: 'false'
   
   # Determines whether destroying enemies grants checks (710 Locations).
+  # You need to enable enemy-sanity for some characters for it to work.
   enemy_sanity: 'false'
   # If enemy-sanity is on, determines whether Sonic's enemies are part of the randomizer (308 Locations).
   sonic_enemy_sanity: 'true'
@@ -215,6 +216,7 @@ Sonic Adventure DX:
   gamma_enemy_sanity: 'true'
   
   # Determines whether destroying capsules grants checks (692 Locations).
+  # You need to enable capsule-sanity for some characters and some types for it to work.
   capsule_sanity: 'false'
   # Determines whether pinball's capsules grant checks (5 Locations).
   pinball_capsules: 'false'
