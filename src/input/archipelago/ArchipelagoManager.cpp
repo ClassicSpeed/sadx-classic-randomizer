@@ -55,6 +55,23 @@ void ArchipelagoManager::OnFrame()
     this->ManageMessages();
 }
 
+static std::string LeftTrim(std::string s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }));
+    return s;
+}
+
+static std::string RightTrim(std::string s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+    return s;
+}
+
+static std::string Trim(std::string s) {
+    return LeftTrim(RightTrim(std::move(s)));
+}
 
 void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
                                                 const std::string& serverPassword,
@@ -64,8 +81,8 @@ void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, con
                                                 const bool showChatMessages, const bool showGoalReached,
                                                 const bool showCountdowns, const bool showPlayerConnections)
 {
-    this->_serverIP = serverIp;
-    this->playerName = newPlayerName;
+    this->_serverIP = Trim(serverIp);
+    this->playerName = Trim(newPlayerName);
     this->_serverPassword = serverPassword;
     this->deathLinkOverride = newDeathLinkOverride;
     this->ringLinkOverride = newRingLinkOverride;

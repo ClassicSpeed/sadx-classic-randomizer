@@ -55,6 +55,7 @@ All notable changes to this project will be documented in this file.
     - Also adds the power rod as a logic requirement for every fish in fish-sanity, B/A/S ranks and "Keeper" missions.
 - Added bosses percentage for the level completion goal.
 - Added max emblem cap in the yaml.
+- IP and Player name are trimmed to avoid issues with extra spaces when connecting.
 
 ### Fixed
 
