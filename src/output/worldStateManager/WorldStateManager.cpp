@@ -999,7 +999,7 @@ FunctionHook<void> onMissionSetLoad(0x591A70, []()-> void
                 && position.y > 204 && position.y < 206
                 && position.z > -1128 && position.z < -1120)
             {
-                objData->SETEntry->Position = {-473.5, 91.5, -1026};
+                objData->SETEntry->Position = {-515.9674, 70.18237, -989.24146};
             }
         }
     }

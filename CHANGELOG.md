@@ -31,7 +31,7 @@ All notable changes to this project will be documented in this file.
 - Every character will now use Sonic's entrance for each level (except for vanilla alternative entrances).
     - Big no longer uses Knuckles' entrance for Speed Highway.
     - Gamma no longer uses Knuckles' entrance for Lost World.
-        - Mission 51 card was moved to the side of the snake head to make it accessible even when the door is open.
+        - Mission 51 card was moved in front of the snake head to make it accessible even when the door is open.
     - Tails, Knuckles, and Big no longer use Gamma's entrance for Final Egg.
         - Solving the door puzzle with any character will save the solved state.
     - Amy and Gamma no longer use Sonic's entrance for Sky Deck.
