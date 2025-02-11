@@ -57,6 +57,7 @@ All notable changes to this project will be documented in this file.
 - Added bosses percentage for the level completion goal.
 - Added max emblem cap in the yaml.
 - IP and Player name are trimmed to avoid issues with extra spaces when connecting.
+- Added extras Ring Loss option: One Hit K.O (No Shields) sames as One Hit K.O but shields and invincibility won't work.
 
 ### Fixed
 

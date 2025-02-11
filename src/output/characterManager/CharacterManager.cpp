@@ -99,12 +99,34 @@ static void __cdecl HandleRingLoss()
             Set0Rings();
         break;
     case OneHitKnockOut:
+    case OneHitKnockOutNoShields:
         Set0Rings();
         KillHimP(0);
         break;
     }
     characterManagerPtr->lastRingAmount = lastRingAmountBuffer;
 }
+
+FunctionHook<void, char> onGiveBarrier(0x441EA0, [](const char character)-> void
+{
+    if (characterManagerPtr->options.ringLoss == OneHitKnockOutNoShields)
+        return;
+    onGiveBarrier.Original(character);
+});
+
+FunctionHook<void, char> onGiveMagneticBarrier(0x441E30, [](const char character)-> void
+{
+    if (characterManagerPtr->options.ringLoss == OneHitKnockOutNoShields)
+        return;
+    onGiveMagneticBarrier.Original(character);
+});
+
+FunctionHook<void, char> onGiveInvincibility(0x441F10, [](const char character)-> void
+{
+    if (characterManagerPtr->options.ringLoss == OneHitKnockOutNoShields)
+        return;
+    onGiveInvincibility.Original(character);
+});
 
 void CharacterManager::UpdateOptions(const Options newOptions)
 {
@@ -233,7 +255,7 @@ void CharacterManager::OnPlayingFrame()
 
     if (options.lazyFishing && unlockStatus.bigPowerRodUnlocked)
         RodTension = 0;
-    
+
     if (PauseEnabled == 0)
         return;
 

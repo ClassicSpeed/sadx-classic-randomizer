@@ -17,7 +17,8 @@ enum RingLoss
 {
     Classic,
     Modern,
-    OneHitKnockOut
+    OneHitKnockOut,
+    OneHitKnockOutNoShields
 };
 
 enum StartingArea
