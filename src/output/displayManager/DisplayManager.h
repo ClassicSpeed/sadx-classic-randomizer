@@ -47,6 +47,7 @@ private:
     void DisplayGoalStatus();
     std::string GetMissionBTarget(bool showTarget);
     std::string GetMissionATarget(bool showTarget);
+    std::string GetMissionSTarget(bool showTarget, bool expertMode);
     void DisplayItemsUnlocked();
 
     int _voiceMenuCharacter = 0;

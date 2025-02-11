@@ -172,7 +172,7 @@ void DisplayManager::DisplayChatMessages()
     int alpha = 255;
     if (timeRemaining < 1)
     {
-      alpha = static_cast<int>(timeRemaining * 255);
+        alpha = static_cast<int>(timeRemaining * 255);
         //Fix for alpha value being too low and SADX showing it as solid color
         if (alpha < 15)
         {
@@ -205,7 +205,7 @@ void DisplayManager::DisplayChatMessages()
                    (linesFromTop - 0.5f) * this->_debugFontSize,
                    (2 + longestMessageSize + 0.5) * this->_debugFontSize,
                    (linesFromTop + _chatDisplayCount + 0.5) * this->_debugFontSize, 62041.496f,
-                   0x5F0000FF & 0x00FFFFFF | alpha/3 << 24,
+                   0x5F0000FF & 0x00FFFFFF | alpha / 3 << 24,
                    QueuedModelFlagsB_EnableZWrite);
 
 
@@ -302,32 +302,79 @@ std::string DisplayManager::GetMissionBTarget(const bool showTarget)
 
 std::string DisplayManager::GetMissionATarget(const bool showTarget)
 {
+    int targetTime;
+
+    switch (CurrentCharacter)
+    {
+    case Characters_Sonic:
+            targetTime = std::get<TIME_A_RANK>(SONIC_TARGET_TIMES.at(CurrentLevel));
+        break;
+    case Characters_Tails:
+            targetTime = std::get<TIME_A_RANK>(TAILS_TARGET_TIMES.at(CurrentLevel));
+        break;
+    case Characters_Knuckles:
+            targetTime = std::get<TIME_A_RANK>(KNUCKLES_TARGET_TIMES.at(CurrentLevel));
+        break;
+    case Characters_Amy:
+            targetTime = std::get<TIME_A_RANK>(AMY_TARGET_TIMES.at(CurrentLevel));
+        break;
+    case Characters_Gamma:
+            targetTime = std::get<TIME_A_RANK>(GAMMA_TARGET_TIMES.at(CurrentLevel));
+        break;
+    case Characters_Big:
+        return showTarget ? " 2000g " : "(     )";
+
+    default: return "";
+    }
+    const int minutes = targetTime / 60 / 60;
+    const int seconds = targetTime / 60 % 60;
+    const std::string formattedTime = " " + std::to_string(minutes) + ":" + (seconds < 10 ? "0" : "") +
+        std::to_string(seconds) + " ";
+
+    if (showTarget)
+        return formattedTime;
+    else
+        return "(" + std::string(formattedTime.length() - 2, ' ') + ")";
+}
+
+std::string DisplayManager::GetMissionSTarget(const bool showTarget, const bool expertMode)
+{
     int targetTime = 0;
 
     switch (CurrentCharacter)
     {
     case Characters_Sonic:
-        if (SONIC_TARGET_TIMES.find(CurrentLevel) != SONIC_TARGET_TIMES.end())
-            targetTime = SONIC_TARGET_TIMES.at(CurrentLevel);
+        if (expertMode)
+            targetTime = std::get<TIME_S_RANK_EXPERT>(SONIC_TARGET_TIMES.at(CurrentLevel));
+        else
+            targetTime = std::get<TIME_S_RANK>(SONIC_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Tails:
-        if (TAILS_TARGET_TIMES.find(CurrentLevel) != TAILS_TARGET_TIMES.end())
-            targetTime = TAILS_TARGET_TIMES.at(CurrentLevel);
+        if (expertMode)
+            targetTime = std::get<TIME_S_RANK_EXPERT>(TAILS_TARGET_TIMES.at(CurrentLevel));
+        else
+            targetTime = std::get<TIME_S_RANK>(TAILS_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Knuckles:
-        if (KNUCKLES_TARGET_TIMES.find(CurrentLevel) != KNUCKLES_TARGET_TIMES.end())
-            targetTime = KNUCKLES_TARGET_TIMES.at(CurrentLevel);
+        if (expertMode)
+            targetTime = std::get<TIME_S_RANK_EXPERT>(KNUCKLES_TARGET_TIMES.at(CurrentLevel));
+        else
+            targetTime = std::get<TIME_S_RANK>(KNUCKLES_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Amy:
-        if (AMY_TARGET_TIMES.find(CurrentLevel) != AMY_TARGET_TIMES.end())
-            targetTime = AMY_TARGET_TIMES.at(CurrentLevel);
+        if (expertMode)
+            targetTime = std::get<TIME_S_RANK_EXPERT>(AMY_TARGET_TIMES.at(CurrentLevel));
+        else
+            targetTime = std::get<TIME_S_RANK>(AMY_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Gamma:
-        if (GAMMA_TARGET_TIMES.find(CurrentLevel) != GAMMA_TARGET_TIMES.end())
-            targetTime = GAMMA_TARGET_TIMES.at(CurrentLevel);
+        if (expertMode)
+            targetTime = std::get<TIME_S_RANK_EXPERT>(GAMMA_TARGET_TIMES.at(CurrentLevel));
+        else
+            targetTime = std::get<TIME_S_RANK>(GAMMA_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Big:
-        return showTarget ? " 2000g " : "(     )";
+        return showTarget ? " 2000g + 5000g " : "(             )";
 
     default: return "";
     }
@@ -392,7 +439,7 @@ void DisplayManager::DisplayItemsUnlocked()
     if (!(GameState == MD_GAME_PAUSE || (GameMode == GameModes_Menu && this->_inCharacterSelectScreen)))
         return;
     // We don't show the tracker on the mission screen
-    if(MissionScreenState > 0)
+    if (MissionScreenState > 0)
         return;
 
     if (this->_inCharacterSelectScreen)
@@ -555,6 +602,10 @@ void DisplayManager::DisplayItemsUnlocked()
                 buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
                                   ? " A" + this->GetMissionATarget(true)
                                   : "  " + this->GetMissionATarget(true));
+            if (missionsEnabled > 3)
+                buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
+                                  ? " S" + this->GetMissionSTarget(true, _options.expertMode)
+                                  : "  " + this->GetMissionSTarget(true, _options.expertMode));
 
             DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
@@ -572,6 +623,10 @@ void DisplayManager::DisplayItemsUnlocked()
                 buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
                                   ? "-A" + this->GetMissionATarget(false)
                                   : "- " + this->GetMissionATarget(false));
+            if (missionsEnabled > 3)
+                buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
+                                  ? "-S" + this->GetMissionSTarget(false, _options.expertMode)
+                                  : "- " + this->GetMissionSTarget(false, _options.expertMode));
             buffer.append("]");
 
             SetDebugFontColor(currentColor & 0x00FFFFFF | 0x66000000);

@@ -135,6 +135,7 @@ struct Options
     bool skyChaseChecks = false;
     bool skyChaseChecksHard = false;
     std::vector<int> missionBlacklist = {};
+    bool expertMode = false;
 
     void SetActionStageMissions(const Characters character, const int missions)
     {

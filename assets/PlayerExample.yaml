@@ -108,11 +108,12 @@ Sonic Adventure DX:
 
   # Stage Options
   
-  # For missions, the options range from 3 to 0.
-  # 3 means Missions A, B, and C.
-  # 2 means Missions B and C.
-  # 1 means Mission C.
+  # For missions, the options range from 0 to 4.
   # 0 means no missions at all (You can still play the character if they are enabled).
+  # 1 means Mission C.
+  # 2 means Missions B and C.
+  # 3 means Missions A, B, and C.
+  # 4 means Missions S, A, B, and C. S missions are extra hard times added by the mod. Not available in normal logic.
   # Choose what action stage missions will be a location check for Sonic.
   sonic_action_stage_missions: 1
   # Choose what action stage missions will be a location check for Tails.

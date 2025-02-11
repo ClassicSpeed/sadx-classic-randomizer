@@ -1051,6 +1051,16 @@ void Randomizer::OnGoalRequiresChaoRacesSet(const bool goalRequiresChaoRaces)
         SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
 }
 
+void Randomizer::OnSetLogicLevel(int logicLevel)
+{
+    if(logicLevel > 1)
+        _options.expertMode = true;
+    else
+        _options.expertMode = false;
+    _worldStateManager.UpdateOptions(_options);
+    _displayManager.UpdateOptions(_options);
+}
+
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
 {

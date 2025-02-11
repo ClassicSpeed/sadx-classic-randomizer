@@ -201,6 +201,11 @@ void SADX_CompareModVersion(const int version)
     randomizerPtr->OnCheckVersion(version);
 }
 
+void SADX_LogicLevel(const int logicLevel)
+{
+    randomizerPtr->OnSetLogicLevel(logicLevel);
+}
+
 void SADX_EmblemsForPerfectChaos(const int emblemGoal)
 {
     randomizerPtr->OnEmblemGoalSet(emblemGoal);
@@ -601,6 +606,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("GoalRequiresBosses", &SADX_GoalRequiresBosses);
     AP_RegisterSlotDataIntCallback("GoalRequiresChaoRaces", &SADX_GoalRequiresChaoRaces);
     AP_RegisterSlotDataIntCallback("ModVersion", &SADX_CompareModVersion);
+    AP_RegisterSlotDataIntCallback("LogicLevel", &SADX_LogicLevel);
     AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
     AP_RegisterSlotDataIntCallback("LevelForPerfectChaos", &SADX_LevelForPerfectChaos);
     AP_RegisterSlotDataIntCallback("MissionForPerfectChaos", &SADX_MissionForPerfectChaos);

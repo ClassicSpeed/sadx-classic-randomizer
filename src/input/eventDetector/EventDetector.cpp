@@ -61,25 +61,15 @@ bool ManualMissionACheck(const int character, const int level)
     switch (character)
     {
     case Characters_Sonic:
-        if (SONIC_TARGET_TIMES.find(level) != SONIC_TARGET_TIMES.end())
-            return time <= SONIC_TARGET_TIMES.at(level);
-        break;
+            return time <= std::get<TIME_A_RANK>(SONIC_TARGET_TIMES.at(level));
     case Characters_Tails:
-        if (TAILS_TARGET_TIMES.find(level) != TAILS_TARGET_TIMES.end())
-            return time <= TAILS_TARGET_TIMES.at(level);
-        break;
+            return time <= std::get<TIME_A_RANK>(TAILS_TARGET_TIMES.at(level));
     case Characters_Knuckles:
-        if (KNUCKLES_TARGET_TIMES.find(level) != KNUCKLES_TARGET_TIMES.end())
-            return time <= KNUCKLES_TARGET_TIMES.at(level);
-        break;
+            return time <= std::get<TIME_A_RANK>(KNUCKLES_TARGET_TIMES.at(level));
     case Characters_Amy:
-        if (AMY_TARGET_TIMES.find(level) != AMY_TARGET_TIMES.end())
-            return time <= AMY_TARGET_TIMES.at(level);
-        break;
+            return time <= std::get<TIME_A_RANK>(AMY_TARGET_TIMES.at(level));
     case Characters_Gamma:
-        if (GAMMA_TARGET_TIMES.find(level) != GAMMA_TARGET_TIMES.end())
-            return time > GAMMA_TARGET_TIMES.at(level);
-        break;
+            return time > std::get<TIME_A_RANK>(GAMMA_TARGET_TIMES.at(level));
     case Characters_Big:
         return BigWeightRecord >= 2000;
 
@@ -88,6 +78,38 @@ bool ManualMissionACheck(const int character, const int level)
     return false;
 }
 
+bool ManualMissionSCheck(const int character, const int level, const bool expertMode)
+{
+    const int time = TimeFrames + 60 * (TimeSeconds + 60 * TimeMinutes);
+    switch (character)
+    {
+    case Characters_Sonic:
+        if (expertMode)
+            return time <= std::get<TIME_S_RANK_EXPERT>(SONIC_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_S_RANK>(SONIC_TARGET_TIMES.at(level));
+    case Characters_Tails:
+        if (expertMode)
+            return time <= std::get<TIME_S_RANK_EXPERT>(TAILS_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_S_RANK>(TAILS_TARGET_TIMES.at(level));
+    case Characters_Knuckles:
+        if (expertMode)
+            return time <= std::get<TIME_S_RANK_EXPERT>(KNUCKLES_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_S_RANK>(KNUCKLES_TARGET_TIMES.at(level));
+    case Characters_Amy:
+        if (expertMode)
+            return time <= std::get<TIME_S_RANK_EXPERT>(AMY_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_S_RANK>(AMY_TARGET_TIMES.at(level));
+    case Characters_Gamma:
+        if (expertMode)
+            return time > std::get<TIME_S_RANK_EXPERT>(GAMMA_TARGET_TIMES.at(level));
+        return time > std::get<TIME_S_RANK>(GAMMA_TARGET_TIMES.at(level));
+    case Characters_Big:
+        return BigWeightRecord >= 2000 && Big_Sakana_Weight >= 5000;
+
+    default: return false;
+    }
+    return false;
+}
 
 bool ManualSubLevelMissionACheck(const int level)
 {
@@ -128,6 +150,14 @@ bool HandleCheckMissionRequirements(const int mission, const int character, cons
                 eventDetectorPtr->OnLevelEmblem(character, level, MISSION_A);
             }
         }
+        
+        if (ManualMissionSCheck(character, level, eventDetectorPtr->randomizer.GetOptions().expertMode))
+        {
+            SetLevelEmblemCollected(&SaveFile, character, level, MISSION_S);
+            eventDetectorPtr->OnLevelEmblem(character, level, MISSION_S);
+        }
+
+        
     }
     return CheckMissionRequirements_t.Original(mission, character, level);
 }

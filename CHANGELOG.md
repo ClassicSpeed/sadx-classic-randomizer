@@ -48,6 +48,8 @@ All notable changes to this project will be documented in this file.
 - When creating a new save file for an existing slot, the completed missions will be marked as completed.
 - Start inventory items are now removed from the item pool.
 - Added option to select the starting character.
+- Added S-Rank missions for actions stages with harder times.
+    - These missions are not available in the normal logic.
 
 ### Fixed
 

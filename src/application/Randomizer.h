@@ -105,6 +105,7 @@ public:
     void OnGoalRequiresMissionsSet(bool goalRequiresMissions);
     void OnGoalRequiresBossesSet(bool goalRequiresBosses);
     void OnGoalRequiresChaoRacesSet(bool goalRequiresChaoRaces);
+    void OnSetLogicLevel(int logicLevel);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;
