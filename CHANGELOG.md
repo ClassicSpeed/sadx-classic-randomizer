@@ -8,7 +8,8 @@ All notable changes to this project will be documented in this file.
 
 #### New Features
 
-- Added 5 unused **extra circuits** to the Twinkle Circuit checks. You can do just the original or one for each character.
+- Added 5 unused **extra circuits** to the Twinkle Circuit checks. You can do just the original or one for each
+  character.
     - The Twinkle Circuit door will now be closed when the Twinkle Circuit checks are disabled.
 - **Replaced Casino District Keys** with Hotel Back Key and Station Back Key.
 - Renamed Hotel/Station Key to Hotel/Station Front Key.
@@ -27,13 +28,14 @@ All notable changes to this project will be documented in this file.
     - These missions are not available in the normal logic.
 - Added **bosses percentage** for the level completion goal.
 - Added **max emblem cap** in the YAML.
-- Added extras Ring Loss option: **One Hit K.O (No Shields)*, similar to One Hit K.O but shields and invincibility won't work.
+- Added extras Ring Loss option: **One Hit K.O (No Shields)*, similar to One Hit K.O but shields and invincibility won't
+  work.
 - Added an option to extend **Ring Capacity** to 5 digits. This mod setting is disabled by default.
 - Added an extra option for **Ring Link Override** in the mod settings for Hard Ring Link.
 - **Chat messages** are now shown in the bottom left corner of the screen.
-  - You can change the color or disable some message types in the mod settings.
+    - You can change the color or disable some message types in the mod settings.
 - **Subtitles** will be shown when characters comment on items/traps.
-  - You can disable this in the mod settings.
+    - You can disable this in the mod settings.
 
 #### Quality of Life
 
@@ -44,8 +46,8 @@ All notable changes to this project will be documented in this file.
 - Mod version is now shown in the bottom right corner when pausing.
 - Game Gear unlock messages are no longer shown.
 - When creating a new save file for an existing slot, completed missions will be marked as completed.
-  - IP and Player name are now trimmed to avoid issues with extra spaces when connecting.
-  - You no longer need the YAML file in the players folder to use Universal Tracker.
+- IP and Player name are now trimmed to avoid issues with extra spaces when connecting.
+- You no longer need the YAML file in the players folder to use Universal Tracker.
 - Added a version check (between the installed apworld and the one used to generate) when using Universal Tracker.
 
 ### Changed
@@ -59,11 +61,11 @@ All notable changes to this project will be documented in this file.
         - Solving the door puzzle with any character will save the solved state.
     - Amy and Gamma no longer use Sonic's entrance for Sky Deck.
 - Everyone can now transform the Egg Carrier.
-- The Hidden Bed Emblem is now in logic for everyone in hard+ logic.
-- The Main Platform Emblem is now in logic for Knuckles in hard+ logic.
 - The mountain door near the Master Emerald shrine won't be closed anymore.
-- Tails' workshop runway will open if Sky Chase is enabled. After getting the check(s) from Act 1, the runway will close.
-- Separated Ring Link and Hard Ring Link packets. Perfect Chaos/end-of-level updates are treated as "hard" updates, meaning only players with Hard Ring Link enabled will be affected by them.
+- Tails' workshop runway will open if Sky Chase is enabled.
+    - After getting the check(s) from Act 1, the runway will close.
+- Separated Ring Link and Hard Ring Link packets. Perfect Chaos/end-of-level updates are treated as "hard" updates,
+  meaning only players with Hard Ring Link enabled will be affected by them.
 
 ### Fixed
 
@@ -74,7 +76,6 @@ All notable changes to this project will be documented in this file.
 - The indicator for Buyon is drawn higher to prevent it from being hidden inside the model.
 - Updated wording for the emblem goal setting to make it clearer and changed its max value to 90%.
 - Updated wording for Enemy/Capsule-sanity to make it clearer that it depends on the other character values.
-
 - Removed the 6th enemy from logic for Sonic's Ice Cap (DC only).
 - The tracker is no longer shown on the mission screen.
 
@@ -89,6 +90,8 @@ All notable changes to this project will be documented in this file.
 
 - Sand Hill entrance is no longer in logic for Sonic (only in expert).
 - All Gamma's Windy Valley level missions, enemies, and capsules are now in logic without the Jet Booster.
+- The Hidden Bed Emblem is now in logic for everyone in hard+ logic.
+- The Main Platform Emblem is now in logic for Knuckles in hard+ logic.
 
 #### Expert (DC)
 
