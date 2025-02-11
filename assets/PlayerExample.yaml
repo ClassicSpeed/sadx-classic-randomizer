@@ -50,6 +50,8 @@ Sonic Adventure DX:
   mission_percentage: 100
   # If enabled, you have to beat all the bosses to unlock the last fight.
   goal_requires_bosses: 'false'
+  # If Bosses are part of the goal, Percentage of the available bosses that needed to be completed to unlock the final story.
+  boss_percentage: 100
   # If enabled, you have to beat all the chao races to unlock the last fight.
   goal_requires_chao_races: 'false'
   # Determines the logic the randomizer will use.

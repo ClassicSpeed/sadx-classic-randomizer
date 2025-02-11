@@ -53,6 +53,7 @@ All notable changes to this project will be documented in this file.
 - Added "Lazy Fishing" option.
     - Grants infinite tension during fishing if you have the Power Rod upgrade.
     - Also adds the power rod as a logic requirement for every fish in fish-sanity, B/A/S ranks and "Keeper" missions.
+- Added bosses percentage for the level completion goal.
 
 ### Fixed
 
