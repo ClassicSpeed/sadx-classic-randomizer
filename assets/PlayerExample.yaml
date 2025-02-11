@@ -39,8 +39,11 @@ Sonic Adventure DX:
   # If enabled, you have to collect a certain number of emblems to unlock the last fight.
   # The emblems are extra items added to the item pool, so they scale with the number of checks.
   goal_requires_emblems: 'false'
+  # If Emblems are part of the goal, determines the maximum number of emblems that can be in the item pool.
+  # If fewer available locations exist in the pool than this number, the number of available locations will be used instead.
+  # Minimum value is 20, maximum value is 1500
+  max_emblem_cap: 130
   # If Emblems are part of the goal, percentage of the available emblems needed to unlock the final story.
-  # 75 means that from all of your remaining checks (after adding key items/characters/etc.), 75% will be emblems.
   # Minimum value is 1, maximum value is 90
   emblems_percentage: 75
   # If enabled, you have to complete missions to unlock the last fight.
