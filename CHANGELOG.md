@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.1.0] - 2025-02-11
+## [v1.1.0 hot-fix] - 2025-02-12
+
+- Fixed Angel Island door not being open for Tails, Amy and Big.
+
+## [v1.1.0 pre-release] - 2025-02-11
 
 ### Added
 

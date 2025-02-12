@@ -219,7 +219,12 @@ WorldStateManager::WorldStateManager()
 
     worldStateManagerPtr = this;
 
-
+    //We allow Tails and Big to enter the Master Emerald Shrine
+    DataArray(int, islandDoorFlags, 0x111E010, 8);
+    islandDoorFlags[Characters_Tails] = FLAG_SONIC_MR_ISLANDDOOR;
+    islandDoorFlags[Characters_Big] = FLAG_SONIC_MR_ISLANDDOOR;
+    islandDoorFlags[Characters_Amy] = FLAG_SONIC_MR_ISLANDDOOR;
+    
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_MRuins[WARP_MYSTIC_RUINS] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
