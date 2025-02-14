@@ -850,3 +850,11 @@ void HandleHudDisplayRings(const signed int ringCount, unsigned char digits, NJS
     else
         HudDisplayRings_t.Original(ringCount, digits, hud);
 }
+
+// For big, we extend the ring capacity to 99999 if enabled
+FunctionHook<void, _SC_NUMBERS*> onDrawSNumbers(0x427BB0, [](_SC_NUMBERS* pscn)-> void
+{
+    if (characterManagerPtr->extendRingCapacity && CurrentCharacter == Characters_Big && pscn->max == 999)
+        pscn->max = 99999;
+    onDrawSNumbers.Original(pscn);
+});
