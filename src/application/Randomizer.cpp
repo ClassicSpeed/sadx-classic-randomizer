@@ -61,9 +61,9 @@ void Randomizer::OnCheckFound(const int checkId) const
 void Randomizer::MarkCheckedLocation(const int64_t checkId) const
 {
     LocationData locationData = _locationRepository.SetLocationChecked(checkId);
-    if(locationData.type == LocationMission)
+    if (locationData.type == LocationMission)
         _saveFileManager.SetMissionCompleted(locationData.missionNumber);
-    
+
     const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
     _displayManager.UpdateLevelStatus(levelStatus);
     const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
@@ -631,7 +631,7 @@ void Randomizer::PlayRandomVoiceForItem(const ItemData& item, const int64_t item
     {
         const int voice = selector.getRandomNumber();
         PlayVoice(voice);
-        if(_showCommentsSubtitles)
+        if (_showCommentsSubtitles)
         {
             auto it = _commentMap.find(voice);
             if (it != _commentMap.end() && GameMode != GameModes_Menu)
@@ -668,14 +668,26 @@ void Randomizer::SetAutoStartMissions(const int autoStartMissions)
 
 void Randomizer::OnCheckVersion(int serverVersion)
 {
-    if (serverVersion != SADX_AP_VERSION_MAJOR * 100 + SADX_AP_VERSION_MINOR * 10 + SADX_AP_VERSION_PATCH)
+    const int serverMajor = serverVersion / 100;
+    const int serverMinor = (serverVersion / 10) % 10;
+    const int serverPatch = serverVersion % 10;
+
+    const std::string modVer = std::to_string(SADX_AP_VERSION_MAJOR)
+        + "." + std::to_string(SADX_AP_VERSION_MINOR)
+        + "." + std::to_string(SADX_AP_VERSION_PATCH);
+    const std::string serverVer = std::to_string(serverMajor)
+        + "." + std::to_string(serverMinor)
+        + "." + std::to_string(serverPatch);
+    if (serverMajor != SADX_AP_VERSION_MAJOR || serverMinor != SADX_AP_VERSION_MINOR)
     {
-        const std::string modVersionString = std::to_string(SADX_AP_VERSION_MAJOR) + "." +
-            std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH);
-        const std::string serverVersionString = std::to_string(serverVersion / 100) + "." +
-            std::to_string((serverVersion / 10) % 10) + "." + std::to_string(serverVersion % 10);
-        _displayManager.QueueItemMessage(
-            "Warning: Version mismatch! Server: v" + serverVersionString + " Mod: v" + modVersionString);
+        std::string errorMessage = "Error: Major version mismatch!\n\nServer: v" + serverVer + "\nMod: v" + modVer;
+        MessageBox(WindowHandle, std::wstring(errorMessage.begin(), errorMessage.end()).c_str(),
+                   L"SADX Archipelago Error: Version mismatch", MB_OK | MB_ICONERROR);
+        exit(0);
+    }
+    if (serverPatch != SADX_AP_VERSION_PATCH)
+    {
+        _displayManager.QueueItemMessage("Warning: version mismatch! Server: v" + serverVer + " Mod: v" + modVer);
     }
 }
 
@@ -725,7 +737,8 @@ void Randomizer::SetCharacterVoiceReactions(const bool eggmanCommentOnCharacterU
                                             const bool currentCharacterCommentOnCharacterUnlock,
                                             const bool unlockedCharacterCommentOnCharacterUnlock,
                                             const bool eggmanCommentOnKeyItems, const bool tikalCommentOnKeyItems,
-                                            const bool currentCharacterCommentOnKeyItems, const bool showCommentsSubtitles)
+                                            const bool currentCharacterCommentOnKeyItems,
+                                            const bool showCommentsSubtitles)
 {
     _eggmanCommentOnCharacterUnlock = eggmanCommentOnCharacterUnlock;
     _currentCharacterCommentOnCharacterUnlock = currentCharacterCommentOnCharacterUnlock;
@@ -919,7 +932,7 @@ void Randomizer::OnSync()
     if (!_options.ringLinkActive)
         return;
     const RingDifference ringDifference = _characterManager.GetRingDifference();
-    
+
     _archipelagoMessenger.SendRingUpdate(ringDifference.ringDifference);
     _archipelagoMessenger.SendHardRingUpdate(ringDifference.hardRingDifference);
 }
@@ -1053,7 +1066,7 @@ void Randomizer::OnGoalRequiresChaoRacesSet(const bool goalRequiresChaoRaces)
 
 void Randomizer::OnSetLogicLevel(int logicLevel)
 {
-    if(logicLevel > 1)
+    if (logicLevel > 1)
         _options.expertMode = true;
     else
         _options.expertMode = false;
@@ -1105,7 +1118,7 @@ void Randomizer::OnFishSanitySet(const bool fishSanity)
     _displayManager.UpdateOptions(_options);
 }
 
-void Randomizer::OnLazyFishingSet(const bool  lazyFishing)
+void Randomizer::OnLazyFishingSet(const bool lazyFishing)
 {
     _options.lazyFishing = lazyFishing;
     _worldStateManager.UpdateOptions(_options);
@@ -1249,6 +1262,7 @@ void Randomizer::SetSkyChaseChecks(const bool skyChaseChecks)
     _worldStateManager.UpdateOptions(_options);
     _characterManager.UpdateOptions(_options);
 }
+
 void Randomizer::SetSkyChaseChecksHard(const bool skyChaseChecksHard)
 {
     _options.skyChaseChecksHard = skyChaseChecksHard;

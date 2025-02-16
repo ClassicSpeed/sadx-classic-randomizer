@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Egg Carrier transformed when starting from the inside.
 - Fixed extended ring capacity not working for Big.
 - Fix Twinkle Circuit option not disabling the checks correctly when disabled.
+- Added an error message for major version mismatch when connecting to Archipelago that will close the game.
 
 ## [v1.1.0 hot-fix] - 2025-02-12
 
