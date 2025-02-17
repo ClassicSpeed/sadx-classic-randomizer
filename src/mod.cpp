@@ -175,6 +175,7 @@ void LoadDisplayMessageSettings(const IniFile* settingsIni)
 
 void LoadGameSettings(const IniFile* settingsIni)
 {
+    const int homingAttackIndicator = settingsIni->getInt("GameSettings", "HomingAttackIndicatorEnabled", 0);
     const bool completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions",
                                                                     true);
     const bool autoSkipCutscenes = settingsIni->getBool("GameSettings", "AutoSkipCutscenes", true);
@@ -254,6 +255,7 @@ void LoadGameSettings(const IniFile* settingsIni)
                                     capsuleIndicator, capsuleIndicatorColor,
                                     fishIndicator, fishIndicatorColor,
                                     progressionIndicator, progressionIndicatorColor);
+    eventDetector.setHomingAttackIndicator(static_cast<HomingAttackIndicator>(homingAttackIndicator));
     worldStateManager.SetShowEntranceIndicators(showEntranceIndicators);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
     worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);

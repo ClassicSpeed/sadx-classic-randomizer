@@ -859,6 +859,9 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     //Cop
     LoadPVM("NISEPAT", &NISEPAT_TEXLIST);
+    
+    //Sky Chase Tarjet
+    LoadNoNamePVM(&TARGET_TEXLIST);
 
     if (worldStateManagerPtr->eggCarrierTransformationCutscene
         && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)

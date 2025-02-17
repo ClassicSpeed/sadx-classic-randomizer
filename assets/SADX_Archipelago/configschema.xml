@@ -72,6 +72,9 @@
         </Group>
 
         <Group name="GameSettings" display="Game Settings">
+            <Property name="HomingAttackIndicatorEnabled" type="HomingAttackIndex" defaultvalue="0" display="Enable Homing Attack Indicator">
+                <HelpText>Adds an indicator for the homing attack, like in modern Sonic games.</HelpText>
+            </Property>
             <Property name="CompleteMultipleLevelMissions" type="bool" defaultvalue="True"
                       display="Complete Multiple Level Missions">
                 <HelpText>Collect more than one check from levels if you beat the other requirements.</HelpText>
@@ -270,6 +273,11 @@
             <EnumMember name="1" display="Force Enabled"/>
             <EnumMember name="2" display="Force Enabled (Hard)"/>
             <EnumMember name="3" display="Force Disabled"/>
+        </Enum>
+        <Enum name="HomingAttackIndex">
+            <EnumMember name="0" display="Disabled"/>
+            <EnumMember name="1" display="Enabled"/>
+            <EnumMember name="2" display="Enabled (No Sound)"/>
         </Enum>
         <Enum name="CharacterVoiceIndex">
             <EnumMember name="-1" display="Random"/>

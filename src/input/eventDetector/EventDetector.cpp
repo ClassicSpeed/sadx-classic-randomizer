@@ -61,15 +61,15 @@ bool ManualMissionACheck(const int character, const int level)
     switch (character)
     {
     case Characters_Sonic:
-            return time <= std::get<TIME_A_RANK>(SONIC_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_A_RANK>(SONIC_TARGET_TIMES.at(level));
     case Characters_Tails:
-            return time <= std::get<TIME_A_RANK>(TAILS_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_A_RANK>(TAILS_TARGET_TIMES.at(level));
     case Characters_Knuckles:
-            return time <= std::get<TIME_A_RANK>(KNUCKLES_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_A_RANK>(KNUCKLES_TARGET_TIMES.at(level));
     case Characters_Amy:
-            return time <= std::get<TIME_A_RANK>(AMY_TARGET_TIMES.at(level));
+        return time <= std::get<TIME_A_RANK>(AMY_TARGET_TIMES.at(level));
     case Characters_Gamma:
-            return time > std::get<TIME_A_RANK>(GAMMA_TARGET_TIMES.at(level));
+        return time > std::get<TIME_A_RANK>(GAMMA_TARGET_TIMES.at(level));
     case Characters_Big:
         return BigWeightRecord >= 2000;
 
@@ -150,14 +150,12 @@ bool HandleCheckMissionRequirements(const int mission, const int character, cons
                 eventDetectorPtr->OnLevelEmblem(character, level, MISSION_A);
             }
         }
-        
+
         if (ManualMissionSCheck(character, level, eventDetectorPtr->randomizer.GetOptions().expertMode))
         {
             SetLevelEmblemCollected(&SaveFile, character, level, MISSION_S);
             eventDetectorPtr->OnLevelEmblem(character, level, MISSION_S);
         }
-
-        
     }
     return CheckMissionRequirements_t.Original(mission, character, level);
 }
@@ -272,6 +270,92 @@ NJS_VECTOR CalculateArrowPosition(const NJS_VECTOR& playerPosition, const Rotati
 
     return arrowPosition;
 }
+
+EntityData1* lastClosestEnemy = nullptr; // ebp
+FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
+{
+    onSonicMain.Original(tp);
+    if (eventDetectorPtr->homingAttackIndicator == HomingAttackIndicatorDisabled)
+        return;
+
+    if (playerpwp[0]->free.sw[2] > 1 || !HomingAttackTarget_Sonic[0].entity)
+    {
+        lastClosestEnemy = nullptr;
+        return;
+    }
+    if (tp->twp->mode != 8 && tp->twp->mode != 14)
+    {
+        lastClosestEnemy = nullptr;
+        return;
+    }
+
+
+    float closestDistance = 10000;
+    EntityData1* closestEnemy = nullptr; 
+    NJS_VECTOR targetPosition; 
+    for (int i = 0; i < HomingAttackTarget_Sonic_Index; i++)
+    {
+        if (HomingAttackTarget_Sonic[i].entity != nullptr)
+        {
+            const CollisionData* targetCollision = HomingAttackTarget_Sonic[i].entity->CollisionInfo->CollisionArray;
+            targetPosition = targetCollision->center;
+            if ((targetCollision->attr & 0x20) == 0)
+            {
+                njAddVector(&targetPosition, &HomingAttackTarget_Sonic[i].entity->Position);
+            }
+            njSubVector(&targetPosition, &tp->twp->pos);
+            const long double angleDifference = atan2(targetPosition.z, targetPosition.x) * 65536.0 * 0.1591549762031479;
+            if (BAMS_Subtract(tp->twp->ang.y, (unsigned __int64)angleDifference) <= 20480)
+            {
+                if (HomingAttackTarget_Sonic[i].distance < closestDistance)
+                {
+                    closestEnemy = HomingAttackTarget_Sonic[i].entity;
+                    closestDistance = HomingAttackTarget_Sonic[i].distance;
+                }
+            }
+        }
+    }
+    if (!closestEnemy)
+        return;
+    const CollisionData* targetCollision = closestEnemy->CollisionInfo->CollisionArray;
+    targetPosition = targetCollision->center;
+    if ((targetCollision->attr & 0x20) == 0)
+    {
+        njAddVector(&targetPosition, &closestEnemy->Position);
+    }
+    njSubVector(&targetPosition, &tp->twp->pos);
+    if (targetPosition.y >= 0.0)
+    {
+        lastClosestEnemy = nullptr;
+        return;
+    }
+    if (lastClosestEnemy != closestEnemy)
+    {
+        lastClosestEnemy = closestEnemy;
+        if (eventDetectorPtr->homingAttackIndicator == HomingAttackIndicatorEnabled)
+            PlaySound(1, 0, 0, 0);
+    }
+
+    //DRAW INDICATOR
+    njPushMatrix(0);
+    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_ONE);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_ONE);
+    SetMaterialAndSpriteColor_Float(1.0, 1.0, 1.0, 0.0);
+    njSetTexture(&TARGET_TEXLIST);
+    targetPosition = targetCollision->center;
+    njAddVector(&targetPosition, &closestEnemy->Position);
+    NJS_POINT2 position;
+    njProjectScreen(0, &targetPosition, &position);
+    TornadoTarget_SPRITE.p.x = position.x;
+    TornadoTarget_SPRITE.p.y = position.y;
+    TornadoTarget_SPRITE.sx = 1.75f;
+    TornadoTarget_SPRITE.sy = 1.75f;
+    njDrawSprite2D_ForcePriority(&TornadoTarget_SPRITE, 0, 1000.0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+    ClampGlobalColorThing_Thing();
+});
 
 
 void EventDetector::OnPlayingFrame() const
@@ -568,7 +652,7 @@ void EventDetector::SetSanitySettings(const bool trackerArrow, const int tracker
     this->capsuleIndicatorColor[0].color = capsuleIndicatorColor;
     this->capsuleIndicatorColor[1].color = capsuleIndicatorColor;
     this->capsuleIndicatorColor[2].color = capsuleIndicatorColor;
-    
+
     this->fishIndicator = fishIndicator;
     this->fishIndicatorColor[0].color = fishIndicatorColor;
     this->fishIndicatorColor[1].color = fishIndicatorColor;
@@ -578,7 +662,11 @@ void EventDetector::SetSanitySettings(const bool trackerArrow, const int tracker
     this->progressionItemIndicatorColor[0].color = progressionIndicatorColor;
     this->progressionItemIndicatorColor[1].color = progressionIndicatorColor;
     this->progressionItemIndicatorColor[2].color = progressionIndicatorColor;
-    
+}
+
+void EventDetector::setHomingAttackIndicator(const HomingAttackIndicator homingAttackIndicator)
+{
+    this->homingAttackIndicator = homingAttackIndicator;
 }
 
 
@@ -932,7 +1020,7 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
             point3Col.col = eventDetectorPtr->enemyIndicatorColor;
         else if (indicatorType == CapsuleIndicator)
             point3Col.col = eventDetectorPtr->capsuleIndicatorColor;
-        else 
+        else
             point3Col.col = eventDetectorPtr->fishIndicatorColor;
     else
         point3Col.col = eventDetectorPtr->disabledIndicatorColor;
@@ -1368,7 +1456,7 @@ FunctionHook<void, task*> onFishCaught(0x470160, [](task* tp)-> void
     onFishCaught.Original(tp);
     if (!eventDetectorPtr->randomizer.GetOptions().fishSanity)
         return;
-    
+
     const auto* v1 = reinterpret_cast<int*>(tp->twp);
     const int fishType = v1[2];
 

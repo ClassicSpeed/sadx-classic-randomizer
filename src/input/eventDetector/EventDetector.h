@@ -45,7 +45,14 @@ enum IndicatorType
     EnemyIndicator,
     CapsuleIndicator,
     FishIndicator,
-}; 
+};
+
+enum HomingAttackIndicator
+{
+    HomingAttackIndicatorDisabled = 0,
+    HomingAttackIndicatorEnabled = 1,
+    HomingAttackIndicatorEnabledNoSound = 2,
+};
 
 class EventDetector
 {
@@ -62,6 +69,7 @@ public:
                            bool capsuleIndicator, int capsuleIndicatorColor,
                            bool fishIndicator, int fishIndicatorColor,
                            bool progressionIndicator, int progressionIndicatorColor);
+    void setHomingAttackIndicator(HomingAttackIndicator homingAttackIndicator);
     void OnTwinkleCircuitCompleted(int character);
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
@@ -80,6 +88,7 @@ public:
     bool capsuleIndicator = true;
     bool fishIndicator = true;
     bool progressionIndicator = true;
+    HomingAttackIndicator homingAttackIndicator = HomingAttackIndicatorDisabled;
 
 
 
