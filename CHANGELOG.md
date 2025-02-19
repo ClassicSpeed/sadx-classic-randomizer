@@ -2,11 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.1.0 hot-fix-2] - 2025-02-??
+## [v1.1.0] - 2025-02-19
 
-- Fixed Egg Carrier transformed when starting from the inside.
+- Fixed Egg Carrier being transformed when starting from the inside.
 - Fixed extended ring capacity not working for Big.
-- Fix Twinkle Circuit option not disabling the checks correctly when disabled.
+- Fixed Twinkle Circuit option not disabling the checks correctly when disabled.
 - Fixed Perfect Chaos Fight being unlocked early sometimes when connecting.
 - Fixed Fish indicator being shown even without fish-sanity enabled or in Amy's Hot Shelter.
 - Fixed S rank missions sending random field emblem checks.
