@@ -291,8 +291,8 @@ FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
 
 
     float closestDistance = 10000;
-    EntityData1* closestEnemy = nullptr; 
-    NJS_VECTOR targetPosition; 
+    EntityData1* closestEnemy = nullptr;
+    NJS_VECTOR targetPosition;
     for (int i = 0; i < HomingAttackTarget_Sonic_Index; i++)
     {
         if (HomingAttackTarget_Sonic[i].entity != nullptr)
@@ -304,7 +304,8 @@ FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
                 njAddVector(&targetPosition, &HomingAttackTarget_Sonic[i].entity->Position);
             }
             njSubVector(&targetPosition, &tp->twp->pos);
-            const long double angleDifference = atan2(targetPosition.z, targetPosition.x) * 65536.0 * 0.1591549762031479;
+            const long double angleDifference = atan2(targetPosition.z, targetPosition.x) * 65536.0 *
+                0.1591549762031479;
             if (BAMS_Subtract(tp->twp->ang.y, (unsigned __int64)angleDifference) <= 20480)
             {
                 if (HomingAttackTarget_Sonic[i].distance < closestDistance)
@@ -1432,6 +1433,12 @@ FunctionHook<signed int> onSaveTwinkleCircuitRecord(0x4B5BC0, []()-> signed int
 FunctionHook<void, task*> onFishMain(0x597010, [](task* tp)-> void
 {
     onFishMain.Original(tp);
+    if (!eventDetectorPtr->randomizer.GetOptions().fishSanity)
+        return;
+    if (CurrentCharacter != Characters_Big)
+        return;
+
+
     const int fishType = tp->twp->value.w[1];
 
     for (const auto& check : eventDetectorPtr->checkData)

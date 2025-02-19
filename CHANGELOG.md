@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Fixed extended ring capacity not working for Big.
 - Fix Twinkle Circuit option not disabling the checks correctly when disabled.
 - Fixed Perfect Chaos Fight being unlocked early sometimes when connecting.
+- Fixed Fish indicator being shown even without fish-sanity enabled or in Amy's Hot Shelter.
 - Added an error message for major version mismatch when connecting to Archipelago that will close the game.
 - Added Homing Attack Indicator option to the mod settings.
 
