@@ -153,7 +153,6 @@ bool HandleCheckMissionRequirements(const int mission, const int character, cons
 
         if (ManualMissionSCheck(character, level, eventDetectorPtr->randomizer.GetOptions().expertMode))
         {
-            SetLevelEmblemCollected(&SaveFile, character, level, MISSION_S);
             eventDetectorPtr->OnLevelEmblem(character, level, MISSION_S);
         }
     }
