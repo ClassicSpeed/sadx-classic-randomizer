@@ -274,6 +274,8 @@ EntityData1* lastClosestEnemy = nullptr; // ebp
 FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
 {
     onSonicMain.Original(tp);
+    if (CurrentCharacter != Characters_Sonic)
+        return;
     if (eventDetectorPtr->homingAttackIndicator == HomingAttackIndicatorDisabled)
         return;
 
