@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.0] - 2025-03-??
+
+### Logic
+
+#### Expert (DX)
+
+- Removed skip from SSMain to Hotel for Tails.
+
 ## [v1.1.0] - 2025-02-19
 
 - Fixed Egg Carrier being transformed when starting from the inside.
