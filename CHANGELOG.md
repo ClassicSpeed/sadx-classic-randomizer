@@ -16,6 +16,12 @@ All notable changes to this project will be documented in this file.
 - Updated items information.
 - Updated random level entrance information.
 
+### Docs
+
+- Removed Player Example YAML from the release.
+- Added information on how to generate the YAML template.
+- Added information about how to use Universal Tracker.
+
 ## [v1.1.0] - 2025-02-19
 
 - Fixed Egg Carrier being transformed when starting from the inside.

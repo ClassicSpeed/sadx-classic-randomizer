@@ -31,7 +31,6 @@ copy .\Release\sadx-classic-randomizer.dll %OUTPUT_DIR%\SADX_Archipelago\sadx-cl
 REM Create the mod zip file
 "C:\Program Files\7-Zip\7z.exe" a -tzip "%OUTPUT_DIR%\SADX_Archipelago_v%VERSION%.zip" "%OUTPUT_DIR%\*" -mx=9 -aoa
 copy .\assets\sadx.apworld %OUTPUT_DIR%
-copy .\assets\PlayerExample.yaml %OUTPUT_DIR%
 @RD /Q /S %OUTPUT_DIR%\SADX_Archipelago
 
 
