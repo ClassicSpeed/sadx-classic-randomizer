@@ -2,13 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.1.0] - 2025-03-??
+## [v1.1.1] - 2025-03-??
 
 ### Logic
 
 #### Expert (DX)
 
 - Removed skip from SSMain to Hotel for Tails.
+
+### Wiki
+
+- Updated location groups.
+- Updated items information.
+- Updated random level entrance information.
 
 ## [v1.1.0] - 2025-02-19
 
