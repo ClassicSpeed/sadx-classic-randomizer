@@ -11,8 +11,17 @@ All notable changes to this project will be documented in this file.
 - Removed skip from SSMain to Hotel for Tails.
 - Added skip from Hotel to Casino for Tails.
 - Added skip from SSMain to TP Lobby for Gamma.
+- Added skip from MRMain to AngelIsland (and back) for Gamma (with boosters).
+- Added Ice Key skip for Tails.
+- Added skip from TP Lobby to SSMain for Amy.
+- Added skip from SSMain to the Station for Big.
 - Tree Stump Emblem now in logic for Amy and Gamma.
 - Spinning Platform Emblem now in logic for Knuckles.
+- City Hall emblem now in logic for Knuckles.
+
+#### Expert (DC)
+
+- Added skip from MRMain to AngelIsland (and back) for Gamma (with boosters).
 
 ### Wiki
 
