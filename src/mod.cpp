@@ -212,7 +212,7 @@ void LoadGameSettings(const IniFile* settingsIni)
     const int chaoStatsMultiplier = settingsIni->getInt("Chao", "StatGainMultiplier");
 
     const bool trackerArrow = settingsIni->getBool("Sanity", "TrackerArrow", true);
-    const bool trackerArrowToggleable = settingsIni->getBool("Sanity", "TrackerArrowToggleable", true);
+    const bool trackerArrowToggleable = settingsIni->getBool("Sanity", "TrackerArrowToggleable", false);
     const bool trackerArrowShowDistance = settingsIni->getBool("Sanity", "TrackerArrowShowDistance", true);
     const bool trackerArrowOverrideColor = settingsIni->getBool("Sanity", "TrackerArrowOverrideColor", false);
     const int trackerArrowR = settingsIni->getInt("Sanity", "TrackerArrowR", 0);

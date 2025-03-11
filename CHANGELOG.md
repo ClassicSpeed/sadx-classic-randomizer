@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.1.1] - 2025-03-??
 
+### Changed
+
+- The Enemy/Capsule arrow is no longer toggleable by default (you can still make it toggleable it in the mod settings).
+
 ### Logic
 
 #### Expert (DX)

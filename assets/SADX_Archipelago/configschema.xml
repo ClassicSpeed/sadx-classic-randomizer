@@ -168,7 +168,7 @@
                       display="Tracker Arrow">
                 <HelpText>Show a tracker arrow that points towards the closest unchecked enemy or capsule.</HelpText>
             </Property>
-            <Property name="TrackerArrowToggleable" type="bool" defaultvalue="True"
+            <Property name="TrackerArrowToggleable" type="bool" defaultvalue="False"
                       display="Toggleable Tracker Arrow">
                 <HelpText>Allows toggling the tracker arrow by pressing the whistle button.</HelpText>
             </Property>

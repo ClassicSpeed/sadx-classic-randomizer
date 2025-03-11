@@ -81,7 +81,7 @@ public:
     float deathDetectionCooldown = 0.5f;
     std::clock_t deathCooldownTimer = -1;
     mutable bool trackerArrow = true;
-    bool trackerArrowToggleable = true;
+    bool trackerArrowToggleable = false;
     bool trackerArrowOverrideColor = true;
     bool trackerArrowShowDistance = true;
     bool enemyIndicator = true;
