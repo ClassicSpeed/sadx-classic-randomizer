@@ -14,7 +14,6 @@ All notable changes to this project will be documented in this file.
 
 - Removed skip from SSMain to Hotel for Tails.
 - Added skip from Hotel to Casino for Tails.
-- Added skip from SSMain to TP Lobby for Gamma.
 - Added skip from MRMain to AngelIsland (and back) for Gamma (with boosters).
 - Added Ice Key skip for Tails.
 - Added skip from TP Lobby to SSMain for Amy.
@@ -22,7 +21,11 @@ All notable changes to this project will be documented in this file.
 - Added alternative SSMain to Hotel with Life Belt for Big.
 - Added skip from Hotel to SSMain for Gamma.
 - Added skip from Hotel to Casino for Gamma.
-- Added skip from TP Lobby to SSMain for Sonic.
+- Added skip from SSMain to TP Lobby for Sonic, Tails, Knuckles, Amy and Big.
+- Added skip from TP Lobby to SSMain for Sonic, Tails, Knuckles, Amy, and Gamma.
+- Added skip from MRMain to Angel Island for Sonic.
+- Added skip from Angel Island to MRMain for Sonic.
+- Station Back Key is no longer needed to open Ice Cap.
 
 - Tree Stump Emblem now in logic for Amy and Gamma.
 - Spinning Platform Emblem now in logic for Knuckles.
