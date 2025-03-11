@@ -15,6 +15,11 @@ All notable changes to this project will be documented in this file.
 - Added Ice Key skip for Tails.
 - Added skip from TP Lobby to SSMain for Amy.
 - Added skip from SSMain to the Station for Big.
+- Added alternative SSMain to Hotel with Life Belt for Big.
+- Added skip from Hotel to SSMain for Gamma.
+- Added skip from Hotel to Casino for Gamma.
+- Added skip from TP Lobby to SSMain for Sonic.
+
 - Tree Stump Emblem now in logic for Amy and Gamma.
 - Spinning Platform Emblem now in logic for Knuckles.
 - City Hall emblem now in logic for Knuckles.
