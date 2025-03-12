@@ -10,10 +10,17 @@ All notable changes to this project will be documented in this file.
 
 ### Logic
 
+#### Hard
+
+- Spinning Platform Emblem now in logic for Knuckles.
+
 #### Expert (DX)
 
 - Removed skip from SSMain to Hotel for Tails.
 - Added skip from Hotel to Casino for Tails.
+- Added skip from Hotel to Station for Knuckles.
+- Added alternative from Casino to Hotel for Knuckles (with Station Back Key).
+- Added skip from Casino to Station for Sonic.
 - Added skip from MRMain to AngelIsland (and back) for Gamma (with boosters).
 - Added Ice Key skip for Tails.
 - Added skip from TP Lobby to SSMain for Amy.
@@ -28,7 +35,6 @@ All notable changes to this project will be documented in this file.
 - Station Back Key is no longer needed to open Ice Cap.
 
 - Tree Stump Emblem now in logic for Amy and Gamma.
-- Spinning Platform Emblem now in logic for Knuckles.
 - City Hall emblem now in logic for Knuckles.
 
 #### Expert (DC)
