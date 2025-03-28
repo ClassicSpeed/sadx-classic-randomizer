@@ -47,6 +47,7 @@ All notable changes to this project will be documented in this file.
 - Updated location groups.
 - Updated items information.
 - Updated random level entrance information.
+- Updated Lost World requirements to include Light Speed Shoes.
 
 ### Docs
 
