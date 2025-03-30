@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - The Enemy/Capsule arrow is no longer toggleable by default (you can still make it toggleable it in the mod settings).
+- When playing as Tails, any capsule that Sonic breaks will count as if Tails broke it.
 
 ### Logic
 

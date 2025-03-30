@@ -14,6 +14,13 @@ static bool __cdecl HandleCheckMissionRequirements(int mission, int character, i
 UsercallFuncVoid(OnBoaBoaPartDestroyed_t, (task * tp), (tp), 0x79F8F0, rEAX);
 static void __cdecl HandleOnBoaBoaPartDestroyed(task* tp);
 
+
+UsercallFuncVoid(OnCapsuleBreak_t, (task * tp), (tp), 0x4D6670, rEAX);
+static void __cdecl HandleCapsuleBreak(task* tp);
+
+UsercallFuncVoid(OnCapsuleBreakAir_t, (task * tp), (tp), 0x4C0610, rEDI);
+static void __cdecl HandleCapsuleBreakAir(task* tp);
+
 float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
 {
     float result = GetShadowPos(x, y, z, rotation);
@@ -27,6 +34,8 @@ EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
     PlayCharacterDeathSound_t.Hook(HandlePlayCharacterDeathSound);
     CheckMissionRequirements_t.Hook(HandleCheckMissionRequirements);
     OnBoaBoaPartDestroyed_t.Hook(HandleOnBoaBoaPartDestroyed);
+    OnCapsuleBreak_t.Hook(HandleCapsuleBreak);
+    OnCapsuleBreakAir_t.Hook(HandleCapsuleBreakAir);
     checkData = randomizer.GetCheckData();
     capsules = randomizer.GetCapsules();
     enemies = randomizer.GetEnemies();
@@ -795,6 +804,24 @@ FunctionHook<void, EntityData1*> onElectricShieldCapsuleBroken(0x4D6E40, [](Enti
     onElectricShieldCapsuleBroken.Original(entity);
     CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity);
 });
+
+//Make Sonic's capsule count as Tails'
+void HandleCapsuleBreak(task* tp)
+{
+    if (CurrentCharacter == Characters_Tails)
+        if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask == GetPlayerTaskPointer(1))
+            tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
+    OnCapsuleBreak_t.Original(tp);
+}
+
+void HandleCapsuleBreakAir(task* tp)
+{
+    if (CurrentCharacter == Characters_Tails)
+        if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask == GetPlayerTaskPointer(1))
+            tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
+    OnCapsuleBreakAir_t.Original(tp);
+}
+
 
 FunctionHook<void, unsigned short> onKillHimP(0x440CD0, [](const unsigned short a1)-> void
 {
