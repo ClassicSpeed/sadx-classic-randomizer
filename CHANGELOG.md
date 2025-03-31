@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - The Enemy/Capsule arrow is no longer toggleable by default (you can still make it toggleable it in the mod settings).
 - When playing as Tails, any capsule that Sonic breaks will count as if Tails broke it.
+- Now all the level objects (including the emblem) will spawn in Angel Island when playing as Tails or Big.
 
 ### Logic
 

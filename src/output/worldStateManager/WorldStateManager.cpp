@@ -224,7 +224,7 @@ WorldStateManager::WorldStateManager()
     islandDoorFlags[Characters_Tails] = FLAG_SONIC_MR_ISLANDDOOR;
     islandDoorFlags[Characters_Big] = FLAG_SONIC_MR_ISLANDDOOR;
     islandDoorFlags[Characters_Amy] = FLAG_SONIC_MR_ISLANDDOOR;
-    
+
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_MRuins[WARP_MYSTIC_RUINS] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
@@ -833,6 +833,24 @@ const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {
 const SETEntry WARP_TO_PAST = CreateSetEntry(WARP_MYSTIC_RUINS, {-2.5f, -240, 2397.5f});
 const SETEntry WARP_FROM_PAST = CreateSetEntry(WARP_PAST, {0, 7, 247.5f});
 
+FunctionHook<Sint32> onPrepareLevel(0x415210, []()-> Sint32
+{
+    Sint32 result;
+    if ((CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Big) && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+    {
+        const int bufferCharacter = CurrentCharacter;
+        CurrentCharacter = Characters_Knuckles;
+        result = onPrepareLevel.Original();
+        CurrentCharacter = bufferCharacter;
+    }
+    else
+    {
+        result = onPrepareLevel.Original();
+    }
+    return result;
+});
+
+
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
     onCountSetItemsMaybe.Original();
@@ -859,7 +877,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     //Cop
     LoadPVM("NISEPAT", &NISEPAT_TEXLIST);
-    
+
     //Sky Chase Tarjet
     LoadNoNamePVM(&TARGET_TEXLIST);
 
@@ -872,7 +890,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
-    
+
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Sonic);
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Tails);
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
