@@ -32,7 +32,7 @@ public:
     void KillPlayer();
     void ProcessRings(Sint16 amount);
     RingDifference GetRingDifference();
-    void GiveFillerItem(FillerType filler);
+    void GiveFillerItem(FillerType filler, bool priority);
     void OnPlayingFrame();
     void SetStartingCharacter(int startingCharacterIndex);
     void SetCharacterVoiceReactions(bool eggmanCommentOnTrap, bool otherCharactersCommentOnTrap,
@@ -56,7 +56,7 @@ private:
     void ReverseControls();
     void SpawnSpring();
     void SpawnEnemies(void (*enemyFunc)(task* tp));
-    std::queue<FillerType> _remainingFiller;
+    std::deque<FillerType> _remainingFiller;
 
     float _fillerDuration = 2.5f;
     std::clock_t _fillerTimer = -1;

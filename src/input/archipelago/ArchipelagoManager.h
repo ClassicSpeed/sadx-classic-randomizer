@@ -25,6 +25,12 @@ enum RingLinkOverride
     RingLinkForceEnabledHard = 2,
     RingLinkForceDisabled = 3,
 };
+enum TrapLinkOverride
+{
+    TrapLinkDefault = 0,
+    TrapLinkForceEnabled = 1,
+    TrapLinkForceDisabled = 2,
+};
 
 class ArchipelagoManager
 {
@@ -38,7 +44,7 @@ public:
     void OnSaveFileLoaded();
     void SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
                                 const std::string& serverPassword, DeathLinkOverride newDeathLinkOverride,
-                                RingLinkOverride newRingLinkOverride,
+                                RingLinkOverride newRingLinkOverride,TrapLinkOverride newTrapLinkOverride,
                                 bool showChatMessages, bool showGoalReached,
                                 bool showCountdowns, bool showPlayerConnections);
 
@@ -47,6 +53,7 @@ public:
     int64_t baseId;
     DeathLinkOverride deathLinkOverride;
     RingLinkOverride ringLinkOverride;
+    TrapLinkOverride trapLinkOverride;
 
 private:
     void ManageMessages();

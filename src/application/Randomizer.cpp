@@ -89,10 +89,17 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
         _characterManager.GiveUpgrade(item.upgrade);
     else if (item.type == ItemCharacter || item.type == ItemKey)
         _worldStateManager.SetEventFlags(item.eventFlags);
-    else if (item.type == ItemFiller)
-        _characterManager.GiveFillerItem(item.fillerType);
     else if (item.type == ItemEmblem)
         _itemRepository.AddEmblem();
+    else if (item.type == ItemFiller)
+    {
+        _characterManager.GiveFillerItem(item.fillerType, false);
+        if (_options.trapLinkActive)
+        {
+            _archipelagoMessenger.SendTrapLink(item.displayName);
+            _displayManager.QueueItemMessage("Linked " + item.displayName + " sent");
+        }
+    }
 
     const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
     _characterManager.UpdateUnlockStatus(unlockStatus);
@@ -963,6 +970,16 @@ void Randomizer::ProcessRings(const Sint16 amount)
     _characterManager.ProcessRings(amount);
 }
 
+void Randomizer::ProcessTrapLink(std::string itemName, std::string message)
+{
+    _displayManager.QueueItemMessage(message);
+
+    FillerType filler = _itemRepository.GetFillerFromName(itemName);
+
+    if (filler != NoFiller)
+        _characterManager.GiveFillerItem(filler, false);
+}
+
 void Randomizer::OnConnected(std::string playerName)
 {
     _options.playerName = playerName;
@@ -1232,6 +1249,12 @@ void Randomizer::SetCasinopolisRingLink(const bool casinopolisRingLink)
 void Randomizer::SetHardRingLink(const bool hardRingLinkActive)
 {
     _options.hardRingLinkActive = hardRingLinkActive;
+    _archipelagoMessenger.UpdateTags(_options);
+}
+
+void Randomizer::SetTrapLink(const bool trapLinkActive)
+{
+    _options.trapLinkActive = trapLinkActive;
     _archipelagoMessenger.UpdateTags(_options);
 }
 

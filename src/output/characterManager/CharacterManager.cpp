@@ -215,9 +215,12 @@ RingDifference CharacterManager::GetRingDifference()
     return ringDifference;
 }
 
-void CharacterManager::GiveFillerItem(const FillerType filler)
+void CharacterManager::GiveFillerItem(const FillerType filler, const bool priority)
 {
-    _remainingFiller.push(filler);
+    if (priority)
+        _remainingFiller.push_front(filler);
+    else
+        _remainingFiller.push_back(filler);
 }
 
 void CharacterManager::OnPlayingFrame()
@@ -305,7 +308,7 @@ void CharacterManager::OnPlayingFrame()
 
 
     ActivateFiller(_remainingFiller.front());
-    _remainingFiller.pop();
+    _remainingFiller.pop_front();
     _fillerTimer = std::clock();
 }
 

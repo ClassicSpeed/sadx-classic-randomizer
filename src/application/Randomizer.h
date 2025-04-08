@@ -62,6 +62,7 @@ public:
     void SetRingLink(bool ringLinkActive);
     void SetCasinopolisRingLink(bool casinopolisRingLink);
     void SetHardRingLink(bool hardRingLinkActive);
+    void SetTrapLink(bool trapLinkActive);
     void SetRingLoss(RingLoss ringLoss);
     void SetTwinkleCircuitCheck(int twinkleCircuitCheck);
     void SetMultipleTwinkleCircuitChecks(int multipleTwinkleCircuitChecks);
@@ -79,6 +80,7 @@ public:
     void OnSync();
     void OnDeath();
     void ProcessRings(Sint16 amount);
+    void ProcessTrapLink(std::string itemName, std::string message);
     void ResetItems();
     void SetMissionMode(int missionModeEnabled);
     void SetAutoStartMissions(int autoStartMissions);

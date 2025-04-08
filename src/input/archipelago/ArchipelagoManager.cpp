@@ -77,6 +77,7 @@ void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, con
                                                 const std::string& serverPassword,
                                                 const DeathLinkOverride newDeathLinkOverride,
                                                 const RingLinkOverride newRingLinkOverride,
+                                                const TrapLinkOverride newTrapLinkOverride,
 
                                                 const bool showChatMessages, const bool showGoalReached,
                                                 const bool showCountdowns, const bool showPlayerConnections)
@@ -86,6 +87,7 @@ void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, con
     this->_serverPassword = serverPassword;
     this->deathLinkOverride = newDeathLinkOverride;
     this->ringLinkOverride = newRingLinkOverride;
+    this->trapLinkOverride = newTrapLinkOverride;
     this->_showChatMessages = showChatMessages;
     this->_showGoalReached = showGoalReached;
     this->_showCountdowns = showCountdowns;
@@ -177,6 +179,23 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
             const int amount = bounceData["amount"].asInt();
 
             randomizerPtr->ProcessRings(amount);
+            break;
+        }
+
+        
+        if (!strcmp(tag.c_str(), "TrapLink"))
+        {
+            if (!randomizerPtr->GetOptions().trapLinkActive)
+                return;
+
+            //Ignore our own trap link
+            if (bounceData["source"].asInt() == archipelagoManagerPtr->instanceId)
+                break;
+
+            std::string trapName = bounceData["trap_name"].asCString();
+            std::string message = "Received Linked " + trapName + " from " + bounceData["source"].asCString();
+
+            randomizerPtr->ProcessTrapLink(trapName, message);
             break;
         }
     }
@@ -485,6 +504,16 @@ void SADX_SetHardRingLink(const int hardRingLinkActive)
         randomizerPtr->SetHardRingLink(hardRingLinkActive);
 }
 
+void SADX_SetTrapLink(const int trapLinkActive)
+{
+    if (archipelagoManagerPtr->trapLinkOverride == TrapLinkForceEnabled)
+        randomizerPtr->SetTrapLink(true);
+    else if (archipelagoManagerPtr->trapLinkOverride == TrapLinkForceDisabled)
+        randomizerPtr->SetTrapLink(false);
+    else
+        randomizerPtr->SetTrapLink(trapLinkActive);
+}
+
 void SADX_RingLoss(const int ringLoss)
 {
     randomizerPtr->SetRingLoss(static_cast<RingLoss>(ringLoss));
@@ -685,6 +714,8 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("CasinopolisRingLink", &SADX_SetCasinopolisRingLink);
     AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);
     AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
+    
+    AP_RegisterSlotDataIntCallback("TrapLink", &SADX_SetTrapLink);
 
     AP_RegisterSlotDataIntCallback("TwinkleCircuitCheck", &SADX_TwinkleCircuitCheck);
     AP_RegisterSlotDataIntCallback("MultipleTwinkleCircuitChecks", &SADX_MultipleTwinkleCircuitChecks);

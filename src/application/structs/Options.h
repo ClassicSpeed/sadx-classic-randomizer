@@ -109,6 +109,7 @@ struct Options
     bool ringLinkActive = false;
     bool casinopolisRingLink = false;
     bool hardRingLinkActive = false;
+    bool trapLinkActive = false;
     RingLoss ringLoss = Classic;
 
     bool bossChecks = false;

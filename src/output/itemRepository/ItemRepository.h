@@ -16,6 +16,7 @@ public:
     int GetEmblemCount();
     UnlockStatus GetUnlockStatus();
     void ResetItems();
+    FillerType GetFillerFromName(const std::string& string);
 
 private:
     int GetSavedItemReceived();

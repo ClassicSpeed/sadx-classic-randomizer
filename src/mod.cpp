@@ -138,6 +138,7 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
 
     const int deathLinkOverride = settingsIni->getInt("AP", "DeathLinkOverride", 0);
     const int ringLinkOverride = settingsIni->getInt("AP", "RingLinkOverride", 0);
+    const int trapLinkOverride = settingsIni->getInt("AP", "TrapLinkOverride", 0);
 
 
     const bool showChatMessages = settingsIni->getBool("Messages", "ShowChatMessages", true);
@@ -148,6 +149,7 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
     archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword,
                                               static_cast<DeathLinkOverride>(deathLinkOverride),
                                               static_cast<RingLinkOverride>(ringLinkOverride),
+                                              static_cast<TrapLinkOverride>(trapLinkOverride),
                                               showChatMessages, showGoalReached, showCountdowns, showPlayerConnections
     );
 }
