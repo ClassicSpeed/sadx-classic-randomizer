@@ -36,13 +36,14 @@ All notable changes to this project will be documented in this file.
 - Added skip from MRMain to Angel Island for Sonic.
 - Added skip from Angel Island to MRMain for Sonic.
 - Station Back Key is no longer needed to open Ice Cap.
-
+- Mission 40 (Sonic) is now in logic without the Light Shoes.
 - Tree Stump Emblem now in logic for Amy and Gamma.
 - City Hall emblem now in logic for Knuckles.
 
 #### Expert (DC)
 
 - Added skip from MRMain to AngelIsland (and back) for Gamma (with boosters).
+- Mission 40 (Sonic) is now in logic without the Light Shoes.
 
 ### Wiki
 
