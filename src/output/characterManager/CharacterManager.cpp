@@ -181,7 +181,7 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 RingDifference CharacterManager::GetRingDifference()
 {
     RingDifference ringDifference = {0, 0};
-    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
+    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
         return {0, 0};
 
     if (CurrentLevel == LevelIDs_PerfectChaos)

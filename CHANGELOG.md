@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file.
 - When playing as Tails, any capsule that Sonic breaks will count as if Tails broke it.
 - Now all the level objects (including the emblem) will spawn in Angel Island when playing as Tails or Big.
 
+### Fixed
+
+- Ring Link now works in Twinkle Circuit.
+
 ### Logic
 
 #### Hard
