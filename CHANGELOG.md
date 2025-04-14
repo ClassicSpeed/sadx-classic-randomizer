@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Support for Trap Link Protocol.
 - Characters names can now be used when blacklisting missions.
+- The in-game tracker can be now be hidden/shown all the time in the mod settings.
 
 ### Changed
 

@@ -158,6 +158,7 @@ void LoadDisplayMessageSettings(const IniFile* settingsIni)
 {
     const float messageDisplayDuration = settingsIni->getFloat("Messages", "MessageDisplayDuration", 5.0f);
     const int messageFontSize = settingsIni->getInt("Messages", "MessageFontSize", 21);
+    const int displayInGameTracker = settingsIni->getInt("Messages", "InGameTracker", 0);
     const int itemMessageColorR = settingsIni->getInt("Messages", "ItemMessageColorR", 33);
     const int itemMessageColorG = settingsIni->getInt("Messages", "ItemMessageColorG", 255);
     const int itemMessageColorB = settingsIni->getInt("Messages", "ItemMessageColorB", 33);
@@ -169,6 +170,7 @@ void LoadDisplayMessageSettings(const IniFile* settingsIni)
 
 
     displayManager.SetMessageConfiguration(messageDisplayDuration, messageFontSize,
+                                              static_cast<DisplayInGameTracker>(displayInGameTracker),
                                            (0xFF << 24) | itemMessageColorR << 16 | itemMessageColorG << 8 |
                                            itemMessageColorB,
                                            (0xFF << 24) | chatMessageColorR << 16 | chatMessageColorG << 8 |

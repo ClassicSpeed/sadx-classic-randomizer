@@ -985,6 +985,7 @@ void Randomizer::OnConnected(std::string playerName)
     _options.playerName = playerName;
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
+    _displayManager.SetConnected();
     _displayManager.QueueItemMessage("Connected to Archipelago");
 }
 

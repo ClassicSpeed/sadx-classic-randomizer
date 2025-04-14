@@ -25,11 +25,14 @@
         <Group name="Messages" display="Messages Settings">
             <Property name="MessageDisplayDuration" type="float" defaultvalue="5" minvalue="3" maxvalue="15"
                       display="Message Display Duration">
-                <HelpText>How long the Archipelago messages will display</HelpText>
+                <HelpText>How long the Archipelago messages will display.</HelpText>
             </Property>
             <Property name="MessageFontSize" type="int" defaultvalue="21" minvalue="10" maxvalue="36"
                       display="Message Font Size">
-                <HelpText>Font size for Archipelago messages</HelpText>
+                <HelpText>Font size for Archipelago messages.</HelpText>
+            </Property>
+            <Property name="InGameTracker" type="InGameTrackerIndex" defaultvalue="0" display="Display In Game Tracker">
+                <HelpText> Display the in-game tracker when paused, always or never.</HelpText>
             </Property>
             <Property name="ItemMessageColorR" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
                       display="Item Message Color Red">
@@ -47,15 +50,12 @@
             <Property name="ShowChatMessages" type="bool" defaultvalue="True" display="Show Chat Messages">
                 <HelpText>Display chats messages in the bottom left corner of the screen.</HelpText>
             </Property>
-
             <Property name="ShowGoalReached" type="bool" defaultvalue="True" display="Show Goal Reached">
                 <HelpText>Display a chat message when someone reaches their goal.</HelpText>
             </Property>
-
             <Property name="ShowCountdowns" type="bool" defaultvalue="True" display="Show Countdowns">
                 <HelpText>Display chat messages for the countdowns.</HelpText>
             </Property>
-
             <Property name="ShowPlayerConnections" type="bool" defaultvalue="False" display="Show Player Connections">
                 <HelpText>Display a chay message when players connect and disconnect.</HelpText>
             </Property>
@@ -281,6 +281,11 @@
             <EnumMember name="0" display="Disabled"/>
             <EnumMember name="1" display="Enabled"/>
             <EnumMember name="2" display="Enabled (No Sound)"/>
+        </Enum>
+        <Enum name="InGameTrackerIndex">
+            <EnumMember name="0" display="When paused"/>
+            <EnumMember name="1" display="Always on"/>
+            <EnumMember name="2" display="Always off"/>
         </Enum>
         <Enum name="CharacterVoiceIndex">
             <EnumMember name="-1" display="Random"/>
