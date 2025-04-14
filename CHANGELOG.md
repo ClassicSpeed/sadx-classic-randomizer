@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.1.1] - 2025-03-??
 
+### Added
+
+- Support for Trap Link Protocol.
+- Characters names can now be used when blacklisting missions.
+
 ### Changed
 
 - The Enemy/Capsule arrow is no longer toggleable by default (you can still make it toggleable it in the mod settings).
