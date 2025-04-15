@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Ring Link now works in Twinkle Circuit.
+- Fixed the subtitles for the "Egg Carrier has crashed" message being too long.
 
 ### Logic
 
