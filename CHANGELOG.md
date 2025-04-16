@@ -23,6 +23,10 @@ All notable changes to this project will be documented in this file.
 
 ### Logic
 
+#### Normal
+
+- Added Light Shoes requirement for Mission 58 (Sonic).
+
 #### Hard
 
 - Spinning Platform Emblem now in logic for Knuckles.
@@ -34,6 +38,7 @@ All notable changes to this project will be documented in this file.
 - Added skip from Hotel to Station for Knuckles.
 - Added alternative from Casino to Hotel for Knuckles (with Station Back Key).
 - Added skip from Casino to Station for Sonic.
+- Added skip from Casino to Station for Knuckles.
 - Added skip from MRMain to AngelIsland (and back) for Gamma (with boosters).
 - Added Ice Key skip for Tails.
 - Added skip from TP Lobby to SSMain for Amy.
@@ -47,6 +52,9 @@ All notable changes to this project will be documented in this file.
 - Added skip from MRMain to Angel Island for Sonic.
 - Added skip from Angel Island to MRMain for Sonic.
 - Station Back Key is no longer needed to open Ice Cap.
+- Added Employee Card skip for Big.
+- Mission 12 (Knuckles) is now in logic without the Shovel Claw.
+- Mission 38 (Knuckles) is now in logic without the Shovel Claw.
 - Mission 40 (Sonic) is now in logic without the Light Shoes.
 - Tree Stump Emblem now in logic for Amy and Gamma.
 - City Hall emblem now in logic for Knuckles.
