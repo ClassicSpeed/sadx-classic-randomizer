@@ -47,15 +47,22 @@ All notable changes to this project will be documented in this file.
 - Added alternative SSMain to Hotel with Life Belt for Big.
 - Added skip from Hotel to SSMain for Gamma.
 - Added skip from Hotel to Casino for Gamma.
+- Added skip from Hotel to SSMain for Amy.
+- Added skip from Hotel to Casino for Amy.
 - Added skip from SSMain to TP Lobby for Sonic, Tails, Knuckles, Amy and Big.
 - Added skip from TP Lobby to SSMain for Sonic, Tails, Knuckles, Amy, and Gamma.
 - Added skip from MRMain to Angel Island for Sonic.
 - Added skip from Angel Island to MRMain for Sonic.
+
+- Added skip from Angel Island to Ice Cap without any items as Sonic
+- Added skip from Angel Island to Red Mountain without any items as Knuckles
 - Station Back Key is no longer needed to open Ice Cap.
 - Added Employee Card skip for Big.
+
 - Mission 12 (Knuckles) is now in logic without the Shovel Claw.
 - Mission 38 (Knuckles) is now in logic without the Shovel Claw.
 - Mission 40 (Sonic) is now in logic without the Light Shoes.
+- 
 - Tree Stump Emblem now in logic for Amy and Gamma.
 - City Hall emblem now in logic for Knuckles.
 
