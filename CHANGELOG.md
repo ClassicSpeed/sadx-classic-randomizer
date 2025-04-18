@@ -59,13 +59,16 @@ All notable changes to this project will be documented in this file.
 - Added skip from Angel Island to Red Mountain without any items as Knuckles
 - Station Back Key is no longer needed to open Ice Cap.
 - Added Employee Card skip for Big.
+- Added Employee Card skip for Gamma.
 - Station Front Key is no longer needed for Big to enter Ice Cap.
 
 - Mission 12 (Knuckles) is now in logic without the Shovel Claw.
 - Mission 38 (Knuckles) is now in logic without the Shovel Claw.
+- Mission 39 (Gamma) is now in logic without the Jet Boosters.
 - Mission 40 (Sonic) is now in logic without the Light Shoes.
-- 
+
 - Tree Stump Emblem now in logic for Amy and Gamma.
+- Pool Emblem now in logic for Gamma.
 - City Hall emblem now in logic for Knuckles.
 
 #### Expert (DC)
@@ -74,6 +77,7 @@ All notable changes to this project will be documented in this file.
 - Added skip from SSMain to Twinkle Park Lobby for Tails.
 - Added skip from SSMain to Twinkle Park Lobby for Knuckles.
 - Added skip from SSMain to Station for Knuckles.
+- Added skip from SSMain to Hotel for Amy.
 - Added skip from Hotel to SSMain for Gamma.
 - Added skip from Hotel to Casino for Gamma.
 - Added skip from Hotel to Casino for Knuckles.
