@@ -45,10 +45,11 @@ All notable changes to this project will be documented in this file.
 - Added skip from SSMain to the Station for Big.
 - Added skip from Station to the SSMain for Sonic.
 - Added alternative SSMain to Hotel with Life Belt for Big.
-- Added skip from Hotel to SSMain for Gamma.
-- Added skip from Hotel to Casino for Gamma.
+- Added skip from Hotel to SSMain for Tails.
 - Added skip from Hotel to SSMain for Amy.
 - Added skip from Hotel to Casino for Amy.
+- Added skip from Hotel to SSMain for Gamma.
+- Added skip from Hotel to Casino for Gamma.
 - Added skip from SSMain to TP Lobby for Sonic, Tails, Knuckles, Amy and Big.
 - Added skip from TP Lobby to SSMain for Sonic, Tails, Knuckles, Amy, and Gamma.
 - Added skip from MRMain to Angel Island for Sonic.
@@ -58,6 +59,7 @@ All notable changes to this project will be documented in this file.
 - Added skip from Angel Island to Red Mountain without any items as Knuckles
 - Station Back Key is no longer needed to open Ice Cap.
 - Added Employee Card skip for Big.
+- Station Front Key is no longer needed for Big to enter Ice Cap.
 
 - Mission 12 (Knuckles) is now in logic without the Shovel Claw.
 - Mission 38 (Knuckles) is now in logic without the Shovel Claw.
@@ -68,7 +70,20 @@ All notable changes to this project will be documented in this file.
 
 #### Expert (DC)
 
-- Added skip from MRMain to AngelIsland (and back) for Gamma (with boosters).
+- Added skip from SSMain to Twinkle Park Lobby for Sonic.
+- Added skip from SSMain to Twinkle Park Lobby for Tails.
+- Added skip from SSMain to Twinkle Park Lobby for Knuckles.
+- Added skip from SSMain to Station for Knuckles.
+- Added skip from Hotel to SSMain for Gamma.
+- Added skip from Hotel to Casino for Gamma.
+- Added skip from Hotel to Casino for Knuckles.
+- Added skip from Hotel to Casino for Amy.
+- Added skip from Angel Island to MRMain for Sonic.
+- Added skip from MRMain to Angel Island for Sonic.
+- Added skip from MRMain to Angel Island for Gamma (with boosters).
+- Added skip from Angel Island to MRMain for Gamma (with boosters).
+- Added skip from Casino to Station for Knuckles.
+- Added skip from SSMain to Station for Amy.
 - Mission 40 (Sonic) is now in logic without the Light Shoes.
 
 ### Wiki
