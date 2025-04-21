@@ -79,6 +79,7 @@ All notable changes to this project will be documented in this file.
 - Added skip from SSMain to Twinkle Park Lobby for Tails.
 - Added skip from SSMain to Twinkle Park Lobby for Knuckles.
 - Added skip from SSMain to Station for Knuckles.
+- Added skip from SSMain to Hotel for Tails.
 - Added skip from SSMain to Hotel for Amy.
 - Added skip from Hotel to SSMain for Gamma.
 - Added skip from Hotel to Casino for Gamma.
