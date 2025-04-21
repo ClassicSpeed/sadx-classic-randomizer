@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Support for Trap Link Protocol.
 - Characters names can now be used when blacklisting missions.
 - The in-game tracker can be now be hidden/shown all the time in the mod settings.
+- Expert + logic for DX.
 
 ### Changed
 
@@ -28,10 +29,31 @@ All notable changes to this project will be documented in this file.
 #### Normal
 
 - Added Light Shoes requirement for Mission 58 (Sonic).
+- Knuckles, Amy and Gamma no longer require the Dynamite to enter Ice Cap.
 
 #### Hard
 
 - Spinning Platform Emblem now in logic for Knuckles.
+
+#### Expert (DC)
+
+- Added skip from SSMain to Twinkle Park Lobby for Sonic.
+- Added skip from SSMain to Twinkle Park Lobby for Tails.
+- Added skip from SSMain to Twinkle Park Lobby for Knuckles.
+- Added skip from SSMain to Station for Knuckles.
+- Added skip from SSMain to Hotel for Tails.
+- Added skip from SSMain to Hotel for Amy.
+- Added skip from Hotel to SSMain for Gamma.
+- Added skip from Hotel to Casino for Gamma.
+- Added skip from Hotel to Casino for Knuckles.
+- Added skip from Hotel to Casino for Amy.
+- Added skip from Angel Island to MRMain for Sonic.
+- Added skip from MRMain to Angel Island for Sonic.
+- Added skip from MRMain to Angel Island for Gamma (with boosters).
+- Added skip from Angel Island to MRMain for Gamma (with boosters).
+- Added skip from Casino to Station for Knuckles.
+- Added skip from SSMain to Station for Amy.
+- Mission 40 (Sonic) is now in logic without the Light Shoes.
 
 #### Expert (DX)
 
@@ -56,42 +78,28 @@ All notable changes to this project will be documented in this file.
 - Added skip from TP Lobby to SSMain for Sonic, Tails, Knuckles, Amy, and Gamma.
 - Added skip from MRMain to Angel Island for Sonic.
 - Added skip from Angel Island to MRMain for Sonic.
-
 - Added skip from Angel Island to Ice Cap without any items as Sonic
 - Added skip from Angel Island to Red Mountain without any items as Knuckles
 - Station Back Key is no longer needed to open Ice Cap.
 - Added Employee Card skip for Big.
 - Added Employee Card skip for Gamma.
 - Station Front Key is no longer needed for Big to enter Ice Cap.
-
 - Mission 12 (Knuckles) is now in logic without the Shovel Claw.
 - Mission 38 (Knuckles) is now in logic without the Shovel Claw.
-- Mission 39 (Gamma) is now in logic without the Jet Boosters.
 - Mission 40 (Sonic) is now in logic without the Light Shoes.
-
 - Tree Stump Emblem now in logic for Amy and Gamma.
 - Pool Emblem now in logic for Gamma.
 - City Hall emblem now in logic for Knuckles.
 
-#### Expert (DC)
+#### Expert + (DX)
 
-- Added skip from SSMain to Twinkle Park Lobby for Sonic.
-- Added skip from SSMain to Twinkle Park Lobby for Tails.
-- Added skip from SSMain to Twinkle Park Lobby for Knuckles.
-- Added skip from SSMain to Station for Knuckles.
-- Added skip from SSMain to Hotel for Tails.
-- Added skip from SSMain to Hotel for Amy.
-- Added skip from Hotel to SSMain for Gamma.
-- Added skip from Hotel to Casino for Gamma.
-- Added skip from Hotel to Casino for Knuckles.
-- Added skip from Hotel to Casino for Amy.
-- Added skip from Angel Island to MRMain for Sonic.
-- Added skip from MRMain to Angel Island for Sonic.
-- Added skip from MRMain to Angel Island for Gamma (with boosters).
-- Added skip from Angel Island to MRMain for Gamma (with boosters).
-- Added skip from Casino to Station for Knuckles.
-- Added skip from SSMain to Station for Amy.
-- Mission 40 (Sonic) is now in logic without the Light Shoes.
+- Added skip from Station to Casino for Gamma.
+- Knuckles can now enter Ice Cap with either the Ice Stone or the Shovel Claw.
+- Mission 39 (Gamma) is now in logic without the Jet Boosters.
+- Mission 51 (Gamma) is now in logic without the Jet Boosters.
+- Mission 56 (Knuckles) is now in logic without the Shovel Claw.
+- Casino Emblem is now in logic for Knuckles.
+
 
 ### Wiki
 
