@@ -625,6 +625,12 @@ void WorldStateManager::SetStartingArea()
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
         break;
     case EggCarrierInside:
+        ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_TRANSFORM));
         SetLevelAndAct(LevelIDs_EggCarrierInside, 1);
         break;
     case AngelIsland:

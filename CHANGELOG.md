@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Ring Link now works in Twinkle Circuit.
 - Fixed the subtitles for the "Egg Carrier has crashed" message being too long.
 - Removed empty locations groups.
+- Fixed Egg Carrier starting transformed when spawned inside.
 
 ### Logic
 
