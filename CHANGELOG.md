@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - The Enemy/Capsule arrow is no longer toggleable by default (you can still make it toggleable it in the mod settings).
 - When playing as Tails, any capsule that Sonic breaks will count as if Tails broke it.
 - Now all the level objects (including the emblem) will spawn in Angel Island when playing as Tails or Big.
+- Timer will no longer be frozen when completing a mission.
 
 ### Fixed
 
@@ -34,6 +35,7 @@ All notable changes to this project will be documented in this file.
 #### Hard
 
 - Spinning Platform Emblem now in logic for Knuckles.
+- Main Platform Emblem now in logic for Amy.
 
 #### Expert (DC)
 
@@ -54,6 +56,7 @@ All notable changes to this project will be documented in this file.
 - Added skip from Casino to Station for Knuckles.
 - Added skip from SSMain to Station for Amy.
 - Mission 40 (Sonic) is now in logic without the Light Shoes.
+- Main Platform Emblem now in logic for Tails.
 
 #### Expert (DX)
 
@@ -90,6 +93,7 @@ All notable changes to this project will be documented in this file.
 - Tree Stump Emblem now in logic for Amy and Gamma.
 - Pool Emblem now in logic for Gamma.
 - City Hall emblem now in logic for Knuckles.
+- Main Platform Emblem now in logic for Tails with Rhythm Badge.
 
 #### Expert + (DX)
 

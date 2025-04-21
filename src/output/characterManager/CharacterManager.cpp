@@ -31,6 +31,9 @@ CharacterManager::CharacterManager()
     WriteCall((void*)0x592048, EnablePause);
     WriteCall((void*)0x5920AF, EnablePause);
 
+    //Re-enable timer after finishing a mission
+    WriteCall((void*)0x592057, WakeTimer);
+
     HudDisplayRings_t.Hook(HandleHudDisplayRings);
 }
 
@@ -181,7 +184,8 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 RingDifference CharacterManager::GetRingDifference()
 {
     RingDifference ringDifference = {0, 0};
-    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field && GameMode != GameModes_Adventure_ActionStg)
+    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field && GameMode !=
+        GameModes_Adventure_ActionStg)
         return {0, 0};
 
     if (CurrentLevel == LevelIDs_PerfectChaos)
