@@ -42,7 +42,10 @@ All notable changes to this project will be documented in this file.
 - Added skip from SSMain to Twinkle Park Lobby for Sonic.
 - Added skip from SSMain to Twinkle Park Lobby for Tails.
 - Added skip from SSMain to Twinkle Park Lobby for Knuckles.
+- Added skip from SSMain to Twinkle Park Lobby for Gamma.
+- Added skip from SSMain to Twinkle Park Lobby for Amy.
 - Added skip from SSMain to Station for Knuckles.
+- Added skip from SSMain to Station for Big.
 - Added skip from SSMain to Hotel for Tails.
 - Added skip from SSMain to Hotel for Amy.
 - Added skip from Hotel to SSMain for Gamma.
@@ -93,7 +96,7 @@ All notable changes to this project will be documented in this file.
 - Tree Stump Emblem now in logic for Amy and Gamma.
 - Pool Emblem now in logic for Gamma.
 - City Hall emblem now in logic for Knuckles.
-- Main Platform Emblem now in logic for Tails with Rhythm Badge.
+- Main Platform Emblem now in logic for Tails.
 
 #### Expert + (DX)
 
