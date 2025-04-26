@@ -31,6 +31,7 @@ All notable changes to this project will be documented in this file.
 
 - Added Light Shoes requirement for Mission 58 (Sonic).
 - Knuckles, Amy and Gamma no longer require the Dynamite to enter Ice Cap.
+- Added missing dynamite requirement for Big's Life Belt.
 
 #### Hard
 
@@ -46,6 +47,8 @@ All notable changes to this project will be documented in this file.
 - Added skip from SSMain to Twinkle Park Lobby for Amy.
 - Added skip from SSMain to Station for Knuckles.
 - Added skip from SSMain to Station for Big.
+- Added skip from SSMain to Station for Gamma.
+- Added skip from Station to SSMain for Sonic.
 - Added skip from SSMain to Hotel for Tails.
 - Added skip from SSMain to Hotel for Amy.
 - Added skip from Hotel to SSMain for Gamma.
@@ -60,6 +63,7 @@ All notable changes to this project will be documented in this file.
 - Added skip from SSMain to Station for Amy.
 - Mission 40 (Sonic) is now in logic without the Light Shoes.
 - Main Platform Emblem now in logic for Tails.
+- Spinning Platform Emblem now in logic for Amy.
 
 #### Expert (DX)
 
@@ -97,6 +101,7 @@ All notable changes to this project will be documented in this file.
 - Pool Emblem now in logic for Gamma.
 - City Hall emblem now in logic for Knuckles.
 - Main Platform Emblem now in logic for Tails.
+- Spinning Platform Emblem now in logic for Amy.
 
 #### Expert + (DX)
 
