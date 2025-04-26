@@ -60,6 +60,7 @@ public:
     Options options;
     UnlockStatus unlockStatus;
     bool eggCarrierTransformationCutscene = true;
+    VisitedLevels visitedLevels;
     LevelEntrances levelEntrances = {
         {EmeraldCoast, EmeraldCoast},
         {WindyValley, WindyValley},
@@ -76,7 +77,6 @@ public:
 
 private:
     bool _showEntranceIndicators = true;
-    VisitedLevels _visitedLevels;
     mutable std::map<int, LocationData> _checkData;
     NJS_COLOR _wrongDoorColor[12] = {
         {0xAAFF0000},

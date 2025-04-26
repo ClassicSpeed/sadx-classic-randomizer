@@ -845,7 +845,7 @@ void Randomizer::OnCharacterLoaded() const
         else
             _characterManager.RemoveUpgrade(item.second.upgrade);
     }
-    if (_options.entranceRandomizer && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
+    if (CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
         _displayManager.UpdateVisitedLevels(_worldStateManager.GetVisitedLevels(CurrentLevel));
 }
 

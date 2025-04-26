@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Characters names can now be used when blacklisting missions.
 - The in-game tracker can be now be hidden/shown all the time in the mod settings.
 - Expert + logic for DX.
+- After entering Lost Word as Knuckles using the snake OoB clip, the entrance will now be open (even in random levels).
 
 ### Changed
 

@@ -199,7 +199,7 @@ char LeonTimer2 = 30;
 
 WorldStateManager::WorldStateManager()
 {
-    _visitedLevels = VisitedLevels();
+    visitedLevels = VisitedLevels();
     onSceneChangeMr_t.Hook(HandleMREntrance);
     onTwinkleParkDoor_t.Hook(HandleTwinkleParkEntrance);
     onTwinkleCircuitDoor_t.Hook(HandleTwinkleCircuitEntrance);
@@ -441,7 +441,8 @@ void WorldStateManager::OnFrame()
     if (CurrentLevel == LevelIDs_PerfectChaos)
         return;
 
-    if (IsSkyChase1Enabled() && (CurrentCharacter == Characters_Sonic || (CurrentCharacter == Characters_Tails && !options.missionModeEnabled)))
+    if (IsSkyChase1Enabled() && (CurrentCharacter == Characters_Sonic || (CurrentCharacter == Characters_Tails && !
+        options.missionModeEnabled)))
         EventFlagArray[33] = 1;
 
     if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
@@ -660,17 +661,17 @@ void WorldStateManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int
 void WorldStateManager::UpdateLevelEntrances(LevelEntrances levelEntrances)
 {
     this->levelEntrances = levelEntrances;
-    this->_visitedLevels.emeraldCoastEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(EmeraldCoast);
-    this->_visitedLevels.windyValleyEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(WindyValley);
-    this->_visitedLevels.casinopolisEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(Casinopolis);
-    this->_visitedLevels.iceCapEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(IceCap);
-    this->_visitedLevels.twinkleParkEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(TwinklePark);
-    this->_visitedLevels.speedHighwayEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SpeedHighway);
-    this->_visitedLevels.redMountainEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(RedMountain);
-    this->_visitedLevels.skyDeckEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SkyDeck);
-    this->_visitedLevels.lostWorldEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(LostWorld);
-    this->_visitedLevels.finalEggEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(FinalEgg);
-    this->_visitedLevels.hotShelterEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(HotShelter);
+    this->visitedLevels.emeraldCoastEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(EmeraldCoast);
+    this->visitedLevels.windyValleyEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(WindyValley);
+    this->visitedLevels.casinopolisEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(Casinopolis);
+    this->visitedLevels.iceCapEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(IceCap);
+    this->visitedLevels.twinkleParkEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(TwinklePark);
+    this->visitedLevels.speedHighwayEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SpeedHighway);
+    this->visitedLevels.redMountainEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(RedMountain);
+    this->visitedLevels.skyDeckEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SkyDeck);
+    this->visitedLevels.lostWorldEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(LostWorld);
+    this->visitedLevels.finalEggEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(FinalEgg);
+    this->visitedLevels.hotShelterEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(HotShelter);
 }
 
 VisitedLevels WorldStateManager::GetVisitedLevels(const int visitedLevel)
@@ -679,42 +680,44 @@ VisitedLevels WorldStateManager::GetVisitedLevels(const int visitedLevel)
     switch (visitedEntrance)
     {
     case LevelIDs_EmeraldCoast:
-        _visitedLevels.emeraldCoastEntranceVisited = true;
+        visitedLevels.emeraldCoastEntranceVisited = true;
         break;
     case LevelIDs_WindyValley:
-        _visitedLevels.windyValleyEntranceVisited = true;
+        visitedLevels.windyValleyEntranceVisited = true;
         break;
     case LevelIDs_Casinopolis:
-        _visitedLevels.casinopolisEntranceVisited = true;
+        visitedLevels.casinopolisEntranceVisited = true;
         break;
     case LevelIDs_IceCap:
-        _visitedLevels.iceCapEntranceVisited = true;
+        visitedLevels.iceCapEntranceVisited = true;
         break;
     case LevelIDs_TwinklePark:
-        _visitedLevels.twinkleParkEntranceVisited = true;
+        visitedLevels.twinkleParkEntranceVisited = true;
         break;
     case LevelIDs_SpeedHighway:
-        _visitedLevels.speedHighwayEntranceVisited = true;
+        visitedLevels.speedHighwayEntranceVisited = true;
         break;
     case LevelIDs_RedMountain:
-        _visitedLevels.redMountainEntranceVisited = true;
+        visitedLevels.redMountainEntranceVisited = true;
         break;
     case LevelIDs_SkyDeck:
-        _visitedLevels.skyDeckEntranceVisited = true;
+        visitedLevels.skyDeckEntranceVisited = true;
         break;
     case LevelIDs_LostWorld:
-        _visitedLevels.lostWorldEntranceVisited = true;
+        visitedLevels.lostWorldEntranceVisited = true;
+        if (CurrentCharacter == Characters_Knuckles)
+            visitedLevels.lostWorldEntranceVisitedAsKnuckles = true;
         break;
     case LevelIDs_FinalEgg:
-        _visitedLevels.finalEggEntranceVisited = true;
+        visitedLevels.finalEggEntranceVisited = true;
         break;
     case LevelIDs_HotShelter:
-        _visitedLevels.hotShelterEntranceVisited = true;
+        visitedLevels.hotShelterEntranceVisited = true;
         break;
     default: break;
     }
 
-    return _visitedLevels;
+    return visitedLevels;
 }
 
 void WorldStateManager::SetEggCarrierTransformationCutscene(const bool eggCarrierTransformation)
@@ -843,7 +846,8 @@ const SETEntry WARP_FROM_PAST = CreateSetEntry(WARP_PAST, {0, 7, 247.5f});
 FunctionHook<Sint32> onPrepareLevel(0x415210, []()-> Sint32
 {
     Sint32 result;
-    if ((CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Big) && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+    if ((CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Big) &&
+        levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
         const int bufferCharacter = CurrentCharacter;
         CurrentCharacter = Characters_Knuckles;
@@ -970,11 +974,10 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
         if (worldStateManagerPtr->IsSkyChase1Enabled())
         {
             AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-            if(worldStateManagerPtr->options.missionModeEnabled)
+            if (worldStateManagerPtr->options.missionModeEnabled)
                 AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
             else
                 AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
-            
         }
 
         AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
@@ -1105,7 +1108,7 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
             && tp->twp->pos.y > 190 && tp->twp->pos.y < 193
             && tp->twp->pos.z > 862 && tp->twp->pos.z < 865)
             return;
-    // We don't spawn the golden/silver keys for knuckles if he can enter LostWorld
+    // We don't spawn the golden/silver keys for knuckles if he can't enter LostWorld
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
     {
         if (!worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter))
@@ -1641,8 +1644,8 @@ FunctionHook<BOOL> isFinalEggDoorActive(0x53EDF0, []()-> BOOL
 FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
 {
     if (CurrentCharacter == Characters_Knuckles)
-        return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[
-                FLAG_KNUCKLES_MR_BLUECUBE]
+        return ((EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[FLAG_KNUCKLES_MR_BLUECUBE]) ||
+                worldStateManagerPtr->visitedLevels.lostWorldEntranceVisitedAsKnuckles)
             && worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
 
     return false;
