@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file.
 - When playing as Tails, any capsule that Sonic breaks will count as if Tails broke it.
 - Now all the level objects (including the emblem) will spawn in Angel Island when playing as Tails or Big.
 - Timer will no longer be frozen when completing a mission.
+- Tails' workshop runway will no longer open for Tails when Mission mode is enabled.
+    - The runway was interfering with the grass mission. For Sonic, it will still open if Sky Chase is enabled.
 
 ### Fixed
 
@@ -111,7 +113,6 @@ All notable changes to this project will be documented in this file.
 - Mission 51 (Gamma) is now in logic without the Jet Boosters.
 - Mission 56 (Knuckles) is now in logic without the Shovel Claw.
 - Casino Emblem is now in logic for Knuckles.
-
 
 ### Wiki
 
