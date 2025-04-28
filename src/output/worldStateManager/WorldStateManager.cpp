@@ -1381,6 +1381,7 @@ static void __cdecl HandleMREntrance(const int newScene)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && newScene == 5)
     {
         SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 3);
+        SetLevelEntrance(0);
     }
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && newScene == 4)
     {

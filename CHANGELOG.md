@@ -33,6 +33,7 @@ All notable changes to this project will be documented in this file.
 - Removed empty locations groups.
 - Fixed Egg Carrier starting transformed when spawned inside.
 - The game will now grant the egg checks even if your garden is full.
+- Fixed Final Egg tower entrance sometimes teleporting the character to the lower floor.
 
 ### Logic
 
