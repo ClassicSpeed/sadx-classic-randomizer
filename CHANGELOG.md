@@ -32,12 +32,16 @@ All notable changes to this project will be documented in this file.
 - Ring Link now works in Twinkle Circuit.
 - Fixed the subtitles for the "Egg Carrier has crashed" message being too long.
 - Removed empty locations groups.
-- Fixed Egg Carrier starting transformed when spawned inside.
 - The game will now grant the egg checks even if your garden is full.
+- Fixed A/B level missions ignoring the "Complete multiple missions together" setting.
+
+#### Couldn't replicate but should be fixed
+
+- Fixed Egg Carrier starting transformed when spawned inside.
 - Fixed Final Egg tower entrance sometimes teleporting the character to the lower floor.
 - Fixed Final Egg entrance sometimes changing character to Sonic.
 - Changed the detection Sky Chase/Sand Hill completion, this should fix the game not sending the check sometimes.
-- Fixed A/B level missions ignoring the "Complete multiple missions together" setting.
+- Fixed crash when entering the Chao Garden with the golden egg if the chao garden is empty.
 - Fixed crash after finishing any Burger Man delivery mission.
 
 ### Logic
