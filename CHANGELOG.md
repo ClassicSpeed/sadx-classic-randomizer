@@ -40,6 +40,8 @@ All notable changes to this project will be documented in this file.
 
 - Spinning Platform Emblem now in logic for Knuckles.
 - Main Platform Emblem now in logic for Amy.
+- Station Emblem now in logic for Gamma.
+- Gamma's Hot Shelter missions/enemies/capsules are no longer in logic without the Jet Booster (Expert only).
 
 #### Expert (DC)
 
@@ -65,6 +67,7 @@ All notable changes to this project will be documented in this file.
 - Added skip from Casino to Station for Knuckles.
 - Added skip from SSMain to Station for Amy.
 - Mission 40 (Sonic) is now in logic without the Light Shoes.
+- Tails' Workshop Emblem now in logic for Amy.
 - Main Platform Emblem now in logic for Tails.
 - Spinning Platform Emblem now in logic for Amy.
 
@@ -100,9 +103,10 @@ All notable changes to this project will be documented in this file.
 - Mission 12 (Knuckles) is now in logic without the Shovel Claw.
 - Mission 38 (Knuckles) is now in logic without the Shovel Claw.
 - Mission 40 (Sonic) is now in logic without the Light Shoes.
+- City Hall emblem now in logic for Knuckles.
+- Tails' Workshop Emblem now in logic for Amy.
 - Tree Stump Emblem now in logic for Amy and Gamma.
 - Pool Emblem now in logic for Gamma.
-- City Hall emblem now in logic for Knuckles.
 - Main Platform Emblem now in logic for Tails.
 - Spinning Platform Emblem now in logic for Amy.
 
