@@ -81,14 +81,14 @@ void ArchipelagoMessenger::SendRingPacket(const int ringDifference, const std::s
 }
 
 
-void ArchipelagoMessenger::SendTrapLink(std::string trapName)
+void ArchipelagoMessenger::SendTrapLink(std::string trapName, std::string playerName)
 {
     Json::FastWriter writer;
     std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
     AP_Bounce b;
     Json::Value v;
     v["time"] = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
-    v["source"] = this->_instanceId;
+    v["source"] = playerName;
     v["trap_name"] = trapName;
     b.data = writer.write(v);
     b.games = nullptr;

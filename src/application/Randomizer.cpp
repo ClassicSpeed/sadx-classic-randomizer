@@ -96,7 +96,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
         _characterManager.GiveFillerItem(item.fillerType, false);
         if (_options.trapLinkActive)
         {
-            _archipelagoMessenger.SendTrapLink(item.displayName);
+            _archipelagoMessenger.SendTrapLink(item.displayName, _options.playerName);
             _displayManager.QueueItemMessage("Linked " + item.displayName + " sent");
         }
     }
@@ -977,7 +977,7 @@ void Randomizer::ProcessTrapLink(std::string itemName, std::string message)
     FillerType filler = _itemRepository.GetFillerFromName(itemName);
 
     if (filler != NoFiller)
-        _characterManager.GiveFillerItem(filler, false);
+        _characterManager.GiveFillerItem(filler, true);
 }
 
 void Randomizer::OnConnected(std::string playerName)

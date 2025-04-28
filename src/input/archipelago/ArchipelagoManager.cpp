@@ -189,7 +189,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
                 return;
 
             //Ignore our own trap link
-            if (bounceData["source"].asInt() == archipelagoManagerPtr->instanceId)
+            if (bounceData["source"] == archipelagoManagerPtr->playerName)
                 break;
 
             std::string trapName = bounceData["trap_name"].asCString();

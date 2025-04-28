@@ -12,7 +12,7 @@ public:
     void UpdateTags(Options options);
     void SendRingUpdate(int ringDifference);
     void SendHardRingUpdate(int ringDifference);
-    void SendTrapLink(std::string trapName);
+    void SendTrapLink(std::string trapName, std::string playerName);
 
 private:
     void SendRingPacket(int ringDifference, const std::string& tagName);
