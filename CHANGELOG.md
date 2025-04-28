@@ -2,6 +2,168 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.1] - 2025-04-28
+
+### Added
+
+- Support for Trap Link Protocol.
+- Characters names can now be used when blacklisting missions.
+- The in-game tracker can now be hidden/shown all the time in the mod settings.
+- Expert + logic for DX.
+- After entering Lost World as Knuckles using the snake OoB clip, the entrance will now be open (even in random levels).
+- Lazy Fishing now has extra options; you can enable it without making the Power Rod a logic requirement.
+    - You can select between no logic requirements, only for fish-sanity, or required for all (old lazy fishing).
+- Added an error message if the SADX:FE mod is loaded.
+
+### Changed
+
+- The Enemy/Capsule arrow is no longer toggleable by default (you can still make it toggleable in the mod settings).
+- When playing as Tails, any capsule that Sonic breaks will count as if Tails broke it.
+- Now all the level objects (including the emblem) will spawn in Angel Island when playing as Tails or Big.
+- The timer will no longer be frozen when completing a mission.
+- Tails' workshop runway will no longer open for Tails when Mission Mode is enabled.
+    - The runway was interfering with the grass mission. For Sonic, it will still open if Sky Chase is enabled.
+- By default, the mod will now use a separate Chao save file (you can change this in the mod.ini file).
+- The Adventure Field Emblem model was reverted to the original, but with the AP logo instead of Sonic.
+- Lure Upgrade Points' location names were changed to include where they are (Sewers, Jungle, Ice Cap, and Jail).
+
+### Fixed
+
+- Ring Link now works in Twinkle Circuit.
+- Fixed the subtitles for the "Egg Carrier has crashed" message being too long.
+- Removed empty location groups.
+- The game will now grant the egg checks even if your garden is full.
+- Fixed A/B level missions ignoring the "Complete multiple missions together" setting.
+- Fixed tracker not being correctly aligned for the Ice Key or Dynamite.
+
+#### Couldn't replicate but should be fixed
+
+- Fixed Egg Carrier starting transformed when spawned inside.
+- Fixed Final Egg tower entrance sometimes teleporting the character to the lower floor.
+- Fixed Final Egg entrance sometimes changing the character to Sonic.
+- Changed the detection for Sky Chase/Sand Hill completion; this should fix the game not sending the check sometimes.
+- Fixed crash when entering the Chao Garden with the golden egg if the Chao Garden is empty.
+- Fixed crash after finishing any Burger Man delivery mission.
+
+### Logic
+
+#### Normal
+
+- Added Light Shoes requirement for Mission 58 (Sonic).
+- Knuckles, Amy, and Gamma no longer require the Dynamite to enter Ice Cap.
+- Added missing Dynamite requirement for Big's Life Belt.
+- Station Emblem is now in logic for Gamma with the Jet Booster.
+
+#### Hard
+
+- Spinning Platform Emblem is now in logic for Knuckles.
+- Main Platform Emblem is now in logic for Amy.
+- Station Emblem is now in logic for Gamma.
+- Gamma's Hot Shelter missions/enemies/capsules are no longer in logic without the Jet Booster (Expert only).
+- Mission 3 now requires the Light Shoes for Sonic (mostly as a QoL change).
+
+#### Expert (DC)
+
+- Added skip from SSMain to Twinkle Park Lobby for Sonic.
+- Added skip from SSMain to Twinkle Park Lobby for Tails.
+- Added skip from SSMain to Twinkle Park Lobby for Knuckles.
+- Added skip from SSMain to Twinkle Park Lobby for Gamma.
+- Added skip from SSMain to Twinkle Park Lobby for Amy.
+- Added skip from SSMain to Station for Knuckles.
+- Added skip from SSMain to Station for Big.
+- Added skip from SSMain to Station for Gamma.
+- Added skip from Station to SSMain for Sonic.
+- Added skip from SSMain to Hotel for Tails.
+- Added skip from SSMain to Hotel for Amy.
+- Added skip from Hotel to SSMain for Gamma.
+- Added skip from Hotel to Casino for Gamma.
+- Added skip from Hotel to Casino for Knuckles.
+- Added skip from Hotel to Casino for Amy.
+- Added skip from Angel Island to MRMain for Sonic.
+- Added skip from MRMain to Angel Island for Sonic.
+- Added skip from MRMain to Angel Island for Gamma (with boosters).
+- Added skip from Angel Island to MRMain for Gamma (with boosters).
+- Added skip from Casino to Station for Knuckles.
+- Added skip from SSMain to Station for Amy.
+- Mission 40 (Sonic) is now in logic without the Light Shoes.
+- Tails' Workshop Emblem is now in logic for Amy.
+- Main Platform Emblem is now in logic for Tails.
+- Spinning Platform Emblem is now in logic for Amy.
+
+#### Expert (DX)
+
+- Removed skip from SSMain to Hotel for Tails.
+- Added skip from Hotel to Casino for Tails.
+- Added skip from Hotel to Station for Knuckles.
+- Added alternative skip from Casino to Hotel for Knuckles (with Station Back Key).
+- Added skip from Casino to Station for Sonic.
+- Added skip from Casino to Station for Knuckles.
+- Added skip from MRMain to AngelIsland (and back) for Gamma (with boosters).
+- Added Ice Key skip for Tails.
+- Added skip from TP Lobby to SSMain for Amy.
+- Added skip from SSMain to Station for Big.
+- Added skip from Station to SSMain for Sonic.
+- Added alternative skip from SSMain to Hotel with Life Belt for Big.
+- Added skip from Hotel to SSMain for Tails.
+- Added skip from Hotel to SSMain for Amy.
+- Added skip from Hotel to Casino for Amy.
+- Added skip from Hotel to SSMain for Gamma.
+- Added skip from Hotel to Casino for Gamma.
+- Added skip from SSMain to TP Lobby for Sonic, Tails, Knuckles, Amy, and Big.
+- Added skip from TP Lobby to SSMain for Sonic, Tails, Knuckles, Amy, and Gamma.
+- Added skip from MRMain to Angel Island for Sonic.
+- Added skip from Angel Island to MRMain for Sonic.
+- Added skip from Angel Island to Ice Cap without any items as Sonic.
+- Added skip from Angel Island to Red Mountain without any items as Knuckles.
+- Station Back Key is no longer needed to open Ice Cap.
+- Added Employee Card skip for Big.
+- Added Employee Card skip for Gamma.
+- Station Front Key is no longer needed for Big to enter Ice Cap.
+- Mission 12 (Knuckles) is now in logic without the Shovel Claw.
+- Mission 38 (Knuckles) is now in logic without the Shovel Claw.
+- Mission 40 (Sonic) is now in logic without the Light Shoes.
+- City Hall Emblem is now in logic for Knuckles.
+- Tails' Workshop Emblem is now in logic for Amy.
+- Tree Stump Emblem is now in logic for Amy and Gamma.
+- Pool Emblem is now in logic for Gamma.
+- Main Platform Emblem is now in logic for Tails.
+- Spinning Platform Emblem is now in logic for Amy.
+
+#### Expert + (DX)
+
+- Added skip from Station to Casino for Gamma.
+- Knuckles can now enter Ice Cap with either the Ice Stone or the Shovel Claw.
+- Mission 39 (Gamma) is now in logic without the Jet Boosters.
+- Mission 51 (Gamma) is now in logic without the Jet Boosters.
+- Mission 56 (Knuckles) is now in logic without the Shovel Claw.
+- Casino Emblem is now in logic for Knuckles.
+
+### Wiki
+
+- Updated location groups.
+- Updated item information.
+- Updated random level entrance information.
+- Updated Lost World requirements to include Light Speed Shoes.
+
+### Docs
+
+- Removed Player Example YAML from the release.
+- Added information on how to generate the YAML template.
+- Added information about how to use the Universal Tracker.
+- Added information about the mod being incompatible with Metal Sonic.
+- Added information about the Chao Exporter/Importer tool.
+
+## [v1.1.0] - 2025-02-19
+
+- Fixed Egg Carrier being transformed when starting from the inside.
+- Fixed extended ring capacity not working for Big.
+- Fixed Twinkle Circuit option not disabling the checks correctly when disabled.
+- Fixed Perfect Chaos Fight being unlocked early sometimes when connecting.
+- Fixed Fish indicator being shown even without fish-sanity enabled or in Amy's Hot Shelter.
+- Fixed S rank missions sending random field emblem checks.
+- Added an error message for major version mismatch when connecting to Archipelago that will close the game.
+- Added Homing Attack Indicator option to the mod settings.
+
 ## [v1.1.0 hot-fix] - 2025-02-12
 
 - Fixed Angel Island door not being open for Tails, Amy and Big.

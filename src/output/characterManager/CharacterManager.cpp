@@ -31,6 +31,9 @@ CharacterManager::CharacterManager()
     WriteCall((void*)0x592048, EnablePause);
     WriteCall((void*)0x5920AF, EnablePause);
 
+    //Re-enable timer after finishing a mission
+    WriteCall((void*)0x592057, WakeTimer);
+
     HudDisplayRings_t.Hook(HandleHudDisplayRings);
 }
 
@@ -181,7 +184,8 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 RingDifference CharacterManager::GetRingDifference()
 {
     RingDifference ringDifference = {0, 0};
-    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
+    if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field && GameMode !=
+        GameModes_Adventure_ActionStg)
         return {0, 0};
 
     if (CurrentLevel == LevelIDs_PerfectChaos)
@@ -215,9 +219,12 @@ RingDifference CharacterManager::GetRingDifference()
     return ringDifference;
 }
 
-void CharacterManager::GiveFillerItem(const FillerType filler)
+void CharacterManager::GiveFillerItem(const FillerType filler, const bool priority)
 {
-    _remainingFiller.push(filler);
+    if (priority)
+        _remainingFiller.push_front(filler);
+    else
+        _remainingFiller.push_back(filler);
 }
 
 void CharacterManager::OnPlayingFrame()
@@ -305,7 +312,7 @@ void CharacterManager::OnPlayingFrame()
 
 
     ActivateFiller(_remainingFiller.front());
-    _remainingFiller.pop();
+    _remainingFiller.pop_front();
     _fillerTimer = std::clock();
 }
 
@@ -850,3 +857,11 @@ void HandleHudDisplayRings(const signed int ringCount, unsigned char digits, NJS
     else
         HudDisplayRings_t.Original(ringCount, digits, hud);
 }
+
+// For big, we extend the ring capacity to 99999 if enabled
+FunctionHook<void, _SC_NUMBERS*> onDrawSNumbers(0x427BB0, [](_SC_NUMBERS* pscn)-> void
+{
+    if (characterManagerPtr->extendRingCapacity && CurrentCharacter == Characters_Big && pscn->max == 999)
+        pscn->max = 99999;
+    onDrawSNumbers.Original(pscn);
+});

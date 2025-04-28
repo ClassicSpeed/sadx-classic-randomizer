@@ -15,6 +15,14 @@
 
 struct LocationData;
 
+
+enum DisplayInGameTracker
+{
+    DisplayTrackerWhenPaused = 0,
+    DisplayTrackerAlwaysOn = 1,
+    DisplayTrackerAlwaysOff = 2,
+};
+
 class DisplayManager
 {
 public:
@@ -36,8 +44,9 @@ public:
     void OnExitCharacterSelectScreen();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
     void SetMessageConfiguration(float messageDisplayDuration, int messageFontSize,
-                                 int itemMessageColor, int chatMessageColor);
+                                 DisplayInGameTracker displayInGameTracker, int itemMessageColor, int chatMessageColor);
     void UpdateVoiceMenuCharacter(int characterVoiceIndex);
+    void SetConnected();
 
 private:
     void RemoveExpiredMessages();
@@ -59,10 +68,11 @@ private:
     int _displayEmblemColor = 0xFFF2C600; //Orange
 
     bool _inCharacterSelectScreen;
-
+    bool _connected = false;
 
     float _displayDuration = 6.0f;
     unsigned __int16 _debugFontSize = 21;
+    DisplayInGameTracker _displayInGameTracker = DisplayTrackerWhenPaused;
     std::queue<std::string> _itemMessagesQueue;
     std::deque<Message> _currentMessages;
 

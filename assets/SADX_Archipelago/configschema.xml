@@ -18,15 +18,21 @@
             <Property name="RingLinkOverride" type="RingLinkIndex" defaultvalue="0" display="Ring Link Override">
                 <HelpText>You can override the Ring Link setting from the yaml.</HelpText>
             </Property>
+            <Property name="TrapLinkOverride" type="DeathLinkIndex" defaultvalue="0" display="Trap Link Override">
+                <HelpText>You can override the Trap Link setting from the yaml.</HelpText>
+            </Property>
         </Group>
         <Group name="Messages" display="Messages Settings">
             <Property name="MessageDisplayDuration" type="float" defaultvalue="5" minvalue="3" maxvalue="15"
                       display="Message Display Duration">
-                <HelpText>How long the Archipelago messages will display</HelpText>
+                <HelpText>How long the Archipelago messages will display.</HelpText>
             </Property>
             <Property name="MessageFontSize" type="int" defaultvalue="21" minvalue="10" maxvalue="36"
                       display="Message Font Size">
-                <HelpText>Font size for Archipelago messages</HelpText>
+                <HelpText>Font size for Archipelago messages.</HelpText>
+            </Property>
+            <Property name="InGameTracker" type="InGameTrackerIndex" defaultvalue="0" display="Display In Game Tracker">
+                <HelpText> Display the in-game tracker when paused, always or never.</HelpText>
             </Property>
             <Property name="ItemMessageColorR" type="int" defaultvalue="33" minvalue="0" maxvalue="255"
                       display="Item Message Color Red">
@@ -44,15 +50,12 @@
             <Property name="ShowChatMessages" type="bool" defaultvalue="True" display="Show Chat Messages">
                 <HelpText>Display chats messages in the bottom left corner of the screen.</HelpText>
             </Property>
-
             <Property name="ShowGoalReached" type="bool" defaultvalue="True" display="Show Goal Reached">
                 <HelpText>Display a chat message when someone reaches their goal.</HelpText>
             </Property>
-
             <Property name="ShowCountdowns" type="bool" defaultvalue="True" display="Show Countdowns">
                 <HelpText>Display chat messages for the countdowns.</HelpText>
             </Property>
-
             <Property name="ShowPlayerConnections" type="bool" defaultvalue="False" display="Show Player Connections">
                 <HelpText>Display a chay message when players connect and disconnect.</HelpText>
             </Property>
@@ -72,6 +75,9 @@
         </Group>
 
         <Group name="GameSettings" display="Game Settings">
+            <Property name="HomingAttackIndicatorEnabled" type="HomingAttackIndex" defaultvalue="0" display="Enable Homing Attack Indicator">
+                <HelpText>Adds an indicator for the homing attack, like in modern Sonic games.</HelpText>
+            </Property>
             <Property name="CompleteMultipleLevelMissions" type="bool" defaultvalue="True"
                       display="Complete Multiple Level Missions">
                 <HelpText>Collect more than one check from levels if you beat the other requirements.</HelpText>
@@ -165,7 +171,7 @@
                       display="Tracker Arrow">
                 <HelpText>Show a tracker arrow that points towards the closest unchecked enemy or capsule.</HelpText>
             </Property>
-            <Property name="TrackerArrowToggleable" type="bool" defaultvalue="True"
+            <Property name="TrackerArrowToggleable" type="bool" defaultvalue="False"
                       display="Toggleable Tracker Arrow">
                 <HelpText>Allows toggling the tracker arrow by pressing the whistle button.</HelpText>
             </Property>
@@ -270,6 +276,16 @@
             <EnumMember name="1" display="Force Enabled"/>
             <EnumMember name="2" display="Force Enabled (Hard)"/>
             <EnumMember name="3" display="Force Disabled"/>
+        </Enum>
+        <Enum name="HomingAttackIndex">
+            <EnumMember name="0" display="Disabled"/>
+            <EnumMember name="1" display="Enabled"/>
+            <EnumMember name="2" display="Enabled (No Sound)"/>
+        </Enum>
+        <Enum name="InGameTrackerIndex">
+            <EnumMember name="0" display="When paused"/>
+            <EnumMember name="1" display="Always on"/>
+            <EnumMember name="2" display="Always off"/>
         </Enum>
         <Enum name="CharacterVoiceIndex">
             <EnumMember name="-1" display="Random"/>

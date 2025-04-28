@@ -62,6 +62,7 @@ public:
     void SetRingLink(bool ringLinkActive);
     void SetCasinopolisRingLink(bool casinopolisRingLink);
     void SetHardRingLink(bool hardRingLinkActive);
+    void SetTrapLink(bool trapLinkActive);
     void SetRingLoss(RingLoss ringLoss);
     void SetTwinkleCircuitCheck(int twinkleCircuitCheck);
     void SetMultipleTwinkleCircuitChecks(int multipleTwinkleCircuitChecks);
@@ -79,6 +80,7 @@ public:
     void OnSync();
     void OnDeath();
     void ProcessRings(Sint16 amount);
+    void ProcessTrapLink(std::string itemName, std::string message);
     void ResetItems();
     void SetMissionMode(int missionModeEnabled);
     void SetAutoStartMissions(int autoStartMissions);
@@ -270,14 +272,14 @@ private:
         {1231, "Ahh! There it is! Right there!!"},
         {1352, "Wow..."},
         {1632, "Take the boat to get to the Egg Carrier."},
-        {1868, "The Egg Carrier has crashed and is floating somewhere in the ocean.\nUse this boat to get to it."},
+        {1868, "The Egg Carrier has crashed and is floating\nsomewhere in the ocean. Use this boat to get to it."},
         {1927, "Take this boat to get to the Egg Carrier."},
         {1921, "Something good may happen at the Casino area."},
         {1922, "Why don't you try going to the Casino?"},
         {1558, "You can go to the Casino area at nighttime."},
         {1928, "Why don't you try going to Angel Island?"},
         {1955, "You can break through the wall if you use dynamite."},
-        {1561, "You can get into a certain building\n using the Employee Card."},
+        {1561, "You can get into a certain building\nusing the Employee Card."},
         {1872, "Get to the beach by going through the hotel."},
         {1559, "Use the Ice Stone in the Mystic Ruins."},
         {1641, "Didn't you see a stone with an ice pattern on it?"},

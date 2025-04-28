@@ -230,6 +230,38 @@ void ItemRepository::ResetItems()
     }
 }
 
+std::map<std::string, FillerType> itemNameToFillerId = {
+    //Native
+    {"Ice Trap", IceTrap},
+    {"Spring Trap", SpringTrap},
+    {"Police Trap", PoliceTrap},
+    {"Buyon Trap", BuyonTrap},
+    {"Reverse Trap", ReverseTrap},
+    {"Gravity Trap", GravityTrap},
+    //Extra
+    {"Reversal Trap", ReverseTrap},
+    {"Confusion Trap", ReverseTrap},
+    {"Confuse Trap", ReverseTrap},
+    {"Freeze Trap", IceTrap},
+    {"Frozen Trap", IceTrap},
+    {"Paralyze Trap", IceTrap},
+    {"Reversal Trap", ReverseTrap},
+    {"Eject Ability", SpringTrap},
+    {"Screen Flip Trap", ReverseTrap},
+    {"Banana Trap", IceTrap},
+    {"Army Trap", PoliceTrap},
+};
+
+
+FillerType ItemRepository::GetFillerFromName(const std::string& trapName)
+{
+    if (itemNameToFillerId.find(trapName) == itemNameToFillerId.end())
+        return NoFiller;
+
+    return itemNameToFillerId[trapName];
+
+}
+
 //We use the metal sonic emblems space
 int ItemRepository::GetSavedItemReceived()
 {

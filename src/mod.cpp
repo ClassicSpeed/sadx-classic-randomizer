@@ -67,6 +67,15 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
         exit(0);
     }
 
+    if (helperFunctions.Mods->find_by_name("SADX:FE"))
+    {
+        MessageBox(WindowHandle,
+                   L"The SADX:FE Mod is not compatible with the SADX Archipelago Randomizer.\n\nPlease disable it and try again.",
+                   L"SADX Archipelago Error: Incompatible Mod", MB_OK | MB_ICONERROR);
+        exit(0);
+    }
+
+
     const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");
 
     if (!settingsIni)
@@ -138,6 +147,7 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
 
     const int deathLinkOverride = settingsIni->getInt("AP", "DeathLinkOverride", 0);
     const int ringLinkOverride = settingsIni->getInt("AP", "RingLinkOverride", 0);
+    const int trapLinkOverride = settingsIni->getInt("AP", "TrapLinkOverride", 0);
 
 
     const bool showChatMessages = settingsIni->getBool("Messages", "ShowChatMessages", true);
@@ -148,6 +158,7 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
     archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword,
                                               static_cast<DeathLinkOverride>(deathLinkOverride),
                                               static_cast<RingLinkOverride>(ringLinkOverride),
+                                              static_cast<TrapLinkOverride>(trapLinkOverride),
                                               showChatMessages, showGoalReached, showCountdowns, showPlayerConnections
     );
 }
@@ -156,6 +167,7 @@ void LoadDisplayMessageSettings(const IniFile* settingsIni)
 {
     const float messageDisplayDuration = settingsIni->getFloat("Messages", "MessageDisplayDuration", 5.0f);
     const int messageFontSize = settingsIni->getInt("Messages", "MessageFontSize", 21);
+    const int displayInGameTracker = settingsIni->getInt("Messages", "InGameTracker", 0);
     const int itemMessageColorR = settingsIni->getInt("Messages", "ItemMessageColorR", 33);
     const int itemMessageColorG = settingsIni->getInt("Messages", "ItemMessageColorG", 255);
     const int itemMessageColorB = settingsIni->getInt("Messages", "ItemMessageColorB", 33);
@@ -167,6 +179,7 @@ void LoadDisplayMessageSettings(const IniFile* settingsIni)
 
 
     displayManager.SetMessageConfiguration(messageDisplayDuration, messageFontSize,
+                                              static_cast<DisplayInGameTracker>(displayInGameTracker),
                                            (0xFF << 24) | itemMessageColorR << 16 | itemMessageColorG << 8 |
                                            itemMessageColorB,
                                            (0xFF << 24) | chatMessageColorR << 16 | chatMessageColorG << 8 |
@@ -175,6 +188,7 @@ void LoadDisplayMessageSettings(const IniFile* settingsIni)
 
 void LoadGameSettings(const IniFile* settingsIni)
 {
+    const int homingAttackIndicator = settingsIni->getInt("GameSettings", "HomingAttackIndicatorEnabled", 0);
     const bool completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions",
                                                                     true);
     const bool autoSkipCutscenes = settingsIni->getBool("GameSettings", "AutoSkipCutscenes", true);
@@ -211,7 +225,7 @@ void LoadGameSettings(const IniFile* settingsIni)
     const int chaoStatsMultiplier = settingsIni->getInt("Chao", "StatGainMultiplier");
 
     const bool trackerArrow = settingsIni->getBool("Sanity", "TrackerArrow", true);
-    const bool trackerArrowToggleable = settingsIni->getBool("Sanity", "TrackerArrowToggleable", true);
+    const bool trackerArrowToggleable = settingsIni->getBool("Sanity", "TrackerArrowToggleable", false);
     const bool trackerArrowShowDistance = settingsIni->getBool("Sanity", "TrackerArrowShowDistance", true);
     const bool trackerArrowOverrideColor = settingsIni->getBool("Sanity", "TrackerArrowOverrideColor", false);
     const int trackerArrowR = settingsIni->getInt("Sanity", "TrackerArrowR", 0);
@@ -254,6 +268,7 @@ void LoadGameSettings(const IniFile* settingsIni)
                                     capsuleIndicator, capsuleIndicatorColor,
                                     fishIndicator, fishIndicatorColor,
                                     progressionIndicator, progressionIndicatorColor);
+    eventDetector.setHomingAttackIndicator(static_cast<HomingAttackIndicator>(homingAttackIndicator));
     worldStateManager.SetShowEntranceIndicators(showEntranceIndicators);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
     worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);

@@ -194,12 +194,18 @@ static int __cdecl HandleSkyDeckDoor(EntityData1* a1);
 UsercallFuncVoid(onLostWorldEntranceCollision_t, (int a1), (a1), 0x532960, rEDI);
 static void __cdecl HandleLostWorldEntranceCollision(int a1);
 
+UsercallFuncVoid(onFinalEggDoorCheckA_t, (int a1), (a1), 0x53C130, rEAX);
+static void __cdecl HandleOnFinalEggDoorCheckA(int a1);
+
+UsercallFunc(__int16, onFinalEggDoorCheckB_t, (int a1), (a1), 0x53BC70, rAX, rEAX);
+static __int16 __cdecl HandleOnFinalEggDoorCheckB(int a1);
+
 char LeonTimer1 = 10;
 char LeonTimer2 = 30;
 
 WorldStateManager::WorldStateManager()
 {
-    _visitedLevels = VisitedLevels();
+    visitedLevels = VisitedLevels();
     onSceneChangeMr_t.Hook(HandleMREntrance);
     onTwinkleParkDoor_t.Hook(HandleTwinkleParkEntrance);
     onTwinkleCircuitDoor_t.Hook(HandleTwinkleCircuitEntrance);
@@ -209,6 +215,8 @@ WorldStateManager::WorldStateManager()
     _onSceneChangeECOutside_t.Hook(HandleSceneChangeEcOutside);
     onSkyDeckDoor_t.Hook(HandleSkyDeckDoor);
     onLostWorldEntranceCollision_t.Hook(HandleLostWorldEntranceCollision);
+    onFinalEggDoorCheckA_t.Hook(HandleOnFinalEggDoorCheckA);
+    onFinalEggDoorCheckB_t.Hook(HandleOnFinalEggDoorCheckB);
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
 
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehogHammer);
@@ -224,7 +232,7 @@ WorldStateManager::WorldStateManager()
     islandDoorFlags[Characters_Tails] = FLAG_SONIC_MR_ISLANDDOOR;
     islandDoorFlags[Characters_Big] = FLAG_SONIC_MR_ISLANDDOOR;
     islandDoorFlags[Characters_Amy] = FLAG_SONIC_MR_ISLANDDOOR;
-    
+
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_MRuins[WARP_MYSTIC_RUINS] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
@@ -441,7 +449,8 @@ void WorldStateManager::OnFrame()
     if (CurrentLevel == LevelIDs_PerfectChaos)
         return;
 
-    if (IsSkyChase1Enabled() && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
+    if (IsSkyChase1Enabled() && (CurrentCharacter == Characters_Sonic || (CurrentCharacter == Characters_Tails && !
+        options.missionModeEnabled)))
         EventFlagArray[33] = 1;
 
     if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
@@ -625,6 +634,12 @@ void WorldStateManager::SetStartingArea()
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
         break;
     case EggCarrierInside:
+        ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_TRANSFORM));
         SetLevelAndAct(LevelIDs_EggCarrierInside, 1);
         break;
     case AngelIsland:
@@ -654,17 +669,17 @@ void WorldStateManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int
 void WorldStateManager::UpdateLevelEntrances(LevelEntrances levelEntrances)
 {
     this->levelEntrances = levelEntrances;
-    this->_visitedLevels.emeraldCoastEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(EmeraldCoast);
-    this->_visitedLevels.windyValleyEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(WindyValley);
-    this->_visitedLevels.casinopolisEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(Casinopolis);
-    this->_visitedLevels.iceCapEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(IceCap);
-    this->_visitedLevels.twinkleParkEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(TwinklePark);
-    this->_visitedLevels.speedHighwayEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SpeedHighway);
-    this->_visitedLevels.redMountainEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(RedMountain);
-    this->_visitedLevels.skyDeckEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SkyDeck);
-    this->_visitedLevels.lostWorldEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(LostWorld);
-    this->_visitedLevels.finalEggEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(FinalEgg);
-    this->_visitedLevels.hotShelterEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(HotShelter);
+    this->visitedLevels.emeraldCoastEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(EmeraldCoast);
+    this->visitedLevels.windyValleyEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(WindyValley);
+    this->visitedLevels.casinopolisEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(Casinopolis);
+    this->visitedLevels.iceCapEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(IceCap);
+    this->visitedLevels.twinkleParkEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(TwinklePark);
+    this->visitedLevels.speedHighwayEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SpeedHighway);
+    this->visitedLevels.redMountainEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(RedMountain);
+    this->visitedLevels.skyDeckEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SkyDeck);
+    this->visitedLevels.lostWorldEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(LostWorld);
+    this->visitedLevels.finalEggEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(FinalEgg);
+    this->visitedLevels.hotShelterEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(HotShelter);
 }
 
 VisitedLevels WorldStateManager::GetVisitedLevels(const int visitedLevel)
@@ -673,42 +688,44 @@ VisitedLevels WorldStateManager::GetVisitedLevels(const int visitedLevel)
     switch (visitedEntrance)
     {
     case LevelIDs_EmeraldCoast:
-        _visitedLevels.emeraldCoastEntranceVisited = true;
+        visitedLevels.emeraldCoastEntranceVisited = true;
         break;
     case LevelIDs_WindyValley:
-        _visitedLevels.windyValleyEntranceVisited = true;
+        visitedLevels.windyValleyEntranceVisited = true;
         break;
     case LevelIDs_Casinopolis:
-        _visitedLevels.casinopolisEntranceVisited = true;
+        visitedLevels.casinopolisEntranceVisited = true;
         break;
     case LevelIDs_IceCap:
-        _visitedLevels.iceCapEntranceVisited = true;
+        visitedLevels.iceCapEntranceVisited = true;
         break;
     case LevelIDs_TwinklePark:
-        _visitedLevels.twinkleParkEntranceVisited = true;
+        visitedLevels.twinkleParkEntranceVisited = true;
         break;
     case LevelIDs_SpeedHighway:
-        _visitedLevels.speedHighwayEntranceVisited = true;
+        visitedLevels.speedHighwayEntranceVisited = true;
         break;
     case LevelIDs_RedMountain:
-        _visitedLevels.redMountainEntranceVisited = true;
+        visitedLevels.redMountainEntranceVisited = true;
         break;
     case LevelIDs_SkyDeck:
-        _visitedLevels.skyDeckEntranceVisited = true;
+        visitedLevels.skyDeckEntranceVisited = true;
         break;
     case LevelIDs_LostWorld:
-        _visitedLevels.lostWorldEntranceVisited = true;
+        visitedLevels.lostWorldEntranceVisited = true;
+        if (CurrentCharacter == Characters_Knuckles)
+            visitedLevels.lostWorldEntranceVisitedAsKnuckles = true;
         break;
     case LevelIDs_FinalEgg:
-        _visitedLevels.finalEggEntranceVisited = true;
+        visitedLevels.finalEggEntranceVisited = true;
         break;
     case LevelIDs_HotShelter:
-        _visitedLevels.hotShelterEntranceVisited = true;
+        visitedLevels.hotShelterEntranceVisited = true;
         break;
     default: break;
     }
 
-    return _visitedLevels;
+    return visitedLevels;
 }
 
 void WorldStateManager::SetEggCarrierTransformationCutscene(const bool eggCarrierTransformation)
@@ -825,13 +842,33 @@ const SETEntry WARP_ZERO = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, 
 const SETEntry WARP_E101_MK2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 750.5f, -385.69f});
 
 //Sky Chase
-const SETEntry WARP_SKY_CHASE_1 = CreateSetEntry(WARP_MYSTIC_RUINS, {1561, 201, 900}, {0, 0x1C00, 0});
+const SETEntry WARP_SKY_CHASE_1_WITHOUT_RUNWAY = CreateSetEntry(WARP_MYSTIC_RUINS, {1561, 191, 900}, {0, 0x1C00, 0});
+const SETEntry WARP_SKY_CHASE_1_WITH_RUNWAY = CreateSetEntry(WARP_MYSTIC_RUINS, {1561, 201, 900}, {0, 0x1C00, 0});
 const SETEntry WARP_SKY_CHASE_2_EC1 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 700, -1100});
 const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {0, 650, -1100});
 
 //Past
 const SETEntry WARP_TO_PAST = CreateSetEntry(WARP_MYSTIC_RUINS, {-2.5f, -240, 2397.5f});
 const SETEntry WARP_FROM_PAST = CreateSetEntry(WARP_PAST, {0, 7, 247.5f});
+
+FunctionHook<Sint32> onPrepareLevel(0x415210, []()-> Sint32
+{
+    Sint32 result;
+    if ((CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Big) &&
+        levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+    {
+        const int bufferCharacter = CurrentCharacter;
+        CurrentCharacter = Characters_Knuckles;
+        result = onPrepareLevel.Original();
+        CurrentCharacter = bufferCharacter;
+    }
+    else
+    {
+        result = onPrepareLevel.Original();
+    }
+    return result;
+});
+
 
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
@@ -860,6 +897,9 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     //Cop
     LoadPVM("NISEPAT", &NISEPAT_TEXLIST);
 
+    //Sky Chase Tarjet
+    LoadNoNamePVM(&TARGET_TEXLIST);
+
     if (worldStateManagerPtr->eggCarrierTransformationCutscene
         && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
         LoadPVM("EC_SKY", &EC_SKY_TEXLIST);
@@ -869,7 +909,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
-    
+
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Sonic);
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Tails);
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
@@ -941,8 +981,11 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
         //Sky Chase
         if (worldStateManagerPtr->IsSkyChase1Enabled())
         {
-            AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-            AddSetToLevel(WARP_SKY_CHASE_1, LevelAndActIDs_MysticRuins1, Characters_Tails);
+            AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+            if (worldStateManagerPtr->options.missionModeEnabled)
+                AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
+            else
+                AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
         }
 
         AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
@@ -1073,7 +1116,7 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
             && tp->twp->pos.y > 190 && tp->twp->pos.y < 193
             && tp->twp->pos.z > 862 && tp->twp->pos.z < 865)
             return;
-    // We don't spawn the golden/silver keys for knuckles if he can enter LostWorld
+    // We don't spawn the golden/silver keys for knuckles if he can't enter LostWorld
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
     {
         if (!worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter))
@@ -1346,6 +1389,7 @@ static void __cdecl HandleMREntrance(const int newScene)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && newScene == 5)
     {
         SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 3);
+        SetLevelEntrance(0);
     }
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && newScene == 4)
     {
@@ -1587,13 +1631,23 @@ FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
     onLoadSceneChangeMr.Original(tp);
 });
 
-FunctionHook<void, task*> onHiddenGate(0x53C3E0, [](task* tp)-> void
+void HandleOnFinalEggDoorCheckA(const int a1)
 {
     const int bufferCharacter = CurrentCharacter;
     CurrentCharacter = Characters_Sonic;
-    onHiddenGate.Original(tp);
+    onFinalEggDoorCheckA_t.Original(a1);
     CurrentCharacter = bufferCharacter;
-});
+}
+
+short HandleOnFinalEggDoorCheckB(const int a1)
+{
+    const int bufferCharacter = CurrentCharacter;
+    CurrentCharacter = Characters_Sonic;
+    const int result = onFinalEggDoorCheckB_t.Original(a1);
+    CurrentCharacter = bufferCharacter;
+    return result;
+}
+
 
 FunctionHook<BOOL> isFinalEggTowerActive(0x538550, []()-> BOOL
 {
@@ -1609,8 +1663,8 @@ FunctionHook<BOOL> isFinalEggDoorActive(0x53EDF0, []()-> BOOL
 FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
 {
     if (CurrentCharacter == Characters_Knuckles)
-        return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[
-                FLAG_KNUCKLES_MR_BLUECUBE]
+        return ((EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[FLAG_KNUCKLES_MR_BLUECUBE]) ||
+                worldStateManagerPtr->visitedLevels.lostWorldEntranceVisitedAsKnuckles)
             && worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
 
     return false;
@@ -1632,7 +1686,6 @@ void HandleLostWorldEntranceCollision(const int a1)
     onLostWorldEntranceCollision_t.Original(a1);
     CurrentCharacter = bufferCharacter;
 }
-
 
 FunctionHook<BOOL> isAngelIslandOpen(0x534570, []()-> BOOL
 {

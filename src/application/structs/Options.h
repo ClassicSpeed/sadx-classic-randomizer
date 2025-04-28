@@ -56,17 +56,17 @@ struct Options
 {
     std::string playerName = "Player";
     bool goalRequiresLevels = true;
-    bool goalRequiresEmblems = false;
-    bool goalRequiresChaosEmeralds = false;
-    bool goalRequiresMissions = false;
-    bool goalRequiresBosses = false;
-    bool goalRequiresChaoRaces = false;
-    int emblemGoal = -1;
-    int levelGoal = -1;
-    int missionGoal = -1;
-    int bossesGoal = -1;
-    bool missionModeEnabled = false;
+    bool goalRequiresEmblems = true;
+    bool goalRequiresChaosEmeralds = true;
+    bool goalRequiresMissions = true;
+    bool goalRequiresBosses = true;
+    bool goalRequiresChaoRaces = true;
+    int emblemGoal = 999999;
+    int levelGoal = 999999;
+    int missionGoal = 999999;
+    int bossesGoal = 999999;
     
+    bool missionModeEnabled = false;
     bool entranceRandomizer = false;
 
     StartingArea sonicStartingArea = NoStatingArea;
@@ -109,6 +109,7 @@ struct Options
     bool ringLinkActive = false;
     bool casinopolisRingLink = false;
     bool hardRingLinkActive = false;
+    bool trapLinkActive = false;
     RingLoss ringLoss = Classic;
 
     bool bossChecks = false;

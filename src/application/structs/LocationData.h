@@ -174,9 +174,9 @@ struct LocationData
     }
 
 
-    static LocationData ChaoEggLocation(const StoryFlags eventFlag, const std::string& displayName)
+    static LocationData ChaoEggLocation(const std::string& displayName)
     {
-        return LocationData(eventFlag, -1, -1, -1, -1, -1, LocationChaoEgg, false,
+        return LocationData(static_cast<StoryFlags>(0x0), -1, -1, -1, -1, -1, LocationChaoEgg, false,
                             displayName, -1, -1, -1, -1, 0, 0, 0);
     }
 

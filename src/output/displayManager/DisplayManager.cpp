@@ -307,19 +307,19 @@ std::string DisplayManager::GetMissionATarget(const bool showTarget)
     switch (CurrentCharacter)
     {
     case Characters_Sonic:
-            targetTime = std::get<TIME_A_RANK>(SONIC_TARGET_TIMES.at(CurrentLevel));
+        targetTime = std::get<TIME_A_RANK>(SONIC_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Tails:
-            targetTime = std::get<TIME_A_RANK>(TAILS_TARGET_TIMES.at(CurrentLevel));
+        targetTime = std::get<TIME_A_RANK>(TAILS_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Knuckles:
-            targetTime = std::get<TIME_A_RANK>(KNUCKLES_TARGET_TIMES.at(CurrentLevel));
+        targetTime = std::get<TIME_A_RANK>(KNUCKLES_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Amy:
-            targetTime = std::get<TIME_A_RANK>(AMY_TARGET_TIMES.at(CurrentLevel));
+        targetTime = std::get<TIME_A_RANK>(AMY_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Gamma:
-            targetTime = std::get<TIME_A_RANK>(GAMMA_TARGET_TIMES.at(CurrentLevel));
+        targetTime = std::get<TIME_A_RANK>(GAMMA_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Big:
         return showTarget ? " 2000g " : "(     )";
@@ -407,12 +407,13 @@ void DisplayManager::UpdateChecks(const std::map<int, LocationData>& checkData)
 }
 
 void DisplayManager::SetMessageConfiguration(const float messageDisplayDuration, const int messageFontSize,
-
+                                             const DisplayInGameTracker displayInGameTracker,
                                              const int itemMessageColor,
                                              const int chatMessageColor)
 {
     this->_displayDuration = messageDisplayDuration;
     this->_debugFontSize = messageFontSize;
+    this->_displayInGameTracker = displayInGameTracker;
     this->_displayMessageColor = itemMessageColor;
     this->_chatMessageColor = chatMessageColor;
 }
@@ -432,22 +433,36 @@ void DisplayManager::UpdateVoiceMenuCharacter(const int characterVoiceIndex)
     }
 }
 
+void DisplayManager::SetConnected()
+{
+    _connected = true;
+}
+
 
 void DisplayManager::DisplayItemsUnlocked()
 {
-    //Show Items Unlock on Pause menu or Character select screen
-    if (!(GameState == MD_GAME_PAUSE || (GameMode == GameModes_Menu && this->_inCharacterSelectScreen)))
-        return;
-    // We don't show the tracker on the mission screen
-    if (MissionScreenState > 0)
+    if (_displayInGameTracker == DisplayTrackerAlwaysOff)
         return;
 
-    if (this->_inCharacterSelectScreen)
+    if (!_connected)
+        return;
+
+    if (_displayInGameTracker == DisplayTrackerWhenPaused)
     {
-        //Added delay to show in sync with the character select screen
-        const double timePassed = (std::clock() - this->_unlockStatusTimer) / static_cast<double>(CLOCKS_PER_SEC);
-        if (timePassed < _unlockStatusDelay)
+        //Show Items Unlock on Pause menu or Character select screen
+        if (!(GameState == MD_GAME_PAUSE || (GameMode == GameModes_Menu && this->_inCharacterSelectScreen)))
             return;
+        // We don't show the tracker on the mission screen
+        if (MissionScreenState > 0)
+            return;
+
+        if (this->_inCharacterSelectScreen)
+        {
+            //Added delay to show in sync with the character select screen
+            const double timePassed = (std::clock() - this->_unlockStatusTimer) / static_cast<double>(CLOCKS_PER_SEC);
+            if (timePassed < _unlockStatusDelay)
+                return;
+        }
     }
 
     SetDebugFontSize(this->_debugFontSize);
@@ -1133,7 +1148,7 @@ void DisplayManager::DisplayItemsUnlocked()
     displayOffset++;
     buffer.clear();
     buffer.append("Stones  ");
-    buffer.append(_unlockStatus.keyWindStone ? " Wind " : "     ");
+    buffer.append(_unlockStatus.keyWindStone ? " Wind " : "      ");
     buffer.append(_unlockStatus.keyIceStone ? "Ice" : "   ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1161,13 +1176,13 @@ void DisplayManager::DisplayItemsUnlocked()
     displayOffset++;
     buffer.clear();
     buffer.append("MR  ");
-    buffer.append(_unlockStatus.keyDynamite ? " Dynamite " : "         ");
+    buffer.append(_unlockStatus.keyDynamite ? " Dynamite " : "          ");
     buffer.append(_unlockStatus.keyJungleCart ? "Jungle Cart" : "           ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     buffer.clear();
     buffer.append("  : ");
-    buffer.append(!_unlockStatus.keyDynamite ? " Dynamite|" : "        |");
+    buffer.append(!_unlockStatus.keyDynamite ? " Dynamite|" : "         |");
     buffer.append(!_unlockStatus.keyJungleCart ? "Jungle Cart" : "           ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());

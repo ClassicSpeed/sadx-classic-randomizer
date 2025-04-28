@@ -14,6 +14,8 @@ struct VisitedLevels
     bool finalEggEntranceVisited = false;
     bool hotShelterEntranceVisited = false;
 
+    bool lostWorldEntranceVisitedAsKnuckles = false;
+
     std::string emeraldCoastEntranceActualLevel;
     std::string windyValleyEntranceActualLevel;
     std::string casinopolisEntranceActualLevel;
