@@ -133,6 +133,7 @@ All notable changes to this project will be documented in this file.
 - Added information on how to generate the YAML template.
 - Added information about how to use Universal Tracker.
 - Added information about the mod being incompatible with Metal Sonic.
+- Added information about the Chao Exporter/Importer tool.
 
 ## [v1.1.0] - 2025-02-19
 
