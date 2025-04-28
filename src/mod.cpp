@@ -67,6 +67,15 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
         exit(0);
     }
 
+    if (helperFunctions.Mods->find_by_name("SADX:FE"))
+    {
+        MessageBox(WindowHandle,
+                   L"The SADX:FE Mod is not compatible with the SADX Archipelago Randomizer.\n\nPlease disable it and try again.",
+                   L"SADX Archipelago Error: Incompatible Mod", MB_OK | MB_ICONERROR);
+        exit(0);
+    }
+
+
     const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");
 
     if (!settingsIni)
