@@ -1,1 +1,1 @@
-4270,sonic_emblm01.png,64x64
+4270,sonic_emblm01.png,256x256
