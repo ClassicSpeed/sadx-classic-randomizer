@@ -809,7 +809,8 @@ FunctionHook<void, EntityData1*> onElectricShieldCapsuleBroken(0x4D6E40, [](Enti
 void HandleCapsuleBreak(task* tp)
 {
     if (CurrentCharacter == Characters_Tails)
-        if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask == GetPlayerTaskPointer(1))
+        if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask ==
+            GetPlayerTaskPointer(1))
             tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
     OnCapsuleBreak_t.Original(tp);
 }
@@ -817,7 +818,8 @@ void HandleCapsuleBreak(task* tp)
 void HandleCapsuleBreakAir(task* tp)
 {
     if (CurrentCharacter == Characters_Tails)
-        if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask == GetPlayerTaskPointer(1))
+        if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask ==
+            GetPlayerTaskPointer(1))
             tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
     OnCapsuleBreakAir_t.Original(tp);
 }
@@ -1512,4 +1514,21 @@ FunctionHook<void, task*> onFishCaught(0x470160, [](task* tp)-> void
     }
     if (checksFound)
         eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
+});
+
+
+FunctionHook<void> onCheckEggHold(0x7151A0, []()-> void
+{
+    const int holdingItem = GetHoldingItemIDP(0);
+    if (holdingItem == 5)
+        //Gold Egg
+        eventDetectorPtr->randomizer.OnCheckFound(900);
+    else if (holdingItem == 10)
+        //Silver Egg
+        eventDetectorPtr->randomizer.OnCheckFound(901);
+    else if (holdingItem == 11)
+        //Black Egg
+        eventDetectorPtr->randomizer.OnCheckFound(902);
+
+    onCheckEggHold.Original();
 });

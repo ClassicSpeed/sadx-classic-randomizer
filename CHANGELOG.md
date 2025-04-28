@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
 - Fixed the subtitles for the "Egg Carrier has crashed" message being too long.
 - Removed empty locations groups.
 - Fixed Egg Carrier starting transformed when spawned inside.
+- The game will now grant the egg checks even if your garden is full.
 
 ### Logic
 
