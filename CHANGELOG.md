@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
     - The runway was interfering with the grass mission. For Sonic, it will still open if Sky Chase is enabled.
 - By default, the mod will have a separate chao save file now (You can change it in the mod.ini file).
 - The adventure field Emblem model was reverted to the original, but with the AP logo instead of Sonic.
+- Lure Upgrade Points location names were change to include where they are (Sewers, Jungle, Ice Cap & Jail).
 
 ### Fixed
 
