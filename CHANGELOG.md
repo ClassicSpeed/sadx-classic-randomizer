@@ -38,6 +38,7 @@ All notable changes to this project will be documented in this file.
 - Added Light Shoes requirement for Mission 58 (Sonic).
 - Knuckles, Amy and Gamma no longer require the Dynamite to enter Ice Cap.
 - Added missing dynamite requirement for Big's Life Belt.
+- Station Emblem now in logic for Gamma with the Jet Booster.
 
 #### Hard
 
@@ -45,6 +46,7 @@ All notable changes to this project will be documented in this file.
 - Main Platform Emblem now in logic for Amy.
 - Station Emblem now in logic for Gamma.
 - Gamma's Hot Shelter missions/enemies/capsules are no longer in logic without the Jet Booster (Expert only).
+- Mission 3 now requires the Light Shoes for Sonic (Mostly as a QoL change).
 
 #### Expert (DC)
 
