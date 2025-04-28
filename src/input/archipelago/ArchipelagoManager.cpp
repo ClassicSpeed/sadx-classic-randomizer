@@ -384,7 +384,7 @@ void SADX_FishSanity(const int fishSanity)
 }
 void SADX_LazyFishing(const int lazyFishing)
 {
-    randomizerPtr->OnLazyFishingSet(lazyFishing);
+    randomizerPtr->OnLazyFishingSet(lazyFishing > 0);
 }
 
 void SADX_ProgressionItems(const std::map<int, int> progressionItems)

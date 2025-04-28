@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 - The in-game tracker can be now be hidden/shown all the time in the mod settings.
 - Expert + logic for DX.
 - After entering Lost Word as Knuckles using the snake OoB clip, the entrance will now be open (even in random levels).
+- Lazy Fishing now has extra options, you can enable it without making the Power Rod a logic requirement.
+    - You can select between no logic requirements, only for fish-sanity or required for all (old lazy fishing).
 
 ### Changed
 
