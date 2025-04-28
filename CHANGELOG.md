@@ -38,6 +38,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Final Egg entrance sometimes changing character to Sonic.
 - Changed the detection Sky Chase/Sand Hill completion, this should fix the game not sending the check sometimes.
 - Fixed A/B level missions ignoring the "Complete multiple missions together" setting.
+- Fixed crash after finishing any Burger Man delivery mission.
 
 ### Logic
 

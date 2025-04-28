@@ -1541,3 +1541,9 @@ FunctionHook<void> onCheckEggHold(0x7151A0, []()-> void
 
     onCheckEggHold.Original();
 });
+
+//Burger Man delete function, should prevent the crash.
+FunctionHook<void, task*> onMissionStatueDelete(0x5934C0, [](task* tp)-> void
+{
+    FreeTask(tp);
+});
