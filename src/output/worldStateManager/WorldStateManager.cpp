@@ -194,6 +194,12 @@ static int __cdecl HandleSkyDeckDoor(EntityData1* a1);
 UsercallFuncVoid(onLostWorldEntranceCollision_t, (int a1), (a1), 0x532960, rEDI);
 static void __cdecl HandleLostWorldEntranceCollision(int a1);
 
+UsercallFuncVoid(onFinalEggDoorCheckA_t, (int a1), (a1), 0x53C130, rEAX);
+static void __cdecl HandleOnFinalEggDoorCheckA(int a1);
+
+UsercallFunc(__int16, onFinalEggDoorCheckB_t, (int a1), (a1), 0x53BC70, rAX, rEAX);
+static __int16 __cdecl HandleOnFinalEggDoorCheckB(int a1);
+
 char LeonTimer1 = 10;
 char LeonTimer2 = 30;
 
@@ -209,6 +215,8 @@ WorldStateManager::WorldStateManager()
     _onSceneChangeECOutside_t.Hook(HandleSceneChangeEcOutside);
     onSkyDeckDoor_t.Hook(HandleSkyDeckDoor);
     onLostWorldEntranceCollision_t.Hook(HandleLostWorldEntranceCollision);
+    onFinalEggDoorCheckA_t.Hook(HandleOnFinalEggDoorCheckA);
+    onFinalEggDoorCheckB_t.Hook(HandleOnFinalEggDoorCheckB);
     WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
 
     WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehogHammer);
@@ -1623,13 +1631,23 @@ FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
     onLoadSceneChangeMr.Original(tp);
 });
 
-FunctionHook<void, task*> onHiddenGate(0x53C3E0, [](task* tp)-> void
+void HandleOnFinalEggDoorCheckA(const int a1)
 {
     const int bufferCharacter = CurrentCharacter;
     CurrentCharacter = Characters_Sonic;
-    onHiddenGate.Original(tp);
+    onFinalEggDoorCheckA_t.Original(a1);
     CurrentCharacter = bufferCharacter;
-});
+}
+
+short HandleOnFinalEggDoorCheckB(const int a1)
+{
+    const int bufferCharacter = CurrentCharacter;
+    CurrentCharacter = Characters_Sonic;
+    const int result = onFinalEggDoorCheckB_t.Original(a1);
+    CurrentCharacter = bufferCharacter;
+    return result;
+}
+
 
 FunctionHook<BOOL> isFinalEggTowerActive(0x538550, []()-> BOOL
 {
@@ -1668,7 +1686,6 @@ void HandleLostWorldEntranceCollision(const int a1)
     onLostWorldEntranceCollision_t.Original(a1);
     CurrentCharacter = bufferCharacter;
 }
-
 
 FunctionHook<BOOL> isAngelIslandOpen(0x534570, []()-> BOOL
 {
