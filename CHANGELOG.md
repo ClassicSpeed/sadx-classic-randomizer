@@ -35,6 +35,8 @@ All notable changes to this project will be documented in this file.
 - The game will now grant the egg checks even if your garden is full.
 - Fixed Final Egg tower entrance sometimes teleporting the character to the lower floor.
 - Fixed Final Egg entrance sometimes changing character to Sonic.
+- Changed the detection Sky Chase/Sand Hill completion, this should fix the game not sending the check sometimes.
+- Fixed A/B level missions ignoring the "Complete multiple missions together" setting.
 
 ### Logic
 

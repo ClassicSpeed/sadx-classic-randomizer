@@ -11,6 +11,11 @@ UsercallFunc(bool, CheckMissionRequirements_t, (int mission, int character, int 
 static bool __cdecl HandleCheckMissionRequirements(int mission, int character, int level);
 
 
+UsercallFunc(bool, CheckMissionRequirementsSubgame_t, (int level, int character, int mission), (level, character, mission),
+             0x4282D0, rEAX, rEAX, rECX, rEDX);
+static bool __cdecl HandleCheckMissionRequirementsSubgame(int level, int character, int mission);
+
+
 UsercallFuncVoid(OnBoaBoaPartDestroyed_t, (task * tp), (tp), 0x79F8F0, rEAX);
 static void __cdecl HandleOnBoaBoaPartDestroyed(task* tp);
 
@@ -33,6 +38,7 @@ EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
 {
     PlayCharacterDeathSound_t.Hook(HandlePlayCharacterDeathSound);
     CheckMissionRequirements_t.Hook(HandleCheckMissionRequirements);
+    CheckMissionRequirementsSubgame_t.Hook(HandleCheckMissionRequirementsSubgame);
     OnBoaBoaPartDestroyed_t.Hook(HandleOnBoaBoaPartDestroyed);
     OnCapsuleBreak_t.Hook(HandleCapsuleBreak);
     OnCapsuleBreakAir_t.Hook(HandleCapsuleBreakAir);
@@ -141,7 +147,7 @@ bool HandleCheckMissionRequirements(const int mission, const int character, cons
     if (level <= LevelIDs_HotShelter)
     {
         //level - mission B
-        if (mission == MISSION_C)
+        if (mission == MISSION_C && eventDetectorPtr->completeMultipleLevelMissions)
         {
             if (ManualMissionBCheck(character))
             {
@@ -151,7 +157,7 @@ bool HandleCheckMissionRequirements(const int mission, const int character, cons
         }
 
         //level - mission A
-        if (mission == MISSION_C || mission == MISSION_B)
+        if ((mission == MISSION_C || mission == MISSION_B) && eventDetectorPtr->completeMultipleLevelMissions)
         {
             if (ManualMissionACheck(character, level))
             {
@@ -168,6 +174,25 @@ bool HandleCheckMissionRequirements(const int mission, const int character, cons
     return CheckMissionRequirements_t.Original(mission, character, level);
 }
 
+bool HandleCheckMissionRequirementsSubgame(const int level, const int character, const int mission)
+{
+    if (level >= LevelIDs_SkyChase1 && level <= LevelIDs_SandHill)
+    {
+        eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_B);
+        
+        //sublevel - mission A
+        if (mission == SUB_LEVEL_MISSION_B)
+        {
+            if (ManualSubLevelMissionACheck(level))
+            {
+                SetLevelEmblemCollected(&SaveFile, character, level, SUB_LEVEL_MISSION_A);
+                eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
+            }
+        }
+    }
+    return CheckMissionRequirementsSubgame_t.Original(level, character, mission);
+}
+
 FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
     0x4B4640, [](SaveFileData* saveFile, const int character, const signed int level, const int mission)-> void
     {
@@ -175,22 +200,6 @@ FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
         if (DemoPlaying > 0)
             return;
         eventDetectorPtr->OnLevelEmblem(character, level, mission);
-
-        if (!eventDetectorPtr->completeMultipleLevelMissions)
-            return;
-
-        if (level >= LevelIDs_SkyChase1 && level <= LevelIDs_SandHill)
-        {
-            //sublevel - mission A
-            if (mission == SUB_LEVEL_MISSION_B)
-            {
-                if (ManualSubLevelMissionACheck(level))
-                {
-                    onLevelEmblemCollected.Original(saveFile, character, level, SUB_LEVEL_MISSION_A);
-                    eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
-                }
-            }
-        }
     });
 
 
