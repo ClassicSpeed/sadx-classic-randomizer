@@ -1148,7 +1148,7 @@ void DisplayManager::DisplayItemsUnlocked()
     displayOffset++;
     buffer.clear();
     buffer.append("Stones  ");
-    buffer.append(_unlockStatus.keyWindStone ? " Wind " : "     ");
+    buffer.append(_unlockStatus.keyWindStone ? " Wind " : "      ");
     buffer.append(_unlockStatus.keyIceStone ? "Ice" : "   ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1176,13 +1176,13 @@ void DisplayManager::DisplayItemsUnlocked()
     displayOffset++;
     buffer.clear();
     buffer.append("MR  ");
-    buffer.append(_unlockStatus.keyDynamite ? " Dynamite " : "         ");
+    buffer.append(_unlockStatus.keyDynamite ? " Dynamite " : "          ");
     buffer.append(_unlockStatus.keyJungleCart ? "Jungle Cart" : "           ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     buffer.clear();
     buffer.append("  : ");
-    buffer.append(!_unlockStatus.keyDynamite ? " Dynamite|" : "        |");
+    buffer.append(!_unlockStatus.keyDynamite ? " Dynamite|" : "         |");
     buffer.append(!_unlockStatus.keyJungleCart ? "Jungle Cart" : "           ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());

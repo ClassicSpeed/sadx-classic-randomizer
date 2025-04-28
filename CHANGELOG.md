@@ -34,6 +34,7 @@ All notable changes to this project will be documented in this file.
 - Removed empty locations groups.
 - The game will now grant the egg checks even if your garden is full.
 - Fixed A/B level missions ignoring the "Complete multiple missions together" setting.
+- Fixed tracker not being correctly aligned for the Ice Key or Dynamite.
 
 #### Couldn't replicate but should be fixed
 
