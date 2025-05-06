@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.1.1b] - 2025-05-06
 
+### Changed
+- ProgressionBalancing has now a default value of 80.
+
 ### Fixed
 - Fixed Tails sometimes teleporting after Sonic breaks a capsule.
 - Fixed tracker not being correctly aligned for the Ice/Wind Stone.
