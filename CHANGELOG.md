@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Tails sometimes teleporting after Sonic breaks a capsule.
 - Fixed tracker not being correctly aligned for the Ice/Wind Stone.
 - Fixed demo gameplay sending death links.
+- Fixed game object for Tails in Angel Island not working correctly.
 
 ## [v1.1.1] - 2025-04-28
 
