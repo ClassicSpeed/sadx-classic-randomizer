@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.1b] - 2025-05-06
+
+### Fixed
+- Fixed Tails sometimes teleporting after Sonic breaks a capsule.
+
 ## [v1.1.1] - 2025-04-28
 
 ### Added
