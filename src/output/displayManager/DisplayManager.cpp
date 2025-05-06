@@ -1154,7 +1154,7 @@ void DisplayManager::DisplayItemsUnlocked()
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     buffer.clear();
     buffer.append("      : ");
-    buffer.append(!_unlockStatus.keyWindStone ? " Wind|" : "    |");
+    buffer.append(!_unlockStatus.keyWindStone ? " Wind|" : "     |");
     buffer.append(!_unlockStatus.keyIceStone ? "Ice" : "   ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
