@@ -948,6 +948,8 @@ void Randomizer::OnDeath()
 {
     if (!_options.deathLinkActive)
         return;
+    if (DemoPlaying > 0)
+        return;
 
     const double timePassed = (std::clock() - _deathLinkCooldownTimer) / static_cast<double>(CLOCKS_PER_SEC);
 
