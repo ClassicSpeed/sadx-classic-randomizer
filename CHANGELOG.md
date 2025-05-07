@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.1b] - 2025-05-07
+
+### Changed
+
+- ProgressionBalancing has now a default value of 80.
+
+### Fixed
+
+- Fixed Tails sometimes teleporting after Sonic breaks a capsule.
+- Fixed tracker not being correctly aligned for the Ice/Wind Stone.
+- Fixed demo gameplay sending death links.
+- Fixed game object for Tails in Angel Island not working correctly.
+- Fixed compatibility issue with the newest version of Archipelago.
+
+### Logic
+
+#### Expert (DC)
+
+- Added skip from Station to Casino for Amy.
+- Casino Emblem now in logic for Amy.
+
+#### Expert (DX)
+
+- Knuckles doesn't need an item to go from casino to hotel anymore.
+
+#### Expert + (DX)
+
+- Gamma's skip from station to casino now requires the Train (or just the Station Back Key).
+
 ## [v1.1.1] - 2025-04-28
 
 ### Added

@@ -857,10 +857,10 @@ FunctionHook<Sint32> onPrepareLevel(0x415210, []()-> Sint32
     if ((CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Big) &&
         levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
-        const int bufferCharacter = CurrentCharacter;
-        CurrentCharacter = Characters_Knuckles;
+        const char* originalCharId = CharIDStrings[CurrentCharacter];
+        CharIDStrings[CurrentCharacter] = "K";
         result = onPrepareLevel.Original();
-        CurrentCharacter = bufferCharacter;
+        CharIDStrings[CurrentCharacter] = originalCharId;
     }
     else
     {

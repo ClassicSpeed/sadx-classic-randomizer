@@ -11,7 +11,8 @@ UsercallFunc(bool, CheckMissionRequirements_t, (int mission, int character, int 
 static bool __cdecl HandleCheckMissionRequirements(int mission, int character, int level);
 
 
-UsercallFunc(bool, CheckMissionRequirementsSubgame_t, (int level, int character, int mission), (level, character, mission),
+UsercallFunc(bool, CheckMissionRequirementsSubgame_t, (int level, int character, int mission),
+             (level, character, mission),
              0x4282D0, rEAX, rEAX, rECX, rEDX);
 static bool __cdecl HandleCheckMissionRequirementsSubgame(int level, int character, int mission);
 
@@ -179,7 +180,7 @@ bool HandleCheckMissionRequirementsSubgame(const int level, const int character,
     if (level >= LevelIDs_SkyChase1 && level <= LevelIDs_SandHill)
     {
         eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_B);
-        
+
         //sublevel - mission A
         if (mission == SUB_LEVEL_MISSION_B)
         {
@@ -818,18 +819,28 @@ FunctionHook<void, EntityData1*> onElectricShieldCapsuleBroken(0x4D6E40, [](Enti
 void HandleCapsuleBreak(task* tp)
 {
     if (CurrentCharacter == Characters_Tails)
+    {
         if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask ==
             GetPlayerTaskPointer(1))
-            tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
+        {
+            item_info[ItemBox_CurrentItem].effect_func(tp->twp);
+            DoThingWithItemBoxPowerupIndex(ItemBox_CurrentItem);
+        }
+    }
     OnCapsuleBreak_t.Original(tp);
 }
 
 void HandleCapsuleBreakAir(task* tp)
 {
     if (CurrentCharacter == Characters_Tails)
+    {
         if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask ==
             GetPlayerTaskPointer(1))
-            tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
+        {
+            item_info[ItemBox_CurrentItem].effect_func(tp->twp);
+            DoThingWithItemBoxPowerupIndex(ItemBox_CurrentItem);
+        }
+    }
     OnCapsuleBreakAir_t.Original(tp);
 }
 
