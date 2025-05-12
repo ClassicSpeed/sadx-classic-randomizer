@@ -58,8 +58,11 @@ void DisplayManager::QueueChatMessage(const std::string& message)
 
 void DisplayManager::ShowSongName(const std::string& songName)
 {
-    _songName = songName;
-    _songNameTime = std::clock();
+    if(_songName != songName)
+    {
+        _songName = songName;
+        _songNameTime = std::clock();
+    }
 }
 
 void DisplayManager::UpdateUnlockStatus(const UnlockStatus unlockStatus)
@@ -246,15 +249,15 @@ void DisplayManager::DisplaySongName()
     const int columns = HorizontalResolution / this->_debugFontSize;
     SetDebugFontSize(this->_debugFontSize);
 
-    DisplayDebugString(NJM_LOCATION(columns/2-(_songName.size()/2), 5), _songName.c_str());
+    DisplayDebugString(NJM_LOCATION(columns/2 - _songName.size() / 2, 4), _songName.c_str());
 
     njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
     njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
 
-    DrawRect_Queue((columns/2 - _songName.size()/2 - 0.5f) * this->_debugFontSize,
-                   (5 - 0.5f) * this->_debugFontSize,
-                   (columns/2 + _songName.size()/2 + 0.5f) * this->_debugFontSize,
-                   (5 + 1 + 0.5) * this->_debugFontSize, 62041.496f,
+    DrawRect_Queue((columns / 2 - _songName.size() / 2 - 0.5f) * this->_debugFontSize,
+                   (4 - 0.5f) * this->_debugFontSize,
+                   (columns / 2 + _songName.size() / 2 + (_songName.size() % 2 != 0 ? 1 : 0) + 0.5f) * this->_debugFontSize,
+                   (4 + 1 + 0.5) * this->_debugFontSize, 62041.496f,
                    0x5F000000 & 0x00FFFFFF | alpha / 3 << 24,
                    QueuedModelFlagsB_EnableZWrite);
 
