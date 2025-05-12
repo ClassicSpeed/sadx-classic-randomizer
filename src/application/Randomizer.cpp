@@ -1094,6 +1094,11 @@ void Randomizer::OnSetLogicLevel(int logicLevel)
     _displayManager.UpdateOptions(_options);
 }
 
+void Randomizer::OnPlaySong(const MusicIDs songId)
+{
+    _displayManager.ShowSongName(_songMap.FindById(songId)->fullName);
+}
+
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
 {

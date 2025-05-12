@@ -1558,3 +1558,21 @@ FunctionHook<void, task*> onMissionStatueDelete(0x5934C0, [](task* tp)-> void
 {
     FreeTask(tp);
 });
+
+//https://info.sonicretro.org/SCHG:Sonic_Adventure/Sound_Editing
+FunctionHook<void, MusicIDs> onPlayMusic(0x425690, [](const MusicIDs songId)-> void
+{
+    int actualId = eventDetectorPtr->randomizer.songRandomizationMap[songId];
+    onPlayMusic.Original(static_cast<MusicIDs>(actualId));
+    eventDetectorPtr->randomizer.OnPlaySong(static_cast<MusicIDs>(actualId));
+});
+
+
+FunctionHook<void, MusicIDs> onPlayMusic2(0x425800, [](const MusicIDs songId)-> void
+{
+    int actualId = eventDetectorPtr->randomizer.songRandomizationMap[songId];
+    onPlayMusic2.Original(static_cast<MusicIDs>(actualId));
+    eventDetectorPtr->randomizer.OnPlaySong(static_cast<MusicIDs>(actualId));
+});
+
+
