@@ -23,6 +23,7 @@ public:
     void AddSong(int id, const std::string& codename, const std::string& fullName,
                  const std::vector<std::string>& possibleCodenames)
     {
+        PrintDebug("[SADX Randomizer] Adding song: %s\n", codename.c_str());
         SongData songData = {id, codename, fullName, possibleCodenames};
         _idMap[id] = songData;
         _codenameMap[codename] = id;
@@ -51,14 +52,15 @@ public:
 
     int GetRandomSongId(const int id) const
     {
+        PrintDebug("[SADX Randomizer] Getting random song ID for: %d\n", id);
         auto it = _idMap.find(id);
         if (it == _idMap.end())
         {
             return 255; // Return an empty string if the ID is not found
         }
-
+        PrintDebug("[SADX Randomizer] Found song ID: %d\n", id);
         const SongData& songData = it->second;
-
+        PrintDebug("[SADX Randomizer] Found song: %s\n", songData.codename.c_str());
         // Combine the base codename with the filtered possible codenames
         std::vector<std::string> allCodenames;
         for (const auto& codename : songData.possibleCodenames)
@@ -69,11 +71,13 @@ public:
             }
         }
         allCodenames.push_back(songData.codename);
+        PrintDebug("[SADX Randomizer] Found %d possible codenames\n", allCodenames.size());
 
         // Generate a random index
         std::uniform_int_distribution<> dist(0, allCodenames.size() - 1);
-
-        const auto song = FindByCodename(allCodenames[dist(gen)]);
+        const std::string& codename = allCodenames[dist(gen)];
+        const auto song = FindByCodename(codename);
+        PrintDebug("[SADX Randomizer] Randomized song: %s\n", song->codename.c_str());
         // Return a random codename
         return song->id;
     }
@@ -91,6 +95,6 @@ public:
     const SongData* FindSongById(MusicIDs songId);
 
 private:    
-    void ProcessSongFile();
+    void ProcessSongFile(const std::string& filePath);
     SongMap _songMap;
 };
