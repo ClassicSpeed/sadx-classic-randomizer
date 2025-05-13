@@ -1096,7 +1096,7 @@ void Randomizer::OnSetLogicLevel(int logicLevel)
 
 void Randomizer::OnPlaySong(const MusicIDs songId)
 {
-    _displayManager.ShowSongName(_songMap.FindById(songId)->fullName);
+    _displayManager.ShowSongName(_musicManager.FindSongById(songId)->fullName);
 }
 
 

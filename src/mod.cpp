@@ -9,6 +9,7 @@
 #include "input/characterLoading/CharacterLoadingDetector.h"
 #include "output/archipelagoMessenger/ArchipelagoMessenger.h"
 #include "output/locationRepository/LocationRepository.h"
+#include "output/musicManager/MusicManager.h"
 #include "output/saveFileManager/SaveFileManager.h"
 #include "output/worldStateManager/WorldStateManager.h"
 
@@ -34,14 +35,15 @@ ItemRepository itemRepository = ItemRepository();
 LocationRepository checkRepository = LocationRepository();
 ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger(INSTANCE_ID, BASE_ID);
 SaveFileManager saveFileManager = SaveFileManager();
-
+MusicManager musicManager = MusicManager();
 Randomizer randomizer = Randomizer(displayManager,
                                    characterManager,
                                    worldStateManager,
                                    itemRepository,
                                    checkRepository,
                                    archipelagoMessenger,
-                                   saveFileManager);
+                                   saveFileManager,
+                                   musicManager);
 
 CheatsManager cheatsManager = CheatsManager(randomizer);
 ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer, INSTANCE_ID, BASE_ID);
