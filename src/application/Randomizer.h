@@ -28,15 +28,6 @@ public:
     {
         _displayManager.UpdateChecks(locationRepository.GetLocations());
 
-        
-        for (size_t id = 0; id < MusicList.size(); ++id)
-        {
-            const int randomSongCode = _musicManager.GetRandomSongId(static_cast<int>(id));
-            if (randomSongCode != 255)
-            {
-                songRandomizationMap[id] = static_cast<MusicIDs>(randomSongCode);
-            }
-        }
     }
 
     void OnCheckFound(int checkId) const;
@@ -120,7 +111,9 @@ public:
     void OnGoalRequiresBossesSet(bool goalRequiresBosses);
     void OnGoalRequiresChaoRacesSet(bool goalRequiresChaoRaces);
     void OnSetLogicLevel(int logicLevel);
+    void RandomizeMusic();
     void OnPlaySong(MusicIDs songId);
+    
     std::unordered_map<int, MusicIDs> songRandomizationMap;
 
 private:

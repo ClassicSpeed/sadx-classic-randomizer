@@ -1094,6 +1094,18 @@ void Randomizer::OnSetLogicLevel(int logicLevel)
     _displayManager.UpdateOptions(_options);
 }
 
+void Randomizer::RandomizeMusic()
+{
+    for (size_t id = 0; id < MusicList.size(); ++id)
+    {
+        const int randomSongCode = _musicManager.GetRandomSongId(static_cast<int>(id));
+        if (randomSongCode != 255)
+        {
+            songRandomizationMap[id] = static_cast<MusicIDs>(randomSongCode);
+        }
+    }
+}
+
 void Randomizer::OnPlaySong(const MusicIDs songId)
 {
     _displayManager.ShowSongName(_musicManager.FindSongById(songId)->fullName);

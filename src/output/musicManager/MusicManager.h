@@ -12,8 +12,8 @@ struct SongData
     std::string codename;
     std::string fullName;
     std::vector<std::string> possibleCodenames;
+    std::string sa2Replacement;
 };
-
 
 class SongMap
 {
@@ -21,10 +21,10 @@ class SongMap
 
 public:
     void AddSong(int id, const std::string& codename, const std::string& fullName,
-                 const std::vector<std::string>& possibleCodenames)
+                 const std::vector<std::string>& possibleCodenames, const std::string& sa2Replacement)
     {
         PrintDebug("[SADX Randomizer] Adding song: %s\n", codename.c_str());
-        SongData songData = {id, codename, fullName, possibleCodenames};
+        SongData songData = {id, codename, fullName, possibleCodenames, sa2Replacement};
         _idMap[id] = songData;
         _codenameMap[codename] = id;
     }
@@ -93,8 +93,9 @@ public:
     MusicManager();
     int GetRandomSongId(int id);
     const SongData* FindSongById(MusicIDs songId);
+    void ProcessSongsFile(const HelperFunctions& helperFunctions);
 
 private:    
-    void ProcessSongFile(const std::string& filePath);
+    void ProcessSongFile(const std::string& filePath, const HelperFunctions& helperFunctions);
     SongMap _songMap;
 };

@@ -95,6 +95,8 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
         PrintDebug("[SADX Randomizer] Super Sonic Mod detected\n");
         randomizer.SetSuperSonicModRunning(true);
     }
+    musicManager.ProcessSongsFile(helperFunctions);
+    randomizer.RandomizeMusic();
 }
 
 __declspec(dllexport) void __cdecl OnFrame()

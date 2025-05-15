@@ -4,9 +4,6 @@
 
 MusicManager::MusicManager()
 {
-    // TODO: Fix
-    this->ProcessSongFile(
-        "C:/Program Files (x86)/Steam/steamapps/common/Sonic Adventure DX/mods/SADX_Archipelago/songs.json");
 }
 
 int MusicManager::GetRandomSongId(int id)
@@ -19,8 +16,15 @@ const SongData* MusicManager::FindSongById(MusicIDs songId)
     return _songMap.FindById(songId);
 }
 
+void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions)
+{
+    // TODO: Fix
+    this->ProcessSongFile(
+        "C:/development/workspaces/sadx-classic-randomizer/assets/SADX_Archipelago/songs.json", helperFunctions);
+}
 
-void MusicManager::ProcessSongFile(const std::string& filePath)
+
+void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunctions& helperFunctions)
 {
     // Open the JSON file
     std::ifstream file(filePath, std::ifstream::binary);
@@ -38,18 +42,58 @@ void MusicManager::ProcessSongFile(const std::string& filePath)
         throw std::runtime_error("Failed to parse JSON: " + errs);
     }
 
-    // Iterate through the JSON object and add songs to _songMap
-    for (const auto& codename : root.getMemberNames())
-    {
-        const Json::Value& songData = root[codename];
-        int id = songData["id"].asInt();
-        std::string fullName = songData["fullName"].asString();
-        std::vector<std::string> possibleCodenames;
+    //SADX
+    Json::Value sadxRoot = root["sadx"];
 
-        for (const auto& possibleCodename : songData["curated"])
+    for (const auto& codename : sadxRoot.getMemberNames())
+    {
+        const Json::Value& songData = sadxRoot[codename];
+        std::string name = songData["name"].asString();
+        int id = songData["id"].asInt();
+        std::vector<std::string> possibleCodenames;
+        //TODO: Separate by options
+        for (const auto& possibleCodename : songData["curatedSADX"])
         {
             possibleCodenames.push_back(possibleCodename.asString());
         }
-        _songMap.AddSong(id, codename, fullName, possibleCodenames);
+        for (const auto& possibleCodename : songData["curatedSA2B"])
+        {
+            possibleCodenames.push_back(possibleCodename.asString());
+        }
+        
+        std::string sa2Replacement = songData["SA2Breplacement"].asString();
+        _songMap.AddSong(id, codename, name, possibleCodenames, sa2Replacement);
+    }
+    //SA2B
+    Json::Value sa2Root = root["sa2b"];
+    for (const auto& codename : sa2Root.getMemberNames())
+    {
+        const Json::Value& songData = sa2Root[codename];
+        std::string name = songData["name"].asString();
+        
+        std::string fullPath = "ADX/" + codename;
+        auto allocatedName = new char[fullPath.size() + 1];
+        std::strcpy(allocatedName, fullPath.c_str());
+        MusicInfo musicInfo = {allocatedName, 1};
+
+        int id = helperFunctions.RegisterMusicFile(musicInfo);
+        _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
+        
+    }
+    //Custom
+    Json::Value customRoot = root["custom"];
+    for (const auto& codename : customRoot.getMemberNames())
+    {
+        const Json::Value& songData = customRoot[codename];
+        std::string name = songData["name"].asString();
+        
+        std::string fullPath = "custom/" + codename;
+        auto allocatedName = new char[fullPath.size() + 1];
+        std::strcpy(allocatedName, fullPath.c_str());
+        MusicInfo musicInfo = {allocatedName, 1};
+
+        int id = helperFunctions.RegisterMusicFile(musicInfo);
+        _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
+        
     }
 }
