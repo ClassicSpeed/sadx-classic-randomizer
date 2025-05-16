@@ -60,7 +60,7 @@ void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunc
         {
             possibleCodenames.push_back(possibleCodename.asString());
         }
-        
+
         std::string sa2Replacement = songData["SA2Breplacement"].asString();
         _songMap.AddSong(id, codename, name, possibleCodenames, sa2Replacement);
     }
@@ -70,7 +70,7 @@ void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunc
     {
         const Json::Value& songData = sa2Root[codename];
         std::string name = songData["name"].asString();
-        
+
         std::string fullPath = "ADX/" + codename;
         auto allocatedName = new char[fullPath.size() + 1];
         std::strcpy(allocatedName, fullPath.c_str());
@@ -78,7 +78,6 @@ void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunc
 
         int id = helperFunctions.RegisterMusicFile(musicInfo);
         _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
-        
     }
     //Custom
     Json::Value customRoot = root["custom"];
@@ -86,7 +85,7 @@ void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunc
     {
         const Json::Value& songData = customRoot[codename];
         std::string name = songData["name"].asString();
-        
+
         std::string fullPath = "custom/" + codename;
         auto allocatedName = new char[fullPath.size() + 1];
         std::strcpy(allocatedName, fullPath.c_str());
@@ -94,6 +93,7 @@ void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunc
 
         int id = helperFunctions.RegisterMusicFile(musicInfo);
         _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
-        
     }
+
+    _songMap.UpdatedIds();
 }

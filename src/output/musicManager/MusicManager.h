@@ -13,6 +13,7 @@ struct SongData
     std::string fullName;
     std::vector<std::string> possibleCodenames;
     std::string sa2Replacement;
+    std::vector<int> possibleIds;
 };
 
 class SongMap
@@ -24,7 +25,7 @@ public:
                  const std::vector<std::string>& possibleCodenames, const std::string& sa2Replacement)
     {
         PrintDebug("[SADX Randomizer] Adding song: %s\n", codename.c_str());
-        SongData songData = {id, codename, fullName, possibleCodenames, sa2Replacement};
+        SongData songData = {id, codename, fullName, possibleCodenames, sa2Replacement, {}};
         _idMap[id] = songData;
         _codenameMap[codename] = id;
     }
@@ -62,24 +63,37 @@ public:
         const SongData& songData = it->second;
         PrintDebug("[SADX Randomizer] Found song: %s\n", songData.codename.c_str());
         // Combine the base codename with the filtered possible codenames
-        std::vector<std::string> allCodenames;
-        for (const auto& codename : songData.possibleCodenames)
+        std::vector<int> allPossibleIds;
+        for (const auto& possibleId : songData.possibleIds)
         {
-            if (!codename.empty())
-            {
-                allCodenames.push_back(codename);
-            }
+            allPossibleIds.push_back(possibleId);
         }
-        allCodenames.push_back(songData.codename);
-        PrintDebug("[SADX Randomizer] Found %d possible codenames\n", allCodenames.size());
+        allPossibleIds.push_back(songData.id);
 
         // Generate a random index
-        std::uniform_int_distribution<> dist(0, allCodenames.size() - 1);
-        const std::string& codename = allCodenames[dist(gen)];
-        const auto song = FindByCodename(codename);
+        std::uniform_int_distribution<> dist(0, allPossibleIds.size() - 1);
+        const int finalId = allPossibleIds[dist(gen)];
+        const auto song = FindById(finalId);
         PrintDebug("[SADX Randomizer] Randomized song: %s\n", song->codename.c_str());
         // Return a random codename
         return song->id;
+    }
+
+    void UpdatedIds()
+    {
+        for (auto& it : _idMap)
+        {
+            int id = it.first;
+            const SongData& songData = it.second;
+            for (const auto& codename : songData.possibleCodenames)
+            {
+                auto it2 = _codenameMap.find(codename);
+                if (it2 != _codenameMap.end())
+                {
+                    _idMap[id].possibleIds.push_back(it2->second);
+                }
+            }
+        }
     }
 
 private:
@@ -95,7 +109,7 @@ public:
     const SongData* FindSongById(MusicIDs songId);
     void ProcessSongsFile(const HelperFunctions& helperFunctions);
 
-private:    
+private:
     void ProcessSongFile(const std::string& filePath, const HelperFunctions& helperFunctions);
     SongMap _songMap;
 };

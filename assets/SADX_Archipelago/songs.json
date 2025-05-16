@@ -1288,7 +1288,7 @@
             "p_cave",
             "h_base",
             "g_fore",
-            "s_oceans"
+            "s_ocean"
          ],
          "SA2Breplacement":"p_cave"
       },
@@ -1307,7 +1307,7 @@
             "p_cave",
             "h_base",
             "g_fore",
-            "s_oceans",
+            "s_ocean",
             "w_jungl"
          ],
          "SA2Breplacement":"w_jungl"
