@@ -60,6 +60,10 @@ void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunc
         {
             possibleCodenames.push_back(possibleCodename.asString());
         }
+        for (const auto& possibleCodename : songData["curatedCustom"])
+        {
+            possibleCodenames.push_back(possibleCodename.asString());
+        }
 
         std::string sa2Replacement = songData["SA2Breplacement"].asString();
         _songMap.AddSong(id, codename, name, possibleCodenames, sa2Replacement);

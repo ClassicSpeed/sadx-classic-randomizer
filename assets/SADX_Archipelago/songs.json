@@ -9,7 +9,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "advbig":{
          "id":1,
@@ -20,7 +23,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "adve102":{
          "id":2,
@@ -31,7 +37,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "advknkls":{
          "id":3,
@@ -42,7 +51,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "advmiles":{
          "id":4,
@@ -53,7 +65,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "advsonic":{
          "id":5,
@@ -64,7 +79,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "amy":{
          "id":6,
@@ -75,7 +93,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "big":{
          "id":7,
@@ -86,7 +107,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "bossall":{
          "id":8,
@@ -117,7 +141,16 @@
             "t9_eggma",
             "t9_shado"
          ],
-         "SA2Breplacement":"boss_01"
+         "SA2Breplacement":"boss_01",
+         "curatedCustom":[
+            "sng_stg20",
+            "sng_stg21",
+            "sng_stg22",
+            "sng_stg23",
+            "sng_stg26",
+            "sng_stg27",
+            "sng_stg28"
+         ]
       },
       "bosse101":{
          "id":9,
@@ -147,7 +180,16 @@
             "t9_eggma",
             "t9_shado"
          ],
-         "SA2Breplacement":"boss_01"
+         "SA2Breplacement":"boss_01",
+         "curatedCustom":[
+            "sng_stg20",
+            "sng_stg21",
+            "sng_stg22",
+            "sng_stg23",
+            "sng_stg26",
+            "sng_stg27",
+            "sng_stg28"
+         ]
       },
       "bossevnt":{
          "id":10,
@@ -177,7 +219,16 @@
             "t9_eggma",
             "t9_shado"
          ],
-         "SA2Breplacement":"boss_04"
+         "SA2Breplacement":"boss_04",
+         "curatedCustom":[
+            "sng_stg20",
+            "sng_stg21",
+            "sng_stg22",
+            "sng_stg23",
+            "sng_stg26",
+            "sng_stg27",
+            "sng_stg28"
+         ]
       },
       "bosstrgt":{
          "id":11,
@@ -208,7 +259,16 @@
             "t9_eggma",
             "t9_shado"
          ],
-         "SA2Breplacement":"boss_03"
+         "SA2Breplacement":"boss_03",
+         "curatedCustom":[
+            "sng_stg20",
+            "sng_stg21",
+            "sng_stg22",
+            "sng_stg23",
+            "sng_stg26",
+            "sng_stg27",
+            "sng_stg28"
+         ]
       },
       "casino1":{
          "id":12,
@@ -229,7 +289,10 @@
             "m_space",
             "s_hall"
          ],
-         "SA2Breplacement":"e_quart"
+         "SA2Breplacement":"e_quart",
+         "curatedCustom":[
+            "sng_stg05"
+         ]
       },
       "casino2":{
          "id":13,
@@ -248,7 +311,11 @@
             "m_space",
             "s_hall"
          ],
-         "SA2Breplacement":"s_hall"
+         "SA2Breplacement":"s_hall",
+         "curatedCustom":[
+            "sng_stg11a",
+            "sng_stg11b"
+         ]
       },
       "casino3":{
          "id":14,
@@ -269,7 +336,16 @@
             "g_hill",
             "p_lane"
          ],
-         "SA2Breplacement":"p_lane"
+         "SA2Breplacement":"p_lane",
+         "curatedCustom":[
+            "sng_btl02",
+            "sng_btl03",
+            "sng_ev11",
+            "sng_spstg1",
+            "sng_spstg2",
+            "sng_stg05",
+            "sng_stg06"
+         ]
       },
       "casino4":{
          "id":15,
@@ -290,7 +366,16 @@
             "g_hill",
             "p_lane"
          ],
-         "SA2Breplacement":"g_hill"
+         "SA2Breplacement":"g_hill",
+         "curatedCustom":[
+            "sng_btl02",
+            "sng_btl03",
+            "sng_ev11",
+            "sng_spstg1",
+            "sng_spstg2",
+            "sng_stg05",
+            "sng_stg06"
+         ]
       },
       "chao":{
          "id":16,
@@ -323,7 +408,10 @@
             "chao_r_h",
             "chao_r_j"
          ],
-         "SA2Breplacement":"chao_g_bgm_n"
+         "SA2Breplacement":"chao_g_bgm_n",
+         "curatedCustom":[
+
+         ]
       },
       "chaogoal":{
          "id":17,
@@ -355,7 +443,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_r_a"
+         "SA2Breplacement":"chao_r_a",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "chaohall":{
          "id":18,
@@ -388,7 +479,10 @@
             "chao_r_h",
             "chao_r_j"
          ],
-         "SA2Breplacement":"chao_r_e"
+         "SA2Breplacement":"chao_r_e",
+         "curatedCustom":[
+
+         ]
       },
       "chaorace":{
          "id":19,
@@ -404,7 +498,10 @@
             "chao_r_c",
             "chao_r_d"
          ],
-         "SA2Breplacement":"chao_r_b"
+         "SA2Breplacement":"chao_r_b",
+         "curatedCustom":[
+
+         ]
       },
       "chaos":{
          "id":20,
@@ -435,7 +532,16 @@
             "t9_eggma",
             "t9_shado"
          ],
-         "SA2Breplacement":"boss_03"
+         "SA2Breplacement":"boss_03",
+         "curatedCustom":[
+            "sng_stg20",
+            "sng_stg21",
+            "sng_stg22",
+            "sng_stg23",
+            "sng_stg26",
+            "sng_stg27",
+            "sng_stg28"
+         ]
       },
       "chaos_6":{
          "id":21,
@@ -465,7 +571,16 @@
             "t9_eggma",
             "t9_shado"
          ],
-         "SA2Breplacement":"boss_06"
+         "SA2Breplacement":"boss_06",
+         "curatedCustom":[
+            "sng_stg20",
+            "sng_stg21",
+            "sng_stg22",
+            "sng_stg23",
+            "sng_stg26",
+            "sng_stg27",
+            "sng_stg28"
+         ]
       },
       "chaos_p1":{
          "id":22,
@@ -495,7 +610,18 @@
             "t9_eggma",
             "t9_shado"
          ],
-         "SA2Breplacement":"boss_06"
+         "SA2Breplacement":"boss_06",
+         "curatedCustom":[
+            "sng_stg20",
+            "sng_stg21",
+            "sng_stg22",
+            "sng_stg23",
+            "sng_stg26",
+            "sng_stg27",
+            "sng_stg28",
+            "sng_e0404",
+            "sng_stg28"
+         ]
       },
       "chaos_p2":{
          "id":23,
@@ -525,7 +651,18 @@
             "t9_eggma",
             "t9_shado"
          ],
-         "SA2Breplacement":"boss_07"
+         "SA2Breplacement":"boss_07",
+         "curatedCustom":[
+            "sng_stg20",
+            "sng_stg21",
+            "sng_stg22",
+            "sng_stg23",
+            "sng_stg26",
+            "sng_stg27",
+            "sng_stg28",
+            "sng_e0404",
+            "sng_stg27"
+         ]
       },
       "charactr":{
          "id":24,
@@ -553,7 +690,13 @@
             "advsng_5",
             "btl_sel"
          ],
-         "SA2Breplacement":"advsng_4"
+         "SA2Breplacement":"advsng_4",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4"
+         ]
       },
       "circuit":{
          "id":25,
@@ -571,7 +714,13 @@
             "kart",
             "g_hill"
          ],
-         "SA2Breplacement":"kart"
+         "SA2Breplacement":"kart",
+         "curatedCustom":[
+            "sng_btl01",
+            "sng_btl02",
+            "sng_spstg1",
+            "sng_stg05"
+         ]
       },
       "continue":{
          "id":26,
@@ -593,7 +742,10 @@
             "continue",
             "chao_g_dead"
          ],
-         "SA2Breplacement":"continue"
+         "SA2Breplacement":"continue",
+         "curatedCustom":[
+
+         ]
       },
       "e102":{
          "id":27,
@@ -604,7 +756,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "ecoast1":{
          "id":28,
@@ -626,7 +781,13 @@
             "w_jungl",
             "g_fores"
          ],
-         "SA2Breplacement":"w_jungl"
+         "SA2Breplacement":"w_jungl",
+         "curatedCustom":[
+            "sng_btl02",
+            "sng_stg01",
+            "sng_stg02",
+            "sng_stg29"
+         ]
       },
       "ecoast2":{
          "id":29,
@@ -648,7 +809,13 @@
             "w_jungl",
             "g_fores"
          ],
-         "SA2Breplacement":"g_fores"
+         "SA2Breplacement":"g_fores",
+         "curatedCustom":[
+            "sng_btl02",
+            "sng_stg01",
+            "sng_stg02",
+            "sng_stg29"
+         ]
       },
       "ecoast3":{
          "id":30,
@@ -670,7 +837,13 @@
             "m_harb1",
             "e_quart"
          ],
-         "SA2Breplacement":"advsng_5"
+         "SA2Breplacement":"advsng_5",
+         "curatedCustom":[
+            "sng_btl02",
+            "sng_stg01",
+            "sng_stg02",
+            "sng_stg29"
+         ]
       },
       "egcarer1":{
          "id":31,
@@ -691,7 +864,10 @@
             "w_bed",
             "d_chambr"
          ],
-         "SA2Breplacement":"e_quart"
+         "SA2Breplacement":"e_quart",
+         "curatedCustom":[
+
+         ]
       },
       "egcarer2":{
          "id":32,
@@ -712,7 +888,10 @@
             "w_bed",
             "d_chambr"
          ],
-         "SA2Breplacement":"e_quart"
+         "SA2Breplacement":"e_quart",
+         "curatedCustom":[
+
+         ]
       },
       "eggman":{
          "id":33,
@@ -723,7 +902,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "eggmbl23":{
          "id":34,
@@ -753,7 +935,16 @@
             "t9_eggma",
             "t9_shado"
          ],
-         "SA2Breplacement":"boss_02b"
+         "SA2Breplacement":"boss_02b",
+         "curatedCustom":[
+            "sng_stg20",
+            "sng_stg21",
+            "sng_stg22",
+            "sng_stg23",
+            "sng_stg26",
+            "sng_stg27",
+            "sng_stg28"
+         ]
       },
       "eggrobo":{
          "id":35,
@@ -783,7 +974,16 @@
             "t9_eggma",
             "t9_shado"
          ],
-         "SA2Breplacement":"boss_02a"
+         "SA2Breplacement":"boss_02a",
+         "curatedCustom":[
+            "sng_stg20",
+            "sng_stg21",
+            "sng_stg22",
+            "sng_stg23",
+            "sng_stg26",
+            "sng_stg27",
+            "sng_stg28"
+         ]
       },
       "evtbgm00":{
          "id":36,
@@ -794,7 +994,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "evtbgm01":{
          "id":37,
@@ -805,7 +1008,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "evtbgm02":{
          "id":38,
@@ -816,7 +1022,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "evtbgm03":{
          "id":39,
@@ -827,7 +1036,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "evtbgm04":{
          "id":40,
@@ -838,7 +1050,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "evtbgm05":{
          "id":41,
@@ -849,7 +1064,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "finaleg1":{
          "id":42,
@@ -879,7 +1097,10 @@
             "p_lane",
             "w_bed"
          ],
-         "SA2Breplacement":"l_colony"
+         "SA2Breplacement":"l_colony",
+         "curatedCustom":[
+
+         ]
       },
       "finaleg2":{
          "id":43,
@@ -909,7 +1130,10 @@
             "p_lane",
             "w_bed"
          ],
-         "SA2Breplacement":"c_core_1"
+         "SA2Breplacement":"c_core_1",
+         "curatedCustom":[
+
+         ]
       },
       "fishget":{
          "id":44,
@@ -941,7 +1165,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_new_garden"
+         "SA2Breplacement":"chao_new_garden",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "fishing":{
          "id":45,
@@ -952,7 +1179,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "fishmiss":{
          "id":46,
@@ -974,7 +1204,10 @@
             "continue",
             "chao_g_dead"
          ],
-         "SA2Breplacement":"chao_k_net_fault"
+         "SA2Breplacement":"chao_k_net_fault",
+         "curatedCustom":[
+
+         ]
       },
       "hammer":{
          "id":47,
@@ -987,7 +1220,12 @@
          "curatedSA2B":[
             "g_hill"
          ],
-         "SA2Breplacement":"g_hill"
+         "SA2Breplacement":"g_hill",
+         "curatedCustom":[
+            "sng_btl01",
+            "sng_btl03",
+            "sng_ev11"
+         ]
       },
       "highway1":{
          "id":48,
@@ -1005,7 +1243,11 @@
             "c_escap3",
             "m_street"
          ],
-         "SA2Breplacement":"r_hwy"
+         "SA2Breplacement":"r_hwy",
+         "curatedCustom":[
+            "sng_stg03",
+            "sng_stg04"
+         ]
       },
       "highway2":{
          "id":49,
@@ -1020,7 +1262,10 @@
             "f_chase",
             "m_harb2"
          ],
-         "SA2Breplacement":"c_escap2"
+         "SA2Breplacement":"c_escap2",
+         "curatedCustom":[
+
+         ]
       },
       "highway3":{
          "id":50,
@@ -1035,7 +1280,10 @@
             "m_street",
             "t9_sonic"
          ],
-         "SA2Breplacement":"c_escap1"
+         "SA2Breplacement":"c_escap1",
+         "curatedCustom":[
+            "sng_btl02"
+         ]
       },
       "hurryup":{
          "id":51,
@@ -1046,7 +1294,10 @@
          "curatedSA2B":[
             "timer"
          ],
-         "SA2Breplacement":"timer"
+         "SA2Breplacement":"timer",
+         "curatedCustom":[
+
+         ]
       },
       "icecap1":{
          "id":52,
@@ -1061,7 +1312,10 @@
             "m_herd",
             "m_space"
          ],
-         "SA2Breplacement":"m_space"
+         "SA2Breplacement":"m_space",
+         "curatedCustom":[
+
+         ]
       },
       "icecap2":{
          "id":53,
@@ -1076,7 +1330,10 @@
             "m_herd",
             "m_space"
          ],
-         "SA2Breplacement":"m_herd"
+         "SA2Breplacement":"m_herd",
+         "curatedCustom":[
+
+         ]
       },
       "icecap3":{
          "id":54,
@@ -1091,7 +1348,11 @@
             "m_harb1",
             "m_harb2"
          ],
-         "SA2Breplacement":"g_fores"
+         "SA2Breplacement":"g_fores",
+         "curatedCustom":[
+            "sng_btl04",
+            "sng_btl05"
+         ]
       },
       "invncibl":{
          "id":55,
@@ -1109,7 +1370,10 @@
             "e207_sng",
             "invncibl"
          ],
-         "SA2Breplacement":"invncibl"
+         "SA2Breplacement":"invncibl",
+         "curatedCustom":[
+            "sng_invncbl"
+         ]
       },
       "item1":{
          "id":56,
@@ -1120,7 +1384,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "jingle_1":{
          "id":57,
@@ -1148,7 +1415,13 @@
             "advsng_5",
             "btl_sel"
          ],
-         "SA2Breplacement":"advsng_2"
+         "SA2Breplacement":"advsng_2",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4"
+         ]
       },
       "jingle_2":{
          "id":58,
@@ -1176,7 +1449,13 @@
             "advsng_5",
             "btl_sel"
          ],
-         "SA2Breplacement":"advsng_4"
+         "SA2Breplacement":"advsng_4",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4"
+         ]
       },
       "jingle_3":{
          "id":59,
@@ -1204,7 +1483,13 @@
             "advsng_5",
             "btl_sel"
          ],
-         "SA2Breplacement":"advsng_4"
+         "SA2Breplacement":"advsng_4",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4"
+         ]
       },
       "jingle_4":{
          "id":60,
@@ -1232,7 +1517,13 @@
             "advsng_5",
             "btl_sel"
          ],
-         "SA2Breplacement":"advsng_3"
+         "SA2Breplacement":"advsng_3",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4"
+         ]
       },
       "jingle_5":{
          "id":61,
@@ -1260,7 +1551,13 @@
             "advsng_5",
             "btl_sel"
          ],
-         "SA2Breplacement":"advsng_1"
+         "SA2Breplacement":"advsng_1",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4"
+         ]
       },
       "knuckles":{
          "id":62,
@@ -1271,7 +1568,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "lstwrld1":{
          "id":63,
@@ -1290,7 +1590,10 @@
             "g_fore",
             "s_ocean"
          ],
-         "SA2Breplacement":"p_cave"
+         "SA2Breplacement":"p_cave",
+         "curatedCustom":[
+            "sng_stg10"
+         ]
       },
       "lstwrld2":{
          "id":64,
@@ -1310,7 +1613,10 @@
             "s_ocean",
             "w_jungl"
          ],
-         "SA2Breplacement":"w_jungl"
+         "SA2Breplacement":"w_jungl",
+         "curatedCustom":[
+            "sng_stg10"
+         ]
       },
       "lstwrld3":{
          "id":65,
@@ -1329,18 +1635,41 @@
             "d_chambr",
             "s_ocean"
          ],
-         "SA2Breplacement":"a_mine"
+         "SA2Breplacement":"a_mine",
+         "curatedCustom":[
+
+         ]
       },
       "mainthem":{
          "id":66,
          "name":"Open your Heart -Main Theme of \"SONIC Adventure\"-",
          "curatedSADX":[
-
+            "sonic",
+            "tails",
+            "knuckles",
+            "amy",
+            "big",
+            "e102"
          ],
          "curatedSA2B":[
-
+            "boss_07",
+            "t9_amy",
+            "t9_eggma",
+            "t9_knuck",
+            "t9_miles",
+            "t9_rouge",
+            "t9_shado",
+            "t9_sonic"
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"boss_07",
+         "curatedCustom":[
+            "sng_e0404",
+            "sng_v01_main",
+            "sng_v02_ts",
+            "sng_v03_td",
+            "sng_v04_tr",
+            "sng_v05_tc"
+         ]
       },
       "mstcln":{
          "id":67,
@@ -1362,7 +1691,11 @@
             "t9_knuck",
             "t9_rouge"
          ],
-         "SA2Breplacement":"d_lagoon"
+         "SA2Breplacement":"d_lagoon",
+         "curatedCustom":[
+            "sng_ev10",
+            "sng_stg09"
+         ]
       },
       "one_up":{
          "id":71,
@@ -1395,7 +1728,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"one_up"
+         "SA2Breplacement":"one_up",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "option":{
          "id":72,
@@ -1423,7 +1759,13 @@
             "advsng_5",
             "btl_sel"
          ],
-         "SA2Breplacement":"advsng_3"
+         "SA2Breplacement":"advsng_3",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4"
+         ]
       },
       "redmntn1":{
          "id":73,
@@ -1440,7 +1782,11 @@
             "t9_knuck",
             "w_canyon"
          ],
-         "SA2Breplacement":"p_hill"
+         "SA2Breplacement":"p_hill",
+         "curatedCustom":[
+            "sng_stg07",
+            "sng_stg08"
+         ]
       },
       "redmntn2":{
          "id":74,
@@ -1455,7 +1801,11 @@
             "s_rail",
             "w_canyon"
          ],
-         "SA2Breplacement":"s_ocean"
+         "SA2Breplacement":"s_ocean",
+         "curatedCustom":[
+            "sng_stg07",
+            "sng_stg08"
+         ]
       },
       "rndclear":{
          "id":75,
@@ -1487,7 +1837,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"rndclear"
+         "SA2Breplacement":"rndclear",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "s_square":{
          "id":76,
@@ -1505,7 +1858,10 @@
             "chao_g_bgm_h",
             "advsng_5"
          ],
-         "SA2Breplacement":"chao_g_bgm_h"
+         "SA2Breplacement":"chao_g_bgm_h",
+         "curatedCustom":[
+
+         ]
       },
       "sandhill":{
          "id":77,
@@ -1523,7 +1879,10 @@
             "s_ocean",
             "s_rail"
          ],
-         "SA2Breplacement":"h_base"
+         "SA2Breplacement":"h_base",
+         "curatedCustom":[
+            "sng_btl04"
+         ]
       },
       "scramble":{
          "id":78,
@@ -1542,7 +1901,10 @@
             "s_rail",
             "t9_miles"
          ],
-         "SA2Breplacement":"c_wall"
+         "SA2Breplacement":"c_wall",
+         "curatedCustom":[
+            "sng_v02_ts"
+         ]
       },
       "shelter1":{
          "id":79,
@@ -1570,7 +1932,10 @@
             "s_hall",
             "w_bed"
          ],
-         "SA2Breplacement":"c_core_2"
+         "SA2Breplacement":"c_core_2",
+         "curatedCustom":[
+            "sng_stg13"
+         ]
       },
       "shelter2":{
          "id":80,
@@ -1598,7 +1963,10 @@
             "s_hall",
             "w_bed"
          ],
-         "SA2Breplacement":"c_core_5"
+         "SA2Breplacement":"c_core_5",
+         "curatedCustom":[
+            "sng_stg13"
+         ]
       },
       "skydeck1":{
          "id":81,
@@ -1618,7 +1986,11 @@
             "i_gate",
             "f_rush"
          ],
-         "SA2Breplacement":"e_engine"
+         "SA2Breplacement":"e_engine",
+         "curatedCustom":[
+            "sng_stg13",
+            "sng_stg14"
+         ]
       },
       "skydeck2":{
          "id":82,
@@ -1640,7 +2012,11 @@
             "w_jungl",
             "f_rush"
          ],
-         "SA2Breplacement":"c_wall"
+         "SA2Breplacement":"c_wall",
+         "curatedCustom":[
+            "sng_stg13",
+            "sng_stg14"
+         ]
       },
       "sonic":{
          "id":83,
@@ -1651,7 +2027,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "speedup":{
          "id":85,
@@ -1669,7 +2048,10 @@
             "speedup",
             "e350_sng"
          ],
-         "SA2Breplacement":"speedup"
+         "SA2Breplacement":"speedup",
+         "curatedCustom":[
+            "sng_speedup"
+         ]
       },
       "sprsonic":{
          "id":86,
@@ -1680,7 +2062,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "tails":{
          "id":88,
@@ -1691,7 +2076,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "theamy":{
          "id":89,
@@ -1702,7 +2090,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "thebig":{
          "id":90,
@@ -1713,7 +2104,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "thee102":{
          "id":91,
@@ -1724,7 +2118,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "theknkls":{
          "id":92,
@@ -1735,7 +2132,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "themiles":{
          "id":93,
@@ -1746,7 +2146,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "thesonic":{
          "id":94,
@@ -1757,7 +2160,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "tical":{
          "id":95,
@@ -1768,7 +2174,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "timer":{
          "id":96,
@@ -1779,7 +2188,10 @@
          "curatedSA2B":[
             "timer"
          ],
-         "SA2Breplacement":"timer"
+         "SA2Breplacement":"timer",
+         "curatedCustom":[
+
+         ]
       },
       "titl_egg":{
          "id":97,
@@ -1801,7 +2213,10 @@
             "continue",
             "chao_g_dead"
          ],
-         "SA2Breplacement":"continue"
+         "SA2Breplacement":"continue",
+         "curatedCustom":[
+
+         ]
       },
       "titl_mr1":{
          "id":98,
@@ -1823,7 +2238,10 @@
             "continue",
             "chao_g_dead"
          ],
-         "SA2Breplacement":"continue"
+         "SA2Breplacement":"continue",
+         "curatedCustom":[
+
+         ]
       },
       "titl_mr2":{
          "id":99,
@@ -1845,7 +2263,10 @@
             "continue",
             "chao_g_dead"
          ],
-         "SA2Breplacement":"continue"
+         "SA2Breplacement":"continue",
+         "curatedCustom":[
+
+         ]
       },
       "titl_ss":{
          "id":100,
@@ -1856,7 +2277,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "title":{
          "id":101,
@@ -1884,7 +2308,13 @@
             "advsng_5",
             "btl_sel"
          ],
-         "SA2Breplacement":"advsng_1"
+         "SA2Breplacement":"advsng_1",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4"
+         ]
       },
       "title2":{
          "id":102,
@@ -1913,7 +2343,15 @@
             "btl_sel",
             "title"
          ],
-         "SA2Breplacement":"title"
+         "SA2Breplacement":"title",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4",
+            "sng_title1",
+            "sng_title2"
+         ]
       },
       "trial":{
          "id":103,
@@ -1941,7 +2379,13 @@
             "advsng_5",
             "btl_sel"
          ],
-         "SA2Breplacement":"btl_sel"
+         "SA2Breplacement":"btl_sel",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4"
+         ]
       },
       "twnklpk1":{
          "id":104,
@@ -1962,7 +2406,12 @@
             "e_quart",
             "g_hill"
          ],
-         "SA2Breplacement":"m_herd"
+         "SA2Breplacement":"m_herd",
+         "curatedCustom":[
+            "sng_spstg2",
+            "sng_spstg1",
+            "sng_stg04"
+         ]
       },
       "twnklpk2":{
          "id":105,
@@ -1982,7 +2431,12 @@
             "m_harb1",
             "e_quart"
          ],
-         "SA2Breplacement":"m_harb1"
+         "SA2Breplacement":"m_harb1",
+         "curatedCustom":[
+            "sng_spstg2",
+            "sng_spstg1",
+            "sng_stg04"
+         ]
       },
       "twnklpk3":{
          "id":106,
@@ -1995,7 +2449,12 @@
             "l_colony",
             "d_chambr"
          ],
-         "SA2Breplacement":"l_colony"
+         "SA2Breplacement":"l_colony",
+         "curatedCustom":[
+            "sng_stg11a",
+            "sng_stg11b",
+            "sng_stg12"
+         ]
       },
       "wndyvly1":{
          "id":107,
@@ -2019,7 +2478,11 @@
             "m_street",
             "d_lagoon"
          ],
-         "SA2Breplacement":"g_hill"
+         "SA2Breplacement":"g_hill",
+         "curatedCustom":[
+            "sng_stg02",
+            "sng_stg09"
+         ]
       },
       "wndyvly2":{
          "id":108,
@@ -2033,7 +2496,11 @@
             "p_lane",
             "c_escap2"
          ],
-         "SA2Breplacement":"f_chase"
+         "SA2Breplacement":"f_chase",
+         "curatedCustom":[
+            "sng_btl04",
+            "sng_stg10"
+         ]
       },
       "wndyvly3":{
          "id":109,
@@ -2059,7 +2526,11 @@
             "m_street",
             "t9_sonic"
          ],
-         "SA2Breplacement":"m_harb1"
+         "SA2Breplacement":"m_harb1",
+         "curatedCustom":[
+            "sng_stg02",
+            "sng_stg09"
+         ]
       },
       "mstart_44":{
          "id":110,
@@ -2091,7 +2562,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_k_net_fine"
+         "SA2Breplacement":"chao_k_net_fine",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "mclear_44":{
          "id":111,
@@ -2123,7 +2597,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_r_item_get"
+         "SA2Breplacement":"chao_r_item_get",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "chao_k_net_fine":{
          "id":112,
@@ -2155,7 +2632,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_k_net_fine"
+         "SA2Breplacement":"chao_k_net_fine",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "chao_g_iede":{
          "id":113,
@@ -2166,7 +2646,10 @@
          "curatedSA2B":[
 
          ],
-         "SA2Breplacement":""
+         "SA2Breplacement":"",
+         "curatedCustom":[
+
+         ]
       },
       "chao_r_e":{
          "id":114,
@@ -2199,7 +2682,10 @@
             "chao_r_h",
             "chao_r_j"
          ],
-         "SA2Breplacement":"chao_r_e"
+         "SA2Breplacement":"chao_r_e",
+         "curatedCustom":[
+
+         ]
       },
       "c_btl_cv":{
          "id":115,
@@ -2227,7 +2713,13 @@
             "advsng_5",
             "btl_sel"
          ],
-         "SA2Breplacement":"c_btl_cv"
+         "SA2Breplacement":"c_btl_cv",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4"
+         ]
       },
       "chao_r_gate_open":{
          "id":116,
@@ -2259,7 +2751,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_r_gate_open"
+         "SA2Breplacement":"chao_r_gate_open",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "chao_g_born_h2":{
          "id":117,
@@ -2291,7 +2786,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_g_born_h2"
+         "SA2Breplacement":"chao_g_born_h2",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "chao_g_born_d2":{
          "id":118,
@@ -2323,7 +2821,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_g_born_d2"
+         "SA2Breplacement":"chao_g_born_d2",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "chao_g_born_c":{
          "id":119,
@@ -2355,7 +2856,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_g_born_c"
+         "SA2Breplacement":"chao_g_born_c",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "chao_g_born_h":{
          "id":120,
@@ -2387,7 +2891,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_g_born_h"
+         "SA2Breplacement":"chao_g_born_h",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "chao_g_born_d":{
          "id":121,
@@ -2419,7 +2926,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_g_born_d"
+         "SA2Breplacement":"chao_g_born_d",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "chao_g_dead":{
          "id":122,
@@ -2441,7 +2951,10 @@
             "continue",
             "chao_g_dead"
          ],
-         "SA2Breplacement":"chao_g_dead"
+         "SA2Breplacement":"chao_g_dead",
+         "curatedCustom":[
+
+         ]
       },
       "chao_g_dance":{
          "id":123,
@@ -2473,7 +2986,10 @@
             "item_get",
             "rndclear"
          ],
-         "SA2Breplacement":"chao_g_dance"
+         "SA2Breplacement":"chao_g_dance",
+         "curatedCustom":[
+            "sng_rndclr"
+         ]
       },
       "chao_k_m":{
          "id":124,
@@ -2501,7 +3017,13 @@
             "advsng_5",
             "btl_sel"
          ],
-         "SA2Breplacement":"chao_k_m"
+         "SA2Breplacement":"chao_k_m",
+         "curatedCustom":[
+            "sng_sys1",
+            "sng_sys2",
+            "sng_sys3",
+            "sng_sys4"
+         ]
       }
    },
    "sa2b":{
@@ -2975,6 +3497,215 @@
       },
       "chao_hall":{
          "name":"Letz Get This Party Started ...for CHAO Race Entrance"
+      }
+   },
+   "custom":{
+      "sng_btl01":{
+         "name":"2P Battle: Sea Area"
+      },
+      "sng_btl02":{
+         "name":"2P Battle: City Area"
+      },
+      "sng_btl03":{
+         "name":"2P Battle: Casino Area"
+      },
+      "sng_btl04":{
+         "name":"2P Battle: Ring Race"
+      },
+      "sng_btl05":{
+         "name":"2P Battle: Quick Race"
+      },
+      "sng_e0017":{
+         "name":"“We Can” – Credits Version"
+      },
+      "sng_e0117":{
+         "name":"”Team Chaotix” — Credits Version"
+      },
+      "sng_e0404":{
+         "name":"“Sonic Heroes” – Credits Version"
+      },
+      "sng_ev10":{
+         "name":"Event #9 – “No Past to Remember”"
+      },
+      "sng_ev11":{
+         "name":"Event #10 – “Monkey Business”"
+      },
+      "sng_ev12":{
+         "name":"Event #11 – “My World”"
+      },
+      "sng_ev13":{
+         "name":"Event #12 – “My Ambition”"
+      },
+      "sng_invncbl":{
+         "name":"Jingle #2 – Invincible"
+      },
+      "sng_rndclr":{
+         "name":"Jingle #1 – Round Clear"
+      },
+      "sng_speedup":{
+         "name":"Jingle #3 – Speed Up"
+      },
+      "sng_spstg1":{
+         "name":"Special Stage #1 – Bonus Challenge"
+      },
+      "sng_spstg2":{
+         "name":"Special Stage #2 – Emerald Challenge"
+      },
+      "sng_stg01":{
+         "name":"Seaside Hill"
+      },
+      "sng_stg02":{
+         "name":"Ocean Palace"
+      },
+      "sng_stg03":{
+         "name":"Grand Metropolis"
+      },
+      "sng_stg04":{
+         "name":"Power Plant"
+      },
+      "sng_stg05":{
+         "name":"Casino Park"
+      },
+      "sng_stg06":{
+         "name":"Bingo Highway"
+      },
+      "sng_stg07":{
+         "name":"Rail Canyon"
+      },
+      "sng_stg08":{
+         "name":"Bullet Station"
+      },
+      "sng_stg09":{
+         "name":"Frog Forest"
+      },
+      "sng_stg10":{
+         "name":"Lost Jungle"
+      },
+      "sng_stg11a":{
+         "name":"Hang Castle #1"
+      },
+      "sng_stg11b":{
+         "name":"Hang Castle #2"
+      },
+      "sng_stg12":{
+         "name":"Mystic Mansion"
+      },
+      "sng_stg12a":{
+         "name":"Mystic Mansion – Part A"
+      },
+      "sng_stg12b":{
+         "name":"Mystic Mansion – Part B"
+      },
+      "sng_stg12c":{
+         "name":"Mystic Mansion – Part C"
+      },
+      "sng_stg12d":{
+         "name":"Mystic Mansion – Part D"
+      },
+      "sng_stg12e":{
+         "name":"Mystic Mansion – Part E"
+      },
+      "sng_stg12f":{
+         "name":"Mystic Mansion – Part F"
+      },
+      "sng_stg13":{
+         "name":"Egg Fleet"
+      },
+      "sng_stg14":{
+         "name":"Final Fortress"
+      },
+      "sng_stg20":{
+         "name":"Boss #1 – Egg Hawk"
+      },
+      "sng_stg20pi":{
+         "name":"Boss #1 – Egg Hawk Intro"
+      },
+      "sng_stg21":{
+         "name":"Boss #2 – Vs. Team Battle"
+      },
+      "sng_stg22":{
+         "name":"Boss #3 – Robot Carnival / Robot Storm"
+      },
+      "sng_stg23":{
+         "name":"Boss #4 – Egg Albatross"
+      },
+      "sng_stg24tc":{
+         "name":"Boss – Vs. Team Chaotix"
+      },
+      "sng_stg24td":{
+         "name":"Boss – Vs. Team Dark"
+      },
+      "sng_stg24tr":{
+         "name":"Boss – Vs. Team Rose"
+      },
+      "sng_stg24ts":{
+         "name":"Boss – Vs. Team Sonic"
+      },
+      "sng_stg26":{
+         "name":"Boss #5 – Egg Emperor"
+      },
+      "sng_stg27":{
+         "name":"Boss #6 – Metal Madness"
+      },
+      "sng_stg28":{
+         "name":"“What I'm Made Of” / Metal Overlord"
+      },
+      "sng_stg29":{
+         "name":"Sea Gate"
+      },
+      "sng_sys1":{
+         "name":"System Screen #1 – Menu"
+      },
+      "sng_sys2":{
+         "name":"System Screen #2 – Select"
+      },
+      "sng_sys3":{
+         "name":"System Screen #3 – 2P Vs. Menu"
+      },
+      "sng_sys4":{
+         "name":"System Screen #4 – Select (Intro)"
+      },
+      "sng_tbsfa1":{
+         "name":"Team Sonic Blast"
+      },
+      "sng_tbsfa2":{
+         "name":"Team Dark Blast"
+      },
+      "sng_tbsfa3":{
+         "name":"Team Rose Blast"
+      },
+      "sng_tbsfa4":{
+         "name":"Team Chaotix Blast"
+      },
+      "sng_tbsfa4e":{
+         "name":"Team Chaotix Blast (EN.)"
+      },
+      "sng_tbsfa4j":{
+         "name":"Team Chaotix Blast (JP.)"
+      },
+      "sng_tbsfa5":{
+         "name":"Team Blast: Super Sonic"
+      },
+      "sng_title1":{
+         "name":"Title Sequence (With Intro)"
+      },
+      "sng_title2":{
+         "name":"Title Sequence"
+      },
+      "sng_v01_main":{
+         "name":"“Sonic Heroes”"
+      },
+      "sng_v02_ts":{
+         "name":"“We Can”"
+      },
+      "sng_v03_td":{
+         "name":"“This Machine”"
+      },
+      "sng_v04_tr":{
+         "name":"“Follow Me”"
+      },
+      "sng_v05_tc":{
+         "name":"“Team Chaotix”"
       }
    }
 }
