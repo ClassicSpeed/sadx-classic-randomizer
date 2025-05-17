@@ -58,7 +58,7 @@ void DisplayManager::QueueChatMessage(const std::string& message)
 
 void DisplayManager::ShowSongName(const std::string& songName)
 {
-    if(_songName != songName)
+    if (_songName != songName)
     {
         _songName = songName;
         _songNameTime = std::clock();
@@ -243,6 +243,16 @@ void DisplayManager::DisplaySongName()
         const int fadedColor = _chatMessageColor & 0x00FFFFFF | alpha << 24;
         SetDebugFontColor(fadedColor);
     }
+    else if (timePassed < 0.25)
+    {
+        alpha = static_cast<int>(timePassed * 4 * 255);
+        //Fix for alpha value being too low and SADX showing it as solid color
+        if (alpha < 15)
+            return;
+
+        const int fadedColor = _chatMessageColor & 0x00FFFFFF | alpha << 24;
+        SetDebugFontColor(fadedColor);
+    }
     else
         SetDebugFontColor(this->_chatMessageColor);
 
@@ -256,7 +266,8 @@ void DisplayManager::DisplaySongName()
 
     DrawRect_Queue((columns / 2 - _songName.size() / 2 - 0.5f) * this->_debugFontSize,
                    (4 - 0.5f) * this->_debugFontSize,
-                   (columns / 2 + _songName.size() / 2 + (_songName.size() % 2 != 0 ? 1 : 0) + 0.5f) * this->_debugFontSize,
+                   (columns / 2 + _songName.size() / 2 + (_songName.size() % 2 != 0 ? 1 : 0) + 0.5f) * this->
+                   _debugFontSize,
                    (4 + 1 + 0.5) * this->_debugFontSize, 62041.496f,
                    0x5F000000 & 0x00FFFFFF | alpha / 3 << 24,
                    QueuedModelFlagsB_EnableZWrite);

@@ -441,7 +441,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_r_a",
          "curatedCustom":[
@@ -1163,7 +1164,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_new_garden",
          "curatedCustom":[
@@ -1726,7 +1728,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"one_up",
          "curatedCustom":[
@@ -1835,7 +1838,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"rndclear",
          "curatedCustom":[
@@ -2220,7 +2224,7 @@
       },
       "titl_mr1":{
          "id":98,
-         "name":"",
+         "name":"Mystic Ruin (Adventure Field Card)",
          "curatedSADX":[
             "continue",
             "evtbgm00",
@@ -2245,7 +2249,7 @@
       },
       "titl_mr2":{
          "id":99,
-         "name":"",
+         "name":"Mystic Ruin (Adventure Field Card)",
          "curatedSADX":[
             "continue",
             "evtbgm00",
@@ -2560,7 +2564,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_k_net_fine",
          "curatedCustom":[
@@ -2595,7 +2600,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_r_item_get",
          "curatedCustom":[
@@ -2630,7 +2636,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_k_net_fine",
          "curatedCustom":[
@@ -2749,7 +2756,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_r_gate_open",
          "curatedCustom":[
@@ -2784,7 +2792,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_g_born_h2",
          "curatedCustom":[
@@ -2819,7 +2828,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_g_born_d2",
          "curatedCustom":[
@@ -2854,7 +2864,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_g_born_c",
          "curatedCustom":[
@@ -2889,7 +2900,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_g_born_h",
          "curatedCustom":[
@@ -2924,7 +2936,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_g_born_d",
          "curatedCustom":[
@@ -2984,7 +2997,8 @@
             "chao_r_a",
             "chao_r_item_get",
             "item_get",
-            "rndclear"
+            "rndclear",
+            "c_btl_wn"
          ],
          "SA2Breplacement":"chao_g_dance",
          "curatedCustom":[
@@ -3106,34 +3120,34 @@
          "name":"Normal Chao Garden"
       },
       "chao_g_born_c":{
-         "name":""
+         "name":"Chaos Chao born"
       },
       "chao_g_born_d":{
-         "name":""
+         "name":"Dark Chao hatching"
       },
       "chao_g_born_d2":{
-         "name":""
+         "name":"Dark Chao cocooning"
       },
       "chao_g_born_h":{
-         "name":""
+         "name":"Hero Chao Hatched"
       },
       "chao_g_born_h2":{
-         "name":""
+         "name":"Hero chao cocooning"
       },
       "chao_g_born_hc":{
-         "name":""
+         "name":"Hero Chaos Chao Hatched"
       },
       "chao_g_dance":{
-         "name":""
+         "name":"Chao love dance"
       },
       "chao_g_dead":{
          "name":"Chao Death Jingle"
       },
       "chao_g_gate_open":{
-         "name":""
+         "name":"Chao to your marks"
       },
       "chao_g_new_garden":{
-         "name":""
+         "name":"Unlocked a new garden (never heard)"
       },
       "chao_g_radicase1":{
          "name":"Chao Radio Song 1"
@@ -3160,7 +3174,7 @@
          "name":"Chao Kindergarten"
       },
       "chao_k_m2":{
-         "name":""
+         "name":"Chao Connection Menu"
       },
       "chao_k_net_connect":{
          "name":"Connecting to the Internet"
@@ -3190,37 +3204,37 @@
          "name":"Hero Chao Song 3"
       },
       "chao_l_m":{
-         "name":""
+         "name":"Pick a Chao game"
       },
       "chao_new_garden":{
-         "name":""
+         "name":"Unlock a new garden"
       },
       "chao_r_a":{
          "name":"Chao Race Victory"
       },
       "chao_r_b":{
-         "name":""
+         "name":"Beginner race"
       },
       "chao_r_c":{
-         "name":""
+         "name":"Challenge Race"
       },
       "chao_r_d":{
-         "name":""
+         "name":"Hero Race (Dark Track)"
       },
       "chao_r_e":{
-         "name":""
+         "name":"Pick your race"
       },
       "chao_r_gate_open":{
          "name":"Chao Race - Gates Open"
       },
       "chao_r_h":{
-         "name":""
+         "name":"Dark Race (Hero Track)"
       },
       "chao_r_item_get":{
-         "name":""
+         "name":"Win a Prize"
       },
       "chao_r_j":{
-         "name":""
+         "name":"Jewel race"
       },
       "continue":{
          "name":"Continue Screen"
@@ -3259,7 +3273,7 @@
          "name":"Event: Revival"
       },
       "e106_sng":{
-         "name":""
+         "name":"Throw It All Away (short)"
       },
       "e111_sng":{
          "name":"Event: Ambition"
@@ -3268,7 +3282,7 @@
          "name":"Event: Operation"
       },
       "e119_sng":{
-         "name":""
+         "name":"Flashback"
       },
       "e127_sng":{
          "name":"E.G.G.M.A.N."
@@ -3292,7 +3306,7 @@
          "name":"Event: The Last Scene"
       },
       "e350_sng":{
-         "name":""
+         "name":"Original Opening"
       },
       "f_chase":{
          "name":"The Supernatural"
@@ -3493,10 +3507,10 @@
          "name":"Chao Karate-Won"
       },
       "chao_g_iede":{
-         "name":"???"
+         "name":"Unwanted Chao"
       },
       "chao_hall":{
-         "name":"Letz Get This Party Started ...for CHAO Race Entrance"
+         "name":"Letz Get This Party Started"
       }
    },
    "custom":{
@@ -3516,40 +3530,40 @@
          "name":"2P Battle: Quick Race"
       },
       "sng_e0017":{
-         "name":"“We Can” – Credits Version"
+         "name":"“We Can” - Credits Version"
       },
       "sng_e0117":{
          "name":"”Team Chaotix” — Credits Version"
       },
       "sng_e0404":{
-         "name":"“Sonic Heroes” – Credits Version"
+         "name":"“Sonic Heroes” - Credits Version"
       },
       "sng_ev10":{
-         "name":"Event #9 – “No Past to Remember”"
+         "name":"Event #9 - “No Past to Remember”"
       },
       "sng_ev11":{
-         "name":"Event #10 – “Monkey Business”"
+         "name":"Event #10 - “Monkey Business”"
       },
       "sng_ev12":{
-         "name":"Event #11 – “My World”"
+         "name":"Event #11 - “My World”"
       },
       "sng_ev13":{
-         "name":"Event #12 – “My Ambition”"
+         "name":"Event #12 - “My Ambition”"
       },
       "sng_invncbl":{
-         "name":"Jingle #2 – Invincible"
+         "name":"Jingle #2 - Invincible"
       },
       "sng_rndclr":{
-         "name":"Jingle #1 – Round Clear"
+         "name":"Jingle #1 - Round Clear"
       },
       "sng_speedup":{
-         "name":"Jingle #3 – Speed Up"
+         "name":"Jingle #3 - Speed Up"
       },
       "sng_spstg1":{
-         "name":"Special Stage #1 – Bonus Challenge"
+         "name":"Special Stage #1 - Bonus Challenge"
       },
       "sng_spstg2":{
-         "name":"Special Stage #2 – Emerald Challenge"
+         "name":"Special Stage #2 - Emerald Challenge"
       },
       "sng_stg01":{
          "name":"Seaside Hill"
@@ -3591,22 +3605,22 @@
          "name":"Mystic Mansion"
       },
       "sng_stg12a":{
-         "name":"Mystic Mansion – Part A"
+         "name":"Mystic Mansion - Part A"
       },
       "sng_stg12b":{
-         "name":"Mystic Mansion – Part B"
+         "name":"Mystic Mansion - Part B"
       },
       "sng_stg12c":{
-         "name":"Mystic Mansion – Part C"
+         "name":"Mystic Mansion - Part C"
       },
       "sng_stg12d":{
-         "name":"Mystic Mansion – Part D"
+         "name":"Mystic Mansion - Part D"
       },
       "sng_stg12e":{
-         "name":"Mystic Mansion – Part E"
+         "name":"Mystic Mansion - Part E"
       },
       "sng_stg12f":{
-         "name":"Mystic Mansion – Part F"
+         "name":"Mystic Mansion - Part F"
       },
       "sng_stg13":{
          "name":"Egg Fleet"
@@ -3615,37 +3629,37 @@
          "name":"Final Fortress"
       },
       "sng_stg20":{
-         "name":"Boss #1 – Egg Hawk"
+         "name":"Boss #1 - Egg Hawk"
       },
       "sng_stg20pi":{
-         "name":"Boss #1 – Egg Hawk Intro"
+         "name":"Boss #1 - Egg Hawk Intro"
       },
       "sng_stg21":{
-         "name":"Boss #2 – Vs. Team Battle"
+         "name":"Boss #2 - Vs. Team Battle"
       },
       "sng_stg22":{
-         "name":"Boss #3 – Robot Carnival / Robot Storm"
+         "name":"Boss #3 - Robot Carnival / Robot Storm"
       },
       "sng_stg23":{
-         "name":"Boss #4 – Egg Albatross"
+         "name":"Boss #4 - Egg Albatross"
       },
       "sng_stg24tc":{
-         "name":"Boss – Vs. Team Chaotix"
+         "name":"Boss - Vs. Team Chaotix"
       },
       "sng_stg24td":{
-         "name":"Boss – Vs. Team Dark"
+         "name":"Boss - Vs. Team Dark"
       },
       "sng_stg24tr":{
-         "name":"Boss – Vs. Team Rose"
+         "name":"Boss - Vs. Team Rose"
       },
       "sng_stg24ts":{
-         "name":"Boss – Vs. Team Sonic"
+         "name":"Boss - Vs. Team Sonic"
       },
       "sng_stg26":{
-         "name":"Boss #5 – Egg Emperor"
+         "name":"Boss #5 - Egg Emperor"
       },
       "sng_stg27":{
-         "name":"Boss #6 – Metal Madness"
+         "name":"Boss #6 - Metal Madness"
       },
       "sng_stg28":{
          "name":"“What I'm Made Of” / Metal Overlord"
@@ -3654,16 +3668,16 @@
          "name":"Sea Gate"
       },
       "sng_sys1":{
-         "name":"System Screen #1 – Menu"
+         "name":"System Screen #1 - Menu"
       },
       "sng_sys2":{
-         "name":"System Screen #2 – Select"
+         "name":"System Screen #2 - Select"
       },
       "sng_sys3":{
-         "name":"System Screen #3 – 2P Vs. Menu"
+         "name":"System Screen #3 - 2P Vs. Menu"
       },
       "sng_sys4":{
-         "name":"System Screen #4 – Select (Intro)"
+         "name":"System Screen #4 - Select (Intro)"
       },
       "sng_tbsfa1":{
          "name":"Team Sonic Blast"
