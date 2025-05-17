@@ -38,6 +38,8 @@ void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions)
     //SADX
     Json::Value sadxRoot = root["sadx"];
 
+    Json::Value settingsRoot = root["settings"];
+
     for (const auto& codename : sadxRoot.getMemberNames())
     {
         const Json::Value& songData = sadxRoot[codename];
@@ -53,6 +55,9 @@ void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions)
         for (const auto& possibleCodename : songData["curatedSADX"])
             possibleSADXCodenames.push_back(possibleCodename.asString());
 
+        if (settingsRoot["includeVanillaInCurated"].asBool() || possibleSADXCodenames.empty())
+            possibleSADXCodenames.push_back(codename);
+
         for (const auto& possibleCodename : songData["curatedSA2B"])
             possibleSA2BCodenames.push_back(possibleCodename.asString());
 
@@ -66,10 +71,10 @@ void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions)
                          sa2Replacement);
     }
     //SA2B
-    ParseSongCategory(helperFunctions, root["sa2b"], "ADX/");
+    ParseSongCategory(helperFunctions, root["sa2b"], settingsRoot["sa2bADXpath"].asString());
 
     //Custom    
-    ParseSongCategory(helperFunctions, root["custom"], "custom/");
+    ParseSongCategory(helperFunctions, root["custom"], settingsRoot["customADXpath"].asString());
 
     _songMap.UpdatedIds();
 }

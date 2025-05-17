@@ -98,7 +98,6 @@ public:
         {
             allPossibleIds.push_back(possibleId);
         }
-        allPossibleIds.push_back(songData.id);
 
         // Generate a random index
         std::uniform_int_distribution<> dist(0, allPossibleIds.size() - 1);
