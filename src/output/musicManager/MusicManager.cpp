@@ -69,55 +69,39 @@ void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunc
         _songMap.AddSong(id, codename, name, possibleCodenames, sa2Replacement);
     }
     //SA2B
-    Json::Value sa2Root = root["sa2b"];
-    for (const auto& codename : sa2Root.getMemberNames())
-    {
-        const Json::Value& songData = sa2Root[codename];
-        std::string name = songData["name"].asString();
+    ParseSongCategory(helperFunctions, root["sa2b"], "ADX/");
 
-        //TODO: Use path from settings
-        std::string fullPath = "ADX/" + codename;
-
-        const std::ifstream fin("./SoundData/bgm/wma/" + fullPath + ".adx");
-        if (!fin)
-        {
-            PrintDebug("\n\n[SADX Randomizer] File not found: %s\n\n\n", fullPath.c_str());
-        }
-        else
-        {
-            auto allocatedName = new char[fullPath.size() + 1];
-            std::strcpy(allocatedName, fullPath.c_str());
-            MusicInfo musicInfo = {allocatedName, 1};
-
-            int id = helperFunctions.RegisterMusicFile(musicInfo);
-            _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
-        }
-    }
-    //Custom
-    Json::Value customRoot = root["custom"];
-    for (const auto& codename : customRoot.getMemberNames())
-    {
-        const Json::Value& songData = customRoot[codename];
-        std::string name = songData["name"].asString();
-
-        //TODO: Use path from settings
-        std::string fullPath = "custom/" + codename;
-
-        const std::ifstream fin("./SoundData/bgm/wma/" + fullPath + ".adx");
-        if (!fin)
-        {
-            PrintDebug("\n\n[SADX Randomizer] File not found: %s\n\n\n", fullPath.c_str());
-        }
-        else
-        {
-            auto allocatedName = new char[fullPath.size() + 1];
-            std::strcpy(allocatedName, fullPath.c_str());
-            MusicInfo musicInfo = {allocatedName, 1};
-
-            int id = helperFunctions.RegisterMusicFile(musicInfo);
-            _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
-        }
-    }
+    //Custom    
+    ParseSongCategory(helperFunctions, root["custom"], "custom/");
 
     _songMap.UpdatedIds();
+}
+
+
+void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot,
+                                     std::string categoryPath)
+{
+    for (const auto& codename : categoryRoot.getMemberNames())
+    {
+        const Json::Value& songData = categoryRoot[codename];
+        std::string name = songData["name"].asString();
+
+        //TODO: Use path from settings
+        std::string fullPath = categoryPath + codename;
+
+        const std::ifstream fin("./SoundData/bgm/wma/" + fullPath + ".adx");
+        if (!fin)
+        {
+            PrintDebug("\n\n[SADX Randomizer] File not found: %s\n\n\n", fullPath.c_str());
+        }
+        else
+        {
+            auto allocatedName = new char[fullPath.size() + 1];
+            std::strcpy(allocatedName, fullPath.c_str());
+            MusicInfo musicInfo = {allocatedName, 1};
+
+            int id = helperFunctions.RegisterMusicFile(musicInfo);
+            _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
+        }
+    }
 }

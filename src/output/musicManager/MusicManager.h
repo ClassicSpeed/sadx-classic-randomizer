@@ -108,6 +108,7 @@ public:
     int GetRandomSongId(int id);
     const SongData* FindSongById(MusicIDs songId);
     void ProcessSongsFile(const HelperFunctions& helperFunctions);
+    void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath);
 
 private:
     void ProcessSongFile(const std::string& filePath, const HelperFunctions& helperFunctions);
