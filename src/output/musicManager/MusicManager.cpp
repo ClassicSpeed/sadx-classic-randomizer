@@ -75,13 +75,23 @@ void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunc
         const Json::Value& songData = sa2Root[codename];
         std::string name = songData["name"].asString();
 
+        //TODO: Use path from settings
         std::string fullPath = "ADX/" + codename;
-        auto allocatedName = new char[fullPath.size() + 1];
-        std::strcpy(allocatedName, fullPath.c_str());
-        MusicInfo musicInfo = {allocatedName, 1};
 
-        int id = helperFunctions.RegisterMusicFile(musicInfo);
-        _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
+        const std::ifstream fin("./SoundData/bgm/wma/" + fullPath + ".adx");
+        if (!fin)
+        {
+            PrintDebug("\n\n[SADX Randomizer] File not found: %s\n\n\n", fullPath.c_str());
+        }
+        else
+        {
+            auto allocatedName = new char[fullPath.size() + 1];
+            std::strcpy(allocatedName, fullPath.c_str());
+            MusicInfo musicInfo = {allocatedName, 1};
+
+            int id = helperFunctions.RegisterMusicFile(musicInfo);
+            _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
+        }
     }
     //Custom
     Json::Value customRoot = root["custom"];
@@ -90,13 +100,23 @@ void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunc
         const Json::Value& songData = customRoot[codename];
         std::string name = songData["name"].asString();
 
+        //TODO: Use path from settings
         std::string fullPath = "custom/" + codename;
-        auto allocatedName = new char[fullPath.size() + 1];
-        std::strcpy(allocatedName, fullPath.c_str());
-        MusicInfo musicInfo = {allocatedName, 1};
 
-        int id = helperFunctions.RegisterMusicFile(musicInfo);
-        _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
+        const std::ifstream fin("./SoundData/bgm/wma/" + fullPath + ".adx");
+        if (!fin)
+        {
+            PrintDebug("\n\n[SADX Randomizer] File not found: %s\n\n\n", fullPath.c_str());
+        }
+        else
+        {
+            auto allocatedName = new char[fullPath.size() + 1];
+            std::strcpy(allocatedName, fullPath.c_str());
+            MusicInfo musicInfo = {allocatedName, 1};
+
+            int id = helperFunctions.RegisterMusicFile(musicInfo);
+            _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
+        }
     }
 
     _songMap.UpdatedIds();
