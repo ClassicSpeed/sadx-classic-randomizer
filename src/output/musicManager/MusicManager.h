@@ -51,7 +51,6 @@ public:
                  const std::vector<std::string>& possibleCustomCodenames,
                  const std::string& sa2Replacement)
     {
-        PrintDebug("[SADX Randomizer] Adding song: %s\n", codename.c_str());
         SongData songData = {
             id, codename, name, type, possibleSADXCodenames, possibleSA2BCodenames, possibleCustomCodenames,
             sa2Replacement, {}
@@ -83,15 +82,12 @@ public:
 
     int GetRandomSongId(const int id) const
     {
-        PrintDebug("[SADX Randomizer] Getting random song ID for: %d\n", id);
         auto it = _idMap.find(id);
         if (it == _idMap.end())
         {
             return 255; // Return an empty string if the ID is not found
         }
-        PrintDebug("[SADX Randomizer] Found song ID: %d\n", id);
         const SongData& songData = it->second;
-        PrintDebug("[SADX Randomizer] Found song: %s\n", songData.codename.c_str());
         // Combine the base codename with the filtered possible codenames
         std::vector<int> allPossibleIds;
         for (const auto& possibleId : songData.possibleIds)
@@ -103,7 +99,6 @@ public:
         std::uniform_int_distribution<> dist(0, allPossibleIds.size() - 1);
         const int finalId = allPossibleIds[dist(gen)];
         const auto song = FindById(finalId);
-        PrintDebug("[SADX Randomizer] Randomized song: %s\n", song->codename.c_str());
         // Return a random codename
         return song->id;
     }
@@ -137,7 +132,8 @@ public:
     int GetRandomSongId(int id);
     const SongData* FindSongById(MusicIDs songId);
     void ProcessSongsFile(const HelperFunctions& helperFunctions);
-    void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath);
+    void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath,
+                           bool showWarningForMissingFiles);
     SongType GetSongTypeFromString(const std::string& typeStr);
 
 private:

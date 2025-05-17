@@ -1,13 +1,11 @@
 {
+  "settings": {
+    "sa2bADXpath": "../../../../Sonic Adventure 2/resource/gd_PC/ADX/",
+    "customADXpath": "custom/",
+    "includeVanillaInCurated": true,
+    "showWarningForMissingFiles": false
+  },
   "sadx": {
-    "settings": {
-      "sa2bADXpath": "../../../../Sonic Adventure 2/resource/gd_PC/ADX/",
-      "customADXpath": "custom/",
-      "includeVanillaInCurated": true,
-      "blacklist": [
-      ],
-      "showWarningForMissingFiles": false
-    },
     "advamy": {
       "id": 0,
       "name": "Instruction: Amy",
