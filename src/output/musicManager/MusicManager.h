@@ -142,6 +142,5 @@ public:
     SongType GetSongTypeFromString(const std::string& typeStr);
 
 private:
-    void ProcessSongFile(const std::string& filePath, const HelperFunctions& helperFunctions);
     SongMap _songMap;
 };

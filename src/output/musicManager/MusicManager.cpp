@@ -18,15 +18,8 @@ const SongData* MusicManager::FindSongById(MusicIDs songId)
 
 void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions)
 {
-    // TODO: Fix
-    this->ProcessSongFile(
-        "C:/development/workspaces/sadx-classic-randomizer/assets/SADX_Archipelago/songs.json", helperFunctions);
-}
-
-
-void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunctions& helperFunctions)
-{
     // Open the JSON file
+    std::string filePath = "./mods/SADX_Archipelago/songs.json";
     std::ifstream file(filePath, std::ifstream::binary);
     if (!file.is_open())
     {
