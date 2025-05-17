@@ -50,23 +50,27 @@ void MusicManager::ProcessSongFile(const std::string& filePath, const HelperFunc
         const Json::Value& songData = sadxRoot[codename];
         std::string name = songData["name"].asString();
         int id = songData["id"].asInt();
-        std::vector<std::string> possibleCodenames;
-        //TODO: Separate by options
+        std::string type = songData["type"].asString();
+
+        SongType songType = GetSongTypeFromString(type);
+
+        std::vector<std::string> possibleSADXCodenames;
+        std::vector<std::string> possibleSA2BCodenames;
+        std::vector<std::string> possibleCustomCodenames;
         for (const auto& possibleCodename : songData["curatedSADX"])
-        {
-            possibleCodenames.push_back(possibleCodename.asString());
-        }
+            possibleSADXCodenames.push_back(possibleCodename.asString());
+
         for (const auto& possibleCodename : songData["curatedSA2B"])
-        {
-            possibleCodenames.push_back(possibleCodename.asString());
-        }
+            possibleSA2BCodenames.push_back(possibleCodename.asString());
+
         for (const auto& possibleCodename : songData["curatedCustom"])
-        {
-            possibleCodenames.push_back(possibleCodename.asString());
-        }
+            possibleCustomCodenames.push_back(possibleCodename.asString());
+
 
         std::string sa2Replacement = songData["SA2Breplacement"].asString();
-        _songMap.AddSong(id, codename, name, possibleCodenames, sa2Replacement);
+        _songMap.AddSong(id, codename, name, songType, possibleSADXCodenames, possibleSA2BCodenames,
+                         possibleCustomCodenames,
+                         sa2Replacement);
     }
     //SA2B
     ParseSongCategory(helperFunctions, root["sa2b"], "ADX/");
@@ -85,6 +89,11 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
     {
         const Json::Value& songData = categoryRoot[codename];
         std::string name = songData["name"].asString();
+        std::string type = songData["type"].asString();
+
+        SongType songType = GetSongTypeFromString(type);
+        PrintDebug("[SADX Randomizer] Adding song: %s, typeId: %d, type: %s\n", codename.c_str(), songType,
+                   type.c_str());
 
         //TODO: Use path from settings
         std::string fullPath = categoryPath + codename;
@@ -98,10 +107,36 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
         {
             auto allocatedName = new char[fullPath.size() + 1];
             std::strcpy(allocatedName, fullPath.c_str());
-            MusicInfo musicInfo = {allocatedName, 1};
+            int loop = 1;
+            if (songType == SongType::Jingle || songType == SongType::Event)
+                loop = 0;
+
+            MusicInfo musicInfo = {allocatedName, loop};
 
             int id = helperFunctions.RegisterMusicFile(musicInfo);
-            _songMap.AddSong(id, codename, name, std::vector<std::string>(), "");
+            _songMap.AddSong(id, codename, name, songType, std::vector<std::string>(),
+                             std::vector<std::string>(), std::vector<std::string>(), "");
         }
     }
+}
+
+SongType MusicManager::GetSongTypeFromString(const std::string& typeStr)
+{
+    static const std::unordered_map<std::string, SongType> stringToEnum = {
+        {"level", SongType::Level},
+        {"fight", SongType::Fight},
+        {"theme", SongType::Theme},
+        {"jingle", SongType::Jingle},
+        {"menu", SongType::Menu},
+        {"adventurefield", SongType::AdventureField},
+        {"event", SongType::Event}
+    };
+
+    auto it = stringToEnum.find(typeStr);
+    if (it != stringToEnum.end())
+    {
+        return it->second;
+    }
+
+    return SongType::Level;
 }

@@ -6,14 +6,38 @@
 #include <unordered_map>
 #include <vector>
 
+
+enum SongType
+{
+    Level,
+    Fight,
+    Theme,
+    Jingle,
+    Menu,
+    AdventureField,
+    Event
+};
+
 struct SongData
 {
     int id;
     std::string codename;
-    std::string fullName;
-    std::vector<std::string> possibleCodenames;
+    std::string name;
+    SongType type;
+    std::vector<std::string> possibleSADXCodenames;
+    std::vector<std::string> possibleSA2BCodenames;
+    std::vector<std::string> possibleCustomCodenames;
     std::string sa2Replacement;
     std::vector<int> possibleIds;
+
+    std::vector<std::string> getAllCodenames() const
+    {
+        std::vector<std::string> allCodenames;
+        allCodenames.insert(allCodenames.end(), possibleSADXCodenames.begin(), possibleSADXCodenames.end());
+        allCodenames.insert(allCodenames.end(), possibleSA2BCodenames.begin(), possibleSA2BCodenames.end());
+        allCodenames.insert(allCodenames.end(), possibleCustomCodenames.begin(), possibleCustomCodenames.end());
+        return allCodenames;
+    }
 };
 
 class SongMap
@@ -21,11 +45,17 @@ class SongMap
     mutable std::mt19937 gen{std::random_device{}()}; // Declare the generator as a class member
 
 public:
-    void AddSong(int id, const std::string& codename, const std::string& fullName,
-                 const std::vector<std::string>& possibleCodenames, const std::string& sa2Replacement)
+    void AddSong(int id, const std::string& codename, const std::string& name, SongType type,
+                 const std::vector<std::string>& possibleSADXCodenames,
+                 const std::vector<std::string>& possibleSA2BCodenames,
+                 const std::vector<std::string>& possibleCustomCodenames,
+                 const std::string& sa2Replacement)
     {
         PrintDebug("[SADX Randomizer] Adding song: %s\n", codename.c_str());
-        SongData songData = {id, codename, fullName, possibleCodenames, sa2Replacement, {}};
+        SongData songData = {
+            id, codename, name, type, possibleSADXCodenames, possibleSA2BCodenames, possibleCustomCodenames,
+            sa2Replacement, {}
+        };
         _idMap[id] = songData;
         _codenameMap[codename] = id;
     }
@@ -85,7 +115,7 @@ public:
         {
             int id = it.first;
             const SongData& songData = it.second;
-            for (const auto& codename : songData.possibleCodenames)
+            for (const auto& codename : songData.getAllCodenames())
             {
                 auto it2 = _codenameMap.find(codename);
                 if (it2 != _codenameMap.end())
@@ -109,6 +139,7 @@ public:
     const SongData* FindSongById(MusicIDs songId);
     void ProcessSongsFile(const HelperFunctions& helperFunctions);
     void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath);
+    SongType GetSongTypeFromString(const std::string& typeStr);
 
 private:
     void ProcessSongFile(const std::string& filePath, const HelperFunctions& helperFunctions);
