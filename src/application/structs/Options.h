@@ -52,6 +52,32 @@ enum Levels
     HotShelter
 };
 
+enum MusicSource
+{
+    MusicSourceSadx = 0,
+    MusicSourceSadxCustom,
+    MusicSourceSa2B,
+    MusicSourceSa2BCustom,
+    MusicSourceSadxSa2B,
+    MusicSourceSadxSa2BCustom
+};
+
+enum MusicShuffle
+{
+    MusicShuffleDisabled = 0,
+    MusicShuffleCurated,
+    MusicShuffleByType,
+    MusicShuffleFull,
+    MusicShuffleSingularity,
+};
+
+enum MusicShuffleConsistency
+{
+    MusicShuffleConsistencyStatic = 0,
+    MusicShuffleConsistencyOnRestart,
+    MusicShuffleConsistencyPrePlay,
+};
+
 struct Options
 {
     std::string playerName = "Player";
@@ -65,7 +91,7 @@ struct Options
     int levelGoal = 999999;
     int missionGoal = 999999;
     int bossesGoal = 999999;
-    
+
     bool missionModeEnabled = false;
     bool entranceRandomizer = false;
 
@@ -75,9 +101,9 @@ struct Options
     StartingArea amyStartingArea = NoStatingArea;
     StartingArea bigStartingArea = NoStatingArea;
     StartingArea gammaStartingArea = NoStatingArea;
-    
+
     bool enemySanity = false;
-    
+
     bool sonicEnemySanity = true;
     bool tailsEnemySanity = true;
     bool knucklesEnemySanity = true;
@@ -90,21 +116,21 @@ struct Options
 
     bool fishSanity = false;
     bool lazyFishing = false;
-    
+
     bool sonicCapsuleSanity = true;
     bool tailsCapsuleSanity = true;
     bool knucklesCapsuleSanity = true;
     bool amyCapsuleSanity = true;
     bool bigCapsuleSanity = true;
     bool gammaCapsuleSanity = true;
-    
+
     bool lifeCapsuleSanity = true;
     bool shieldCapsuleSanity = true;
     bool powerUpCapsuleSanity = true;
     bool ringCapsuleSanity = true;
-    
+
     std::vector<int> progressionItems = {};
-    
+
     bool deathLinkActive = false;
     bool ringLinkActive = false;
     bool casinopolisRingLink = false;
@@ -132,9 +158,14 @@ struct Options
     int bigActionStageMissions = 0;
     int gammaActionStageMissions = 0;
 
+    MusicSource musicSource = MusicSourceSadx;
+    MusicShuffle musicShuffle = MusicShuffleDisabled;
+    MusicShuffleConsistency musicShuffleConsistency = MusicShuffleConsistencyStatic;
+    bool lifeCapsulesChangeSongs = false;
+
     bool twinkleCircuitCheck = true;
     bool multipleTwinkleCircuitChecks = true;
-    
+
     bool skyChaseChecks = false;
     bool skyChaseChecksHard = false;
     std::vector<int> missionBlacklist = {};
@@ -168,6 +199,7 @@ struct Options
             break;
         }
     }
+
     void SetCharacterEnemySanity(const Characters character, const bool characterEnemySanity)
     {
         switch (character)
@@ -273,7 +305,7 @@ struct Options
         }
         return false;
     }
-    
+
     bool GetSpecificCapsuleSanity(const CapsuleType capsuleType) const
     {
         switch (capsuleType)
@@ -403,6 +435,6 @@ struct Options
 
     bool LocationHasProgressiveItem(int locationId)
     {
-       return std::find(progressionItems.begin(), progressionItems.end(), locationId) != progressionItems.end();
+        return std::find(progressionItems.begin(), progressionItems.end(), locationId) != progressionItems.end();
     }
 };

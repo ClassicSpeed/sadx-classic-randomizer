@@ -618,6 +618,22 @@ void SADX_BigActionStageMissions(const int missions)
     randomizerPtr->SetActionStageMissions(Characters_Big, missions);
 }
 
+void SADX_MusicSource(const int musicSource)
+{
+    randomizerPtr->SetMusicSource(static_cast<MusicSource>(musicSource));
+}
+void SADX_MusicShuffle(const int musicShuffle)
+{
+    randomizerPtr->SetMusicShuffle(static_cast<MusicShuffle>(musicShuffle));
+}
+void SADX_MusicShuffleConsistency(const int musicShuffleConsistency)
+{
+    randomizerPtr->SetMusicShuffleConsistency(static_cast<MusicShuffleConsistency>(musicShuffleConsistency));
+}
+void SADX_LifeCapsulesChangeSongs(const int lifeCapsulesChangeSongs)
+{
+    randomizerPtr->SetLifeCapsulesChangeSongs(lifeCapsulesChangeSongs);
+}
 
 void SADX_ReverseControlTrapDuration(const int reverseControlTrapDuration)
 {
@@ -741,6 +757,11 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("AmyActionStageMissions", &SADX_AmyActionStageMissions);
     AP_RegisterSlotDataIntCallback("GammaActionStageMissions", &SADX_GammaActionStageMissions);
     AP_RegisterSlotDataIntCallback("BigActionStageMissions", &SADX_BigActionStageMissions);
+
+    AP_RegisterSlotDataIntCallback("MusicSource", &SADX_MusicSource);
+    AP_RegisterSlotDataIntCallback("MusicShuffle", &SADX_MusicShuffle);
+    AP_RegisterSlotDataIntCallback("MusicShuffleConsistency", &SADX_MusicShuffleConsistency);
+    AP_RegisterSlotDataIntCallback("LifeCapsulesChangeSongs", &SADX_LifeCapsulesChangeSongs);
 
 
     AP_RegisterSlotDataIntCallback("ReverseControlTrapDuration", &SADX_ReverseControlTrapDuration);

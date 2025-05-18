@@ -5,6 +5,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include "../../application/structs/Options.h"
 
 
 enum SongType
@@ -135,6 +136,8 @@ public:
     void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath,
                            bool showWarningForMissingFiles);
     SongType GetSongTypeFromString(const std::string& typeStr);
+    void UpdateOptions(Options newOptions);
+    Options options;
 
 private:
     SongMap _songMap;

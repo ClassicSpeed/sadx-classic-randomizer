@@ -1112,6 +1112,29 @@ void Randomizer::OnPlaySong(const MusicIDs songId)
     _displayManager.ShowSongName("~ " + _musicManager.FindSongById(songId)->name + " ~");
 }
 
+void Randomizer::SetMusicSource(const MusicSource musicSource)
+{
+    _options.musicSource = musicSource;
+    _musicManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetMusicShuffle(const MusicShuffle musicShuffle)
+{
+    _options.musicShuffle = musicShuffle;
+    _musicManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetMusicShuffleConsistency(const MusicShuffleConsistency musicShuffleConsistency)
+{
+    _options.musicShuffleConsistency = musicShuffleConsistency;
+    _musicManager.UpdateOptions(_options);
+}
+
+void Randomizer::SetLifeCapsulesChangeSongs(const bool lifeCapsulesChangeSongs)
+{
+    _options.lifeCapsulesChangeSongs = lifeCapsulesChangeSongs;
+    _musicManager.UpdateOptions(_options);
+}
 
 void Randomizer::OnEmblemGoalSet(const int emblemGoal)
 {

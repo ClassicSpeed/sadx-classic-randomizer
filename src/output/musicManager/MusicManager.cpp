@@ -144,3 +144,8 @@ SongType MusicManager::GetSongTypeFromString(const std::string& typeStr)
 
     return SongType::Level;
 }
+
+void MusicManager::UpdateOptions(const Options newOptions)
+{
+    this->options = options;
+}

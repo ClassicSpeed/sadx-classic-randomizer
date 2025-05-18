@@ -113,7 +113,11 @@ public:
     void OnSetLogicLevel(int logicLevel);
     void RandomizeMusic();
     void OnPlaySong(MusicIDs songId);
-    
+    void SetMusicSource(MusicSource musicSource);
+    void SetMusicShuffle(MusicShuffle musicShuffle);
+    void SetMusicShuffleConsistency(MusicShuffleConsistency musicShuffleConsistency);
+    void SetLifeCapsulesChangeSongs(bool lifeCapsulesChangeSongs);
+
     std::unordered_map<int, MusicIDs> songRandomizationMap;
 
 private:
