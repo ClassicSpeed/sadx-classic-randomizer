@@ -1575,3 +1575,9 @@ FunctionHook<void, MusicIDs> onPlayMusic2(0x425800, [](const MusicIDs songId)-> 
 });
 
 
+FunctionHook<void, int> onPlayJingle(0x425860, [](const int a1)-> void
+{
+    const MusicIDs actualId = eventDetectorPtr->randomizer.songRandomizationMap[a1];
+    onPlayJingle.Original(actualId);
+    eventDetectorPtr->randomizer.OnPlaySong(actualId);
+});
