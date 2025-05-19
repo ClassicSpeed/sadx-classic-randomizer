@@ -89,6 +89,8 @@ public:
     bool fishIndicator = true;
     bool progressionIndicator = true;
     HomingAttackIndicator homingAttackIndicator = HomingAttackIndicatorDisabled;
+    int lastRealSongId = -1;
+    int lastShuffledSongId = -1;
 
 
 
