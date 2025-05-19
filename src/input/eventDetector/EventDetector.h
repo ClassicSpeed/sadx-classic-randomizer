@@ -71,6 +71,7 @@ public:
                            bool progressionIndicator, int progressionIndicatorColor);
     void setHomingAttackIndicator(HomingAttackIndicator homingAttackIndicator);
     void OnTwinkleCircuitCompleted(int character);
+    void ShuffleSong();
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
     std::vector<CapsuleLocationData> capsules;

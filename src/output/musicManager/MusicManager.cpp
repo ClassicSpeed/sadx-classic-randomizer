@@ -163,6 +163,7 @@ void MusicManager::RandomizeMusic()
     {
         for (size_t id = 0; id < MusicList.size(); ++id)
         {
+            //TODO: Fix custom music not loading
             const std::vector<int> possibleIds = this->GetPossibleSongIds(static_cast<int>(id));
             if (!possibleIds.empty())
                 _songRandomizationMap[id] = possibleIds;
