@@ -54,6 +54,7 @@ enum Levels
 
 enum MusicSource
 {
+    MusicSourceNone = -1,
     MusicSourceSadx = 0,
     MusicSourceSadxCustom,
     MusicSourceSa2B,
@@ -64,6 +65,7 @@ enum MusicSource
 
 enum MusicShuffle
 {
+    MusicShuffleNone = -1,
     MusicShuffleDisabled = 0,
     MusicShuffleCurated,
     MusicShuffleByType,
@@ -73,9 +75,10 @@ enum MusicShuffle
 
 enum MusicShuffleConsistency
 {
+    MusicShuffleConsistencyNone = -1,
     MusicShuffleConsistencyStatic = 0,
     MusicShuffleConsistencyOnRestart,
-    MusicShuffleConsistencyPrePlay,
+    MusicShuffleConsistencyPerPlay,
 };
 
 struct Options
@@ -162,6 +165,12 @@ struct Options
     MusicShuffle musicShuffle = MusicShuffleDisabled;
     MusicShuffleConsistency musicShuffleConsistency = MusicShuffleConsistencyStatic;
     bool lifeCapsulesChangeSongs = false;
+    int musicShuffleSeed = -1;
+
+    bool includeVanillaSong = true;
+    bool showWarningForMissingFiles = false;
+    std::string sa2BAdxPath = "../../../../Sonic Adventure 2/resource/gd_PC/ADX/";
+    std::string customAdxPath = "custom/";
 
     bool twinkleCircuitCheck = true;
     bool multipleTwinkleCircuitChecks = true;
@@ -437,4 +446,20 @@ struct Options
     {
         return std::find(progressionItems.begin(), progressionItems.end(), locationId) != progressionItems.end();
     }
+    
+    bool MusicSourceIncludeSadx() const
+    {
+        return this->musicSource == MusicSourceSadx || this->musicSource == MusicSourceSadxCustom || this->musicSource == MusicSourceSadxSa2B ||
+            this->musicSource == MusicSourceSadxSa2BCustom;
+    }
+    bool MusicSourceIncludeSa2B() const
+    {
+        return this->musicSource == MusicSourceSa2B || this->musicSource == MusicSourceSa2BCustom || this->musicSource == MusicSourceSadxSa2B ||
+            this->musicSource == MusicSourceSadxSa2BCustom;
+    }
+    bool MusicSourceIncludeCustom() const
+    {
+        return this->musicSource == MusicSourceSadxCustom || this->musicSource == MusicSourceSa2BCustom || this->musicSource == MusicSourceSadxSa2BCustom;
+    }
+    
 };

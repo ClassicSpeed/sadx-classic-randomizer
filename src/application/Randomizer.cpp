@@ -1094,40 +1094,47 @@ void Randomizer::OnSetLogicLevel(int logicLevel)
     _displayManager.UpdateOptions(_options);
 }
 
-void Randomizer::RandomizeMusic()
+
+int Randomizer::GetSongForId(const int songId)
 {
-    //TODO: Separate by options
-    for (size_t id = 0; id < MusicList.size(); ++id)
-    {
-        const int randomSongCode = _musicManager.GetRandomSongId(static_cast<int>(id));
-        if (randomSongCode != 255)
-        {
-            songRandomizationMap[id] = static_cast<MusicIDs>(randomSongCode);
-        }
-    }
+    return _musicManager.GetSongForId(songId);
+    
 }
 
-void Randomizer::OnPlaySong(const MusicIDs songId)
+void Randomizer::OnPlaySong(const int songId)
 {
-    _displayManager.ShowSongName("~ " + _musicManager.FindSongById(songId)->name + " ~");
+    const auto* song = _musicManager.FindSongById(songId);
+    if (song != nullptr)
+        _displayManager.ShowSongName("~ " + song->name + " ~");
+    
 }
 
 void Randomizer::SetMusicSource(const MusicSource musicSource)
 {
     _options.musicSource = musicSource;
     _musicManager.UpdateOptions(_options);
+    _musicManager.RandomizeMusic();
 }
 
 void Randomizer::SetMusicShuffle(const MusicShuffle musicShuffle)
 {
     _options.musicShuffle = musicShuffle;
     _musicManager.UpdateOptions(_options);
+    _musicManager.RandomizeMusic();
 }
 
 void Randomizer::SetMusicShuffleConsistency(const MusicShuffleConsistency musicShuffleConsistency)
 {
     _options.musicShuffleConsistency = musicShuffleConsistency;
     _musicManager.UpdateOptions(_options);
+    _musicManager.RandomizeMusic();
+}
+
+void Randomizer::SetMusicShuffleSeed(const int musicShuffleSeed)
+{
+    _options.musicShuffleSeed = musicShuffleSeed;
+    _musicManager.UpdateOptions(_options);
+    _musicManager.RandomizeMusic();
 }
 
 void Randomizer::SetLifeCapsulesChangeSongs(const bool lifeCapsulesChangeSongs)

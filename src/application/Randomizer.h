@@ -111,14 +111,13 @@ public:
     void OnGoalRequiresBossesSet(bool goalRequiresBosses);
     void OnGoalRequiresChaoRacesSet(bool goalRequiresChaoRaces);
     void OnSetLogicLevel(int logicLevel);
-    void RandomizeMusic();
-    void OnPlaySong(MusicIDs songId);
+    void OnPlaySong(int songId);
     void SetMusicSource(MusicSource musicSource);
     void SetMusicShuffle(MusicShuffle musicShuffle);
     void SetMusicShuffleConsistency(MusicShuffleConsistency musicShuffleConsistency);
+    void SetMusicShuffleSeed(int musicShuffleSeed);
     void SetLifeCapsulesChangeSongs(bool lifeCapsulesChangeSongs);
-
-    std::unordered_map<int, MusicIDs> songRandomizationMap;
+    int GetSongForId(int songId);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;

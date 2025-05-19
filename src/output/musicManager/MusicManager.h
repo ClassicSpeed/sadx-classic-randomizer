@@ -19,17 +19,24 @@ enum SongType
     Event
 };
 
+enum SongSource
+{
+    SADXSource,
+    SA2BSource,
+    CustomSource
+};
+
 struct SongData
 {
     int id;
     std::string codename;
     std::string name;
     SongType type;
+    SongSource source;
     std::vector<std::string> possibleSADXCodenames;
     std::vector<std::string> possibleSA2BCodenames;
     std::vector<std::string> possibleCustomCodenames;
     std::string sa2Replacement;
-    std::vector<int> possibleIds;
 
     std::vector<std::string> getAllCodenames() const
     {
@@ -43,18 +50,16 @@ struct SongData
 
 class SongMap
 {
-    mutable std::mt19937 gen{std::random_device{}()}; // Declare the generator as a class member
-
 public:
-    void AddSong(int id, const std::string& codename, const std::string& name, SongType type,
+    void AddSong(int id, const std::string& codename, const std::string& name, SongType type, SongSource source,
                  const std::vector<std::string>& possibleSADXCodenames,
                  const std::vector<std::string>& possibleSA2BCodenames,
                  const std::vector<std::string>& possibleCustomCodenames,
                  const std::string& sa2Replacement)
     {
         SongData songData = {
-            id, codename, name, type, possibleSADXCodenames, possibleSA2BCodenames, possibleCustomCodenames,
-            sa2Replacement, {}
+            id, codename, name, type, source, possibleSADXCodenames, possibleSA2BCodenames, possibleCustomCodenames,
+            sa2Replacement
         };
         _idMap[id] = songData;
         _codenameMap[codename] = id;
@@ -81,64 +86,100 @@ public:
         return nullptr;
     }
 
-    int GetRandomSongId(const int id) const
+    std::vector<int> GetCuratedSongs(const int id, const Options options) const
     {
-        auto it = _idMap.find(id);
-        if (it == _idMap.end())
-        {
-            return 255; // Return an empty string if the ID is not found
-        }
-        const SongData& songData = it->second;
-        // Combine the base codename with the filtered possible codenames
-        std::vector<int> allPossibleIds;
-        for (const auto& possibleId : songData.possibleIds)
-        {
-            allPossibleIds.push_back(possibleId);
-        }
+        std::vector<int> allPossibleIds = {};
 
-        // Generate a random index
-        std::uniform_int_distribution<> dist(0, allPossibleIds.size() - 1);
-        const int finalId = allPossibleIds[dist(gen)];
-        const auto song = FindById(finalId);
-        // Return a random codename
-        return song->id;
+        const auto songData = FindById(id);
+
+        if (options.MusicSourceIncludeSadx())
+        {
+            for (const auto& possibleCodename : songData->possibleSADXCodenames)
+            {
+                const auto possibleSongData = FindByCodename(possibleCodename);
+                if (possibleSongData != nullptr)
+                    allPossibleIds.push_back(possibleSongData->id);
+            }
+        }
+        else if (options.MusicSourceIncludeSa2B())
+        {
+            for (const auto& possibleCodename : songData->possibleSA2BCodenames)
+            {
+                const auto possibleSongData = FindByCodename(possibleCodename);
+                if (possibleSongData != nullptr)
+                    allPossibleIds.push_back(possibleSongData->id);
+            }
+        }
+        else if (options.MusicSourceIncludeCustom())
+        {
+            for (const auto& possibleCodename : songData->possibleCustomCodenames)
+            {
+                const auto possibleSongData = FindByCodename(possibleCodename);
+                if (possibleSongData != nullptr)
+                    allPossibleIds.push_back(possibleSongData->id);
+            }
+        }
+        return allPossibleIds;
     }
 
-    void UpdatedIds()
+    std::vector<int> GetSongsByType(const SongType songType)
     {
-        for (auto& it : _idMap)
+        return _songsByType[songType];
+    }
+
+    std::vector<int> GetAllSongs(const bool isJingle)
+    {
+        if (isJingle)
+            return _allJingles;
+
+        return _allSongs;
+    }
+
+    void UpdateSongLists(const Options& options)
+    {
+        for (const auto& song : _idMap)
         {
-            int id = it.first;
-            const SongData& songData = it.second;
-            for (const auto& codename : songData.getAllCodenames())
-            {
-                auto it2 = _codenameMap.find(codename);
-                if (it2 != _codenameMap.end())
-                {
-                    _idMap[id].possibleIds.push_back(it2->second);
-                }
-            }
+            if (song.second.source == SADXSource && !options.MusicSourceIncludeSadx())
+                continue;
+            if (song.second.source == SA2BSource && !options.MusicSourceIncludeSa2B())
+                continue;
+            if (song.second.source == CustomSource && !options.MusicSourceIncludeCustom())
+                continue;
+
+            _songsByType[song.second.type].push_back(song.first);
+            if (song.second.type == Jingle)
+                _allJingles.push_back(song.first);
+            else
+                _allSongs.push_back(song.first);
         }
     }
 
 private:
     std::map<int, SongData> _idMap;
     std::unordered_map<std::string, int> _codenameMap;
+
+    std::unordered_map<SongType, std::vector<int>> _songsByType;
+    std::vector<int> _allSongs;
+    std::vector<int> _allJingles;
 };
 
 class MusicManager
 {
 public:
     MusicManager();
-    int GetRandomSongId(int id);
-    const SongData* FindSongById(MusicIDs songId);
+    const SongData* FindSongById(int songId);
     void ProcessSongsFile(const HelperFunctions& helperFunctions);
     void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath,
-                           bool showWarningForMissingFiles);
+                           SongSource songSource);
     SongType GetSongTypeFromString(const std::string& typeStr);
     void UpdateOptions(Options newOptions);
-    Options options;
+    void RandomizeMusic();
+    std::vector<int> GetPossibleSongIds(int id);
+    int GetSingularitySong();
+    int GetSongForId(int songId);
 
 private:
+    Options _options;
     SongMap _songMap;
+    std::unordered_map<int, std::vector<int>> _songRandomizationMap;
 };

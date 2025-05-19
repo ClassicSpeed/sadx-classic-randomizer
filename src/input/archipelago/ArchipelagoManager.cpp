@@ -630,6 +630,10 @@ void SADX_MusicShuffleConsistency(const int musicShuffleConsistency)
 {
     randomizerPtr->SetMusicShuffleConsistency(static_cast<MusicShuffleConsistency>(musicShuffleConsistency));
 }
+void SADX_MusicShuffleSeed(const int musicShuffleSeed)
+{
+    randomizerPtr->SetMusicShuffleSeed(musicShuffleSeed);
+}
 void SADX_LifeCapsulesChangeSongs(const int lifeCapsulesChangeSongs)
 {
     randomizerPtr->SetLifeCapsulesChangeSongs(lifeCapsulesChangeSongs);
@@ -761,6 +765,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("MusicSource", &SADX_MusicSource);
     AP_RegisterSlotDataIntCallback("MusicShuffle", &SADX_MusicShuffle);
     AP_RegisterSlotDataIntCallback("MusicShuffleConsistency", &SADX_MusicShuffleConsistency);
+    AP_RegisterSlotDataIntCallback("MusicShuffleSeed", &SADX_MusicShuffleSeed);
     AP_RegisterSlotDataIntCallback("LifeCapsulesChangeSongs", &SADX_LifeCapsulesChangeSongs);
 
 

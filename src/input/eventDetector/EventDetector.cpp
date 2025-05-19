@@ -1559,25 +1559,23 @@ FunctionHook<void, task*> onMissionStatueDelete(0x5934C0, [](task* tp)-> void
     FreeTask(tp);
 });
 
-FunctionHook<void, MusicIDs> onPlayMusic(0x425690, [](const MusicIDs songId)-> void
+FunctionHook<void, int> onPlayMusic(0x425690, [](const int songId)-> void
 {
-    const MusicIDs actualId = eventDetectorPtr->randomizer.songRandomizationMap[songId];
+    const int actualId = eventDetectorPtr->randomizer.GetSongForId(songId);
     onPlayMusic.Original(actualId);
     eventDetectorPtr->randomizer.OnPlaySong(actualId);
 });
 
-
-FunctionHook<void, MusicIDs> onPlayMusic2(0x425800, [](const MusicIDs songId)-> void
+FunctionHook<void, int> onPlayMusic2(0x425800, [](const int songId)-> void
 {
-    const MusicIDs actualId = eventDetectorPtr->randomizer.songRandomizationMap[songId];
+    const int actualId = eventDetectorPtr->randomizer.GetSongForId(songId);
     onPlayMusic2.Original(actualId);
     eventDetectorPtr->randomizer.OnPlaySong(actualId);
 });
 
-
-FunctionHook<void, int> onPlayJingle(0x425860, [](const int a1)-> void
+FunctionHook<void, int> onPlayJingle(0x425860, [](const int songId)-> void
 {
-    const MusicIDs actualId = eventDetectorPtr->randomizer.songRandomizationMap[a1];
+    const int actualId = eventDetectorPtr->randomizer.GetSongForId(songId);
     onPlayJingle.Original(actualId);
     eventDetectorPtr->randomizer.OnPlaySong(actualId);
 });

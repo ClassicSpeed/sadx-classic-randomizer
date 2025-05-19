@@ -96,7 +96,6 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
         randomizer.SetSuperSonicModRunning(true);
     }
     musicManager.ProcessSongsFile(helperFunctions);
-    randomizer.RandomizeMusic();
 }
 
 __declspec(dllexport) void __cdecl OnFrame()
