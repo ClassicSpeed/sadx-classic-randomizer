@@ -42,6 +42,7 @@ All notable changes to this project will be documented in this file.
 
 - Sky chase entrance won't disappear after getting the checks anymore (consistent with boss gates).
 - All the characters can travel to the past (no logic changed, but wanted consistency between characters).
+- Updated wording for "Complete multiple level missions" in mod settings.
 
 ### Fixed
 

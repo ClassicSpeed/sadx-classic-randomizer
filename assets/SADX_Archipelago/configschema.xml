@@ -79,8 +79,8 @@
                 <HelpText>Adds an indicator for the homing attack, like in modern Sonic games.</HelpText>
             </Property>
             <Property name="CompleteMultipleLevelMissions" type="bool" defaultvalue="True"
-                      display="Complete Multiple Level Missions">
-                <HelpText>Collect more than one check from levels if you beat the other requirements.</HelpText>
+                      display="Complete Multiple Level Missions at Once">
+                <HelpText>Collect every level mission check at once (if you beat their requirements).</HelpText>
             </Property>
             <Property name="EggCarrierTransformationCutscene" type="bool" defaultvalue="True"
                       display="Egg Carrier's Transformation Cutscene">
