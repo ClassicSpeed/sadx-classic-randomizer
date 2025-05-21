@@ -1567,7 +1567,7 @@ FunctionHook<void, int> onPlayMusic(0x425690, [](const int songId)-> void
         shuffledSongId = eventDetectorPtr->lastShuffledSongId;
     else
         shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
-    
+
     onPlayMusic.Original(shuffledSongId);
     eventDetectorPtr->randomizer.OnPlaySong(shuffledSongId);
     eventDetectorPtr->lastRealSongId = songId;
@@ -1594,8 +1594,6 @@ FunctionHook<void, int> onPlayJingle(0x425860, [](const int songId)-> void
     onPlayJingle.Original(shuffledSongId);
     eventDetectorPtr->randomizer.OnPlaySong(shuffledSongId);
 });
-
-//TODO: Check different songs
 void EventDetector::ShuffleSong()
 {
     if (randomizer.GetOptions().musicShuffle == MusicShuffleNone

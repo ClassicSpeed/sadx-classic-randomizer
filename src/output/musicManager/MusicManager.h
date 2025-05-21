@@ -114,7 +114,7 @@ public:
                     allPossibleIds.push_back(possibleSongData->id);
             }
         }
-        else if (options.MusicSourceIncludeSa2B())
+        if (options.MusicSourceIncludeSa2B())
         {
             for (const auto& possibleCodename : songData->possibleSA2BCodenames)
             {
@@ -123,7 +123,7 @@ public:
                     allPossibleIds.push_back(possibleSongData->id);
             }
         }
-        else if (options.MusicSourceIncludeCustom())
+        if (options.MusicSourceIncludeCustom())
         {
             for (const auto& possibleCodename : songData->possibleCustomCodenames)
             {
@@ -190,6 +190,7 @@ public:
     std::vector<int> GetPossibleSongIds(int id);
     int GetSingularitySong();
     int GetSongForId(int songId);
+    int GetSongNewForId(int songId, int currentSongId);
 
 private:
     Options _options;

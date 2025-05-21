@@ -1101,6 +1101,11 @@ int Randomizer::GetSongForId(const int songId)
     
 }
 
+int Randomizer::GetSongNewForId(const int songId, const int currentSongId)
+{
+    return _musicManager.GetSongNewForId(songId, currentSongId);
+}
+
 void Randomizer::OnPlaySong(const int songId)
 {
     const auto* song = _musicManager.FindSongById(songId);

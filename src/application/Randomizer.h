@@ -118,6 +118,7 @@ public:
     void SetMusicShuffleSeed(int musicShuffleSeed);
     void SetLifeCapsulesChangeSongs(bool lifeCapsulesChangeSongs);
     int GetSongForId(int songId);
+    int GetSongNewForId(int songId, int currentSongId);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;

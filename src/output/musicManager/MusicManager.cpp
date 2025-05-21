@@ -164,7 +164,6 @@ void MusicManager::RandomizeMusic()
     {
         for (size_t id = 0; id < MusicList.size(); ++id)
         {
-            //TODO: Fix custom music not loading
             const std::vector<int> possibleIds = this->GetPossibleSongIds(static_cast<int>(id));
             if (!possibleIds.empty())
                 _songRandomizationMap[id] = possibleIds;
@@ -247,4 +246,30 @@ int MusicManager::GetSongForId(int const songId)
     std::uniform_int_distribution<> dis(0, _songRandomizationMap[songId].size() - 1);
 
     return _songRandomizationMap[songId][dis(gen)];
+}
+
+int MusicManager::GetSongNewForId(int const songId, int const currentSongId)
+{
+    if (_songRandomizationMap[songId].empty())
+        return songId;
+
+    std::vector<int> filteredSongs;
+    for (int song : _songRandomizationMap[songId])
+    {
+        if (song != currentSongId)
+            filteredSongs.push_back(song);
+    }
+
+    if (filteredSongs.empty())
+        return currentSongId;
+
+    if (filteredSongs.size() == 1)
+        return filteredSongs[0];
+
+    // Randomly select a song from the filtered list
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, filteredSongs.size() - 1);
+
+    return filteredSongs[dis(gen)];
 }
