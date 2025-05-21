@@ -861,6 +861,9 @@ FunctionHook<Sint32> onPrepareLevel(0x415210, []()-> Sint32
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
     onCountSetItemsMaybe.Original();
+    
+    if (DemoPlaying > 0)
+        return;
 
     for (int i = 0; i < SETTable_Count; ++i)
     {
