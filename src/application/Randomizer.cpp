@@ -94,7 +94,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     else if (item.type == ItemFiller)
     {
         _characterManager.GiveFillerItem(item.fillerType, false);
-        if (_options.trapLinkActive)
+        if (_options.trapLinkActive && !IsJunkFiller(item.fillerType))
         {
             _archipelagoMessenger.SendTrapLink(item.displayName, _options.playerName);
             _displayManager.QueueItemMessage("Linked " + item.displayName + " sent");
