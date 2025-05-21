@@ -8,24 +8,24 @@ All notable changes to this project will be documented in this file.
 
 - You can randomize the music in the game.
 - You can select the source of the music from SADX, SA2B, Heroes, and even custom ADX files.
-    - You can play with Music Shuffle off but SA2B as the source:
+    - You can play with Music Shuffle off but with SA2B as the source:
         - Every song will be replaced by the closest SA2B song.
 - You can select how the music is randomized:
     - **Full randomization**: Every song is randomized with a different one.
     - **By type**: Every song is randomized with a different one of the same type (e.g., menu, level, boss).
     - **Curated**: Every song is randomized with a different one from a curated list.
     - **Singularity**: Every song is replaced with only one song.
-    - You can choose to include the original song in the randomization in the mod settings.
+    - You can choose to include the original song in the randomization via the mod settings.
 - You can select how often the music changes:
     - **Static**: Music remains the same for the seed/slot.
     - **On Restart**: Music is reshuffled every time the game is restarted.
     - **Per Play**: Music changes every time it starts playing.
 - Life Capsules can change the music when collected.
     - Can only be enabled when **Per Play** consistency is selected.
-- Every apworld option is overrideable in the mod settings.
+- Every apworld option is overridable in the mod settings.
 - The song name is shown in-game when the song changes.
     - You can toggle this in the settings.
-    - You can also choose which types of songs show their name.
+    - You can also choose which types of songs display their name.
 - A `songs.json` file is included in the mod folder to map all the songs:
     - Songs have a codename, a name, and a type.
     - Songs mapped as jingles won't loop.
@@ -40,26 +40,26 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Sky chase entrance won't disappear after getting the checks anymore (consistent with boss gates).
-- All the characters can travel to the past (no logic changed, but wanted consistency between characters).
-- Updated wording for "Complete multiple level missions" in mod settings.
+- Sky Chase entrance won't disappear after getting the checks anymore (consistent with boss gates).
+- All characters can travel to the past (no logic changed, but added for consistency between characters).
+- Updated wording for "Complete multiple level missions" in the mod settings.
+
+### Fixed
+
+- Teleport platforms won't spawn during the demo/press start levels/cutscenes.
+- Fixed Ice Cap ladder not spawning for Tails and Big.
+- Junk items are no longer sent as trap links.
 
 ### Logic
 
 - Mission 40 is now expert+.
 - Gamma now needs the Jet Booster to clip from Hotel to SSMain/Casino in expert (DX).
 - The clip without any item is expert+ only.
-- Tails can now enter Ice Cap without the Ice Stone in expert (DC)
+- Tails can now enter Ice Cap without the Ice Stone in expert (DC).
 - Added skip from Hotel to Casino for Tails in expert (DC).
 - Added skip from Casino/Station to SSMain for Tails in expert (DC).
 - Added skip from SSMain to Station for Gamma in expert (DX).
 - Added skip from SSMain to Hotel for Gamma in expert (DX).
-
-### Fixed
-
-- Teleports platforms won't spawn during the demo/press start levels/cutscenes.
-- Fixed Ice Cap ladder not spawning in for Tails and Big.
-- Junk items are no longer sent as trap links.
 
 ## [v1.1.1b] - 2025-05-07
 
