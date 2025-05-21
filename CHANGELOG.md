@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.2] - 2025-05-21
+
+### Music Randomization
+
+- You can randomize the music in the game.
+- You can select the source of the music from SADX, SA2B, Heroes, and even custom ADX files.
+    - You can play with Music Shuffle off but SA2B as the source:
+        - Every song will be replaced by the closest SA2B song.
+- You can select how the music is randomized:
+    - **Full randomization**: Every song is randomized with a different one.
+    - **By type**: Every song is randomized with a different one of the same type (e.g., menu, level, boss).
+    - **Curated**: Every song is randomized with a different one from a curated list.
+    - **Singularity**: Every song is replaced with only one song.
+    - You can choose to include the original song in the randomization in the mod settings.
+- You can select how often the music changes:
+    - **Static**: Music remains the same for the seed/slot.
+    - **On Restart**: Music is reshuffled every time the game is restarted.
+    - **Per Play**: Music changes every time it starts playing.
+- Life Capsules can change the music when collected.
+    - Can only be enabled when **Per Play** consistency is selected.
+- Every apworld option is overrideable in the mod settings.
+- The song name is shown in-game when the song changes.
+    - You can toggle this in the settings.
+    - You can also choose which types of songs show their name.
+- A `songs.json` file is included in the mod folder to map all the songs:
+    - Songs have a codename, a name, and a type.
+    - Songs mapped as jingles won't loop.
+    - For SADX songs, the file includes:
+        - The in-game ID
+        - Curated lists from all the sources
+        - SA2B replacements
+- The song map file will be validated when the game starts.
+    - Any song that is missing won't be added to the pool.
+    - If the curated list is empty, the game will use the default song.
+    - You can choose to force a warning message if a song is missing, via the mod settings.
+
 ## [v1.1.1b] - 2025-05-07
 
 ### Changed
