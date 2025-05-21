@@ -9,7 +9,7 @@
     "advamy": {
       "id": 0,
       "name": "Instruction: Amy",
-      "type": "theme",
+      "type": "event",
       "curatedSADX": [
       ],
       "curatedSA2B": [
@@ -21,7 +21,7 @@
     "advbig": {
       "id": 1,
       "name": "Instruction: Big",
-      "type": "theme",
+      "type": "event",
       "curatedSADX": [
       ],
       "curatedSA2B": [
@@ -33,7 +33,7 @@
     "adve102": {
       "id": 2,
       "name": "Instruction: E-102",
-      "type": "theme",
+      "type": "event",
       "curatedSADX": [
       ],
       "curatedSA2B": [
@@ -45,7 +45,7 @@
     "advknkls": {
       "id": 3,
       "name": "Instruction: Knuckles",
-      "type": "theme",
+      "type": "event",
       "curatedSADX": [
       ],
       "curatedSA2B": [
@@ -57,7 +57,7 @@
     "advmiles": {
       "id": 4,
       "name": "Instruction: Tails",
-      "type": "theme",
+      "type": "event",
       "curatedSADX": [
       ],
       "curatedSA2B": [
@@ -69,7 +69,7 @@
     "advsonic": {
       "id": 5,
       "name": "Instruction: Sonic",
-      "type": "theme",
+      "type": "event",
       "curatedSADX": [
       ],
       "curatedSA2B": [
@@ -731,7 +731,7 @@
     "continue": {
       "id": 26,
       "name": "Will You Continue?",
-      "type": "jingle",
+      "type": "menu",
       "curatedSADX": [
         "continue",
         "evtbgm00",
@@ -1132,19 +1132,14 @@
       "name": "Fish Get!",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -1181,15 +1176,11 @@
       "name": "Fish Miss!",
       "type": "jingle",
       "curatedSADX": [
-        "continue",
-        "evtbgm00",
         "fishmiss",
         "titl_egg",
         "titl_mr1",
         "titl_mr2",
-        "titl_ss",
-        "chao_g_iede",
-        "chao_g_born_c",
+        "titl_ss,chao_g_born_c",
         "chao_g_dead"
       ],
       "curatedSA2B": [
@@ -1355,13 +1346,17 @@
       "name": "Invincible ...No Fear!",
       "type": "jingle",
       "curatedSADX": [
-        "sprsonic",
-        "advamy",
-        "advbig",
-        "adve102",
-        "advmiles",
-        "advsonic",
-        "advknkls"
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
       ],
       "curatedSA2B": [
         "e207_sng",
@@ -1377,6 +1372,17 @@
       "name": "Item",
       "type": "jingle",
       "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
       ],
       "curatedSA2B": [
       ],
@@ -1704,19 +1710,14 @@
       "name": "Extend",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -2050,13 +2051,17 @@
       "name": "Hey You! It's Time to Speed Up!!!",
       "type": "jingle",
       "curatedSADX": [
-        "sprsonic",
-        "advamy",
-        "advbig",
-        "adve102",
-        "advmiles",
-        "advsonic",
-        "advknkls"
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
       ],
       "curatedSA2B": [
         "speedup",
@@ -2540,19 +2545,14 @@
       "name": "Mission Start!",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -2577,19 +2577,14 @@
       "name": "Mission Clear!",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -2614,19 +2609,14 @@
       "name": "Chao: Level Up!",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -2734,19 +2724,14 @@
       "name": "Chao Race Gate Open",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -2771,19 +2756,14 @@
       "name": "Hero Chaos Chao Born 2",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -2808,19 +2788,14 @@
       "name": "Dark Chaos Chao Born 2",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -2845,19 +2820,14 @@
       "name": "Chaos Chao Born",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -2882,19 +2852,14 @@
       "name": "Hero Chaos Chao Born",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -2919,19 +2884,14 @@
       "name": "Dark Chaos Chao Born",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -2956,14 +2916,11 @@
       "name": "Chao Died",
       "type": "jingle",
       "curatedSADX": [
-        "continue",
-        "evtbgm00",
         "fishmiss",
         "titl_egg",
         "titl_mr1",
         "titl_mr2",
         "titl_ss",
-        "chao_g_iede",
         "chao_g_born_c",
         "chao_g_dead"
       ],
@@ -2981,19 +2938,14 @@
       "name": "Chao Dance",
       "type": "jingle",
       "curatedSADX": [
-        "chaogoal",
-        "evtbgm02",
-        "evtbgm03",
         "fishget",
         "item1",
         "one_up",
-        "rndclear",
         "mclear_44",
         "mstart_44",
         "chao_k_net_fine",
         "chao_r_gate_open",
-        "chao_g_born_h",
-        "chao_g_born_d",
+        "chao_g_born_h,chao_g_born_d",
         "chao_g_born_h2",
         "chao_g_born_d2",
         "chao_g_dance"
@@ -3196,31 +3148,31 @@
     },
     "chao_g_radicase1": {
       "name": "Chao Radio Song 1",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_g_radicase2": {
       "name": "Chao Radio Song 2",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_g_radicase3": {
       "name": "Chao Radio Song 3",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_g_radicase4": {
       "name": "Chao Radio Song 4",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_g_tv_cartoon": {
       "name": "Chao TV - Cartoon",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_g_tv_drama": {
       "name": "Chao TV - Drama",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_g_tv_sports": {
       "name": "Chao TV - Sports",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_k_m": {
       "name": "Chao Kindergarten",
@@ -3244,27 +3196,27 @@
     },
     "chao_k_sing_dark1": {
       "name": "Dark Chao Song 1",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_k_sing_dark2": {
       "name": "Dark Chao Song 2",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_k_sing_dark3": {
       "name": "Dark Chao Song 3",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_k_sing_hero1": {
       "name": "Hero Chao Song 1",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_k_sing_hero2": {
       "name": "Hero Chao Song 2",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_k_sing_hero3": {
       "name": "Hero Chao Song 3",
-      "type": "jingle"
+      "type": "event"
     },
     "chao_l_m": {
       "name": "Pick a Chao game",
@@ -3616,7 +3568,7 @@
     },
     "btl_opng": {
       "name": "Opening Music",
-      "type": "jingle"
+      "type": "theme"
     },
     "btl_pc": {
       "name": "Grind Race",
@@ -3930,7 +3882,7 @@
     },
     "sng_title1": {
       "name": "Title Sequence (With Intro)",
-      "type": "jingle"
+      "type": "event"
     },
     "sng_title2": {
       "name": "Title Sequence",
