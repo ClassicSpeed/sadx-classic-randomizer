@@ -111,7 +111,7 @@ public:
     void OnGoalRequiresBossesSet(bool goalRequiresBosses);
     void OnGoalRequiresChaoRacesSet(bool goalRequiresChaoRaces);
     void OnSetLogicLevel(int logicLevel);
-    void OnPlaySong(int songId);
+    void DisplaySongName(int songId);
     void SetMusicSource(MusicSource musicSource);
     void SetMusicShuffle(MusicShuffle musicShuffle);
     void SetMusicShuffleConsistency(MusicShuffleConsistency musicShuffleConsistency);
@@ -119,6 +119,11 @@ public:
     void SetLifeCapsulesChangeSongs(bool lifeCapsulesChangeSongs);
     int GetSongForId(int songId);
     int GetSongNewForId(int songId, int currentSongId);
+    void UpdateMusicSettings(ShowSongName showSongName, ShowSongNameForType showSongNameFor, bool includeVanillaSongs,
+                             bool showWarningForMissingFiles, const std::string& string, const std::string& basicString,
+                             MusicSource musicSource, MusicShuffle musicShuffle,
+                             MusicShuffleConsistency musicShuffleConsistency,
+                             LifeCapsulesChangeSongs lifeCapsulesChangeSongs);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;

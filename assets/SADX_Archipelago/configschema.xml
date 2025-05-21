@@ -102,7 +102,46 @@
                 <HelpText>When random level entrance in is enabled, show helpful indicators over the levels' door.</HelpText>
             </Property>
         </Group>
-
+        <Group name="MusicShuffle" display="Music Shuffle Settings">
+            <Property name="Sa2bADXpath" type="string" defaultvalue="../../../../Sonic Adventure 2/resource/gd_PC/ADX/"
+                      display="SA2B Songs Path">
+                <HelpText>Path to the SA2B music files. Must end with a slash (/) and be relative to Sonic Adventure DX/SoundData/bgm/wma/.</HelpText>
+            </Property>
+            <Property name="CustomADXpath" type="string" defaultvalue="custom/" display="Custom Songs Path">
+                <HelpText>Path to the custom music files. Must end with a slash (/) and be relative to Sonic Adventure DX/SoundData/bgm/wma/.</HelpText>
+            </Property>
+            <Property name="ShowSongName" type="ShowSongNameIndex" defaultvalue="0" display="Show Song Name">
+                <HelpText>Display the name of the song during gameplay.</HelpText>
+            </Property>
+            <Property name="ShowSongNameForType" type="ShowSongNameForTypeIndex" defaultvalue="0"
+                      display="Show Song Name for Type">
+                <HelpText>Display song names only for selected song types.</HelpText>
+            </Property>
+            <Property name="IncludeVanilla" type="bool" defaultvalue="True"
+                      display="Include Vanilla Song">
+                <HelpText>Include the original song in its own shuffle rotation.</HelpText>
+            </Property>
+            <Property name="ShowWarningForMissingFiles" type="bool" defaultvalue="False"
+                      display="Show Missing Song Warning">
+                <HelpText>Show a warning if any referenced music files are missing.</HelpText>
+            </Property>
+            <Property name="MusicSourceOverride" type="MusicSourceIndex" defaultvalue="-1"
+                      display="Music Source Override">
+                <HelpText>Override the source used for Music Shuffle.</HelpText>
+            </Property>
+            <Property name="MusicShuffleOverride" type="MusicShuffleIndex" defaultvalue="-1"
+                      display="Music Shuffle Override">
+                <HelpText>Override the randomization method for Music Shuffle.</HelpText>
+            </Property>
+            <Property name="MusicShuffleConsistencyOverride" type="MusicShuffleConsistencyIndex" defaultvalue="-1"
+                      display="Music Shuffle Consistency Override">
+                <HelpText>Override how frequently the music changes in Music Shuffle.</HelpText>
+            </Property>
+            <Property name="LifeCapsulesChangeSongsOverride" type="DeathLinkIndex" defaultvalue="0"
+                      display="Life Capsules Music Change Override">
+                <HelpText>Override whether collecting Life Capsules changes the music.</HelpText>
+            </Property>
+        </Group>
 
         <Group name="CharacterVoiceReactions" display="Character Voice Reactions">
             <Property name="VoiceMenu" type="CharacterVoiceIndex" defaultvalue="-1" display="Menu Voice">
@@ -298,6 +337,39 @@
             <EnumMember name="6" display="Big"/>
             <EnumMember name="7" display="Eggman"/>
             <EnumMember name="8" display="Tikal"/>
+        </Enum>
+        <Enum name="ShowSongNameIndex">
+            <EnumMember name="0" display="With Song Shuffle enabled"/>
+            <EnumMember name="1" display="Always on"/>
+            <EnumMember name="2" display="Always off"/>
+        </Enum>
+        <Enum name="ShowSongNameForTypeIndex">
+            <EnumMember name="0" display="Everything"/>
+            <EnumMember name="1" display="Everything but Jingles"/>
+            <EnumMember name="2" display="Only for action levels"/>
+        </Enum>
+        <Enum name="MusicSourceIndex">
+            <EnumMember name="-1" display="Default"/>
+            <EnumMember name="0" display="Force SADX"/>
+            <EnumMember name="1" display="Force SADX/Custom"/>
+            <EnumMember name="2" display="Force SA2B"/>
+            <EnumMember name="3" display="Force SA2B/Custom"/>
+            <EnumMember name="4" display="Force SADX/SA2B"/>
+            <EnumMember name="5" display="Force SADX/SA2B/Custom"/>
+        </Enum>
+        <Enum name="MusicShuffleIndex">
+            <EnumMember name="-1" display="Default"/>
+            <EnumMember name="0" display="Force Disabled"/>
+            <EnumMember name="1" display="Force Curated"/>
+            <EnumMember name="2" display="Force By Type"/>
+            <EnumMember name="3" display="Force Full"/>
+            <EnumMember name="4" display="Force Singularity"/>
+        </Enum>
+        <Enum name="MusicShuffleConsistencyIndex">
+            <EnumMember name="-1" display="Default"/>
+            <EnumMember name="0" display="Force Static"/>
+            <EnumMember name="1" display="Force On Restart"/>
+            <EnumMember name="2" display="Force Per Play"/>
         </Enum>
     </Enums>
 </ConfigSchema>

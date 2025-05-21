@@ -1098,7 +1098,6 @@ void Randomizer::OnSetLogicLevel(int logicLevel)
 int Randomizer::GetSongForId(const int songId)
 {
     return _musicManager.GetSongForId(songId);
-    
 }
 
 int Randomizer::GetSongNewForId(const int songId, const int currentSongId)
@@ -1106,31 +1105,67 @@ int Randomizer::GetSongNewForId(const int songId, const int currentSongId)
     return _musicManager.GetSongNewForId(songId, currentSongId);
 }
 
-void Randomizer::OnPlaySong(const int songId)
+
+
+void Randomizer::UpdateMusicSettings(const ShowSongName showSongName, const ShowSongNameForType showSongNameFor,
+                                  const bool includeVanillaSongs, const bool showWarningForMissingFiles,
+                                  const std::string& string,
+                                  const std::string& basicString, const MusicSource musicSource,
+                                  const MusicShuffle musicShuffle,
+                                  const MusicShuffleConsistency musicShuffleConsistency,
+                                  const LifeCapsulesChangeSongs lifeCapsulesChangeSongs)
 {
+    _options.showSongName = showSongName;
+    _options.showSongNameForType = showSongNameFor;
+    _options.includeVanillaSongs = includeVanillaSongs;
+    _options.showWarningForMissingFiles = showWarningForMissingFiles;
+    _options.sa2BAdxPath = string;
+    _options.customAdxPath = basicString;
+    _options.musicSource = musicSource;
+    _options.musicShuffle = musicShuffle;
+    _options.musicShuffleConsistency = musicShuffleConsistency;
+    _options.lifeCapsulesChangeSongs = lifeCapsulesChangeSongs;
+    _musicManager.UpdateOptions(_options);
+}
+
+
+void Randomizer::DisplaySongName(const int songId)
+{
+    if(_options.showSongName == ShowSongNameAlwaysOff)
+        return;
+    
+    if(_options.showSongName == ShowSongNameWithSongShuffle && _options.musicShuffle == MusicShuffleNone)
+        return;
+
+    if(_options.showSongNameForType == ShowSongNameForTypeOnlyActionLevels)
+        if(CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
+            return;
+    
     const auto* song = _musicManager.FindSongById(songId);
     if (song != nullptr)
         _displayManager.ShowSongName("~ " + song->name + " ~");
-    
 }
 
 void Randomizer::SetMusicSource(const MusicSource musicSource)
 {
-    _options.musicSource = musicSource;
+    if (_options.musicSource == MusicSourceNone)
+        _options.musicSource = musicSource;
     _musicManager.UpdateOptions(_options);
     _musicManager.RandomizeMusic();
 }
 
 void Randomizer::SetMusicShuffle(const MusicShuffle musicShuffle)
 {
-    _options.musicShuffle = musicShuffle;
+    if (_options.musicShuffle == MusicShuffleNone)
+        _options.musicShuffle = musicShuffle;
     _musicManager.UpdateOptions(_options);
     _musicManager.RandomizeMusic();
 }
 
 void Randomizer::SetMusicShuffleConsistency(const MusicShuffleConsistency musicShuffleConsistency)
 {
-    _options.musicShuffleConsistency = musicShuffleConsistency;
+    if (_options.musicShuffleConsistency == MusicShuffleConsistencyNone)
+        _options.musicShuffleConsistency = musicShuffleConsistency;
     _musicManager.UpdateOptions(_options);
     _musicManager.RandomizeMusic();
 }
@@ -1144,7 +1179,10 @@ void Randomizer::SetMusicShuffleSeed(const int musicShuffleSeed)
 
 void Randomizer::SetLifeCapsulesChangeSongs(const bool lifeCapsulesChangeSongs)
 {
-    _options.lifeCapsulesChangeSongs = lifeCapsulesChangeSongs;
+    if (_options.lifeCapsulesChangeSongs == LifeCapsulesChangeSongsNone)
+        _options.lifeCapsulesChangeSongs = lifeCapsulesChangeSongs
+                                               ? LifeCapsulesChangeSongsEnabled
+                                               : LifeCapsulesChangeSongsDisabled;
     _musicManager.UpdateOptions(_options);
 }
 

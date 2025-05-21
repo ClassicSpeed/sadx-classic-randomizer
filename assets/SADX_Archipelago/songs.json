@@ -1,10 +1,4 @@
 {
-  "settings": {
-    "sa2bADXpath": "../../../../Sonic Adventure 2/resource/gd_PC/ADX/",
-    "customADXpath": "custom/",
-    "includeVanillaInCurated": true,
-    "showWarningForMissingFiles": false
-  },
   "sadx": {
     "advamy": {
       "id": 0,

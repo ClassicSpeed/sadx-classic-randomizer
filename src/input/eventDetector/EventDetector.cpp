@@ -1569,7 +1569,7 @@ FunctionHook<void, int> onPlayMusic(0x425690, [](const int songId)-> void
         shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
 
     onPlayMusic.Original(shuffledSongId);
-    eventDetectorPtr->randomizer.OnPlaySong(shuffledSongId);
+    eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
     eventDetectorPtr->lastRealSongId = songId;
     eventDetectorPtr->lastShuffledSongId = shuffledSongId;
 });
@@ -1583,7 +1583,7 @@ FunctionHook<void, int> onPlayMusic2(0x425800, [](const int songId)-> void
         shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
 
     onPlayMusic2.Original(shuffledSongId);
-    eventDetectorPtr->randomizer.OnPlaySong(shuffledSongId);
+    eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
     eventDetectorPtr->lastRealSongId = songId;
     eventDetectorPtr->lastShuffledSongId = shuffledSongId;
 });
@@ -1592,7 +1592,8 @@ FunctionHook<void, int> onPlayJingle(0x425860, [](const int songId)-> void
 {
     const int shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
     onPlayJingle.Original(shuffledSongId);
-    eventDetectorPtr->randomizer.OnPlaySong(shuffledSongId);
+    if(eventDetectorPtr->randomizer.GetOptions().showSongNameForType == ShowSongNameForTypeEverything)
+        eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
 });
 void EventDetector::ShuffleSong()
 {
@@ -1604,10 +1605,10 @@ void EventDetector::ShuffleSong()
     if (randomizer.GetOptions().musicShuffleConsistency != MusicShuffleConsistencyPerPlay)
         return;
 
-    if (!randomizer.GetOptions().lifeCapsulesChangeSongs)
+    if (!randomizer.GetOptions().lifeCapsulesChangeSongs != LifeCapsulesChangeSongsEnabled)
         return;
 
     const int shuffledSongId = randomizer.GetSongForId(eventDetectorPtr->lastRealSongId);
     onPlayMusic.Original(shuffledSongId);
-    randomizer.OnPlaySong(shuffledSongId);
+    randomizer.DisplaySongName(shuffledSongId);
 }

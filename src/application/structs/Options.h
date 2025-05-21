@@ -52,6 +52,21 @@ enum Levels
     HotShelter
 };
 
+enum ShowSongName
+{
+    ShowSongNameWithSongShuffle = 0,
+    ShowSongNameAlwaysOn,
+    ShowSongNameAlwaysOff
+};
+
+enum ShowSongNameForType
+{
+    ShowSongNameForTypeEverything,
+    ShowSongNameForTypeEverythingButJingles,
+    ShowSongNameForTypeOnlyActionLevels
+};
+
+
 enum MusicSource
 {
     MusicSourceNone = -1,
@@ -79,6 +94,14 @@ enum MusicShuffleConsistency
     MusicShuffleConsistencyStatic = 0,
     MusicShuffleConsistencyOnRestart,
     MusicShuffleConsistencyPerPlay,
+};
+
+
+enum LifeCapsulesChangeSongs
+{
+    LifeCapsulesChangeSongsNone = -1,
+    LifeCapsulesChangeSongsEnabled = 0,
+    LifeCapsulesChangeSongsDisabled = 1,
 };
 
 struct Options
@@ -161,16 +184,18 @@ struct Options
     int bigActionStageMissions = 0;
     int gammaActionStageMissions = 0;
 
-    MusicSource musicSource = MusicSourceSadx;
-    MusicShuffle musicShuffle = MusicShuffleDisabled;
-    MusicShuffleConsistency musicShuffleConsistency = MusicShuffleConsistencyStatic;
-    bool lifeCapsulesChangeSongs = false;
-    int musicShuffleSeed = -1;
-
-    bool includeVanillaSong = true;
-    bool showWarningForMissingFiles = false;
     std::string sa2BAdxPath = "../../../../Sonic Adventure 2/resource/gd_PC/ADX/";
     std::string customAdxPath = "custom/";
+    ShowSongName showSongName = ShowSongNameWithSongShuffle;
+    ShowSongNameForType showSongNameForType = ShowSongNameForTypeEverything;
+    bool includeVanillaSongs = true;
+    bool showWarningForMissingFiles = false;
+
+    MusicSource musicSource = MusicSourceNone;
+    MusicShuffle musicShuffle = MusicShuffleNone;
+    MusicShuffleConsistency musicShuffleConsistency = MusicShuffleConsistencyNone;
+    LifeCapsulesChangeSongs lifeCapsulesChangeSongs = LifeCapsulesChangeSongsNone;
+    int musicShuffleSeed = -1;
 
     bool twinkleCircuitCheck = true;
     bool multipleTwinkleCircuitChecks = true;
@@ -446,20 +471,24 @@ struct Options
     {
         return std::find(progressionItems.begin(), progressionItems.end(), locationId) != progressionItems.end();
     }
-    
+
     bool MusicSourceIncludeSadx() const
     {
-        return this->musicSource == MusicSourceSadx || this->musicSource == MusicSourceSadxCustom || this->musicSource == MusicSourceSadxSa2B ||
+        return this->musicSource == MusicSourceSadx || this->musicSource == MusicSourceSadxCustom || this->musicSource
+            == MusicSourceSadxSa2B ||
             this->musicSource == MusicSourceSadxSa2BCustom;
     }
+
     bool MusicSourceIncludeSa2B() const
     {
-        return this->musicSource == MusicSourceSa2B || this->musicSource == MusicSourceSa2BCustom || this->musicSource == MusicSourceSadxSa2B ||
+        return this->musicSource == MusicSourceSa2B || this->musicSource == MusicSourceSa2BCustom || this->musicSource
+            == MusicSourceSadxSa2B ||
             this->musicSource == MusicSourceSadxSa2BCustom;
     }
+
     bool MusicSourceIncludeCustom() const
     {
-        return this->musicSource == MusicSourceSadxCustom || this->musicSource == MusicSourceSa2BCustom || this->musicSource == MusicSourceSadxSa2BCustom;
+        return this->musicSource == MusicSourceSadxCustom || this->musicSource == MusicSourceSa2BCustom || this->
+            musicSource == MusicSourceSadxSa2BCustom;
     }
-    
 };

@@ -31,13 +31,6 @@ void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions)
         throw std::runtime_error("Failed to parse JSON: " + errs);
     }
 
-    //TODO: Move to mod settings
-    Json::Value settingsRoot = root["settings"];
-    _options.includeVanillaSong = settingsRoot["includeVanillaInCurated"].asBool();
-    _options.showWarningForMissingFiles = settingsRoot["showWarningForMissingFiles"].asBool();
-    _options.sa2BAdxPath = settingsRoot["sa2bADXpath"].asString();
-    _options.customAdxPath = settingsRoot["customADXpath"].asString();
-
 
     //SADX
     Json::Value sadxRoot = root["sadx"];
@@ -192,7 +185,7 @@ std::vector<int> MusicManager::GetPossibleSongIds(int const id)
     else if (_options.musicShuffle == MusicShuffleFull)
         allPossibleIds = _songMap.GetAllSongs(songInfo->type == Jingle);
 
-    if (allPossibleIds.empty() || _options.includeVanillaSong)
+    if (allPossibleIds.empty() || _options.includeVanillaSongs)
     {
         // If no songs are found, return the original id
         allPossibleIds.push_back(id);

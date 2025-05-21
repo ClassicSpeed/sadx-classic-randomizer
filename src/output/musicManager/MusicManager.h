@@ -191,7 +191,7 @@ public:
     int GetSingularitySong();
     int GetSongForId(int songId);
     int GetSongNewForId(int songId, int currentSongId);
-
+  
 private:
     Options _options;
     SongMap _songMap;

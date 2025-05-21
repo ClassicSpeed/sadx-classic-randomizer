@@ -182,7 +182,7 @@ void LoadDisplayMessageSettings(const IniFile* settingsIni)
 
 
     displayManager.SetMessageConfiguration(messageDisplayDuration, messageFontSize,
-                                              static_cast<DisplayInGameTracker>(displayInGameTracker),
+                                           static_cast<DisplayInGameTracker>(displayInGameTracker),
                                            (0xFF << 24) | itemMessageColorR << 16 | itemMessageColorG << 8 |
                                            itemMessageColorB,
                                            (0xFF << 24) | chatMessageColorR << 16 | chatMessageColorG << 8 |
@@ -262,6 +262,18 @@ void LoadGameSettings(const IniFile* settingsIni)
         progressionIndicatorB;
 
 
+    const std::string sa2BAdxPath = settingsIni->getString("MusicShuffle", "Sa2bADXpath",
+                                                           "../../../../Sonic Adventure 2/resource/gd_PC/ADX/");
+    const std::string customAdxPath = settingsIni->getString("MusicShuffle", "CustomADXpath", "custom/");
+    const int showSongName = settingsIni->getInt("MusicShuffle", "ShowSongName", 0);
+    const int showSongNameForType = settingsIni->getInt("MusicShuffle", "ShowSongNameForType", 0);
+    const bool includeVanillaSongs = settingsIni->getBool("MusicShuffle", "IncludeVanilla", true);
+    const bool showWarningForMissingFiles = settingsIni->getBool("MusicShuffle", "ShowWarningForMissingFiles", false);
+    const int musicSource = settingsIni->getInt("MusicShuffle", "MusicSourceOverride", -1);
+    const int musicShuffle = settingsIni->getInt("MusicShuffle", "MusicShuffleOverride", -1);
+    const int musicShuffleConsistency = settingsIni->getInt("MusicShuffle", "MusicShuffleConsistencyOverride", -1);
+    const int lifeCapsulesChangeSongs = settingsIni->getInt("MusicShuffle", "LifeCapsulesChangeSongsOverride", 0);
+
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, noLifeLossOnRestart);
     eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
@@ -283,6 +295,13 @@ void LoadGameSettings(const IniFile* settingsIni)
                                           unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
                                           tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems,
                                           showCommentsSubtitles);
+    
+    randomizer.UpdateMusicSettings(static_cast<ShowSongName>(showSongName),
+                                static_cast<ShowSongNameForType>(showSongNameForType), includeVanillaSongs,
+                                showWarningForMissingFiles, sa2BAdxPath, customAdxPath,
+                                static_cast<MusicSource>(musicSource), static_cast<MusicShuffle>(musicShuffle),
+                                static_cast<MusicShuffleConsistency>(musicShuffleConsistency),
+                                static_cast<LifeCapsulesChangeSongs>(lifeCapsulesChangeSongs));
 }
 
 #define ReplacePNG_Common(a) do { \
