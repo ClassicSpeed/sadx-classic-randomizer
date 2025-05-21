@@ -46,6 +46,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Teleports platforms won't spawn during the demo/press start levels/cutscenes.
+- Fixed Ice Cap ladder not spawning in for Tails and Big.
 
 ## [v1.1.1b] - 2025-05-07
 

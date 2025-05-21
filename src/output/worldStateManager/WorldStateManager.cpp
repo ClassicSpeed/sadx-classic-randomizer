@@ -846,7 +846,7 @@ FunctionHook<Sint32> onPrepareLevel(0x415210, []()-> Sint32
         levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
         const char* originalCharId = CharIDStrings[CurrentCharacter];
-        CharIDStrings[CurrentCharacter] = "K";
+        CharIDStrings[CurrentCharacter] = "S";
         result = onPrepareLevel.Original();
         CharIDStrings[CurrentCharacter] = originalCharId;
     }
