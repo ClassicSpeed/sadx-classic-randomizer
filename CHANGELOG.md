@@ -44,6 +44,17 @@ All notable changes to this project will be documented in this file.
 - All the characters can travel to the past (no logic changed, but wanted consistency between characters).
 - Updated wording for "Complete multiple level missions" in mod settings.
 
+### Logic
+
+- Mission 40 is now expert+.
+- Gamma now needs the Jet Booster to clip from Hotel to SSMain/Casino in expert (DX).
+- The clip without any item is expert+ only.
+- Tails can now enter Ice Cap without the Ice Stone in expert (DC)
+- Added skip from Hotel to Casino for Tails in expert (DC).
+- Added skip from Casino/Station to SSMain for Tails in expert (DC).
+- Added skip from SSMain to Station for Gamma in expert (DX).
+- Added skip from SSMain to Hotel for Gamma in expert (DX).
+
 ### Fixed
 
 - Teleports platforms won't spawn during the demo/press start levels/cutscenes.
