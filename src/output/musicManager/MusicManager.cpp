@@ -2,6 +2,7 @@
 #include <fstream>
 #include "json/json.h"
 
+
 MusicManager::MusicManager()
 {
 }
@@ -179,7 +180,11 @@ std::vector<int> MusicManager::GetPossibleSongIds(int const id)
     const auto songInfo = FindSongById(id);
 
     if (_options.musicShuffle == MusicShuffleDisabled || songInfo == nullptr)
+    {
+        if (_options.musicSource == MusicSourceSa2B || _options.musicSource == MusicSourceSa2BCustom)
+            return _songMap.GetSa2Song(id);
         return {id};
+    }
 
     if (_options.musicShuffle == MusicShuffleCurated)
         allPossibleIds = _songMap.GetCuratedSongs(id, _options);

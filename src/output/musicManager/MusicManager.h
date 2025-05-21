@@ -86,6 +86,19 @@ public:
         return nullptr;
     }
 
+    std::vector<int> GetSa2Song(const int id) const
+    {
+        const auto songData = FindById(id);
+        if (songData == nullptr)
+            return {id};
+
+        const auto sa2SongData = FindByCodename(songData->sa2Replacement);
+        if (sa2SongData == nullptr)
+            return {id};
+        
+        return {sa2SongData->id};
+    }
+
     std::vector<int> GetCuratedSongs(const int id, const Options options) const
     {
         std::vector<int> allPossibleIds = {};
