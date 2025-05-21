@@ -38,6 +38,10 @@ All notable changes to this project will be documented in this file.
     - If the curated list is empty, the game will use the default song.
     - You can choose to force a warning message if a song is missing, via the mod settings.
 
+### Changed
+ - Sky chase entrance won't disappear after getting the checks anymore (consistent with boss gates).
+ - All the characters can travel to the past (no logic changed, but wanted consistency between characters).
+
 ## [v1.1.1b] - 2025-05-07
 
 ### Changed
