@@ -7,6 +7,7 @@
 #include "../output/worldStateManager/WorldStateManager.h"
 #include "../output/archipelagoMessenger/ArchipelagoMessenger.h"
 #include "../output/saveFileManager/SaveFileManager.h"
+#include "../output/musicManager/MusicManager.h"
 #include "structs/LocationData.h"
 #include "structs/Options.h"
 
@@ -15,17 +16,18 @@ class Randomizer
 public:
     Randomizer(DisplayManager& displayManager, CharacterManager& characterManager, WorldStateManager& menuManager,
                ItemRepository& itemRepository, LocationRepository& locationRepository,
-               ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager)
+               ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager, MusicManager& musicManager)
         : _displayManager(displayManager),
           _characterManager(characterManager),
           _worldStateManager(menuManager),
           _itemRepository(itemRepository),
           _locationRepository(locationRepository),
           _archipelagoMessenger(archipelagoMessenger),
-          _saveFileManager(saveFileManager), _deathPending(false)
+          _saveFileManager(saveFileManager), _musicManager(musicManager), _deathPending(false)
 
     {
         _displayManager.UpdateChecks(locationRepository.GetLocations());
+
     }
 
     void OnCheckFound(int checkId) const;
@@ -109,6 +111,19 @@ public:
     void OnGoalRequiresBossesSet(bool goalRequiresBosses);
     void OnGoalRequiresChaoRacesSet(bool goalRequiresChaoRaces);
     void OnSetLogicLevel(int logicLevel);
+    void DisplaySongName(int songId);
+    void SetMusicSource(MusicSource musicSource);
+    void SetMusicShuffle(MusicShuffle musicShuffle);
+    void SetMusicShuffleConsistency(MusicShuffleConsistency musicShuffleConsistency);
+    void SetMusicShuffleSeed(int musicShuffleSeed);
+    void SetLifeCapsulesChangeSongs(bool lifeCapsulesChangeSongs);
+    int GetSongForId(int songId);
+    int GetSongNewForId(int songId, int currentSongId);
+    void UpdateMusicSettings(ShowSongName showSongName, ShowSongNameForType showSongNameFor, bool includeVanillaSongs,
+                             bool showWarningForMissingFiles, const std::string& string, const std::string& basicString,
+                             MusicSource musicSource, MusicShuffle musicShuffle,
+                             MusicShuffleConsistency musicShuffleConsistency,
+                             LifeCapsulesChangeSongs lifeCapsulesChangeSongs);
 
 private:
     bool AreLastStoryRequirementsCompleted() const;
@@ -119,6 +134,7 @@ private:
     LocationRepository& _locationRepository;
     ArchipelagoMessenger& _archipelagoMessenger;
     SaveFileManager& _saveFileManager;
+    MusicManager& _musicManager;
 
     Options _options;
     std::string _pendingDeathCause;
@@ -139,7 +155,7 @@ private:
     bool _tikalCommentOnKeyItems = true;
     bool _currentCharacterCommentOnKeyItems = true;
     bool _showCommentsSubtitles = true;
-    
+
     bool _superSonicModRunning = false;
 
 
@@ -350,4 +366,6 @@ private:
         {295, "This hotel is nice!"},
         {289, "Trains are cool; too!"}
     };
+
+
 };

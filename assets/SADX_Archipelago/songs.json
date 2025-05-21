@@ -1,0 +1,3906 @@
+{
+  "sadx": {
+    "advamy": {
+      "id": 0,
+      "name": "Instruction: Amy",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "advbig": {
+      "id": 1,
+      "name": "Instruction: Big",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "adve102": {
+      "id": 2,
+      "name": "Instruction: E-102",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "advknkls": {
+      "id": 3,
+      "name": "Instruction: Knuckles",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "advmiles": {
+      "id": 4,
+      "name": "Instruction: Tails",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "advsonic": {
+      "id": 5,
+      "name": "Instruction: Sonic",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "amy": {
+      "id": 6,
+      "name": "My Sweet Passion",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "big": {
+      "id": 7,
+      "name": "Lazy Days~Livin' In Paradise",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "bossall": {
+      "id": 8,
+      "name": "Egg Mobile",
+      "type": "fight",
+      "curatedSADX": [
+        "evtbgm01",
+        "adve102",
+        "bossall",
+        "bosse101",
+        "bossevnt",
+        "bosstrgt",
+        "chaos",
+        "chaos_6",
+        "chaos_p1",
+        "chaos_p2",
+        "eggman",
+        "eggmbl23",
+        "eggrobo"
+      ],
+      "curatedSA2B": [
+        "boss_01",
+        "boss_02a",
+        "boss_02b",
+        "boss_03",
+        "boss_04",
+        "boss_05",
+        "boss_06",
+        "t9_eggma",
+        "t9_shado"
+      ],
+      "SA2Breplacement": "boss_01",
+      "curatedCustom": [
+        "sng_stg20",
+        "sng_stg21",
+        "sng_stg22",
+        "sng_stg23",
+        "sng_stg26",
+        "sng_stg27",
+        "sng_stg28"
+      ]
+    },
+    "bosse101": {
+      "id": 9,
+      "name": "Crazy Robo",
+      "type": "fight",
+      "curatedSADX": [
+        "adve102",
+        "bossall",
+        "bosse101",
+        "bossevnt",
+        "bosstrgt",
+        "chaos",
+        "chaos_6",
+        "chaos_p1",
+        "chaos_p2",
+        "eggman",
+        "eggmbl23",
+        "eggrobo"
+      ],
+      "curatedSA2B": [
+        "boss_01",
+        "boss_02a",
+        "boss_02b",
+        "boss_03",
+        "boss_04",
+        "boss_05",
+        "boss_06",
+        "t9_eggma",
+        "t9_shado"
+      ],
+      "SA2Breplacement": "boss_01",
+      "curatedCustom": [
+        "sng_stg20",
+        "sng_stg21",
+        "sng_stg22",
+        "sng_stg23",
+        "sng_stg26",
+        "sng_stg27",
+        "sng_stg28"
+      ]
+    },
+    "bossevnt": {
+      "id": 10,
+      "name": "Fight for My Own Way",
+      "type": "fight",
+      "curatedSADX": [
+        "adve102",
+        "bossall",
+        "bosse101",
+        "bossevnt",
+        "bosstrgt",
+        "chaos",
+        "chaos_6",
+        "chaos_p1",
+        "chaos_p2",
+        "eggman",
+        "eggmbl23",
+        "eggrobo"
+      ],
+      "curatedSA2B": [
+        "boss_01",
+        "boss_02a",
+        "boss_02b",
+        "boss_03",
+        "boss_04",
+        "boss_05",
+        "boss_06",
+        "t9_eggma",
+        "t9_shado"
+      ],
+      "SA2Breplacement": "boss_04",
+      "curatedCustom": [
+        "sng_stg20",
+        "sng_stg21",
+        "sng_stg22",
+        "sng_stg23",
+        "sng_stg26",
+        "sng_stg27",
+        "sng_stg28"
+      ]
+    },
+    "bosstrgt": {
+      "id": 11,
+      "name": "Heartless Colleague",
+      "type": "fight",
+      "curatedSADX": [
+        "evtbgm01",
+        "adve102",
+        "bossall",
+        "bosse101",
+        "bossevnt",
+        "bosstrgt",
+        "chaos",
+        "chaos_6",
+        "chaos_p1",
+        "chaos_p2",
+        "eggman",
+        "eggmbl23",
+        "eggrobo"
+      ],
+      "curatedSA2B": [
+        "boss_01",
+        "boss_02a",
+        "boss_02b",
+        "boss_03",
+        "boss_04",
+        "boss_05",
+        "boss_06",
+        "t9_eggma",
+        "t9_shado"
+      ],
+      "SA2Breplacement": "boss_03",
+      "curatedCustom": [
+        "sng_stg20",
+        "sng_stg21",
+        "sng_stg22",
+        "sng_stg23",
+        "sng_stg26",
+        "sng_stg27",
+        "sng_stg28"
+      ]
+    },
+    "casino1": {
+      "id": 12,
+      "name": "The Dreamy Stage",
+      "type": "level",
+      "curatedSADX": [
+        "amy",
+        "casino1",
+        "casino2",
+        "casino3",
+        "casino4",
+        "chaohall",
+        "circuit",
+        "twnklpk1",
+        "twnklpk2"
+      ],
+      "curatedSA2B": [
+        "e_quart",
+        "m_space",
+        "s_hall"
+      ],
+      "SA2Breplacement": "e_quart",
+      "curatedCustom": [
+        "sng_stg05"
+      ]
+    },
+    "casino2": {
+      "id": 13,
+      "name": "Dilapidated Way",
+      "type": "level",
+      "curatedSADX": [
+        "casino1",
+        "casino3",
+        "casino4",
+        "redmntn2",
+        "shelter1"
+      ],
+      "curatedSA2B": [
+        "d_chambr",
+        "i_gate",
+        "e_quart",
+        "m_space",
+        "s_hall"
+      ],
+      "SA2Breplacement": "s_hall",
+      "curatedCustom": [
+        "sng_stg11a",
+        "sng_stg11b"
+      ]
+    },
+    "casino3": {
+      "id": 14,
+      "name": "Blue Star",
+      "type": "level",
+      "curatedSADX": [
+        "amy",
+        "casino1",
+        "casino2",
+        "casino3",
+        "casino4",
+        "chaohall",
+        "circuit",
+        "twnklpk1",
+        "twnklpk2"
+      ],
+      "curatedSA2B": [
+        "kart",
+        "g_hill",
+        "p_lane"
+      ],
+      "SA2Breplacement": "p_lane",
+      "curatedCustom": [
+        "sng_btl02",
+        "sng_btl03",
+        "sng_ev11",
+        "sng_spstg1",
+        "sng_spstg2",
+        "sng_stg05",
+        "sng_stg06"
+      ]
+    },
+    "casino4": {
+      "id": 15,
+      "name": "Message from Nightopia",
+      "type": "level",
+      "curatedSADX": [
+        "amy",
+        "casino1",
+        "casino2",
+        "casino3",
+        "casino4",
+        "chaohall",
+        "circuit",
+        "twnklpk1",
+        "twnklpk2"
+      ],
+      "curatedSA2B": [
+        "kart",
+        "g_hill",
+        "p_lane"
+      ],
+      "SA2Breplacement": "g_hill",
+      "curatedCustom": [
+        "sng_btl02",
+        "sng_btl03",
+        "sng_ev11",
+        "sng_spstg1",
+        "sng_spstg2",
+        "sng_stg05",
+        "sng_stg06"
+      ]
+    },
+    "chao": {
+      "id": 16,
+      "name": "Theme of \"CHAO\"",
+      "type": "adventurefield",
+      "curatedSADX": [
+        "chaorace",
+        "chao",
+        "chaohall",
+        "ecoast3",
+        "highway3",
+        "icecap1",
+        "s_square",
+        "twnklpk1",
+        "twnklpk2",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "chao_g_bgm_n",
+        "advsng_5",
+        "chao_g_bgm_h",
+        "chao_g_bgm_d",
+        "chao_g_radicase1",
+        "chao_g_radicase2",
+        "chao_g_radicase3",
+        "chao_g_radicase4",
+        "chao_k_m2",
+        "chao_l_m",
+        "chao_r_h",
+        "chao_r_j"
+      ],
+      "SA2Breplacement": "chao_g_bgm_n",
+      "curatedCustom": [
+      ]
+    },
+    "chaogoal": {
+      "id": 17,
+      "name": "Chao Race Goal",
+      "type": "jingle",
+      "curatedSADX": [
+        "chaogoal",
+        "evtbgm02",
+        "evtbgm03",
+        "fishget",
+        "item1",
+        "one_up",
+        "rndclear",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h",
+        "chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_r_a",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "chaohall": {
+      "id": 18,
+      "name": "Letz Get This Party Started",
+      "type": "adventurefield",
+      "curatedSADX": [
+        "chaorace",
+        "chao",
+        "chaohall",
+        "ecoast3",
+        "highway3",
+        "icecap1",
+        "s_square",
+        "twnklpk1",
+        "twnklpk2",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "chao_g_bgm_n",
+        "advsng_5",
+        "chao_g_bgm_h",
+        "chao_g_bgm_d",
+        "chao_g_radicase1",
+        "chao_g_radicase2",
+        "chao_g_radicase3",
+        "chao_g_radicase4",
+        "chao_k_m2",
+        "chao_l_m",
+        "chao_r_h",
+        "chao_r_j"
+      ],
+      "SA2Breplacement": "chao_r_e",
+      "curatedCustom": [
+      ]
+    },
+    "chaorace": {
+      "id": 19,
+      "name": "Join Us 4 Happy Time",
+      "type": "level",
+      "curatedSADX": [
+        "chaohall",
+        "circuit",
+        "hammer",
+        "scramble"
+      ],
+      "curatedSA2B": [
+        "chao_r_b",
+        "chao_r_c",
+        "chao_r_d"
+      ],
+      "SA2Breplacement": "chao_r_b",
+      "curatedCustom": [
+      ]
+    },
+    "chaos": {
+      "id": 20,
+      "name": "Boss: CHAOS ver.0, 2, 4",
+      "type": "fight",
+      "curatedSADX": [
+        "evtbgm01",
+        "adve102",
+        "bossall",
+        "bosse101",
+        "bossevnt",
+        "bosstrgt",
+        "chaos",
+        "chaos_6",
+        "chaos_p1",
+        "chaos_p2",
+        "eggman",
+        "eggmbl23",
+        "eggrobo"
+      ],
+      "curatedSA2B": [
+        "boss_01",
+        "boss_02a",
+        "boss_02b",
+        "boss_03",
+        "boss_04",
+        "boss_05",
+        "boss_06",
+        "t9_eggma",
+        "t9_shado"
+      ],
+      "SA2Breplacement": "boss_03",
+      "curatedCustom": [
+        "sng_stg20",
+        "sng_stg21",
+        "sng_stg22",
+        "sng_stg23",
+        "sng_stg26",
+        "sng_stg27",
+        "sng_stg28"
+      ]
+    },
+    "chaos_6": {
+      "id": 21,
+      "name": "Boss: CHAOS ver.6",
+      "type": "fight",
+      "curatedSADX": [
+        "adve102",
+        "bossall",
+        "bosse101",
+        "bossevnt",
+        "bosstrgt",
+        "chaos",
+        "chaos_6",
+        "chaos_p1",
+        "chaos_p2",
+        "eggman",
+        "eggmbl23",
+        "eggrobo"
+      ],
+      "curatedSA2B": [
+        "boss_01",
+        "boss_02a",
+        "boss_02b",
+        "boss_03",
+        "boss_04",
+        "boss_05",
+        "boss_06",
+        "t9_eggma",
+        "t9_shado"
+      ],
+      "SA2Breplacement": "boss_06",
+      "curatedCustom": [
+        "sng_stg20",
+        "sng_stg21",
+        "sng_stg22",
+        "sng_stg23",
+        "sng_stg26",
+        "sng_stg27",
+        "sng_stg28"
+      ]
+    },
+    "chaos_p1": {
+      "id": 22,
+      "name": "Boss: Perfect CHAOS",
+      "type": "fight",
+      "curatedSADX": [
+        "adve102",
+        "bossall",
+        "bosse101",
+        "bossevnt",
+        "bosstrgt",
+        "chaos",
+        "chaos_6",
+        "chaos_p1",
+        "chaos_p2",
+        "eggman",
+        "eggmbl23",
+        "eggrobo"
+      ],
+      "curatedSA2B": [
+        "boss_01",
+        "boss_02a",
+        "boss_02b",
+        "boss_03",
+        "boss_04",
+        "boss_05",
+        "boss_06",
+        "t9_eggma",
+        "t9_shado"
+      ],
+      "SA2Breplacement": "boss_06",
+      "curatedCustom": [
+        "sng_stg20",
+        "sng_stg21",
+        "sng_stg22",
+        "sng_stg23",
+        "sng_stg26",
+        "sng_stg27",
+        "sng_stg28",
+        "sng_e0404",
+        "sng_stg28"
+      ]
+    },
+    "chaos_p2": {
+      "id": 23,
+      "name": "Perfect CHAOS Revival!",
+      "type": "fight",
+      "curatedSADX": [
+        "adve102",
+        "bossall",
+        "bosse101",
+        "bossevnt",
+        "bosstrgt",
+        "chaos",
+        "chaos_6",
+        "chaos_p1",
+        "chaos_p2",
+        "eggman",
+        "eggmbl23",
+        "eggrobo"
+      ],
+      "curatedSA2B": [
+        "boss_01",
+        "boss_02a",
+        "boss_02b",
+        "boss_03",
+        "boss_04",
+        "boss_05",
+        "boss_06",
+        "t9_eggma",
+        "t9_shado"
+      ],
+      "SA2Breplacement": "boss_07",
+      "curatedCustom": [
+        "sng_stg20",
+        "sng_stg21",
+        "sng_stg22",
+        "sng_stg23",
+        "sng_stg26",
+        "sng_stg27",
+        "sng_stg28",
+        "sng_e0404",
+        "sng_stg27"
+      ]
+    },
+    "charactr": {
+      "id": 24,
+      "name": "Choose Your Buddy!",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel"
+      ],
+      "SA2Breplacement": "advsng_4",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4"
+      ]
+    },
+    "circuit": {
+      "id": 25,
+      "name": "Twinkle Circuit",
+      "type": "level",
+      "curatedSADX": [
+        "casino2",
+        "chaohall",
+        "hammer",
+        "highway1",
+        "shelter2",
+        "skydeck2",
+        "twnklpk1"
+      ],
+      "curatedSA2B": [
+        "kart",
+        "g_hill"
+      ],
+      "SA2Breplacement": "kart",
+      "curatedCustom": [
+        "sng_btl01",
+        "sng_btl02",
+        "sng_spstg1",
+        "sng_stg05"
+      ]
+    },
+    "continue": {
+      "id": 26,
+      "name": "Will You Continue?",
+      "type": "menu",
+      "curatedSADX": [
+        "continue",
+        "evtbgm00",
+        "fishmiss",
+        "titl_egg",
+        "titl_mr1",
+        "titl_mr2",
+        "titl_ss",
+        "chao_g_iede",
+        "chao_g_born_c",
+        "chao_g_dead"
+      ],
+      "curatedSA2B": [
+        "chao_k_net_fault",
+        "continue",
+        "chao_g_dead"
+      ],
+      "SA2Breplacement": "continue",
+      "curatedCustom": [
+      ]
+    },
+    "e102": {
+      "id": 27,
+      "name": "Theme of \"E-102g\"",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "ecoast1": {
+      "id": 28,
+      "name": "Azure Blue World",
+      "type": "level",
+      "curatedSADX": [
+        "chaorace",
+        "ecoast2",
+        "ecoast3",
+        "egcarer2",
+        "highway3",
+        "wndyvly1",
+        "wndyvly3"
+      ],
+      "curatedSA2B": [
+        "advsng_5",
+        "d_lagoon",
+        "m_harb1",
+        "w_jungl",
+        "g_fores"
+      ],
+      "SA2Breplacement": "w_jungl",
+      "curatedCustom": [
+        "sng_btl02",
+        "sng_stg01",
+        "sng_stg02",
+        "sng_stg29"
+      ]
+    },
+    "ecoast2": {
+      "id": 29,
+      "name": "Windy and Ripply",
+      "type": "level",
+      "curatedSADX": [
+        "chaorace",
+        "ecoast1",
+        "ecoast3",
+        "egcarer2",
+        "highway3",
+        "wndyvly1",
+        "wndyvly3"
+      ],
+      "curatedSA2B": [
+        "advsng_5",
+        "d_lagoon",
+        "m_harb1",
+        "w_jungl",
+        "g_fores"
+      ],
+      "SA2Breplacement": "g_fores",
+      "curatedCustom": [
+        "sng_btl02",
+        "sng_stg01",
+        "sng_stg02",
+        "sng_stg29"
+      ]
+    },
+    "ecoast3": {
+      "id": 30,
+      "name": "BIG Fishes at Emerald Coast",
+      "type": "level",
+      "curatedSADX": [
+        "big",
+        "chaorace",
+        "ecoast1",
+        "ecoast2",
+        "egcarer2",
+        "highway3",
+        "wndyvly1",
+        "wndyvly3"
+      ],
+      "curatedSA2B": [
+        "advsng_5",
+        "d_lagoon",
+        "m_harb1",
+        "e_quart"
+      ],
+      "SA2Breplacement": "advsng_5",
+      "curatedCustom": [
+        "sng_btl02",
+        "sng_stg01",
+        "sng_stg02",
+        "sng_stg29"
+      ]
+    },
+    "egcarer1": {
+      "id": 31,
+      "name": "A Song That Keeps Us On The Move",
+      "type": "adventurefield",
+      "curatedSADX": [
+        "bosse101",
+        "e102",
+        "egcarer1",
+        "egcarer2",
+        "finaleg1",
+        "hammer",
+        "scramble",
+        "shelter2"
+      ],
+      "curatedSA2B": [
+        "e_quart",
+        "t9_eggma",
+        "w_bed",
+        "d_chambr"
+      ],
+      "SA2Breplacement": "e_quart",
+      "curatedCustom": [
+      ]
+    },
+    "egcarer2": {
+      "id": 32,
+      "name": "Calm After the Storm",
+      "type": "adventurefield",
+      "curatedSADX": [
+        "bosse101",
+        "e102",
+        "egcarer1",
+        "egcarer2",
+        "finaleg1",
+        "hammer",
+        "scramble",
+        "shelter2"
+      ],
+      "curatedSA2B": [
+        "e_quart",
+        "t9_eggma",
+        "w_bed",
+        "d_chambr"
+      ],
+      "SA2Breplacement": "e_quart",
+      "curatedCustom": [
+      ]
+    },
+    "eggman": {
+      "id": 33,
+      "name": "Theme of \"Dr.EGGMAN\"",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "eggmbl23": {
+      "id": 34,
+      "name": "Militant Missionary",
+      "type": "fight",
+      "curatedSADX": [
+        "adve102",
+        "bossall",
+        "bosse101",
+        "bossevnt",
+        "bosstrgt",
+        "chaos",
+        "chaos_6",
+        "chaos_p1",
+        "chaos_p2",
+        "eggman",
+        "eggmbl23",
+        "eggrobo"
+      ],
+      "curatedSA2B": [
+        "boss_01",
+        "boss_02a",
+        "boss_02b",
+        "boss_03",
+        "boss_04",
+        "boss_05",
+        "boss_06",
+        "t9_eggma",
+        "t9_shado"
+      ],
+      "SA2Breplacement": "boss_02b",
+      "curatedCustom": [
+        "sng_stg20",
+        "sng_stg21",
+        "sng_stg22",
+        "sng_stg23",
+        "sng_stg26",
+        "sng_stg27",
+        "sng_stg28"
+      ]
+    },
+    "eggrobo": {
+      "id": 35,
+      "name": "ZERO The Chase-master",
+      "type": "fight",
+      "curatedSADX": [
+        "adve102",
+        "bossall",
+        "bosse101",
+        "bossevnt",
+        "bosstrgt",
+        "chaos",
+        "chaos_6",
+        "chaos_p1",
+        "chaos_p2",
+        "eggman",
+        "eggmbl23",
+        "eggrobo"
+      ],
+      "curatedSA2B": [
+        "boss_01",
+        "boss_02a",
+        "boss_02b",
+        "boss_03",
+        "boss_04",
+        "boss_05",
+        "boss_06",
+        "t9_eggma",
+        "t9_shado"
+      ],
+      "SA2Breplacement": "boss_02a",
+      "curatedCustom": [
+        "sng_stg20",
+        "sng_stg21",
+        "sng_stg22",
+        "sng_stg23",
+        "sng_stg26",
+        "sng_stg27",
+        "sng_stg28"
+      ]
+    },
+    "evtbgm00": {
+      "id": 36,
+      "name": "Event: Sadness",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "evtbgm01": {
+      "id": 37,
+      "name": "Event: Strain",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "evtbgm02": {
+      "id": 38,
+      "name": "Event: Unbound",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "evtbgm03": {
+      "id": 39,
+      "name": "Event: Good-bye!",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "evtbgm04": {
+      "id": 40,
+      "name": "Event: The Past",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "evtbgm05": {
+      "id": 41,
+      "name": "Event: Fanfare for \"Dr.EGGMAN\"",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "finaleg1": {
+      "id": 42,
+      "name": "Mechanical Resonance",
+      "type": "level",
+      "curatedSADX": [
+        "bosse101",
+        "e102",
+        "finaleg1",
+        "finaleg2",
+        "shelter1",
+        "shelter2",
+        "skydeck1",
+        "twnklpk3"
+      ],
+      "curatedSA2B": [
+        "l_colony",
+        "c_core_1",
+        "c_core_2",
+        "c_core_5",
+        "c_gadget",
+        "c_wall",
+        "d_chambr",
+        "e_engine",
+        "f_rush",
+        "i_gate",
+        "m_space",
+        "p_lane",
+        "w_bed"
+      ],
+      "SA2Breplacement": "l_colony",
+      "curatedCustom": [
+      ]
+    },
+    "finaleg2": {
+      "id": 43,
+      "name": "Crank the Heat Up!!",
+      "type": "level",
+      "curatedSADX": [
+        "bosse101",
+        "e102",
+        "finaleg1",
+        "finaleg2",
+        "shelter1",
+        "shelter2",
+        "skydeck1",
+        "twnklpk3"
+      ],
+      "curatedSA2B": [
+        "l_colony",
+        "c_core_1",
+        "c_core_2",
+        "c_core_5",
+        "c_gadget",
+        "c_wall",
+        "d_chambr",
+        "e_engine",
+        "f_rush",
+        "i_gate",
+        "m_space",
+        "p_lane",
+        "w_bed"
+      ],
+      "SA2Breplacement": "c_core_1",
+      "curatedCustom": [
+      ]
+    },
+    "fishget": {
+      "id": 44,
+      "name": "Fish Get!",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_new_garden",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "fishing": {
+      "id": 45,
+      "name": "and... Fish Hits!",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "fishmiss": {
+      "id": 46,
+      "name": "Fish Miss!",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishmiss",
+        "titl_egg",
+        "titl_mr1",
+        "titl_mr2",
+        "titl_ss,chao_g_born_c",
+        "chao_g_dead"
+      ],
+      "curatedSA2B": [
+        "chao_k_net_fault",
+        "continue",
+        "chao_g_dead"
+      ],
+      "SA2Breplacement": "chao_k_net_fault",
+      "curatedCustom": [
+      ]
+    },
+    "hammer": {
+      "id": 47,
+      "name": "Sweet Punch",
+      "type": "level",
+      "curatedSADX": [
+        "amy",
+        "casino3",
+        "casino4"
+      ],
+      "curatedSA2B": [
+        "g_hill"
+      ],
+      "SA2Breplacement": "g_hill",
+      "curatedCustom": [
+        "sng_btl01",
+        "sng_btl03",
+        "sng_ev11"
+      ]
+    },
+    "highway1": {
+      "id": 48,
+      "name": "Run Through the Speed Highway",
+      "type": "level",
+      "curatedSADX": [
+        "circuit",
+        "finaleg2",
+        "redmntn2",
+        "shelter1",
+        "twnklpk1"
+      ],
+      "curatedSA2B": [
+        "r_hwy",
+        "c_escap1",
+        "c_escap3",
+        "m_street"
+      ],
+      "SA2Breplacement": "r_hwy",
+      "curatedCustom": [
+        "sng_stg03",
+        "sng_stg04"
+      ]
+    },
+    "highway2": {
+      "id": 49,
+      "name": "Goin' Down!?",
+      "type": "level",
+      "curatedSADX": [
+        "icecap3",
+        "skydeck1",
+        "skydeck2"
+      ],
+      "curatedSA2B": [
+        "c_escap2",
+        "f_chase",
+        "m_harb2"
+      ],
+      "SA2Breplacement": "c_escap2",
+      "curatedCustom": [
+      ]
+    },
+    "highway3": {
+      "id": 50,
+      "name": "At Dawn",
+      "type": "level",
+      "curatedSADX": [
+        "casino1",
+        "s_square"
+      ],
+      "curatedSA2B": [
+        "c_escap1",
+        "c_escap3",
+        "m_street",
+        "t9_sonic"
+      ],
+      "SA2Breplacement": "c_escap1",
+      "curatedCustom": [
+        "sng_btl02"
+      ]
+    },
+    "hurryup": {
+      "id": 51,
+      "name": "Danger is Imminent",
+      "type": "event",
+      "curatedSADX": [
+        "timer"
+      ],
+      "curatedSA2B": [
+        "timer"
+      ],
+      "SA2Breplacement": "timer",
+      "curatedCustom": [
+      ]
+    },
+    "icecap1": {
+      "id": 52,
+      "name": "Snowy Mountain",
+      "type": "level",
+      "curatedSADX": [
+        "icecap1",
+        "icecap2",
+        "wndyvly1"
+      ],
+      "curatedSA2B": [
+        "l_colony",
+        "m_herd",
+        "m_space"
+      ],
+      "SA2Breplacement": "m_space",
+      "curatedCustom": [
+      ]
+    },
+    "icecap2": {
+      "id": 53,
+      "name": "Limestone Cave",
+      "type": "level",
+      "curatedSADX": [
+        "icecap1",
+        "icecap2",
+        "wndyvly1"
+      ],
+      "curatedSA2B": [
+        "l_colony",
+        "m_herd",
+        "m_space"
+      ],
+      "SA2Breplacement": "m_herd",
+      "curatedCustom": [
+      ]
+    },
+    "icecap3": {
+      "id": 54,
+      "name": "Be Cool, Be Wild and Be Groovy",
+      "type": "level",
+      "curatedSADX": [
+        "scramble",
+        "skydeck1",
+        "wndyvly2"
+      ],
+      "curatedSA2B": [
+        "g_fores",
+        "m_harb1",
+        "m_harb2"
+      ],
+      "SA2Breplacement": "g_fores",
+      "curatedCustom": [
+        "sng_btl04",
+        "sng_btl05"
+      ]
+    },
+    "invncibl": {
+      "id": 55,
+      "name": "Invincible ...No Fear!",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "e207_sng",
+        "invncibl"
+      ],
+      "SA2Breplacement": "invncibl",
+      "curatedCustom": [
+        "sng_invncbl"
+      ]
+    },
+    "item1": {
+      "id": 56,
+      "name": "Item",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "jingle_1": {
+      "id": 57,
+      "name": "Jingle A",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel"
+      ],
+      "SA2Breplacement": "advsng_2",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4"
+      ]
+    },
+    "jingle_2": {
+      "id": 58,
+      "name": "Jingle B",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel"
+      ],
+      "SA2Breplacement": "advsng_4",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4"
+      ]
+    },
+    "jingle_3": {
+      "id": 59,
+      "name": "Jingle C",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel"
+      ],
+      "SA2Breplacement": "advsng_4",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4"
+      ]
+    },
+    "jingle_4": {
+      "id": 60,
+      "name": "Jingle D",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel"
+      ],
+      "SA2Breplacement": "advsng_3",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4"
+      ]
+    },
+    "jingle_5": {
+      "id": 61,
+      "name": "Jingle E",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel"
+      ],
+      "SA2Breplacement": "advsng_1",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4"
+      ]
+    },
+    "knuckles": {
+      "id": 62,
+      "name": "Unknown from M.E.",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "lstwrld1": {
+      "id": 63,
+      "name": "Tricky Maze",
+      "type": "level",
+      "curatedSADX": [
+        "lstwrld1",
+        "lstwrld2",
+        "lstwrld3",
+        "mstcln",
+        "sandhill",
+        "tical"
+      ],
+      "curatedSA2B": [
+        "p_cave",
+        "h_base",
+        "g_fore",
+        "s_ocean"
+      ],
+      "SA2Breplacement": "p_cave",
+      "curatedCustom": [
+        "sng_stg10"
+      ]
+    },
+    "lstwrld2": {
+      "id": 64,
+      "name": "Danger! Chased by Rock",
+      "type": "level",
+      "curatedSADX": [
+        "lstwrld1",
+        "lstwrld2",
+        "lstwrld3",
+        "mstcln",
+        "sandhill",
+        "tical"
+      ],
+      "curatedSA2B": [
+        "p_cave",
+        "h_base",
+        "g_fore",
+        "s_ocean",
+        "w_jungl"
+      ],
+      "SA2Breplacement": "w_jungl",
+      "curatedCustom": [
+        "sng_stg10"
+      ]
+    },
+    "lstwrld3": {
+      "id": 65,
+      "name": "Leading Lights",
+      "type": "level",
+      "curatedSADX": [
+        "chaos_p2",
+        "lstwrld1",
+        "lstwrld2",
+        "lstwrld3",
+        "mstcln",
+        "sandhill",
+        "tical"
+      ],
+      "curatedSA2B": [
+        "a_mine",
+        "d_chambr",
+        "s_ocean"
+      ],
+      "SA2Breplacement": "a_mine",
+      "curatedCustom": [
+      ]
+    },
+    "mainthem": {
+      "id": 66,
+      "name": "Open your Heart -Main Theme of \"SONIC Adventure\"-",
+      "type": "theme",
+      "curatedSADX": [
+        "sonic",
+        "tails",
+        "knuckles",
+        "amy",
+        "big",
+        "e102"
+      ],
+      "curatedSA2B": [
+        "boss_07",
+        "t9_amy",
+        "t9_eggma",
+        "t9_knuck",
+        "t9_miles",
+        "t9_rouge",
+        "t9_shado",
+        "t9_sonic"
+      ],
+      "SA2Breplacement": "boss_07",
+      "curatedCustom": [
+        "sng_e0404",
+        "sng_v01_main",
+        "sng_v02_ts",
+        "sng_v03_td",
+        "sng_v04_tr",
+        "sng_v05_tc"
+      ]
+    },
+    "mstcln": {
+      "id": 67,
+      "name": "Mystic Ruin",
+      "type": "adventurefield",
+      "curatedSADX": [
+        "knuckles",
+        "chao",
+        "chaorace",
+        "icecap1",
+        "lstwrld1",
+        "lstwrld3",
+        "tical"
+      ],
+      "curatedSA2B": [
+        "w_canyon",
+        "d_lagoon",
+        "chao_g_bgm_h",
+        "t2_rouge",
+        "t9_knuck",
+        "t9_rouge"
+      ],
+      "SA2Breplacement": "d_lagoon",
+      "curatedCustom": [
+        "sng_ev10",
+        "sng_stg09"
+      ]
+    },
+    "one_up": {
+      "id": 71,
+      "name": "Extend",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "one_up",
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "one_up",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "option": {
+      "id": 72,
+      "name": "Funky Groove Makes U Hot!?",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel"
+      ],
+      "SA2Breplacement": "advsng_3",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4"
+      ]
+    },
+    "redmntn1": {
+      "id": 73,
+      "name": "Mt. Red: a Symbol of Thrill",
+      "type": "level",
+      "curatedSADX": [
+        "egcarer2",
+        "knuckles",
+        "lstwrld1",
+        "redmntn2"
+      ],
+      "curatedSA2B": [
+        "p_hill",
+        "s_rail",
+        "t9_knuck",
+        "w_canyon"
+      ],
+      "SA2Breplacement": "p_hill",
+      "curatedCustom": [
+        "sng_stg07",
+        "sng_stg08"
+      ]
+    },
+    "redmntn2": {
+      "id": 74,
+      "name": "Red Hot Skull",
+      "type": "level",
+      "curatedSADX": [
+        "shelter1",
+        "redmntn1"
+      ],
+      "curatedSA2B": [
+        "s_ocean",
+        "p_hill",
+        "s_rail",
+        "w_canyon"
+      ],
+      "SA2Breplacement": "s_ocean",
+      "curatedCustom": [
+        "sng_stg07",
+        "sng_stg08"
+      ]
+    },
+    "rndclear": {
+      "id": 75,
+      "name": "Round Clear",
+      "type": "jingle",
+      "curatedSADX": [
+        "chaogoal",
+        "evtbgm02",
+        "evtbgm03",
+        "fishget",
+        "item1",
+        "one_up",
+        "rndclear",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h",
+        "chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "rndclear",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "s_square": {
+      "id": 76,
+      "name": "Welcome to Station Square!",
+      "type": "adventurefield",
+      "curatedSADX": [
+        "casino1",
+        "casino2",
+        "chao",
+        "chaorace",
+        "ecoast3",
+        "highway3",
+        "chao_r_e"
+      ],
+      "curatedSA2B": [
+        "chao_g_bgm_h",
+        "advsng_5"
+      ],
+      "SA2Breplacement": "chao_g_bgm_h",
+      "curatedCustom": [
+      ]
+    },
+    "sandhill": {
+      "id": 77,
+      "name": "Sand Hill",
+      "type": "level",
+      "curatedSADX": [
+        "icecap3",
+        "lstwrld1",
+        "lstwrld2",
+        "redmntn1"
+      ],
+      "curatedSA2B": [
+        "h_base",
+        "g_fores",
+        "p_cave",
+        "s_ocean",
+        "s_rail"
+      ],
+      "SA2Breplacement": "h_base",
+      "curatedCustom": [
+        "sng_btl04"
+      ]
+    },
+    "scramble": {
+      "id": 78,
+      "name": "Tornado Scramble",
+      "type": "level",
+      "curatedSADX": [
+        "tails",
+        "scramble",
+        "shelter2",
+        "skydeck1",
+        "wndyvly2"
+      ],
+      "curatedSA2B": [
+        "c_wall",
+        "f_chase",
+        "f_rush",
+        "s_rail",
+        "t9_miles"
+      ],
+      "SA2Breplacement": "c_wall",
+      "curatedCustom": [
+        "sng_v02_ts"
+      ]
+    },
+    "shelter1": {
+      "id": 79,
+      "name": "Bad Taste Aquarium",
+      "type": "level",
+      "curatedSADX": [
+        "bosse101",
+        "e102",
+        "finaleg1",
+        "finaleg2",
+        "redmntn2",
+        "shelter1",
+        "shelter2",
+        "skydeck1"
+      ],
+      "curatedSA2B": [
+        "c_core_1",
+        "c_core_2",
+        "c_core_5",
+        "c_gadget",
+        "c_wall",
+        "e_engine",
+        "f_rush",
+        "i_gate",
+        "p_lane",
+        "s_hall",
+        "w_bed"
+      ],
+      "SA2Breplacement": "c_core_2",
+      "curatedCustom": [
+        "sng_stg13"
+      ]
+    },
+    "shelter2": {
+      "id": 80,
+      "name": "Red Barrage Area",
+      "type": "level",
+      "curatedSADX": [
+        "bosse101",
+        "e102",
+        "finaleg1",
+        "finaleg2",
+        "redmntn2",
+        "shelter1",
+        "shelter2",
+        "skydeck1"
+      ],
+      "curatedSA2B": [
+        "c_core_1",
+        "c_core_2",
+        "c_core_5",
+        "c_gadget",
+        "c_wall",
+        "e_engine",
+        "f_rush",
+        "i_gate",
+        "p_lane",
+        "s_hall",
+        "w_bed"
+      ],
+      "SA2Breplacement": "c_core_5",
+      "curatedCustom": [
+        "sng_stg13"
+      ]
+    },
+    "skydeck1": {
+      "id": 81,
+      "name": "Skydeck A Go! Go!",
+      "type": "level",
+      "curatedSADX": [
+        "scramble",
+        "wndyvly2",
+        "casino2",
+        "finaleg1",
+        "skydeck1",
+        "skydeck2"
+      ],
+      "curatedSA2B": [
+        "m_harb1",
+        "c_gadget",
+        "e_engine",
+        "i_gate",
+        "f_rush"
+      ],
+      "SA2Breplacement": "e_engine",
+      "curatedCustom": [
+        "sng_stg13",
+        "sng_stg14"
+      ]
+    },
+    "skydeck2": {
+      "id": 82,
+      "name": "General Offensive",
+      "type": "level",
+      "curatedSADX": [
+        "casino2",
+        "finaleg1",
+        "skydeck1",
+        "skydeck2"
+      ],
+      "curatedSA2B": [
+        "w_bed",
+        "m_harb1",
+        "c_gadget",
+        "c_wall",
+        "e_engine",
+        "i_gate",
+        "s_hall",
+        "w_jungl",
+        "f_rush"
+      ],
+      "SA2Breplacement": "c_wall",
+      "curatedCustom": [
+        "sng_stg13",
+        "sng_stg14"
+      ]
+    },
+    "sonic": {
+      "id": 83,
+      "name": "It Doesn't Matter",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "speedup": {
+      "id": 85,
+      "name": "Hey You! It's Time to Speed Up!!!",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "speedup",
+        "e350_sng"
+      ],
+      "SA2Breplacement": "speedup",
+      "curatedCustom": [
+        "sng_speedup"
+      ]
+    },
+    "sprsonic": {
+      "id": 86,
+      "name": "Theme of \"SUPER SONIC\"",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "tails": {
+      "id": 88,
+      "name": "Believe in Myself",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "theamy": {
+      "id": 89,
+      "name": "Appearance: AMY",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "thebig": {
+      "id": 90,
+      "name": "Appearance: BIG",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "thee102": {
+      "id": 91,
+      "name": "Appearance: E-102",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "theknkls": {
+      "id": 92,
+      "name": "Appearance: KNUCKLES",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "themiles": {
+      "id": 93,
+      "name": "Appearance: MILES",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "thesonic": {
+      "id": 94,
+      "name": "Appearance: SONIC",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "tical": {
+      "id": 95,
+      "name": "Theme of \"TIKAL\"",
+      "type": "theme",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "timer": {
+      "id": 96,
+      "name": "Drowning",
+      "type": "jingle",
+      "curatedSADX": [
+        "hurryup"
+      ],
+      "curatedSA2B": [
+        "timer"
+      ],
+      "SA2Breplacement": "timer",
+      "curatedCustom": [
+      ]
+    },
+    "titl_egg": {
+      "id": 97,
+      "name": "Egg Carrier Transform",
+      "type": "jingle",
+      "curatedSADX": [
+        "continue",
+        "evtbgm00",
+        "fishmiss",
+        "titl_egg",
+        "titl_mr1",
+        "titl_mr2",
+        "titl_ss",
+        "chao_g_iede",
+        "chao_g_born_c",
+        "chao_g_dead"
+      ],
+      "curatedSA2B": [
+        "chao_k_net_fault",
+        "continue",
+        "chao_g_dead"
+      ],
+      "SA2Breplacement": "continue",
+      "curatedCustom": [
+      ]
+    },
+    "titl_mr1": {
+      "id": 98,
+      "name": "Mystic Ruin (Adventure Field Card)",
+      "type": "jingle",
+      "curatedSADX": [
+        "continue",
+        "evtbgm00",
+        "fishmiss",
+        "titl_egg",
+        "titl_mr1",
+        "titl_mr2",
+        "titl_ss",
+        "chao_g_iede",
+        "chao_g_born_c",
+        "chao_g_dead"
+      ],
+      "curatedSA2B": [
+        "chao_k_net_fault",
+        "continue",
+        "chao_g_dead"
+      ],
+      "SA2Breplacement": "continue",
+      "curatedCustom": [
+      ]
+    },
+    "titl_mr2": {
+      "id": 99,
+      "name": "Mystic Ruin (Adventure Field Card)",
+      "type": "jingle",
+      "curatedSADX": [
+        "continue",
+        "evtbgm00",
+        "fishmiss",
+        "titl_egg",
+        "titl_mr1",
+        "titl_mr2",
+        "titl_ss",
+        "chao_g_iede",
+        "chao_g_born_c",
+        "chao_g_dead"
+      ],
+      "curatedSA2B": [
+        "chao_k_net_fault",
+        "continue",
+        "chao_g_dead"
+      ],
+      "SA2Breplacement": "continue",
+      "curatedCustom": [
+      ]
+    },
+    "titl_ss": {
+      "id": 100,
+      "name": "Trial Version Quit",
+      "type": "jingle",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "title": {
+      "id": 101,
+      "name": "Main Menu",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel"
+      ],
+      "SA2Breplacement": "advsng_1",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4"
+      ]
+    },
+    "title2": {
+      "id": 102,
+      "name": "Title Screen",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel",
+        "title"
+      ],
+      "SA2Breplacement": "title",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4",
+        "sng_title1",
+        "sng_title2"
+      ]
+    },
+    "trial": {
+      "id": 103,
+      "name": "Trial",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel"
+      ],
+      "SA2Breplacement": "btl_sel",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4"
+      ]
+    },
+    "twnklpk1": {
+      "id": 104,
+      "name": "Twinkle Cart",
+      "type": "level",
+      "curatedSADX": [
+        "amy",
+        "circuit",
+        "highway1",
+        "highway3",
+        "shelter1",
+        "twnklpk1",
+        "twnklpk2",
+        "twnklpk3"
+      ],
+      "curatedSA2B": [
+        "m_herd",
+        "m_harb1",
+        "e_quart",
+        "g_hill"
+      ],
+      "SA2Breplacement": "m_herd",
+      "curatedCustom": [
+        "sng_spstg2",
+        "sng_spstg1",
+        "sng_stg04"
+      ]
+    },
+    "twnklpk2": {
+      "id": 105,
+      "name": "Pleasure Castle",
+      "type": "level",
+      "curatedSADX": [
+        "amy",
+        "circuit",
+        "highway1",
+        "highway3",
+        "shelter1",
+        "twnklpk1",
+        "twnklpk2",
+        "twnklpk3"
+      ],
+      "curatedSA2B": [
+        "m_herd",
+        "m_harb1",
+        "e_quart"
+      ],
+      "SA2Breplacement": "m_harb1",
+      "curatedCustom": [
+        "sng_spstg2",
+        "sng_spstg1",
+        "sng_stg04"
+      ]
+    },
+    "twnklpk3": {
+      "id": 106,
+      "name": "Fakery Way",
+      "type": "level",
+      "curatedSADX": [
+        "eggmbl23",
+        "lstwrld3"
+      ],
+      "curatedSA2B": [
+        "l_colony",
+        "d_chambr"
+      ],
+      "SA2Breplacement": "l_colony",
+      "curatedCustom": [
+        "sng_stg11a",
+        "sng_stg11b",
+        "sng_stg12"
+      ]
+    },
+    "wndyvly1": {
+      "id": 107,
+      "name": "Windy Hill",
+      "type": "level",
+      "curatedSADX": [
+        "chaorace",
+        "ecoast1",
+        "ecoast2",
+        "ecoast3",
+        "egcarer2",
+        "jingle_5",
+        "redmntn1",
+        "twnklpk1",
+        "wndyvly1",
+        "wndyvly2",
+        "wndyvly3"
+      ],
+      "curatedSA2B": [
+        "g_hill",
+        "m_harb1",
+        "m_street",
+        "d_lagoon"
+      ],
+      "SA2Breplacement": "g_hill",
+      "curatedCustom": [
+        "sng_stg02",
+        "sng_stg09"
+      ]
+    },
+    "wndyvly2": {
+      "id": 108,
+      "name": "Tornado",
+      "type": "level",
+      "curatedSADX": [
+        "scramble",
+        "skydeck1"
+      ],
+      "curatedSA2B": [
+        "f_chase",
+        "p_lane",
+        "c_escap2"
+      ],
+      "SA2Breplacement": "f_chase",
+      "curatedCustom": [
+        "sng_btl04",
+        "sng_stg10"
+      ]
+    },
+    "wndyvly3": {
+      "id": 109,
+      "name": "The Air",
+      "type": "level",
+      "curatedSADX": [
+        "big",
+        "tails",
+        "chaorace",
+        "ecoast1",
+        "ecoast2",
+        "ecoast3",
+        "egcarer2",
+        "jingle_5",
+        "redmntn1",
+        "twnklpk1",
+        "wndyvly1",
+        "wndyvly2",
+        "wndyvly3"
+      ],
+      "curatedSA2B": [
+        "g_hill",
+        "m_harb1",
+        "m_street",
+        "t9_sonic"
+      ],
+      "SA2Breplacement": "m_harb1",
+      "curatedCustom": [
+        "sng_stg02",
+        "sng_stg09"
+      ]
+    },
+    "mstart_44": {
+      "id": 110,
+      "name": "Mission Start!",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_k_net_fine",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "mclear_44": {
+      "id": 111,
+      "name": "Mission Clear!",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_r_item_get",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "chao_k_net_fine": {
+      "id": 112,
+      "name": "Chao: Level Up!",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_k_net_fine",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "chao_g_iede": {
+      "id": 113,
+      "name": "Chao: Goodbye!",
+      "type": "event",
+      "curatedSADX": [
+      ],
+      "curatedSA2B": [
+      ],
+      "SA2Breplacement": "",
+      "curatedCustom": [
+      ]
+    },
+    "chao_r_e": {
+      "id": 114,
+      "name": "Chao: Naming",
+      "type": "adventurefield",
+      "curatedSADX": [
+        "chaorace",
+        "chao",
+        "chaohall",
+        "ecoast3",
+        "highway3",
+        "icecap1",
+        "s_square",
+        "twnklpk1",
+        "twnklpk2",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "chao_g_bgm_n",
+        "advsng_5",
+        "chao_g_bgm_h",
+        "chao_g_bgm_d",
+        "chao_g_radicase1",
+        "chao_g_radicase2",
+        "chao_g_radicase3",
+        "chao_g_radicase4",
+        "chao_k_m2",
+        "chao_l_m",
+        "chao_r_h",
+        "chao_r_j"
+      ],
+      "SA2Breplacement": "chao_r_e",
+      "curatedCustom": [
+      ]
+    },
+    "c_btl_cv": {
+      "id": 115,
+      "name": "Chao Race Entry",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel"
+      ],
+      "SA2Breplacement": "c_btl_cv",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4"
+      ]
+    },
+    "chao_r_gate_open": {
+      "id": 116,
+      "name": "Chao Race Gate Open",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_r_gate_open",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "chao_g_born_h2": {
+      "id": 117,
+      "name": "Hero Chaos Chao Born 2",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_g_born_h2",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "chao_g_born_d2": {
+      "id": 118,
+      "name": "Dark Chaos Chao Born 2",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_g_born_d2",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "chao_g_born_c": {
+      "id": 119,
+      "name": "Chaos Chao Born",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_g_born_c",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "chao_g_born_h": {
+      "id": 120,
+      "name": "Hero Chaos Chao Born",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_g_born_h",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "chao_g_born_d": {
+      "id": 121,
+      "name": "Dark Chaos Chao Born",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_g_born_d",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "chao_g_dead": {
+      "id": 122,
+      "name": "Chao Died",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishmiss",
+        "titl_egg",
+        "titl_mr1",
+        "titl_mr2",
+        "titl_ss",
+        "chao_g_born_c",
+        "chao_g_dead"
+      ],
+      "curatedSA2B": [
+        "chao_k_net_fault",
+        "continue",
+        "chao_g_dead"
+      ],
+      "SA2Breplacement": "chao_g_dead",
+      "curatedCustom": [
+      ]
+    },
+    "chao_g_dance": {
+      "id": 123,
+      "name": "Chao Dance",
+      "type": "jingle",
+      "curatedSADX": [
+        "fishget",
+        "item1",
+        "one_up",
+        "mclear_44",
+        "mstart_44",
+        "chao_k_net_fine",
+        "chao_r_gate_open",
+        "chao_g_born_h,chao_g_born_d",
+        "chao_g_born_h2",
+        "chao_g_born_d2",
+        "chao_g_dance"
+      ],
+      "curatedSA2B": [
+        "chao_g_new_garden",
+        "chao_k_net_fine",
+        "chao_new_garden",
+        "chao_r_a",
+        "chao_r_item_get",
+        "item_get",
+        "rndclear",
+        "c_btl_wn"
+      ],
+      "SA2Breplacement": "chao_g_dance",
+      "curatedCustom": [
+        "sng_rndclr"
+      ]
+    },
+    "chao_k_m": {
+      "id": 124,
+      "name": "Chao: Black Market",
+      "type": "menu",
+      "curatedSADX": [
+        "chaohall",
+        "charactr",
+        "jingle_1",
+        "jingle_2",
+        "jingle_3",
+        "jingle_5",
+        "option",
+        "title",
+        "title2",
+        "trial",
+        "chao_r_e",
+        "c_btl_cv",
+        "chao_k_m"
+      ],
+      "curatedSA2B": [
+        "advsng_1",
+        "advsng_2",
+        "advsng_3",
+        "advsng_4",
+        "advsng_5",
+        "btl_sel"
+      ],
+      "SA2Breplacement": "chao_k_m",
+      "curatedCustom": [
+        "sng_sys1",
+        "sng_sys2",
+        "sng_sys3",
+        "sng_sys4"
+      ]
+    }
+  },
+  "sa2b": {
+    "a_mine": {
+      "name": "Dive into the Mellow",
+      "type": "level"
+    },
+    "advsng_1": {
+      "name": "Title Screen Music",
+      "type": "menu"
+    },
+    "advsng_2": {
+      "name": "Advertise: SA2 ...in the groove",
+      "type": "menu"
+    },
+    "advsng_3": {
+      "name": "Advertise: Rhythmic Passage",
+      "type": "menu"
+    },
+    "advsng_4": {
+      "name": "Stage Select",
+      "type": "menu"
+    },
+    "advsng_5": {
+      "name": "Advertise: Prof.Omochao",
+      "type": "menu"
+    },
+    "boss_01": {
+      "name": "Big Foot",
+      "type": "fight"
+    },
+    "boss_02a": {
+      "name": "Masters of the Desert",
+      "type": "fight"
+    },
+    "boss_02b": {
+      "name": "Masters of the Desert",
+      "type": "fight"
+    },
+    "boss_03": {
+      "name": "Knuckles Vs. Rouge",
+      "type": "fight"
+    },
+    "boss_04": {
+      "name": "Sonic Vs. Shadow #1",
+      "type": "fight"
+    },
+    "boss_05": {
+      "name": "For True Story",
+      "type": "fight"
+    },
+    "boss_06": {
+      "name": "Supporting Me",
+      "type": "fight"
+    },
+    "boss_07": {
+      "name": "Live & Learn",
+      "type": "fight"
+    },
+    "c_core_1": {
+      "name": "Scramble For The Core",
+      "type": "level"
+    },
+    "c_core_2": {
+      "name": "Cooperation",
+      "type": "level"
+    },
+    "c_core_5": {
+      "name": "Deep Inside Of",
+      "type": "level"
+    },
+    "c_core_6": {
+      "name": "Cannon's Core #6",
+      "type": "event"
+    },
+    "c_escap1": {
+      "name": "Escape From the City",
+      "type": "level"
+    },
+    "c_escap2": {
+      "name": "Mad Convoy Race",
+      "type": "level"
+    },
+    "c_escap3": {
+      "name": "Escape From the City (alt)",
+      "type": "level"
+    },
+    "c_gadget": {
+      "name": "Unstable World",
+      "type": "level"
+    },
+    "c_wall": {
+      "name": "Soarin' Over Space",
+      "type": "level"
+    },
+    "chao_g_bgm_d": {
+      "name": "Dark Chao Garden",
+      "type": "adventurefield"
+    },
+    "chao_g_bgm_h": {
+      "name": "Hero Chao Garden",
+      "type": "adventurefield"
+    },
+    "chao_g_bgm_n": {
+      "name": "Normal Chao Garden",
+      "type": "adventurefield"
+    },
+    "chao_g_born_c": {
+      "name": "Chaos Chao born",
+      "type": "jingle"
+    },
+    "chao_g_born_d": {
+      "name": "Dark Chao hatching",
+      "type": "jingle"
+    },
+    "chao_g_born_d2": {
+      "name": "Dark Chao cocooning",
+      "type": "jingle"
+    },
+    "chao_g_born_h": {
+      "name": "Hero Chao Hatched",
+      "type": "jingle"
+    },
+    "chao_g_born_h2": {
+      "name": "Hero chao cocooning",
+      "type": "jingle"
+    },
+    "chao_g_born_hc": {
+      "name": "Hero Chaos Chao Hatched",
+      "type": "jingle"
+    },
+    "chao_g_dance": {
+      "name": "Chao love dance",
+      "type": "jingle"
+    },
+    "chao_g_dead": {
+      "name": "Chao Death Jingle",
+      "type": "jingle"
+    },
+    "chao_g_gate_open": {
+      "name": "Chao to your marks",
+      "type": "jingle"
+    },
+    "chao_g_new_garden": {
+      "name": "Unlocked a new garden",
+      "type": "jingle"
+    },
+    "chao_g_radicase1": {
+      "name": "Chao Radio Song 1",
+      "type": "event"
+    },
+    "chao_g_radicase2": {
+      "name": "Chao Radio Song 2",
+      "type": "event"
+    },
+    "chao_g_radicase3": {
+      "name": "Chao Radio Song 3",
+      "type": "event"
+    },
+    "chao_g_radicase4": {
+      "name": "Chao Radio Song 4",
+      "type": "event"
+    },
+    "chao_g_tv_cartoon": {
+      "name": "Chao TV - Cartoon",
+      "type": "event"
+    },
+    "chao_g_tv_drama": {
+      "name": "Chao TV - Drama",
+      "type": "event"
+    },
+    "chao_g_tv_sports": {
+      "name": "Chao TV - Sports",
+      "type": "event"
+    },
+    "chao_k_m": {
+      "name": "Chao Kindergarten",
+      "type": "adventurefield"
+    },
+    "chao_k_m2": {
+      "name": "Chao Connection Menu",
+      "type": "menu"
+    },
+    "chao_k_net_connect": {
+      "name": "Connecting to the Internet",
+      "type": "event"
+    },
+    "chao_k_net_fault": {
+      "name": "Connection Failed",
+      "type": "jingle"
+    },
+    "chao_k_net_fine": {
+      "name": "Connection Success",
+      "type": "jingle"
+    },
+    "chao_k_sing_dark1": {
+      "name": "Dark Chao Song 1",
+      "type": "event"
+    },
+    "chao_k_sing_dark2": {
+      "name": "Dark Chao Song 2",
+      "type": "event"
+    },
+    "chao_k_sing_dark3": {
+      "name": "Dark Chao Song 3",
+      "type": "event"
+    },
+    "chao_k_sing_hero1": {
+      "name": "Hero Chao Song 1",
+      "type": "event"
+    },
+    "chao_k_sing_hero2": {
+      "name": "Hero Chao Song 2",
+      "type": "event"
+    },
+    "chao_k_sing_hero3": {
+      "name": "Hero Chao Song 3",
+      "type": "event"
+    },
+    "chao_l_m": {
+      "name": "Pick a Chao game",
+      "type": "adventurefield"
+    },
+    "chao_new_garden": {
+      "name": "Unlock a new garden",
+      "type": "jingle"
+    },
+    "chao_r_a": {
+      "name": "Chao Race Victory",
+      "type": "jingle"
+    },
+    "chao_r_b": {
+      "name": "Beginner race",
+      "type": "level"
+    },
+    "chao_r_c": {
+      "name": "Challenge Race",
+      "type": "level"
+    },
+    "chao_r_d": {
+      "name": "Hero Race (Dark Track)",
+      "type": "level"
+    },
+    "chao_r_e": {
+      "name": "Pick your race",
+      "type": "menu"
+    },
+    "chao_r_gate_open": {
+      "name": "Chao Race - Gates Open",
+      "type": "jingle"
+    },
+    "chao_r_h": {
+      "name": "Dark Race (Hero Track)",
+      "type": "level"
+    },
+    "chao_r_item_get": {
+      "name": "Win a Prize",
+      "type": "jingle"
+    },
+    "chao_r_j": {
+      "name": "Jewel race",
+      "type": "level"
+    },
+    "continue": {
+      "name": "Continue Screen",
+      "type": "jingle"
+    },
+    "d_chambr": {
+      "name": "Deeper",
+      "type": "level"
+    },
+    "d_lagoon": {
+      "name": "Bright Sound",
+      "type": "level"
+    },
+    "e_engine": {
+      "name": "On The Edge",
+      "type": "level"
+    },
+    "e_quart": {
+      "name": "Lovely Gate 3",
+      "type": "level"
+    },
+    "e000_sng": {
+      "name": "Event: Let's Make It!",
+      "type": "event"
+    },
+    "e006_sng": {
+      "name": "Event - The Base",
+      "type": "event"
+    },
+    "e019_sng": {
+      "name": "E.G.G.M.A.N.",
+      "type": "event"
+    },
+    "e021_sng": {
+      "name": "Event: Strategy",
+      "type": "event"
+    },
+    "e027_sng": {
+      "name": "Event: Sonic vs. Shadow",
+      "type": "event"
+    },
+    "e028_sng": {
+      "name": "Event: Reunion",
+      "type": "event"
+    },
+    "e101_sng": {
+      "name": "Event: Revival",
+      "type": "event"
+    },
+    "e106_sng": {
+      "name": "Throw It All Away (short)",
+      "type": "event"
+    },
+    "e111_sng": {
+      "name": "Event: Ambition",
+      "type": "event"
+    },
+    "e112_sng": {
+      "name": "Event: Operation",
+      "type": "event"
+    },
+    "e119_sng": {
+      "name": "Flashback",
+      "type": "event"
+    },
+    "e127_sng": {
+      "name": "E.G.G.M.A.N.",
+      "type": "event"
+    },
+    "e130_sng": {
+      "name": "Event: Sonic vs. Shadow",
+      "type": "event"
+    },
+    "e205_sng": {
+      "name": "Event: Madness",
+      "type": "event"
+    },
+    "e207_sng": {
+      "name": "Super Sonic & Shadow Transformation",
+      "type": "event"
+    },
+    "e208_sng": {
+      "name": "Sonic & Shadow use Chaos Control",
+      "type": "event"
+    },
+    "e210_sn1": {
+      "name": "Event: The Last Scene/ Live & Learn",
+      "type": "event"
+    },
+    "e210_sn2": {
+      "name": "Event: The Last Scene",
+      "type": "event"
+    },
+    "e350_sng": {
+      "name": "Original Opening",
+      "type": "event"
+    },
+    "f_chase": {
+      "name": "The Supernatural",
+      "type": "level"
+    },
+    "f_rush": {
+      "name": "Highway In The Sky",
+      "type": "level"
+    },
+    "g_fores": {
+      "name": "Won't Stop, Just Go!",
+      "type": "level"
+    },
+    "g_hill": {
+      "name": "Green Hill Zone",
+      "type": "level"
+    },
+    "h_base": {
+      "name": "Down In The Base",
+      "type": "level"
+    },
+    "i_gate": {
+      "name": "Remember Me? - M.F.M.",
+      "type": "level"
+    },
+    "invncibl": {
+      "name": "Still Invincible ...No fear!",
+      "type": "jingle"
+    },
+    "item_get": {
+      "name": "Item Jingle",
+      "type": "jingle"
+    },
+    "kart": {
+      "name": "Chasing Drive",
+      "type": "level"
+    },
+    "l_colony": {
+      "name": "Trespasser",
+      "type": "level"
+    },
+    "m_harb1": {
+      "name": "That's The Way I Like It",
+      "type": "level"
+    },
+    "m_harb2": {
+      "name": "Can't Stop, So What!?",
+      "type": "level"
+    },
+    "m_herd": {
+      "name": "Space Trip Steps",
+      "type": "level"
+    },
+    "m_space": {
+      "name": "34ºN, 12ºE",
+      "type": "level"
+    },
+    "m_street": {
+      "name": "Rumbling HWY",
+      "type": "level"
+    },
+    "one_up": {
+      "name": "1-Up Jingle",
+      "type": "jingle"
+    },
+    "p_cave": {
+      "name": "Keys The Ruin",
+      "type": "level"
+    },
+    "p_hill": {
+      "name": "A Ghost's Pumpkin Soup",
+      "type": "level"
+    },
+    "p_lane": {
+      "name": "This Way Out",
+      "type": "level"
+    },
+    "r_hwy": {
+      "name": "Vengeance Is Mine",
+      "type": "level"
+    },
+    "rndclear": {
+      "name": "Round Clear",
+      "type": "jingle"
+    },
+    "s_hall": {
+      "name": "I'm A Spy",
+      "type": "level"
+    },
+    "s_ocean": {
+      "name": "Way To The Base",
+      "type": "level"
+    },
+    "s_rail": {
+      "name": "Mr.Unsmiley",
+      "type": "level"
+    },
+    "speedup": {
+      "name": "Hey You! It's Time To Speed Up Again!!!",
+      "type": "jingle"
+    },
+    "t1_shado": {
+      "name": "Throw It All Away",
+      "type": "event"
+    },
+    "t1_sonic": {
+      "name": "It Doesn't Matter",
+      "type": "event"
+    },
+    "t2_miles": {
+      "name": "Believe in Myself",
+      "type": "event"
+    },
+    "t2_rouge": {
+      "name": "Fly in the Freedom",
+      "type": "event"
+    },
+    "t3_eggma": {
+      "name": "EGGMAN",
+      "type": "event"
+    },
+    "t3_knuck": {
+      "name": "Unkown from M.E.",
+      "type": "event"
+    },
+    "t3_miles": {
+      "name": "Believe in Myself",
+      "type": "event"
+    },
+    "t3_shado": {
+      "name": "Throw It All Away",
+      "type": "event"
+    },
+    "t4_knuck": {
+      "name": "Unkown from M.E.",
+      "type": "event"
+    },
+    "t4_rouge": {
+      "name": "Fly in the Freedom",
+      "type": "event"
+    },
+    "t4_sonic": {
+      "name": "It Doesn't Matter",
+      "type": "event"
+    },
+    "t9_amy": {
+      "name": "My Sweet Passio",
+      "type": "theme"
+    },
+    "t9_eggma": {
+      "name": "EGGMAN",
+      "type": "theme"
+    },
+    "t9_knuck": {
+      "name": "Unkown from M.E.",
+      "type": "theme"
+    },
+    "t9_miles": {
+      "name": "Believe in Myself",
+      "type": "theme"
+    },
+    "t9_rouge": {
+      "name": "Fly in the Freedom",
+      "type": "theme"
+    },
+    "t9_shado": {
+      "name": "Throw It All Away",
+      "type": "theme"
+    },
+    "t9_sonic": {
+      "name": "It Doesn't Matter",
+      "type": "theme"
+    },
+    "timer": {
+      "name": "Drowning Timer",
+      "type": "jingle"
+    },
+    "title": {
+      "name": "Title Screen",
+      "type": "jingle"
+    },
+    "w_bed": {
+      "name": "Crush'em All",
+      "type": "level"
+    },
+    "w_canyon": {
+      "name": "Kick the Rock!",
+      "type": "level"
+    },
+    "w_jungl": {
+      "name": "Rhythm and Balance",
+      "type": "level"
+    },
+    "btl_ce": {
+      "name": "Downtown Race",
+      "type": "level"
+    },
+    "btl_hb": {
+      "name": "Hidden Base",
+      "type": "level"
+    },
+    "btl_ig": {
+      "name": "Iron Gate",
+      "type": "level"
+    },
+    "btl_mh": {
+      "name": "Metal Harbor",
+      "type": "level"
+    },
+    "btl_opng": {
+      "name": "Opening Music",
+      "type": "theme"
+    },
+    "btl_pc": {
+      "name": "Grind Race",
+      "type": "level"
+    },
+    "btl_rh": {
+      "name": "Radical Highway",
+      "type": "level"
+    },
+    "btl_sel": {
+      "name": "2P Selection",
+      "type": "menu"
+    },
+    "btl_so": {
+      "name": "Sand Ocean",
+      "type": "level"
+    },
+    "btl_wb": {
+      "name": "Weapons Bed",
+      "type": "level"
+    },
+    "btl_wj": {
+      "name": "White Jungle",
+      "type": "level"
+    },
+    "c_btl_ch": {
+      "name": "Chao Karate-Champion",
+      "type": "jingle"
+    },
+    "c_btl_cv": {
+      "name": "Chao Race Entry",
+      "type": "menu"
+    },
+    "c_btl_dr": {
+      "name": "Chao Karate-Draw",
+      "type": "jingle"
+    },
+    "c_btl_gm": {
+      "name": "Chao Karate",
+      "type": "event"
+    },
+    "c_btl_ls": {
+      "name": "Chao Karate-Lost",
+      "type": "jingle"
+    },
+    "c_btl_sl": {
+      "name": "Chao Karate Menu",
+      "type": "menu"
+    },
+    "c_btl_wn": {
+      "name": "Chao Karate-Won",
+      "type": "jingle"
+    },
+    "chao_g_iede": {
+      "name": "Unwanted Chao",
+      "type": "event"
+    },
+    "chao_hall": {
+      "name": "Letz Get This Party Started",
+      "type": "adventurefield"
+    }
+  },
+  "custom": {
+    "sng_btl01": {
+      "name": "2P Battle: Sea Area",
+      "type": "level"
+    },
+    "sng_btl02": {
+      "name": "2P Battle: City Area",
+      "type": "level"
+    },
+    "sng_btl03": {
+      "name": "2P Battle: Casino Area",
+      "type": "level"
+    },
+    "sng_btl04": {
+      "name": "2P Battle: Ring Race",
+      "type": "level"
+    },
+    "sng_btl05": {
+      "name": "2P Battle: Quick Race",
+      "type": "level"
+    },
+    "sng_e0017": {
+      "name": "\"We Can\" - Credits Version",
+      "type": "theme"
+    },
+    "sng_e0117": {
+      "name": "”Team Chaotix” - Credits Version",
+      "type": "theme"
+    },
+    "sng_e0404": {
+      "name": "\"Sonic Heroes\" - Credits Version",
+      "type": "theme"
+    },
+    "sng_ev10": {
+      "name": "\"No Past to Remember\"",
+      "type": "event"
+    },
+    "sng_ev11": {
+      "name": "\"Monkey Business\"",
+      "type": "event"
+    },
+    "sng_ev12": {
+      "name": "\"My World\"",
+      "type": "event"
+    },
+    "sng_ev13": {
+      "name": "\"My Ambition\"",
+      "type": "event"
+    },
+    "sng_invncbl": {
+      "name": "Jingle #2 - Invincible",
+      "type": "jingle"
+    },
+    "sng_rndclr": {
+      "name": "Jingle #1 - Round Clear",
+      "type": "jingle"
+    },
+    "sng_speedup": {
+      "name": "Jingle #3 - Speed Up",
+      "type": "jingle"
+    },
+    "sng_spstg1": {
+      "name": "Special Stage #1 - Bonus Challenge",
+      "type": "level"
+    },
+    "sng_spstg2": {
+      "name": "Special Stage #2 - Emerald Challenge",
+      "type": "level"
+    },
+    "sng_stg01": {
+      "name": "Seaside Hill",
+      "type": "level"
+    },
+    "sng_stg02": {
+      "name": "Ocean Palace",
+      "type": "level"
+    },
+    "sng_stg03": {
+      "name": "Grand Metropolis",
+      "type": "level"
+    },
+    "sng_stg04": {
+      "name": "Power Plant",
+      "type": "level"
+    },
+    "sng_stg05": {
+      "name": "Casino Park",
+      "type": "level"
+    },
+    "sng_stg06": {
+      "name": "Bingo Highway",
+      "type": "level"
+    },
+    "sng_stg07": {
+      "name": "Rail Canyon",
+      "type": "level"
+    },
+    "sng_stg08": {
+      "name": "Bullet Station",
+      "type": "level"
+    },
+    "sng_stg09": {
+      "name": "Frog Forest",
+      "type": "level"
+    },
+    "sng_stg10": {
+      "name": "Lost Jungle",
+      "type": "level"
+    },
+    "sng_stg11a": {
+      "name": "Hang Castle #1",
+      "type": "level"
+    },
+    "sng_stg11b": {
+      "name": "Hang Castle #2",
+      "type": "level"
+    },
+    "sng_stg12": {
+      "name": "Mystic Mansion",
+      "type": "level"
+    },
+    "sng_stg12a": {
+      "name": "Mystic Mansion - Part A",
+      "type": "event"
+    },
+    "sng_stg12b": {
+      "name": "Mystic Mansion - Part B",
+      "type": "event"
+    },
+    "sng_stg12c": {
+      "name": "Mystic Mansion - Part C",
+      "type": "event"
+    },
+    "sng_stg12d": {
+      "name": "Mystic Mansion - Part D",
+      "type": "event"
+    },
+    "sng_stg12e": {
+      "name": "Mystic Mansion - Part E",
+      "type": "event"
+    },
+    "sng_stg12f": {
+      "name": "Mystic Mansion - Part F",
+      "type": "event"
+    },
+    "sng_stg13": {
+      "name": "Egg Fleet",
+      "type": "level"
+    },
+    "sng_stg14": {
+      "name": "Final Fortress",
+      "type": "level"
+    },
+    "sng_stg20": {
+      "name": "Boss #1 - Egg Hawk",
+      "type": "fight"
+    },
+    "sng_stg20pi": {
+      "name": "Boss #1 - Egg Hawk Intro",
+      "type": "fight"
+    },
+    "sng_stg21": {
+      "name": "Boss #2 - Vs. Team Battle",
+      "type": "fight"
+    },
+    "sng_stg22": {
+      "name": "Boss #3 - Robot Carnival / Robot Storm",
+      "type": "fight"
+    },
+    "sng_stg23": {
+      "name": "Boss #4 - Egg Albatross",
+      "type": "fight"
+    },
+    "sng_stg24tc": {
+      "name": "Boss - Vs. Team Chaotix",
+      "type": "fight"
+    },
+    "sng_stg24td": {
+      "name": "Boss - Vs. Team Dark",
+      "type": "fight"
+    },
+    "sng_stg24tr": {
+      "name": "Boss - Vs. Team Rose",
+      "type": "fight"
+    },
+    "sng_stg24ts": {
+      "name": "Boss - Vs. Team Sonic",
+      "type": "fight"
+    },
+    "sng_stg26": {
+      "name": "Boss #5 - Egg Emperor",
+      "type": "fight"
+    },
+    "sng_stg27": {
+      "name": "Boss #6 - Metal Madness",
+      "type": "fight"
+    },
+    "sng_stg28": {
+      "name": "\"What I'm Made Of\" / Metal Overlord",
+      "type": "fight"
+    },
+    "sng_stg29": {
+      "name": "Sea Gate",
+      "type": "level"
+    },
+    "sng_sys1": {
+      "name": "System Screen #1 - Menu",
+      "type": "menu"
+    },
+    "sng_sys2": {
+      "name": "System Screen #2 - Select",
+      "type": "menu"
+    },
+    "sng_sys3": {
+      "name": "System Screen #3 - 2P Vs. Menu",
+      "type": "menu"
+    },
+    "sng_sys4": {
+      "name": "System Screen #4 - Select (Intro)",
+      "type": "menu"
+    },
+    "sng_tbsfa1": {
+      "name": "Team Sonic Blast",
+      "type": "jingle"
+    },
+    "sng_tbsfa2": {
+      "name": "Team Dark Blast",
+      "type": "jingle"
+    },
+    "sng_tbsfa3": {
+      "name": "Team Rose Blast",
+      "type": "jingle"
+    },
+    "sng_tbsfa4": {
+      "name": "Team Chaotix Blast",
+      "type": "jingle"
+    },
+    "sng_tbsfa4e": {
+      "name": "Team Chaotix Blast (EN.)",
+      "type": "jingle"
+    },
+    "sng_tbsfa4j": {
+      "name": "Team Chaotix Blast (JP.)",
+      "type": "jingle"
+    },
+    "sng_tbsfa5": {
+      "name": "Team Blast: Super Sonic",
+      "type": "jingle"
+    },
+    "sng_title1": {
+      "name": "Title Sequence (With Intro)",
+      "type": "event"
+    },
+    "sng_title2": {
+      "name": "Title Sequence",
+      "type": "jingle"
+    },
+    "sng_v01_main": {
+      "name": "\"Sonic Heroes\"",
+      "type": "theme"
+    },
+    "sng_v02_ts": {
+      "name": "\"We Can\"",
+      "type": "theme"
+    },
+    "sng_v03_td": {
+      "name": "\"This Machine\"",
+      "type": "theme"
+    },
+    "sng_v04_tr": {
+      "name": "\"Follow Me\"",
+      "type": "theme"
+    },
+    "sng_v05_tc": {
+      "name": "\"Team Chaotix\"",
+      "type": "theme"
+    }
+  }
+}

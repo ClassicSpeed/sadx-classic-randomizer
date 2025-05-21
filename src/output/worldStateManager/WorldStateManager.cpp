@@ -279,18 +279,6 @@ void WorldStateManager::UpdateChecks(const std::map<int, LocationData>& checkDat
     this->_checkData = checkData;
 }
 
-bool WorldStateManager::IsSkyChase1Enabled()
-{
-    if (!this->options.skyChaseChecks)
-        return false;
-
-    if ((this->options.skyChaseChecksHard && this->_checkData[28].checked) ||
-        (!this->options.skyChaseChecksHard && this->_checkData[27].checked))
-        return false;
-
-    return true;
-}
-
 void WorldStateManager::DrawDisableDoorIndicator(const NJS_POINT3 basePoint, const float angle)
 {
     NJS_POINT3COL point3Col;
@@ -449,7 +437,7 @@ void WorldStateManager::OnFrame()
     if (CurrentLevel == LevelIDs_PerfectChaos)
         return;
 
-    if (IsSkyChase1Enabled() && (CurrentCharacter == Characters_Sonic || (CurrentCharacter == Characters_Tails && !
+    if (options.skyChaseChecks && (CurrentCharacter == Characters_Sonic || (CurrentCharacter == Characters_Tails && !
         options.missionModeEnabled)))
         EventFlagArray[33] = 1;
 
@@ -858,7 +846,7 @@ FunctionHook<Sint32> onPrepareLevel(0x415210, []()-> Sint32
         levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
         const char* originalCharId = CharIDStrings[CurrentCharacter];
-        CharIDStrings[CurrentCharacter] = "K";
+        CharIDStrings[CurrentCharacter] = "S";
         result = onPrepareLevel.Original();
         CharIDStrings[CurrentCharacter] = originalCharId;
     }
@@ -873,6 +861,9 @@ FunctionHook<Sint32> onPrepareLevel(0x415210, []()-> Sint32
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
     onCountSetItemsMaybe.Original();
+    
+    if (DemoPlaying > 0)
+        return;
 
     for (int i = 0; i < SETTable_Count; ++i)
     {
@@ -978,15 +969,11 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     }
     if (worldStateManagerPtr->options.skyChaseChecks)
     {
-        //Sky Chase
-        if (worldStateManagerPtr->IsSkyChase1Enabled())
-        {
-            AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-            if (worldStateManagerPtr->options.missionModeEnabled)
-                AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
-            else
-                AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
-        }
+        AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+        if (worldStateManagerPtr->options.missionModeEnabled)
+            AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
+        else
+            AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
 
         AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
         AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
@@ -996,8 +983,19 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     }
 
     //Time Travel 
+    AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Sonic);
     AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Tails);
+    AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Knuckles);
+    AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Amy);
+    AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Gamma);
+    AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Big);
+    
+    AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Sonic);
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Tails);
+    AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Knuckles);
+    AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Amy);
+    AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Gamma);
+    AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Big);
 });
 
 

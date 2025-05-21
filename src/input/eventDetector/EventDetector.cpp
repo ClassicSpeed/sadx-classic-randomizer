@@ -803,6 +803,7 @@ FunctionHook<void, EntityData1*> onExtraLifeCapsuleBroken(0x4D6D40, [](EntityDat
 {
     onExtraLifeCapsuleBroken.Original(entity);
     CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().lifeCapsuleSanity);
+    eventDetectorPtr->ShuffleSong();
 });
 FunctionHook<void, EntityData1*> onBombCapsuleBroken(0x4D6E00, [](EntityData1* entity)-> void
 {
@@ -1558,3 +1559,56 @@ FunctionHook<void, task*> onMissionStatueDelete(0x5934C0, [](task* tp)-> void
 {
     FreeTask(tp);
 });
+
+FunctionHook<void, int> onPlayMusic(0x425690, [](const int songId)-> void
+{
+    int shuffledSongId;
+    if (songId == eventDetectorPtr->lastRealSongId)
+        shuffledSongId = eventDetectorPtr->lastShuffledSongId;
+    else
+        shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
+
+    onPlayMusic.Original(shuffledSongId);
+    eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
+    eventDetectorPtr->lastRealSongId = songId;
+    eventDetectorPtr->lastShuffledSongId = shuffledSongId;
+});
+
+FunctionHook<void, int> onPlayMusic2(0x425800, [](const int songId)-> void
+{
+    int shuffledSongId;
+    if (songId == eventDetectorPtr->lastRealSongId)
+        shuffledSongId = eventDetectorPtr->lastShuffledSongId;
+    else
+        shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
+
+    onPlayMusic2.Original(shuffledSongId);
+    eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
+    eventDetectorPtr->lastRealSongId = songId;
+    eventDetectorPtr->lastShuffledSongId = shuffledSongId;
+});
+
+FunctionHook<void, int> onPlayJingle(0x425860, [](const int songId)-> void
+{
+    const int shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
+    onPlayJingle.Original(shuffledSongId);
+    if(eventDetectorPtr->randomizer.GetOptions().showSongNameForType == ShowSongNameForTypeEverything)
+        eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
+});
+void EventDetector::ShuffleSong()
+{
+    if (randomizer.GetOptions().musicShuffle == MusicShuffleNone
+        || randomizer.GetOptions().musicShuffle == MusicShuffleDisabled
+        || randomizer.GetOptions().musicShuffle == MusicShuffleSingularity)
+        return;
+
+    if (randomizer.GetOptions().musicShuffleConsistency != MusicShuffleConsistencyPerPlay)
+        return;
+
+    if (!randomizer.GetOptions().lifeCapsulesChangeSongs != LifeCapsulesChangeSongsEnabled)
+        return;
+
+    const int shuffledSongId = randomizer.GetSongForId(eventDetectorPtr->lastRealSongId);
+    onPlayMusic.Original(shuffledSongId);
+    randomizer.DisplaySongName(shuffledSongId);
+}

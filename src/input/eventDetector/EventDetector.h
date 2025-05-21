@@ -71,6 +71,7 @@ public:
                            bool progressionIndicator, int progressionIndicatorColor);
     void setHomingAttackIndicator(HomingAttackIndicator homingAttackIndicator);
     void OnTwinkleCircuitCompleted(int character);
+    void ShuffleSong();
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
     std::vector<CapsuleLocationData> capsules;
@@ -89,6 +90,8 @@ public:
     bool fishIndicator = true;
     bool progressionIndicator = true;
     HomingAttackIndicator homingAttackIndicator = HomingAttackIndicatorDisabled;
+    int lastRealSongId = -1;
+    int lastShuffledSongId = -1;
 
 
 

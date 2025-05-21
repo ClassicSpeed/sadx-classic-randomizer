@@ -9,7 +9,7 @@
 
 #define SADX_AP_VERSION_MAJOR 1
 #define SADX_AP_VERSION_MINOR 1
-#define SADX_AP_VERSION_PATCH 1
+#define SADX_AP_VERSION_PATCH 2
 
 #define MISSION_S  3
 #define MISSION_C  2

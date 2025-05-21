@@ -52,6 +52,58 @@ enum Levels
     HotShelter
 };
 
+enum ShowSongName
+{
+    ShowSongNameWithSongShuffle = 0,
+    ShowSongNameAlwaysOn,
+    ShowSongNameAlwaysOff
+};
+
+enum ShowSongNameForType
+{
+    ShowSongNameForTypeEverything,
+    ShowSongNameForTypeEverythingButJingles,
+    ShowSongNameForTypeOnlyActionLevels
+};
+
+
+enum MusicSource
+{
+    MusicSourceNone = -1,
+    MusicSourceSadx = 0,
+    MusicSourceSadxCustom,
+    MusicSourceSa2B,
+    MusicSourceSa2BCustom,
+    MusicSourceSadxSa2B,
+    MusicSourceSadxSa2BCustom
+};
+
+enum MusicShuffle
+{
+    MusicShuffleNone = -1,
+    MusicShuffleDisabled = 0,
+    MusicShuffleCurated,
+    MusicShuffleByType,
+    MusicShuffleFull,
+    MusicShuffleSingularity,
+};
+
+enum MusicShuffleConsistency
+{
+    MusicShuffleConsistencyNone = -1,
+    MusicShuffleConsistencyStatic = 0,
+    MusicShuffleConsistencyOnRestart,
+    MusicShuffleConsistencyPerPlay,
+};
+
+
+enum LifeCapsulesChangeSongs
+{
+    LifeCapsulesChangeSongsNone = -1,
+    LifeCapsulesChangeSongsEnabled = 0,
+    LifeCapsulesChangeSongsDisabled = 1,
+};
+
 struct Options
 {
     std::string playerName = "Player";
@@ -65,7 +117,7 @@ struct Options
     int levelGoal = 999999;
     int missionGoal = 999999;
     int bossesGoal = 999999;
-    
+
     bool missionModeEnabled = false;
     bool entranceRandomizer = false;
 
@@ -75,9 +127,9 @@ struct Options
     StartingArea amyStartingArea = NoStatingArea;
     StartingArea bigStartingArea = NoStatingArea;
     StartingArea gammaStartingArea = NoStatingArea;
-    
+
     bool enemySanity = false;
-    
+
     bool sonicEnemySanity = true;
     bool tailsEnemySanity = true;
     bool knucklesEnemySanity = true;
@@ -90,21 +142,21 @@ struct Options
 
     bool fishSanity = false;
     bool lazyFishing = false;
-    
+
     bool sonicCapsuleSanity = true;
     bool tailsCapsuleSanity = true;
     bool knucklesCapsuleSanity = true;
     bool amyCapsuleSanity = true;
     bool bigCapsuleSanity = true;
     bool gammaCapsuleSanity = true;
-    
+
     bool lifeCapsuleSanity = true;
     bool shieldCapsuleSanity = true;
     bool powerUpCapsuleSanity = true;
     bool ringCapsuleSanity = true;
-    
+
     std::vector<int> progressionItems = {};
-    
+
     bool deathLinkActive = false;
     bool ringLinkActive = false;
     bool casinopolisRingLink = false;
@@ -132,9 +184,22 @@ struct Options
     int bigActionStageMissions = 0;
     int gammaActionStageMissions = 0;
 
+    std::string sa2BAdxPath = "../../../../Sonic Adventure 2/resource/gd_PC/ADX/";
+    std::string customAdxPath = "custom/";
+    ShowSongName showSongName = ShowSongNameWithSongShuffle;
+    ShowSongNameForType showSongNameForType = ShowSongNameForTypeEverything;
+    bool includeVanillaSongs = true;
+    bool showWarningForMissingFiles = false;
+
+    MusicSource musicSource = MusicSourceNone;
+    MusicShuffle musicShuffle = MusicShuffleNone;
+    MusicShuffleConsistency musicShuffleConsistency = MusicShuffleConsistencyNone;
+    LifeCapsulesChangeSongs lifeCapsulesChangeSongs = LifeCapsulesChangeSongsNone;
+    int musicShuffleSeed = -1;
+
     bool twinkleCircuitCheck = true;
     bool multipleTwinkleCircuitChecks = true;
-    
+
     bool skyChaseChecks = false;
     bool skyChaseChecksHard = false;
     std::vector<int> missionBlacklist = {};
@@ -168,6 +233,7 @@ struct Options
             break;
         }
     }
+
     void SetCharacterEnemySanity(const Characters character, const bool characterEnemySanity)
     {
         switch (character)
@@ -273,7 +339,7 @@ struct Options
         }
         return false;
     }
-    
+
     bool GetSpecificCapsuleSanity(const CapsuleType capsuleType) const
     {
         switch (capsuleType)
@@ -403,6 +469,26 @@ struct Options
 
     bool LocationHasProgressiveItem(int locationId)
     {
-       return std::find(progressionItems.begin(), progressionItems.end(), locationId) != progressionItems.end();
+        return std::find(progressionItems.begin(), progressionItems.end(), locationId) != progressionItems.end();
+    }
+
+    bool MusicSourceIncludeSadx() const
+    {
+        return this->musicSource == MusicSourceSadx || this->musicSource == MusicSourceSadxCustom || this->musicSource
+            == MusicSourceSadxSa2B ||
+            this->musicSource == MusicSourceSadxSa2BCustom;
+    }
+
+    bool MusicSourceIncludeSa2B() const
+    {
+        return this->musicSource == MusicSourceSa2B || this->musicSource == MusicSourceSa2BCustom || this->musicSource
+            == MusicSourceSadxSa2B ||
+            this->musicSource == MusicSourceSadxSa2BCustom;
+    }
+
+    bool MusicSourceIncludeCustom() const
+    {
+        return this->musicSource == MusicSourceSadxCustom || this->musicSource == MusicSourceSa2BCustom || this->
+            musicSource == MusicSourceSadxSa2BCustom;
     }
 };

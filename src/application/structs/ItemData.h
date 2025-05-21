@@ -32,6 +32,23 @@ enum FillerType
     NoFiller,
 };
 
+inline bool IsJunkFiller(const FillerType fillerType)
+{
+    switch (fillerType)
+    {
+    case Invincibility:
+    case FiveRings:
+    case TenRings:
+    case Shield:
+    case MagneticShield:
+    case ExtraLife:
+    case NoFiller:
+        return false;
+    default:
+        return true;
+    }
+}
+
 struct ItemData
 {
     ItemData() : upgrade(static_cast<Upgrades>(0)), eventFlags({}), type(ItemUnknown), obtained(false),

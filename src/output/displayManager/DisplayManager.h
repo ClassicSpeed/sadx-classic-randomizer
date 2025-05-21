@@ -30,6 +30,7 @@ public:
 
     void QueueItemMessage(const std::string& message);
     void QueueChatMessage(const std::string& message);
+    void ShowSongName(const std::string& songName);
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
     void UpdateLevelStatus(LevelStatus levelStatus);
     void UpdateMissionStatus(MissionStatus missionStatus);
@@ -53,6 +54,7 @@ private:
     void AddNewMessages();
     void DisplayItemMessages() const;
     void DisplayChatMessages();
+    void DisplaySongName();
     void DisplayGoalStatus();
     std::string GetMissionBTarget(bool showTarget);
     std::string GetMissionATarget(bool showTarget);
@@ -80,6 +82,9 @@ private:
     int _chatDisplayCount = 5;
     std::vector<std::string> _chatMessagesQueue;
     std::clock_t _lastMessageTime = -1;
+
+    std::string _songName = "Unknown";
+    std::clock_t _songNameTime = -1;
 
     std::clock_t _goalTimer = -1;
 

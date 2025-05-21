@@ -411,7 +411,12 @@ void CharacterManager::ActivateFiller(const FillerType filler)
         MagneticBarrierPowerup(EntityData1Ptrs[0]);
         break;
     case ExtraLife:
-        ExtraLifePowerup(EntityData1Ptrs[0]);
+        GiveLives(1);
+        if (GetCurrentCharacterID() == Characters_Gamma)
+        {
+            PlaySound(1306, 0, 0, 0);
+        }
+        PlaySound(11, 0, 0, 0);
         break;
     case IceTrap:
         this->FreezePlayer();

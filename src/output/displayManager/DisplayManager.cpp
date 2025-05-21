@@ -56,6 +56,15 @@ void DisplayManager::QueueChatMessage(const std::string& message)
     _lastMessageTime = std::clock();
 }
 
+void DisplayManager::ShowSongName(const std::string& songName)
+{
+    if (_songName != songName)
+    {
+        _songName = songName;
+        _songNameTime = std::clock();
+    }
+}
+
 void DisplayManager::UpdateUnlockStatus(const UnlockStatus unlockStatus)
 {
     this->_unlockStatus = unlockStatus;
@@ -101,6 +110,7 @@ void DisplayManager::OnFrame()
 
     DisplayItemMessages();
     DisplayChatMessages();
+    DisplaySongName();
 
     DisplayGoalStatus();
     DisplayItemsUnlocked();
@@ -206,6 +216,60 @@ void DisplayManager::DisplayChatMessages()
                    (2 + longestMessageSize + 0.5) * this->_debugFontSize,
                    (linesFromTop + _chatDisplayCount + 0.5) * this->_debugFontSize, 62041.496f,
                    0x5F0000FF & 0x00FFFFFF | alpha / 3 << 24,
+                   QueuedModelFlagsB_EnableZWrite);
+
+
+    njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+}
+
+void DisplayManager::DisplaySongName()
+{
+    if (_songNameTime < 0)
+        return;
+
+    const double timePassed = (std::clock() - this->_songNameTime) / static_cast<double>(CLOCKS_PER_SEC);
+    const double timeRemaining = _displayDuration - timePassed;
+    int alpha = 255;
+    if (timeRemaining < 1)
+    {
+        alpha = static_cast<int>(timeRemaining * 255);
+        //Fix for alpha value being too low and SADX showing it as solid color
+        if (alpha < 15)
+        {
+            _songNameTime = -1;
+            return;
+        }
+        const int fadedColor = _chatMessageColor & 0x00FFFFFF | alpha << 24;
+        SetDebugFontColor(fadedColor);
+    }
+    else if (timePassed < 0.25)
+    {
+        alpha = static_cast<int>(timePassed * 4 * 255);
+        //Fix for alpha value being too low and SADX showing it as solid color
+        if (alpha < 15)
+            return;
+
+        const int fadedColor = _chatMessageColor & 0x00FFFFFF | alpha << 24;
+        SetDebugFontColor(fadedColor);
+    }
+    else
+        SetDebugFontColor(this->_chatMessageColor);
+
+    const int columns = HorizontalResolution / this->_debugFontSize;
+    SetDebugFontSize(this->_debugFontSize);
+
+    DisplayDebugString(NJM_LOCATION(columns/2 - _songName.size() / 2, 4), _songName.c_str());
+
+    njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+
+    DrawRect_Queue((columns / 2 - _songName.size() / 2 - 0.5f) * this->_debugFontSize,
+                   (4 - 0.5f) * this->_debugFontSize,
+                   (columns / 2 + _songName.size() / 2 + (_songName.size() % 2 != 0 ? 1 : 0) + 0.5f) * this->
+                   _debugFontSize,
+                   (4 + 1 + 0.5) * this->_debugFontSize, 62041.496f,
+                   0x5F000000 & 0x00FFFFFF | alpha / 3 << 24,
                    QueuedModelFlagsB_EnableZWrite);
 
 
@@ -470,9 +534,10 @@ void DisplayManager::DisplayItemsUnlocked()
 
     const int rows = VerticalResolution / this->_debugFontSize;
     const int columns = HorizontalResolution / this->_debugFontSize;
-    const std::string modVersionString = "v" + std::to_string(SADX_AP_VERSION_MAJOR) + "." +
+    //TODO: Change back
+    const std::string modVersionString = "pre-v" + std::to_string(SADX_AP_VERSION_MAJOR) + "." +
         std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH);
-    DisplayDebugString(NJM_LOCATION(columns-7, rows-2), modVersionString.c_str());
+    DisplayDebugString(NJM_LOCATION(columns-11, rows-2), modVersionString.c_str());
 
     SetDebugFontColor(this->_displayEmblemColor);
     std::string buffer;
