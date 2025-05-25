@@ -187,7 +187,7 @@ public:
     SongType GetSongTypeFromString(const std::string& typeStr);
     void UpdateOptions(Options newOptions);
     void RandomizeMusic();
-    std::vector<int> GetPossibleSongIds(int id);
+    std::vector<int> GetPossibleSongIds(int id, std::mt19937& gen);
     int GetSingularitySong();
     int GetSongForId(int songId);
     int GetSongNewForId(int songId, int currentSongId);

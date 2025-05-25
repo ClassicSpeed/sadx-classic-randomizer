@@ -165,9 +165,14 @@ void MusicManager::RandomizeMusic()
     }
     else
     {
+        std::mt19937 gen;
+        if (_options.musicShuffleConsistency == MusicShuffleConsistencyStatic)
+            gen = std::mt19937(_options.musicShuffleSeed);
+        else
+            gen = std::mt19937(std::random_device{}());
         for (size_t id = 0; id < MusicList.size(); ++id)
         {
-            const std::vector<int> possibleIds = this->GetPossibleSongIds(static_cast<int>(id));
+            const std::vector<int> possibleIds = this->GetPossibleSongIds(static_cast<int>(id), gen);
             if (!possibleIds.empty())
                 _songRandomizationMap[id] = possibleIds;
         }
@@ -175,7 +180,7 @@ void MusicManager::RandomizeMusic()
 }
 
 
-std::vector<int> MusicManager::GetPossibleSongIds(int const id)
+std::vector<int> MusicManager::GetPossibleSongIds(int const id, std::mt19937& gen)
 {
     // Get all the possible songs for the given id
     std::vector<int> allPossibleIds = {};
@@ -201,18 +206,10 @@ std::vector<int> MusicManager::GetPossibleSongIds(int const id)
         allPossibleIds.push_back(id);
     }
 
-    if (_options.musicShuffleConsistency == MusicShuffleConsistencyStatic)
+    if (_options.musicShuffleConsistency == MusicShuffleConsistencyStatic
+        || _options.musicShuffleConsistency == MusicShuffleConsistencyOnRestart)
     {
-        std::mt19937 gen(_options.musicShuffleSeed);
         std::uniform_int_distribution<> dis(0, allPossibleIds.size() - 1);
-        return {allPossibleIds[dis(gen)]};
-    }
-    if (_options.musicShuffleConsistency == MusicShuffleConsistencyOnRestart)
-    {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, allPossibleIds.size() - 1);
-
         return {allPossibleIds[dis(gen)]};
     }
     //MusicShuffleConsistencyPerPlay
