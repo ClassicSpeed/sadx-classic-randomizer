@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added:
 
-- Added a path option for `songs.json` in the mod settings to allow a custom location. Path is relative to the game's main folder.
+- Added a path option for `songs.json` in the mod settings to allow a custom location. Path is relative to the game's
+  main folder.
 - Added popup messages for missing or malformed `songs.json`.
 - Added Ring Loss override in the mod settings.
 - Added Custom songs only as a source option for music randomization.
@@ -21,6 +22,14 @@ All notable changes to this project will be documented in this file.
 - Fixed spelling mistakes in `songs.json` for Unknown from M.E. tracks.
 - Changed SA2's Original intro and Sonic Heroes intro from "event" to "jingle".
 - Fixed Trap Link sending junk items instead of traps.
+
+### Logic
+
+- Knuckles clip from Casino to Station is now Expert+ only.
+- Added clip from SSMain into Speed Highway for Amy in expert (DX).
+- Added clip from SSMain into Speed Highway for Tails in expert (DC).
+- Added clip from Angel Island into Ice Cap for Sonic and Knuckles in expert (DC).
+- Big now requires the Station Front key to enter Ice Cap again.
 
 ## [v1.1.2 pre-release] - 2025-05-21
 
@@ -72,7 +81,7 @@ All notable changes to this project will be documented in this file.
 
 ### Logic
 
-- Mission 40 is now expert+.
+- Mission 40 without light shoes is now expert+.
 - Gamma now needs the Jet Booster to clip from Hotel to SSMain/Casino in expert (DX).
 - The clip without any item is expert+ only.
 - Tails can now enter Ice Cap without the Ice Stone in expert (DC).
