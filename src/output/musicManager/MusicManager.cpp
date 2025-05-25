@@ -12,14 +12,20 @@ const SongData* MusicManager::FindSongById(const int songId)
     return _songMap.FindById(songId);
 }
 
-void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions)
+
+void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath)
 {
     // Open the JSON file
-    std::string filePath = "./mods/SADX_Archipelago/songs.json";
+    std::string filePath = songsPath + "songs.json";
     std::ifstream file(filePath, std::ifstream::binary);
     if (!file.is_open())
     {
-        throw std::runtime_error("Failed to open file: " + filePath);
+        std::string errorMessage = "Error: Couldn't open song mapping file!\n\nFile location: /Sonic Adventure DX/"
+            + filePath + "\n\nPlease check the file location/mod settings and try again.";
+        MessageBox(WindowHandle, std::wstring(errorMessage.begin(), errorMessage.end()).c_str(),
+                   L"SADX Archipelago Error: Missing songs mapping file", MB_OK | MB_ICONERROR);
+
+        exit(0);
     }
 
     // Parse the JSON file
@@ -28,7 +34,12 @@ void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions)
     std::string errs;
     if (!Json::parseFromStream(builder, file, &root, &errs))
     {
-        throw std::runtime_error("Failed to parse JSON: " + errs);
+        std::string errorMessage = "Error: Couldn't parse the song mapping file!\n\nFile location: /Sonic Adventure DX/"
+            + filePath + "\n\nPlease use a JSON validator with the songs.json file  and try again.";
+        MessageBox(WindowHandle, std::wstring(errorMessage.begin(), errorMessage.end()).c_str(),
+                   L"SADX Archipelago Error: Malformed songs mapping file", MB_OK | MB_ICONERROR);
+
+        exit(0);
     }
 
 
@@ -67,12 +78,45 @@ void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions)
 
     //Custom    
     ParseSongCategory(helperFunctions, root["custom"], _options.customAdxPath, CustomSource);
+    ParseExtraFiles(helperFunctions);
 }
 
+void MusicManager::ParseExtraFiles(const HelperFunctions& helperFunctions)
+{
+    namespace fs = std::filesystem;
+    std::string directoryPath = "./SoundData/bgm/wma/" + _options.customAdxPath;
+    if (!fs::exists(directoryPath) || !fs::is_directory(directoryPath))
+        return;
+
+    for (const auto& entry : fs::directory_iterator(directoryPath))
+    {
+        if (entry.is_regular_file() && entry.path().extension() == ".adx")
+        {
+            std::string codename = entry.path().stem().string();
+
+            if (_songMap.FindByCodename(codename) != nullptr)
+                continue;
+
+            std::string fullPath = _options.customAdxPath + codename;
+
+            // Allocate memory for the file path
+            const auto allocatedName = new char[fullPath.size() + 1];
+            std::strcpy(allocatedName, fullPath.c_str());
+
+            // Register the music file and add it to the song map
+            const MusicInfo musicInfo = {allocatedName, 1};
+            const int id = helperFunctions.RegisterMusicFile(musicInfo);
+            _songMap.AddSong(id, codename, codename, SongTypeAny, CustomSource, std::vector<std::string>(),
+                             std::vector<std::string>(), std::vector<std::string>(), "");
+        }
+    }
+}
 
 void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot,
                                      std::string categoryPath, SongSource songSource)
 {
+    std::vector<std::string> missingFiles;
+
     for (const auto& codename : categoryRoot.getMemberNames())
     {
         const Json::Value& songData = categoryRoot[codename];
@@ -83,22 +127,18 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
 
         std::string fullPath = categoryPath + codename;
 
-        const std::ifstream fin("./SoundData/bgm/wma/" + fullPath + ".adx");
-        if (!fin)
+        if (const std::ifstream fin("./SoundData/bgm/wma/" + fullPath + ".adx"); !fin)
         {
-            if (_options.showWarningForMissingFiles)
+            if (_options.showWarningForMissingFiles && missingFiles.size() < 3)
             {
-                std::string errorMessage = "Warning: Missing song file!\n\nFile name: " + fullPath +
-                    ".adx\n\nPlease check the file name and try again.";
-                MessageBox(WindowHandle, std::wstring(errorMessage.begin(), errorMessage.end()).c_str(),
-                           L"SADX Archipelago Warning: Missing music file", MB_OK | MB_ICONERROR);
+                missingFiles.push_back(fullPath + ".adx");
             }
         }
         else
         {
             auto allocatedName = new char[fullPath.size() + 1];
             std::strcpy(allocatedName, fullPath.c_str());
-            int loop = songType == Jingle ? 0 : 1;
+            int loop = songType == SongTypeJingle ? 0 : 1;
 
             MusicInfo musicInfo = {allocatedName, loop};
 
@@ -107,18 +147,36 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
                              std::vector<std::string>(), std::vector<std::string>(), "");
         }
     }
+
+    if (!missingFiles.empty() && _options.showWarningForMissingFiles)
+    {
+        std::string errorMessage = "Warning: Missing song files!\n\n";
+        for (const auto& file : missingFiles)
+    {
+            errorMessage += "File name: " + file + "\n";
+        }
+        if (missingFiles.size() == 3)
+        {
+            errorMessage += "...\n(Only showing the first 3 missing files)";
+        }
+        errorMessage += "\n\nPlease check the file names and try again.";
+        MessageBox(WindowHandle, std::wstring(errorMessage.begin(), errorMessage.end()).c_str(),
+                   L"SADX Archipelago Warning: Missing music files", MB_OK | MB_ICONERROR);
 }
+}
+
 
 SongType MusicManager::GetSongTypeFromString(const std::string& typeStr)
 {
     static const std::unordered_map<std::string, SongType> stringToEnum = {
-        {"level", SongType::Level},
-        {"fight", SongType::Fight},
-        {"theme", SongType::Theme},
-        {"jingle", SongType::Jingle},
-        {"menu", SongType::Menu},
-        {"adventurefield", SongType::AdventureField},
-        {"event", SongType::Event}
+        {"level", SongType::SongTypeLevel},
+        {"fight", SongType::SongTypeFight},
+        {"theme", SongType::SongTypeTheme},
+        {"jingle", SongType::SongTypeJingle},
+        {"menu", SongType::SongTypeMenu},
+        {"adventurefield", SongType::SongTypeAdventureField},
+        {"event", SongType::SongTypeEvent},
+        {"any", SongType::SongTypeAny}
     };
 
     auto it = stringToEnum.find(typeStr);
@@ -127,7 +185,7 @@ SongType MusicManager::GetSongTypeFromString(const std::string& typeStr)
         return it->second;
     }
 
-    return SongType::Level;
+    return SongType::SongTypeLevel;
 }
 
 void MusicManager::UpdateOptions(const Options newOptions)
@@ -155,9 +213,14 @@ void MusicManager::RandomizeMusic()
     }
     else
     {
+        std::mt19937 gen;
+        if (_options.musicShuffleConsistency == MusicShuffleConsistencyStatic)
+            gen = std::mt19937(_options.musicShuffleSeed);
+        else
+            gen = std::mt19937(std::random_device{}());
         for (size_t id = 0; id < MusicList.size(); ++id)
         {
-            const std::vector<int> possibleIds = this->GetPossibleSongIds(static_cast<int>(id));
+            const std::vector<int> possibleIds = this->GetPossibleSongIds(static_cast<int>(id), gen);
             if (!possibleIds.empty())
                 _songRandomizationMap[id] = possibleIds;
         }
@@ -165,7 +228,7 @@ void MusicManager::RandomizeMusic()
 }
 
 
-std::vector<int> MusicManager::GetPossibleSongIds(int const id)
+std::vector<int> MusicManager::GetPossibleSongIds(int const id, std::mt19937& gen)
 {
     // Get all the possible songs for the given id
     std::vector<int> allPossibleIds = {};
@@ -183,7 +246,7 @@ std::vector<int> MusicManager::GetPossibleSongIds(int const id)
     else if (_options.musicShuffle == MusicShuffleByType)
         allPossibleIds = _songMap.GetSongsByType(songInfo->type);
     else if (_options.musicShuffle == MusicShuffleFull)
-        allPossibleIds = _songMap.GetAllSongs(songInfo->type == Jingle);
+        allPossibleIds = _songMap.GetAllSongs(songInfo->type == SongTypeJingle);
 
     if (allPossibleIds.empty() || _options.includeVanillaSongs)
     {
@@ -191,18 +254,10 @@ std::vector<int> MusicManager::GetPossibleSongIds(int const id)
         allPossibleIds.push_back(id);
     }
 
-    if (_options.musicShuffleConsistency == MusicShuffleConsistencyStatic)
+    if (_options.musicShuffleConsistency == MusicShuffleConsistencyStatic
+        || _options.musicShuffleConsistency == MusicShuffleConsistencyOnRestart)
     {
-        std::mt19937 gen(_options.musicShuffleSeed);
         std::uniform_int_distribution<> dis(0, allPossibleIds.size() - 1);
-        return {allPossibleIds[dis(gen)]};
-    }
-    if (_options.musicShuffleConsistency == MusicShuffleConsistencyOnRestart)
-    {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, allPossibleIds.size() - 1);
-
         return {allPossibleIds[dis(gen)]};
     }
     //MusicShuffleConsistencyPerPlay

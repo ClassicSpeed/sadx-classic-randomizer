@@ -18,6 +18,9 @@
             <Property name="RingLinkOverride" type="RingLinkIndex" defaultvalue="0" display="Ring Link Override">
                 <HelpText>You can override the Ring Link setting from the yaml.</HelpText>
             </Property>
+            <Property name="RingLossOverride" type="RingLossIndex" defaultvalue="0" display="Ring Loss Override">
+                <HelpText>You can override the Ring Loss setting from the yaml.</HelpText>
+            </Property>
             <Property name="TrapLinkOverride" type="DeathLinkIndex" defaultvalue="0" display="Trap Link Override">
                 <HelpText>You can override the Trap Link setting from the yaml.</HelpText>
             </Property>
@@ -103,12 +106,15 @@
             </Property>
         </Group>
         <Group name="MusicShuffle" display="Music Shuffle Settings">
+            <Property name="SongsPath" type="string" defaultvalue="mods/SADX_Archipelago/" display="Songs mapping Path">
+                <HelpText>Path to the songs.json file. Must end with a slash (/) and be relative to /Sonic Adventure DX/.</HelpText>
+            </Property>
             <Property name="Sa2bADXpath" type="string" defaultvalue="../../../../Sonic Adventure 2/resource/gd_PC/ADX/"
                       display="SA2B Songs Path">
-                <HelpText>Path to the SA2B music files. Must end with a slash (/) and be relative to Sonic Adventure DX/SoundData/bgm/wma/.</HelpText>
+                <HelpText>Path to the SA2B music files. Must end with a slash (/) and be relative to /Sonic Adventure DX/SoundData/bgm/wma/.</HelpText>
             </Property>
             <Property name="CustomADXpath" type="string" defaultvalue="custom/" display="Custom Songs Path">
-                <HelpText>Path to the custom music files. Must end with a slash (/) and be relative to Sonic Adventure DX/SoundData/bgm/wma/.</HelpText>
+                <HelpText>Path to the custom music files. Must end with a slash (/) and be relative to /Sonic Adventure DX/SoundData/bgm/wma/.</HelpText>
             </Property>
             <Property name="ShowSongName" type="ShowSongNameIndex" defaultvalue="0" display="Show Song Name">
                 <HelpText>Display the name of the song during gameplay.</HelpText>
@@ -316,6 +322,13 @@
             <EnumMember name="2" display="Force Enabled (Hard)"/>
             <EnumMember name="3" display="Force Disabled"/>
         </Enum>
+        <Enum name="RingLossIndex">
+            <EnumMember name="0" display="Default"/>
+            <EnumMember name="1" display="Force Classic"/>
+            <EnumMember name="2" display="Force Modern"/>
+            <EnumMember name="3" display="Force OHKO"/>
+            <EnumMember name="4" display="Force OHKO (No shields)"/>
+        </Enum>
         <Enum name="HomingAttackIndex">
             <EnumMember name="0" display="Disabled"/>
             <EnumMember name="1" display="Enabled"/>
@@ -351,11 +364,12 @@
         <Enum name="MusicSourceIndex">
             <EnumMember name="-1" display="Default"/>
             <EnumMember name="0" display="Force SADX"/>
-            <EnumMember name="1" display="Force SADX/Custom"/>
-            <EnumMember name="2" display="Force SA2B"/>
-            <EnumMember name="3" display="Force SA2B/Custom"/>
-            <EnumMember name="4" display="Force SADX/SA2B"/>
-            <EnumMember name="5" display="Force SADX/SA2B/Custom"/>
+            <EnumMember name="1" display="Force SA2B"/>
+            <EnumMember name="2" display="Force Custom"/>
+            <EnumMember name="3" display="Force SADX/SA2B"/>
+            <EnumMember name="4" display="Force SADX/Custom"/>
+            <EnumMember name="5" display="Force SA2B/Custom"/>
+            <EnumMember name="6" display="Force SADX/SA2B/Custom"/>
         </Enum>
         <Enum name="MusicShuffleIndex">
             <EnumMember name="-1" display="Default"/>

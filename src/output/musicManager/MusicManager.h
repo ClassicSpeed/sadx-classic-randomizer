@@ -5,18 +5,20 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <filesystem>
 #include "../../application/structs/Options.h"
 
 
 enum SongType
 {
-    Level,
-    Fight,
-    Theme,
-    Jingle,
-    Menu,
-    AdventureField,
-    Event
+    SongTypeLevel,
+    SongTypeFight,
+    SongTypeTheme,
+    SongTypeJingle,
+    SongTypeMenu,
+    SongTypeAdventureField,
+    SongTypeEvent,
+    SongTypeAny
 };
 
 enum SongSource
@@ -57,12 +59,16 @@ public:
                  const std::vector<std::string>& possibleCustomCodenames,
                  const std::string& sa2Replacement)
     {
+        std::string lowercaseCodename = codename;
+        std::transform(lowercaseCodename.begin(), lowercaseCodename.end(), lowercaseCodename.begin(),
+                       [](unsigned char c) { return std::tolower(c); });
         SongData songData = {
-            id, codename, name, type, source, possibleSADXCodenames, possibleSA2BCodenames, possibleCustomCodenames,
+            id, lowercaseCodename, name, type, source, possibleSADXCodenames, possibleSA2BCodenames,
+            possibleCustomCodenames,
             sa2Replacement
         };
         _idMap[id] = songData;
-        _codenameMap[codename] = id;
+        _codenameMap[lowercaseCodename] = id;
     }
 
     const SongData* FindById(int id) const
@@ -77,7 +83,10 @@ public:
 
     const SongData* FindByCodename(const std::string& codename) const
     {
-        auto it = _codenameMap.find(codename);
+        std::string lowercaseCodename = codename;
+        std::transform(lowercaseCodename.begin(), lowercaseCodename.end(), lowercaseCodename.begin(),
+                       [](unsigned char c) { return std::tolower(c); });
+        auto it = _codenameMap.find(lowercaseCodename);
         if (it != _codenameMap.end())
         {
             auto song = &(_idMap.at(it->second));
@@ -95,7 +104,7 @@ public:
         const auto sa2SongData = FindByCodename(songData->sa2Replacement);
         if (sa2SongData == nullptr)
             return {id};
-        
+
         return {sa2SongData->id};
     }
 
@@ -137,7 +146,15 @@ public:
 
     std::vector<int> GetSongsByType(const SongType songType)
     {
-        return _songsByType[songType];
+        if (songType == SongTypeAny)
+            return _allSongs;
+        if (songType == SongTypeJingle)
+            return _songsByType[songType];
+
+        std::vector<int> result = _songsByType[songType];
+        const auto& anySongs = _songsByType[SongTypeAny];
+        result.insert(result.end(), anySongs.begin(), anySongs.end());
+        return result;
     }
 
     std::vector<int> GetAllSongs(const bool isJingle)
@@ -160,7 +177,7 @@ public:
                 continue;
 
             _songsByType[song.second.type].push_back(song.first);
-            if (song.second.type == Jingle)
+            if (song.second.type == SongTypeJingle)
                 _allJingles.push_back(song.first);
             else
                 _allSongs.push_back(song.first);
@@ -181,17 +198,18 @@ class MusicManager
 public:
     MusicManager();
     const SongData* FindSongById(int songId);
-    void ProcessSongsFile(const HelperFunctions& helperFunctions);
+    void ParseExtraFiles(const HelperFunctions& helperFunctions);
+    void ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath);
     void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath,
                            SongSource songSource);
     SongType GetSongTypeFromString(const std::string& typeStr);
     void UpdateOptions(Options newOptions);
     void RandomizeMusic();
-    std::vector<int> GetPossibleSongIds(int id);
+    std::vector<int> GetPossibleSongIds(int id, std::mt19937& gen);
     int GetSingularitySong();
     int GetSongForId(int songId);
     int GetSongNewForId(int songId, int currentSongId);
-  
+
 private:
     Options _options;
     SongMap _songMap;

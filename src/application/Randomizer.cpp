@@ -985,6 +985,7 @@ void Randomizer::ProcessTrapLink(std::string itemName, std::string message)
 void Randomizer::OnConnected(std::string playerName)
 {
     _options.playerName = playerName;
+    _musicManager.RandomizeMusic();
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
     _displayManager.SetConnected();
@@ -1151,7 +1152,6 @@ void Randomizer::SetMusicSource(const MusicSource musicSource)
     if (_options.musicSource == MusicSourceNone)
         _options.musicSource = musicSource;
     _musicManager.UpdateOptions(_options);
-    _musicManager.RandomizeMusic();
 }
 
 void Randomizer::SetMusicShuffle(const MusicShuffle musicShuffle)
@@ -1159,7 +1159,6 @@ void Randomizer::SetMusicShuffle(const MusicShuffle musicShuffle)
     if (_options.musicShuffle == MusicShuffleNone)
         _options.musicShuffle = musicShuffle;
     _musicManager.UpdateOptions(_options);
-    _musicManager.RandomizeMusic();
 }
 
 void Randomizer::SetMusicShuffleConsistency(const MusicShuffleConsistency musicShuffleConsistency)
@@ -1167,14 +1166,12 @@ void Randomizer::SetMusicShuffleConsistency(const MusicShuffleConsistency musicS
     if (_options.musicShuffleConsistency == MusicShuffleConsistencyNone)
         _options.musicShuffleConsistency = musicShuffleConsistency;
     _musicManager.UpdateOptions(_options);
-    _musicManager.RandomizeMusic();
 }
 
 void Randomizer::SetMusicShuffleSeed(const int musicShuffleSeed)
 {
     _options.musicShuffleSeed = musicShuffleSeed;
     _musicManager.UpdateOptions(_options);
-    _musicManager.RandomizeMusic();
 }
 
 void Randomizer::SetLifeCapsulesChangeSongs(const bool lifeCapsulesChangeSongs)

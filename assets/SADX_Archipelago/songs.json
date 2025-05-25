@@ -3350,7 +3350,7 @@
     },
     "e350_sng": {
       "name": "Original Opening",
-      "type": "event"
+      "type": "jingle"
     },
     "f_chase": {
       "name": "The Supernatural",
@@ -3473,7 +3473,7 @@
       "type": "event"
     },
     "t3_knuck": {
-      "name": "Unkown from M.E.",
+      "name": "Unknown from M.E.",
       "type": "event"
     },
     "t3_miles": {
@@ -3485,7 +3485,7 @@
       "type": "event"
     },
     "t4_knuck": {
-      "name": "Unkown from M.E.",
+      "name": "Unknown from M.E.",
       "type": "event"
     },
     "t4_rouge": {
@@ -3505,7 +3505,7 @@
       "type": "theme"
     },
     "t9_knuck": {
-      "name": "Unkown from M.E.",
+      "name": "Unknown from M.E.",
       "type": "theme"
     },
     "t9_miles": {
@@ -3876,7 +3876,7 @@
     },
     "sng_title1": {
       "name": "Title Sequence (With Intro)",
-      "type": "event"
+      "type": "jingle"
     },
     "sng_title2": {
       "name": "Title Sequence",

@@ -43,9 +43,9 @@ inline bool IsJunkFiller(const FillerType fillerType)
     case MagneticShield:
     case ExtraLife:
     case NoFiller:
-        return false;
-    default:
         return true;
+    default:
+        return false;
     }
 }
 

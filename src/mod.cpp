@@ -18,7 +18,7 @@ constexpr int SYNC_RATE = 10;
 
 void LoadArchipelagoSettings(const IniFile* settingsIni);
 void LoadDisplayMessageSettings(const IniFile* settingsIni);
-void LoadGameSettings(const IniFile* settingsIni);
+void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperFunctions);
 void ReplaceEmblemImage(const char* path, const HelperFunctions& helperFunctions);
 
 extern "C" {
@@ -87,7 +87,7 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
 
     LoadDisplayMessageSettings(settingsIni);
 
-    LoadGameSettings(settingsIni);
+    LoadGameSettings(settingsIni, helperFunctions);
 
     ReplaceEmblemImage(path, helperFunctions);
     if (helperFunctions.Mods->find_by_name("Super Sonic"))
@@ -95,7 +95,6 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
         PrintDebug("[SADX Randomizer] Super Sonic Mod detected\n");
         randomizer.SetSuperSonicModRunning(true);
     }
-    musicManager.ProcessSongsFile(helperFunctions);
 }
 
 __declspec(dllexport) void __cdecl OnFrame()
@@ -150,6 +149,7 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
 
     const int deathLinkOverride = settingsIni->getInt("AP", "DeathLinkOverride", 0);
     const int ringLinkOverride = settingsIni->getInt("AP", "RingLinkOverride", 0);
+    const int ringLossOverride = settingsIni->getInt("AP", "RingLossOverride", 0);
     const int trapLinkOverride = settingsIni->getInt("AP", "TrapLinkOverride", 0);
 
 
@@ -161,6 +161,7 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
     archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword,
                                               static_cast<DeathLinkOverride>(deathLinkOverride),
                                               static_cast<RingLinkOverride>(ringLinkOverride),
+                                              static_cast<RingLossOverride>(ringLossOverride),
                                               static_cast<TrapLinkOverride>(trapLinkOverride),
                                               showChatMessages, showGoalReached, showCountdowns, showPlayerConnections
     );
@@ -189,7 +190,7 @@ void LoadDisplayMessageSettings(const IniFile* settingsIni)
                                            chatMessageColorB);
 }
 
-void LoadGameSettings(const IniFile* settingsIni)
+void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperFunctions)
 {
     const int homingAttackIndicator = settingsIni->getInt("GameSettings", "HomingAttackIndicatorEnabled", 0);
     const bool completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions",
@@ -262,6 +263,7 @@ void LoadGameSettings(const IniFile* settingsIni)
         progressionIndicatorB;
 
 
+    const std::string songsPath = settingsIni->getString("MusicShuffle", "SongsPath", "mods/SADX_Archipelago/");
     const std::string sa2BAdxPath = settingsIni->getString("MusicShuffle", "Sa2bADXpath",
                                                            "../../../../Sonic Adventure 2/resource/gd_PC/ADX/");
     const std::string customAdxPath = settingsIni->getString("MusicShuffle", "CustomADXpath", "custom/");
@@ -302,6 +304,9 @@ void LoadGameSettings(const IniFile* settingsIni)
                                 static_cast<MusicSource>(musicSource), static_cast<MusicShuffle>(musicShuffle),
                                 static_cast<MusicShuffleConsistency>(musicShuffleConsistency),
                                 static_cast<LifeCapsulesChangeSongs>(lifeCapsulesChangeSongs));
+
+    
+    musicManager.ProcessSongsFile(helperFunctions, songsPath);
 }
 
 #define ReplacePNG_Common(a) do { \
