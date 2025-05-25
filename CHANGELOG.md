@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Added path to songs.json in the mod settings to allow a custom location. Relative to the game's main folder.
 - Added popup messages for missing or malformed song.json.
+- Added Ring Loss override in the mod settings.
 
 ### Fixed:
 

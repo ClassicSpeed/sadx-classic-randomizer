@@ -55,21 +55,26 @@ void ArchipelagoManager::OnFrame()
     this->ManageMessages();
 }
 
-static std::string LeftTrim(std::string s) {
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+static std::string LeftTrim(std::string s)
+{
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch)
+    {
         return !std::isspace(ch);
     }));
     return s;
 }
 
-static std::string RightTrim(std::string s) {
-    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+static std::string RightTrim(std::string s)
+{
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch)
+    {
         return !std::isspace(ch);
     }).base(), s.end());
     return s;
 }
 
-static std::string Trim(std::string s) {
+static std::string Trim(std::string s)
+{
     return LeftTrim(RightTrim(std::move(s)));
 }
 
@@ -77,6 +82,7 @@ void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, con
                                                 const std::string& serverPassword,
                                                 const DeathLinkOverride newDeathLinkOverride,
                                                 const RingLinkOverride newRingLinkOverride,
+                                                const RingLossOverride newRingLossOverride,
                                                 const TrapLinkOverride newTrapLinkOverride,
 
                                                 const bool showChatMessages, const bool showGoalReached,
@@ -87,6 +93,7 @@ void ArchipelagoManager::SetServerConfiguration(const std::string& serverIp, con
     this->_serverPassword = serverPassword;
     this->deathLinkOverride = newDeathLinkOverride;
     this->ringLinkOverride = newRingLinkOverride;
+    this->ringLossOverride = newRingLossOverride;
     this->trapLinkOverride = newTrapLinkOverride;
     this->_showChatMessages = showChatMessages;
     this->_showGoalReached = showGoalReached;
@@ -182,7 +189,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
             break;
         }
 
-        
+
         if (!strcmp(tag.c_str(), "TrapLink"))
         {
             if (!randomizerPtr->GetOptions().trapLinkActive)
@@ -378,10 +385,12 @@ void SADX_RingCapsuleSanity(const int ringCapsuleSanity)
 {
     randomizerPtr->OnRingCapsuleSanitySet(ringCapsuleSanity);
 }
+
 void SADX_FishSanity(const int fishSanity)
 {
     randomizerPtr->OnFishSanitySet(fishSanity);
 }
+
 void SADX_LazyFishing(const int lazyFishing)
 {
     randomizerPtr->OnLazyFishingSet(lazyFishing > 0);
@@ -516,8 +525,18 @@ void SADX_SetTrapLink(const int trapLinkActive)
 
 void SADX_RingLoss(const int ringLoss)
 {
-    randomizerPtr->SetRingLoss(static_cast<RingLoss>(ringLoss));
+    if (archipelagoManagerPtr->ringLossOverride == RingLossDefault)
+        randomizerPtr->SetRingLoss(static_cast<RingLoss>(ringLoss));
+    else if (archipelagoManagerPtr->ringLossOverride == RingLossForceClassic)
+        randomizerPtr->SetRingLoss(Classic);
+    else if (archipelagoManagerPtr->ringLossOverride == RingLossForceModern)
+        randomizerPtr->SetRingLoss(Modern);
+    else if (archipelagoManagerPtr->ringLossOverride == RingLossForceOhko)
+        randomizerPtr->SetRingLoss(OneHitKnockOut);
+    else if (archipelagoManagerPtr->ringLossOverride == RingLossForceOhkoNoShields)
+        randomizerPtr->SetRingLoss(OneHitKnockOutNoShields);
 }
+
 void SADX_TwinkleCircuitCheck(const int twinkleCircuitCheck)
 {
     randomizerPtr->SetTwinkleCircuitCheck(twinkleCircuitCheck);
@@ -622,18 +641,22 @@ void SADX_MusicSource(const int musicSource)
 {
     randomizerPtr->SetMusicSource(static_cast<MusicSource>(musicSource));
 }
+
 void SADX_MusicShuffle(const int musicShuffle)
 {
     randomizerPtr->SetMusicShuffle(static_cast<MusicShuffle>(musicShuffle));
 }
+
 void SADX_MusicShuffleConsistency(const int musicShuffleConsistency)
 {
     randomizerPtr->SetMusicShuffleConsistency(static_cast<MusicShuffleConsistency>(musicShuffleConsistency));
 }
+
 void SADX_MusicShuffleSeed(const int musicShuffleSeed)
 {
     randomizerPtr->SetMusicShuffleSeed(musicShuffleSeed);
 }
+
 void SADX_LifeCapsulesChangeSongs(const int lifeCapsulesChangeSongs)
 {
     randomizerPtr->SetLifeCapsulesChangeSongs(lifeCapsulesChangeSongs);
@@ -709,7 +732,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("ShieldCapsuleSanity", &SADX_ShieldCapsuleSanity);
     AP_RegisterSlotDataIntCallback("PowerUpCapsuleSanity", &SADX_PowerUpCapsuleSanity);
     AP_RegisterSlotDataIntCallback("RingCapsuleSanity", &SADX_RingCapsuleSanity);
-    
+
     AP_RegisterSlotDataIntCallback("FishSanity", &SADX_FishSanity);
     AP_RegisterSlotDataIntCallback("LazyFishing", &SADX_LazyFishing);
 
@@ -734,7 +757,7 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("CasinopolisRingLink", &SADX_SetCasinopolisRingLink);
     AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);
     AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
-    
+
     AP_RegisterSlotDataIntCallback("TrapLink", &SADX_SetTrapLink);
 
     AP_RegisterSlotDataIntCallback("TwinkleCircuitCheck", &SADX_TwinkleCircuitCheck);

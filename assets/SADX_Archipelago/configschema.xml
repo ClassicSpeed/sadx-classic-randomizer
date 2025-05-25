@@ -18,6 +18,9 @@
             <Property name="RingLinkOverride" type="RingLinkIndex" defaultvalue="0" display="Ring Link Override">
                 <HelpText>You can override the Ring Link setting from the yaml.</HelpText>
             </Property>
+            <Property name="RingLossOverride" type="RingLossIndex" defaultvalue="0" display="Ring Loss Override">
+                <HelpText>You can override the Ring Loss setting from the yaml.</HelpText>
+            </Property>
             <Property name="TrapLinkOverride" type="DeathLinkIndex" defaultvalue="0" display="Trap Link Override">
                 <HelpText>You can override the Trap Link setting from the yaml.</HelpText>
             </Property>
@@ -318,6 +321,13 @@
             <EnumMember name="1" display="Force Enabled"/>
             <EnumMember name="2" display="Force Enabled (Hard)"/>
             <EnumMember name="3" display="Force Disabled"/>
+        </Enum>
+        <Enum name="RingLossIndex">
+            <EnumMember name="0" display="Default"/>
+            <EnumMember name="1" display="Force Classic"/>
+            <EnumMember name="2" display="Force Modern"/>
+            <EnumMember name="3" display="Force OHKO"/>
+            <EnumMember name="4" display="Force OHKO (No shields)"/>
         </Enum>
         <Enum name="HomingAttackIndex">
             <EnumMember name="0" display="Disabled"/>

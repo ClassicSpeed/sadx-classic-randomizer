@@ -25,6 +25,16 @@ enum RingLinkOverride
     RingLinkForceEnabledHard = 2,
     RingLinkForceDisabled = 3,
 };
+
+enum RingLossOverride
+{
+    RingLossDefault = 0,
+    RingLossForceClassic = 1,
+    RingLossForceModern = 2,
+    RingLossForceOhko = 3,
+    RingLossForceOhkoNoShields = 4,
+};
+
 enum TrapLinkOverride
 {
     TrapLinkDefault = 0,
@@ -44,7 +54,8 @@ public:
     void OnSaveFileLoaded();
     void SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
                                 const std::string& serverPassword, DeathLinkOverride newDeathLinkOverride,
-                                RingLinkOverride newRingLinkOverride,TrapLinkOverride newTrapLinkOverride,
+                                RingLinkOverride newRingLinkOverride, RingLossOverride newRingLossOverride,
+                                TrapLinkOverride newTrapLinkOverride,
                                 bool showChatMessages, bool showGoalReached,
                                 bool showCountdowns, bool showPlayerConnections);
 
@@ -53,6 +64,7 @@ public:
     int64_t baseId;
     DeathLinkOverride deathLinkOverride;
     RingLinkOverride ringLinkOverride;
+    RingLossOverride ringLossOverride;
     TrapLinkOverride trapLinkOverride;
 
 private:
