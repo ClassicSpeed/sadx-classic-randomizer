@@ -12,6 +12,7 @@ const SongData* MusicManager::FindSongById(const int songId)
     return _songMap.FindById(songId);
 }
 
+
 void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath)
 {
     // Open the JSON file
@@ -77,8 +78,39 @@ void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions, cons
 
     //Custom    
     ParseSongCategory(helperFunctions, root["custom"], _options.customAdxPath, CustomSource);
+    ParseExtraFiles(helperFunctions);
 }
 
+void MusicManager::ParseExtraFiles(const HelperFunctions& helperFunctions)
+{
+    namespace fs = std::filesystem;
+    std::string directoryPath = "./SoundData/bgm/wma/" + _options.customAdxPath;
+    if (!fs::exists(directoryPath) || !fs::is_directory(directoryPath))
+        return;
+
+    for (const auto& entry : fs::directory_iterator(directoryPath))
+    {
+        if (entry.is_regular_file() && entry.path().extension() == ".adx")
+        {
+            std::string codename = entry.path().stem().string();
+
+            if (_songMap.FindByCodename(codename) != nullptr)
+                continue;
+
+            std::string fullPath = _options.customAdxPath + codename;
+
+            // Allocate memory for the file path
+            const auto allocatedName = new char[fullPath.size() + 1];
+            std::strcpy(allocatedName, fullPath.c_str());
+
+            // Register the music file and add it to the song map
+            const MusicInfo musicInfo = {allocatedName, 1};
+            const int id = helperFunctions.RegisterMusicFile(musicInfo);
+            _songMap.AddSong(id, codename, codename, Level, CustomSource, std::vector<std::string>(),
+                             std::vector<std::string>(), std::vector<std::string>(), "");
+        }
+    }
+}
 
 void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot,
                                      std::string categoryPath, SongSource songSource)

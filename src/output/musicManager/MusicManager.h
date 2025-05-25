@@ -5,6 +5,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <filesystem>
 #include "../../application/structs/Options.h"
 
 
@@ -57,12 +58,16 @@ public:
                  const std::vector<std::string>& possibleCustomCodenames,
                  const std::string& sa2Replacement)
     {
+
+        std::string lowercaseCodename = codename;
+        std::transform(lowercaseCodename.begin(), lowercaseCodename.end(), lowercaseCodename.begin(),
+                       [](unsigned char c) { return std::tolower(c); });
         SongData songData = {
-            id, codename, name, type, source, possibleSADXCodenames, possibleSA2BCodenames, possibleCustomCodenames,
+            id, lowercaseCodename, name, type, source, possibleSADXCodenames, possibleSA2BCodenames, possibleCustomCodenames,
             sa2Replacement
         };
         _idMap[id] = songData;
-        _codenameMap[codename] = id;
+        _codenameMap[lowercaseCodename] = id;
     }
 
     const SongData* FindById(int id) const
@@ -77,7 +82,10 @@ public:
 
     const SongData* FindByCodename(const std::string& codename) const
     {
-        auto it = _codenameMap.find(codename);
+        std::string lowercaseCodename = codename;
+        std::transform(lowercaseCodename.begin(), lowercaseCodename.end(), lowercaseCodename.begin(),
+                       [](unsigned char c) { return std::tolower(c); });
+        auto it = _codenameMap.find(lowercaseCodename);
         if (it != _codenameMap.end())
         {
             auto song = &(_idMap.at(it->second));
@@ -181,6 +189,7 @@ class MusicManager
 public:
     MusicManager();
     const SongData* FindSongById(int songId);
+    void ParseExtraFiles(const HelperFunctions& helperFunctions);
     void ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath);
     void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath,
                            SongSource songSource);
