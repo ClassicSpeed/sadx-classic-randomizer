@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Added popup messages for missing or malformed song.json.
 - Added Ring Loss override in the mod settings.
 - Added Custom songs only as a source for music randomization.
+- Added support for 1.1.1 seeds using overrides.
 
 ### Fixed:
 
