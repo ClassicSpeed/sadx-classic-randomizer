@@ -181,7 +181,7 @@ class MusicManager
 public:
     MusicManager();
     const SongData* FindSongById(int songId);
-    void ProcessSongsFile(const HelperFunctions& helperFunctions);
+    void ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath);
     void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath,
                            SongSource songSource);
     SongType GetSongTypeFromString(const std::string& typeStr);
@@ -191,7 +191,7 @@ public:
     int GetSingularitySong();
     int GetSongForId(int songId);
     int GetSongNewForId(int songId, int currentSongId);
-  
+
 private:
     Options _options;
     SongMap _songMap;

@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.1.2] - 2025-05-21
+## [v1.1.2] - 2025-05-25
+
+### Added:
+
+- Added path to songs.json in the mod settings to allow a custom location. Relative to the game's main folder.
+- Added popup messages for missing song.json.
+- Added popup messages for malformed song.json.
+
+## [v1.1.2 pre-release] - 2025-05-21
 
 ### Music Randomization
 

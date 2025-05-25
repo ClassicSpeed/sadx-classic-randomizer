@@ -12,14 +12,19 @@ const SongData* MusicManager::FindSongById(const int songId)
     return _songMap.FindById(songId);
 }
 
-void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions)
+void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath)
 {
     // Open the JSON file
-    std::string filePath = "./mods/SADX_Archipelago/songs.json";
+    std::string filePath = songsPath + "songs.json";
     std::ifstream file(filePath, std::ifstream::binary);
     if (!file.is_open())
     {
-        throw std::runtime_error("Failed to open file: " + filePath);
+        std::string errorMessage = "Error: Couldn't open song mapping file!\n\nFile location: /Sonic Adventure DX/"
+            + filePath + "\n\nPlease check the file location/mod settings and try again.";
+        MessageBox(WindowHandle, std::wstring(errorMessage.begin(), errorMessage.end()).c_str(),
+                   L"SADX Archipelago Error: Missing songs mapping file", MB_OK | MB_ICONERROR);
+
+        exit(0);
     }
 
     // Parse the JSON file
@@ -28,7 +33,12 @@ void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions)
     std::string errs;
     if (!Json::parseFromStream(builder, file, &root, &errs))
     {
-        throw std::runtime_error("Failed to parse JSON: " + errs);
+        std::string errorMessage = "Error: Couldn't parse the song mapping file!\n\nFile location: /Sonic Adventure DX/"
+            + filePath + "\n\nPlease use a JSON validator with the songs.json file  and try again.";
+        MessageBox(WindowHandle, std::wstring(errorMessage.begin(), errorMessage.end()).c_str(),
+                   L"SADX Archipelago Error: Malformed songs mapping file", MB_OK | MB_ICONERROR);
+
+        exit(0);
     }
 
 
