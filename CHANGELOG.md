@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
 
 - Fixed static consistency working like singularity.
+- Fixed spelling mistakes in songs.json for Unknown from M.E. songs.
 
 ## [v1.1.2 pre-release] - 2025-05-21
 
