@@ -3876,7 +3876,7 @@
     },
     "sng_title1": {
       "name": "Title Sequence (With Intro)",
-      "type": "event"
+      "type": "jingle"
     },
     "sng_title2": {
       "name": "Title Sequence",

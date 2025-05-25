@@ -9,12 +9,13 @@ All notable changes to this project will be documented in this file.
 - Added path to songs.json in the mod settings to allow a custom location. Relative to the game's main folder.
 - Added popup messages for missing or malformed song.json.
 - Added Ring Loss override in the mod settings.
+- Added Custom songs only as a source for music randomization.
 
 ### Fixed:
 
 - Fixed static consistency working like singularity.
 - Fixed spelling mistakes in songs.json for Unknown from M.E. songs.
-- SA2's Original Intro changed from "event" to "jingle".
+- SA2's Original intro and Sonic Heroes intro, changed from "event" to "jingle".
 - Fixed Trap link sending junk items and not sending traps.
 
 ## [v1.1.2 pre-release] - 2025-05-21

@@ -71,10 +71,11 @@ enum MusicSource
 {
     MusicSourceNone = -1,
     MusicSourceSadx = 0,
-    MusicSourceSadxCustom,
     MusicSourceSa2B,
-    MusicSourceSa2BCustom,
+    MusicSourceCustom,
     MusicSourceSadxSa2B,
+    MusicSourceSadxCustom,
+    MusicSourceSa2BCustom,
     MusicSourceSadxSa2BCustom
 };
 
@@ -489,6 +490,6 @@ struct Options
     bool MusicSourceIncludeCustom() const
     {
         return this->musicSource == MusicSourceSadxCustom || this->musicSource == MusicSourceSa2BCustom || this->
-            musicSource == MusicSourceSadxSa2BCustom;
+            musicSource == MusicSourceSadxSa2BCustom || this->musicSource == MusicSourceCustom;
     }
 };

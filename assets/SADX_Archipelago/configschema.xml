@@ -364,11 +364,12 @@
         <Enum name="MusicSourceIndex">
             <EnumMember name="-1" display="Default"/>
             <EnumMember name="0" display="Force SADX"/>
-            <EnumMember name="1" display="Force SADX/Custom"/>
-            <EnumMember name="2" display="Force SA2B"/>
-            <EnumMember name="3" display="Force SA2B/Custom"/>
-            <EnumMember name="4" display="Force SADX/SA2B"/>
-            <EnumMember name="5" display="Force SADX/SA2B/Custom"/>
+            <EnumMember name="1" display="Force SA2B"/>
+            <EnumMember name="2" display="Force Custom"/>
+            <EnumMember name="3" display="Force SADX/SA2B"/>
+            <EnumMember name="4" display="Force SADX/Custom"/>
+            <EnumMember name="5" display="Force SA2B/Custom"/>
+            <EnumMember name="6" display="Force SADX/SA2B/Custom"/>
         </Enum>
         <Enum name="MusicShuffleIndex">
             <EnumMember name="-1" display="Default"/>
