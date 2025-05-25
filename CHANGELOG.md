@@ -6,19 +6,20 @@ All notable changes to this project will be documented in this file.
 
 ### Added:
 
-- Added path to songs.json in the mod settings to allow a custom location. Relative to the game's main folder.
-- Added popup messages for missing or malformed song.json.
+- Added a path option for `songs.json` in the mod settings to allow a custom location. Path is relative to the game's main folder.
+- Added popup messages for missing or malformed `songs.json`.
 - Added Ring Loss override in the mod settings.
-- Added Custom songs only as a source for music randomization.
+- Added Custom songs only as a source option for music randomization.
 - Added support for 1.1.1 seeds using overrides.
-- Any non-mapped ADX file from the custom folder will be added to the pool as a Level type song.
+- Any non-mapped ADX file from the custom folder will now be added to the pool as a Level-type song.
+- Warning messages for missing songs are now shown as a single message for SA2B and custom songs.
 
 ### Fixed:
 
-- Fixed static consistency working like singularity.
-- Fixed spelling mistakes in songs.json for Unknown from M.E. songs.
-- SA2's Original intro and Sonic Heroes intro, changed from "event" to "jingle".
-- Fixed Trap link sending junk items and not sending traps.
+- Fixed static consistency behaving like singularity.
+- Fixed spelling mistakes in `songs.json` for Unknown from M.E. tracks.
+- Changed SA2's Original intro and Sonic Heroes intro from "event" to "jingle".
+- Fixed Trap Link sending junk items instead of traps.
 
 ## [v1.1.2 pre-release] - 2025-05-21
 
