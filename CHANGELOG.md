@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Fixed static consistency working like singularity.
 - Fixed spelling mistakes in songs.json for Unknown from M.E. songs.
 - SA2's Original Intro changed from "event" to "jingle".
+- Fixed Trap link sending junk items and not sending traps.
 
 ## [v1.1.2 pre-release] - 2025-05-21
 
