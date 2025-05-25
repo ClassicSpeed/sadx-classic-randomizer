@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Added support for 1.1.1 seeds using overrides.
 - Any non-mapped ADX file from the custom folder will now be added to the pool as a Level-type song.
 - Warning messages for missing songs are now shown as a single message for SA2B and custom songs.
+- Added 'any' as song type. It can play for any type except for jingles.
 
 ### Fixed:
 

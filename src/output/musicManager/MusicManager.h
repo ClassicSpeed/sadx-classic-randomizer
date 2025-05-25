@@ -11,13 +11,14 @@
 
 enum SongType
 {
-    Level,
-    Fight,
-    Theme,
-    Jingle,
-    Menu,
-    AdventureField,
-    Event
+    SongTypeLevel,
+    SongTypeFight,
+    SongTypeTheme,
+    SongTypeJingle,
+    SongTypeMenu,
+    SongTypeAdventureField,
+    SongTypeEvent,
+    SongTypeAny
 };
 
 enum SongSource
@@ -58,12 +59,12 @@ public:
                  const std::vector<std::string>& possibleCustomCodenames,
                  const std::string& sa2Replacement)
     {
-
         std::string lowercaseCodename = codename;
         std::transform(lowercaseCodename.begin(), lowercaseCodename.end(), lowercaseCodename.begin(),
                        [](unsigned char c) { return std::tolower(c); });
         SongData songData = {
-            id, lowercaseCodename, name, type, source, possibleSADXCodenames, possibleSA2BCodenames, possibleCustomCodenames,
+            id, lowercaseCodename, name, type, source, possibleSADXCodenames, possibleSA2BCodenames,
+            possibleCustomCodenames,
             sa2Replacement
         };
         _idMap[id] = songData;
@@ -103,7 +104,7 @@ public:
         const auto sa2SongData = FindByCodename(songData->sa2Replacement);
         if (sa2SongData == nullptr)
             return {id};
-        
+
         return {sa2SongData->id};
     }
 
@@ -145,7 +146,15 @@ public:
 
     std::vector<int> GetSongsByType(const SongType songType)
     {
-        return _songsByType[songType];
+        if (songType == SongTypeAny)
+            return _allSongs;
+        if (songType == SongTypeJingle)
+            return _songsByType[songType];
+
+        std::vector<int> result = _songsByType[songType];
+        const auto& anySongs = _songsByType[SongTypeAny];
+        result.insert(result.end(), anySongs.begin(), anySongs.end());
+        return result;
     }
 
     std::vector<int> GetAllSongs(const bool isJingle)
@@ -168,7 +177,7 @@ public:
                 continue;
 
             _songsByType[song.second.type].push_back(song.first);
-            if (song.second.type == Jingle)
+            if (song.second.type == SongTypeJingle)
                 _allJingles.push_back(song.first);
             else
                 _allSongs.push_back(song.first);

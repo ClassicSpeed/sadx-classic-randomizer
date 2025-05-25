@@ -106,7 +106,7 @@ void MusicManager::ParseExtraFiles(const HelperFunctions& helperFunctions)
             // Register the music file and add it to the song map
             const MusicInfo musicInfo = {allocatedName, 1};
             const int id = helperFunctions.RegisterMusicFile(musicInfo);
-            _songMap.AddSong(id, codename, codename, Level, CustomSource, std::vector<std::string>(),
+            _songMap.AddSong(id, codename, codename, SongTypeAny, CustomSource, std::vector<std::string>(),
                              std::vector<std::string>(), std::vector<std::string>(), "");
         }
     }
@@ -138,7 +138,7 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
         {
             auto allocatedName = new char[fullPath.size() + 1];
             std::strcpy(allocatedName, fullPath.c_str());
-            int loop = songType == Jingle ? 0 : 1;
+            int loop = songType == SongTypeJingle ? 0 : 1;
 
             MusicInfo musicInfo = {allocatedName, loop};
 
@@ -169,13 +169,14 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
 SongType MusicManager::GetSongTypeFromString(const std::string& typeStr)
 {
     static const std::unordered_map<std::string, SongType> stringToEnum = {
-        {"level", SongType::Level},
-        {"fight", SongType::Fight},
-        {"theme", SongType::Theme},
-        {"jingle", SongType::Jingle},
-        {"menu", SongType::Menu},
-        {"adventurefield", SongType::AdventureField},
-        {"event", SongType::Event}
+        {"level", SongType::SongTypeLevel},
+        {"fight", SongType::SongTypeFight},
+        {"theme", SongType::SongTypeTheme},
+        {"jingle", SongType::SongTypeJingle},
+        {"menu", SongType::SongTypeMenu},
+        {"adventurefield", SongType::SongTypeAdventureField},
+        {"event", SongType::SongTypeEvent},
+        {"any", SongType::SongTypeAny}
     };
 
     auto it = stringToEnum.find(typeStr);
@@ -184,7 +185,7 @@ SongType MusicManager::GetSongTypeFromString(const std::string& typeStr)
         return it->second;
     }
 
-    return SongType::Level;
+    return SongType::SongTypeLevel;
 }
 
 void MusicManager::UpdateOptions(const Options newOptions)
@@ -245,7 +246,7 @@ std::vector<int> MusicManager::GetPossibleSongIds(int const id, std::mt19937& ge
     else if (_options.musicShuffle == MusicShuffleByType)
         allPossibleIds = _songMap.GetSongsByType(songInfo->type);
     else if (_options.musicShuffle == MusicShuffleFull)
-        allPossibleIds = _songMap.GetAllSongs(songInfo->type == Jingle);
+        allPossibleIds = _songMap.GetAllSongs(songInfo->type == SongTypeJingle);
 
     if (allPossibleIds.empty() || _options.includeVanillaSongs)
     {
