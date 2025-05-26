@@ -534,10 +534,9 @@ void DisplayManager::DisplayItemsUnlocked()
 
     const int rows = VerticalResolution / this->_debugFontSize;
     const int columns = HorizontalResolution / this->_debugFontSize;
-    //TODO: Change back
-    const std::string modVersionString = "pr2-v" + std::to_string(SADX_AP_VERSION_MAJOR) + "." +
+    const std::string modVersionString = "v" + std::to_string(SADX_AP_VERSION_MAJOR) + "." +
         std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH);
-    DisplayDebugString(NJM_LOCATION(columns-11, rows-2), modVersionString.c_str());
+    DisplayDebugString(NJM_LOCATION(columns-7, rows-2), modVersionString.c_str());
 
     SetDebugFontColor(this->_displayEmblemColor);
     std::string buffer;
