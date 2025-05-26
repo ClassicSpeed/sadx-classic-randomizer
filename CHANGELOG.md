@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.2] - 2025-05-XX
+
+### Fixed:
+
+- Fixed music randomization breaking when rejoining after a lot of checks have been sent.
+
 ## [v1.1.2 pre-release 2] - 2025-05-25
 
 ### Added:
