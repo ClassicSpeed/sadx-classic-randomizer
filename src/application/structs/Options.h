@@ -102,8 +102,8 @@ enum MusicShuffleConsistency
 enum LifeCapsulesChangeSongs
 {
     LifeCapsulesChangeSongsNone = -1,
-    LifeCapsulesChangeSongsEnabled = 0,
-    LifeCapsulesChangeSongsDisabled = 1,
+    LifeCapsulesChangeSongsDisabled = 0,
+    LifeCapsulesChangeSongsEnabled = 1,
 };
 
 struct Options

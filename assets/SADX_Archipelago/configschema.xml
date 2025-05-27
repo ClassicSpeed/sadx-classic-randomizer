@@ -387,8 +387,8 @@
         </Enum>
         <Enum name="LifeCapsulesChangeSongsIndex">
             <EnumMember name="-1" display="Default"/>
-            <EnumMember name="0" display="Force Enabled"/>
-            <EnumMember name="1" display="Force Disabled"/>
+            <EnumMember name="0" display="Force Disabled"/>
+            <EnumMember name="1" display="Force Enabled"/>
         </Enum>
     </Enums>
 </ConfigSchema>
