@@ -123,7 +123,7 @@
                       display="Show Song Name for Type">
                 <HelpText>Display song names only for selected song types.</HelpText>
             </Property>
-            <Property name="IncludeVanilla" type="bool" defaultvalue="True"
+            <Property name="IncludeVanilla" type="bool" defaultvalue="False"
                       display="Include Vanilla Song">
                 <HelpText>Include the original song in its own shuffle rotation.</HelpText>
             </Property>

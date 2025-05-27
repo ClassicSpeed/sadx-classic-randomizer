@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Changed base songs path to SADX's main folder.
 - Changed default custom songs path to `songs/custom/`.
+- IncludeVanillaSongs setting is now disabled by default.
 - Trap Link will no longer process traps disabled by the player in the YAML.
 - Trap Link will no longer show traps that are not going to be processed.
 - Added a 5-second cooldown to Trap Link.

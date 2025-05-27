@@ -190,7 +190,7 @@ struct Options
     std::string customAdxPath = "custom/";
     ShowSongName showSongName = ShowSongNameWithSongShuffle;
     ShowSongNameForType showSongNameForType = ShowSongNameForTypeEverything;
-    bool includeVanillaSongs = true;
+    bool includeVanillaSongs = false;
     bool showWarningForMissingFiles = false;
 
     MusicSource musicSource = MusicSourceNone;

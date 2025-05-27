@@ -269,7 +269,7 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
     const std::string customAdxPath = settingsIni->getString("MusicShuffle", "CustomADXpath", "songs/custom/");
     const int showSongName = settingsIni->getInt("MusicShuffle", "ShowSongName", 0);
     const int showSongNameForType = settingsIni->getInt("MusicShuffle", "ShowSongNameForType", 0);
-    const bool includeVanillaSongs = settingsIni->getBool("MusicShuffle", "IncludeVanilla", true);
+    const bool includeVanillaSongs = settingsIni->getBool("MusicShuffle", "IncludeVanilla", false);
     const bool showWarningForMissingFiles = settingsIni->getBool("MusicShuffle", "ShowWarningForMissingFiles", false);
     const int musicSource = settingsIni->getInt("MusicShuffle", "MusicSourceOverride", -1);
     const int musicShuffle = settingsIni->getInt("MusicShuffle", "MusicShuffleOverride", -1);
