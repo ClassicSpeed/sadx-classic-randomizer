@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
 
 - Fixed music randomization breaking when rejoining after a lot of checks have been sent.
+- Changed SADX intro from "event" to "jingle".
 
 ## [v1.1.2 pre-release 2] - 2025-05-25
 
