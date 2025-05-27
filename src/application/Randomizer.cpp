@@ -756,6 +756,38 @@ void Randomizer::SetCharacterVoiceReactions(const bool eggmanCommentOnCharacterU
     _showCommentsSubtitles = showCommentsSubtitles;
 }
 
+
+void Randomizer::SetIceTrapWeight(const int iceTrapWeight)
+{
+    _options.iceTrapWeight = iceTrapWeight;
+}
+
+void Randomizer::SetSpringTrapWeight(const int springTrapWeight)
+{
+    _options.springTrapWeight = springTrapWeight;
+}
+
+void Randomizer::SetPoliceTrapWeight(const int policeTrapWeight)
+{
+    _options.policeTrapWeight = policeTrapWeight;
+}
+
+void Randomizer::SetBuyonTrapWeight(const int buyonTrapWeight)
+{
+    _options.buyonTrapWeight = buyonTrapWeight;
+}
+
+void Randomizer::SetReverseTrapWeight(const int reverseTrapWeight)
+{
+    _options.reverseTrapWeight = reverseTrapWeight;
+}
+
+void Randomizer::SetGravityTrapWeight(const int gravityTrapWeight)
+{
+    _options.gravityTrapWeight = gravityTrapWeight;
+}
+
+
 void Randomizer::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
 {
     _characterManager.SetReverseControlTrapDuration(reverseControlTrapDuration);
@@ -974,12 +1006,18 @@ void Randomizer::ProcessRings(const Sint16 amount)
 
 void Randomizer::ProcessTrapLink(std::string itemName, std::string message)
 {
-    _displayManager.QueueItemMessage(message);
-
     FillerType filler = _itemRepository.GetFillerFromName(itemName);
 
-    if (filler != NoFiller)
-        _characterManager.GiveFillerItem(filler, true);
+    if (!_options.IsTrapEnabled(filler))
+        return;
+
+    const double timePassed = (std::clock() - _trapLinkCooldownTimer) / static_cast<double>(CLOCKS_PER_SEC);
+    if (_trapLinkCooldownTimer >= 0 && timePassed <= _trapLinkCooldown)
+        return;
+
+    _trapLinkCooldownTimer = std::clock();
+    _displayManager.QueueItemMessage(message);
+    _characterManager.GiveFillerItem(filler, true);
 }
 
 void Randomizer::OnConnected(std::string playerName)
@@ -1107,14 +1145,13 @@ int Randomizer::GetSongNewForId(const int songId, const int currentSongId)
 }
 
 
-
 void Randomizer::UpdateMusicSettings(const ShowSongName showSongName, const ShowSongNameForType showSongNameFor,
-                                  const bool includeVanillaSongs, const bool showWarningForMissingFiles,
-                                  const std::string& string,
-                                  const std::string& basicString, const MusicSource musicSource,
-                                  const MusicShuffle musicShuffle,
-                                  const MusicShuffleConsistency musicShuffleConsistency,
-                                  const LifeCapsulesChangeSongs lifeCapsulesChangeSongs)
+                                     const bool includeVanillaSongs, const bool showWarningForMissingFiles,
+                                     const std::string& string,
+                                     const std::string& basicString, const MusicSource musicSource,
+                                     const MusicShuffle musicShuffle,
+                                     const MusicShuffleConsistency musicShuffleConsistency,
+                                     const LifeCapsulesChangeSongs lifeCapsulesChangeSongs)
 {
     _options.showSongName = showSongName;
     _options.showSongNameForType = showSongNameFor;
@@ -1132,16 +1169,16 @@ void Randomizer::UpdateMusicSettings(const ShowSongName showSongName, const Show
 
 void Randomizer::DisplaySongName(const int songId)
 {
-    if(_options.showSongName == ShowSongNameAlwaysOff)
-        return;
-    
-    if(_options.showSongName == ShowSongNameWithSongShuffle && _options.musicShuffle == MusicShuffleNone)
+    if (_options.showSongName == ShowSongNameAlwaysOff)
         return;
 
-    if(_options.showSongNameForType == ShowSongNameForTypeOnlyActionLevels)
-        if(CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
+    if (_options.showSongName == ShowSongNameWithSongShuffle && _options.musicShuffle == MusicShuffleNone)
+        return;
+
+    if (_options.showSongNameForType == ShowSongNameForTypeOnlyActionLevels)
+        if (CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
             return;
-    
+
     const auto* song = _musicManager.FindSongById(songId);
     if (song != nullptr)
         _displayManager.ShowSongName("~ " + song->name + " ~");

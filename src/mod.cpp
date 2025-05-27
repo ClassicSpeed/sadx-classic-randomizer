@@ -297,15 +297,15 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
                                           unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
                                           tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems,
                                           showCommentsSubtitles);
-    
-    randomizer.UpdateMusicSettings(static_cast<ShowSongName>(showSongName),
-                                static_cast<ShowSongNameForType>(showSongNameForType), includeVanillaSongs,
-                                showWarningForMissingFiles, sa2BAdxPath, customAdxPath,
-                                static_cast<MusicSource>(musicSource), static_cast<MusicShuffle>(musicShuffle),
-                                static_cast<MusicShuffleConsistency>(musicShuffleConsistency),
-                                static_cast<LifeCapsulesChangeSongs>(lifeCapsulesChangeSongs));
 
-    
+    randomizer.UpdateMusicSettings(static_cast<ShowSongName>(showSongName),
+                                   static_cast<ShowSongNameForType>(showSongNameForType), includeVanillaSongs,
+                                   showWarningForMissingFiles, sa2BAdxPath, customAdxPath,
+                                   static_cast<MusicSource>(musicSource), static_cast<MusicShuffle>(musicShuffle),
+                                   static_cast<MusicShuffleConsistency>(musicShuffleConsistency),
+                                   static_cast<LifeCapsulesChangeSongs>(lifeCapsulesChangeSongs));
+
+
     musicManager.ProcessSongsFile(helperFunctions, songsPath);
 }
 
