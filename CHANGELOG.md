@@ -2,17 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.1.2] - 2025-05-XX
+## [v1.1.2] - 2025-05-27
 
 ### Changed
 
+- Changed base songs path to SADX's main folder.
+- Changed default custom songs path to `songs/custom/`.
 - Trap Link will no longer process traps disabled by the player in the YAML.
 - Trap Link will no longer show traps that are not going to be processed.
-- Added Trap Link cooldown of 5 seconds.
+- Added a 5-second cooldown to Trap Link.
 
 ### Fixed
 
-- Fixed music randomization breaking when rejoining after a lot of checks have been sent.
+- Fixed music randomization breaking when rejoining after many checks have been sent.
 - Changed SADX intro from "event" to "jingle".
 - Fixed level timer not stopping when finishing a level after completing a mission.
 

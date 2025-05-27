@@ -265,8 +265,8 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
 
     const std::string songsPath = settingsIni->getString("MusicShuffle", "SongsPath", "mods/SADX_Archipelago/");
     const std::string sa2BAdxPath = settingsIni->getString("MusicShuffle", "Sa2bADXpath",
-                                                           "../../../../Sonic Adventure 2/resource/gd_PC/ADX/");
-    const std::string customAdxPath = settingsIni->getString("MusicShuffle", "CustomADXpath", "custom/");
+                                                           "../Sonic Adventure 2/resource/gd_PC/ADX/");
+    const std::string customAdxPath = settingsIni->getString("MusicShuffle", "CustomADXpath", "songs/custom/");
     const int showSongName = settingsIni->getInt("MusicShuffle", "ShowSongName", 0);
     const int showSongNameForType = settingsIni->getInt("MusicShuffle", "ShowSongNameForType", 0);
     const bool includeVanillaSongs = settingsIni->getBool("MusicShuffle", "IncludeVanilla", true);

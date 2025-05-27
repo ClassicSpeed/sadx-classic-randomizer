@@ -109,12 +109,12 @@
             <Property name="SongsPath" type="string" defaultvalue="mods/SADX_Archipelago/" display="Songs mapping Path">
                 <HelpText>Path to the songs.json file. Must end with a slash (/) and be relative to /Sonic Adventure DX/.</HelpText>
             </Property>
-            <Property name="Sa2bADXpath" type="string" defaultvalue="../../../../Sonic Adventure 2/resource/gd_PC/ADX/"
+            <Property name="Sa2bADXpath" type="string" defaultvalue="../Sonic Adventure 2/resource/gd_PC/ADX/"
                       display="SA2B Songs Path">
-                <HelpText>Path to the SA2B music files. Must end with a slash (/) and be relative to /Sonic Adventure DX/SoundData/bgm/wma/.</HelpText>
+                <HelpText>Path to the SA2B music files. Must end with a slash (/) and be relative to /Sonic Adventure DX/.</HelpText>
             </Property>
-            <Property name="CustomADXpath" type="string" defaultvalue="custom/" display="Custom Songs Path">
-                <HelpText>Path to the custom music files. Must end with a slash (/) and be relative to /Sonic Adventure DX/SoundData/bgm/wma/.</HelpText>
+            <Property name="CustomADXpath" type="string" defaultvalue="songs/custom/" display="Custom Songs Path">
+                <HelpText>Path to the custom music files. Must end with a slash (/) and be relative to /Sonic Adventure DX/.</HelpText>
             </Property>
             <Property name="ShowSongName" type="ShowSongNameIndex" defaultvalue="0" display="Show Song Name">
                 <HelpText>Display the name of the song during gameplay.</HelpText>
