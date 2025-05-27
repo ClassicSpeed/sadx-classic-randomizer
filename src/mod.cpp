@@ -274,7 +274,7 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
     const int musicSource = settingsIni->getInt("MusicShuffle", "MusicSourceOverride", -1);
     const int musicShuffle = settingsIni->getInt("MusicShuffle", "MusicShuffleOverride", -1);
     const int musicShuffleConsistency = settingsIni->getInt("MusicShuffle", "MusicShuffleConsistencyOverride", -1);
-    const int lifeCapsulesChangeSongs = settingsIni->getInt("MusicShuffle", "LifeCapsulesChangeSongsOverride", 0);
+    const int lifeCapsulesChangeSongs = settingsIni->getInt("MusicShuffle", "LifeCapsulesChangeSongsOverride", -1);
 
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, noLifeLossOnRestart);

@@ -143,7 +143,7 @@
                       display="Music Shuffle Consistency Override">
                 <HelpText>Override how frequently the music changes in Music Shuffle.</HelpText>
             </Property>
-            <Property name="LifeCapsulesChangeSongsOverride" type="DeathLinkIndex" defaultvalue="0"
+            <Property name="LifeCapsulesChangeSongsOverride" type="LifeCapsulesChangeSongsIndex" defaultvalue="-1"
                       display="Life Capsules Music Change Override">
                 <HelpText>Override whether collecting Life Capsules changes the music.</HelpText>
             </Property>
@@ -384,6 +384,11 @@
             <EnumMember name="0" display="Force Static"/>
             <EnumMember name="1" display="Force On Restart"/>
             <EnumMember name="2" display="Force Per Play"/>
+        </Enum>
+        <Enum name="LifeCapsulesChangeSongsIndex">
+            <EnumMember name="-1" display="Default"/>
+            <EnumMember name="0" display="Force Enabled"/>
+            <EnumMember name="1" display="Force Disabled"/>
         </Enum>
     </Enums>
 </ConfigSchema>

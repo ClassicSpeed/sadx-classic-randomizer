@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Fixed music randomization breaking when rejoining after many checks have been sent.
 - Changed SADX intro from "event" to "jingle".
 - Fixed level timer not stopping when finishing a level after completing a mission.
+- Fixed `LifeCapsulesChangeSongsOverride` not working correctly.
 
 ## [v1.1.2 pre-release 2] - 2025-05-25
 
