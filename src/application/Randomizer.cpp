@@ -660,12 +660,6 @@ void Randomizer::ResetItems()
     _worldStateManager.UpdateUnlockStatus(unlockStatus);
 }
 
-void Randomizer::SetMissionMode(const int missionModeEnabled)
-{
-    _options.missionModeEnabled = missionModeEnabled;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
 
 void Randomizer::SetAutoStartMissions(const int autoStartMissions)
 {
@@ -718,8 +712,7 @@ void Randomizer::UpdateLevelEntrances(LevelEntrances levelEntrances)
 void Randomizer::UpdateMissionBlacklist(const std::vector<int>& missionBlacklist)
 {
     _options.missionBlacklist = missionBlacklist;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
+    //TODO: Post every value set
     if (_options.goalRequiresMissions)
     {
         const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
@@ -728,12 +721,6 @@ void Randomizer::UpdateMissionBlacklist(const std::vector<int>& missionBlacklist
     _worldStateManager.MarkBlacklistedMissionsAsCompleted(_options.missionBlacklist);
 }
 
-void Randomizer::UpdateProgressionItemsList(const std::vector<int>& progressionItemsList)
-{
-    _options.progressionItems = progressionItemsList;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
 
 void Randomizer::SetEntranceRandomizer(const bool enableEntranceRandomizer)
 {
@@ -985,9 +972,7 @@ void Randomizer::ProcessTrapLink(std::string itemName, std::string message)
 void Randomizer::OnConnected(std::string playerName)
 {
     _options.playerName = playerName;
-    _musicManager.RandomizeMusic();
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
+    //TODO: Post every value set
     _displayManager.SetConnected();
     _displayManager.QueueItemMessage("Connected to Archipelago");
 }
@@ -1006,22 +991,17 @@ void Randomizer::ShowStatusInformation(std::string information)
 void Randomizer::QueueNewItemMessage(std::string information)
 {
     _displayManager.QueueItemMessage(information);
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
 }
 
 void Randomizer::QueueNewChatMessage(std::string information)
 {
     _displayManager.QueueChatMessage(information);
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
 }
 
 void Randomizer::OnGoalRequiresLevelsSet(const bool goalRequiresLevels)
 {
     _options.goalRequiresLevels = goalRequiresLevels;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
+    //TODO: Post every value set
 
     const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
     _displayManager.UpdateLevelStatus(levelStatus);
@@ -1030,18 +1010,9 @@ void Randomizer::OnGoalRequiresLevelsSet(const bool goalRequiresLevels)
         SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
 }
 
-void Randomizer::OnGoalRequiresChaosEmeraldsSet(const bool goalRequiresChaosEmeralds)
-{
-    _options.goalRequiresChaosEmeralds = goalRequiresChaosEmeralds;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
 void Randomizer::OnGoalRequiresEmblems(const bool goalRequiresEmblems)
 {
     _options.goalRequiresEmblems = goalRequiresEmblems;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
 
     if (!_options.goalRequiresChaosEmeralds)
         SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
@@ -1050,8 +1021,7 @@ void Randomizer::OnGoalRequiresEmblems(const bool goalRequiresEmblems)
 void Randomizer::OnGoalRequiresMissionsSet(const bool goalRequiresMissions)
 {
     _options.goalRequiresMissions = goalRequiresMissions;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
+    //TODO: Post every value set
     const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
     _displayManager.UpdateMissionStatus(missionStatus);
 
@@ -1062,8 +1032,7 @@ void Randomizer::OnGoalRequiresMissionsSet(const bool goalRequiresMissions)
 void Randomizer::OnGoalRequiresBossesSet(const bool goalRequiresBosses)
 {
     _options.goalRequiresBosses = goalRequiresBosses;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
+    //TODO: Post every value set
 
     const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
     _displayManager.UpdateBossesStatus(bossesStatus);
@@ -1075,8 +1044,7 @@ void Randomizer::OnGoalRequiresBossesSet(const bool goalRequiresBosses)
 void Randomizer::OnGoalRequiresChaoRacesSet(const bool goalRequiresChaoRaces)
 {
     _options.goalRequiresChaoRaces = goalRequiresChaoRaces;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
+    //TODO: Post every value set
 
     const ChaoStatus chaoStatus = _locationRepository.GetChaoStatus();
     _displayManager.UpdateChaoStatus(chaoStatus);
@@ -1084,17 +1052,6 @@ void Randomizer::OnGoalRequiresChaoRacesSet(const bool goalRequiresChaoRaces)
     if (!_options.goalRequiresChaosEmeralds)
         SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
 }
-
-void Randomizer::OnSetLogicLevel(int logicLevel)
-{
-    if (logicLevel > 1)
-        _options.expertMode = true;
-    else
-        _options.expertMode = false;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
 
 int Randomizer::GetSongForId(const int songId)
 {
@@ -1107,41 +1064,18 @@ int Randomizer::GetSongNewForId(const int songId, const int currentSongId)
 }
 
 
-
-void Randomizer::UpdateMusicSettings(const ShowSongName showSongName, const ShowSongNameForType showSongNameFor,
-                                  const bool includeVanillaSongs, const bool showWarningForMissingFiles,
-                                  const std::string& string,
-                                  const std::string& basicString, const MusicSource musicSource,
-                                  const MusicShuffle musicShuffle,
-                                  const MusicShuffleConsistency musicShuffleConsistency,
-                                  const LifeCapsulesChangeSongs lifeCapsulesChangeSongs)
-{
-    _options.showSongName = showSongName;
-    _options.showSongNameForType = showSongNameFor;
-    _options.includeVanillaSongs = includeVanillaSongs;
-    _options.showWarningForMissingFiles = showWarningForMissingFiles;
-    _options.sa2BAdxPath = string;
-    _options.customAdxPath = basicString;
-    _options.musicSource = musicSource;
-    _options.musicShuffle = musicShuffle;
-    _options.musicShuffleConsistency = musicShuffleConsistency;
-    _options.lifeCapsulesChangeSongs = lifeCapsulesChangeSongs;
-    _musicManager.UpdateOptions(_options);
-}
-
-
 void Randomizer::DisplaySongName(const int songId)
 {
-    if(_options.showSongName == ShowSongNameAlwaysOff)
-        return;
-    
-    if(_options.showSongName == ShowSongNameWithSongShuffle && _options.musicShuffle == MusicShuffleNone)
+    if (_options.showSongName == ShowSongNameAlwaysOff)
         return;
 
-    if(_options.showSongNameForType == ShowSongNameForTypeOnlyActionLevels)
-        if(CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
+    if (_options.showSongName == ShowSongNameWithSongShuffle && _options.musicShuffle == MusicShuffleNone)
+        return;
+
+    if (_options.showSongNameForType == ShowSongNameForTypeOnlyActionLevels)
+        if (CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
             return;
-    
+
     const auto* song = _musicManager.FindSongById(songId);
     if (song != nullptr)
         _displayManager.ShowSongName("~ " + song->name + " ~");
@@ -1151,7 +1085,7 @@ void Randomizer::SetMusicSource(const MusicSource musicSource)
 {
     if (_options.musicSource == MusicSourceNone)
         _options.musicSource = musicSource;
-    _musicManager.UpdateOptions(_options);
+    //TODO: Post every value set
     _musicManager.RandomizeMusic();
 }
 
@@ -1159,7 +1093,7 @@ void Randomizer::SetMusicShuffle(const MusicShuffle musicShuffle)
 {
     if (_options.musicShuffle == MusicShuffleNone)
         _options.musicShuffle = musicShuffle;
-    _musicManager.UpdateOptions(_options);
+    //TODO: Post every value set
     _musicManager.RandomizeMusic();
 }
 
@@ -1167,155 +1101,21 @@ void Randomizer::SetMusicShuffleConsistency(const MusicShuffleConsistency musicS
 {
     if (_options.musicShuffleConsistency == MusicShuffleConsistencyNone)
         _options.musicShuffleConsistency = musicShuffleConsistency;
-    _musicManager.UpdateOptions(_options);
+    //TODO: Post every value set
     _musicManager.RandomizeMusic();
 }
 
 void Randomizer::SetMusicShuffleSeed(const int musicShuffleSeed)
 {
     _options.musicShuffleSeed = musicShuffleSeed;
-    _musicManager.UpdateOptions(_options);
+    //TODO: Post every value set
     _musicManager.RandomizeMusic();
-}
-
-void Randomizer::SetLifeCapsulesChangeSongs(const bool lifeCapsulesChangeSongs)
-{
-    if (_options.lifeCapsulesChangeSongs == LifeCapsulesChangeSongsNone)
-        _options.lifeCapsulesChangeSongs = lifeCapsulesChangeSongs
-                                               ? LifeCapsulesChangeSongsEnabled
-                                               : LifeCapsulesChangeSongsDisabled;
-    _musicManager.UpdateOptions(_options);
-}
-
-void Randomizer::OnEmblemGoalSet(const int emblemGoal)
-{
-    _options.emblemGoal = max(1, emblemGoal);
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-void Randomizer::OnLevelGoalSet(const int levelGoal)
-{
-    _options.levelGoal = max(1, levelGoal);
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-void Randomizer::OnMissionGoalSet(const int missionGoal)
-{
-    _options.missionGoal = max(1, missionGoal);
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-void Randomizer::OnBossesGoalSet(const int bossesGoal)
-{
-    _options.bossesGoal = max(1, bossesGoal);
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-
-void Randomizer::OnEnemySanitySet(const bool enemySanity)
-{
-    _options.enemySanity = enemySanity;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-void Randomizer::OnFishSanitySet(const bool fishSanity)
-{
-    _options.fishSanity = fishSanity;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-void Randomizer::OnLazyFishingSet(const bool lazyFishing)
-{
-    _options.lazyFishing = lazyFishing;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-    _characterManager.UpdateOptions(_options);
-}
-
-void Randomizer::SetCharacterEnemySanity(const Characters character, const bool characterEnemySanity)
-{
-    _options.SetCharacterEnemySanity(character, characterEnemySanity);
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-
-void Randomizer::OnCapsuleSanitySet(const bool capsuleSanity)
-{
-    _options.capsuleSanity = capsuleSanity;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-void Randomizer::OnPinballCapsulesSet(const bool includePinballCapsules)
-{
-    _options.includePinballCapsules = includePinballCapsules;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-void Randomizer::SetCharacterCapsuleSanity(const Characters character, const bool characterCapsuleSanity)
-{
-    _options.SetCharacterCapsuleSanity(character, characterCapsuleSanity);
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-
-void Randomizer::OnLifeCapsuleSanitySet(const bool lifeCapsuleSanity)
-{
-    _options.lifeCapsuleSanity = lifeCapsuleSanity;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-void Randomizer::OnShieldCapsuleSanitySet(const bool shieldCapsuleSanity)
-{
-    _options.shieldCapsuleSanity = shieldCapsuleSanity;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-void Randomizer::OnPowerUpCapsuleSanitySet(const bool powerUpCapsuleSanity)
-{
-    _options.powerUpCapsuleSanity = powerUpCapsuleSanity;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-void Randomizer::OnRingCapsuleSanitySet(const bool ringCapsuleSanity)
-{
-    _options.ringCapsuleSanity = ringCapsuleSanity;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
-}
-
-
-void Randomizer::SetCharacterStatingArea(const Characters character, const StartingArea startingArea)
-{
-    _options.SetCharacterStatingArea(character, startingArea);
-    _worldStateManager.UpdateOptions(_options);
-    _worldStateManager.UpdateOptions(_options);
-}
-
-void Randomizer::SetPlayableCharacter(const Characters character, const bool playable)
-{
-    _options.SetPlayableCharacter(character, playable);
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
 }
 
 void Randomizer::SetActionStageMissions(const Characters characters, const int missions)
 {
     _options.SetActionStageMissions(characters, missions);
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
+    //TODO: Post every value set
     if (_options.goalRequiresLevels)
     {
         const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
@@ -1353,53 +1153,11 @@ void Randomizer::SetTrapLink(const bool trapLinkActive)
     _archipelagoMessenger.UpdateTags(_options);
 }
 
-void Randomizer::SetRingLoss(const RingLoss ringLoss)
-{
-    _options.ringLoss = ringLoss;
-    _worldStateManager.UpdateOptions(_options);
-    _characterManager.UpdateOptions(_options);
-}
-
-void Randomizer::SetTwinkleCircuitCheck(int twinkleCircuitCheck)
-{
-    _options.twinkleCircuitCheck = twinkleCircuitCheck;
-    _worldStateManager.UpdateOptions(_options);
-    _characterManager.UpdateOptions(_options);
-}
-
-void Randomizer::SetMultipleTwinkleCircuitChecks(int multipleTwinkleCircuitChecks)
-{
-    _options.multipleTwinkleCircuitChecks = multipleTwinkleCircuitChecks;
-    _worldStateManager.UpdateOptions(_options);
-    _characterManager.UpdateOptions(_options);
-}
-
-void Randomizer::SetSkyChaseChecks(const bool skyChaseChecks)
-{
-    _options.skyChaseChecks = skyChaseChecks;
-    _worldStateManager.UpdateOptions(_options);
-    _characterManager.UpdateOptions(_options);
-}
-
-void Randomizer::SetSkyChaseChecksHard(const bool skyChaseChecksHard)
-{
-    _options.skyChaseChecksHard = skyChaseChecksHard;
-    _worldStateManager.UpdateOptions(_options);
-    _characterManager.UpdateOptions(_options);
-}
-
-void Randomizer::SetBossChecks(const bool bossChecks)
-{
-    _options.bossChecks = bossChecks;
-    _worldStateManager.UpdateOptions(_options);
-    _characterManager.UpdateOptions(_options);
-}
 
 void Randomizer::SetUnifyChaos4(const bool unifyChaos4)
 {
     _options.unifyChaos4 = unifyChaos4;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
+    //TODO: Post every value set
 
     const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
     _displayManager.UpdateBossesStatus(bossesStatus);
@@ -1408,8 +1166,7 @@ void Randomizer::SetUnifyChaos4(const bool unifyChaos4)
 void Randomizer::SetUnifyChaos6(const bool unifyChaos6)
 {
     _options.unifyChaos6 = unifyChaos6;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
+    //TODO: Post every value set
 
     const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
     _displayManager.UpdateBossesStatus(bossesStatus);
@@ -1418,14 +1175,8 @@ void Randomizer::SetUnifyChaos6(const bool unifyChaos6)
 void Randomizer::SetUnifyEggHornet(const bool unifyEggHornet)
 {
     _options.unifyEggHornet = unifyEggHornet;
-    _worldStateManager.UpdateOptions(_options);
-    _displayManager.UpdateOptions(_options);
+    //TODO: Post every value set
 
     const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
     _displayManager.UpdateBossesStatus(bossesStatus);
-}
-
-Options Randomizer::GetOptions() const
-{
-    return _options;
 }

@@ -6,7 +6,7 @@ class CheatsManager
 public:
     explicit CheatsManager(Randomizer& randomizer);
 
-    void SetCheatsConfiguration(bool autoSkipCutscenes, bool skipCredits, bool noLifeLossOnRestart);
+    void SetCheatsConfiguration(bool autoSkipCutscenes, bool skipCredits, bool newNoLifeLossOnRestart);
     bool noLifeLossOnRestart = true;
     
 private:

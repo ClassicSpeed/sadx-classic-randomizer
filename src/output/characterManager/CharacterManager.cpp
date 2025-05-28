@@ -8,9 +8,9 @@ const char* subtitleTrapBuffer[] = {NULL, NULL};
 UsercallFuncVoid(HudDisplayRings_t, (signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud),
                  (ringCount, digits, hud), 0x425960, rEAX, rBL, rESI);
 static void __cdecl HandleHudDisplayRings(signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud);
+static void __cdecl HandleRingLoss();
 
-
-CharacterManager::CharacterManager()
+CharacterManager::CharacterManager(const Options& options): options(options)
 {
     characterManagerPtr = this;
     //Re-enable control after graving an emblem
@@ -33,9 +33,13 @@ CharacterManager::CharacterManager()
 
     //Re-enable timer after finishing a mission
     WriteCall((void*)0x592057, WakeTimer);
+    
+    //We override the Set0Rings call inside the HurtPlayer function;
+    WriteCall(reinterpret_cast<void*>(0x45072D), &HandleRingLoss);
 
     HudDisplayRings_t.Hook(HandleHudDisplayRings);
 }
+
 
 void CharacterManager::SetExtendRingCapacity(const bool extendRingCapacity)
 {
@@ -130,13 +134,6 @@ FunctionHook<void, char> onGiveInvincibility(0x441F10, [](const char character)-
         return;
     onGiveInvincibility.Original(character);
 });
-
-void CharacterManager::UpdateOptions(const Options newOptions)
-{
-    this->options = newOptions;
-    //We override the Set0Rings call inside the HurtPlayer function;
-    WriteCall(reinterpret_cast<void*>(0x45072D), &HandleRingLoss);
-}
 
 void CharacterManager::UpdateUnlockStatus(const UnlockStatus newUnlockStatus)
 {

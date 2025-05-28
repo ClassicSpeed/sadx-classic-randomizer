@@ -27,16 +27,17 @@ const int INSTANCE_ID = std::chrono::duration_cast<std::chrono::seconds>(timesta
 constexpr int64_t BASE_ID = 543800000;
 int syncTimer = 0;
 
-
-DisplayManager displayManager = DisplayManager();
-CharacterManager characterManager = CharacterManager();
-WorldStateManager worldStateManager = WorldStateManager();
+Options options = Options();
+DisplayManager displayManager = DisplayManager(options);
+CharacterManager characterManager = CharacterManager(options);
+WorldStateManager worldStateManager = WorldStateManager(options);
 ItemRepository itemRepository = ItemRepository();
 LocationRepository checkRepository = LocationRepository();
 ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger(INSTANCE_ID, BASE_ID);
 SaveFileManager saveFileManager = SaveFileManager();
-MusicManager musicManager = MusicManager();
-Randomizer randomizer = Randomizer(displayManager,
+MusicManager musicManager = MusicManager(options);
+Randomizer randomizer = Randomizer(options,
+                                   displayManager,
                                    characterManager,
                                    worldStateManager,
                                    itemRepository,
@@ -46,8 +47,8 @@ Randomizer randomizer = Randomizer(displayManager,
                                    musicManager);
 
 CheatsManager cheatsManager = CheatsManager(randomizer);
-ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer, INSTANCE_ID, BASE_ID);
-EventDetector eventDetector = EventDetector(randomizer);
+ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer, options, INSTANCE_ID, BASE_ID);
+EventDetector eventDetector = EventDetector(randomizer, options);
 CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(randomizer);
 
 
@@ -297,15 +298,15 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
                                           unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
                                           tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems,
                                           showCommentsSubtitles);
-    
-    randomizer.UpdateMusicSettings(static_cast<ShowSongName>(showSongName),
-                                static_cast<ShowSongNameForType>(showSongNameForType), includeVanillaSongs,
-                                showWarningForMissingFiles, sa2BAdxPath, customAdxPath,
-                                static_cast<MusicSource>(musicSource), static_cast<MusicShuffle>(musicShuffle),
-                                static_cast<MusicShuffleConsistency>(musicShuffleConsistency),
-                                static_cast<LifeCapsulesChangeSongs>(lifeCapsulesChangeSongs));
 
-    
+    musicManager.UpdateMusicSettings(static_cast<ShowSongName>(showSongName),
+                                   static_cast<ShowSongNameForType>(showSongNameForType), includeVanillaSongs,
+                                   showWarningForMissingFiles, sa2BAdxPath, customAdxPath,
+                                   static_cast<MusicSource>(musicSource), static_cast<MusicShuffle>(musicShuffle),
+                                   static_cast<MusicShuffleConsistency>(musicShuffleConsistency),
+                                   static_cast<LifeCapsulesChangeSongs>(lifeCapsulesChangeSongs));
+
+
     musicManager.ProcessSongsFile(helperFunctions, songsPath);
 }
 

@@ -4,7 +4,7 @@
 
 DisplayManager* displayManagerPtr;
 
-DisplayManager::DisplayManager()
+DisplayManager::DisplayManager(const Options& options): _options(options)
 {
     displayManagerPtr = this;
 }
@@ -94,12 +94,6 @@ void DisplayManager::UpdateVisitedLevels(VisitedLevels visitedLevels)
 {
     this->_visitedLevels = visitedLevels;
 }
-
-void DisplayManager::UpdateOptions(const Options options)
-{
-    this->_options = options;
-}
-
 
 void DisplayManager::OnFrame()
 {

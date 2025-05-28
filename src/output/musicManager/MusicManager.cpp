@@ -3,13 +3,33 @@
 #include "json/json.h"
 
 
-MusicManager::MusicManager()
+MusicManager::MusicManager(const Options& options): _options(options)
 {
 }
 
 const SongData* MusicManager::FindSongById(const int songId)
 {
     return _songMap.FindById(songId);
+}
+
+void MusicManager::UpdateMusicSettings(const ShowSongName showSongName, const ShowSongNameForType showSongNameFor,
+                                  const bool includeVanillaSongs, const bool showWarningForMissingFiles,
+                                  const std::string& string,
+                                  const std::string& basicString, const MusicSource musicSource,
+                                  const MusicShuffle musicShuffle,
+                                  const MusicShuffleConsistency musicShuffleConsistency,
+                                  const LifeCapsulesChangeSongs lifeCapsulesChangeSongs)
+{
+    _options.showSongName = showSongName;
+    _options.showSongNameForType = showSongNameFor;
+    _options.includeVanillaSongs = includeVanillaSongs;
+    _options.showWarningForMissingFiles = showWarningForMissingFiles;
+    _options.sa2BAdxPath = string;
+    _options.customAdxPath = basicString;
+    _options.musicSource = musicSource;
+    _options.musicShuffle = musicShuffle;
+    _options.musicShuffleConsistency = musicShuffleConsistency;
+    _options.lifeCapsulesChangeSongs = lifeCapsulesChangeSongs;
 }
 
 
@@ -152,7 +172,7 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
     {
         std::string errorMessage = "Warning: Missing song files!\n\n";
         for (const auto& file : missingFiles)
-    {
+        {
             errorMessage += "File name: " + file + "\n";
         }
         if (missingFiles.size() == 3)
@@ -162,7 +182,7 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
         errorMessage += "\n\nPlease check the file names and try again.";
         MessageBox(WindowHandle, std::wstring(errorMessage.begin(), errorMessage.end()).c_str(),
                    L"SADX Archipelago Warning: Missing music files", MB_OK | MB_ICONERROR);
-}
+    }
 }
 
 
@@ -186,11 +206,6 @@ SongType MusicManager::GetSongTypeFromString(const std::string& typeStr)
     }
 
     return SongType::SongTypeLevel;
-}
-
-void MusicManager::UpdateOptions(const Options newOptions)
-{
-    this->_options = newOptions;
 }
 
 void MusicManager::RandomizeMusic()

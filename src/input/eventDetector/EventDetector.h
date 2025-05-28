@@ -57,7 +57,7 @@ enum HomingAttackIndicator
 class EventDetector
 {
 public:
-    explicit EventDetector(Randomizer& randomizer);
+    explicit EventDetector(Randomizer& randomizer, Options& options);
     bool IsTargetableCheck(const LocationData& location) const;
     void OnPlayingFrame() const;
     void OnLevelEmblem(int character, int level, int mission);
@@ -72,13 +72,16 @@ public:
     void setHomingAttackIndicator(HomingAttackIndicator homingAttackIndicator);
     void OnTwinkleCircuitCompleted(int character);
     void ShuffleSong();
+    
+    Randomizer& randomizer;
+    Options& options;
+    
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
     std::vector<CapsuleLocationData> capsules;
     std::vector<EnemyLocationData> enemies;
     mutable std::map<int, LocationData> checkData;
     mutable std::vector<ArrowTarget> possibleChecks;
-    Randomizer& randomizer;
     float deathDetectionCooldown = 0.5f;
     std::clock_t deathCooldownTimer = -1;
     mutable bool trackerArrow = true;

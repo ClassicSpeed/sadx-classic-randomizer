@@ -8,16 +8,18 @@
 #include "../output/archipelagoMessenger/ArchipelagoMessenger.h"
 #include "../output/saveFileManager/SaveFileManager.h"
 #include "../output/musicManager/MusicManager.h"
+#include "../configuration/Options.h"
 #include "structs/LocationData.h"
 #include "structs/Options.h"
 
 class Randomizer
 {
 public:
-    Randomizer(DisplayManager& displayManager, CharacterManager& characterManager, WorldStateManager& menuManager,
+    Randomizer(Options& options, DisplayManager& displayManager, CharacterManager& characterManager,
+               WorldStateManager& menuManager,
                ItemRepository& itemRepository, LocationRepository& locationRepository,
                ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager, MusicManager& musicManager)
-        : _displayManager(displayManager),
+        : _options(options), _displayManager(displayManager),
           _characterManager(characterManager),
           _worldStateManager(menuManager),
           _itemRepository(itemRepository),
@@ -27,7 +29,6 @@ public:
 
     {
         _displayManager.UpdateChecks(locationRepository.GetLocations());
-
     }
 
     void OnCheckFound(int checkId) const;
@@ -42,39 +43,15 @@ public:
     void ShowStatusInformation(std::string information);
     void QueueNewItemMessage(std::string information);
     void QueueNewChatMessage(std::string information);
-    void OnEmblemGoalSet(int emblemGoal);
-    void OnLevelGoalSet(int levelGoal);
-    void OnMissionGoalSet(int missionGoal);
-    void OnBossesGoalSet(int bossesGoal);
-    void SetCharacterStatingArea(Characters characters, StartingArea startingArea);
-    void SetPlayableCharacter(Characters character, bool playable);
     void SetActionStageMissions(Characters characters, int missions);
-    void OnEnemySanitySet(bool enemySanity);
-    void OnFishSanitySet(bool fishSanity);
-    void OnLazyFishingSet(bool lazyFishing);
-    void SetCharacterEnemySanity(Characters character, bool characterEnemySanity);
-    void OnCapsuleSanitySet(bool capsuleSanity);
-    void OnPinballCapsulesSet(bool includePinballCapsules);
-    void SetCharacterCapsuleSanity(Characters character, bool characterCapsuleSanity);
-    void OnLifeCapsuleSanitySet(bool lifeCapsuleSanity);
-    void OnShieldCapsuleSanitySet(bool shieldCapsuleSanity);
-    void OnPowerUpCapsuleSanitySet(bool powerUpCapsuleSanity);
-    void OnRingCapsuleSanitySet(bool ringCapsuleSanity);
     void SetDeathLink(bool deathLinkActive);
     void SetRingLink(bool ringLinkActive);
     void SetCasinopolisRingLink(bool casinopolisRingLink);
     void SetHardRingLink(bool hardRingLinkActive);
     void SetTrapLink(bool trapLinkActive);
-    void SetRingLoss(RingLoss ringLoss);
-    void SetTwinkleCircuitCheck(int twinkleCircuitCheck);
-    void SetMultipleTwinkleCircuitChecks(int multipleTwinkleCircuitChecks);
-    void SetSkyChaseChecks(bool skyChaseChecks);
-    void SetSkyChaseChecksHard(bool skyChaseChecksHard);
-    void SetBossChecks(bool bossChecks);
     void SetUnifyChaos4(bool unifyChaos4);
     void SetUnifyChaos6(bool unifyChaos6);
     void SetUnifyEggHornet(bool unifyEggHornet);
-    Options GetOptions() const;
     std::vector<CapsuleLocationData> GetCapsules();
     std::vector<EnemyLocationData> GetEnemies();
     void ProcessDeath(const std::string& deathCause);
@@ -84,13 +61,11 @@ public:
     void ProcessRings(Sint16 amount);
     void ProcessTrapLink(std::string itemName, std::string message);
     void ResetItems();
-    void SetMissionMode(int missionModeEnabled);
     void SetAutoStartMissions(int autoStartMissions);
     void OnCheckVersion(int serverVersion);
     void SetStartingCharacter(int startingCharacterIndex);
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
     void UpdateMissionBlacklist(const std::vector<int>& missionBlacklist);
-    void UpdateProgressionItemsList(const std::vector<int>& progressionItemsList);
     void SetEntranceRandomizer(bool enableEntranceRandomizer);
     void SetCharacterVoiceReactions(bool eggmanCommentOnCharacterUnlock, bool currentCharacterCommentOnCharacterUnlock,
                                     bool unlockedCharacterCommentOnCharacterUnlock, bool eggmanCommentOnKeyItems,
@@ -105,28 +80,20 @@ public:
     void SetSendDeathLinkChance(int sendDeathLinkChance);
     void SetReceiveDeathLinkChance(int receiveDeathLinkChance);
     void OnGoalRequiresLevelsSet(bool goalRequiresLevels);
-    void OnGoalRequiresChaosEmeraldsSet(bool goalRequiresChaosEmeralds);
     void OnGoalRequiresEmblems(bool goalRequiresEmblems);
     void OnGoalRequiresMissionsSet(bool goalRequiresMissions);
     void OnGoalRequiresBossesSet(bool goalRequiresBosses);
     void OnGoalRequiresChaoRacesSet(bool goalRequiresChaoRaces);
-    void OnSetLogicLevel(int logicLevel);
     void DisplaySongName(int songId);
     void SetMusicSource(MusicSource musicSource);
     void SetMusicShuffle(MusicShuffle musicShuffle);
     void SetMusicShuffleConsistency(MusicShuffleConsistency musicShuffleConsistency);
     void SetMusicShuffleSeed(int musicShuffleSeed);
-    void SetLifeCapsulesChangeSongs(bool lifeCapsulesChangeSongs);
     int GetSongForId(int songId);
     int GetSongNewForId(int songId, int currentSongId);
-    void UpdateMusicSettings(ShowSongName showSongName, ShowSongNameForType showSongNameFor, bool includeVanillaSongs,
-                             bool showWarningForMissingFiles, const std::string& string, const std::string& basicString,
-                             MusicSource musicSource, MusicShuffle musicShuffle,
-                             MusicShuffleConsistency musicShuffleConsistency,
-                             LifeCapsulesChangeSongs lifeCapsulesChangeSongs);
 
 private:
-    bool AreLastStoryRequirementsCompleted() const;
+    Options& _options;
     DisplayManager& _displayManager;
     CharacterManager& _characterManager;
     WorldStateManager& _worldStateManager;
@@ -136,7 +103,6 @@ private:
     SaveFileManager& _saveFileManager;
     MusicManager& _musicManager;
 
-    Options _options;
     std::string _pendingDeathCause;
     bool _deathPending;
 
@@ -158,6 +124,8 @@ private:
 
     bool _superSonicModRunning = false;
 
+    
+    bool AreLastStoryRequirementsCompleted() const;
 
     std::map<int, std::string> _commentMap = {
         {498, "Long time no see."},
@@ -366,6 +334,4 @@ private:
         {295, "This hotel is nice!"},
         {289, "Trains are cool; too!"}
     };
-
-
 };

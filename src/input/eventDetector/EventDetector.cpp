@@ -35,7 +35,7 @@ float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
     return result;
 }
 
-EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
+EventDetector::EventDetector(Randomizer& randomizer, Options& options) : randomizer(randomizer), options(options)
 {
     PlayCharacterDeathSound_t.Hook(HandlePlayCharacterDeathSound);
     CheckMissionRequirements_t.Hook(HandleCheckMissionRequirements);
@@ -167,7 +167,7 @@ bool HandleCheckMissionRequirements(const int mission, const int character, cons
             }
         }
 
-        if (ManualMissionSCheck(character, level, eventDetectorPtr->randomizer.GetOptions().expertMode))
+        if (ManualMissionSCheck(character, level, eventDetectorPtr->options.expertMode))
         {
             eventDetectorPtr->OnLevelEmblem(character, level, MISSION_S);
         }
@@ -226,25 +226,25 @@ bool EventDetector::IsTargetableCheck(const LocationData& location) const
 
     if (location.type == LocationEnemy)
     {
-        if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+        if (!eventDetectorPtr->options.enemySanity)
             return false;
 
-        if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(
+        if (!eventDetectorPtr->options.GetCharacterEnemySanity(
             static_cast<Characters>(CurrentCharacter)))
             return false;
         return true;
     }
     if (location.type == LocationCapsule)
     {
-        if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+        if (!eventDetectorPtr->options.capsuleSanity)
             return false;
-        if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(
+        if (!eventDetectorPtr->options.GetCharacterCapsuleSanity(
             static_cast<Characters>(CurrentCharacter)))
             return false;
-        if (!eventDetectorPtr->randomizer.GetOptions().GetSpecificCapsuleSanity(
+        if (!eventDetectorPtr->options.GetSpecificCapsuleSanity(
             static_cast<CapsuleType>(location.capsuleType)))
             return false;
-        if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && location.level ==
+        if (!eventDetectorPtr->options.includePinballCapsules && location.level ==
             LevelAndActIDs_Casinopolis3)
             return false;
         return true;
@@ -751,13 +751,13 @@ void CheckCapsule(const EntityData1* entity, const bool specificCapsule)
 {
     if (DemoPlaying > 0)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+    if (!eventDetectorPtr->options.capsuleSanity)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+    if (!eventDetectorPtr->options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
     if (!specificCapsule)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
+    if (!eventDetectorPtr->options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
@@ -772,48 +772,48 @@ void CheckCapsule(const EntityData1* entity, const bool specificCapsule)
 FunctionHook<void, EntityData1*> onSpeedUpCapsuleBroken(0x4D6BF0, [](EntityData1* entity)-> void
 {
     onSpeedUpCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity);
+    CheckCapsule(entity, eventDetectorPtr->options.powerUpCapsuleSanity);
 });
 FunctionHook<void, EntityData1*> onInvincibilityCapsuleBroken(0x4D6D80, [](EntityData1* entity)-> void
 {
     onInvincibilityCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity);
+    CheckCapsule(entity, eventDetectorPtr->options.powerUpCapsuleSanity);
 });
 FunctionHook<void, EntityData1*> onFiveRingsCapsuleBroken(0x4D6C50, [](EntityData1* entity)-> void
 {
     onFiveRingsCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity);
+    CheckCapsule(entity, eventDetectorPtr->options.ringCapsuleSanity);
 });
 FunctionHook<void, EntityData1*> onTenRingsCapsule(0x4D6C90, [](EntityData1* entity)-> void
 {
     onTenRingsCapsule.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity);
+    CheckCapsule(entity, eventDetectorPtr->options.ringCapsuleSanity);
 });
 FunctionHook<void, EntityData1*> onRandomRingsCapsuleBroken(0x4D6CD0, [](EntityData1* entity)-> void
 {
     onRandomRingsCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity);
+    CheckCapsule(entity, eventDetectorPtr->options.ringCapsuleSanity);
 });
 FunctionHook<void, EntityData1*> onShieldCapsuleBroken(0x4D6DC0, [](EntityData1* entity)-> void
 {
     onShieldCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity);
+    CheckCapsule(entity, eventDetectorPtr->options.shieldCapsuleSanity);
 });
 FunctionHook<void, EntityData1*> onExtraLifeCapsuleBroken(0x4D6D40, [](EntityData1* entity)-> void
 {
     onExtraLifeCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().lifeCapsuleSanity);
+    CheckCapsule(entity, eventDetectorPtr->options.lifeCapsuleSanity);
     eventDetectorPtr->ShuffleSong();
 });
 FunctionHook<void, EntityData1*> onBombCapsuleBroken(0x4D6E00, [](EntityData1* entity)-> void
 {
     onBombCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity);
+    CheckCapsule(entity, eventDetectorPtr->options.powerUpCapsuleSanity);
 });
 FunctionHook<void, EntityData1*> onElectricShieldCapsuleBroken(0x4D6E40, [](EntityData1* entity)-> void
 {
     onElectricShieldCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity);
+    CheckCapsule(entity, eventDetectorPtr->options.shieldCapsuleSanity);
 });
 
 //Make Sonic's capsule count as Tails'
@@ -889,7 +889,7 @@ FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
         return;
     if (CurrentLevel < LevelIDs_Chaos0 || CurrentLevel > LevelIDs_E101R)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().bossChecks)
+    if (!eventDetectorPtr->options.bossChecks)
         return;
 
     bool checksFound = false;
@@ -898,7 +898,7 @@ FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
         if (check.second.type != LocationBossFight)
             continue;
 
-        if (eventDetectorPtr->randomizer.GetOptions().unifyEggHornet && CurrentLevel == LevelIDs_EggHornet)
+        if (eventDetectorPtr->options.unifyEggHornet && CurrentLevel == LevelIDs_EggHornet)
         {
             if (check.second.character == -1 && check.second.level == LevelIDs_EggHornet && !check.second.checked)
             {
@@ -906,7 +906,7 @@ FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
                 checksFound = true;
             }
         }
-        else if (eventDetectorPtr->randomizer.GetOptions().unifyChaos4 && CurrentLevel == LevelIDs_Chaos4)
+        else if (eventDetectorPtr->options.unifyChaos4 && CurrentLevel == LevelIDs_Chaos4)
         {
             if (check.second.character == -1 && check.second.level == LevelIDs_Chaos4 && !check.second.checked)
             {
@@ -914,7 +914,7 @@ FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
                 checksFound = true;
             }
         }
-        else if (eventDetectorPtr->randomizer.GetOptions().unifyChaos6 && CurrentLevel == LevelIDs_Chaos6)
+        else if (eventDetectorPtr->options.unifyChaos6 && CurrentLevel == LevelIDs_Chaos6)
         {
             if (check.second.character == -1 && check.second.level == LevelIDs_Chaos6 && !check.second.checked)
             {
@@ -1065,7 +1065,7 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     NJS_POINT3COL point3Col;
     point3Col.p = point;
     if (!checked)
-        if (eventDetectorPtr->progressionIndicator && eventDetectorPtr->randomizer.GetOptions().
+        if (eventDetectorPtr->progressionIndicator && eventDetectorPtr->options.
                                                                         LocationHasProgressiveItem(locationId))
             point3Col.col = eventDetectorPtr->progressionItemIndicatorColor;
         else if (indicatorType == EnemyIndicator)
@@ -1085,32 +1085,32 @@ bool GetCapsuleTypeOption(const Float type)
     switch (static_cast<int>(std::floor(type)))
     {
     case 6:
-        return eventDetectorPtr->randomizer.GetOptions().lifeCapsuleSanity;
+        return eventDetectorPtr->options.lifeCapsuleSanity;
     case 5:
     case 8:
-        return eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity;
+        return eventDetectorPtr->options.shieldCapsuleSanity;
     case 2:
     case 3:
     case 4:
-        return eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity;
+        return eventDetectorPtr->options.ringCapsuleSanity;
     case 1:
     case 7:
     case 0:
     default:
-        return eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity;
+        return eventDetectorPtr->options.powerUpCapsuleSanity;
     }
 }
 
 FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
 {
     OnItemBoxMain.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+    if (!eventDetectorPtr->options.capsuleSanity)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+    if (!eventDetectorPtr->options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
     if (!GetCapsuleTypeOption(tp->twp->scl.x))
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
+    if (!eventDetectorPtr->options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
@@ -1128,13 +1128,13 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
 FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
 {
     OnAirItemBoxMain.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+    if (!eventDetectorPtr->options.capsuleSanity)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+    if (!eventDetectorPtr->options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
     if (!GetCapsuleTypeOption(tp->twp->scl.x))
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
+    if (!eventDetectorPtr->options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
@@ -1169,10 +1169,10 @@ int FindEnemyTrackerId(task* tp)
 
 void CheckEnemy(task* tp)
 {
-    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+    if (!eventDetectorPtr->options.enemySanity)
         return;
 
-    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+    if (!eventDetectorPtr->options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
     int enemyId = FindEnemyTrackerId(tp);
@@ -1253,9 +1253,9 @@ FunctionHook<void, task*> onBuyonMain(0x7B2E00, [](task* tp)-> void
 FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
 {
     onBoaBoaHeadLoad.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+    if (!eventDetectorPtr->options.enemySanity)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().
+    if (!eventDetectorPtr->options.
                            GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
@@ -1397,10 +1397,10 @@ FunctionHook<void, task*> onEggKeeperMain(0x4A6420, [](task* tp)-> void
 
 void CheckDestroyedEnemy(task* tp)
 {
-    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+    if (!eventDetectorPtr->options.enemySanity)
         return;
 
-    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+    if (!eventDetectorPtr->options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
     const int enemyId = FindEnemyTrackerId(tp);
@@ -1439,10 +1439,10 @@ void HandleOnBoaBoaPartDestroyed(task* tp)
 
 void EventDetector::OnTwinkleCircuitCompleted(const int character)
 {
-    if (!eventDetectorPtr->randomizer.GetOptions().twinkleCircuitCheck)
+    if (!eventDetectorPtr->options.twinkleCircuitCheck)
         return;
 
-    if (eventDetectorPtr->randomizer.GetOptions().multipleTwinkleCircuitChecks)
+    if (eventDetectorPtr->options.multipleTwinkleCircuitChecks)
     {
         switch (character)
         {
@@ -1484,7 +1484,7 @@ FunctionHook<signed int> onSaveTwinkleCircuitRecord(0x4B5BC0, []()-> signed int
 FunctionHook<void, task*> onFishMain(0x597010, [](task* tp)-> void
 {
     onFishMain.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().fishSanity)
+    if (!eventDetectorPtr->options.fishSanity)
         return;
     if (CurrentCharacter != Characters_Big)
         return;
@@ -1512,7 +1512,7 @@ FunctionHook<void, task*> onFishMain(0x597010, [](task* tp)-> void
 FunctionHook<void, task*> onFishCaught(0x470160, [](task* tp)-> void
 {
     onFishCaught.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().fishSanity)
+    if (!eventDetectorPtr->options.fishSanity)
         return;
 
     const auto* v1 = reinterpret_cast<int*>(tp->twp);
@@ -1592,20 +1592,21 @@ FunctionHook<void, int> onPlayJingle(0x425860, [](const int songId)-> void
 {
     const int shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
     onPlayJingle.Original(shuffledSongId);
-    if(eventDetectorPtr->randomizer.GetOptions().showSongNameForType == ShowSongNameForTypeEverything)
+    if (eventDetectorPtr->options.showSongNameForType == ShowSongNameForTypeEverything)
         eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
 });
+
 void EventDetector::ShuffleSong()
 {
-    if (randomizer.GetOptions().musicShuffle == MusicShuffleNone
-        || randomizer.GetOptions().musicShuffle == MusicShuffleDisabled
-        || randomizer.GetOptions().musicShuffle == MusicShuffleSingularity)
+    if (this->options.musicShuffle == MusicShuffleNone
+        || this->options.musicShuffle == MusicShuffleDisabled
+        || this->options.musicShuffle == MusicShuffleSingularity)
         return;
 
-    if (randomizer.GetOptions().musicShuffleConsistency != MusicShuffleConsistencyPerPlay)
+    if (this->options.musicShuffleConsistency != MusicShuffleConsistencyPerPlay)
         return;
 
-    if (!randomizer.GetOptions().lifeCapsulesChangeSongs != LifeCapsulesChangeSongsEnabled)
+    if (!this->options.lifeCapsulesChangeSongs != LifeCapsulesChangeSongsEnabled)
         return;
 
     const int shuffledSongId = randomizer.GetSongForId(eventDetectorPtr->lastRealSongId);

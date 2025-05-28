@@ -9,9 +9,9 @@ CheatsManager::CheatsManager(Randomizer& randomizer) : _randomizer(randomizer)
 }
 
 
-void CheatsManager::SetCheatsConfiguration(const bool autoSkipCutscenes, const bool skipCredits, const bool noLifeLossOnRestart)
+void CheatsManager::SetCheatsConfiguration(const bool autoSkipCutscenes, const bool skipCredits, const bool newNoLifeLossOnRestart)
 {
-    this->noLifeLossOnRestart = noLifeLossOnRestart;
+    this->noLifeLossOnRestart = newNoLifeLossOnRestart;
     
     //Auto Skip All Cutscenes by MainMemory
     if (autoSkipCutscenes)

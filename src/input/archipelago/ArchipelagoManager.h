@@ -45,7 +45,7 @@ enum TrapLinkOverride
 class ArchipelagoManager
 {
 public:
-    explicit ArchipelagoManager(Randomizer& randomizer, int instanceId, int64_t baseId);
+    explicit ArchipelagoManager(Randomizer& randomizer, Options& options, int instanceId, int64_t baseId);
 
     void Connect();
     bool IsValidSaveFile();
@@ -66,6 +66,7 @@ public:
     RingLinkOverride ringLinkOverride;
     RingLossOverride ringLossOverride;
     TrapLinkOverride trapLinkOverride;
+    Options& options;
 
 private:
     void ManageMessages();

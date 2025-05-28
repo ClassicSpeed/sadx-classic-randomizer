@@ -2,10 +2,11 @@
 #include <queue>
 
 #include "../../pch.h"
-#include "../../application/structs/Options.h"
+#include "../../configuration/Options.h"
 #include "../../application/structs/UnlockStatus.h"
 #include "../../application/structs/ItemData.h"
 #include "../../application/structs/WeightedRandomSelector.h"
+#include "../../configuration/Options.h"
 
 
 #define RING_LOSS_SOUND_ID 0
@@ -22,12 +23,11 @@ struct RingDifference
 class CharacterManager
 {
 public:
-    CharacterManager();
+    explicit CharacterManager(const Options& options);
     void SetExtendRingCapacity(bool extendRingCapacity);
 
     void GiveUpgrade(Upgrades upgrade);
     void RemoveUpgrade(Upgrades upgrade);
-    void UpdateOptions(Options newOptions);
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
     void KillPlayer();
     void ProcessRings(Sint16 amount);

@@ -9,8 +9,9 @@
 #include "../../application/structs/BossesStatus.h"
 #include "../../application/structs/ChaoStatus.h"
 #include "../../application/structs/VisitedLevels.h"
-#include "../../application/structs/Options.h"
+#include "../../configuration/Options.h"
 #include "../../application/structs/LocationData.h"
+#include "../../configuration/Options.h"
 
 
 struct LocationData;
@@ -26,8 +27,7 @@ enum DisplayInGameTracker
 class DisplayManager
 {
 public:
-    DisplayManager();
-
+    explicit DisplayManager(const Options& options);
     void QueueItemMessage(const std::string& message);
     void QueueChatMessage(const std::string& message);
     void ShowSongName(const std::string& songName);
@@ -37,7 +37,6 @@ public:
     void UpdateBossesStatus(BossesStatus bossesStatus);
     void UpdateChaoStatus(ChaoStatus chaoStatus);
     void UpdateVisitedLevels(VisitedLevels visitedLevels);
-    void UpdateOptions(Options options);
     void OnFrame();
     void ShowStatusInformation(std::string information);
     void ShowGoalStatus();

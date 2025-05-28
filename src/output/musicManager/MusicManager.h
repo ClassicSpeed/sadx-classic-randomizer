@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <vector>
 #include <filesystem>
-#include "../../application/structs/Options.h"
+#include "../../configuration/Options.h"
 
 
 enum SongType
@@ -196,14 +196,18 @@ private:
 class MusicManager
 {
 public:
-    MusicManager();
+    MusicManager(const Options& options);
     const SongData* FindSongById(int songId);
+    void UpdateMusicSettings(ShowSongName showSongName, ShowSongNameForType showSongNameFor, bool includeVanillaSongs,
+                             bool showWarningForMissingFiles, const std::string& string, const std::string& basicString,
+                             MusicSource musicSource, MusicShuffle musicShuffle,
+                             MusicShuffleConsistency musicShuffleConsistency,
+                             LifeCapsulesChangeSongs lifeCapsulesChangeSongs);
     void ParseExtraFiles(const HelperFunctions& helperFunctions);
     void ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath);
     void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath,
                            SongSource songSource);
     SongType GetSongTypeFromString(const std::string& typeStr);
-    void UpdateOptions(Options newOptions);
     void RandomizeMusic();
     std::vector<int> GetPossibleSongIds(int id, std::mt19937& gen);
     int GetSingularitySong();

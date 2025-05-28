@@ -2,7 +2,7 @@
 
 #include "../../pch.h"
 #include <algorithm>
-#include "../../application/structs/Options.h"
+#include "../../configuration/Options.h"
 #include "../../application/structs/LevelEntrances.h"
 #include "../../application/structs/UnlockStatus.h"
 #include "../../application/structs/VisitedLevels.h"
@@ -38,13 +38,11 @@ struct LevelArrow
 class WorldStateManager
 {
 public:
-    WorldStateManager();
+    explicit WorldStateManager(const Options& options);
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
-    void UpdateOptions(Options newOptions);
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
     void UpdateChecks(const std::map<int, LocationData>& checkData);
-    bool IsSkyChase1Enabled();
     void DrawDisableDoorIndicator(NJS_POINT3 basePoint, float angle);
     void DrawCorrectDoorIndicator(NJS_POINT3 basePoint, float angle);
     void DrawOtherDoorIndicator(NJS_POINT3 basePoint, float angle);
