@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "ItemData.h"
 #include "LocationData.h"
 
 enum Goal
@@ -101,8 +102,8 @@ enum MusicShuffleConsistency
 enum LifeCapsulesChangeSongs
 {
     LifeCapsulesChangeSongsNone = -1,
-    LifeCapsulesChangeSongsEnabled = 0,
-    LifeCapsulesChangeSongsDisabled = 1,
+    LifeCapsulesChangeSongsDisabled = 0,
+    LifeCapsulesChangeSongsEnabled = 1,
 };
 
 struct Options
@@ -189,7 +190,7 @@ struct Options
     std::string customAdxPath = "custom/";
     ShowSongName showSongName = ShowSongNameWithSongShuffle;
     ShowSongNameForType showSongNameForType = ShowSongNameForTypeEverything;
-    bool includeVanillaSongs = true;
+    bool includeVanillaSongs = false;
     bool showWarningForMissingFiles = false;
 
     MusicSource musicSource = MusicSourceNone;
@@ -205,7 +206,14 @@ struct Options
     bool skyChaseChecksHard = false;
     std::vector<int> missionBlacklist = {};
     bool expertMode = false;
-
+    
+    int iceTrapWeight = 2;
+    int springTrapWeight = 2;
+    int policeTrapWeight = 2;
+    int buyonTrapWeight = 2;
+    int reverseTrapWeight = 2;
+    int gravityTrapWeight = 2;
+    
     void SetActionStageMissions(const Characters character, const int missions)
     {
         switch (character)
@@ -491,5 +499,25 @@ struct Options
     {
         return this->musicSource == MusicSourceSadxCustom || this->musicSource == MusicSourceSa2BCustom || this->
             musicSource == MusicSourceSadxSa2BCustom || this->musicSource == MusicSourceCustom;
+    }
+
+    bool IsTrapEnabled(const FillerType filler)
+    {
+        if (filler == NoFiller)
+            return false;
+        if (filler == IceTrap && iceTrapWeight > 0)
+            return true;
+        if (filler == SpringTrap && springTrapWeight > 0)
+            return true;
+        if (filler == PoliceTrap && policeTrapWeight > 0)
+            return true;
+        if (filler == BuyonTrap && buyonTrapWeight > 0)
+            return true;
+        if (filler == ReverseTrap && reverseTrapWeight > 0)
+            return true;
+        if (filler == GravityTrap && gravityTrapWeight > 0)
+            return true;
+
+        return false;
     }
 };

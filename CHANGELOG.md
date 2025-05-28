@@ -2,9 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.2] - 2025-05-27
+
+### Changed
+
+- Changed base songs path to SADX's main folder.
+- Changed default custom songs path to `songs/custom/`.
+- IncludeVanillaSongs setting is now disabled by default.
+- Trap Link will no longer process traps disabled by the player in the YAML.
+- Trap Link will no longer show traps that are not going to be processed.
+- Added a 5-second cooldown to Trap Link.
+
+### Fixed
+
+- Fixed music randomization breaking when rejoining after many checks have been sent.
+- Changed SADX intro from "event" to "jingle".
+- Fixed level timer not stopping when finishing a level after completing a mission.
+- Fixed `LifeCapsulesChangeSongsOverride` not working correctly.
+
 ## [v1.1.2 pre-release 2] - 2025-05-25
 
-### Added:
+### Added
 
 - Added a path option for `songs.json` in the mod settings to allow a custom location. Path is relative to the game's
   main folder.
@@ -12,11 +30,11 @@ All notable changes to this project will be documented in this file.
 - Added Ring Loss override in the mod settings.
 - Added Custom songs only as a source option for music randomization.
 - Added support for 1.1.1 seeds using overrides.
-- Any non-mapped ADX file from the custom folder will now be added to the pool as a Level-type song.
+- Any non-mapped ADX file from the custom folder will now be added to the pool as a Any-type song.
 - Warning messages for missing songs are now shown as a single message for SA2B and custom songs.
 - Added 'any' as song type. It can play for any type except for jingles.
 
-### Fixed:
+### Fixed
 
 - Fixed static consistency behaving like singularity.
 - Fixed spelling mistakes in `songs.json` for Unknown from M.E. tracks.
