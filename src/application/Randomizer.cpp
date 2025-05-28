@@ -1023,7 +1023,6 @@ void Randomizer::ProcessTrapLink(std::string itemName, std::string message)
 void Randomizer::OnConnected(std::string playerName)
 {
     _options.playerName = playerName;
-    _musicManager.RandomizeMusic();
     _worldStateManager.UpdateOptions(_options);
     _displayManager.UpdateOptions(_options);
     _displayManager.SetConnected();
