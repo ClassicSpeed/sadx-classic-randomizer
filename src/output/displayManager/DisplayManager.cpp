@@ -4,7 +4,7 @@
 
 DisplayManager* displayManagerPtr;
 
-DisplayManager::DisplayManager(const Options& options): _options(options)
+DisplayManager::DisplayManager(Options& options): _options(options)
 {
     displayManagerPtr = this;
 }
@@ -494,6 +494,11 @@ void DisplayManager::UpdateVoiceMenuCharacter(const int characterVoiceIndex)
 void DisplayManager::SetConnected()
 {
     _connected = true;
+}
+
+void DisplayManager::PrintPLayerName()
+{
+    PrintDebug("[SADX Archipelago] ---- Initializing playername %s\n", _options.playerName.c_str());
 }
 
 

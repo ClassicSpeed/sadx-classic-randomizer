@@ -196,7 +196,7 @@ private:
 class MusicManager
 {
 public:
-    MusicManager(const Options& options);
+    MusicManager(Options& options);
     const SongData* FindSongById(int songId);
     void UpdateMusicSettings(ShowSongName showSongName, ShowSongNameForType showSongNameFor, bool includeVanillaSongs,
                              bool showWarningForMissingFiles, const std::string& string, const std::string& basicString,
@@ -215,7 +215,7 @@ public:
     int GetSongNewForId(int songId, int currentSongId);
 
 private:
-    Options _options;
+    Options& _options;
     SongMap _songMap;
     std::unordered_map<int, std::vector<int>> _songRandomizationMap;
 };

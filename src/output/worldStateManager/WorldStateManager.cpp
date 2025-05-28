@@ -203,7 +203,7 @@ static __int16 __cdecl HandleOnFinalEggDoorCheckB(int a1);
 char LeonTimer1 = 10;
 char LeonTimer2 = 30;
 
-WorldStateManager::WorldStateManager(const Options& options): options(options)
+WorldStateManager::WorldStateManager(Options& options): options(options)
 {
     visitedLevels = VisitedLevels();
     onSceneChangeMr_t.Hook(HandleMREntrance);

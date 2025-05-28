@@ -23,7 +23,7 @@ struct RingDifference
 class CharacterManager
 {
 public:
-    explicit CharacterManager(const Options& options);
+    explicit CharacterManager(Options& options);
     void SetExtendRingCapacity(bool extendRingCapacity);
 
     void GiveUpgrade(Upgrades upgrade);
@@ -42,7 +42,7 @@ public:
     void SetTrapsOnBossFights(bool trapsOnBossFights);
     void SetTrapsOnPerfectChaosFight(bool trapsOnPerfectChaosFight);
     void RemoveStatusEffects();
-    Options options;
+    Options& options;
     UnlockStatus unlockStatus;
     int lastRingAmount;
     bool reverseControlsEnabled = false;

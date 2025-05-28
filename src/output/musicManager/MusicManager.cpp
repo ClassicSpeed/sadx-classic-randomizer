@@ -3,7 +3,7 @@
 #include "json/json.h"
 
 
-MusicManager::MusicManager(const Options& options): _options(options)
+MusicManager::MusicManager(Options& options): _options(options)
 {
 }
 

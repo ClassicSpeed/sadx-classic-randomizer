@@ -38,7 +38,7 @@ struct LevelArrow
 class WorldStateManager
 {
 public:
-    explicit WorldStateManager(const Options& options);
+    explicit WorldStateManager(Options& options);
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
@@ -55,7 +55,7 @@ public:
     void SetEggCarrierTransformationCutscene(bool eggCarrierTransformation);
     void SetChaoStatsMultiplier(int chaoStatsMultiplier);
     void SetShowEntranceIndicators(bool showEntranceIndicators);
-    Options options;
+    Options& options;
     UnlockStatus unlockStatus;
     bool eggCarrierTransformationCutscene = true;
     VisitedLevels visitedLevels;

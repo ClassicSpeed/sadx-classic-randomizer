@@ -14,7 +14,7 @@ void EmptyCall()
 {
 }
 
-CharacterManager::CharacterManager(const Options& options): options(options)
+CharacterManager::CharacterManager(Options& options): options(options)
 {
     characterManagerPtr = this;
     //Re-enable control after graving an emblem

@@ -27,7 +27,7 @@ enum DisplayInGameTracker
 class DisplayManager
 {
 public:
-    explicit DisplayManager(const Options& options);
+    explicit DisplayManager(Options& options);
     void QueueItemMessage(const std::string& message);
     void QueueChatMessage(const std::string& message);
     void ShowSongName(const std::string& songName);
@@ -47,6 +47,7 @@ public:
                                  DisplayInGameTracker displayInGameTracker, int itemMessageColor, int chatMessageColor);
     void UpdateVoiceMenuCharacter(int characterVoiceIndex);
     void SetConnected();
+    void PrintPLayerName();
 
 private:
     void RemoveExpiredMessages();
@@ -96,7 +97,7 @@ private:
     BossesStatus _bossesStatus;
     ChaoStatus _chaoStatus;
     VisitedLevels _visitedLevels;
-    Options _options;
+    Options&  _options;
 
 
     int _keyItemColor = 0xFFF2C600;
