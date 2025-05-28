@@ -1606,7 +1606,7 @@ void EventDetector::ShuffleSong()
     if (this->options.musicShuffleConsistency != MusicShuffleConsistencyPerPlay)
         return;
 
-    if (!this->options.lifeCapsulesChangeSongs != LifeCapsulesChangeSongsEnabled)
+    if (this->options.lifeCapsulesChangeSongs != LifeCapsulesChangeSongsEnabled)
         return;
 
     const int shuffledSongId = randomizer.GetSongForId(eventDetectorPtr->lastRealSongId);

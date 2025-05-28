@@ -266,16 +266,16 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
 
     const std::string songsPath = settingsIni->getString("MusicShuffle", "SongsPath", "mods/SADX_Archipelago/");
     const std::string sa2BAdxPath = settingsIni->getString("MusicShuffle", "Sa2bADXpath",
-                                                           "../../../../Sonic Adventure 2/resource/gd_PC/ADX/");
-    const std::string customAdxPath = settingsIni->getString("MusicShuffle", "CustomADXpath", "custom/");
+                                                           "../Sonic Adventure 2/resource/gd_PC/ADX/");
+    const std::string customAdxPath = settingsIni->getString("MusicShuffle", "CustomADXpath", "songs/custom/");
     const int showSongName = settingsIni->getInt("MusicShuffle", "ShowSongName", 0);
     const int showSongNameForType = settingsIni->getInt("MusicShuffle", "ShowSongNameForType", 0);
-    const bool includeVanillaSongs = settingsIni->getBool("MusicShuffle", "IncludeVanilla", true);
+    const bool includeVanillaSongs = settingsIni->getBool("MusicShuffle", "IncludeVanilla", false);
     const bool showWarningForMissingFiles = settingsIni->getBool("MusicShuffle", "ShowWarningForMissingFiles", false);
     const int musicSource = settingsIni->getInt("MusicShuffle", "MusicSourceOverride", -1);
     const int musicShuffle = settingsIni->getInt("MusicShuffle", "MusicShuffleOverride", -1);
     const int musicShuffleConsistency = settingsIni->getInt("MusicShuffle", "MusicShuffleConsistencyOverride", -1);
-    const int lifeCapsulesChangeSongs = settingsIni->getInt("MusicShuffle", "LifeCapsulesChangeSongsOverride", 0);
+    const int lifeCapsulesChangeSongs = settingsIni->getInt("MusicShuffle", "LifeCapsulesChangeSongsOverride", -1);
 
     displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
     cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, noLifeLossOnRestart);

@@ -104,7 +104,7 @@ void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions, cons
 void MusicManager::ParseExtraFiles(const HelperFunctions& helperFunctions)
 {
     namespace fs = std::filesystem;
-    std::string directoryPath = "./SoundData/bgm/wma/" + _options.customAdxPath;
+    std::string directoryPath = "./" + _options.customAdxPath;
     if (!fs::exists(directoryPath) || !fs::is_directory(directoryPath))
         return;
 
@@ -120,6 +120,7 @@ void MusicManager::ParseExtraFiles(const HelperFunctions& helperFunctions)
             std::string fullPath = _options.customAdxPath + codename;
 
             // Allocate memory for the file path
+            fullPath = "../../../" + fullPath;
             const auto allocatedName = new char[fullPath.size() + 1];
             std::strcpy(allocatedName, fullPath.c_str());
 
@@ -147,7 +148,7 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
 
         std::string fullPath = categoryPath + codename;
 
-        if (const std::ifstream fin("./SoundData/bgm/wma/" + fullPath + ".adx"); !fin)
+        if (const std::ifstream fin("./" + fullPath + ".adx"); !fin)
         {
             if (_options.showWarningForMissingFiles && missingFiles.size() < 3)
             {
@@ -156,6 +157,7 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
         }
         else
         {
+            fullPath = "../../../" + fullPath;
             auto allocatedName = new char[fullPath.size() + 1];
             std::strcpy(allocatedName, fullPath.c_str());
             int loop = songType == SongTypeJingle ? 0 : 1;

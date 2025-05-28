@@ -72,6 +72,13 @@ public:
                                     bool tikalCommentOnKeyItems,
                                     bool currentCharacterCommentOnKeyItems,
                                     bool showCommentsSubtitles);
+    void SetIceTrapWeight(int iceTrapWeight);
+    void SetSpringTrapWeight(int springTrapWeight);
+    void SetPoliceTrapWeight(int policeTrapWeight);
+    void SetBuyonTrapWeight(int buyonTrapWeight);
+    void SetReverseTrapWeight(int reverseTrapWeight);
+    void SetGravityTrapWeight(int gravityTrapWeight);
+
     void SetReverseControlTrapDuration(int reverseControlTrapDuration);
     void SetTrapsOnAdventureFields(bool trapsOnAdventureFields);
     void SetTrapsOnBossFights(bool trapsOnBossFights);
@@ -108,6 +115,9 @@ private:
 
     float _deathLinkCooldown = 5.0f;
     std::clock_t _deathLinkCooldownTimer = -1;
+
+    float _trapLinkCooldown = 5.0f;
+    std::clock_t _trapLinkCooldownTimer = -1;
 
     int _sendDeathLinkChance = 100;
     int _receiveDeathLinkChance = 100;

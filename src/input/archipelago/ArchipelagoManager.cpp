@@ -670,6 +670,32 @@ void SADX_LifeCapsulesChangeSongs(const int lifeCapsulesChangeSongs)
                                                                      : LifeCapsulesChangeSongsDisabled;
 }
 
+
+void SADX_IceTrapWeight(const int iceTrapWeight)
+{
+    randomizerPtr->SetIceTrapWeight(iceTrapWeight);
+}
+void SADX_SpringTrapWeight(const int springTrapWeight)
+{
+    randomizerPtr->SetSpringTrapWeight(springTrapWeight);
+}
+void SADX_PoliceTrapWeight(const int policeTrapWeight)
+{
+    randomizerPtr->SetPoliceTrapWeight(policeTrapWeight);
+}
+void SADX_BuyonTrapWeight(const int buyonTrapWeight)
+{
+    randomizerPtr->SetBuyonTrapWeight(buyonTrapWeight);
+}
+void SADX_ReverseTrapWeight(const int reverseTrapWeight)
+{
+    randomizerPtr->SetReverseTrapWeight(reverseTrapWeight);
+}
+void SADX_GravityTrapWeight(const int gravityTrapWeight)
+{
+    randomizerPtr->SetGravityTrapWeight(gravityTrapWeight);
+}
+
 void SADX_ReverseControlTrapDuration(const int reverseControlTrapDuration)
 {
     randomizerPtr->SetReverseControlTrapDuration(reverseControlTrapDuration);
@@ -799,6 +825,12 @@ void ArchipelagoManager::Connect()
     AP_RegisterSlotDataIntCallback("MusicShuffleSeed", &SADX_MusicShuffleSeed);
     AP_RegisterSlotDataIntCallback("LifeCapsulesChangeSongs", &SADX_LifeCapsulesChangeSongs);
 
+    AP_RegisterSlotDataIntCallback("IceTrapWeight", &SADX_IceTrapWeight);
+    AP_RegisterSlotDataIntCallback("SpringTrapWeight", &SADX_SpringTrapWeight);
+    AP_RegisterSlotDataIntCallback("PoliceTrapWeight", &SADX_PoliceTrapWeight);
+    AP_RegisterSlotDataIntCallback("BuyonTrapWeight", &SADX_BuyonTrapWeight);
+    AP_RegisterSlotDataIntCallback("ReverseTrapWeight", &SADX_ReverseTrapWeight);
+    AP_RegisterSlotDataIntCallback("GravityTrapWeight", &SADX_GravityTrapWeight);
 
     AP_RegisterSlotDataIntCallback("ReverseControlTrapDuration", &SADX_ReverseControlTrapDuration);
     AP_RegisterSlotDataIntCallback("TrapsOnAdventureFields", &SADX_TrapsOnAdventureFields);

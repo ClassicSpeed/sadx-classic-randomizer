@@ -10,6 +10,10 @@ UsercallFuncVoid(HudDisplayRings_t, (signed int ringCount, unsigned __int8 digit
 static void __cdecl HandleHudDisplayRings(signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud);
 static void __cdecl HandleRingLoss();
 
+void EmptyCall()
+{
+}
+
 CharacterManager::CharacterManager(const Options& options): options(options)
 {
     characterManagerPtr = this;
@@ -32,7 +36,9 @@ CharacterManager::CharacterManager(const Options& options): options(options)
     WriteCall((void*)0x5920AF, EnablePause);
 
     //Re-enable timer after finishing a mission
-    WriteCall((void*)0x592057, WakeTimer);
+    WriteCall((void*)0x592057, EmptyCall);
+    WriteCall((void*)0x592131, EmptyCall);
+    WriteCall((void*)0x59219E, EmptyCall);
     
     //We override the Set0Rings call inside the HurtPlayer function;
     WriteCall(reinterpret_cast<void*>(0x45072D), &HandleRingLoss);
