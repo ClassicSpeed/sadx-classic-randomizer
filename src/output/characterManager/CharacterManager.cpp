@@ -251,16 +251,16 @@ void CharacterManager::OnPlayingFrame()
         || CurrentLevel == LevelIDs_SkyChase2)
         return;
 
-    if (CurrentLevel >= LevelIDs_Chaos0 && CurrentLevel <= LevelIDs_E101R && !_trapsOnBossFights)
+    if (CurrentLevel >= LevelIDs_Chaos0 && CurrentLevel <= LevelIDs_E101R && !options._trapsOnBossFights)
         return;
 
-    if (CurrentLevel == LevelIDs_PerfectChaos && !_trapsOnPerfectChaosFight)
+    if (CurrentLevel == LevelIDs_PerfectChaos && !options._trapsOnPerfectChaosFight)
         return;
 
-    if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past && !_trapsOnAdventureFields)
+    if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past && !options._trapsOnAdventureFields)
         return;
 
-    if (CurrentLevel >= LevelIDs_SSGarden && CurrentLevel <= LevelIDs_ChaoRace && !_trapsOnAdventureFields)
+    if (CurrentLevel >= LevelIDs_SSGarden && CurrentLevel <= LevelIDs_ChaoRace && !options._trapsOnAdventureFields)
         return;
 
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
@@ -288,10 +288,10 @@ void CharacterManager::OnPlayingFrame()
         }
     }
 
-    if (_reverseControlsTimer > 0 && _reverseControlsDuration > 0)
+    if (_reverseControlsTimer > 0 && options._reverseControlsDuration > 0)
     {
         const double timePassed = (std::clock() - this->_reverseControlsTimer) / static_cast<double>(CLOCKS_PER_SEC);
-        if (timePassed > _reverseControlsDuration)
+        if (timePassed > options._reverseControlsDuration)
         {
             reverseControlsEnabled = false;
             _reverseControlsTimer = -1;
@@ -355,25 +355,6 @@ void CharacterManager::SetStartingCharacter(int startingCharacterIndex)
     }
 }
 
-void CharacterManager::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
-{
-    _reverseControlsDuration = static_cast<float>(reverseControlTrapDuration);
-}
-
-void CharacterManager::SetTrapsOnAdventureFields(const bool trapsOnAdventureFields)
-{
-    this->_trapsOnAdventureFields = trapsOnAdventureFields;
-}
-
-void CharacterManager::SetTrapsOnBossFights(const bool trapsOnBossFights)
-{
-    this->_trapsOnBossFights = trapsOnBossFights;
-}
-
-void CharacterManager::SetTrapsOnPerfectChaosFight(const bool trapsOnPerfectChaosFight)
-{
-    this->_trapsOnPerfectChaosFight = trapsOnPerfectChaosFight;
-}
 
 void CharacterManager::RemoveStatusEffects()
 {
@@ -575,7 +556,7 @@ void CharacterManager::ReverseControls()
         _reverseControlsTimer = -1;
     }
 
-    if (_reverseControlsDuration > 0)
+    if (options._reverseControlsDuration > 0)
         _reverseControlsTimer = std::clock();
     reverseControlsEnabled = true;
 }

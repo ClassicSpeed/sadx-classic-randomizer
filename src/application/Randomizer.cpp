@@ -143,12 +143,6 @@ void Randomizer::ResetItems()
     _worldStateManager.UpdateUnlockStatus(unlockStatus);
 }
 
-// TODO: Move to On connect
-void Randomizer::SetAutoStartMissions(const int autoStartMissions)
-{
-    if (autoStartMissions)
-        _saveFileManager.StartAllMissions();
-}
 
 void Randomizer::OnCheckVersion(int serverVersion)
 {
@@ -193,31 +187,6 @@ void Randomizer::UpdateLevelEntrances(LevelEntrances levelEntrances)
             LevelIDs_EmeraldCoast && location.second.level <= LevelIDs_HotShelter)
             _displayManager.UpdateVisitedLevels(_worldStateManager.GetVisitedLevels(location.second.level));
     }
-}
-
-
-//TODO: Move to options
-void Randomizer::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
-{
-    _characterManager.SetReverseControlTrapDuration(reverseControlTrapDuration);
-}
-
-//TODO: Move to options
-void Randomizer::SetTrapsOnAdventureFields(bool trapsOnAdventureFields)
-{
-    _characterManager.SetTrapsOnAdventureFields(trapsOnAdventureFields);
-}
-
-//TODO: Move to options
-void Randomizer::SetTrapsOnBossFights(bool trapsOnBossFights)
-{
-    _characterManager.SetTrapsOnBossFights(trapsOnBossFights);
-}
-
-//TODO: Move to options
-void Randomizer::SetTrapsOnPerfectChaosFight(bool trapsOnPerfectChaosFight)
-{
-    _characterManager.SetTrapsOnPerfectChaosFight(trapsOnPerfectChaosFight);
 }
 
 //TODO: Move to STATUS?
@@ -453,6 +422,8 @@ void Randomizer::OnConnected(std::string playerName)
     //Missions
     const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
     _displayManager.UpdateMissionStatus(missionStatus);
+    if (_options.autoStartMissions)
+        _saveFileManager.StartAllMissions();
 
     // Bosses
     const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);

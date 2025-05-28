@@ -36,10 +36,6 @@ public:
     void GiveFillerItem(FillerType filler, bool priority);
     void OnPlayingFrame();
     void SetStartingCharacter(int startingCharacterIndex);
-    void SetReverseControlTrapDuration(int reverseControlTrapDuration);
-    void SetTrapsOnAdventureFields(bool trapsOnAdventureFields);
-    void SetTrapsOnBossFights(bool trapsOnBossFights);
-    void SetTrapsOnPerfectChaosFight(bool trapsOnPerfectChaosFight);
     void RemoveStatusEffects();
     Options& options;
     ReactionManager& reactionManager;
@@ -70,12 +66,7 @@ private:
     float _gravityDuration = 7.0f;
     std::clock_t _gravityTimer = -1;
 
-    float _reverseControlsDuration = 7.0f;
     std::clock_t _reverseControlsTimer = -1;
 
-
-    bool _trapsOnBossFights = true;
-    bool _trapsOnAdventureFields = true;
-    bool _trapsOnPerfectChaosFight = false;
 
 };

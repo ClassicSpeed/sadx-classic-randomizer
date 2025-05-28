@@ -293,9 +293,7 @@ void SADX_MissionBlackList(const std::map<int, int> missionBlacklist)
 
 void SADX_AutoStartMissions(const int autoStartMissions)
 {
-    
-    //TODO: Remove from randomizer.cpp
-    randomizerPtr->SetAutoStartMissions(autoStartMissions);
+    archipelagoManagerPtr->options.autoStartMissions = autoStartMissions > 0;
 }
 
 void SADX_EnemySanity(const int enemySanity)
@@ -418,7 +416,6 @@ void SADX_ProgressionItems(const std::map<int, int> progressionItems)
 
 void SADX_StartingCharacter(const int startingCharacterIndex)
 {
-    
     //TODO: Remove from randomizer.cpp
     randomizerPtr->SetStartingCharacter(startingCharacterIndex);
 }
@@ -467,7 +464,7 @@ void SADX_LevelEntranceMap(const std::map<int, int> levelEntrancesValues)
         const auto actualLevel = static_cast<Levels>(entrance.second);
         levelEntrances.addRelationship(levelEntrance, actualLevel);
     }
-    
+
     //TODO: Remove from randomizer.cpp
     randomizerPtr->UpdateLevelEntrances(levelEntrances);
 }
@@ -489,14 +486,12 @@ void SADX_SetDeathLink(const int deathLinkActive)
 
 void SADX_SendDeathLinkChance(const int sendDeathLinkChance)
 {
-    
     //TODO: Remove from randomizer.cpp
     randomizerPtr->SetSendDeathLinkChance(sendDeathLinkChance);
 }
 
 void SADX_ReceiveDeathLinkChance(const int receiveDeathLinkChance)
 {
-    
     //TODO: Remove from randomizer.cpp
     randomizerPtr->SetReceiveDeathLinkChance(receiveDeathLinkChance);
 }
@@ -718,30 +713,22 @@ void SADX_GravityTrapWeight(const int gravityTrapWeight)
 
 void SADX_ReverseControlTrapDuration(const int reverseControlTrapDuration)
 {
-    
-    //TODO: Remove from randomizer.cpp
-    randomizerPtr->SetReverseControlTrapDuration(reverseControlTrapDuration);
+    archipelagoManagerPtr->options._reverseControlsDuration = static_cast<float>(reverseControlTrapDuration);
 }
 
 void SADX_TrapsOnAdventureFields(const int trapsOnAdventureFields)
 {
-    
-    //TODO: Remove from randomizer.cpp
-    randomizerPtr->SetTrapsOnAdventureFields(trapsOnAdventureFields);
+    archipelagoManagerPtr->options._trapsOnAdventureFields = trapsOnAdventureFields > 0;
 }
 
 void SADX_TrapsOnBossFights(const int trapsOnBossFights)
 {
-    
-    //TODO: Remove from randomizer.cpp
-    randomizerPtr->SetTrapsOnBossFights(trapsOnBossFights);
+    archipelagoManagerPtr->options._trapsOnBossFights = trapsOnBossFights > 0;
 }
 
 void SADX_TrapsOnPerfectChaosFight(const int trapsOnPerfectChaosFight)
 {
-    
-    //TODO: Remove from randomizer.cpp
-    randomizerPtr->SetTrapsOnPerfectChaosFight(trapsOnPerfectChaosFight);
+    archipelagoManagerPtr->options._trapsOnPerfectChaosFight = trapsOnPerfectChaosFight > 0;
 }
 
 

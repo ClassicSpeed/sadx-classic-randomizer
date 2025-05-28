@@ -11,7 +11,6 @@
 #include "../output/reactionManager/ReactionManager.h"
 #include "../configuration/Options.h"
 #include "structs/LocationData.h"
-#include "structs/Options.h"
 
 class Randomizer
 {
@@ -52,15 +51,9 @@ public:
     void ProcessRings(Sint16 amount);
     void ProcessTrapLink(std::string itemName, std::string message);
     void ResetItems();
-    void SetAutoStartMissions(int autoStartMissions);
     void OnCheckVersion(int serverVersion);
     void SetStartingCharacter(int startingCharacterIndex);
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
-
-    void SetReverseControlTrapDuration(int reverseControlTrapDuration);
-    void SetTrapsOnAdventureFields(bool trapsOnAdventureFields);
-    void SetTrapsOnBossFights(bool trapsOnBossFights);
-    void SetTrapsOnPerfectChaosFight(bool trapsOnPerfectChaosFight);
     void SetSuperSonicModRunning(bool isModRunning);
     void SetSendDeathLinkChance(int sendDeathLinkChance);
     void SetReceiveDeathLinkChance(int receiveDeathLinkChance);

@@ -148,6 +148,7 @@ public:
     int bossesGoal = 999999;
 
     bool missionModeEnabled = false;
+    bool autoStartMissions = false;
     bool entranceRandomizer = false;
 
     StartingArea sonicStartingArea = NoStatingArea;
@@ -219,6 +220,12 @@ public:
     int buyonTrapWeight = 2;
     int reverseTrapWeight = 2;
     int gravityTrapWeight = 2;
+
+    
+    float _reverseControlsDuration = 7.0f;
+    bool _trapsOnAdventureFields = true;
+    bool _trapsOnBossFights = true;
+    bool _trapsOnPerfectChaosFight = false;
 
     std::string sa2BAdxPath = "../../../../Sonic Adventure 2/resource/gd_PC/ADX/";
     std::string customAdxPath = "custom/";
