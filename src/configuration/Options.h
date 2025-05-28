@@ -1,6 +1,7 @@
 #pragma once
 #include "../pch.h"
 #include "../application/structs/LocationData.h"
+#include "../application/structs/ItemData.h"
 #include <string>
 #include <vector>
 
@@ -125,6 +126,7 @@ public:
     bool MusicSourceIncludeSadx() const;
     bool MusicSourceIncludeSa2B() const;
     bool MusicSourceIncludeCustom() const;
+    bool IsTrapEnabled(FillerType filler);
 
 
     std::string playerName = "Player";
@@ -204,6 +206,13 @@ public:
     int amyActionStageMissions = 0;
     int bigActionStageMissions = 0;
     int gammaActionStageMissions = 0;
+    
+    int iceTrapWeight = 2;
+    int springTrapWeight = 2;
+    int policeTrapWeight = 2;
+    int buyonTrapWeight = 2;
+    int reverseTrapWeight = 2;
+    int gravityTrapWeight = 2;
 
     std::string sa2BAdxPath = "../../../../Sonic Adventure 2/resource/gd_PC/ADX/";
     std::string customAdxPath = "custom/";

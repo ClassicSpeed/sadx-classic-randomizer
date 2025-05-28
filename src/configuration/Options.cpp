@@ -287,3 +287,23 @@ bool Options::MusicSourceIncludeCustom() const
     return this->musicSource == MusicSourceSadxCustom || this->musicSource == MusicSourceSa2BCustom || this->
         musicSource == MusicSourceSadxSa2BCustom || this->musicSource == MusicSourceCustom;
 }
+
+bool Options::IsTrapEnabled(const FillerType filler)
+{
+    if (filler == NoFiller)
+        return false;
+    if (filler == IceTrap && iceTrapWeight > 0)
+        return true;
+    if (filler == SpringTrap && springTrapWeight > 0)
+        return true;
+    if (filler == PoliceTrap && policeTrapWeight > 0)
+        return true;
+    if (filler == BuyonTrap && buyonTrapWeight > 0)
+        return true;
+    if (filler == ReverseTrap && reverseTrapWeight > 0)
+        return true;
+    if (filler == GravityTrap && gravityTrapWeight > 0)
+        return true;
+
+    return false;
+}
