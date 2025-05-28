@@ -127,6 +127,12 @@ public:
     bool MusicSourceIncludeSa2B() const;
     bool MusicSourceIncludeCustom() const;
     bool IsTrapEnabled(FillerType filler);
+    void SetCharacterVoiceReactions(bool eggmanCommentOnCharacterUnlock, bool currentCharacterCommentOnCharacterUnlock,
+                                    bool unlockedCharacterCommentOnCharacterUnlock, bool eggmanCommentOnKeyItems,
+                                    bool tikalCommentOnKeyItems, bool currentCharacterCommentOnKeyItems,
+                                    bool showCommentsSubtitles);
+    void SetCharacterVoiceReactions(bool eggmanCommentOnTrap, bool otherCharactersCommentOnTrap,
+                                    bool currentCharacterReactToTrap, bool showCommentsSubtitles);
 
 
     std::string playerName = "Player";
@@ -234,5 +240,21 @@ public:
     bool skyChaseChecksHard = false;
     std::vector<int> missionBlacklist = {};
     bool expertMode = false;
+
+
+    //Mod Settings
+    bool _eggmanCommentOnCharacterUnlock = true;
+    bool _currentCharacterCommentOnCharacterUnlock = true;
+    bool _unlockedCharacterCommentOnCharacterUnlock = true;
+
+    bool _eggmanCommentOnKeyItems = true;
+    bool _tikalCommentOnKeyItems = true;
+    bool _currentCharacterCommentOnKeyItems = true;
+    
+    bool _eggmanCommentOnTrap = true;
+    bool _otherCharactersCommentOnTrap = true;
+    bool _currentCharacterReactToTrap = true;
+    
+    bool _showCommentsSubtitles = true;
 
 };

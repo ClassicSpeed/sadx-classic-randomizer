@@ -242,6 +242,7 @@ void SADX_GoalRequiresChaoRaces(const int goalRequiresChaoRaces)
 
 void SADX_CompareModVersion(const int version)
 {
+    //TODO: Remove from randomizer.cpp
     randomizerPtr->OnCheckVersion(version);
 }
 
@@ -292,6 +293,8 @@ void SADX_MissionBlackList(const std::map<int, int> missionBlacklist)
 
 void SADX_AutoStartMissions(const int autoStartMissions)
 {
+    
+    //TODO: Remove from randomizer.cpp
     randomizerPtr->SetAutoStartMissions(autoStartMissions);
 }
 
@@ -415,6 +418,8 @@ void SADX_ProgressionItems(const std::map<int, int> progressionItems)
 
 void SADX_StartingCharacter(const int startingCharacterIndex)
 {
+    
+    //TODO: Remove from randomizer.cpp
     randomizerPtr->SetStartingCharacter(startingCharacterIndex);
 }
 
@@ -462,12 +467,14 @@ void SADX_LevelEntranceMap(const std::map<int, int> levelEntrancesValues)
         const auto actualLevel = static_cast<Levels>(entrance.second);
         levelEntrances.addRelationship(levelEntrance, actualLevel);
     }
+    
+    //TODO: Remove from randomizer.cpp
     randomizerPtr->UpdateLevelEntrances(levelEntrances);
 }
 
 void SADX_SetEntranceRandomizer(const int enableEntranceRandomizer)
 {
-    randomizerPtr->SetEntranceRandomizer(enableEntranceRandomizer);
+    archipelagoManagerPtr->options.entranceRandomizer = enableEntranceRandomizer;
 }
 
 void SADX_SetDeathLink(const int deathLinkActive)
@@ -482,11 +489,15 @@ void SADX_SetDeathLink(const int deathLinkActive)
 
 void SADX_SendDeathLinkChance(const int sendDeathLinkChance)
 {
+    
+    //TODO: Remove from randomizer.cpp
     randomizerPtr->SetSendDeathLinkChance(sendDeathLinkChance);
 }
 
 void SADX_ReceiveDeathLinkChance(const int receiveDeathLinkChance)
 {
+    
+    //TODO: Remove from randomizer.cpp
     randomizerPtr->SetReceiveDeathLinkChance(receiveDeathLinkChance);
 }
 
@@ -707,21 +718,29 @@ void SADX_GravityTrapWeight(const int gravityTrapWeight)
 
 void SADX_ReverseControlTrapDuration(const int reverseControlTrapDuration)
 {
+    
+    //TODO: Remove from randomizer.cpp
     randomizerPtr->SetReverseControlTrapDuration(reverseControlTrapDuration);
 }
 
 void SADX_TrapsOnAdventureFields(const int trapsOnAdventureFields)
 {
+    
+    //TODO: Remove from randomizer.cpp
     randomizerPtr->SetTrapsOnAdventureFields(trapsOnAdventureFields);
 }
 
 void SADX_TrapsOnBossFights(const int trapsOnBossFights)
 {
+    
+    //TODO: Remove from randomizer.cpp
     randomizerPtr->SetTrapsOnBossFights(trapsOnBossFights);
 }
 
 void SADX_TrapsOnPerfectChaosFight(const int trapsOnPerfectChaosFight)
 {
+    
+    //TODO: Remove from randomizer.cpp
     randomizerPtr->SetTrapsOnPerfectChaosFight(trapsOnPerfectChaosFight);
 }
 

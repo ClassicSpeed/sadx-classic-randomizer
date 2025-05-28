@@ -59,7 +59,7 @@ struct UnlockStatus
         return whiteEmerald && redEmerald && cyanEmerald && purpleEmerald && greenEmerald && yellowEmerald && blueEmerald;
     }
 
-    int CountChaosEmeralds()
+    int CountChaosEmeralds() const
     {
         int count = 0;
         count += whiteEmerald;

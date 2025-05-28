@@ -212,7 +212,7 @@ public:
     std::vector<int> GetPossibleSongIds(int id, std::mt19937& gen);
     int GetSingularitySong();
     int GetSongForId(int songId);
-    int GetSongNewForId(int songId, int currentSongId);
+    int GetNewSongForId(int songId, int currentSongId);
 
 private:
     Options& _options;

@@ -307,3 +307,31 @@ bool Options::IsTrapEnabled(const FillerType filler)
 
     return false;
 }
+
+void Options::SetCharacterVoiceReactions(const bool eggmanCommentOnCharacterUnlock,
+                                         const bool currentCharacterCommentOnCharacterUnlock,
+                                         const bool unlockedCharacterCommentOnCharacterUnlock,
+                                         const bool eggmanCommentOnKeyItems, const bool tikalCommentOnKeyItems,
+                                         const bool currentCharacterCommentOnKeyItems,
+                                         const bool showCommentsSubtitles)
+{
+    this->_eggmanCommentOnCharacterUnlock = eggmanCommentOnCharacterUnlock;
+    this->_currentCharacterCommentOnCharacterUnlock = currentCharacterCommentOnCharacterUnlock;
+    this->_unlockedCharacterCommentOnCharacterUnlock = unlockedCharacterCommentOnCharacterUnlock;
+    this->_eggmanCommentOnKeyItems = eggmanCommentOnKeyItems;
+    this->_tikalCommentOnKeyItems = tikalCommentOnKeyItems;
+    this->_currentCharacterCommentOnKeyItems = currentCharacterCommentOnKeyItems;
+    this->_showCommentsSubtitles = showCommentsSubtitles;
+}
+
+
+void Options::SetCharacterVoiceReactions(const bool eggmanCommentOnTrap,
+                                         const bool otherCharactersCommentOnTrap,
+                                         const bool currentCharacterReactToTrap,
+                                         const bool showCommentsSubtitles)
+{
+    this->_eggmanCommentOnTrap = eggmanCommentOnTrap;
+    this->_otherCharactersCommentOnTrap = otherCharactersCommentOnTrap;
+    this->_currentCharacterReactToTrap = currentCharacterReactToTrap;
+    this->_showCommentsSubtitles = showCommentsSubtitles;
+}

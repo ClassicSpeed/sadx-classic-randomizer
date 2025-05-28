@@ -28,8 +28,9 @@ constexpr int64_t BASE_ID = 543800000;
 int syncTimer = 0;
 
 Options options = Options();
+ReactionManager reactionManager = ReactionManager(options);
 DisplayManager displayManager = DisplayManager(options);
-CharacterManager characterManager = CharacterManager(options);
+CharacterManager characterManager = CharacterManager(options, reactionManager);
 WorldStateManager worldStateManager = WorldStateManager(options);
 ItemRepository itemRepository = ItemRepository();
 LocationRepository checkRepository = LocationRepository();
@@ -44,7 +45,8 @@ Randomizer randomizer = Randomizer(options,
                                    checkRepository,
                                    archipelagoMessenger,
                                    saveFileManager,
-                                   musicManager);
+                                   musicManager,
+                                   reactionManager);
 
 CheatsManager cheatsManager = CheatsManager(randomizer);
 ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer, options, INSTANCE_ID, BASE_ID);
@@ -55,11 +57,10 @@ CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(ran
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
 {
     displayManager.PrintPLayerName();
-    options.playerName ="TEST1";
+    options.playerName = "TEST1";
     displayManager.PrintPLayerName();
 
 
-    
     if (helperFunctions.Mods->find_by_name("Steam Achievements Mod"))
     {
         MessageBox(WindowHandle,
@@ -296,21 +297,20 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
     worldStateManager.SetShowEntranceIndicators(showEntranceIndicators);
     worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
     worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);
-    characterManager.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,
-                                                currentCharacterReactToTrap, showCommentsSubtitles);
     characterManager.SetExtendRingCapacity(extendRingCapacity);
-
-    randomizer.SetCharacterVoiceReactions(eggmanCommentOnCharacterUnlock, currentCharacterCommentOnCharacterUnlock,
-                                          unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
-                                          tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems,
-                                          showCommentsSubtitles);
+    options.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,
+                                       currentCharacterReactToTrap, showCommentsSubtitles);
+    options.SetCharacterVoiceReactions(eggmanCommentOnCharacterUnlock, currentCharacterCommentOnCharacterUnlock,
+                                       unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
+                                       tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems,
+                                       showCommentsSubtitles);
 
     musicManager.UpdateMusicSettings(static_cast<ShowSongName>(showSongName),
-                                   static_cast<ShowSongNameForType>(showSongNameForType), includeVanillaSongs,
-                                   showWarningForMissingFiles, sa2BAdxPath, customAdxPath,
-                                   static_cast<MusicSource>(musicSource), static_cast<MusicShuffle>(musicShuffle),
-                                   static_cast<MusicShuffleConsistency>(musicShuffleConsistency),
-                                   static_cast<LifeCapsulesChangeSongs>(lifeCapsulesChangeSongs));
+                                     static_cast<ShowSongNameForType>(showSongNameForType), includeVanillaSongs,
+                                     showWarningForMissingFiles, sa2BAdxPath, customAdxPath,
+                                     static_cast<MusicSource>(musicSource), static_cast<MusicShuffle>(musicShuffle),
+                                     static_cast<MusicShuffleConsistency>(musicShuffleConsistency),
+                                     static_cast<LifeCapsulesChangeSongs>(lifeCapsulesChangeSongs));
 
 
     musicManager.ProcessSongsFile(helperFunctions, songsPath);

@@ -313,7 +313,7 @@ int MusicManager::GetSongForId(int const songId)
     return _songRandomizationMap[songId][dis(gen)];
 }
 
-int MusicManager::GetSongNewForId(int const songId, int const currentSongId)
+int MusicManager::GetNewSongForId(int const songId, int const currentSongId)
 {
     if (_songRandomizationMap[songId].empty())
         return songId;
