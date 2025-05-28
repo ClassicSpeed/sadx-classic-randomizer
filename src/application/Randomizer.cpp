@@ -709,18 +709,6 @@ void Randomizer::UpdateLevelEntrances(LevelEntrances levelEntrances)
     }
 }
 
-void Randomizer::UpdateMissionBlacklist(const std::vector<int>& missionBlacklist)
-{
-    _options.missionBlacklist = missionBlacklist;
-    //TODO: Post every value set
-    if (_options.goalRequiresMissions)
-    {
-        const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
-        _displayManager.UpdateMissionStatus(missionStatus);
-    }
-    _worldStateManager.MarkBlacklistedMissionsAsCompleted(_options.missionBlacklist);
-}
-
 
 void Randomizer::SetEntranceRandomizer(const bool enableEntranceRandomizer)
 {
@@ -741,37 +729,6 @@ void Randomizer::SetCharacterVoiceReactions(const bool eggmanCommentOnCharacterU
     _tikalCommentOnKeyItems = tikalCommentOnKeyItems;
     _currentCharacterCommentOnKeyItems = currentCharacterCommentOnKeyItems;
     _showCommentsSubtitles = showCommentsSubtitles;
-}
-
-
-void Randomizer::SetIceTrapWeight(const int iceTrapWeight)
-{
-    _options.iceTrapWeight = iceTrapWeight;
-}
-
-void Randomizer::SetSpringTrapWeight(const int springTrapWeight)
-{
-    _options.springTrapWeight = springTrapWeight;
-}
-
-void Randomizer::SetPoliceTrapWeight(const int policeTrapWeight)
-{
-    _options.policeTrapWeight = policeTrapWeight;
-}
-
-void Randomizer::SetBuyonTrapWeight(const int buyonTrapWeight)
-{
-    _options.buyonTrapWeight = buyonTrapWeight;
-}
-
-void Randomizer::SetReverseTrapWeight(const int reverseTrapWeight)
-{
-    _options.reverseTrapWeight = reverseTrapWeight;
-}
-
-void Randomizer::SetGravityTrapWeight(const int gravityTrapWeight)
-{
-    _options.gravityTrapWeight = gravityTrapWeight;
 }
 
 
@@ -1010,7 +967,32 @@ void Randomizer::ProcessTrapLink(std::string itemName, std::string message)
 void Randomizer::OnConnected(std::string playerName)
 {
     _options.playerName = playerName;
-    //TODO: Post every value set
+
+    //Levels
+    const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
+    _displayManager.UpdateLevelStatus(levelStatus);
+
+    //Missions
+    const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
+    _displayManager.UpdateMissionStatus(missionStatus);
+
+    // Bosses
+    const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
+    _displayManager.UpdateBossesStatus(bossesStatus);
+
+    //Chao
+    const ChaoStatus chaoStatus = _locationRepository.GetChaoStatus();
+    _displayManager.UpdateChaoStatus(chaoStatus);
+
+    if (!_options.goalRequiresChaosEmeralds)
+        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
+
+    // Music
+    _worldStateManager.MarkBlacklistedMissionsAsCompleted(_options.missionBlacklist);
+    _musicManager.RandomizeMusic();
+
+
+    _archipelagoMessenger.UpdateTags(_options);
     _displayManager.SetConnected();
     _displayManager.QueueItemMessage("Connected to Archipelago");
 }
@@ -1034,61 +1016,6 @@ void Randomizer::QueueNewItemMessage(std::string information)
 void Randomizer::QueueNewChatMessage(std::string information)
 {
     _displayManager.QueueChatMessage(information);
-}
-
-void Randomizer::OnGoalRequiresLevelsSet(const bool goalRequiresLevels)
-{
-    _options.goalRequiresLevels = goalRequiresLevels;
-    //TODO: Post every value set
-
-    const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
-    _displayManager.UpdateLevelStatus(levelStatus);
-
-    if (!_options.goalRequiresChaosEmeralds)
-        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
-}
-
-void Randomizer::OnGoalRequiresEmblems(const bool goalRequiresEmblems)
-{
-    _options.goalRequiresEmblems = goalRequiresEmblems;
-
-    if (!_options.goalRequiresChaosEmeralds)
-        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
-}
-
-void Randomizer::OnGoalRequiresMissionsSet(const bool goalRequiresMissions)
-{
-    _options.goalRequiresMissions = goalRequiresMissions;
-    //TODO: Post every value set
-    const MissionStatus missionStatus = _locationRepository.GetMissionStatus(_options);
-    _displayManager.UpdateMissionStatus(missionStatus);
-
-    if (!_options.goalRequiresChaosEmeralds)
-        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
-}
-
-void Randomizer::OnGoalRequiresBossesSet(const bool goalRequiresBosses)
-{
-    _options.goalRequiresBosses = goalRequiresBosses;
-    //TODO: Post every value set
-
-    const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
-    _displayManager.UpdateBossesStatus(bossesStatus);
-
-    if (!_options.goalRequiresChaosEmeralds)
-        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
-}
-
-void Randomizer::OnGoalRequiresChaoRacesSet(const bool goalRequiresChaoRaces)
-{
-    _options.goalRequiresChaoRaces = goalRequiresChaoRaces;
-    //TODO: Post every value set
-
-    const ChaoStatus chaoStatus = _locationRepository.GetChaoStatus();
-    _displayManager.UpdateChaoStatus(chaoStatus);
-
-    if (!_options.goalRequiresChaosEmeralds)
-        SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
 }
 
 int Randomizer::GetSongForId(const int songId)
@@ -1117,104 +1044,4 @@ void Randomizer::DisplaySongName(const int songId)
     const auto* song = _musicManager.FindSongById(songId);
     if (song != nullptr)
         _displayManager.ShowSongName("~ " + song->name + " ~");
-}
-
-void Randomizer::SetMusicSource(const MusicSource musicSource)
-{
-    if (_options.musicSource == MusicSourceNone)
-        _options.musicSource = musicSource;
-    //TODO: Post every value set
-    _musicManager.RandomizeMusic();
-}
-
-void Randomizer::SetMusicShuffle(const MusicShuffle musicShuffle)
-{
-    if (_options.musicShuffle == MusicShuffleNone)
-        _options.musicShuffle = musicShuffle;
-    //TODO: Post every value set
-    _musicManager.RandomizeMusic();
-}
-
-void Randomizer::SetMusicShuffleConsistency(const MusicShuffleConsistency musicShuffleConsistency)
-{
-    if (_options.musicShuffleConsistency == MusicShuffleConsistencyNone)
-        _options.musicShuffleConsistency = musicShuffleConsistency;
-    //TODO: Post every value set
-    _musicManager.RandomizeMusic();
-}
-
-void Randomizer::SetMusicShuffleSeed(const int musicShuffleSeed)
-{
-    _options.musicShuffleSeed = musicShuffleSeed;
-    //TODO: Post every value set
-    _musicManager.RandomizeMusic();
-}
-
-void Randomizer::SetActionStageMissions(const Characters characters, const int missions)
-{
-    _options.SetActionStageMissions(characters, missions);
-    //TODO: Post every value set
-    if (_options.goalRequiresLevels)
-    {
-        const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
-        _displayManager.UpdateLevelStatus(levelStatus);
-    }
-}
-
-
-void Randomizer::SetDeathLink(const bool deathLinkActive)
-{
-    _options.deathLinkActive = deathLinkActive;
-    _archipelagoMessenger.UpdateTags(_options);
-}
-
-void Randomizer::SetRingLink(const bool ringLinkActive)
-{
-    _options.ringLinkActive = ringLinkActive;
-    _archipelagoMessenger.UpdateTags(_options);
-}
-
-void Randomizer::SetCasinopolisRingLink(const bool casinopolisRingLink)
-{
-    _options.casinopolisRingLink = casinopolisRingLink;
-}
-
-void Randomizer::SetHardRingLink(const bool hardRingLinkActive)
-{
-    _options.hardRingLinkActive = hardRingLinkActive;
-    _archipelagoMessenger.UpdateTags(_options);
-}
-
-void Randomizer::SetTrapLink(const bool trapLinkActive)
-{
-    _options.trapLinkActive = trapLinkActive;
-    _archipelagoMessenger.UpdateTags(_options);
-}
-
-
-void Randomizer::SetUnifyChaos4(const bool unifyChaos4)
-{
-    _options.unifyChaos4 = unifyChaos4;
-    //TODO: Post every value set
-
-    const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
-    _displayManager.UpdateBossesStatus(bossesStatus);
-}
-
-void Randomizer::SetUnifyChaos6(const bool unifyChaos6)
-{
-    _options.unifyChaos6 = unifyChaos6;
-    //TODO: Post every value set
-
-    const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
-    _displayManager.UpdateBossesStatus(bossesStatus);
-}
-
-void Randomizer::SetUnifyEggHornet(const bool unifyEggHornet)
-{
-    _options.unifyEggHornet = unifyEggHornet;
-    //TODO: Post every value set
-
-    const BossesStatus bossesStatus = _locationRepository.GetBossesStatus(_options);
-    _displayManager.UpdateBossesStatus(bossesStatus);
 }

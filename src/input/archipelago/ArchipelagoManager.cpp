@@ -211,7 +211,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
 
 void SADX_GoalRequiresLevels(const int goalRequiresLevels)
 {
-    randomizerPtr->OnGoalRequiresLevelsSet(goalRequiresLevels);
+    archipelagoManagerPtr->options.goalRequiresLevels = goalRequiresLevels;
 }
 
 void SADX_GoalRequiresChaosEmeralds(const int goalRequiresChaosEmeralds)
@@ -221,22 +221,22 @@ void SADX_GoalRequiresChaosEmeralds(const int goalRequiresChaosEmeralds)
 
 void SADX_GoalRequiresEmblems(const int goalRequiresEmblems)
 {
-    randomizerPtr->OnGoalRequiresEmblems(goalRequiresEmblems);
+    archipelagoManagerPtr->options.goalRequiresEmblems = goalRequiresEmblems;
 }
 
 void SADX_GoalRequiresMissions(const int goalRequiresMissions)
 {
-    randomizerPtr->OnGoalRequiresMissionsSet(goalRequiresMissions);
+    archipelagoManagerPtr->options.goalRequiresMissions = goalRequiresMissions;
 }
 
 void SADX_GoalRequiresBosses(const int goalRequiresBosses)
 {
-    randomizerPtr->OnGoalRequiresBossesSet(goalRequiresBosses);
+    archipelagoManagerPtr->options.goalRequiresBosses = goalRequiresBosses;
 }
 
 void SADX_GoalRequiresChaoRaces(const int goalRequiresChaoRaces)
 {
-    randomizerPtr->OnGoalRequiresChaoRacesSet(goalRequiresChaoRaces);
+    archipelagoManagerPtr->options.goalRequiresChaoRaces = goalRequiresChaoRaces;
 }
 
 
@@ -287,7 +287,7 @@ void SADX_MissionBlackList(const std::map<int, int> missionBlacklist)
     for (const auto& mission : missionBlacklist)
         blacklistedMissions.push_back(mission.first);
 
-    randomizerPtr->UpdateMissionBlacklist(blacklistedMissions);
+    archipelagoManagerPtr->options.missionBlacklist = blacklistedMissions;
 }
 
 void SADX_AutoStartMissions(const int autoStartMissions)
@@ -473,11 +473,11 @@ void SADX_SetEntranceRandomizer(const int enableEntranceRandomizer)
 void SADX_SetDeathLink(const int deathLinkActive)
 {
     if (archipelagoManagerPtr->deathLinkOverride == DeathLinkForceEnabled)
-        randomizerPtr->SetDeathLink(true);
+        archipelagoManagerPtr->options.deathLinkActive = true;
     else if (archipelagoManagerPtr->deathLinkOverride == DeathLinkForceDisabled)
-        randomizerPtr->SetDeathLink(false);
+        archipelagoManagerPtr->options.deathLinkActive = false;
     else
-        randomizerPtr->SetDeathLink(deathLinkActive);
+        archipelagoManagerPtr->options.deathLinkActive = deathLinkActive;
 }
 
 void SADX_SendDeathLinkChance(const int sendDeathLinkChance)
@@ -495,37 +495,37 @@ void SADX_SetRingLink(const int ringLinkActive)
 {
     if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabled
         || archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabledHard)
-        randomizerPtr->SetRingLink(true);
+        archipelagoManagerPtr->options.ringLinkActive = true;
     else if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceDisabled)
-        randomizerPtr->SetRingLink(false);
+        archipelagoManagerPtr->options.ringLinkActive = false;
     else
-        randomizerPtr->SetRingLink(ringLinkActive);
+        archipelagoManagerPtr->options.ringLinkActive = ringLinkActive;
 }
 
 void SADX_SetCasinopolisRingLink(const int casinopolisRingLink)
 {
-    randomizerPtr->SetCasinopolisRingLink(casinopolisRingLink);
+    archipelagoManagerPtr->options.casinopolisRingLink = casinopolisRingLink;
 }
 
 void SADX_SetHardRingLink(const int hardRingLinkActive)
 {
     if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabledHard)
-        randomizerPtr->SetHardRingLink(true);
+        archipelagoManagerPtr->options.hardRingLinkActive = true;
     else if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceDisabled
         || archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabled)
-        randomizerPtr->SetHardRingLink(false);
+        archipelagoManagerPtr->options.hardRingLinkActive = false;
     else
-        randomizerPtr->SetHardRingLink(hardRingLinkActive);
+        archipelagoManagerPtr->options.hardRingLinkActive = hardRingLinkActive;
 }
 
 void SADX_SetTrapLink(const int trapLinkActive)
 {
     if (archipelagoManagerPtr->trapLinkOverride == TrapLinkForceEnabled)
-        randomizerPtr->SetTrapLink(true);
+        archipelagoManagerPtr->options.trapLinkActive = true;
     else if (archipelagoManagerPtr->trapLinkOverride == TrapLinkForceDisabled)
-        randomizerPtr->SetTrapLink(false);
+        archipelagoManagerPtr->options.trapLinkActive = false;
     else
-        randomizerPtr->SetTrapLink(trapLinkActive);
+        archipelagoManagerPtr->options.trapLinkActive = trapLinkActive;
 }
 
 void SADX_RingLoss(const int ringLoss)
@@ -567,19 +567,19 @@ void SADX_BossChecks(const int bossChecks)
     archipelagoManagerPtr->options.bossChecks = bossChecks;
 }
 
-void SADX_UnifyChaos4(const int unifiyChaos4)
+void SADX_UnifyChaos4(const int unifyChaos4)
 {
-    randomizerPtr->SetUnifyChaos4(unifiyChaos4);
+    archipelagoManagerPtr->options.unifyChaos4 = unifyChaos4;
 }
 
-void SADX_UnifyChaos6(const int unifiyChaos6)
+void SADX_UnifyChaos6(const int unifyChaos6)
 {
-    randomizerPtr->SetUnifyChaos6(unifiyChaos6);
+    archipelagoManagerPtr->options.unifyChaos6 = unifyChaos6;
 }
 
 void SADX_UnifyEggHornet(const int unifyEggHornet)
 {
-    randomizerPtr->SetUnifyEggHornet(unifyEggHornet);
+    archipelagoManagerPtr->options.unifyEggHornet = unifyEggHornet;
 }
 
 void SADX_PlayableSonic(const int playable)
@@ -614,52 +614,56 @@ void SADX_PlayableBig(const int playable)
 
 void SADX_SonicActionStageMissions(const int missions)
 {
-    randomizerPtr->SetActionStageMissions(Characters_Sonic, missions);
+    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Sonic, missions);
 }
 
 void SADX_TailsActionStageMissions(const int missions)
 {
-    randomizerPtr->SetActionStageMissions(Characters_Tails, missions);
+    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Tails, missions);
 }
 
 void SADX_KnucklesActionStageMissions(const int missions)
 {
-    randomizerPtr->SetActionStageMissions(Characters_Knuckles, missions);
+    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Knuckles, missions);
 }
 
 void SADX_AmyActionStageMissions(const int missions)
 {
-    randomizerPtr->SetActionStageMissions(Characters_Amy, missions);
+    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Amy, missions);
 }
 
 void SADX_GammaActionStageMissions(const int missions)
 {
-    randomizerPtr->SetActionStageMissions(Characters_Gamma, missions);
+    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Gamma, missions);
 }
 
 void SADX_BigActionStageMissions(const int missions)
 {
-    randomizerPtr->SetActionStageMissions(Characters_Big, missions);
+    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Big, missions);
 }
 
 void SADX_MusicSource(const int musicSource)
 {
-    randomizerPtr->SetMusicSource(static_cast<MusicSource>(musicSource));
+    if (archipelagoManagerPtr->options.musicSource == MusicSourceNone)
+        archipelagoManagerPtr->options.musicSource = static_cast<MusicSource>(musicSource);
 }
 
 void SADX_MusicShuffle(const int musicShuffle)
 {
-    randomizerPtr->SetMusicShuffle(static_cast<MusicShuffle>(musicShuffle));
+    if (archipelagoManagerPtr->options.musicShuffle == MusicShuffleNone)
+        archipelagoManagerPtr->options.musicShuffle = static_cast<MusicShuffle>(musicShuffle);
 }
 
 void SADX_MusicShuffleConsistency(const int musicShuffleConsistency)
 {
-    randomizerPtr->SetMusicShuffleConsistency(static_cast<MusicShuffleConsistency>(musicShuffleConsistency));
+    if (archipelagoManagerPtr->options.musicShuffleConsistency == MusicShuffleConsistencyNone)
+        archipelagoManagerPtr->options.musicShuffleConsistency = static_cast<MusicShuffleConsistency>(
+            musicShuffleConsistency);
 }
 
 void SADX_MusicShuffleSeed(const int musicShuffleSeed)
 {
-    randomizerPtr->SetMusicShuffleSeed(musicShuffleSeed);
+    archipelagoManagerPtr->options.musicShuffleSeed = musicShuffleSeed;
 }
 
 void SADX_LifeCapsulesChangeSongs(const int lifeCapsulesChangeSongs)
@@ -673,27 +677,32 @@ void SADX_LifeCapsulesChangeSongs(const int lifeCapsulesChangeSongs)
 
 void SADX_IceTrapWeight(const int iceTrapWeight)
 {
-    randomizerPtr->SetIceTrapWeight(iceTrapWeight);
+    archipelagoManagerPtr->options.iceTrapWeight = iceTrapWeight;
 }
+
 void SADX_SpringTrapWeight(const int springTrapWeight)
 {
-    randomizerPtr->SetSpringTrapWeight(springTrapWeight);
+    archipelagoManagerPtr->options.springTrapWeight = springTrapWeight;
 }
+
 void SADX_PoliceTrapWeight(const int policeTrapWeight)
 {
-    randomizerPtr->SetPoliceTrapWeight(policeTrapWeight);
+    archipelagoManagerPtr->options.policeTrapWeight = policeTrapWeight;
 }
+
 void SADX_BuyonTrapWeight(const int buyonTrapWeight)
 {
-    randomizerPtr->SetBuyonTrapWeight(buyonTrapWeight);
+    archipelagoManagerPtr->options.buyonTrapWeight = buyonTrapWeight;
 }
+
 void SADX_ReverseTrapWeight(const int reverseTrapWeight)
 {
-    randomizerPtr->SetReverseTrapWeight(reverseTrapWeight);
+    archipelagoManagerPtr->options.reverseTrapWeight = reverseTrapWeight;
 }
+
 void SADX_GravityTrapWeight(const int gravityTrapWeight)
 {
-    randomizerPtr->SetGravityTrapWeight(gravityTrapWeight);
+    archipelagoManagerPtr->options.gravityTrapWeight = gravityTrapWeight;
 }
 
 void SADX_ReverseControlTrapDuration(const int reverseControlTrapDuration)
