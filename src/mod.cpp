@@ -56,11 +56,6 @@ CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(ran
 
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
 {
-    displayManager.PrintPLayerName();
-    options.playerName = "TEST1";
-    displayManager.PrintPLayerName();
-
-
     if (helperFunctions.Mods->find_by_name("Steam Achievements Mod"))
     {
         MessageBox(WindowHandle,

@@ -56,6 +56,7 @@ void ArchipelagoManager::OnFrame()
     this->ManageMessages();
 }
 
+// TODO: Move to helpers
 static std::string LeftTrim(std::string s)
 {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch)
@@ -114,25 +115,25 @@ void ArchipelagoManager::OnSaveFileLoaded()
 }
 
 
-void SADX_RecvItem(const int64_t itemId, bool notify)
+void ArchipelagoManager::RecvItem(const int64_t itemId, const bool notify)
 {
     PrintDebug(" --- Item received: %d\n", itemId);
     randomizerPtr->OnItemReceived(itemId - archipelagoManagerPtr->baseId);
 }
 
-void SADX_ResetItems()
+void ArchipelagoManager::ResetItems()
 {
     PrintDebug(" --- Reset items\n");
     randomizerPtr->ResetItems();
 }
 
-void SADX_CheckLocation(int64_t loc_id)
+void ArchipelagoManager::CheckLocation(const int64_t locationId)
 {
-    PrintDebug(" --- Checked location %d\n", loc_id);
-    randomizerPtr->MarkCheckedLocation(loc_id - archipelagoManagerPtr->baseId);
+    PrintDebug(" --- Checked location %d\n", locationId);
+    randomizerPtr->MarkCheckedLocation(locationId - archipelagoManagerPtr->baseId);
 }
 
-void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
+void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
 {
     Json::Value bounceData;
     Json::Reader reader;
@@ -148,7 +149,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
 
         if (!strcmp(tag.c_str(), "DeathLink"))
         {
-            if (!archipelagoManagerPtr->options.deathLinkActive)
+            if (!options.deathLinkActive)
                 return;
 
             //We don't ignore deaths from our own slot
@@ -163,7 +164,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
         }
         if (!strcmp(tag.c_str(), "RingLink"))
         {
-            if (!archipelagoManagerPtr->options.ringLinkActive)
+            if (!options.ringLinkActive)
                 return;
 
             //Ignore our own ring link    
@@ -177,7 +178,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
         }
         if (!strcmp(tag.c_str(), "HardRingLink"))
         {
-            if (!archipelagoManagerPtr->options.ringLinkActive || !archipelagoManagerPtr->options.hardRingLinkActive)
+            if (!options.ringLinkActive || !options.hardRingLinkActive)
                 return;
 
             //Ignore our own ring link    
@@ -193,7 +194,7 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
 
         if (!strcmp(tag.c_str(), "TrapLink"))
         {
-            if (!archipelagoManagerPtr->options.trapLinkActive)
+            if (!options.trapLinkActive)
                 return;
 
             //Ignore our own trap link
@@ -209,77 +210,78 @@ void SADX_HandleBouncedPacket(AP_Bounce bouncePacket)
     }
 }
 
-void SADX_GoalRequiresLevels(const int goalRequiresLevels)
+void ArchipelagoManager::GoalRequiresLevels(const int goalRequiresLevels)
 {
-    archipelagoManagerPtr->options.goalRequiresLevels = goalRequiresLevels;
+    options.goalRequiresLevels = goalRequiresLevels;
 }
 
-void SADX_GoalRequiresChaosEmeralds(const int goalRequiresChaosEmeralds)
+void ArchipelagoManager::GoalRequiresChaosEmeralds(const int goalRequiresChaosEmeralds)
 {
-    archipelagoManagerPtr->options.goalRequiresChaosEmeralds = goalRequiresChaosEmeralds;
+    options.goalRequiresChaosEmeralds = goalRequiresChaosEmeralds;
 }
 
-void SADX_GoalRequiresEmblems(const int goalRequiresEmblems)
+void ArchipelagoManager::GoalRequiresEmblems(const int goalRequiresEmblems)
 {
-    archipelagoManagerPtr->options.goalRequiresEmblems = goalRequiresEmblems;
+    options.goalRequiresEmblems = goalRequiresEmblems;
 }
 
-void SADX_GoalRequiresMissions(const int goalRequiresMissions)
+void ArchipelagoManager::GoalRequiresMissions(const int goalRequiresMissions)
 {
-    archipelagoManagerPtr->options.goalRequiresMissions = goalRequiresMissions;
+    options.goalRequiresMissions = goalRequiresMissions;
 }
 
-void SADX_GoalRequiresBosses(const int goalRequiresBosses)
+void ArchipelagoManager::GoalRequiresBosses(const int goalRequiresBosses)
 {
-    archipelagoManagerPtr->options.goalRequiresBosses = goalRequiresBosses;
+    options.goalRequiresBosses = goalRequiresBosses;
 }
 
-void SADX_GoalRequiresChaoRaces(const int goalRequiresChaoRaces)
+void ArchipelagoManager::GoalRequiresChaoRaces(const int goalRequiresChaoRaces)
 {
-    archipelagoManagerPtr->options.goalRequiresChaoRaces = goalRequiresChaoRaces;
+    options.goalRequiresChaoRaces = goalRequiresChaoRaces;
 }
 
 
-void SADX_CompareModVersion(const int version)
+void ArchipelagoManager::CompareModVersion(const int version)
 {
+    PrintDebug(" --- Checking mod version: %d\n", version);
     //TODO: Remove from randomizer.cpp
     randomizerPtr->OnCheckVersion(version);
 }
 
-void SADX_LogicLevel(const int logicLevel)
+void ArchipelagoManager::LogicLevel(const int logicLevel)
 {
     if (logicLevel > 1)
-        archipelagoManagerPtr->options.expertMode = true;
+        options.expertMode = true;
     else
-        archipelagoManagerPtr->options.expertMode = false;
+        options.expertMode = false;
 }
 
-void SADX_EmblemsForPerfectChaos(const int emblemGoal)
+void ArchipelagoManager::EmblemsForPerfectChaos(const int emblemGoal)
 {
-    archipelagoManagerPtr->options.emblemGoal = max(1, emblemGoal);
+    options.emblemGoal = max(1, emblemGoal);
 }
 
-void SADX_LevelForPerfectChaos(const int levelGoal)
+void ArchipelagoManager::LevelForPerfectChaos(const int levelGoal)
 {
-    archipelagoManagerPtr->options.levelGoal = max(1, levelGoal);
+    options.levelGoal = max(1, levelGoal);
 }
 
-void SADX_MissionForPerfectChaos(const int missionGoal)
+void ArchipelagoManager::MissionForPerfectChaos(const int missionGoal)
 {
-    archipelagoManagerPtr->options.missionGoal = max(1, missionGoal);
+    options.missionGoal = max(1, missionGoal);
 }
 
-void SADX_BossesForPerfectChaos(const int bossesGoal)
+void ArchipelagoManager::BossesForPerfectChaos(const int bossesGoal)
 {
-    archipelagoManagerPtr->options.bossesGoal = max(1, bossesGoal);
+    options.bossesGoal = max(1, bossesGoal);
 }
 
-void SADX_MissionModeChecks(const int missionModeEnabled)
+void ArchipelagoManager::MissionModeChecks(const int missionModeEnabled)
 {
-    archipelagoManagerPtr->options.missionModeEnabled = missionModeEnabled;
+    options.missionModeEnabled = missionModeEnabled;
 }
 
-void SADX_MissionBlackList(const std::map<int, int> missionBlacklist)
+void ArchipelagoManager::MissionBlackList(const std::map<int, int> missionBlacklist)
 {
     if (missionBlacklist.empty())
         return;
@@ -288,120 +290,120 @@ void SADX_MissionBlackList(const std::map<int, int> missionBlacklist)
     for (const auto& mission : missionBlacklist)
         blacklistedMissions.push_back(mission.first);
 
-    archipelagoManagerPtr->options.missionBlacklist = blacklistedMissions;
+    options.missionBlacklist = blacklistedMissions;
 }
 
-void SADX_AutoStartMissions(const int autoStartMissions)
+void ArchipelagoManager::AutoStartMissions(const int autoStartMissions)
 {
-    archipelagoManagerPtr->options.autoStartMissions = autoStartMissions > 0;
+    options.autoStartMissions = autoStartMissions > 0;
 }
 
-void SADX_EnemySanity(const int enemySanity)
+void ArchipelagoManager::EnemySanity(const int enemySanity)
 {
-    archipelagoManagerPtr->options.enemySanity = enemySanity;
+    options.enemySanity = enemySanity;
 }
 
-void SADX_SonicEnemySanity(const int characterEnemySanity)
+void ArchipelagoManager::SonicEnemySanity(const int characterEnemySanity)
 {
-    archipelagoManagerPtr->options.SetCharacterEnemySanity(Characters_Sonic, characterEnemySanity);
+    options.SetCharacterEnemySanity(Characters_Sonic, characterEnemySanity);
 }
 
-void SADX_TailsEnemySanity(const int characterEnemySanity)
+void ArchipelagoManager::TailsEnemySanity(const int characterEnemySanity)
 {
-    archipelagoManagerPtr->options.SetCharacterEnemySanity(Characters_Tails, characterEnemySanity);
+    options.SetCharacterEnemySanity(Characters_Tails, characterEnemySanity);
 }
 
-void SADX_KnucklesEnemySanity(const int characterEnemySanity)
+void ArchipelagoManager::KnucklesEnemySanity(const int characterEnemySanity)
 {
-    archipelagoManagerPtr->options.SetCharacterEnemySanity(Characters_Knuckles, characterEnemySanity);
+    options.SetCharacterEnemySanity(Characters_Knuckles, characterEnemySanity);
 }
 
-void SADX_AmyEnemySanity(const int characterEnemySanity)
+void ArchipelagoManager::AmyEnemySanity(const int characterEnemySanity)
 {
-    archipelagoManagerPtr->options.SetCharacterEnemySanity(Characters_Amy, characterEnemySanity);
+    options.SetCharacterEnemySanity(Characters_Amy, characterEnemySanity);
 }
 
-void SADX_GammaEnemySanity(const int characterEnemySanity)
+void ArchipelagoManager::GammaEnemySanity(const int characterEnemySanity)
 {
-    archipelagoManagerPtr->options.SetCharacterEnemySanity(Characters_Gamma, characterEnemySanity);
+    options.SetCharacterEnemySanity(Characters_Gamma, characterEnemySanity);
 }
 
-void SADX_BigEnemySanity(const int characterEnemySanity)
+void ArchipelagoManager::BigEnemySanity(const int characterEnemySanity)
 {
-    archipelagoManagerPtr->options.SetCharacterEnemySanity(Characters_Big, characterEnemySanity);
+    options.SetCharacterEnemySanity(Characters_Big, characterEnemySanity);
 }
 
-void SADX_CapsuleSanity(const int capsuleSanity)
+void ArchipelagoManager::CapsuleSanity(const int capsuleSanity)
 {
-    archipelagoManagerPtr->options.capsuleSanity = capsuleSanity;
+    options.capsuleSanity = capsuleSanity;
 }
 
-void SADX_PinballCapsules(const int includePinballCapsules)
+void ArchipelagoManager::PinballCapsules(const int includePinballCapsules)
 {
-    archipelagoManagerPtr->options.includePinballCapsules = includePinballCapsules;
+    options.includePinballCapsules = includePinballCapsules;
 }
 
-void SADX_SonicCapsuleSanity(const int characterCapsuleSanity)
+void ArchipelagoManager::SonicCapsuleSanity(const int characterCapsuleSanity)
 {
-    archipelagoManagerPtr->options.SetCharacterCapsuleSanity(Characters_Sonic, characterCapsuleSanity);
+    options.SetCharacterCapsuleSanity(Characters_Sonic, characterCapsuleSanity);
 }
 
-void SADX_TailsCapsuleSanity(const int characterCapsuleSanity)
+void ArchipelagoManager::TailsCapsuleSanity(const int characterCapsuleSanity)
 {
-    archipelagoManagerPtr->options.SetCharacterCapsuleSanity(Characters_Tails, characterCapsuleSanity);
+    options.SetCharacterCapsuleSanity(Characters_Tails, characterCapsuleSanity);
 }
 
-void SADX_KnucklesCapsuleSanity(const int characterCapsuleSanity)
+void ArchipelagoManager::KnucklesCapsuleSanity(const int characterCapsuleSanity)
 {
-    archipelagoManagerPtr->options.SetCharacterCapsuleSanity(Characters_Knuckles, characterCapsuleSanity);
+    options.SetCharacterCapsuleSanity(Characters_Knuckles, characterCapsuleSanity);
 }
 
-void SADX_AmyCapsuleSanity(const int characterCapsuleSanity)
+void ArchipelagoManager::AmyCapsuleSanity(const int characterCapsuleSanity)
 {
-    archipelagoManagerPtr->options.SetCharacterCapsuleSanity(Characters_Amy, characterCapsuleSanity);
+    options.SetCharacterCapsuleSanity(Characters_Amy, characterCapsuleSanity);
 }
 
-void SADX_GammaCapsuleSanity(const int characterCapsuleSanity)
+void ArchipelagoManager::GammaCapsuleSanity(const int characterCapsuleSanity)
 {
-    archipelagoManagerPtr->options.SetCharacterCapsuleSanity(Characters_Gamma, characterCapsuleSanity);
+    options.SetCharacterCapsuleSanity(Characters_Gamma, characterCapsuleSanity);
 }
 
-void SADX_BigCapsuleSanity(const int characterCapsuleSanity)
+void ArchipelagoManager::BigCapsuleSanity(const int characterCapsuleSanity)
 {
-    archipelagoManagerPtr->options.SetCharacterCapsuleSanity(Characters_Big, characterCapsuleSanity);
+    options.SetCharacterCapsuleSanity(Characters_Big, characterCapsuleSanity);
 }
 
-void SADX_LifeCapsuleSanity(const int lifeCapsuleSanity)
+void ArchipelagoManager::LifeCapsuleSanity(const int lifeCapsuleSanity)
 {
-    archipelagoManagerPtr->options.lifeCapsuleSanity = lifeCapsuleSanity;
+    options.lifeCapsuleSanity = lifeCapsuleSanity;
 }
 
-void SADX_ShieldCapsuleSanity(const int shieldCapsuleSanity)
+void ArchipelagoManager::ShieldCapsuleSanity(const int shieldCapsuleSanity)
 {
-    archipelagoManagerPtr->options.shieldCapsuleSanity = shieldCapsuleSanity;
+    options.shieldCapsuleSanity = shieldCapsuleSanity;
 }
 
-void SADX_PowerUpCapsuleSanity(const int powerUpCapsuleSanity)
+void ArchipelagoManager::PowerUpCapsuleSanity(const int powerUpCapsuleSanity)
 {
-    archipelagoManagerPtr->options.powerUpCapsuleSanity = powerUpCapsuleSanity;
+    options.powerUpCapsuleSanity = powerUpCapsuleSanity;
 }
 
-void SADX_RingCapsuleSanity(const int ringCapsuleSanity)
+void ArchipelagoManager::RingCapsuleSanity(const int ringCapsuleSanity)
 {
-    archipelagoManagerPtr->options.ringCapsuleSanity = ringCapsuleSanity;
+    options.ringCapsuleSanity = ringCapsuleSanity;
 }
 
-void SADX_FishSanity(const int fishSanity)
+void ArchipelagoManager::FishSanity(const int fishSanity)
 {
-    archipelagoManagerPtr->options.fishSanity = fishSanity;
+    options.fishSanity = fishSanity;
 }
 
-void SADX_LazyFishing(const int lazyFishing)
+void ArchipelagoManager::LazyFishing(const int lazyFishing)
 {
-    archipelagoManagerPtr->options.lazyFishing = lazyFishing > 0;
+    options.lazyFishing = lazyFishing > 0;
 }
 
-void SADX_ProgressionItems(const std::map<int, int> progressionItems)
+void ArchipelagoManager::ProgressionItems(const std::map<int, int> progressionItems)
 {
     if (progressionItems.empty())
         return;
@@ -410,48 +412,48 @@ void SADX_ProgressionItems(const std::map<int, int> progressionItems)
     for (const auto& progressionItem : progressionItems)
         progressionItemsList.push_back(progressionItem.first - archipelagoManagerPtr->baseId);
 
-    archipelagoManagerPtr->options.progressionItems = progressionItemsList;
+    options.progressionItems = progressionItemsList;
 }
 
 
-void SADX_StartingCharacter(const int startingCharacterIndex)
+void ArchipelagoManager::StartingCharacter(const int startingCharacterIndex)
 {
     //TODO: Remove from randomizer.cpp
     randomizerPtr->SetStartingCharacter(startingCharacterIndex);
 }
 
-void SADX_SonicStartingArea(const int startingArea)
+void ArchipelagoManager::SonicStartingArea(const int startingArea)
 {
-    archipelagoManagerPtr->options.SetCharacterStatingArea(Characters_Sonic, static_cast<StartingArea>(startingArea));
+    options.SetCharacterStatingArea(Characters_Sonic, static_cast<StartingArea>(startingArea));
 }
 
-void SADX_TailsStartingArea(const int startingArea)
+void ArchipelagoManager::TailsStartingArea(const int startingArea)
 {
-    archipelagoManagerPtr->options.SetCharacterStatingArea(Characters_Tails, static_cast<StartingArea>(startingArea));
+    options.SetCharacterStatingArea(Characters_Tails, static_cast<StartingArea>(startingArea));
 }
 
-void SADX_KnucklesStartingArea(const int startingArea)
+void ArchipelagoManager::KnucklesStartingArea(const int startingArea)
 {
-    archipelagoManagerPtr->options.
-                           SetCharacterStatingArea(Characters_Knuckles, static_cast<StartingArea>(startingArea));
+    options.
+        SetCharacterStatingArea(Characters_Knuckles, static_cast<StartingArea>(startingArea));
 }
 
-void SADX_AmyStartingArea(const int startingArea)
+void ArchipelagoManager::AmyStartingArea(const int startingArea)
 {
-    archipelagoManagerPtr->options.SetCharacterStatingArea(Characters_Amy, static_cast<StartingArea>(startingArea));
+    options.SetCharacterStatingArea(Characters_Amy, static_cast<StartingArea>(startingArea));
 }
 
-void SADX_GammaStartingArea(const int startingArea)
+void ArchipelagoManager::GammaStartingArea(const int startingArea)
 {
-    archipelagoManagerPtr->options.SetCharacterStatingArea(Characters_Gamma, static_cast<StartingArea>(startingArea));
+    options.SetCharacterStatingArea(Characters_Gamma, static_cast<StartingArea>(startingArea));
 }
 
-void SADX_BigStartingArea(const int startingArea)
+void ArchipelagoManager::BigStartingArea(const int startingArea)
 {
-    archipelagoManagerPtr->options.SetCharacterStatingArea(Characters_Big, static_cast<StartingArea>(startingArea));
+    options.SetCharacterStatingArea(Characters_Big, static_cast<StartingArea>(startingArea));
 }
 
-void SADX_LevelEntranceMap(const std::map<int, int> levelEntrancesValues)
+void ArchipelagoManager::LevelEntranceMap(const std::map<int, int> levelEntrancesValues)
 {
     if (levelEntrancesValues.empty())
         return;
@@ -469,266 +471,266 @@ void SADX_LevelEntranceMap(const std::map<int, int> levelEntrancesValues)
     randomizerPtr->UpdateLevelEntrances(levelEntrances);
 }
 
-void SADX_SetEntranceRandomizer(const int enableEntranceRandomizer)
+void ArchipelagoManager::SetEntranceRandomizer(const int enableEntranceRandomizer)
 {
-    archipelagoManagerPtr->options.entranceRandomizer = enableEntranceRandomizer;
+    options.entranceRandomizer = enableEntranceRandomizer;
 }
 
-void SADX_SetDeathLink(const int deathLinkActive)
+void ArchipelagoManager::SetDeathLink(const int deathLinkActive)
 {
     if (archipelagoManagerPtr->deathLinkOverride == DeathLinkForceEnabled)
-        archipelagoManagerPtr->options.deathLinkActive = true;
+        options.deathLinkActive = true;
     else if (archipelagoManagerPtr->deathLinkOverride == DeathLinkForceDisabled)
-        archipelagoManagerPtr->options.deathLinkActive = false;
+        options.deathLinkActive = false;
     else
-        archipelagoManagerPtr->options.deathLinkActive = deathLinkActive;
+        options.deathLinkActive = deathLinkActive;
 }
 
-void SADX_SendDeathLinkChance(const int sendDeathLinkChance)
+void ArchipelagoManager::SendDeathLinkChance(const int sendDeathLinkChance)
 {
     //TODO: Remove from randomizer.cpp
     randomizerPtr->SetSendDeathLinkChance(sendDeathLinkChance);
 }
 
-void SADX_ReceiveDeathLinkChance(const int receiveDeathLinkChance)
+void ArchipelagoManager::ReceiveDeathLinkChance(const int receiveDeathLinkChance)
 {
     //TODO: Remove from randomizer.cpp
     randomizerPtr->SetReceiveDeathLinkChance(receiveDeathLinkChance);
 }
 
 
-void SADX_SetRingLink(const int ringLinkActive)
+void ArchipelagoManager::SetRingLink(const int ringLinkActive)
 {
     if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabled
         || archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabledHard)
-        archipelagoManagerPtr->options.ringLinkActive = true;
+        options.ringLinkActive = true;
     else if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceDisabled)
-        archipelagoManagerPtr->options.ringLinkActive = false;
+        options.ringLinkActive = false;
     else
-        archipelagoManagerPtr->options.ringLinkActive = ringLinkActive;
+        options.ringLinkActive = ringLinkActive;
 }
 
-void SADX_SetCasinopolisRingLink(const int casinopolisRingLink)
+void ArchipelagoManager::SetCasinopolisRingLink(const int casinopolisRingLink)
 {
-    archipelagoManagerPtr->options.casinopolisRingLink = casinopolisRingLink;
+    options.casinopolisRingLink = casinopolisRingLink;
 }
 
-void SADX_SetHardRingLink(const int hardRingLinkActive)
+void ArchipelagoManager::SetHardRingLink(const int hardRingLinkActive)
 {
     if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabledHard)
-        archipelagoManagerPtr->options.hardRingLinkActive = true;
+        options.hardRingLinkActive = true;
     else if (archipelagoManagerPtr->ringLinkOverride == RingLinkForceDisabled
         || archipelagoManagerPtr->ringLinkOverride == RingLinkForceEnabled)
-        archipelagoManagerPtr->options.hardRingLinkActive = false;
+        options.hardRingLinkActive = false;
     else
-        archipelagoManagerPtr->options.hardRingLinkActive = hardRingLinkActive;
+        options.hardRingLinkActive = hardRingLinkActive;
 }
 
-void SADX_SetTrapLink(const int trapLinkActive)
+void ArchipelagoManager::SetTrapLink(const int trapLinkActive)
 {
     if (archipelagoManagerPtr->trapLinkOverride == TrapLinkForceEnabled)
-        archipelagoManagerPtr->options.trapLinkActive = true;
+        options.trapLinkActive = true;
     else if (archipelagoManagerPtr->trapLinkOverride == TrapLinkForceDisabled)
-        archipelagoManagerPtr->options.trapLinkActive = false;
+        options.trapLinkActive = false;
     else
-        archipelagoManagerPtr->options.trapLinkActive = trapLinkActive;
+        options.trapLinkActive = trapLinkActive;
 }
 
-void SADX_RingLoss(const int ringLoss)
+void ArchipelagoManager::SetRingLoss(const int ringLoss)
 {
     if (archipelagoManagerPtr->ringLossOverride == RingLossDefault)
-        archipelagoManagerPtr->options.ringLoss = static_cast<RingLoss>(ringLoss);
+        options.ringLoss = static_cast<RingLoss>(ringLoss);
     else if (archipelagoManagerPtr->ringLossOverride == RingLossForceClassic)
-        archipelagoManagerPtr->options.ringLoss = Classic;
+        options.ringLoss = Classic;
     else if (archipelagoManagerPtr->ringLossOverride == RingLossForceModern)
-        archipelagoManagerPtr->options.ringLoss = Modern;
+        options.ringLoss = Modern;
     else if (archipelagoManagerPtr->ringLossOverride == RingLossForceOhko)
-        archipelagoManagerPtr->options.ringLoss = OneHitKnockOut;
+        options.ringLoss = OneHitKnockOut;
     else if (archipelagoManagerPtr->ringLossOverride == RingLossForceOhkoNoShields)
-        archipelagoManagerPtr->options.ringLoss = OneHitKnockOutNoShields;
+        options.ringLoss = OneHitKnockOutNoShields;
 }
 
-void SADX_TwinkleCircuitCheck(const int twinkleCircuitCheck)
+void ArchipelagoManager::TwinkleCircuitCheck(const int twinkleCircuitCheck)
 {
-    archipelagoManagerPtr->options.twinkleCircuitCheck = twinkleCircuitCheck;
+    options.twinkleCircuitCheck = twinkleCircuitCheck;
 }
 
-void SADX_MultipleTwinkleCircuitChecks(const int multipleTwinkleCircuitChecks)
+void ArchipelagoManager::MultipleTwinkleCircuitChecks(const int multipleTwinkleCircuitChecks)
 {
-    archipelagoManagerPtr->options.multipleTwinkleCircuitChecks = multipleTwinkleCircuitChecks;
+    options.multipleTwinkleCircuitChecks = multipleTwinkleCircuitChecks;
 }
 
-void SADX_SkyChaseChecks(const int skyChaseChecks)
+void ArchipelagoManager::SkyChaseChecks(const int skyChaseChecks)
 {
-    archipelagoManagerPtr->options.skyChaseChecks = skyChaseChecks;
+    options.skyChaseChecks = skyChaseChecks;
 }
 
-void SADX_SkyChaseChecksHard(const int skyChaseChecksHard)
+void ArchipelagoManager::SkyChaseChecksHard(const int skyChaseChecksHard)
 {
-    archipelagoManagerPtr->options.skyChaseChecksHard = skyChaseChecksHard;
+    options.skyChaseChecksHard = skyChaseChecksHard;
 }
 
-void SADX_BossChecks(const int bossChecks)
+void ArchipelagoManager::BossChecks(const int bossChecks)
 {
-    archipelagoManagerPtr->options.bossChecks = bossChecks;
+    options.bossChecks = bossChecks;
 }
 
-void SADX_UnifyChaos4(const int unifyChaos4)
+void ArchipelagoManager::UnifyChaos4(const int unifyChaos4)
 {
-    archipelagoManagerPtr->options.unifyChaos4 = unifyChaos4;
+    options.unifyChaos4 = unifyChaos4;
 }
 
-void SADX_UnifyChaos6(const int unifyChaos6)
+void ArchipelagoManager::UnifyChaos6(const int unifyChaos6)
 {
-    archipelagoManagerPtr->options.unifyChaos6 = unifyChaos6;
+    options.unifyChaos6 = unifyChaos6;
 }
 
-void SADX_UnifyEggHornet(const int unifyEggHornet)
+void ArchipelagoManager::UnifyEggHornet(const int unifyEggHornet)
 {
-    archipelagoManagerPtr->options.unifyEggHornet = unifyEggHornet;
+    options.unifyEggHornet = unifyEggHornet;
 }
 
-void SADX_PlayableSonic(const int playable)
+void ArchipelagoManager::PlayableSonic(const int playable)
 {
-    archipelagoManagerPtr->options.SetPlayableCharacter(Characters_Sonic, playable);
+    options.SetPlayableCharacter(Characters_Sonic, playable);
 }
 
-void SADX_PlayableTails(const int playable)
+void ArchipelagoManager::PlayableTails(const int playable)
 {
-    archipelagoManagerPtr->options.SetPlayableCharacter(Characters_Tails, playable);
+    options.SetPlayableCharacter(Characters_Tails, playable);
 }
 
-void SADX_PlayableKnuckles(const int playable)
+void ArchipelagoManager::PlayableKnuckles(const int playable)
 {
-    archipelagoManagerPtr->options.SetPlayableCharacter(Characters_Knuckles, playable);
+    options.SetPlayableCharacter(Characters_Knuckles, playable);
 }
 
-void SADX_PlayableAmy(const int playable)
+void ArchipelagoManager::PlayableAmy(const int playable)
 {
-    archipelagoManagerPtr->options.SetPlayableCharacter(Characters_Amy, playable);
+    options.SetPlayableCharacter(Characters_Amy, playable);
 }
 
-void SADX_PlayableGamma(const int playable)
+void ArchipelagoManager::PlayableGamma(const int playable)
 {
-    archipelagoManagerPtr->options.SetPlayableCharacter(Characters_Gamma, playable);
+    options.SetPlayableCharacter(Characters_Gamma, playable);
 }
 
-void SADX_PlayableBig(const int playable)
+void ArchipelagoManager::PlayableBig(const int playable)
 {
-    archipelagoManagerPtr->options.SetPlayableCharacter(Characters_Big, playable);
+    options.SetPlayableCharacter(Characters_Big, playable);
 }
 
-void SADX_SonicActionStageMissions(const int missions)
+void ArchipelagoManager::SonicActionStageMissions(const int missions)
 {
-    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Sonic, missions);
+    options.SetActionStageMissions(Characters_Sonic, missions);
 }
 
-void SADX_TailsActionStageMissions(const int missions)
+void ArchipelagoManager::TailsActionStageMissions(const int missions)
 {
-    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Tails, missions);
+    options.SetActionStageMissions(Characters_Tails, missions);
 }
 
-void SADX_KnucklesActionStageMissions(const int missions)
+void ArchipelagoManager::KnucklesActionStageMissions(const int missions)
 {
-    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Knuckles, missions);
+    options.SetActionStageMissions(Characters_Knuckles, missions);
 }
 
-void SADX_AmyActionStageMissions(const int missions)
+void ArchipelagoManager::AmyActionStageMissions(const int missions)
 {
-    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Amy, missions);
+    options.SetActionStageMissions(Characters_Amy, missions);
 }
 
-void SADX_GammaActionStageMissions(const int missions)
+void ArchipelagoManager::GammaActionStageMissions(const int missions)
 {
-    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Gamma, missions);
+    options.SetActionStageMissions(Characters_Gamma, missions);
 }
 
-void SADX_BigActionStageMissions(const int missions)
+void ArchipelagoManager::BigActionStageMissions(const int missions)
 {
-    archipelagoManagerPtr->options.SetActionStageMissions(Characters_Big, missions);
+    options.SetActionStageMissions(Characters_Big, missions);
 }
 
-void SADX_MusicSource(const int musicSource)
+void ArchipelagoManager::SetMusicSource(const int musicSource)
 {
-    if (archipelagoManagerPtr->options.musicSource == MusicSourceNone)
-        archipelagoManagerPtr->options.musicSource = static_cast<MusicSource>(musicSource);
+    if (options.musicSource == MusicSourceNone)
+        options.musicSource = static_cast<MusicSource>(musicSource);
 }
 
-void SADX_MusicShuffle(const int musicShuffle)
+void ArchipelagoManager::SetMusicShuffle(const int musicShuffle)
 {
-    if (archipelagoManagerPtr->options.musicShuffle == MusicShuffleNone)
-        archipelagoManagerPtr->options.musicShuffle = static_cast<MusicShuffle>(musicShuffle);
+    if (options.musicShuffle == MusicShuffleNone)
+        options.musicShuffle = static_cast<MusicShuffle>(musicShuffle);
 }
 
-void SADX_MusicShuffleConsistency(const int musicShuffleConsistency)
+void ArchipelagoManager::SetMusicShuffleConsistency(const int musicShuffleConsistency)
 {
-    if (archipelagoManagerPtr->options.musicShuffleConsistency == MusicShuffleConsistencyNone)
-        archipelagoManagerPtr->options.musicShuffleConsistency = static_cast<MusicShuffleConsistency>(
+    if (options.musicShuffleConsistency == MusicShuffleConsistencyNone)
+        options.musicShuffleConsistency = static_cast<MusicShuffleConsistency>(
             musicShuffleConsistency);
 }
 
-void SADX_MusicShuffleSeed(const int musicShuffleSeed)
+void ArchipelagoManager::SetMusicShuffleSeed(const int musicShuffleSeed)
 {
-    archipelagoManagerPtr->options.musicShuffleSeed = musicShuffleSeed;
+    options.musicShuffleSeed = musicShuffleSeed;
 }
 
-void SADX_LifeCapsulesChangeSongs(const int lifeCapsulesChangeSongs)
+void ArchipelagoManager::SetLifeCapsulesChangeSongs(const int lifeCapsulesChangeSongs)
 {
-    if (archipelagoManagerPtr->options.lifeCapsulesChangeSongs == LifeCapsulesChangeSongsNone)
-        archipelagoManagerPtr->options.lifeCapsulesChangeSongs = lifeCapsulesChangeSongs
-                                                                     ? LifeCapsulesChangeSongsEnabled
-                                                                     : LifeCapsulesChangeSongsDisabled;
+    if (options.lifeCapsulesChangeSongs == LifeCapsulesChangeSongsNone)
+        options.lifeCapsulesChangeSongs = lifeCapsulesChangeSongs
+                                              ? LifeCapsulesChangeSongsEnabled
+                                              : LifeCapsulesChangeSongsDisabled;
 }
 
 
-void SADX_IceTrapWeight(const int iceTrapWeight)
+void ArchipelagoManager::SetIceTrapWeight(const int iceTrapWeight)
 {
-    archipelagoManagerPtr->options.iceTrapWeight = iceTrapWeight;
+    options.iceTrapWeight = iceTrapWeight;
 }
 
-void SADX_SpringTrapWeight(const int springTrapWeight)
+void ArchipelagoManager::SetSpringTrapWeight(const int springTrapWeight)
 {
-    archipelagoManagerPtr->options.springTrapWeight = springTrapWeight;
+    options.springTrapWeight = springTrapWeight;
 }
 
-void SADX_PoliceTrapWeight(const int policeTrapWeight)
+void ArchipelagoManager::SetPoliceTrapWeight(const int policeTrapWeight)
 {
-    archipelagoManagerPtr->options.policeTrapWeight = policeTrapWeight;
+    options.policeTrapWeight = policeTrapWeight;
 }
 
-void SADX_BuyonTrapWeight(const int buyonTrapWeight)
+void ArchipelagoManager::SetBuyonTrapWeight(const int buyonTrapWeight)
 {
-    archipelagoManagerPtr->options.buyonTrapWeight = buyonTrapWeight;
+    options.buyonTrapWeight = buyonTrapWeight;
 }
 
-void SADX_ReverseTrapWeight(const int reverseTrapWeight)
+void ArchipelagoManager::SetReverseTrapWeight(const int reverseTrapWeight)
 {
-    archipelagoManagerPtr->options.reverseTrapWeight = reverseTrapWeight;
+    options.reverseTrapWeight = reverseTrapWeight;
 }
 
-void SADX_GravityTrapWeight(const int gravityTrapWeight)
+void ArchipelagoManager::SetGravityTrapWeight(const int gravityTrapWeight)
 {
-    archipelagoManagerPtr->options.gravityTrapWeight = gravityTrapWeight;
+    options.gravityTrapWeight = gravityTrapWeight;
 }
 
-void SADX_ReverseControlTrapDuration(const int reverseControlTrapDuration)
+void ArchipelagoManager::ReverseControlTrapDuration(const int reverseControlTrapDuration)
 {
-    archipelagoManagerPtr->options._reverseControlsDuration = static_cast<float>(reverseControlTrapDuration);
+    options._reverseControlsDuration = static_cast<float>(reverseControlTrapDuration);
 }
 
-void SADX_TrapsOnAdventureFields(const int trapsOnAdventureFields)
+void ArchipelagoManager::TrapsOnAdventureFields(const int trapsOnAdventureFields)
 {
-    archipelagoManagerPtr->options._trapsOnAdventureFields = trapsOnAdventureFields > 0;
+    options._trapsOnAdventureFields = trapsOnAdventureFields > 0;
 }
 
-void SADX_TrapsOnBossFights(const int trapsOnBossFights)
+void ArchipelagoManager::TrapsOnBossFights(const int trapsOnBossFights)
 {
-    archipelagoManagerPtr->options._trapsOnBossFights = trapsOnBossFights > 0;
+    options._trapsOnBossFights = trapsOnBossFights > 0;
 }
 
-void SADX_TrapsOnPerfectChaosFight(const int trapsOnPerfectChaosFight)
+void ArchipelagoManager::TrapsOnPerfectChaosFight(const int trapsOnPerfectChaosFight)
 {
-    archipelagoManagerPtr->options._trapsOnPerfectChaosFight = trapsOnPerfectChaosFight > 0;
+    options._trapsOnPerfectChaosFight = trapsOnPerfectChaosFight > 0;
 }
 
 
@@ -737,120 +739,121 @@ void ArchipelagoManager::Connect()
     AP_Init(_serverIP.c_str(), "Sonic Adventure DX", playerName.c_str(), _serverPassword.c_str());
 
     AP_SetDeathLinkSupported(false);
-    AP_SetItemClearCallback(&SADX_ResetItems);
-    AP_SetItemRecvCallback(&SADX_RecvItem);
-    AP_SetLocationCheckedCallback(&SADX_CheckLocation);
-    AP_RegisterBouncedCallback(&SADX_HandleBouncedPacket);
-    AP_RegisterSlotDataIntCallback("GoalRequiresLevels", &SADX_GoalRequiresLevels);
-    AP_RegisterSlotDataIntCallback("GoalRequiresChaosEmeralds", &SADX_GoalRequiresChaosEmeralds);
-    AP_RegisterSlotDataIntCallback("GoalRequiresEmblems", &SADX_GoalRequiresEmblems);
-    AP_RegisterSlotDataIntCallback("GoalRequiresMissions", &SADX_GoalRequiresMissions);
-    AP_RegisterSlotDataIntCallback("GoalRequiresBosses", &SADX_GoalRequiresBosses);
-    AP_RegisterSlotDataIntCallback("GoalRequiresChaoRaces", &SADX_GoalRequiresChaoRaces);
-    AP_RegisterSlotDataIntCallback("ModVersion", &SADX_CompareModVersion);
-    AP_RegisterSlotDataIntCallback("LogicLevel", &SADX_LogicLevel);
-    AP_RegisterSlotDataIntCallback("EmblemsForPerfectChaos", &SADX_EmblemsForPerfectChaos);
-    AP_RegisterSlotDataIntCallback("LevelForPerfectChaos", &SADX_LevelForPerfectChaos);
-    AP_RegisterSlotDataIntCallback("MissionForPerfectChaos", &SADX_MissionForPerfectChaos);
-    AP_RegisterSlotDataIntCallback("BossesForPerfectChaos", &SADX_BossesForPerfectChaos);
-    AP_RegisterSlotDataIntCallback("MissionModeChecks", &SADX_MissionModeChecks);
-    AP_RegisterSlotDataMapIntIntCallback("MissionBlackList", &SADX_MissionBlackList);
+    AP_SetItemClearCallback([this]() { ResetItems(); });
+    AP_SetItemRecvCallback([this](const int64_t itemId, const bool notify) { RecvItem(itemId, notify); });
+    AP_SetLocationCheckedCallback([this](const int64_t locationId) { CheckLocation(locationId); });
+    AP_RegisterBouncedCallback([this](const AP_Bounce bouncePacket) { HandleBouncedPacket(bouncePacket); });
+    
+    AP_REGISTER_INT_CALLBACK("GoalRequiresLevels", GoalRequiresLevels);
+    AP_REGISTER_INT_CALLBACK("GoalRequiresChaosEmeralds", GoalRequiresChaosEmeralds);
+    AP_REGISTER_INT_CALLBACK("GoalRequiresEmblems", GoalRequiresEmblems);
+    AP_REGISTER_INT_CALLBACK("GoalRequiresMissions", GoalRequiresMissions);
+    AP_REGISTER_INT_CALLBACK("GoalRequiresBosses", GoalRequiresBosses);
+    AP_REGISTER_INT_CALLBACK("GoalRequiresChaoRaces", GoalRequiresChaoRaces);
+    AP_REGISTER_INT_CALLBACK("ModVersion", CompareModVersion);
+    AP_REGISTER_INT_CALLBACK("LogicLevel", LogicLevel);
+    AP_REGISTER_INT_CALLBACK("EmblemsForPerfectChaos", EmblemsForPerfectChaos);
+    AP_REGISTER_INT_CALLBACK("LevelForPerfectChaos", LevelForPerfectChaos);
+    AP_REGISTER_INT_CALLBACK("MissionForPerfectChaos", MissionForPerfectChaos);
+    AP_REGISTER_INT_CALLBACK("BossesForPerfectChaos", BossesForPerfectChaos);
+    AP_REGISTER_INT_CALLBACK("MissionModeChecks", MissionModeChecks);
+    AP_REGISTER_MAP_CALLBACK("MissionBlackList", MissionBlackList);
 
-    AP_RegisterSlotDataIntCallback("AutoStartMissions", &SADX_AutoStartMissions);
+    AP_REGISTER_INT_CALLBACK("AutoStartMissions", AutoStartMissions);
 
-    AP_RegisterSlotDataIntCallback("EnemySanity", &SADX_EnemySanity);
+    AP_REGISTER_INT_CALLBACK("EnemySanity", EnemySanity);
 
-    AP_RegisterSlotDataIntCallback("SonicEnemySanity", &SADX_SonicEnemySanity);
-    AP_RegisterSlotDataIntCallback("TailsEnemySanity", &SADX_TailsEnemySanity);
-    AP_RegisterSlotDataIntCallback("KnucklesEnemySanity", &SADX_KnucklesEnemySanity);
-    AP_RegisterSlotDataIntCallback("AmyEnemySanity", &SADX_AmyEnemySanity);
-    AP_RegisterSlotDataIntCallback("BigEnemySanity", &SADX_BigEnemySanity);
-    AP_RegisterSlotDataIntCallback("GammaEnemySanity", &SADX_GammaEnemySanity);
+    AP_REGISTER_INT_CALLBACK("SonicEnemySanity", SonicEnemySanity);
+    AP_REGISTER_INT_CALLBACK("TailsEnemySanity", TailsEnemySanity);
+    AP_REGISTER_INT_CALLBACK("KnucklesEnemySanity", KnucklesEnemySanity);
+    AP_REGISTER_INT_CALLBACK("AmyEnemySanity", AmyEnemySanity);
+    AP_REGISTER_INT_CALLBACK("BigEnemySanity", BigEnemySanity);
+    AP_REGISTER_INT_CALLBACK("GammaEnemySanity", GammaEnemySanity);
 
-    AP_RegisterSlotDataIntCallback("CapsuleSanity", &SADX_CapsuleSanity);
-    AP_RegisterSlotDataIntCallback("PinballCapsules", &SADX_PinballCapsules);
+    AP_REGISTER_INT_CALLBACK("CapsuleSanity", CapsuleSanity);
+    AP_REGISTER_INT_CALLBACK("PinballCapsules", PinballCapsules);
 
-    AP_RegisterSlotDataIntCallback("SonicCapsuleSanity", &SADX_SonicCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("TailsCapsuleSanity", &SADX_TailsCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("KnucklesCapsuleSanity", &SADX_KnucklesCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("AmyCapsuleSanity", &SADX_AmyCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("BigCapsuleSanity", &SADX_BigCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("GammaCapsuleSanity", &SADX_GammaCapsuleSanity);
+    AP_REGISTER_INT_CALLBACK("SonicCapsuleSanity", SonicCapsuleSanity);
+    AP_REGISTER_INT_CALLBACK("TailsCapsuleSanity", TailsCapsuleSanity);
+    AP_REGISTER_INT_CALLBACK("KnucklesCapsuleSanity", KnucklesCapsuleSanity);
+    AP_REGISTER_INT_CALLBACK("AmyCapsuleSanity", AmyCapsuleSanity);
+    AP_REGISTER_INT_CALLBACK("BigCapsuleSanity", BigCapsuleSanity);
+    AP_REGISTER_INT_CALLBACK("GammaCapsuleSanity", GammaCapsuleSanity);
 
-    AP_RegisterSlotDataIntCallback("LifeCapsuleSanity", &SADX_LifeCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("ShieldCapsuleSanity", &SADX_ShieldCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("PowerUpCapsuleSanity", &SADX_PowerUpCapsuleSanity);
-    AP_RegisterSlotDataIntCallback("RingCapsuleSanity", &SADX_RingCapsuleSanity);
+    AP_REGISTER_INT_CALLBACK("LifeCapsuleSanity", LifeCapsuleSanity);
+    AP_REGISTER_INT_CALLBACK("ShieldCapsuleSanity", ShieldCapsuleSanity);
+    AP_REGISTER_INT_CALLBACK("PowerUpCapsuleSanity", PowerUpCapsuleSanity);
+    AP_REGISTER_INT_CALLBACK("RingCapsuleSanity", RingCapsuleSanity);
 
-    AP_RegisterSlotDataIntCallback("FishSanity", &SADX_FishSanity);
-    AP_RegisterSlotDataIntCallback("LazyFishing", &SADX_LazyFishing);
+    AP_REGISTER_INT_CALLBACK("FishSanity", FishSanity);
+    AP_REGISTER_INT_CALLBACK("LazyFishing", LazyFishing);
 
-    AP_RegisterSlotDataMapIntIntCallback("ProgressionItems", &SADX_ProgressionItems);
+    AP_REGISTER_MAP_CALLBACK("ProgressionItems", ProgressionItems);
 
-    AP_RegisterSlotDataIntCallback("StartingCharacter", &SADX_StartingCharacter);
-    AP_RegisterSlotDataIntCallback("SonicStartingArea", &SADX_SonicStartingArea);
-    AP_RegisterSlotDataIntCallback("TailsStartingArea", &SADX_TailsStartingArea);
-    AP_RegisterSlotDataIntCallback("KnucklesStartingArea", &SADX_KnucklesStartingArea);
-    AP_RegisterSlotDataIntCallback("AmyStartingArea", &SADX_AmyStartingArea);
-    AP_RegisterSlotDataIntCallback("GammaStartingArea", &SADX_GammaStartingArea);
-    AP_RegisterSlotDataIntCallback("BigStartingArea", &SADX_BigStartingArea);
+    AP_REGISTER_INT_CALLBACK("StartingCharacter", StartingCharacter);
+    AP_REGISTER_INT_CALLBACK("SonicStartingArea", SonicStartingArea);
+    AP_REGISTER_INT_CALLBACK("TailsStartingArea", TailsStartingArea);
+    AP_REGISTER_INT_CALLBACK("KnucklesStartingArea", KnucklesStartingArea);
+    AP_REGISTER_INT_CALLBACK("AmyStartingArea", AmyStartingArea);
+    AP_REGISTER_INT_CALLBACK("GammaStartingArea", GammaStartingArea);
+    AP_REGISTER_INT_CALLBACK("BigStartingArea", BigStartingArea);
 
-    AP_RegisterSlotDataMapIntIntCallback("LevelEntranceMap", &SADX_LevelEntranceMap);
-    AP_RegisterSlotDataIntCallback("EntranceRandomizer", &SADX_SetEntranceRandomizer);
+    AP_REGISTER_MAP_CALLBACK("LevelEntranceMap", LevelEntranceMap);
+    AP_REGISTER_INT_CALLBACK("EntranceRandomizer", SetEntranceRandomizer);
 
-    AP_RegisterSlotDataIntCallback("DeathLink", &SADX_SetDeathLink);
-    AP_RegisterSlotDataIntCallback("SendDeathLinkChance", &SADX_SendDeathLinkChance);
-    AP_RegisterSlotDataIntCallback("ReceiveDeathLinkChance", &SADX_ReceiveDeathLinkChance);
+    AP_REGISTER_INT_CALLBACK("DeathLink", SetDeathLink);
+    AP_REGISTER_INT_CALLBACK("SendDeathLinkChance", SendDeathLinkChance);
+    AP_REGISTER_INT_CALLBACK("ReceiveDeathLinkChance", ReceiveDeathLinkChance);
 
-    AP_RegisterSlotDataIntCallback("RingLink", &SADX_SetRingLink);
-    AP_RegisterSlotDataIntCallback("CasinopolisRingLink", &SADX_SetCasinopolisRingLink);
-    AP_RegisterSlotDataIntCallback("HardRingLink", &SADX_SetHardRingLink);
-    AP_RegisterSlotDataIntCallback("RingLoss", &SADX_RingLoss);
+    AP_REGISTER_INT_CALLBACK("RingLink", SetRingLink);
+    AP_REGISTER_INT_CALLBACK("CasinopolisRingLink", SetCasinopolisRingLink);
+    AP_REGISTER_INT_CALLBACK("HardRingLink", SetHardRingLink);
+    AP_REGISTER_INT_CALLBACK("RingLoss", SetRingLoss);
 
-    AP_RegisterSlotDataIntCallback("TrapLink", &SADX_SetTrapLink);
+    AP_REGISTER_INT_CALLBACK("TrapLink", SetTrapLink);
 
-    AP_RegisterSlotDataIntCallback("TwinkleCircuitCheck", &SADX_TwinkleCircuitCheck);
-    AP_RegisterSlotDataIntCallback("MultipleTwinkleCircuitChecks", &SADX_MultipleTwinkleCircuitChecks);
-    AP_RegisterSlotDataIntCallback("SkyChaseChecks", &SADX_SkyChaseChecks);
-    AP_RegisterSlotDataIntCallback("SkyChaseChecksHard", &SADX_SkyChaseChecksHard);
+    AP_REGISTER_INT_CALLBACK("TwinkleCircuitCheck", TwinkleCircuitCheck);
+    AP_REGISTER_INT_CALLBACK("MultipleTwinkleCircuitChecks", MultipleTwinkleCircuitChecks);
+    AP_REGISTER_INT_CALLBACK("SkyChaseChecks", SkyChaseChecks);
+    AP_REGISTER_INT_CALLBACK("SkyChaseChecksHard", SkyChaseChecksHard);
 
-    AP_RegisterSlotDataIntCallback("BossChecks", &SADX_BossChecks);
-    AP_RegisterSlotDataIntCallback("UnifyChaos4", &SADX_UnifyChaos4);
-    AP_RegisterSlotDataIntCallback("UnifyChaos6", &SADX_UnifyChaos6);
-    AP_RegisterSlotDataIntCallback("UnifyEggHornet", &SADX_UnifyEggHornet);
+    AP_REGISTER_INT_CALLBACK("BossChecks", BossChecks);
+    AP_REGISTER_INT_CALLBACK("UnifyChaos4", UnifyChaos4);
+    AP_REGISTER_INT_CALLBACK("UnifyChaos6", UnifyChaos6);
+    AP_REGISTER_INT_CALLBACK("UnifyEggHornet", UnifyEggHornet);
 
 
-    AP_RegisterSlotDataIntCallback("PlayableSonic", &SADX_PlayableSonic);
-    AP_RegisterSlotDataIntCallback("PlayableTails", &SADX_PlayableTails);
-    AP_RegisterSlotDataIntCallback("PlayableKnuckles", &SADX_PlayableKnuckles);
-    AP_RegisterSlotDataIntCallback("PlayableAmy", &SADX_PlayableAmy);
-    AP_RegisterSlotDataIntCallback("PlayableBig", &SADX_PlayableBig);
-    AP_RegisterSlotDataIntCallback("PlayableGamma", &SADX_PlayableGamma);
+    AP_REGISTER_INT_CALLBACK("PlayableSonic", PlayableSonic);
+    AP_REGISTER_INT_CALLBACK("PlayableTails", PlayableTails);
+    AP_REGISTER_INT_CALLBACK("PlayableKnuckles", PlayableKnuckles);
+    AP_REGISTER_INT_CALLBACK("PlayableAmy", PlayableAmy);
+    AP_REGISTER_INT_CALLBACK("PlayableBig", PlayableBig);
+    AP_REGISTER_INT_CALLBACK("PlayableGamma", PlayableGamma);
 
-    AP_RegisterSlotDataIntCallback("SonicActionStageMissions", &SADX_SonicActionStageMissions);
-    AP_RegisterSlotDataIntCallback("TailsActionStageMissions", &SADX_TailsActionStageMissions);
-    AP_RegisterSlotDataIntCallback("KnucklesActionStageMissions", &SADX_KnucklesActionStageMissions);
-    AP_RegisterSlotDataIntCallback("AmyActionStageMissions", &SADX_AmyActionStageMissions);
-    AP_RegisterSlotDataIntCallback("GammaActionStageMissions", &SADX_GammaActionStageMissions);
-    AP_RegisterSlotDataIntCallback("BigActionStageMissions", &SADX_BigActionStageMissions);
+    AP_REGISTER_INT_CALLBACK("SonicActionStageMissions", SonicActionStageMissions);
+    AP_REGISTER_INT_CALLBACK("TailsActionStageMissions", TailsActionStageMissions);
+    AP_REGISTER_INT_CALLBACK("KnucklesActionStageMissions", KnucklesActionStageMissions);
+    AP_REGISTER_INT_CALLBACK("AmyActionStageMissions", AmyActionStageMissions);
+    AP_REGISTER_INT_CALLBACK("GammaActionStageMissions", GammaActionStageMissions);
+    AP_REGISTER_INT_CALLBACK("BigActionStageMissions", BigActionStageMissions);
 
-    AP_RegisterSlotDataIntCallback("MusicSource", &SADX_MusicSource);
-    AP_RegisterSlotDataIntCallback("MusicShuffle", &SADX_MusicShuffle);
-    AP_RegisterSlotDataIntCallback("MusicShuffleConsistency", &SADX_MusicShuffleConsistency);
-    AP_RegisterSlotDataIntCallback("MusicShuffleSeed", &SADX_MusicShuffleSeed);
-    AP_RegisterSlotDataIntCallback("LifeCapsulesChangeSongs", &SADX_LifeCapsulesChangeSongs);
+    AP_REGISTER_INT_CALLBACK("MusicSource", SetMusicSource);
+    AP_REGISTER_INT_CALLBACK("MusicShuffle", SetMusicShuffle);
+    AP_REGISTER_INT_CALLBACK("MusicShuffleConsistency", SetMusicShuffleConsistency);
+    AP_REGISTER_INT_CALLBACK("MusicShuffleSeed", SetMusicShuffleSeed);
+    AP_REGISTER_INT_CALLBACK("LifeCapsulesChangeSongs", SetLifeCapsulesChangeSongs);
 
-    AP_RegisterSlotDataIntCallback("IceTrapWeight", &SADX_IceTrapWeight);
-    AP_RegisterSlotDataIntCallback("SpringTrapWeight", &SADX_SpringTrapWeight);
-    AP_RegisterSlotDataIntCallback("PoliceTrapWeight", &SADX_PoliceTrapWeight);
-    AP_RegisterSlotDataIntCallback("BuyonTrapWeight", &SADX_BuyonTrapWeight);
-    AP_RegisterSlotDataIntCallback("ReverseTrapWeight", &SADX_ReverseTrapWeight);
-    AP_RegisterSlotDataIntCallback("GravityTrapWeight", &SADX_GravityTrapWeight);
+    AP_REGISTER_INT_CALLBACK("IceTrapWeight", SetIceTrapWeight);
+    AP_REGISTER_INT_CALLBACK("SpringTrapWeight", SetSpringTrapWeight);
+    AP_REGISTER_INT_CALLBACK("PoliceTrapWeight", SetPoliceTrapWeight);
+    AP_REGISTER_INT_CALLBACK("BuyonTrapWeight", SetBuyonTrapWeight);
+    AP_REGISTER_INT_CALLBACK("ReverseTrapWeight", SetReverseTrapWeight);
+    AP_REGISTER_INT_CALLBACK("GravityTrapWeight", SetGravityTrapWeight);
 
-    AP_RegisterSlotDataIntCallback("ReverseControlTrapDuration", &SADX_ReverseControlTrapDuration);
-    AP_RegisterSlotDataIntCallback("TrapsOnAdventureFields", &SADX_TrapsOnAdventureFields);
-    AP_RegisterSlotDataIntCallback("TrapsOnBossFights", &SADX_TrapsOnBossFights);
-    AP_RegisterSlotDataIntCallback("TrapsOnPerfectChaosFight", &SADX_TrapsOnPerfectChaosFight);
+    AP_REGISTER_INT_CALLBACK("ReverseControlTrapDuration", ReverseControlTrapDuration);
+    AP_REGISTER_INT_CALLBACK("TrapsOnAdventureFields", TrapsOnAdventureFields);
+    AP_REGISTER_INT_CALLBACK("TrapsOnBossFights", TrapsOnBossFights);
+    AP_REGISTER_INT_CALLBACK("TrapsOnPerfectChaosFight", TrapsOnPerfectChaosFight);
 
 
     AP_Start();
