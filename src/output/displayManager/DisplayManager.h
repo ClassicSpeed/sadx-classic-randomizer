@@ -27,7 +27,13 @@ enum DisplayInGameTracker
 class DisplayManager
 {
 public:
-    explicit DisplayManager(Options& options);
+    static DisplayManager& Init(Options& options)
+    {
+        if (_instance == nullptr)
+            _instance = new DisplayManager(options);
+        return *_instance;
+    }
+
     void QueueItemMessage(const std::string& message);
     void QueueChatMessage(const std::string& message);
     void ShowSongName(const std::string& songName);
@@ -48,7 +54,16 @@ public:
     void UpdateVoiceMenuCharacter(int characterVoiceIndex);
     void SetConnected();
 
+    static void OnCharSelAdvaModeProcedure(AdvaModeEnum adventureMode);
+    static void OnCmnAdvaModeProcedure(AdvaModeEnum adventureMode);
+    static Sint32 OnFinishedLevelMaybe();
+    static SEQ_SECTIONTBL* OnStorySelected(int playerNumber);
+
 private:
+    explicit DisplayManager(Options& options);
+    static DisplayManager* _instance;
+
+
     void RemoveExpiredMessages();
     void AddNewMessages();
     void DisplayItemMessages() const;
@@ -96,7 +111,7 @@ private:
     BossesStatus _bossesStatus;
     ChaoStatus _chaoStatus;
     VisitedLevels _visitedLevels;
-    Options&  _options;
+    Options& _options;
 
 
     int _keyItemColor = 0xFFF2C600;

@@ -68,7 +68,7 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
 
     options = new Options();
     reactionManager = new ReactionManager(*options);
-    displayManager = new DisplayManager(*options);
+    displayManager = &DisplayManager::Init(*options);
     characterManager = new CharacterManager(*options, *reactionManager);
     worldStateManager = new WorldStateManager(*options);
     itemRepository = new ItemRepository();

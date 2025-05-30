@@ -2,44 +2,50 @@
 
 #include <random>
 
-DisplayManager* displayManagerPtr;
+DisplayManager* DisplayManager::_instance = nullptr;
+
+FunctionHook<void, AdvaModeEnum> charSelAdvaModeProcedureHook(0x505E60);
+FunctionHook<void, AdvaModeEnum> cmnAdvaModeProcedureHook(0x505B40);
+FunctionHook<Sint32> finishedLevelMaybeHook(0x414090);
+FunctionHook<SEQ_SECTIONTBL*, int> storySelectedHook(0x44EAF0);
 
 DisplayManager::DisplayManager(Options& options): _options(options)
 {
-    displayManagerPtr = this;
+    charSelAdvaModeProcedureHook.Hook(OnCharSelAdvaModeProcedure);
+    cmnAdvaModeProcedureHook.Hook(OnCmnAdvaModeProcedure);
+    finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
+    storySelectedHook.Hook(OnStorySelected);
 }
 
 // On entering the character select screen while on the main menu
-FunctionHook<void, AdvaModeEnum> CharSelAdvaModeProcedureHook(0x505E60, [](AdvaModeEnum mode)-> void
+void DisplayManager::OnCharSelAdvaModeProcedure(const AdvaModeEnum adventureMode)
 {
-    if (mode == ADVA_MODE_EXPLAIN)
-        displayManagerPtr->OnEnterCharacterSelectScreen();
-    CharSelAdvaModeProcedureHook.Original(mode);
-});
+    if (adventureMode == ADVA_MODE_EXPLAIN)
+        _instance->OnEnterCharacterSelectScreen();
+    charSelAdvaModeProcedureHook.Original(adventureMode);
+}
 
 // On exiting the character select screen 
-FunctionHook<void, AdvaModeEnum> CmnAdvaModeProcedureHook(0x505B40, [](AdvaModeEnum mode)-> void
+void DisplayManager::OnCmnAdvaModeProcedure(const AdvaModeEnum adventureMode)
 {
-    if (mode == ADVA_MODE_TITLE_MENU)
-        displayManagerPtr->OnExitCharacterSelectScreen();
-    CmnAdvaModeProcedureHook.Original(mode);
-});
+    if (adventureMode == ADVA_MODE_TITLE_MENU)
+        _instance->OnExitCharacterSelectScreen();
+    cmnAdvaModeProcedureHook.Original(adventureMode);
+}
 
 //When leaving a level, check if we quiting the adventure game
-FunctionHook<Sint32> onFinishedLevelMaybe2(0x414090, []()-> Sint32
+Sint32 DisplayManager::OnFinishedLevelMaybe()
 {
     if (GameState == MD_GAME_ABORT)
-    {
-        displayManagerPtr->OnEnterCharacterSelectScreen();
-    }
-    return onFinishedLevelMaybe2.Original();
-});
+        _instance->OnEnterCharacterSelectScreen();
+    return finishedLevelMaybeHook.Original();
+}
 
-FunctionHook<SEQ_SECTIONTBL*, int> storySelectedHook(0x44EAF0, [](int playerno)-> SEQ_SECTIONTBL* {
-    SEQ_SECTIONTBL* ptr = storySelectedHook.Original(playerno);
-    displayManagerPtr->OnExitCharacterSelectScreen();
-    return ptr;
-});
+SEQ_SECTIONTBL* DisplayManager::OnStorySelected(const int playerNumber)
+{
+    _instance->OnExitCharacterSelectScreen();
+    return storySelectedHook.Original(playerNumber);
+}
 
 void DisplayManager::QueueItemMessage(const std::string& message)
 {
@@ -450,12 +456,14 @@ std::string DisplayManager::GetMissionSTarget(const bool showTarget, const bool 
 
 void DisplayManager::OnEnterCharacterSelectScreen()
 {
+    PrintDebug("-----[DisplayManager] Entering Character Select Screen\n");
     this->_inCharacterSelectScreen = true;
     _unlockStatusTimer = std::clock();
 }
 
 void DisplayManager::OnExitCharacterSelectScreen()
 {
+    PrintDebug("-----[DisplayManager] Exiting Character Select Screen\n");
     this->_inCharacterSelectScreen = false;
 }
 
