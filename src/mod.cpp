@@ -15,16 +15,13 @@
 
 constexpr int SYNC_RATE = 10;
 
-
 void LoadArchipelagoSettings(const IniFile* settingsIni);
 void LoadDisplayMessageSettings(const IniFile* settingsIni);
 void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperFunctions);
 void ReplaceEmblemImage(const char* path, const HelperFunctions& helperFunctions);
 
 extern "C" {
-std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
-const int INSTANCE_ID = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
-constexpr int64_t BASE_ID = 543800000;
+
 int syncTimer = 0;
 
 Options options = Options();
@@ -34,7 +31,7 @@ CharacterManager characterManager = CharacterManager(options, reactionManager);
 WorldStateManager worldStateManager = WorldStateManager(options);
 ItemRepository itemRepository = ItemRepository();
 LocationRepository checkRepository = LocationRepository();
-ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger(INSTANCE_ID, BASE_ID);
+ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger(options);
 SaveFileManager saveFileManager = SaveFileManager();
 MusicManager musicManager = MusicManager(options);
 Randomizer randomizer = Randomizer(options,
@@ -49,7 +46,7 @@ Randomizer randomizer = Randomizer(options,
                                    reactionManager);
 
 CheatsManager cheatsManager = CheatsManager(randomizer);
-ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer, options, INSTANCE_ID, BASE_ID);
+ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer, options);
 EventDetector eventDetector = EventDetector(randomizer, options);
 CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(randomizer);
 
@@ -161,13 +158,12 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
     const bool showCountdowns = settingsIni->getBool("Messages", "ShowCountdowns", true);
     const bool showPlayerConnections = settingsIni->getBool("Messages", "ShowPlayerConnections", false);
 
-    archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword,
-                                              static_cast<DeathLinkOverride>(deathLinkOverride),
-                                              static_cast<RingLinkOverride>(ringLinkOverride),
-                                              static_cast<RingLossOverride>(ringLossOverride),
-                                              static_cast<TrapLinkOverride>(trapLinkOverride),
-                                              showChatMessages, showGoalReached, showCountdowns, showPlayerConnections
-    );
+    options.SetLinksOverrides(static_cast<DeathLinkOverride>(deathLinkOverride),
+                              static_cast<RingLinkOverride>(ringLinkOverride),
+                              static_cast<RingLossOverride>(ringLossOverride),
+                              static_cast<TrapLinkOverride>(trapLinkOverride));
+    archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword, showChatMessages, showGoalReached,
+                                              showCountdowns, showPlayerConnections);
 }
 
 void LoadDisplayMessageSettings(const IniFile* settingsIni)

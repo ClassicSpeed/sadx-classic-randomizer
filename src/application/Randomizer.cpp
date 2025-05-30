@@ -62,7 +62,7 @@ void Randomizer::MarkCheckedLocation(const int64_t checkId) const
     if (locationData.type == LocationMission)
         _saveFileManager.SetMissionCompleted(locationData.missionNumber);
 
-    
+
     //TODO: Unify?
     const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
     _displayManager.UpdateLevelStatus(levelStatus);
@@ -177,8 +177,20 @@ void Randomizer::SetStartingCharacter(const int startingCharacterIndex)
 }
 
 //TODO: Move to OnConnect
-void Randomizer::UpdateLevelEntrances(LevelEntrances levelEntrances)
+void Randomizer::UpdateLevelEntrances()
 {
+    if (_options.levelEntrancesMap.empty())
+        return;
+
+    LevelEntrances levelEntrances;
+
+    for (const auto& [first, second] : _options.levelEntrancesMap)
+    {
+        const auto levelEntrance = static_cast<Levels>(first);
+        const auto actualLevel = static_cast<Levels>(second);
+        levelEntrances.addRelationship(levelEntrance, actualLevel);
+    }
+    
     _worldStateManager.UpdateLevelEntrances(levelEntrances);
 
     for (const auto& location : _locationRepository.GetLocations())
@@ -193,27 +205,6 @@ void Randomizer::UpdateLevelEntrances(LevelEntrances levelEntrances)
 void Randomizer::SetSuperSonicModRunning(const bool isModRunning)
 {
     _superSonicModRunning = isModRunning;
-}
-
-
-//TODO: Move to helpers?
-int Clamp(const int value, const int min, const int max)
-{
-    if (value < min) return min;
-    if (value > max) return max;
-    return value;
-}
-
-//TODO: Move to options
-void Randomizer::SetSendDeathLinkChance(const int sendDeathLinkChance)
-{
-    _sendDeathLinkChance = Clamp(sendDeathLinkChance, 1, 100);
-}
-
-//TODO: Move to options
-void Randomizer::SetReceiveDeathLinkChance(const int receiveDeathLinkChance)
-{
-    _receiveDeathLinkChance = Clamp(receiveDeathLinkChance, 1, 100);
 }
 
 
@@ -316,7 +307,7 @@ void Randomizer::ProcessDeath(const std::string& deathCause)
     const double timePassed = (std::clock() - _deathLinkCooldownTimer) / static_cast<double>(CLOCKS_PER_SEC);
     if (_deathLinkCooldownTimer < 0 || timePassed > _deathLinkCooldown)
     {
-        if (!CheckDeathLinkChance(_receiveDeathLinkChance))
+        if (!CheckDeathLinkChance(_options.receiveDeathLinkChance))
         {
             _displayManager.QueueItemMessage("You survived a Death Link!");
             return;
@@ -380,7 +371,7 @@ void Randomizer::OnDeath()
     {
         _deathLinkCooldownTimer = std::clock();
 
-        if (!CheckDeathLinkChance(_sendDeathLinkChance))
+        if (!CheckDeathLinkChance(_options.sendDeathLinkChance))
         {
             _displayManager.QueueItemMessage("Death Link not sent!");
             return;
@@ -440,6 +431,12 @@ void Randomizer::OnConnected(std::string playerName)
     _worldStateManager.MarkBlacklistedMissionsAsCompleted(_options.missionBlacklist);
     _musicManager.RandomizeMusic();
 
+    //Starting Character
+    _characterManager.SetStartingCharacter(_options.startingCharacterIndex);
+
+    // Update Level Entrances
+
+    UpdateLevelEntrances();
 
     _archipelagoMessenger.UpdateTags(_options);
     _displayManager.SetConnected();
@@ -475,6 +472,11 @@ int Randomizer::GetSongForId(const int songId)
 int Randomizer::GetNewSongForId(const int songId, const int currentSongId)
 {
     return _musicManager.GetNewSongForId(songId, currentSongId);
+}
+
+void Randomizer::MinorVersionMismatch(const std::string& serverVer, const std::string& modVer)
+{
+    _displayManager.QueueItemMessage("Warning: version mismatch! Server: v" + serverVer + " Mod: v" + modVer);
 }
 
 

@@ -496,11 +496,6 @@ void DisplayManager::SetConnected()
     _connected = true;
 }
 
-void DisplayManager::PrintPLayerName()
-{
-    PrintDebug("[SADX Archipelago] ---- Initializing playername %s\n", _options.playerName.c_str());
-}
-
 
 void DisplayManager::DisplayItemsUnlocked()
 {

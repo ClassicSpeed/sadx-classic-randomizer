@@ -5,7 +5,7 @@
 class ArchipelagoMessenger
 {
 public:
-    explicit ArchipelagoMessenger(int instanceId, int64_t baseId);
+    explicit ArchipelagoMessenger(Options& options);
     void CheckLocation(int locationId);
     void GameCompleted();
     void SendDeath(std::string playerName);
@@ -15,7 +15,6 @@ public:
     void SendTrapLink(std::string trapName, std::string playerName);
 
 private:
+    Options& _options;
     void SendRingPacket(int ringDifference, const std::string& tagName);
-    int _instanceId = 0;
-    int64_t _baseId;
 };

@@ -1,4 +1,6 @@
 #pragma once
+#include <chrono>
+
 #include "../pch.h"
 #include "../application/structs/LocationData.h"
 #include "../application/structs/ItemData.h"
@@ -109,16 +111,109 @@ enum LifeCapsulesChangeSongs
     LifeCapsulesChangeSongsDisabled = 1,
 };
 
+
+enum DeathLinkOverride
+{
+    DeathLinkDefault = 0,
+    DeathLinkForceEnabled = 1,
+    DeathLinkForceDisabled = 2,
+};
+
+enum RingLinkOverride
+{
+    RingLinkDefault = 0,
+    RingLinkForceEnabled = 1,
+    RingLinkForceEnabledHard = 2,
+    RingLinkForceDisabled = 3,
+};
+
+enum RingLossOverride
+{
+    RingLossDefault = 0,
+    RingLossForceClassic = 1,
+    RingLossForceModern = 2,
+    RingLossForceOhko = 3,
+    RingLossForceOhkoNoShields = 4,
+};
+
+enum TrapLinkOverride
+{
+    TrapLinkDefault = 0,
+    TrapLinkForceEnabled = 1,
+    TrapLinkForceDisabled = 2,
+};
+
+
 class Options
 {
 public:
-    void SetActionStageMissions(Characters character, int missions);
+    void GoalRequiresLevels(int newGoalRequiresLevels);
+    void GoalRequiresChaosEmeralds(int newGoalRequiresChaosEmeralds);
+    void GoalRequiresEmblems(int newGoalRequiresEmblems);
+    void GoalRequiresMissions(int newGoalRequiresMissions);
+    void GoalRequiresBosses(int newGoalRequiresBosses);
+    void GoalRequiresChaoRaces(int newGoalRequiresChaoRaces);
+    void LogicLevel(int logicLevel);
+    void EmblemsForPerfectChaos(int newEmblemGoal);
+    void LevelForPerfectChaos(int newLevelGoal);
+    void MissionForPerfectChaos(int newMissionGoal);
+    void BossesForPerfectChaos(int newBossesGoal);
+    void MissionModeChecks(int newMissionModeEnabled);
+    void MissionBlackList(const std::map<int, int>& newMissionBlacklist);
+    void AutoStartMissions(int newAutoStartMissions);
+    void EnemySanity(int newEnemySanity);
     void SetCharacterEnemySanity(Characters character, bool characterEnemySanity);
+    void CapsuleSanity(int newCapsuleSanity);
+    void PinballCapsules(int newIncludePinballCapsules);
+    void LifeCapsuleSanity(int newLifeCapsuleSanity);
+    void ShieldCapsuleSanity(int newShieldCapsuleSanity);
+    void PowerUpCapsuleSanity(int newPowerUpCapsuleSanity);
+    void RingCapsuleSanity(int newRingCapsuleSanity);
+    void FishSanity(int newFishSanity);
+    void LazyFishing(int newLazyFishing);
+    void ProgressionItems(const std::map<int, int>& newProgressionItems);
+    void StartingCharacter(int newStartingCharacterIndex);
+    void LevelEntranceMap(const std::map<int, int>& levelEntrancesValues);
+    void SetEntranceRandomizer(int enableEntranceRandomizer);
+    void SetDeathLink(int newDeathLinkActive);
+    void SendDeathLinkChance(int newSendDeathLinkChance);
+    void ReceiveDeathLinkChance(int newReceiveDeathLinkChance);
+    void SetRingLink(int newRingLinkActive);
+    void SetCasinopolisRingLink(int newCasinopolisRingLink);
+    void SetHardRingLink(int newHardRingLinkActive);
+    void SetTrapLink(int newTrapLinkActive);
+    void SetRingLoss(int newRingLoss);
+    void TwinkleCircuitCheck(int newTwinkleCircuitCheck);
+    void MultipleTwinkleCircuitChecks(int newMultipleTwinkleCircuitChecks);
+    void SkyChaseChecks(int newSkyChaseChecks);
+    void SkyChaseChecksHard(int newSkyChaseChecksHard);
+    void BossChecks(int newBossChecks);
+    void UnifyChaos4(int newUnifyChaos4);
+    void UnifyChaos6(int newUnifyChaos6);
+    void UnifyEggHornet(int newUnifyEggHornet);
+    void SetMusicSource(int newMusicSource);
+    void SetMusicShuffle(int newMusicShuffle);
+    void SetMusicShuffleConsistency(int newMusicShuffleConsistency);
+    void SetMusicShuffleSeed(int newMusicShuffleSeed);
+    void SetLifeCapsulesChangeSongs(int newLifeCapsulesChangeSongs);
+    void SetIceTrapWeight(int newIceTrapWeight);
+    void SetSpringTrapWeight(int newSpringTrapWeight);
+    void SetPoliceTrapWeight(int newPoliceTrapWeight);
+    void SetBuyonTrapWeight(int newBuyonTrapWeight);
+    void SetReverseTrapWeight(int newReverseTrapWeight);
+    void SetGravityTrapWeight(int newGravityTrapWeight);
+    void SetReverseControlTrapDuration(int reverseControlTrapDuration);
+    void SetTrapsOnAdventureFields(int trapsOnAdventureFields);
+    void SetTrapsOnBossFights(int trapsOnBossFights);
+    void SetTrapsOnPerfectChaosFight(int trapsOnPerfectChaosFight);
+
+    
+    void SetActionStageMissions(Characters character, int missions);
     bool GetCharacterEnemySanity(Characters character) const;
     void SetCharacterCapsuleSanity(Characters character, bool characterCapsuleSanity);
     bool GetCharacterCapsuleSanity(Characters character) const;
     bool GetSpecificCapsuleSanity(CapsuleType capsuleType) const;
-    void SetCharacterStatingArea(Characters character, StartingArea startingArea);
+    void SetCharacterStatingArea(Characters character, int startingArea);
     StartingArea GetCharacterStartingArea(Characters character) const;
     void SetPlayableCharacter(Characters character, bool playable);
     bool GetPlayableCharacter(Characters character) const;
@@ -126,15 +221,24 @@ public:
     bool MusicSourceIncludeSadx() const;
     bool MusicSourceIncludeSa2B() const;
     bool MusicSourceIncludeCustom() const;
-    bool IsTrapEnabled(FillerType filler);
+    bool IsTrapEnabled(FillerType filler) const;
     void SetCharacterVoiceReactions(bool eggmanCommentOnCharacterUnlock, bool currentCharacterCommentOnCharacterUnlock,
                                     bool unlockedCharacterCommentOnCharacterUnlock, bool eggmanCommentOnKeyItems,
                                     bool tikalCommentOnKeyItems, bool currentCharacterCommentOnKeyItems,
                                     bool showCommentsSubtitles);
     void SetCharacterVoiceReactions(bool eggmanCommentOnTrap, bool otherCharactersCommentOnTrap,
                                     bool currentCharacterReactToTrap, bool showCommentsSubtitles);
+    void SetLinksOverrides(DeathLinkOverride newDeathLinkOverride, RingLinkOverride newRingLinkOverride,
+                           RingLossOverride newRingLossOverride, TrapLinkOverride newTrapLinkOverride);
 
 
+    //Constant values
+    const int64_t baseId = 543800000;
+    
+    std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
+    const int instanceId = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
+
+    // YAML Options
     std::string playerName = "Player";
     bool goalRequiresLevels = true;
     bool goalRequiresEmblems = true;
@@ -185,9 +289,13 @@ public:
     bool powerUpCapsuleSanity = true;
     bool ringCapsuleSanity = true;
 
-    std::vector<int> progressionItems = {};
+    std::vector<int64_t> progressionItems = {};
+    int startingCharacterIndex = 1;
+    std::map<int, int> levelEntrancesMap;
 
     bool deathLinkActive = false;
+    int sendDeathLinkChance = 100;
+    int receiveDeathLinkChance = 100;
     bool ringLinkActive = false;
     bool casinopolisRingLink = false;
     bool hardRingLinkActive = false;
@@ -247,9 +355,15 @@ public:
     bool skyChaseChecksHard = false;
     std::vector<int> missionBlacklist = {};
     bool expertMode = false;
-
-
+    
     //Mod Settings
+
+    DeathLinkOverride deathLinkOverride;
+    RingLinkOverride ringLinkOverride;
+    RingLossOverride ringLossOverride;
+    TrapLinkOverride trapLinkOverride;
+
+    
     bool _eggmanCommentOnCharacterUnlock = true;
     bool _currentCharacterCommentOnCharacterUnlock = true;
     bool _unlockedCharacterCommentOnCharacterUnlock = true;
@@ -263,5 +377,4 @@ public:
     bool _currentCharacterReactToTrap = true;
     
     bool _showCommentsSubtitles = true;
-
 };

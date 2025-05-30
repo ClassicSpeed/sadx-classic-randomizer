@@ -47,7 +47,6 @@ public:
                                  DisplayInGameTracker displayInGameTracker, int itemMessageColor, int chatMessageColor);
     void UpdateVoiceMenuCharacter(int characterVoiceIndex);
     void SetConnected();
-    void PrintPLayerName();
 
 private:
     void RemoveExpiredMessages();

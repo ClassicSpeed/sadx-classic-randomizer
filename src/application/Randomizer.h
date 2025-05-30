@@ -53,13 +53,12 @@ public:
     void ResetItems();
     void OnCheckVersion(int serverVersion);
     void SetStartingCharacter(int startingCharacterIndex);
-    void UpdateLevelEntrances(LevelEntrances levelEntrances);
+    void UpdateLevelEntrances();
     void SetSuperSonicModRunning(bool isModRunning);
-    void SetSendDeathLinkChance(int sendDeathLinkChance);
-    void SetReceiveDeathLinkChance(int receiveDeathLinkChance);
     void DisplaySongName(int songId);
     int GetSongForId(int songId);
     int GetNewSongForId(int songId, int currentSongId);
+    void MinorVersionMismatch(const std::string& serverVer, const std::string& modVer);
 
 private:
     Options& _options;
@@ -82,8 +81,6 @@ private:
     float _trapLinkCooldown = 5.0f;
     std::clock_t _trapLinkCooldownTimer = -1;
 
-    int _sendDeathLinkChance = 100;
-    int _receiveDeathLinkChance = 100;
 
     bool _superSonicModRunning = false;
 

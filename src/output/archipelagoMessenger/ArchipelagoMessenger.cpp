@@ -3,15 +3,13 @@
 #include <chrono>
 
 
-ArchipelagoMessenger::ArchipelagoMessenger(const int instanceId, const int64_t baseId)
+ArchipelagoMessenger::ArchipelagoMessenger(Options& options): _options(options)
 {
-    _instanceId = instanceId;
-    _baseId = baseId;
 }
 
 void ArchipelagoMessenger::CheckLocation(const int locationId)
 {
-    AP_SendItem(_baseId + locationId);
+    AP_SendItem(_options.baseId + locationId);
 }
 
 void ArchipelagoMessenger::GameCompleted()
@@ -70,7 +68,7 @@ void ArchipelagoMessenger::SendRingPacket(const int ringDifference, const std::s
     AP_Bounce b;
     Json::Value v;
     v["time"] = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
-    v["source"] = this->_instanceId;
+    v["source"] = _options.instanceId;
     v["amount"] = ringDifference;
     b.data = writer.write(v);
     b.slots = nullptr;
