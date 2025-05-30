@@ -1,11 +1,9 @@
 #include "CheatsManager.h"
 
-CheatsManager* cheatsManagerPtr;
 
-
-CheatsManager::CheatsManager(Randomizer& randomizer) : _randomizer(randomizer)
+CheatsManager::CheatsManager()
 {
-    cheatsManagerPtr = this;
+    _giveLivesHook.Hook(OnGiveLives);
 }
 
 
@@ -25,10 +23,10 @@ void CheatsManager::SetCheatsConfiguration(const bool autoSkipCutscenes, const b
     WriteData<1>((char*)0x004B5800, 0xC3u);
 }
 
-FunctionHook<void, std::int16_t> onGiveLives(0x425B60, [](const std::int16_t lives)-> void
+void CheatsManager::OnGiveLives(const std::int16_t lives)
 {
-    if (lives == -1 && GameState == MD_GAME_FADEOUT_MISS_RESTART && cheatsManagerPtr->noLifeLossOnRestart)
+    if (lives == -1 && GameState == MD_GAME_FADEOUT_MISS_RESTART && _instance->noLifeLossOnRestart)
         return;
 
-    onGiveLives.Original(lives);
-});
+    _giveLivesHook.Original(lives);
+};

@@ -55,6 +55,7 @@ public:
 private:
     explicit DisplayManager(Options& options);
     inline static DisplayManager* _instance = nullptr;
+    Options& _options;
 
     inline static FunctionHook<void, AdvaModeEnum> _charSelAdvaModeProcedureHook{0x505E60};
     static void OnCharSelAdvaModeProcedure(AdvaModeEnum adventureMode);
@@ -118,7 +119,6 @@ private:
     BossesStatus _bossesStatus;
     ChaoStatus _chaoStatus;
     VisitedLevels _visitedLevels;
-    Options& _options;
 
 
     int _keyItemColor = 0xFFF2C600;

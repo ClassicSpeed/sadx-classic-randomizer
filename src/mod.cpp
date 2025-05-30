@@ -79,10 +79,10 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     randomizer = new Randomizer(*options, *displayManager, *characterManager, *worldStateManager, *itemRepository,
                                 *checkRepository, *archipelagoMessenger, *saveFileManager, *musicManager,
                                 *reactionManager);
-    cheatsManager = new CheatsManager(*randomizer);
+    cheatsManager = &CheatsManager::Init();
     archipelagoManager = new ArchipelagoManager(*randomizer, *options);
     eventDetector = new EventDetector(*randomizer, *options);
-    characterLoadingDetector = new CharacterLoadingDetector(*randomizer);
+    characterLoadingDetector = &CharacterLoadingDetector::Init(*randomizer);
 
 
     const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");

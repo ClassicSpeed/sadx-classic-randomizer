@@ -4,11 +4,20 @@
 class CheatsManager
 {
 public:
-    explicit CheatsManager(Randomizer& randomizer);
+    static CheatsManager& Init()
+    {
+        if (_instance == nullptr)
+            _instance = new CheatsManager();
+        return *_instance;
+    }
 
     void SetCheatsConfiguration(bool autoSkipCutscenes, bool skipCredits, bool newNoLifeLossOnRestart);
     bool noLifeLossOnRestart = true;
     
 private:
-    Randomizer& _randomizer;
+    explicit CheatsManager();
+    inline static CheatsManager* _instance = nullptr;
+
+    inline static FunctionHook<void, std::int16_t> _giveLivesHook{0x425B60};
+    static void OnGiveLives(std::int16_t lives);
 };

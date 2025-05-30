@@ -1,28 +1,24 @@
 #include "CharacterLoadingDetector.h"
-#include "../../pch.h"
 
 
-
-CharacterLoadingDetector* characterLoadingDetectorPtr = nullptr;
 
 CharacterLoadingDetector::CharacterLoadingDetector(Randomizer& randomizer)
     : _randomizer(randomizer)
 {
-    characterLoadingDetectorPtr = this;
+    _loadCharacterHook.Hook(OnLoadCharacter);
+    _loadCharacterSelectScreenHook.Hook(OnLoadCharacterSelectScreen);
 }
 
-//Character loaded
-FunctionHookAdd(0x4157C0, []
-                {
-                characterLoadingDetectorPtr->OnCharacterLoaded();
-                });
+void CharacterLoadingDetector::OnLoadCharacter()
+{
+    _instance->OnCharacterLoaded();
+}
 
-//Character selection screen loaded
-FunctionHookAdd(0x512BC0, []
-                {
-                characterLoadingDetectorPtr->OnCharacterLoaded();
-                characterLoadingDetectorPtr->OnCharacterSelectScreenLoaded();
-                });
+void CharacterLoadingDetector::OnLoadCharacterSelectScreen()
+{
+    _instance->OnCharacterLoaded();
+    _instance->OnCharacterSelectScreenLoaded();
+}
 
 
 void CharacterLoadingDetector::OnCharacterSelectScreenLoaded() const
