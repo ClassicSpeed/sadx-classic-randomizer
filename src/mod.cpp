@@ -21,34 +21,23 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
 void ReplaceEmblemImage(const char* path, const HelperFunctions& helperFunctions);
 
 extern "C" {
-
 int syncTimer = 0;
 
-Options options = Options();
-ReactionManager reactionManager = ReactionManager(options);
-DisplayManager displayManager = DisplayManager(options);
-CharacterManager characterManager = CharacterManager(options, reactionManager);
-WorldStateManager worldStateManager = WorldStateManager(options);
-ItemRepository itemRepository = ItemRepository();
-LocationRepository checkRepository = LocationRepository();
-ArchipelagoMessenger archipelagoMessenger = ArchipelagoMessenger(options);
-SaveFileManager saveFileManager = SaveFileManager();
-MusicManager musicManager = MusicManager(options);
-Randomizer randomizer = Randomizer(options,
-                                   displayManager,
-                                   characterManager,
-                                   worldStateManager,
-                                   itemRepository,
-                                   checkRepository,
-                                   archipelagoMessenger,
-                                   saveFileManager,
-                                   musicManager,
-                                   reactionManager);
-
-CheatsManager cheatsManager = CheatsManager(randomizer);
-ArchipelagoManager archipelagoManager = ArchipelagoManager(randomizer, options);
-EventDetector eventDetector = EventDetector(randomizer, options);
-CharacterLoadingDetector characterLoadingDetector = CharacterLoadingDetector(randomizer);
+Options* options = nullptr;
+ReactionManager* reactionManager = nullptr;
+DisplayManager* displayManager = nullptr;
+CharacterManager* characterManager = nullptr;
+WorldStateManager* worldStateManager = nullptr;
+ItemRepository* itemRepository = nullptr;
+LocationRepository* checkRepository = nullptr;
+ArchipelagoMessenger* archipelagoMessenger = nullptr;
+SaveFileManager* saveFileManager = nullptr;
+MusicManager* musicManager = nullptr;
+Randomizer* randomizer = nullptr;
+CheatsManager* cheatsManager = nullptr;
+ArchipelagoManager* archipelagoManager = nullptr;
+EventDetector* eventDetector = nullptr;
+CharacterLoadingDetector* characterLoadingDetector = nullptr;
 
 
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
@@ -77,11 +66,29 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
         exit(0);
     }
 
+    options = new Options();
+    reactionManager = new ReactionManager(*options);
+    displayManager = new DisplayManager(*options);
+    characterManager = new CharacterManager(*options, *reactionManager);
+    worldStateManager = new WorldStateManager(*options);
+    itemRepository = new ItemRepository();
+    checkRepository = new LocationRepository();
+    archipelagoMessenger = new ArchipelagoMessenger(*options);
+    saveFileManager = new SaveFileManager();
+    musicManager = new MusicManager(*options);
+    randomizer = new Randomizer(*options, *displayManager, *characterManager, *worldStateManager, *itemRepository,
+                                *checkRepository, *archipelagoMessenger, *saveFileManager, *musicManager,
+                                *reactionManager);
+    cheatsManager = new CheatsManager(*randomizer);
+    archipelagoManager = new ArchipelagoManager(*randomizer, *options);
+    eventDetector = new EventDetector(*randomizer, *options);
+    characterLoadingDetector = new CharacterLoadingDetector(*randomizer);
+
 
     const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");
 
     if (!settingsIni)
-        return randomizer.ShowStatusInformation("Invalid Settings INI");
+        return randomizer->ShowStatusInformation("Invalid Settings INI");
 
     LoadArchipelagoSettings(settingsIni);
 
@@ -93,26 +100,28 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     if (helperFunctions.Mods->find_by_name("Super Sonic"))
     {
         PrintDebug("[SADX Randomizer] Super Sonic Mod detected\n");
-        randomizer.SetSuperSonicModRunning(true);
+        randomizer->SetSuperSonicModRunning(true);
     }
 }
 
 __declspec(dllexport) void __cdecl OnFrame()
 {
-    saveFileManager.OnFrame();
-    archipelagoManager.OnFrame();
-    displayManager.OnFrame();
-    worldStateManager.OnFrame();
+    saveFileManager->OnFrame();
+    archipelagoManager->OnFrame();
+    displayManager->OnFrame();
+    worldStateManager->OnFrame();
+
     if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
     {
-        eventDetector.OnPlayingFrame();
-        characterLoadingDetector.OnPlayingFrame();
-        randomizer.OnPlayingFrame();
-        characterManager.OnPlayingFrame();
+        eventDetector->OnPlayingFrame();
+        characterLoadingDetector->OnPlayingFrame();
+        randomizer->OnPlayingFrame();
+        characterManager->OnPlayingFrame();
     }
+
     if (syncTimer == 0)
     {
-        randomizer.OnSync();
+        randomizer->OnSync();
         syncTimer = SYNC_RATE;
     }
     else
@@ -124,8 +133,8 @@ FunctionHook<BOOL> onTrialMenuLoaded(0x506780, []()-> BOOL
 {
     if (GameMode == GameModes_Menu && !saveFileSelected)
     {
-        saveFileManager.OnSaveFileLoaded();
-        archipelagoManager.OnSaveFileLoaded();
+        saveFileManager->OnSaveFileLoaded();
+        archipelagoManager->OnSaveFileLoaded();
         saveFileSelected = true;
     }
 
@@ -158,12 +167,12 @@ void LoadArchipelagoSettings(const IniFile* settingsIni)
     const bool showCountdowns = settingsIni->getBool("Messages", "ShowCountdowns", true);
     const bool showPlayerConnections = settingsIni->getBool("Messages", "ShowPlayerConnections", false);
 
-    options.SetLinksOverrides(static_cast<DeathLinkOverride>(deathLinkOverride),
-                              static_cast<RingLinkOverride>(ringLinkOverride),
-                              static_cast<RingLossOverride>(ringLossOverride),
-                              static_cast<TrapLinkOverride>(trapLinkOverride));
-    archipelagoManager.SetServerConfiguration(serverIp, playerName, serverPassword, showChatMessages, showGoalReached,
-                                              showCountdowns, showPlayerConnections);
+    options->SetLinksOverrides(static_cast<DeathLinkOverride>(deathLinkOverride),
+                               static_cast<RingLinkOverride>(ringLinkOverride),
+                               static_cast<RingLossOverride>(ringLossOverride),
+                               static_cast<TrapLinkOverride>(trapLinkOverride));
+    archipelagoManager->SetServerConfiguration(serverIp, playerName, serverPassword, showChatMessages, showGoalReached,
+                                               showCountdowns, showPlayerConnections);
 }
 
 void LoadDisplayMessageSettings(const IniFile* settingsIni)
@@ -181,12 +190,12 @@ void LoadDisplayMessageSettings(const IniFile* settingsIni)
     const int chatMessageColorB = settingsIni->getInt("Messages", "ChatMessageColorB", 255);
 
 
-    displayManager.SetMessageConfiguration(messageDisplayDuration, messageFontSize,
-                                           static_cast<DisplayInGameTracker>(displayInGameTracker),
-                                           (0xFF << 24) | itemMessageColorR << 16 | itemMessageColorG << 8 |
-                                           itemMessageColorB,
-                                           (0xFF << 24) | chatMessageColorR << 16 | chatMessageColorG << 8 |
-                                           chatMessageColorB);
+    displayManager->SetMessageConfiguration(messageDisplayDuration, messageFontSize,
+                                            static_cast<DisplayInGameTracker>(displayInGameTracker),
+                                            (0xFF << 24) | itemMessageColorR << 16 | itemMessageColorG << 8 |
+                                            itemMessageColorB,
+                                            (0xFF << 24) | chatMessageColorR << 16 | chatMessageColorG << 8 |
+                                            chatMessageColorB);
 }
 
 void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperFunctions)
@@ -275,36 +284,36 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
     const int musicShuffleConsistency = settingsIni->getInt("MusicShuffle", "MusicShuffleConsistencyOverride", -1);
     const int lifeCapsulesChangeSongs = settingsIni->getInt("MusicShuffle", "LifeCapsulesChangeSongsOverride", -1);
 
-    displayManager.UpdateVoiceMenuCharacter(voiceMenuIndex);
-    cheatsManager.SetCheatsConfiguration(autoSkipCutscenes, skipCredits, noLifeLossOnRestart);
-    eventDetector.SetMultipleMissions(completeMultipleLevelMissions);
-    eventDetector.SetSanitySettings(trackerArrow, trackerArrowColor, trackerArrowToggleable,
-                                    trackerArrowShowDistance, trackerArrowOverrideColor,
-                                    enemyIndicator, enemyIndicatorColor,
-                                    capsuleIndicator, capsuleIndicatorColor,
-                                    fishIndicator, fishIndicatorColor,
-                                    progressionIndicator, progressionIndicatorColor);
-    eventDetector.setHomingAttackIndicator(static_cast<HomingAttackIndicator>(homingAttackIndicator));
-    worldStateManager.SetShowEntranceIndicators(showEntranceIndicators);
-    worldStateManager.SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
-    worldStateManager.SetChaoStatsMultiplier(chaoStatsMultiplier);
-    characterManager.SetExtendRingCapacity(extendRingCapacity);
-    options.SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,
-                                       currentCharacterReactToTrap, showCommentsSubtitles);
-    options.SetCharacterVoiceReactions(eggmanCommentOnCharacterUnlock, currentCharacterCommentOnCharacterUnlock,
-                                       unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
-                                       tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems,
-                                       showCommentsSubtitles);
+    displayManager->UpdateVoiceMenuCharacter(voiceMenuIndex);
+    cheatsManager->SetCheatsConfiguration(autoSkipCutscenes, skipCredits, noLifeLossOnRestart);
+    eventDetector->SetMultipleMissions(completeMultipleLevelMissions);
+    eventDetector->SetSanitySettings(trackerArrow, trackerArrowColor, trackerArrowToggleable,
+                                     trackerArrowShowDistance, trackerArrowOverrideColor,
+                                     enemyIndicator, enemyIndicatorColor,
+                                     capsuleIndicator, capsuleIndicatorColor,
+                                     fishIndicator, fishIndicatorColor,
+                                     progressionIndicator, progressionIndicatorColor);
+    eventDetector->setHomingAttackIndicator(static_cast<HomingAttackIndicator>(homingAttackIndicator));
+    worldStateManager->SetShowEntranceIndicators(showEntranceIndicators);
+    worldStateManager->SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
+    worldStateManager->SetChaoStatsMultiplier(chaoStatsMultiplier);
+    characterManager->SetExtendRingCapacity(extendRingCapacity);
+    options->SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,
+                                        currentCharacterReactToTrap, showCommentsSubtitles);
+    options->SetCharacterVoiceReactions(eggmanCommentOnCharacterUnlock, currentCharacterCommentOnCharacterUnlock,
+                                        unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
+                                        tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems,
+                                        showCommentsSubtitles);
 
-    musicManager.UpdateMusicSettings(static_cast<ShowSongName>(showSongName),
-                                     static_cast<ShowSongNameForType>(showSongNameForType), includeVanillaSongs,
-                                     showWarningForMissingFiles, sa2BAdxPath, customAdxPath,
-                                     static_cast<MusicSource>(musicSource), static_cast<MusicShuffle>(musicShuffle),
-                                     static_cast<MusicShuffleConsistency>(musicShuffleConsistency),
-                                     static_cast<LifeCapsulesChangeSongs>(lifeCapsulesChangeSongs));
+    musicManager->UpdateMusicSettings(static_cast<ShowSongName>(showSongName),
+                                      static_cast<ShowSongNameForType>(showSongNameForType), includeVanillaSongs,
+                                      showWarningForMissingFiles, sa2BAdxPath, customAdxPath,
+                                      static_cast<MusicSource>(musicSource), static_cast<MusicShuffle>(musicShuffle),
+                                      static_cast<MusicShuffleConsistency>(musicShuffleConsistency),
+                                      static_cast<LifeCapsulesChangeSongs>(lifeCapsulesChangeSongs));
 
 
-    musicManager.ProcessSongsFile(helperFunctions, songsPath);
+    musicManager->ProcessSongsFile(helperFunctions, songsPath);
 }
 
 #define ReplacePNG_Common(a) do { \

@@ -6,7 +6,6 @@
 AP_RegisterSlotDataIntCallback(key, [this](const int value) { method(value); })
 #define AP_REGISTER_INT_CALLBACK_CHARACTER(key, method, character) \
 AP_RegisterSlotDataIntCallback(key, [this](const int value) { method(character, value); })
-
 #define AP_REGISTER_MAP_CALLBACK(key, method) \
 AP_RegisterSlotDataMapIntIntCallback(key, [this](const std::map<int, int>& value) { method(value); })
 
@@ -30,12 +29,11 @@ public:
     void OnFrame();
     bool IsWaitingForSaveFile();
     void OnSaveFileLoaded();
-    void RecvItem(int64_t itemId, bool notify);
+    void ReceiveItem(int64_t itemId, bool notify);
     void ResetItems();
     void CheckLocation(int64_t locationId);
     void HandleBouncedPacket(AP_Bounce bouncePacket);
     void CompareModVersion(int serverVersion);
-    
     void SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
                                 const std::string& serverPassword,
                                 bool showChatMessages, bool showGoalReached,

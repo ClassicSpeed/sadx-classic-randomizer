@@ -102,7 +102,7 @@ void ArchipelagoManager::OnSaveFileLoaded()
     _status = SaveFileSelected;
 }
 
-void ArchipelagoManager::RecvItem(const int64_t itemId, const bool notify)
+void ArchipelagoManager::ReceiveItem(const int64_t itemId, const bool notify)
 {
     PrintDebug(" --- Item received: %d\n", itemId);
     randomizerPtr->OnItemReceived(itemId - options.baseId);
@@ -222,15 +222,13 @@ void ArchipelagoManager::CompareModVersion(const int serverVersion)
     }
 }
 
-/*------------------------------*/
-
 void ArchipelagoManager::Connect()
 {
     AP_Init(_serverIP.c_str(), "Sonic Adventure DX", playerName.c_str(), _serverPassword.c_str());
 
     AP_SetDeathLinkSupported(false);
     AP_SetItemClearCallback([this]() { ResetItems(); });
-    AP_SetItemRecvCallback([this](const int64_t itemId, const bool notify) { RecvItem(itemId, notify); });
+    AP_SetItemRecvCallback([this](const int64_t itemId, const bool notify) { ReceiveItem(itemId, notify); });
     AP_SetLocationCheckedCallback([this](const int64_t locationId) { CheckLocation(locationId); });
     AP_RegisterBouncedCallback([this](const AP_Bounce bouncePacket) { HandleBouncedPacket(bouncePacket); });
     AP_REGISTER_INT_CALLBACK("ModVersion", CompareModVersion);
