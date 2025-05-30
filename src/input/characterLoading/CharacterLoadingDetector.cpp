@@ -12,12 +12,14 @@ CharacterLoadingDetector::CharacterLoadingDetector(Randomizer& randomizer)
 void CharacterLoadingDetector::OnLoadCharacter()
 {
     _instance->OnCharacterLoaded();
+    _loadCharacterHook.Original();
 }
 
 void CharacterLoadingDetector::OnLoadCharacterSelectScreen()
 {
     _instance->OnCharacterLoaded();
     _instance->OnCharacterSelectScreenLoaded();
+    _loadCharacterSelectScreenHook.Original();
 }
 
 

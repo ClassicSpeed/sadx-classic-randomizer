@@ -12,7 +12,12 @@
 class LocationRepository
 {
 public:
-    LocationRepository();
+    static LocationRepository& Init()
+    {
+        if (_instance == nullptr)
+            _instance = new LocationRepository();
+        return *_instance;
+    }
     LocationData SetLocationChecked(int checkId);
     LocationData GetLocation(int checkId);
     std::map<int, LocationData> GetLocations();
@@ -24,6 +29,8 @@ public:
     ChaoStatus GetChaoStatus();
 
 private:
+    LocationRepository();
+    inline static LocationRepository* _instance = nullptr;
     std::map<int, LocationData> _checkData;
     std::vector<EnemyLocationData> _enemies;
     std::vector<CapsuleLocationData> _capsules;

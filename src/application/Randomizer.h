@@ -15,20 +15,17 @@
 class Randomizer
 {
 public:
-    Randomizer(Options& options, DisplayManager& displayManager, CharacterManager& characterManager,
-               WorldStateManager& menuManager,
-               ItemRepository& itemRepository, LocationRepository& locationRepository,
-               ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager, MusicManager& musicManager, ReactionManager& reactionManager)
-        : _options(options), _displayManager(displayManager),
-          _characterManager(characterManager),
-          _worldStateManager(menuManager),
-          _itemRepository(itemRepository),
-          _locationRepository(locationRepository),
-          _archipelagoMessenger(archipelagoMessenger),
-          _saveFileManager(saveFileManager), _musicManager(musicManager), _reactionManager(reactionManager),_deathPending(false)
-
+    static Randomizer& Init(Options& options, DisplayManager& displayManager,
+                            CharacterManager& characterManager, WorldStateManager& menuManager,
+                            ItemRepository& itemRepository, LocationRepository& locationRepository,
+                            ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager,
+                            MusicManager& musicManager, ReactionManager& reactionManager)
     {
-        _displayManager.UpdateChecks(locationRepository.GetLocations());
+        if (_instance == nullptr)
+            _instance = new Randomizer(options, displayManager, characterManager, menuManager,
+                                       itemRepository, locationRepository, archipelagoMessenger,
+                                       saveFileManager, musicManager, reactionManager);
+        return *_instance;
     }
 
     void OnCheckFound(int checkId) const;
@@ -61,6 +58,13 @@ public:
     void MinorVersionMismatch(const std::string& serverVer, const std::string& modVer);
 
 private:
+    Randomizer(Options& options, DisplayManager& displayManager, CharacterManager& characterManager,
+               WorldStateManager& menuManager,
+               ItemRepository& itemRepository, LocationRepository& locationRepository,
+               ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager, MusicManager& musicManager,
+               ReactionManager& reactionManager);
+    inline static Randomizer* _instance = nullptr;
+
     Options& _options;
     DisplayManager& _displayManager;
     CharacterManager& _characterManager;
@@ -84,8 +88,6 @@ private:
 
     bool _superSonicModRunning = false;
 
-    
-    bool AreLastStoryRequirementsCompleted() const;
 
-   
+    bool AreLastStoryRequirementsCompleted() const;
 };

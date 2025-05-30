@@ -22,7 +22,12 @@ enum ConnectionStatus
 class ArchipelagoManager
 {
 public:
-    explicit ArchipelagoManager(Randomizer& randomizer, Options& options);
+    static ArchipelagoManager& Init(Randomizer& randomizer, Options& options)
+    {
+        if (_instance == nullptr)
+            _instance = new ArchipelagoManager(randomizer, options);
+        return *_instance;
+    }
 
     void Connect();
     bool IsValidSaveFile();
@@ -43,6 +48,9 @@ public:
     Options& options;
 
 private:
+    explicit ArchipelagoManager(Randomizer& randomizer, Options& options);
+    inline static ArchipelagoManager* _instance = nullptr;
+
     void ManageMessages();
     void EnqueueMessage(AP_Message* msg);
 

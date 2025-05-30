@@ -24,7 +24,12 @@ struct RingDifference
 class CharacterManager
 {
 public:
-    explicit CharacterManager(Options& options, ReactionManager& reactionManager);
+    static CharacterManager& Init(Options& options, ReactionManager& reactionManager)
+    {
+        if (_instance == nullptr)
+            _instance = new CharacterManager(options, reactionManager);
+        return *_instance;
+    }
     void SetExtendRingCapacity(bool extendRingCapacity);
 
     void GiveUpgrade(Upgrades upgrade);
@@ -45,6 +50,9 @@ public:
     bool extendRingCapacity = false;
 
 private:
+    explicit CharacterManager(Options& options, ReactionManager& reactionManager);
+    inline static CharacterManager* _instance = nullptr;
+    
     void ActivateFiller(FillerType filler);
     void FreezePlayer();
     void IncrementGravity();

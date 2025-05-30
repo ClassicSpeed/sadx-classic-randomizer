@@ -2,6 +2,22 @@
 
 #include <random>
 
+Randomizer::Randomizer(Options& options, DisplayManager& displayManager, CharacterManager& characterManager,
+            WorldStateManager& menuManager,
+            ItemRepository& itemRepository, LocationRepository& locationRepository,
+            ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager, MusicManager& musicManager, ReactionManager& reactionManager)
+     : _options(options), _displayManager(displayManager),
+       _characterManager(characterManager),
+       _worldStateManager(menuManager),
+       _itemRepository(itemRepository),
+       _locationRepository(locationRepository),
+       _archipelagoMessenger(archipelagoMessenger),
+       _saveFileManager(saveFileManager), _musicManager(musicManager), _reactionManager(reactionManager),_deathPending(false)
+
+{
+    _displayManager.UpdateChecks(locationRepository.GetLocations());
+}
+
 void Randomizer::OnCheckFound(const int checkId) const
 {
     const LocationData check = _locationRepository.GetLocation(checkId);
@@ -478,7 +494,6 @@ void Randomizer::MinorVersionMismatch(const std::string& serverVer, const std::s
 {
     _displayManager.QueueItemMessage("Warning: version mismatch! Server: v" + serverVer + " Mod: v" + modVer);
 }
-
 
 void Randomizer::DisplaySongName(const int songId)
 {

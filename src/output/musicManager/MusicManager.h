@@ -196,7 +196,12 @@ private:
 class MusicManager
 {
 public:
-    MusicManager(Options& options);
+    static MusicManager& Init(Options& options)
+    {
+        if (_instance == nullptr)
+            _instance = new MusicManager(options);
+        return *_instance;
+    }
     const SongData* FindSongById(int songId);
     void UpdateMusicSettings(ShowSongName showSongName, ShowSongNameForType showSongNameFor, bool includeVanillaSongs,
                              bool showWarningForMissingFiles, const std::string& string, const std::string& basicString,
@@ -215,6 +220,8 @@ public:
     int GetNewSongForId(int songId, int currentSongId);
 
 private:
+    MusicManager(Options& options);
+    inline static MusicManager* _instance = nullptr;
     Options& _options;
     SongMap _songMap;
     std::unordered_map<int, std::vector<int>> _songRandomizationMap;

@@ -57,7 +57,13 @@ enum HomingAttackIndicator
 class EventDetector
 {
 public:
-    explicit EventDetector(Randomizer& randomizer, Options& options);
+    static EventDetector& Init(Randomizer& randomizer, Options& options)
+    {
+        if (_instance == nullptr)
+            _instance = new EventDetector(randomizer, options);
+        return *_instance;
+    }
+
     bool IsTargetableCheck(const LocationData& location) const;
     void OnPlayingFrame() const;
     void OnLevelEmblem(int character, int level, int mission);
@@ -72,10 +78,10 @@ public:
     void setHomingAttackIndicator(HomingAttackIndicator homingAttackIndicator);
     void OnTwinkleCircuitCompleted(int character);
     void ShuffleSong();
-    
+
     Randomizer& randomizer;
     Options& options;
-    
+
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
     std::vector<CapsuleLocationData> capsules;
@@ -95,7 +101,6 @@ public:
     HomingAttackIndicator homingAttackIndicator = HomingAttackIndicatorDisabled;
     int lastRealSongId = -1;
     int lastShuffledSongId = -1;
-
 
 
     NJS_COLOR arrowColor[6] = {
@@ -132,4 +137,8 @@ public:
         {0xFFD4AF37},
         {0xFFD4AF37},
     };
+
+private:
+    explicit EventDetector(Randomizer& randomizer, Options& options);
+    inline static EventDetector* _instance = nullptr;
 };

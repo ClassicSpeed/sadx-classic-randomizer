@@ -67,21 +67,21 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     }
 
     options = new Options();
-    reactionManager = new ReactionManager(*options);
+    reactionManager = &ReactionManager::Init(*options);
     displayManager = &DisplayManager::Init(*options);
-    characterManager = new CharacterManager(*options, *reactionManager);
-    worldStateManager = new WorldStateManager(*options);
-    itemRepository = new ItemRepository();
-    checkRepository = new LocationRepository();
-    archipelagoMessenger = new ArchipelagoMessenger(*options);
-    saveFileManager = new SaveFileManager();
-    musicManager = new MusicManager(*options);
-    randomizer = new Randomizer(*options, *displayManager, *characterManager, *worldStateManager, *itemRepository,
-                                *checkRepository, *archipelagoMessenger, *saveFileManager, *musicManager,
-                                *reactionManager);
+    characterManager = &CharacterManager::Init(*options, *reactionManager);
+    worldStateManager = &WorldStateManager::Init(*options);
+    itemRepository = &ItemRepository::Init();
+    checkRepository = &LocationRepository::Init();
+    archipelagoMessenger = &ArchipelagoMessenger::Init(*options);
+    saveFileManager = &SaveFileManager::Init();
+    musicManager = &MusicManager::Init(*options);
+    randomizer = &Randomizer::Init(*options, *displayManager, *characterManager, *worldStateManager, *itemRepository,
+                                   *checkRepository, *archipelagoMessenger, *saveFileManager, *musicManager,
+                                   *reactionManager);
     cheatsManager = &CheatsManager::Init();
-    archipelagoManager = new ArchipelagoManager(*randomizer, *options);
-    eventDetector = new EventDetector(*randomizer, *options);
+    archipelagoManager = &ArchipelagoManager::Init(*randomizer, *options);
+    eventDetector = &EventDetector::Init(*randomizer, *options);
     characterLoadingDetector = &CharacterLoadingDetector::Init(*randomizer);
 
 

@@ -38,7 +38,14 @@ struct LevelArrow
 class WorldStateManager
 {
 public:
-    explicit WorldStateManager(Options& options);
+    static WorldStateManager& Init(Options& options)
+    {
+        if (_instance == nullptr)
+            _instance = new WorldStateManager(options);
+        return *_instance;
+    }
+
+
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
     void UpdateUnlockStatus(UnlockStatus unlockStatus);
@@ -74,6 +81,8 @@ public:
     };
 
 private:
+    explicit WorldStateManager(Options& options);
+    inline static WorldStateManager* _instance = nullptr;
     bool _showEntranceIndicators = true;
     mutable std::map<int, LocationData> _checkData;
     NJS_COLOR _wrongDoorColor[12] = {

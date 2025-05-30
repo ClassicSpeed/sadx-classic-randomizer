@@ -449,14 +449,12 @@ std::string DisplayManager::GetMissionSTarget(const bool showTarget, const bool 
 
 void DisplayManager::OnEnterCharacterSelectScreen()
 {
-    PrintDebug("-----[DisplayManager] Entering Character Select Screen\n");
     this->_inCharacterSelectScreen = true;
     _unlockStatusTimer = std::clock();
 }
 
 void DisplayManager::OnExitCharacterSelectScreen()
 {
-    PrintDebug("-----[DisplayManager] Exiting Character Select Screen\n");
     this->_inCharacterSelectScreen = false;
 }
 

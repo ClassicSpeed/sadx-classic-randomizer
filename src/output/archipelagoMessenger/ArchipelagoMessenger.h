@@ -5,7 +5,13 @@
 class ArchipelagoMessenger
 {
 public:
-    explicit ArchipelagoMessenger(Options& options);
+    static ArchipelagoMessenger& Init(Options& options)
+    {
+        if (_instance == nullptr)
+            _instance = new ArchipelagoMessenger(options);
+        return *_instance;
+    }
+
     void CheckLocation(int locationId);
     void GameCompleted();
     void SendDeath(std::string playerName);
@@ -15,6 +21,8 @@ public:
     void SendTrapLink(std::string trapName, std::string playerName);
 
 private:
+    explicit ArchipelagoMessenger(Options& options);
+    inline static ArchipelagoMessenger* _instance = nullptr;
     Options& _options;
     void SendRingPacket(int ringDifference, const std::string& tagName);
 };
