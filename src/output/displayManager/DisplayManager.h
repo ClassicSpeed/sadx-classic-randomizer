@@ -46,24 +46,31 @@ public:
     void OnFrame();
     void ShowStatusInformation(std::string information);
     void ShowGoalStatus();
-    void OnEnterCharacterSelectScreen();
-    void OnExitCharacterSelectScreen();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
     void SetMessageConfiguration(float messageDisplayDuration, int messageFontSize,
                                  DisplayInGameTracker displayInGameTracker, int itemMessageColor, int chatMessageColor);
     void UpdateVoiceMenuCharacter(int characterVoiceIndex);
     void SetConnected();
 
-    static void OnCharSelAdvaModeProcedure(AdvaModeEnum adventureMode);
-    static void OnCmnAdvaModeProcedure(AdvaModeEnum adventureMode);
-    static Sint32 OnFinishedLevelMaybe();
-    static SEQ_SECTIONTBL* OnStorySelected(int playerNumber);
-
 private:
     explicit DisplayManager(Options& options);
-    static DisplayManager* _instance;
+    inline static DisplayManager* _instance = nullptr;
 
+    inline static FunctionHook<void, AdvaModeEnum> _charSelAdvaModeProcedureHook{0x505E60};
+    static void OnCharSelAdvaModeProcedure(AdvaModeEnum adventureMode);
+    
+    inline static FunctionHook<void, AdvaModeEnum> _cmnAdvaModeProcedureHook{0x505B40};
+    static void OnCmnAdvaModeProcedure(AdvaModeEnum adventureMode);
+    
+    inline static FunctionHook<Sint32> _finishedLevelMaybeHook{0x414090};
+    static Sint32 OnFinishedLevelMaybe();
+    
+    inline static FunctionHook<SEQ_SECTIONTBL*, int> _storySelectedHook{0x44EAF0};
+    static SEQ_SECTIONTBL* OnStorySelected(int playerNumber);
 
+    
+    void OnEnterCharacterSelectScreen();
+    void OnExitCharacterSelectScreen();
     void RemoveExpiredMessages();
     void AddNewMessages();
     void DisplayItemMessages() const;

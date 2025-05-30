@@ -2,19 +2,12 @@
 
 #include <random>
 
-DisplayManager* DisplayManager::_instance = nullptr;
-
-FunctionHook<void, AdvaModeEnum> charSelAdvaModeProcedureHook(0x505E60);
-FunctionHook<void, AdvaModeEnum> cmnAdvaModeProcedureHook(0x505B40);
-FunctionHook<Sint32> finishedLevelMaybeHook(0x414090);
-FunctionHook<SEQ_SECTIONTBL*, int> storySelectedHook(0x44EAF0);
-
 DisplayManager::DisplayManager(Options& options): _options(options)
 {
-    charSelAdvaModeProcedureHook.Hook(OnCharSelAdvaModeProcedure);
-    cmnAdvaModeProcedureHook.Hook(OnCmnAdvaModeProcedure);
-    finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
-    storySelectedHook.Hook(OnStorySelected);
+    _charSelAdvaModeProcedureHook.Hook(OnCharSelAdvaModeProcedure);
+    _cmnAdvaModeProcedureHook.Hook(OnCmnAdvaModeProcedure);
+    _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
+    _storySelectedHook.Hook(OnStorySelected);
 }
 
 // On entering the character select screen while on the main menu
@@ -22,7 +15,7 @@ void DisplayManager::OnCharSelAdvaModeProcedure(const AdvaModeEnum adventureMode
 {
     if (adventureMode == ADVA_MODE_EXPLAIN)
         _instance->OnEnterCharacterSelectScreen();
-    charSelAdvaModeProcedureHook.Original(adventureMode);
+    _charSelAdvaModeProcedureHook.Original(adventureMode);
 }
 
 // On exiting the character select screen 
@@ -30,7 +23,7 @@ void DisplayManager::OnCmnAdvaModeProcedure(const AdvaModeEnum adventureMode)
 {
     if (adventureMode == ADVA_MODE_TITLE_MENU)
         _instance->OnExitCharacterSelectScreen();
-    cmnAdvaModeProcedureHook.Original(adventureMode);
+    _cmnAdvaModeProcedureHook.Original(adventureMode);
 }
 
 //When leaving a level, check if we quiting the adventure game
@@ -38,13 +31,13 @@ Sint32 DisplayManager::OnFinishedLevelMaybe()
 {
     if (GameState == MD_GAME_ABORT)
         _instance->OnEnterCharacterSelectScreen();
-    return finishedLevelMaybeHook.Original();
+    return _finishedLevelMaybeHook.Original();
 }
 
 SEQ_SECTIONTBL* DisplayManager::OnStorySelected(const int playerNumber)
 {
     _instance->OnExitCharacterSelectScreen();
-    return storySelectedHook.Original(playerNumber);
+    return _storySelectedHook.Original(playerNumber);
 }
 
 void DisplayManager::QueueItemMessage(const std::string& message)
