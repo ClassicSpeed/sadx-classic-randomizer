@@ -68,6 +68,9 @@ private:
     
     inline static FunctionHook<SEQ_SECTIONTBL*, int> _storySelectedHook{0x44EAF0};
     static SEQ_SECTIONTBL* OnStorySelected(int playerNumber);
+    
+    inline static FunctionHook<BOOL> _loadMissionMenu{0x506410};
+    inline static FunctionHook<BOOL> _loadTrialMenu{0x506780};
 
     
     void OnEnterCharacterSelectScreen();
