@@ -251,16 +251,16 @@ void CharacterManager::OnPlayingFrame()
         || CurrentLevel == LevelIDs_SkyChase2)
         return;
 
-    if (CurrentLevel >= LevelIDs_Chaos0 && CurrentLevel <= LevelIDs_E101R && !options._trapsOnBossFights)
+    if (CurrentLevel >= LevelIDs_Chaos0 && CurrentLevel <= LevelIDs_E101R && !options.trapsOnBossFights)
         return;
 
-    if (CurrentLevel == LevelIDs_PerfectChaos && !options._trapsOnPerfectChaosFight)
+    if (CurrentLevel == LevelIDs_PerfectChaos && !options.trapsOnPerfectChaosFight)
         return;
 
-    if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past && !options._trapsOnAdventureFields)
+    if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past && !options.trapsOnAdventureFields)
         return;
 
-    if (CurrentLevel >= LevelIDs_SSGarden && CurrentLevel <= LevelIDs_ChaoRace && !options._trapsOnAdventureFields)
+    if (CurrentLevel >= LevelIDs_SSGarden && CurrentLevel <= LevelIDs_ChaoRace && !options.trapsOnAdventureFields)
         return;
 
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
@@ -288,10 +288,10 @@ void CharacterManager::OnPlayingFrame()
         }
     }
 
-    if (_reverseControlsTimer > 0 && options._reverseControlsDuration > 0)
+    if (_reverseControlsTimer > 0 && options.reverseControlsDuration > 0)
     {
         const double timePassed = (std::clock() - this->_reverseControlsTimer) / static_cast<double>(CLOCKS_PER_SEC);
-        if (timePassed > options._reverseControlsDuration)
+        if (timePassed > options.reverseControlsDuration)
         {
             reverseControlsEnabled = false;
             _reverseControlsTimer = -1;
@@ -556,7 +556,7 @@ void CharacterManager::ReverseControls()
         _reverseControlsTimer = -1;
     }
 
-    if (options._reverseControlsDuration > 0)
+    if (options.reverseControlsDuration > 0)
         _reverseControlsTimer = std::clock();
     reverseControlsEnabled = true;
 }

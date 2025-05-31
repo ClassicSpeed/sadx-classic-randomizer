@@ -330,10 +330,10 @@ public:
     int gravityTrapWeight = 2;
 
     
-    float _reverseControlsDuration = 7.0f;
-    bool _trapsOnAdventureFields = true;
-    bool _trapsOnBossFights = true;
-    bool _trapsOnPerfectChaosFight = false;
+    float reverseControlsDuration = 7.0f;
+    bool trapsOnAdventureFields = true;
+    bool trapsOnBossFights = true;
+    bool trapsOnPerfectChaosFight = false;
 
     std::string sa2BAdxPath = "../../../../Sonic Adventure 2/resource/gd_PC/ADX/";
     std::string customAdxPath = "custom/";
@@ -364,17 +364,17 @@ public:
     TrapLinkOverride trapLinkOverride;
 
     
-    bool _eggmanCommentOnCharacterUnlock = true;
-    bool _currentCharacterCommentOnCharacterUnlock = true;
-    bool _unlockedCharacterCommentOnCharacterUnlock = true;
+    bool eggmanCommentOnCharacterUnlock = true;
+    bool currentCharacterCommentOnCharacterUnlock = true;
+    bool unlockedCharacterCommentOnCharacterUnlock = true;
 
-    bool _eggmanCommentOnKeyItems = true;
-    bool _tikalCommentOnKeyItems = true;
-    bool _currentCharacterCommentOnKeyItems = true;
+    bool eggmanCommentOnKeyItems = true;
+    bool tikalCommentOnKeyItems = true;
+    bool currentCharacterCommentOnKeyItems = true;
     
-    bool _eggmanCommentOnTrap = true;
-    bool _otherCharactersCommentOnTrap = true;
-    bool _currentCharacterReactToTrap = true;
+    bool eggmanCommentOnTrap = true;
+    bool otherCharactersCommentOnTrap = true;
+    bool currentCharacterReactToTrap = true;
     
-    bool _showCommentsSubtitles = true;
+    bool showCommentsSubtitles = true;
 };

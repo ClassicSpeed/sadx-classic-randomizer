@@ -366,22 +366,22 @@ void Options::SetGravityTrapWeight(const int newGravityTrapWeight)
 
 void Options::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
 {
-    this->_reverseControlsDuration = static_cast<float>(reverseControlTrapDuration);
+    this->reverseControlsDuration = static_cast<float>(reverseControlTrapDuration);
 }
 
 void Options::SetTrapsOnAdventureFields(const int trapsOnAdventureFields)
 {
-    this->_trapsOnAdventureFields = trapsOnAdventureFields > 0;
+    this->trapsOnAdventureFields = trapsOnAdventureFields > 0;
 }
 
 void Options::SetTrapsOnBossFights(const int trapsOnBossFights)
 {
-    this->_trapsOnBossFights = trapsOnBossFights > 0;
+    this->trapsOnBossFights = trapsOnBossFights > 0;
 }
 
 void Options::SetTrapsOnPerfectChaosFight(const int trapsOnPerfectChaosFight)
 {
-    this->_trapsOnPerfectChaosFight = trapsOnPerfectChaosFight > 0;
+    this->trapsOnPerfectChaosFight = trapsOnPerfectChaosFight > 0;
 }
 
 
@@ -671,13 +671,13 @@ void Options::SetCharacterVoiceReactions(const bool eggmanCommentOnCharacterUnlo
                                          const bool currentCharacterCommentOnKeyItems,
                                          const bool showCommentsSubtitles)
 {
-    this->_eggmanCommentOnCharacterUnlock = eggmanCommentOnCharacterUnlock;
-    this->_currentCharacterCommentOnCharacterUnlock = currentCharacterCommentOnCharacterUnlock;
-    this->_unlockedCharacterCommentOnCharacterUnlock = unlockedCharacterCommentOnCharacterUnlock;
-    this->_eggmanCommentOnKeyItems = eggmanCommentOnKeyItems;
-    this->_tikalCommentOnKeyItems = tikalCommentOnKeyItems;
-    this->_currentCharacterCommentOnKeyItems = currentCharacterCommentOnKeyItems;
-    this->_showCommentsSubtitles = showCommentsSubtitles;
+    this->eggmanCommentOnCharacterUnlock = eggmanCommentOnCharacterUnlock;
+    this->currentCharacterCommentOnCharacterUnlock = currentCharacterCommentOnCharacterUnlock;
+    this->unlockedCharacterCommentOnCharacterUnlock = unlockedCharacterCommentOnCharacterUnlock;
+    this->eggmanCommentOnKeyItems = eggmanCommentOnKeyItems;
+    this->tikalCommentOnKeyItems = tikalCommentOnKeyItems;
+    this->currentCharacterCommentOnKeyItems = currentCharacterCommentOnKeyItems;
+    this->showCommentsSubtitles = showCommentsSubtitles;
 }
 
 
@@ -686,10 +686,10 @@ void Options::SetCharacterVoiceReactions(const bool eggmanCommentOnTrap,
                                          const bool currentCharacterReactToTrap,
                                          const bool showCommentsSubtitles)
 {
-    this->_eggmanCommentOnTrap = eggmanCommentOnTrap;
-    this->_otherCharactersCommentOnTrap = otherCharactersCommentOnTrap;
-    this->_currentCharacterReactToTrap = currentCharacterReactToTrap;
-    this->_showCommentsSubtitles = showCommentsSubtitles;
+    this->eggmanCommentOnTrap = eggmanCommentOnTrap;
+    this->otherCharactersCommentOnTrap = otherCharactersCommentOnTrap;
+    this->currentCharacterReactToTrap = currentCharacterReactToTrap;
+    this->showCommentsSubtitles = showCommentsSubtitles;
 }
 
 void Options::SetLinksOverrides(const DeathLinkOverride newDeathLinkOverride,
