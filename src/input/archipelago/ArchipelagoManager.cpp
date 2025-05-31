@@ -8,6 +8,18 @@ ArchipelagoManager::ArchipelagoManager(Randomizer& randomizer, Options& options)
 {
     randomizerPtr = &this->_randomizer;
     archipelagoManagerPtr = this;
+    _loadTrialMenuHook.Hook(OnLoadTrialMenu);
+}
+
+BOOL ArchipelagoManager::OnLoadTrialMenu()
+{
+    if (GameMode == GameModes_Menu && _instance->_status == ReadyForConnection)
+    {
+        _instance->_status = SaveFileSelected;
+        _instance->_randomizer.OnSaveFileLoaded();
+        
+    }
+    return _loadTrialMenuHook.Original();
 }
 
 
@@ -97,10 +109,6 @@ bool ArchipelagoManager::IsWaitingForSaveFile()
     return _status == ReadyForConnection;
 }
 
-void ArchipelagoManager::OnSaveFileLoaded()
-{
-    _status = SaveFileSelected;
-}
 
 void ArchipelagoManager::ReceiveItem(const int64_t itemId, const bool notify)
 {
@@ -232,7 +240,7 @@ void ArchipelagoManager::Connect()
     AP_SetLocationCheckedCallback([this](const int64_t locationId) { CheckLocation(locationId); });
     AP_RegisterBouncedCallback([this](const AP_Bounce bouncePacket) { HandleBouncedPacket(bouncePacket); });
     AP_REGISTER_INT_CALLBACK("ModVersion", CompareModVersion);
-    
+
     AP_REGISTER_INT_CALLBACK("GoalRequiresLevels", options.GoalRequiresLevels);
     AP_REGISTER_INT_CALLBACK("GoalRequiresChaosEmeralds", options.GoalRequiresChaosEmeralds);
     AP_REGISTER_INT_CALLBACK("GoalRequiresEmblems", options.GoalRequiresEmblems);
@@ -313,14 +321,15 @@ void ArchipelagoManager::Connect()
     AP_REGISTER_INT_CALLBACK_CHARACTER("PlayableSonic", options.SetPlayableCharacter, Characters_Sonic);
     AP_REGISTER_INT_CALLBACK_CHARACTER("PlayableTails", options.SetPlayableCharacter, Characters_Tails);
     AP_REGISTER_INT_CALLBACK_CHARACTER("PlayableKnuckles", options.SetPlayableCharacter, Characters_Knuckles);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("PlayableAmy", options.SetPlayableCharacter,Characters_Amy);
+    AP_REGISTER_INT_CALLBACK_CHARACTER("PlayableAmy", options.SetPlayableCharacter, Characters_Amy);
     AP_REGISTER_INT_CALLBACK_CHARACTER("PlayableGamma", options.SetPlayableCharacter, Characters_Gamma);
     AP_REGISTER_INT_CALLBACK_CHARACTER("PlayableBig", options.SetPlayableCharacter, Characters_Big);
 
     AP_REGISTER_INT_CALLBACK_CHARACTER("SonicActionStageMissions", options.SetActionStageMissions, Characters_Sonic);
     AP_REGISTER_INT_CALLBACK_CHARACTER("TailsActionStageMissions", options.SetActionStageMissions, Characters_Tails);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("KnucklesActionStageMissions", options.SetActionStageMissions, Characters_Knuckles);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("AmyActionStageMissions", options.SetActionStageMissions,Characters_Amy);
+    AP_REGISTER_INT_CALLBACK_CHARACTER("KnucklesActionStageMissions", options.SetActionStageMissions,
+                                       Characters_Knuckles);
+    AP_REGISTER_INT_CALLBACK_CHARACTER("AmyActionStageMissions", options.SetActionStageMissions, Characters_Amy);
     AP_REGISTER_INT_CALLBACK_CHARACTER("GammaActionStageMissions", options.SetActionStageMissions, Characters_Gamma);
     AP_REGISTER_INT_CALLBACK_CHARACTER("BigActionStageMissions", options.SetActionStageMissions, Characters_Big);
 

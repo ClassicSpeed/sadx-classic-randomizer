@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../pch.h"
+
 class SaveFileManager
 {
 public:
@@ -9,12 +11,15 @@ public:
             _instance = new SaveFileManager();
         return *_instance;
     }
+
     void OnSaveFileLoaded();
     void OnFrame();
     void StartAllMissions();
     void SetMissionCompleted(int mission);
 
-private:    
+private:
+    SaveFileManager(){}
     inline static SaveFileManager* _instance = nullptr;
     void OnSaveFileCreated();
+
 };

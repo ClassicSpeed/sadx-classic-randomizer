@@ -1,12 +1,12 @@
 #include "SaveFileManager.h"
 
-#include "../../pch.h"
 
 void SaveFileManager::OnSaveFileLoaded()
 {
     if (LevelClearCounts[0] == 0)
-        OnSaveFileCreated();
+        _instance->OnSaveFileCreated();
 }
+
 
 void SaveFileManager::OnFrame()
 {
@@ -202,7 +202,6 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_EC));
     WriteSaveFile();
 }
-
 
 void SaveFileManager::StartAllMissions()
 {

@@ -495,6 +495,11 @@ void Randomizer::MinorVersionMismatch(const std::string& serverVer, const std::s
     _displayManager.QueueItemMessage("Warning: version mismatch! Server: v" + serverVer + " Mod: v" + modVer);
 }
 
+void Randomizer::OnSaveFileLoaded()
+{
+    _saveFileManager.OnSaveFileLoaded();
+}
+
 void Randomizer::DisplaySongName(const int songId)
 {
     //TODO: Move logic to displayManager

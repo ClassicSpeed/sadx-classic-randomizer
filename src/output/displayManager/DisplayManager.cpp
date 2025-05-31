@@ -8,6 +8,10 @@ DisplayManager::DisplayManager(Options& options): _options(options)
     _cmnAdvaModeProcedureHook.Hook(OnCmnAdvaModeProcedure);
     _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
     _storySelectedHook.Hook(OnStorySelected);
+    
+    //Blocks mission/trail menu
+    FunctionHook<BOOL> blockMissionMenu(0x506410, []() -> BOOL { return false; });
+    FunctionHook<BOOL> blockTrialMenu(0x506780, []() -> BOOL { return false; });
 }
 
 // On entering the character select screen while on the main menu

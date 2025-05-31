@@ -56,6 +56,7 @@ public:
     int GetSongForId(int songId);
     int GetNewSongForId(int songId, int currentSongId);
     void MinorVersionMismatch(const std::string& serverVer, const std::string& modVer);
+    void OnSaveFileLoaded();
 
 private:
     Randomizer(Options& options, DisplayManager& displayManager, CharacterManager& characterManager,

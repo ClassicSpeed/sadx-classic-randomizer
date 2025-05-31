@@ -33,7 +33,6 @@ public:
     bool IsValidSaveFile();
     void OnFrame();
     bool IsWaitingForSaveFile();
-    void OnSaveFileLoaded();
     void ReceiveItem(int64_t itemId, bool notify);
     void ResetItems();
     void CheckLocation(int64_t locationId);
@@ -50,6 +49,9 @@ public:
 private:
     explicit ArchipelagoManager(Randomizer& randomizer, Options& options);
     inline static ArchipelagoManager* _instance = nullptr;
+    
+    inline static FunctionHook<BOOL> _loadTrialMenuHook{0x506780};
+    static BOOL OnLoadTrialMenu();
 
     void ManageMessages();
     void EnqueueMessage(AP_Message* msg);
