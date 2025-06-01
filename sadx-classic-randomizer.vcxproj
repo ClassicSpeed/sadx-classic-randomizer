@@ -61,13 +61,17 @@
             <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
             <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
             <AdditionalIncludeDirectories>lib;lib/json/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+            <LanguageStandard>stdcpp17</LanguageStandard>
         </ClCompile>
         <Link>
             <SubSystem>Windows</SubSystem>
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <EnableUAC>false</EnableUAC>
-            <AdditionalDependencies>lib/APCpp/ixwebsocket.lib;lib/APCpp/mbedcrypto.lib;lib/APCpp/mbedtls.lib;lib/APCpp/mbedx509.lib;Ws2_32.lib;Crypt32.lib;%(AdditionalDependencies);</AdditionalDependencies>
+            <AdditionalDependencies>lib/APCpp/mbedcrypto.lib;lib/APCpp/mbedtls.lib;lib/APCpp/mbedx509.lib;Ws2_32.lib;Crypt32.lib;%(AdditionalDependencies);</AdditionalDependencies>
         </Link>
+        <PreBuildEvent>
+            <Command>call ./scripts/release-clean.bat</Command>
+        </PreBuildEvent>
         <PostBuildEvent>
             <Command>call ./scripts/debug_install.bat</Command>
         </PostBuildEvent>
@@ -91,9 +95,8 @@
             <OptimizeReferences>true</OptimizeReferences>
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <EnableUAC>false</EnableUAC>
-            <AdditionalDependencies>lib/APCpp/ixwebsocket.lib;lib/APCpp/mbedcrypto.lib;lib/APCpp/mbedtls.lib;lib/APCpp/mbedx509.lib;Ws2_32.lib;Crypt32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
+            <AdditionalDependencies>lib/APCpp/mbedcrypto.lib;lib/APCpp/mbedtls.lib;lib/APCpp/mbedx509.lib;Ws2_32.lib;Crypt32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
         </Link>
-
         <PreBuildEvent>
             <Command>call ./scripts/release-clean.bat</Command>
         </PreBuildEvent>
@@ -103,6 +106,7 @@
     </ItemDefinitionGroup>
     <ItemGroup>
         <ClCompile Include="lib\APCpp\Archipelago.cpp"/>
+        <ClCompile Include="lib\APCpp\ixwebsocket\*.cpp" />
         <ClCompile Include="lib\json\src\lib_json\*.cpp"/>
         <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.cpp"/>
         <ClCompile Include="src\**\*.cpp" />
