@@ -115,7 +115,6 @@
         <ClInclude Include="lib\APCpp\Archipelago.h"/>
         <ClInclude Include="lib\APCpp\ixwebsocket\*.h" />
         <ClInclude Include="lib\json\include\json\*.h"/>
-        <ClInclude Include="lib\json\src\lib_json\json_valueiterator.inl"/>
         <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.hpp"/>
         <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.h"/>
         <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\*.h"/>
