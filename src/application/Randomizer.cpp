@@ -2,11 +2,11 @@
 
 #include <random>
 
-Randomizer::Randomizer(Options& options, DisplayManager& displayManager, CharacterManager& characterManager,
+Randomizer::Randomizer(Options& options, Settings& settings, DisplayManager& displayManager, CharacterManager& characterManager,
             WorldStateManager& menuManager,
             ItemRepository& itemRepository, LocationRepository& locationRepository,
             ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager, MusicManager& musicManager, ReactionManager& reactionManager)
-     : _options(options), _displayManager(displayManager),
+     : _options(options), _settings(settings), _displayManager(displayManager),
        _characterManager(characterManager),
        _worldStateManager(menuManager),
        _itemRepository(itemRepository),
@@ -112,7 +112,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
         _characterManager.GiveFillerItem(item.fillerType, false);
         if (_options.trapLinkActive && !IsJunkFiller(item.fillerType))
         {
-            _archipelagoMessenger.SendTrapLink(item.displayName, _options.playerName);
+            _archipelagoMessenger.SendTrapLink(item.displayName, _settings.playerName);
             _displayManager.QueueItemMessage("Linked " + item.displayName + " sent");
         }
     }
@@ -392,7 +392,7 @@ void Randomizer::OnDeath()
             _displayManager.QueueItemMessage("Death Link not sent!");
             return;
         }
-        _archipelagoMessenger.SendDeath(_options.playerName);
+        _archipelagoMessenger.SendDeath(_settings.playerName);
         _displayManager.QueueItemMessage("Death Sent");
     }
 }
@@ -418,9 +418,8 @@ void Randomizer::ProcessTrapLink(std::string itemName, std::string message)
     _characterManager.GiveFillerItem(filler, true);
 }
 
-void Randomizer::OnConnected(std::string playerName)
+void Randomizer::OnConnected()
 {
-    _options.playerName = playerName;
 
     //Levels
     const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
@@ -503,13 +502,13 @@ void Randomizer::OnSaveFileLoaded()
 void Randomizer::DisplaySongName(const int songId)
 {
     //TODO: Move logic to displayManager
-    if (_options.showSongName == ShowSongNameAlwaysOff)
+    if (_settings.showSongName == ShowSongNameAlwaysOff)
         return;
 
-    if (_options.showSongName == ShowSongNameWithSongShuffle && _options.musicShuffle == MusicShuffleNone)
+    if (_settings.showSongName == ShowSongNameWithSongShuffle && _options.musicShuffle == MusicShuffleNone)
         return;
 
-    if (_options.showSongNameForType == ShowSongNameForTypeOnlyActionLevels)
+    if (_settings.showSongNameForType == ShowSongNameForTypeOnlyActionLevels)
         if (CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
             return;
 

@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+#include "settings/Settings.h"
+
 enum Goal
 {
     GoalLevels,
@@ -58,95 +60,26 @@ enum Levels
     HotShelter
 };
 
-enum ShowSongName
+
+//TODO: Move to helpers?
+static int Clamp(const int value, const int min, const int max)
 {
-    ShowSongNameWithSongShuffle = 0,
-    ShowSongNameAlwaysOn,
-    ShowSongNameAlwaysOff
-};
-
-enum ShowSongNameForType
-{
-    ShowSongNameForTypeEverything,
-    ShowSongNameForTypeEverythingButJingles,
-    ShowSongNameForTypeOnlyActionLevels
-};
-
-
-enum MusicSource
-{
-    MusicSourceNone = -1,
-    MusicSourceSadx = 0,
-    MusicSourceSa2B,
-    MusicSourceCustom,
-    MusicSourceSadxSa2B,
-    MusicSourceSadxCustom,
-    MusicSourceSa2BCustom,
-    MusicSourceSadxSa2BCustom
-};
-
-enum MusicShuffle
-{
-    MusicShuffleNone = -1,
-    MusicShuffleDisabled = 0,
-    MusicShuffleCurated,
-    MusicShuffleByType,
-    MusicShuffleFull,
-    MusicShuffleSingularity,
-};
-
-enum MusicShuffleConsistency
-{
-    MusicShuffleConsistencyNone = -1,
-    MusicShuffleConsistencyStatic = 0,
-    MusicShuffleConsistencyOnRestart,
-    MusicShuffleConsistencyPerPlay,
-};
-
-
-enum LifeCapsulesChangeSongs
-{
-    LifeCapsulesChangeSongsNone = -1,
-    LifeCapsulesChangeSongsEnabled = 0,
-    LifeCapsulesChangeSongsDisabled = 1,
-};
-
-
-enum DeathLinkOverride
-{
-    DeathLinkDefault = 0,
-    DeathLinkForceEnabled = 1,
-    DeathLinkForceDisabled = 2,
-};
-
-enum RingLinkOverride
-{
-    RingLinkDefault = 0,
-    RingLinkForceEnabled = 1,
-    RingLinkForceEnabledHard = 2,
-    RingLinkForceDisabled = 3,
-};
-
-enum RingLossOverride
-{
-    RingLossDefault = 0,
-    RingLossForceClassic = 1,
-    RingLossForceModern = 2,
-    RingLossForceOhko = 3,
-    RingLossForceOhkoNoShields = 4,
-};
-
-enum TrapLinkOverride
-{
-    TrapLinkDefault = 0,
-    TrapLinkForceEnabled = 1,
-    TrapLinkForceDisabled = 2,
-};
-
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+}
 
 class Options
 {
 public:
+    static Options& Init(Settings& settings)
+    {
+        if (_instance == nullptr)
+            _instance = new Options(settings);
+        return *_instance;
+    }
+
+
     void GoalRequiresLevels(int newGoalRequiresLevels);
     void GoalRequiresChaosEmeralds(int newGoalRequiresChaosEmeralds);
     void GoalRequiresEmblems(int newGoalRequiresEmblems);
@@ -203,11 +136,11 @@ public:
     void SetReverseTrapWeight(int newReverseTrapWeight);
     void SetGravityTrapWeight(int newGravityTrapWeight);
     void SetReverseControlTrapDuration(int reverseControlTrapDuration);
-    void SetTrapsOnAdventureFields(int trapsOnAdventureFields);
-    void SetTrapsOnBossFights(int trapsOnBossFights);
-    void SetTrapsOnPerfectChaosFight(int trapsOnPerfectChaosFight);
+    void SetTrapsOnAdventureFields(int newTrapsOnAdventureFields);
+    void SetTrapsOnBossFights(int newTrapsOnBossFights);
+    void SetTrapsOnPerfectChaosFight(int newTrapsOnPerfectChaosFight);
 
-    
+
     void SetActionStageMissions(Characters character, int missions);
     bool GetCharacterEnemySanity(Characters character) const;
     void SetCharacterCapsuleSanity(Characters character, bool characterCapsuleSanity);
@@ -222,24 +155,15 @@ public:
     bool MusicSourceIncludeSa2B() const;
     bool MusicSourceIncludeCustom() const;
     bool IsTrapEnabled(FillerType filler) const;
-    void SetCharacterVoiceReactions(bool eggmanCommentOnCharacterUnlock, bool currentCharacterCommentOnCharacterUnlock,
-                                    bool unlockedCharacterCommentOnCharacterUnlock, bool eggmanCommentOnKeyItems,
-                                    bool tikalCommentOnKeyItems, bool currentCharacterCommentOnKeyItems,
-                                    bool showCommentsSubtitles);
-    void SetCharacterVoiceReactions(bool eggmanCommentOnTrap, bool otherCharactersCommentOnTrap,
-                                    bool currentCharacterReactToTrap, bool showCommentsSubtitles);
-    void SetLinksOverrides(DeathLinkOverride newDeathLinkOverride, RingLinkOverride newRingLinkOverride,
-                           RingLossOverride newRingLossOverride, TrapLinkOverride newTrapLinkOverride);
 
 
     //Constant values
     const int64_t baseId = 543800000;
-    
+
     std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
     const int instanceId = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
 
     // YAML Options
-    std::string playerName = "Player";
     bool goalRequiresLevels = true;
     bool goalRequiresEmblems = true;
     bool goalRequiresChaosEmeralds = true;
@@ -321,7 +245,7 @@ public:
     int amyActionStageMissions = 0;
     int bigActionStageMissions = 0;
     int gammaActionStageMissions = 0;
-    
+
     int iceTrapWeight = 2;
     int springTrapWeight = 2;
     int policeTrapWeight = 2;
@@ -329,18 +253,11 @@ public:
     int reverseTrapWeight = 2;
     int gravityTrapWeight = 2;
 
-    
+
     float reverseControlsDuration = 7.0f;
     bool trapsOnAdventureFields = true;
     bool trapsOnBossFights = true;
     bool trapsOnPerfectChaosFight = false;
-
-    std::string sa2BAdxPath = "../../../../Sonic Adventure 2/resource/gd_PC/ADX/";
-    std::string customAdxPath = "custom/";
-    ShowSongName showSongName = ShowSongNameWithSongShuffle;
-    ShowSongNameForType showSongNameForType = ShowSongNameForTypeEverything;
-    bool includeVanillaSongs = true;
-    bool showWarningForMissingFiles = false;
 
     MusicSource musicSource = MusicSourceNone;
     MusicShuffle musicShuffle = MusicShuffleNone;
@@ -355,26 +272,9 @@ public:
     bool skyChaseChecksHard = false;
     std::vector<int> missionBlacklist = {};
     bool expertMode = false;
-    
-    //Mod Settings
 
-    DeathLinkOverride deathLinkOverride;
-    RingLinkOverride ringLinkOverride;
-    RingLossOverride ringLossOverride;
-    TrapLinkOverride trapLinkOverride;
-
-    
-    bool eggmanCommentOnCharacterUnlock = true;
-    bool currentCharacterCommentOnCharacterUnlock = true;
-    bool unlockedCharacterCommentOnCharacterUnlock = true;
-
-    bool eggmanCommentOnKeyItems = true;
-    bool tikalCommentOnKeyItems = true;
-    bool currentCharacterCommentOnKeyItems = true;
-    
-    bool eggmanCommentOnTrap = true;
-    bool otherCharactersCommentOnTrap = true;
-    bool currentCharacterReactToTrap = true;
-    
-    bool showCommentsSubtitles = true;
+private:
+    explicit Options(Settings& settings);
+    inline static Options* _instance = nullptr;
+    Settings& _settings;
 };

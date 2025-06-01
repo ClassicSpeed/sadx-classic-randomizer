@@ -3,7 +3,7 @@
 const char* subtitleBuffer[] = {NULL, NULL};
 
 
-ReactionManager::ReactionManager(Options& options): _options(options)
+ReactionManager::ReactionManager(Options& options, Settings& settings): _options(options), _settings(settings)
 {
 }
 
@@ -17,7 +17,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
     WeightedRandomSelector selector;
     if (item.type == ItemCharacter)
     {
-        if (_options.currentCharacterCommentOnCharacterUnlock)
+        if (_settings.currentCharacterCommentOnCharacterUnlock)
         {
             if (CurrentCharacter == Characters_Amy)
             {
@@ -40,13 +40,13 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
 
         if (itemId == 4)
         {
-            if (_options.unlockedCharacterCommentOnCharacterUnlock)
+            if (_settings.unlockedCharacterCommentOnCharacterUnlock)
             {
                 selector.addNumber(277, 1); //I wanna go shopping!
                 selector.addNumber(324, 1); //I'm going to do my best; Sonic.
                 selector.addNumber(1730, 1); //It's my turn now!
             }
-            if (_options.currentCharacterCommentOnCharacterUnlock)
+            if (_settings.currentCharacterCommentOnCharacterUnlock)
             {
                 if (CurrentCharacter == Characters_Sonic)
                 {
@@ -63,7 +63,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
         }
         else if (itemId == 6)
         {
-            if (_options.unlockedCharacterCommentOnCharacterUnlock)
+            if (_settings.unlockedCharacterCommentOnCharacterUnlock)
             {
                 selector.addNumber(367, 1); //I wanna go fishing!
                 selector.addNumber(566, 1); //I must save Froggy!
@@ -73,7 +73,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                 selector.addNumber(1876, 1); //Okay! One more time!
                 selector.addNumber(2012, 1); //Froggy? Where are you?
             }
-            if (_options.currentCharacterCommentOnCharacterUnlock)
+            if (_settings.currentCharacterCommentOnCharacterUnlock)
             {
                 if (CurrentCharacter == Characters_Tails)
                 {
@@ -83,7 +83,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
         }
         else if (itemId == 5)
         {
-            if (_options.unlockedCharacterCommentOnCharacterUnlock)
+            if (_settings.unlockedCharacterCommentOnCharacterUnlock)
             {
                 selector.addNumber(394, 1); //Combat system activated.
                 selector.addNumber(543, 1); //What is your wish; master Robotnik?
@@ -92,7 +92,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                 selector.addNumber(1276, 1); //How can I serve you; Dr. Robotnik?
                 selector.addNumber(1767, 1); //Preperation complete.
             }
-            if (_options.currentCharacterCommentOnCharacterUnlock)
+            if (_settings.currentCharacterCommentOnCharacterUnlock)
             {
                 if (CurrentCharacter == Characters_Amy)
                 {
@@ -117,7 +117,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                     selector.addNumber(378, 3); //Something's different about this robot.
                 }
             }
-            if (_options.eggmanCommentOnCharacterUnlock)
+            if (_settings.eggmanCommentOnCharacterUnlock)
             {
                 selector.addNumber(542, 1); //GAMMA!!
                 selector.addNumber(779, 1); //I'll leave it up to you; Gamma.
@@ -130,7 +130,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
         }
         else if (itemId == 3)
         {
-            if (_options.unlockedCharacterCommentOnCharacterUnlock)
+            if (_settings.unlockedCharacterCommentOnCharacterUnlock)
             {
                 selector.addNumber(261, 1); //Okay now; where's the treasure?
                 selector.addNumber(308, 1); //I've got to find the Master Emerald.
@@ -138,7 +138,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                 selector.addNumber(1123, 1); //Here I come; Eggman!
                 selector.addNumber(1787, 1); //Okay! Let's go!
             }
-            if (_options.currentCharacterCommentOnCharacterUnlock)
+            if (_settings.currentCharacterCommentOnCharacterUnlock)
             {
                 if (CurrentCharacter == Characters_Sonic)
                 {
@@ -154,14 +154,14 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                     selector.addNumber(679, 3); //Hey Knuckles; what's up?
                 }
             }
-            if (_options.eggmanCommentOnCharacterUnlock)
+            if (_settings.eggmanCommentOnCharacterUnlock)
             {
                 selector.addNumber(1036, 1); //Kn- Knuckles!
             }
         }
         else if (itemId == 1)
         {
-            if (_options.unlockedCharacterCommentOnCharacterUnlock)
+            if (_settings.unlockedCharacterCommentOnCharacterUnlock)
             {
                 selector.addNumber(206, 1); //Hey; hey; hey!
                 selector.addNumber(242, 1); //Watch and learn!
@@ -171,7 +171,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                 selector.addNumber(410, 1); //This could be fun!
                 selector.addNumber(568, 1); //Just leave it to me!
             }
-            if (_options.currentCharacterCommentOnCharacterUnlock)
+            if (_settings.currentCharacterCommentOnCharacterUnlock)
             {
                 if (CurrentCharacter == Characters_Amy)
                 {
@@ -200,7 +200,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                     selector.addNumber(235, 1); //I wonder where Sonic is.
                 }
             }
-            if (_options.eggmanCommentOnCharacterUnlock)
+            if (_settings.eggmanCommentOnCharacterUnlock)
             {
                 selector.addNumber(431, 1); //Ha ha ha ha! If it isn't Sonic!
                 selector.addNumber(601, 1); //Well; if it isn't my pal; Sonic.
@@ -211,7 +211,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
         }
         else if (itemId == 2)
         {
-            if (_options.unlockedCharacterCommentOnCharacterUnlock)
+            if (_settings.unlockedCharacterCommentOnCharacterUnlock)
             {
                 selector.addNumber(243, 1); //Time to jam!
                 selector.addNumber(275, 1); //Boy; I'm hungry.
@@ -223,7 +223,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                 selector.addNumber(757, 1); //Ready Sonic? Here I come!
                 selector.addNumber(1800, 1); //Here I come; Sonic!
             }
-            if (_options.currentCharacterCommentOnCharacterUnlock)
+            if (_settings.currentCharacterCommentOnCharacterUnlock)
             {
                 if (CurrentCharacter == Characters_Sonic)
                 {
@@ -235,7 +235,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                     selector.addNumber(527, 1); //Ready to roll; champ? Let's go!
                 }
             }
-            if (_options.eggmanCommentOnCharacterUnlock)
+            if (_settings.eggmanCommentOnCharacterUnlock)
             {
                 selector.addNumber(219, 2); //You little fox!
             }
@@ -243,7 +243,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
     }
     else if (item.type == ItemChaosEmerald)
     {
-        if (_options.currentCharacterCommentOnKeyItems)
+        if (_settings.currentCharacterCommentOnKeyItems)
         {
             if (CurrentCharacter == Characters_Knuckles)
             {
@@ -268,7 +268,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                 selector.addNumber(928, 1); //It's a Chaos Emerald!
             }
         }
-        if (_options.eggmanCommentOnKeyItems)
+        if (_settings.eggmanCommentOnKeyItems)
         {
             selector.addNumber(438, 1); //I want all of the Chaos Emeralds.
             selector.addNumber(445, 1); //Come on Chaos; time to eat!
@@ -288,7 +288,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                 selector.addNumber(571, 5); //There's only one more left to find!
             }
         }
-        if (_options.tikalCommentOnKeyItems)
+        if (_settings.tikalCommentOnKeyItems)
         {
             if (_unlockStatus.CountChaosEmeralds() == 7)
             {
@@ -298,11 +298,11 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
     }
     else if (item.type == ItemKey)
     {
-        if (_options.eggmanCommentOnKeyItems)
+        if (_settings.eggmanCommentOnKeyItems)
         {
             selector.addNumber(1231, 1); //Ahh! There it is! Right there!!
         }
-        if (_options.tikalCommentOnKeyItems)
+        if (_settings.tikalCommentOnKeyItems)
         {
             selector.addNumber(1352, 1); //Wow...
             //Boat
@@ -367,7 +367,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
                 //If you have the Stone of Wind; gusts of strong wind are known to blow in the caves.
             }
         }
-        if (_options.currentCharacterCommentOnKeyItems)
+        if (_settings.currentCharacterCommentOnKeyItems)
         {
             if (CurrentCharacter == Characters_Amy)
             {
@@ -517,7 +517,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
     {
         const int voice = selector.getRandomNumber();
         PlayVoice(voice);
-        if (_options.showCommentsSubtitles)
+        if (_settings.showCommentsSubtitles)
         {
             auto it = _commentMap.find(voice);
             if (it != _commentMap.end() && GameMode != GameModes_Menu)
@@ -534,7 +534,7 @@ void ReactionManager::PlayRandomTrapVoice(const FillerType filler)
 {
     WeightedRandomSelector selector;
     selector.addNumber(174, 1); //Get a load of this!
-    if (_options.eggmanCommentOnTrap)
+    if (_settings.eggmanCommentOnTrap)
     {
         selector.addNumber(171, 2); //All systems; full power!
         selector.addNumber(173, 3); //Ah-ha!
@@ -584,7 +584,7 @@ void ReactionManager::PlayRandomTrapVoice(const FillerType filler)
             selector.addNumber(407, 3); //Lock on target men. Ready? Fire!
         }
     }
-    if (_options.otherCharactersCommentOnTrap)
+    if (_settings.otherCharactersCommentOnTrap)
     {
         if (CurrentCharacter != Characters_Amy)
         {
@@ -654,7 +654,7 @@ void ReactionManager::PlayRandomTrapVoice(const FillerType filler)
             selector.addNumber(1511, 1); //All's well that ends well; right?
         }
     }
-    if (_options.currentCharacterReactToTrap)
+    if (_settings.currentCharacterReactToTrap)
     {
         if (CurrentCharacter == Characters_Amy)
         {
@@ -745,7 +745,7 @@ void ReactionManager::PlayRandomTrapVoice(const FillerType filler)
     {
         const int voice = selector.getRandomNumber();
         PlayVoice(voice);
-        if (_options.showCommentsSubtitles)
+        if (_settings.showCommentsSubtitles)
         {
             auto it = _trapCommentMap.find(voice);
             if (it != _trapCommentMap.end() && GameMode != GameModes_Menu)

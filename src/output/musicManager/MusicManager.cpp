@@ -3,8 +3,10 @@
 #include "json/json.h"
 
 
-MusicManager::MusicManager(Options& options): _options(options)
+MusicManager::MusicManager(Options& options, Settings& settings, const HelperFunctions& helperFunctions): _options(options), _settings(settings)
 {
+    this->ProcessSongsFile(helperFunctions, _settings.songsPath);
+    
 }
 
 const SongData* MusicManager::FindSongById(const int songId)
@@ -12,25 +14,6 @@ const SongData* MusicManager::FindSongById(const int songId)
     return _songMap.FindById(songId);
 }
 
-void MusicManager::UpdateMusicSettings(const ShowSongName showSongName, const ShowSongNameForType showSongNameFor,
-                                  const bool includeVanillaSongs, const bool showWarningForMissingFiles,
-                                  const std::string& string,
-                                  const std::string& basicString, const MusicSource musicSource,
-                                  const MusicShuffle musicShuffle,
-                                  const MusicShuffleConsistency musicShuffleConsistency,
-                                  const LifeCapsulesChangeSongs lifeCapsulesChangeSongs)
-{
-    _options.showSongName = showSongName;
-    _options.showSongNameForType = showSongNameFor;
-    _options.includeVanillaSongs = includeVanillaSongs;
-    _options.showWarningForMissingFiles = showWarningForMissingFiles;
-    _options.sa2BAdxPath = string;
-    _options.customAdxPath = basicString;
-    _options.musicSource = musicSource;
-    _options.musicShuffle = musicShuffle;
-    _options.musicShuffleConsistency = musicShuffleConsistency;
-    _options.lifeCapsulesChangeSongs = lifeCapsulesChangeSongs;
-}
 
 
 void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath)
@@ -94,17 +77,17 @@ void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions, cons
     }
 
     //SA2B
-    ParseSongCategory(helperFunctions, root["sa2b"], _options.sa2BAdxPath, SA2BSource);
+    ParseSongCategory(helperFunctions, root["sa2b"], _settings.sa2BAdxPath, SA2BSource);
 
     //Custom    
-    ParseSongCategory(helperFunctions, root["custom"], _options.customAdxPath, CustomSource);
+    ParseSongCategory(helperFunctions, root["custom"], _settings.customAdxPath, CustomSource);
     ParseExtraFiles(helperFunctions);
 }
 
 void MusicManager::ParseExtraFiles(const HelperFunctions& helperFunctions)
 {
     namespace fs = std::filesystem;
-    std::string directoryPath = "./" + _options.customAdxPath;
+    std::string directoryPath = "./" + _settings.customAdxPath;
     if (!fs::exists(directoryPath) || !fs::is_directory(directoryPath))
         return;
 
@@ -117,7 +100,7 @@ void MusicManager::ParseExtraFiles(const HelperFunctions& helperFunctions)
             if (_songMap.FindByCodename(codename) != nullptr)
                 continue;
 
-            std::string fullPath = _options.customAdxPath + codename;
+            std::string fullPath = _settings.customAdxPath + codename;
 
             // Allocate memory for the file path
             fullPath = "../../../" + fullPath;
@@ -150,7 +133,7 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
 
         if (const std::ifstream fin("./" + fullPath + ".adx"); !fin)
         {
-            if (_options.showWarningForMissingFiles && missingFiles.size() < 3)
+            if (_settings.showWarningForMissingFiles && missingFiles.size() < 3)
             {
                 missingFiles.push_back(fullPath + ".adx");
             }
@@ -170,7 +153,7 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
         }
     }
 
-    if (!missingFiles.empty() && _options.showWarningForMissingFiles)
+    if (!missingFiles.empty() && _settings.showWarningForMissingFiles)
     {
         std::string errorMessage = "Warning: Missing song files!\n\n";
         for (const auto& file : missingFiles)
@@ -265,7 +248,7 @@ std::vector<int> MusicManager::GetPossibleSongIds(int const id, std::mt19937& ge
     else if (_options.musicShuffle == MusicShuffleFull)
         allPossibleIds = _songMap.GetAllSongs(songInfo->type == SongTypeJingle);
 
-    if (allPossibleIds.empty() || _options.includeVanillaSongs)
+    if (allPossibleIds.empty() || _settings.includeVanillaSongs)
     {
         // If no songs are found, return the original id
         allPossibleIds.push_back(id);

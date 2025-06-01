@@ -9,10 +9,10 @@
 class ReactionManager
 {
 public:
-    static ReactionManager& Init(Options& options)
+    static ReactionManager& Init(Options& options, Settings& settings)
     {
         if (_instance == nullptr)
-            _instance = new ReactionManager(options);
+            _instance = new ReactionManager(options, settings);
         return *_instance;
     }
     void UpdateUnlockStatus(UnlockStatus newUnlockStatus);
@@ -20,9 +20,10 @@ public:
     void PlayRandomTrapVoice(FillerType filler);
 
 private:
-    explicit ReactionManager(Options& options);
+    explicit ReactionManager(Options& options, Settings& settings);
     inline static ReactionManager* _instance = nullptr;
     Options& _options;
+    Settings& _settings;
     UnlockStatus _unlockStatus;
     std::map<int, std::string> _commentMap = {
         {498, "Long time no see."},

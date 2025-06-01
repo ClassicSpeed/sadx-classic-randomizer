@@ -7,6 +7,7 @@
 #include <vector>
 #include <filesystem>
 #include "../../configuration/Options.h"
+#include "../../configuration/settings/Settings.h"
 
 
 enum SongType
@@ -196,20 +197,14 @@ private:
 class MusicManager
 {
 public:
-    static MusicManager& Init(Options& options)
+    static MusicManager& Init(Options& options, Settings& settings, const HelperFunctions& helperFunctions)
     {
         if (_instance == nullptr)
-            _instance = new MusicManager(options);
+            _instance = new MusicManager(options, settings, helperFunctions);
         return *_instance;
     }
     const SongData* FindSongById(int songId);
-    void UpdateMusicSettings(ShowSongName showSongName, ShowSongNameForType showSongNameFor, bool includeVanillaSongs,
-                             bool showWarningForMissingFiles, const std::string& string, const std::string& basicString,
-                             MusicSource musicSource, MusicShuffle musicShuffle,
-                             MusicShuffleConsistency musicShuffleConsistency,
-                             LifeCapsulesChangeSongs lifeCapsulesChangeSongs);
     void ParseExtraFiles(const HelperFunctions& helperFunctions);
-    void ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath);
     void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath,
                            SongSource songSource);
     SongType GetSongTypeFromString(const std::string& typeStr);
@@ -220,9 +215,12 @@ public:
     int GetNewSongForId(int songId, int currentSongId);
 
 private:
-    MusicManager(Options& options);
+    MusicManager(Options& options, Settings& settings, const HelperFunctions& helperFunctions);
     inline static MusicManager* _instance = nullptr;
     Options& _options;
+    Settings& _settings;
+    
+    void ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath);
     SongMap _songMap;
     std::unordered_map<int, std::vector<int>> _songRandomizationMap;
 };

@@ -35,7 +35,8 @@ float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
     return result;
 }
 
-EventDetector::EventDetector(Randomizer& randomizer, Options& options) : randomizer(randomizer), options(options)
+EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& randomizer) : options(options),
+    settings(settings), randomizer(randomizer)
 {
     PlayCharacterDeathSound_t.Hook(HandlePlayCharacterDeathSound);
     CheckMissionRequirements_t.Hook(HandleCheckMissionRequirements);
@@ -1592,7 +1593,7 @@ FunctionHook<void, int> onPlayJingle(0x425860, [](const int songId)-> void
 {
     const int shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
     onPlayJingle.Original(shuffledSongId);
-    if (eventDetectorPtr->options.showSongNameForType == ShowSongNameForTypeEverything)
+    if (eventDetectorPtr->settings.showSongNameForType == ShowSongNameForTypeEverything)
         eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
 });
 

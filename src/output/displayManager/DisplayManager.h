@@ -17,20 +17,13 @@
 struct LocationData;
 
 
-enum DisplayInGameTracker
-{
-    DisplayTrackerWhenPaused = 0,
-    DisplayTrackerAlwaysOn = 1,
-    DisplayTrackerAlwaysOff = 2,
-};
-
 class DisplayManager
 {
 public:
-    static DisplayManager& Init(Options& options)
+    static DisplayManager& Init(Options& options, Settings& settings)
     {
         if (_instance == nullptr)
-            _instance = new DisplayManager(options);
+            _instance = new DisplayManager(options, settings);
         return *_instance;
     }
 
@@ -47,15 +40,14 @@ public:
     void ShowStatusInformation(std::string information);
     void ShowGoalStatus();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
-    void SetMessageConfiguration(float messageDisplayDuration, int messageFontSize,
-                                 DisplayInGameTracker displayInGameTracker, int itemMessageColor, int chatMessageColor);
     void UpdateVoiceMenuCharacter(int characterVoiceIndex);
     void SetConnected();
 
 private:
-    explicit DisplayManager(Options& options);
+    explicit DisplayManager(Options& options, Settings& settings);
     inline static DisplayManager* _instance = nullptr;
     Options& _options;
+    Settings& _settings;
 
     inline static FunctionHook<void, AdvaModeEnum> _charSelAdvaModeProcedureHook{0x505E60};
     static void OnCharSelAdvaModeProcedure(AdvaModeEnum adventureMode);
@@ -90,20 +82,15 @@ private:
 
     int _startLine = 2;
     size_t _displayCount = 5;
-    int _displayMessageColor = 0xFF33FF33; //Green
     int _displayStatusColor = 0xFF00FFFF; //Cyan
     int _displayEmblemColor = 0xFFF2C600; //Orange
 
     bool _inCharacterSelectScreen;
     bool _connected = false;
 
-    float _displayDuration = 6.0f;
-    unsigned __int16 _debugFontSize = 21;
-    DisplayInGameTracker _displayInGameTracker = DisplayTrackerWhenPaused;
     std::queue<std::string> _itemMessagesQueue;
     std::deque<Message> _currentMessages;
 
-    int _chatMessageColor = 0xFFFFFFFF;
     int _chatDisplayCount = 5;
     std::vector<std::string> _chatMessagesQueue;
     std::clock_t _lastMessageTime = -1;

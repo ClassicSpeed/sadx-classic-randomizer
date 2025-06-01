@@ -22,10 +22,10 @@ enum ConnectionStatus
 class ArchipelagoManager
 {
 public:
-    static ArchipelagoManager& Init(Randomizer& randomizer, Options& options)
+    static ArchipelagoManager& Init(Options& options, Settings& settings, Randomizer& randomizer)
     {
         if (_instance == nullptr)
-            _instance = new ArchipelagoManager(randomizer, options);
+            _instance = new ArchipelagoManager(options, settings, randomizer);
         return *_instance;
     }
 
@@ -38,18 +38,13 @@ public:
     void CheckLocation(int64_t locationId);
     void HandleBouncedPacket(AP_Bounce bouncePacket);
     void CompareModVersion(int serverVersion);
-    void SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
-                                const std::string& serverPassword,
-                                bool showChatMessages, bool showGoalReached,
-                                bool showCountdowns, bool showPlayerConnections);
-
-    std::string playerName;
-    Options& options;
 
 private:
-    explicit ArchipelagoManager(Randomizer& randomizer, Options& options);
+    explicit ArchipelagoManager(Options& options, Settings& settings, Randomizer& randomizer);
     inline static ArchipelagoManager* _instance = nullptr;
-    
+    Options& _options;
+    Settings& _settings;
+
     inline static FunctionHook<BOOL> _loadTrialMenuHook{0x506780};
     static BOOL OnLoadTrialMenu();
 
@@ -59,17 +54,8 @@ private:
     Randomizer& _randomizer;
     mutable std::string _configPath;
     ConnectionStatus _status = ReadyForConnection;
-
-
-    std::string _serverIP;
-    std::string _serverPassword;
     std::string _seedName;
 
     const float _suggestChangingConfigWaitTime = 2.5f;
     std::clock_t _connectedAt = -1;
-
-    bool _showChatMessages = true;
-    bool _showGoalReached = true;
-    bool _showCountdowns = true;
-    bool _showPlayerConnections = false;
 };

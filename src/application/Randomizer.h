@@ -15,14 +15,14 @@
 class Randomizer
 {
 public:
-    static Randomizer& Init(Options& options, DisplayManager& displayManager,
+    static Randomizer& Init(Options& options, Settings& settings, DisplayManager& displayManager,
                             CharacterManager& characterManager, WorldStateManager& menuManager,
                             ItemRepository& itemRepository, LocationRepository& locationRepository,
                             ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager,
                             MusicManager& musicManager, ReactionManager& reactionManager)
     {
         if (_instance == nullptr)
-            _instance = new Randomizer(options, displayManager, characterManager, menuManager,
+            _instance = new Randomizer(options, settings, displayManager, characterManager, menuManager,
                                        itemRepository, locationRepository, archipelagoMessenger,
                                        saveFileManager, musicManager, reactionManager);
         return *_instance;
@@ -34,7 +34,7 @@ public:
     void OnCharacterLoaded() const;
     void OnCharacterSelectScreenLoaded() const;
     std::map<int, LocationData> GetCheckData() const;
-    void OnConnected(std::string playerName);
+    void OnConnected();
     void OnGameCompleted();
     void ShowStatusInformation(std::string information);
     void QueueNewItemMessage(std::string information);
@@ -59,14 +59,14 @@ public:
     void OnSaveFileLoaded();
 
 private:
-    Randomizer(Options& options, DisplayManager& displayManager, CharacterManager& characterManager,
+    Randomizer(Options& options, Settings& settings, DisplayManager& displayManager, CharacterManager& characterManager,
                WorldStateManager& menuManager,
                ItemRepository& itemRepository, LocationRepository& locationRepository,
                ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager, MusicManager& musicManager,
                ReactionManager& reactionManager);
     inline static Randomizer* _instance = nullptr;
-
     Options& _options;
+    Settings& _settings;
     DisplayManager& _displayManager;
     CharacterManager& _characterManager;
     WorldStateManager& _worldStateManager;

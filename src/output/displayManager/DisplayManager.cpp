@@ -2,7 +2,7 @@
 
 #include <random>
 
-DisplayManager::DisplayManager(Options& options): _options(options)
+DisplayManager::DisplayManager(Options& options, Settings& settings): _options(options), _settings(_settings)
 {
     _charSelAdvaModeProcedureHook.Hook(OnCharSelAdvaModeProcedure);
     _cmnAdvaModeProcedureHook.Hook(OnCmnAdvaModeProcedure);
@@ -115,7 +115,7 @@ void DisplayManager::OnFrame()
 
 void DisplayManager::ShowStatusInformation(std::string information)
 {
-    SetDebugFontSize(this->_debugFontSize);
+    SetDebugFontSize(_settings._debugFontSize);
     SetDebugFontColor(_displayStatusColor);
     DisplayDebugString(NJM_LOCATION(2, 1), ("> " + information).c_str());
 }
@@ -130,7 +130,7 @@ void DisplayManager::RemoveExpiredMessages()
 {
     for (auto message = _currentMessages.begin(); message != _currentMessages.end();)
     {
-        if (message->IsExpired(_displayDuration))
+        if (message->IsExpired(_settings._displayDuration))
             message = _currentMessages.erase(message);
         else
             ++message;
@@ -151,20 +151,20 @@ void DisplayManager::DisplayItemMessages() const
     for (size_t i = 0; i < this->_currentMessages.size(); i++)
     {
         const double timePassed = _currentMessages[i].TimePassed();
-        const double timeRemaining = _displayDuration - timePassed;
+        const double timeRemaining = _settings._displayDuration - timePassed;
         if (timeRemaining < 1)
         {
             int alpha = static_cast<int>(timeRemaining * 255);
             //Fix for alpha value being too low and SADX showing it as solid color
             if (alpha < 15)
                 continue;
-            const int fadedColor = _displayMessageColor & 0x00FFFFFF | alpha << 24;
+            const int fadedColor = _settings._displayMessageColor & 0x00FFFFFF | alpha << 24;
             SetDebugFontColor(fadedColor);
         }
         else
-            SetDebugFontColor(this->_displayMessageColor);
+            SetDebugFontColor(_settings._displayMessageColor);
 
-        SetDebugFontSize(this->_debugFontSize);
+        SetDebugFontSize(_settings._debugFontSize);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + i), _currentMessages[i].message.c_str());
     }
 }
@@ -175,7 +175,7 @@ void DisplayManager::DisplayChatMessages()
         return;
 
     const double timePassed = (std::clock() - this->_lastMessageTime) / static_cast<double>(CLOCKS_PER_SEC);
-    const double timeRemaining = _displayDuration - timePassed;
+    const double timeRemaining = _settings._displayDuration - timePassed;
     int alpha = 255;
     if (timeRemaining < 1)
     {
@@ -186,14 +186,14 @@ void DisplayManager::DisplayChatMessages()
             _lastMessageTime = -1;
             return;
         }
-        const int fadedColor = _chatMessageColor & 0x00FFFFFF | alpha << 24;
+        const int fadedColor = _settings._chatMessageColor & 0x00FFFFFF | alpha << 24;
         SetDebugFontColor(fadedColor);
     }
     else
-        SetDebugFontColor(this->_chatMessageColor);
+        SetDebugFontColor(_settings._chatMessageColor);
 
-    const int rows = VerticalResolution / this->_debugFontSize;
-    SetDebugFontSize(this->_debugFontSize);
+    const int rows = VerticalResolution / _settings._debugFontSize;
+    SetDebugFontSize(_settings._debugFontSize);
 
     int longestMessageSize = 0;
     for (size_t i = 0; i < this->_chatMessagesQueue.size(); ++i)
@@ -208,10 +208,10 @@ void DisplayManager::DisplayChatMessages()
     njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
 
     int linesFromTop = rows - 1 - _chatDisplayCount;
-    DrawRect_Queue(1.5f * this->_debugFontSize,
-                   (linesFromTop - 0.5f) * this->_debugFontSize,
-                   (2 + longestMessageSize + 0.5) * this->_debugFontSize,
-                   (linesFromTop + _chatDisplayCount + 0.5) * this->_debugFontSize, 62041.496f,
+    DrawRect_Queue(1.5f * _settings._debugFontSize,
+                   (linesFromTop - 0.5f) * _settings._debugFontSize,
+                   (2 + longestMessageSize + 0.5) * _settings._debugFontSize,
+                   (linesFromTop + _chatDisplayCount + 0.5) * _settings._debugFontSize, 62041.496f,
                    0x5F0000FF & 0x00FFFFFF | alpha / 3 << 24,
                    QueuedModelFlagsB_EnableZWrite);
 
@@ -226,7 +226,7 @@ void DisplayManager::DisplaySongName()
         return;
 
     const double timePassed = (std::clock() - this->_songNameTime) / static_cast<double>(CLOCKS_PER_SEC);
-    const double timeRemaining = _displayDuration - timePassed;
+    const double timeRemaining = _settings._displayDuration - timePassed;
     int alpha = 255;
     if (timeRemaining < 1)
     {
@@ -237,7 +237,7 @@ void DisplayManager::DisplaySongName()
             _songNameTime = -1;
             return;
         }
-        const int fadedColor = _chatMessageColor & 0x00FFFFFF | alpha << 24;
+        const int fadedColor = _settings._chatMessageColor & 0x00FFFFFF | alpha << 24;
         SetDebugFontColor(fadedColor);
     }
     else if (timePassed < 0.25)
@@ -247,25 +247,25 @@ void DisplayManager::DisplaySongName()
         if (alpha < 15)
             return;
 
-        const int fadedColor = _chatMessageColor & 0x00FFFFFF | alpha << 24;
+        const int fadedColor = _settings._chatMessageColor & 0x00FFFFFF | alpha << 24;
         SetDebugFontColor(fadedColor);
     }
     else
-        SetDebugFontColor(this->_chatMessageColor);
+        SetDebugFontColor(_settings._chatMessageColor);
 
-    const int columns = HorizontalResolution / this->_debugFontSize;
-    SetDebugFontSize(this->_debugFontSize);
+    const int columns = HorizontalResolution / _settings._debugFontSize;
+    SetDebugFontSize(_settings._debugFontSize);
 
     DisplayDebugString(NJM_LOCATION(columns/2 - _songName.size() / 2, 4), _songName.c_str());
 
     njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
     njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
 
-    DrawRect_Queue((columns / 2 - _songName.size() / 2 - 0.5f) * this->_debugFontSize,
-                   (4 - 0.5f) * this->_debugFontSize,
+    DrawRect_Queue((columns / 2 - _songName.size() / 2 - 0.5f) * _settings._debugFontSize,
+                   (4 - 0.5f) * _settings._debugFontSize,
                    (columns / 2 + _songName.size() / 2 + (_songName.size() % 2 != 0 ? 1 : 0) + 0.5f) * this->
-                   _debugFontSize,
-                   (4 + 1 + 0.5) * this->_debugFontSize, 62041.496f,
+                   _settings._debugFontSize,
+                   (4 + 1 + 0.5) * _settings._debugFontSize, 62041.496f,
                    0x5F000000 & 0x00FFFFFF | alpha / 3 << 24,
                    QueuedModelFlagsB_EnableZWrite);
 
@@ -281,13 +281,13 @@ void DisplayManager::DisplayGoalStatus()
         return;
 
     const double timePassed = (std::clock() - this->_goalTimer) / static_cast<double>(CLOCKS_PER_SEC);
-    if (timePassed > _displayDuration)
+    if (timePassed > _settings._displayDuration)
     {
         _goalTimer = -1;
         return;
     }
 
-    SetDebugFontSize(this->_debugFontSize);
+    SetDebugFontSize(_settings._debugFontSize);
     SetDebugFontColor(this->_displayEmblemColor);
 
     std::string buffer;
@@ -467,17 +467,6 @@ void DisplayManager::UpdateChecks(const std::map<int, LocationData>& checkData)
     this->_checkData = checkData;
 }
 
-void DisplayManager::SetMessageConfiguration(const float messageDisplayDuration, const int messageFontSize,
-                                             const DisplayInGameTracker displayInGameTracker,
-                                             const int itemMessageColor,
-                                             const int chatMessageColor)
-{
-    this->_displayDuration = messageDisplayDuration;
-    this->_debugFontSize = messageFontSize;
-    this->_displayInGameTracker = displayInGameTracker;
-    this->_displayMessageColor = itemMessageColor;
-    this->_chatMessageColor = chatMessageColor;
-}
 
 void DisplayManager::UpdateVoiceMenuCharacter(const int characterVoiceIndex)
 {
@@ -502,13 +491,13 @@ void DisplayManager::SetConnected()
 
 void DisplayManager::DisplayItemsUnlocked()
 {
-    if (_displayInGameTracker == DisplayTrackerAlwaysOff)
+    if (_settings._displayInGameTracker == DisplayTrackerAlwaysOff)
         return;
 
     if (!_connected)
         return;
 
-    if (_displayInGameTracker == DisplayTrackerWhenPaused)
+    if (_settings._displayInGameTracker == DisplayTrackerWhenPaused)
     {
         //Show Items Unlock on Pause menu or Character select screen
         if (!(GameState == MD_GAME_PAUSE || (GameMode == GameModes_Menu && this->_inCharacterSelectScreen)))
@@ -526,11 +515,11 @@ void DisplayManager::DisplayItemsUnlocked()
         }
     }
 
-    SetDebugFontSize(this->_debugFontSize);
+    SetDebugFontSize(_settings._debugFontSize);
     SetDebugFontColor(0x88FFFFFF);
 
-    const int rows = VerticalResolution / this->_debugFontSize;
-    const int columns = HorizontalResolution / this->_debugFontSize;
+    const int rows = VerticalResolution / _settings._debugFontSize;
+    const int columns = HorizontalResolution / _settings._debugFontSize;
     const std::string modVersionString = "v" + std::to_string(SADX_AP_VERSION_MAJOR) + "." +
         std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH);
     DisplayDebugString(NJM_LOCATION(columns-7, rows-2), modVersionString.c_str());

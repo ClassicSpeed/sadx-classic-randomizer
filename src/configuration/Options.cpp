@@ -1,12 +1,10 @@
 #include "Options.h"
 
-//TODO: Move to helpers?
-int Clamp(const int value, const int min, const int max)
+
+Options::Options(Settings& settings): _settings(settings)
 {
-    if (value < min) return min;
-    if (value > max) return max;
-    return value;
 }
+
 
 void Options::GoalRequiresLevels(const int newGoalRequiresLevels)
 {
@@ -193,9 +191,9 @@ void Options::SetEntranceRandomizer(const int enableEntranceRandomizer)
 
 void Options::SetDeathLink(const int newDeathLinkActive)
 {
-    if (this->deathLinkOverride == DeathLinkForceEnabled)
+    if (_settings.deathLinkOverride == DeathLinkForceEnabled)
         this->deathLinkActive = true;
-    else if (this->deathLinkOverride == DeathLinkForceDisabled)
+    else if (_settings.deathLinkOverride == DeathLinkForceDisabled)
         this->deathLinkActive = false;
     else
         this->deathLinkActive = newDeathLinkActive;
@@ -212,10 +210,10 @@ void Options::ReceiveDeathLinkChance(const int newReceiveDeathLinkChance)
     
 void Options::SetRingLink(const int newRingLinkActive)
 {
-    if (this->ringLinkOverride == RingLinkForceEnabled
-        || this->ringLinkOverride == RingLinkForceEnabledHard)
+    if (_settings.ringLinkOverride == RingLinkForceEnabled
+        || _settings.ringLinkOverride == RingLinkForceEnabledHard)
         this->ringLinkActive = true;
-    else if (this->ringLinkOverride == RingLinkForceDisabled)
+    else if (_settings.ringLinkOverride == RingLinkForceDisabled)
         this->ringLinkActive = false;
     else
         this->ringLinkActive = newRingLinkActive;
@@ -228,10 +226,10 @@ void Options::SetCasinopolisRingLink(const int newCasinopolisRingLink)
 
 void Options::SetHardRingLink(const int newHardRingLinkActive)
 {
-    if (this->ringLinkOverride == RingLinkForceEnabledHard)
+    if (_settings.ringLinkOverride == RingLinkForceEnabledHard)
         this->hardRingLinkActive = true;
-    else if (this->ringLinkOverride == RingLinkForceDisabled
-        || this->ringLinkOverride == RingLinkForceEnabled)
+    else if (_settings.ringLinkOverride == RingLinkForceDisabled
+        || _settings.ringLinkOverride == RingLinkForceEnabled)
         this->hardRingLinkActive = false;
     else
         this->hardRingLinkActive = newHardRingLinkActive;
@@ -239,9 +237,9 @@ void Options::SetHardRingLink(const int newHardRingLinkActive)
 
 void Options::SetTrapLink(const int newTrapLinkActive)
 {
-    if (this->trapLinkOverride == TrapLinkForceEnabled)
+    if (_settings.trapLinkOverride == TrapLinkForceEnabled)
         this->trapLinkActive = true;
-    else if (this->trapLinkOverride == TrapLinkForceDisabled)
+    else if (_settings.trapLinkOverride == TrapLinkForceDisabled)
         this->trapLinkActive = false;
     else
         this->trapLinkActive = newTrapLinkActive;
@@ -249,15 +247,15 @@ void Options::SetTrapLink(const int newTrapLinkActive)
 
 void Options::SetRingLoss(const int newRingLoss)
 {
-    if (this->ringLossOverride == RingLossDefault)
+    if (_settings.ringLossOverride == RingLossDefault)
         this->ringLoss = static_cast<RingLoss>(newRingLoss);
-    else if (this->ringLossOverride == RingLossForceClassic)
+    else if (_settings.ringLossOverride == RingLossForceClassic)
         this->ringLoss = Classic;
-    else if (this->ringLossOverride == RingLossForceModern)
+    else if (_settings.ringLossOverride == RingLossForceModern)
         this->ringLoss = Modern;
-    else if (this->ringLossOverride == RingLossForceOhko)
+    else if (_settings.ringLossOverride == RingLossForceOhko)
         this->ringLoss = OneHitKnockOut;
-    else if (this->ringLossOverride == RingLossForceOhkoNoShields)
+    else if (_settings.ringLossOverride == RingLossForceOhkoNoShields)
         this->ringLoss = OneHitKnockOutNoShields;
 }
 
@@ -303,21 +301,28 @@ void Options::UnifyEggHornet(const int newUnifyEggHornet)
 
 void Options::SetMusicSource(const int newMusicSource)
 {
-    if (this->musicSource == MusicSourceNone)
+    if (_settings.musicSource == MusicSourceNone)
         this->musicSource = static_cast<MusicSource>(newMusicSource);
+    else
+        this->musicSource = _settings.musicSource;
 }
 
 void Options::SetMusicShuffle(const int newMusicShuffle)
 {
-    if (this->musicShuffle == MusicShuffleNone)
+    if (_settings.musicShuffle == MusicShuffleNone)
         this->musicShuffle = static_cast<MusicShuffle>(newMusicShuffle);
+    else
+        this->musicShuffle = _settings.musicShuffle;
+    
 }
 
 void Options::SetMusicShuffleConsistency(const int newMusicShuffleConsistency)
 {
-    if (this->musicShuffleConsistency == MusicShuffleConsistencyNone)
+    if (_settings.musicShuffleConsistency == MusicShuffleConsistencyNone)
         this->musicShuffleConsistency = static_cast<MusicShuffleConsistency>(
             newMusicShuffleConsistency);
+    else
+        this->musicShuffleConsistency = _settings.musicShuffleConsistency;
 }
 
 void Options::SetMusicShuffleSeed(const int newMusicShuffleSeed)
@@ -327,10 +332,12 @@ void Options::SetMusicShuffleSeed(const int newMusicShuffleSeed)
 
 void Options::SetLifeCapsulesChangeSongs(const int newLifeCapsulesChangeSongs)
 {
-    if (this->lifeCapsulesChangeSongs == LifeCapsulesChangeSongsNone)
+    if (_settings.lifeCapsulesChangeSongs == LifeCapsulesChangeSongsNone)
         this->lifeCapsulesChangeSongs = newLifeCapsulesChangeSongs
                                             ? LifeCapsulesChangeSongsEnabled
                                             : LifeCapsulesChangeSongsDisabled;
+    else
+        this->lifeCapsulesChangeSongs = _settings.lifeCapsulesChangeSongs;
 }
 
 
@@ -369,19 +376,19 @@ void Options::SetReverseControlTrapDuration(const int reverseControlTrapDuration
     this->reverseControlsDuration = static_cast<float>(reverseControlTrapDuration);
 }
 
-void Options::SetTrapsOnAdventureFields(const int trapsOnAdventureFields)
+void Options::SetTrapsOnAdventureFields(const int newTrapsOnAdventureFields)
 {
-    this->trapsOnAdventureFields = trapsOnAdventureFields > 0;
+    this->trapsOnAdventureFields = newTrapsOnAdventureFields > 0;
 }
 
-void Options::SetTrapsOnBossFights(const int trapsOnBossFights)
+void Options::SetTrapsOnBossFights(const int newTrapsOnBossFights)
 {
-    this->trapsOnBossFights = trapsOnBossFights > 0;
+    this->trapsOnBossFights = newTrapsOnBossFights > 0;
 }
 
-void Options::SetTrapsOnPerfectChaosFight(const int trapsOnPerfectChaosFight)
+void Options::SetTrapsOnPerfectChaosFight(const int newTrapsOnPerfectChaosFight)
 {
-    this->trapsOnPerfectChaosFight = trapsOnPerfectChaosFight > 0;
+    this->trapsOnPerfectChaosFight = newTrapsOnPerfectChaosFight > 0;
 }
 
 
@@ -664,42 +671,4 @@ bool Options::IsTrapEnabled(const FillerType filler) const
     return false;
 }
 
-void Options::SetCharacterVoiceReactions(const bool eggmanCommentOnCharacterUnlock,
-                                         const bool currentCharacterCommentOnCharacterUnlock,
-                                         const bool unlockedCharacterCommentOnCharacterUnlock,
-                                         const bool eggmanCommentOnKeyItems, const bool tikalCommentOnKeyItems,
-                                         const bool currentCharacterCommentOnKeyItems,
-                                         const bool showCommentsSubtitles)
-{
-    this->eggmanCommentOnCharacterUnlock = eggmanCommentOnCharacterUnlock;
-    this->currentCharacterCommentOnCharacterUnlock = currentCharacterCommentOnCharacterUnlock;
-    this->unlockedCharacterCommentOnCharacterUnlock = unlockedCharacterCommentOnCharacterUnlock;
-    this->eggmanCommentOnKeyItems = eggmanCommentOnKeyItems;
-    this->tikalCommentOnKeyItems = tikalCommentOnKeyItems;
-    this->currentCharacterCommentOnKeyItems = currentCharacterCommentOnKeyItems;
-    this->showCommentsSubtitles = showCommentsSubtitles;
-}
-
-
-void Options::SetCharacterVoiceReactions(const bool eggmanCommentOnTrap,
-                                         const bool otherCharactersCommentOnTrap,
-                                         const bool currentCharacterReactToTrap,
-                                         const bool showCommentsSubtitles)
-{
-    this->eggmanCommentOnTrap = eggmanCommentOnTrap;
-    this->otherCharactersCommentOnTrap = otherCharactersCommentOnTrap;
-    this->currentCharacterReactToTrap = currentCharacterReactToTrap;
-    this->showCommentsSubtitles = showCommentsSubtitles;
-}
-
-void Options::SetLinksOverrides(const DeathLinkOverride newDeathLinkOverride,
-                                     const RingLinkOverride newRingLinkOverride,
-                                     const RingLossOverride newRingLossOverride,
-                                     const TrapLinkOverride newTrapLinkOverride)
-{
-    this->deathLinkOverride = newDeathLinkOverride;
-    this->ringLinkOverride = newRingLinkOverride;
-    this->ringLossOverride = newRingLossOverride;
-    this->trapLinkOverride = newTrapLinkOverride;
-}
 

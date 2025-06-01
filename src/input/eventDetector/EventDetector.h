@@ -57,10 +57,10 @@ enum HomingAttackIndicator
 class EventDetector
 {
 public:
-    static EventDetector& Init(Randomizer& randomizer, Options& options)
+    static EventDetector& Init(Options& options, Settings& settings, Randomizer& randomizer)
     {
         if (_instance == nullptr)
-            _instance = new EventDetector(randomizer, options);
+            _instance = new EventDetector(options, settings, randomizer);
         return *_instance;
     }
 
@@ -79,8 +79,9 @@ public:
     void OnTwinkleCircuitCompleted(int character);
     void ShuffleSong();
 
-    Randomizer& randomizer;
     Options& options;
+    Settings& settings;
+    Randomizer& randomizer;
 
     LastStoryState lastStoryState = LastStoryNotStarted;
     bool completeMultipleLevelMissions = true;
@@ -139,6 +140,6 @@ public:
     };
 
 private:
-    explicit EventDetector(Randomizer& randomizer, Options& options);
+    explicit EventDetector(Options& options, Settings& settings, Randomizer& randomizer);
     inline static EventDetector* _instance = nullptr;
 };

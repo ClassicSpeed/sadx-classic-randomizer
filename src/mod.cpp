@@ -15,14 +15,13 @@
 
 constexpr int SYNC_RATE = 10;
 
-void LoadArchipelagoSettings(const IniFile* settingsIni);
-void LoadDisplayMessageSettings(const IniFile* settingsIni);
 void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperFunctions);
 void ReplaceEmblemImage(const char* path, const HelperFunctions& helperFunctions);
 
 extern "C" {
 int syncTimer = 0;
 
+Settings* settings = nullptr;
 Options* options = nullptr;
 ReactionManager* reactionManager = nullptr;
 DisplayManager* displayManager = nullptr;
@@ -65,34 +64,30 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
                    L"SADX Archipelago Error: Incompatible Mod", MB_OK | MB_ICONERROR);
         exit(0);
     }
+    const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");
 
-    options = new Options();
-    reactionManager = &ReactionManager::Init(*options);
-    displayManager = &DisplayManager::Init(*options);
+    if (!settingsIni)
+        return randomizer->ShowStatusInformation("Invalid Settings INI");
+
+    settings = &Settings::Init(settingsIni);
+    options = &Options::Init(*settings);
+    reactionManager = &ReactionManager::Init(*options, *settings);
+    displayManager = &DisplayManager::Init(*options, *settings);
     characterManager = &CharacterManager::Init(*options, *reactionManager);
     worldStateManager = &WorldStateManager::Init(*options);
     itemRepository = &ItemRepository::Init();
     checkRepository = &LocationRepository::Init();
     archipelagoMessenger = &ArchipelagoMessenger::Init(*options);
     saveFileManager = &SaveFileManager::Init();
-    musicManager = &MusicManager::Init(*options);
-    randomizer = &Randomizer::Init(*options, *displayManager, *characterManager, *worldStateManager, *itemRepository,
+    musicManager = &MusicManager::Init(*options, *settings, helperFunctions);
+    randomizer = &Randomizer::Init(*options, *settings, *displayManager, *characterManager, *worldStateManager,
+                                   *itemRepository,
                                    *checkRepository, *archipelagoMessenger, *saveFileManager, *musicManager,
                                    *reactionManager);
     cheatsManager = &CheatsManager::Init();
-    archipelagoManager = &ArchipelagoManager::Init(*randomizer, *options);
-    eventDetector = &EventDetector::Init(*randomizer, *options);
+    archipelagoManager = &ArchipelagoManager::Init(*options, *settings, *randomizer);
+    eventDetector = &EventDetector::Init(*options, *settings,*randomizer);
     characterLoadingDetector = &CharacterLoadingDetector::Init(*randomizer);
-
-
-    const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");
-
-    if (!settingsIni)
-        return randomizer->ShowStatusInformation("Invalid Settings INI");
-
-    LoadArchipelagoSettings(settingsIni);
-
-    LoadDisplayMessageSettings(settingsIni);
 
     LoadGameSettings(settingsIni, helperFunctions);
 
@@ -127,58 +122,10 @@ __declspec(dllexport) void __cdecl OnFrame()
     else
         syncTimer--;
 }
-    
+
 __declspec(dllexport) ModInfo SADXModInfo = {ModLoaderVer}; // This is needed for the Mod Loader to recognize the DLL.
 }
 
-
-void LoadArchipelagoSettings(const IniFile* settingsIni)
-{
-    const std::string serverIp = settingsIni->getString("AP", "IP");
-    const std::string playerName = settingsIni->getString("AP", "PlayerName");
-    const std::string serverPassword = settingsIni->getString("AP", "Password");
-
-    const int deathLinkOverride = settingsIni->getInt("AP", "DeathLinkOverride", 0);
-    const int ringLinkOverride = settingsIni->getInt("AP", "RingLinkOverride", 0);
-    const int ringLossOverride = settingsIni->getInt("AP", "RingLossOverride", 0);
-    const int trapLinkOverride = settingsIni->getInt("AP", "TrapLinkOverride", 0);
-
-
-    const bool showChatMessages = settingsIni->getBool("Messages", "ShowChatMessages", true);
-    const bool showGoalReached = settingsIni->getBool("Messages", "ShowGoalReached", true);
-    const bool showCountdowns = settingsIni->getBool("Messages", "ShowCountdowns", true);
-    const bool showPlayerConnections = settingsIni->getBool("Messages", "ShowPlayerConnections", false);
-
-    options->SetLinksOverrides(static_cast<DeathLinkOverride>(deathLinkOverride),
-                               static_cast<RingLinkOverride>(ringLinkOverride),
-                               static_cast<RingLossOverride>(ringLossOverride),
-                               static_cast<TrapLinkOverride>(trapLinkOverride));
-    archipelagoManager->SetServerConfiguration(serverIp, playerName, serverPassword, showChatMessages, showGoalReached,
-                                               showCountdowns, showPlayerConnections);
-}
-
-void LoadDisplayMessageSettings(const IniFile* settingsIni)
-{
-    const float messageDisplayDuration = settingsIni->getFloat("Messages", "MessageDisplayDuration", 5.0f);
-    const int messageFontSize = settingsIni->getInt("Messages", "MessageFontSize", 21);
-    const int displayInGameTracker = settingsIni->getInt("Messages", "InGameTracker", 0);
-    const int itemMessageColorR = settingsIni->getInt("Messages", "ItemMessageColorR", 33);
-    const int itemMessageColorG = settingsIni->getInt("Messages", "ItemMessageColorG", 255);
-    const int itemMessageColorB = settingsIni->getInt("Messages", "ItemMessageColorB", 33);
-
-
-    const int chatMessageColorR = settingsIni->getInt("Messages", "ChatMessageColorR", 255);
-    const int chatMessageColorG = settingsIni->getInt("Messages", "ChatMessageColorG", 255);
-    const int chatMessageColorB = settingsIni->getInt("Messages", "ChatMessageColorB", 255);
-
-
-    displayManager->SetMessageConfiguration(messageDisplayDuration, messageFontSize,
-                                            static_cast<DisplayInGameTracker>(displayInGameTracker),
-                                            (0xFF << 24) | itemMessageColorR << 16 | itemMessageColorG << 8 |
-                                            itemMessageColorB,
-                                            (0xFF << 24) | chatMessageColorR << 16 | chatMessageColorG << 8 |
-                                            chatMessageColorB);
-}
 
 void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperFunctions)
 {
@@ -198,23 +145,6 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
 
     const int voiceMenuIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
 
-    const bool showCommentsSubtitles = settingsIni->getBool("CharacterVoiceReactions",
-                                                            "DisplaySubtitlesForVoiceReactions", true);
-    const bool eggmanCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnTrap", true);
-    const bool otherCharactersCommentOnTrap = settingsIni->getBool("CharacterVoiceReactions", "OtherCharactersOnTrap",
-                                                                   true);
-    const bool currentCharacterReactToTrap = settingsIni->getBool("CharacterVoiceReactions", "CurrentCharacterOnTrap",
-                                                                  true);
-
-    const bool eggmanCommentOnCharacterUnlock = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnUnlock", true);
-    const bool currentCharacterCommentOnCharacterUnlock = settingsIni->getBool(
-        "CharacterVoiceReactions", "CurrentCharacterOnUnlock", true);
-    const bool unlockedCharacterCommentOnCharacterUnlock = settingsIni->getBool(
-        "CharacterVoiceReactions", "UnlockedCharactersOnUnlock", true);
-    const bool eggmanCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "EggmanOnKeyItem", true);
-    const bool tikalCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions", "TikalOnKeyItem", true);
-    const bool currentCharacterCommentOnKeyItems = settingsIni->getBool("CharacterVoiceReactions",
-                                                                        "CurrentCharacterOnKeyItem", true);
 
     const int chaoStatsMultiplier = settingsIni->getInt("Chao", "StatGainMultiplier");
 
@@ -253,18 +183,7 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
         progressionIndicatorB;
 
 
-    const std::string songsPath = settingsIni->getString("MusicShuffle", "SongsPath", "mods/SADX_Archipelago/");
-    const std::string sa2BAdxPath = settingsIni->getString("MusicShuffle", "Sa2bADXpath",
-                                                           "../Sonic Adventure 2/resource/gd_PC/ADX/");
-    const std::string customAdxPath = settingsIni->getString("MusicShuffle", "CustomADXpath", "songs/custom/");
-    const int showSongName = settingsIni->getInt("MusicShuffle", "ShowSongName", 0);
-    const int showSongNameForType = settingsIni->getInt("MusicShuffle", "ShowSongNameForType", 0);
-    const bool includeVanillaSongs = settingsIni->getBool("MusicShuffle", "IncludeVanilla", false);
-    const bool showWarningForMissingFiles = settingsIni->getBool("MusicShuffle", "ShowWarningForMissingFiles", false);
-    const int musicSource = settingsIni->getInt("MusicShuffle", "MusicSourceOverride", -1);
-    const int musicShuffle = settingsIni->getInt("MusicShuffle", "MusicShuffleOverride", -1);
-    const int musicShuffleConsistency = settingsIni->getInt("MusicShuffle", "MusicShuffleConsistencyOverride", -1);
-    const int lifeCapsulesChangeSongs = settingsIni->getInt("MusicShuffle", "LifeCapsulesChangeSongsOverride", -1);
+  
 
     displayManager->UpdateVoiceMenuCharacter(voiceMenuIndex);
     cheatsManager->SetCheatsConfiguration(autoSkipCutscenes, skipCredits, noLifeLossOnRestart);
@@ -280,22 +199,7 @@ void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperF
     worldStateManager->SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
     worldStateManager->SetChaoStatsMultiplier(chaoStatsMultiplier);
     characterManager->SetExtendRingCapacity(extendRingCapacity);
-    options->SetCharacterVoiceReactions(eggmanCommentOnTrap, otherCharactersCommentOnTrap,
-                                        currentCharacterReactToTrap, showCommentsSubtitles);
-    options->SetCharacterVoiceReactions(eggmanCommentOnCharacterUnlock, currentCharacterCommentOnCharacterUnlock,
-                                        unlockedCharacterCommentOnCharacterUnlock, eggmanCommentOnKeyItems,
-                                        tikalCommentOnKeyItems, currentCharacterCommentOnKeyItems,
-                                        showCommentsSubtitles);
-
-    musicManager->UpdateMusicSettings(static_cast<ShowSongName>(showSongName),
-                                      static_cast<ShowSongNameForType>(showSongNameForType), includeVanillaSongs,
-                                      showWarningForMissingFiles, sa2BAdxPath, customAdxPath,
-                                      static_cast<MusicSource>(musicSource), static_cast<MusicShuffle>(musicShuffle),
-                                      static_cast<MusicShuffleConsistency>(musicShuffleConsistency),
-                                      static_cast<LifeCapsulesChangeSongs>(lifeCapsulesChangeSongs));
-
-
-    musicManager->ProcessSongsFile(helperFunctions, songsPath);
+    
 }
 
 #define ReplacePNG_Common(a) do { \
