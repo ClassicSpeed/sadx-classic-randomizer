@@ -1,6 +1,6 @@
 #pragma once
 #include "../../pch.h"
-#include "../../configuration/Options.h"
+#include "../../configuration/options/Options.h"
 
 class ArchipelagoMessenger
 {

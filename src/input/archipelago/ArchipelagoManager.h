@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "../../application/Randomizer.h"
-#include "../../configuration/Options.h"
+#include "../../configuration/options/Options.h"
 
 #define AP_REGISTER_INT_CALLBACK(key, method) \
 AP_RegisterSlotDataIntCallback(key, [this](const int value) { method(value); })

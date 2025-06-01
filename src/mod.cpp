@@ -40,35 +40,7 @@ CharacterLoadingDetector* characterLoadingDetector = nullptr;
 
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
 {
-    if (helperFunctions.Mods->find_by_name("Steam Achievements Mod"))
-    {
-        MessageBox(WindowHandle,
-                   L"The Steam Achievements Mod is not compatible with the SADX Archipelago Randomizer.\n\nPlease disable it and try again.",
-                   L"SADX Archipelago Error: Incompatible Mod", MB_OK | MB_ICONERROR);
-        exit(0);
-    }
-
-    if (helperFunctions.Mods->find_by_name("Fixes, Adds, and Beta Restores"))
-    {
-        MessageBox(WindowHandle,
-                   L"The Fixes, Adds, and Beta Restores Mod is not compatible with the SADX Archipelago Randomizer.\n\nPlease disable it and try again.",
-                   L"SADX Archipelago Error: Incompatible Mod", MB_OK | MB_ICONERROR);
-        exit(0);
-    }
-
-    if (helperFunctions.Mods->find_by_name("SADX:FE"))
-    {
-        MessageBox(WindowHandle,
-                   L"The SADX:FE Mod is not compatible with the SADX Archipelago Randomizer.\n\nPlease disable it and try again.",
-                   L"SADX Archipelago Error: Incompatible Mod", MB_OK | MB_ICONERROR);
-        exit(0);
-    }
-    const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");
-
-    if (!settingsIni)
-        return randomizer->ShowStatusInformation("Invalid Settings INI");
-
-    settings = &Settings::Init(settingsIni);
+    settings = &Settings::Init(path, helperFunctions);
     options = &Options::Init(*settings);
     reactionManager = &ReactionManager::Init(*options, *settings);
     displayManager = &DisplayManager::Init(*options, *settings);

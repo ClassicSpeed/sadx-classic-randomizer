@@ -9,7 +9,7 @@
 #include "../output/saveFileManager/SaveFileManager.h"
 #include "../output/musicManager/MusicManager.h"
 #include "../output/reactionManager/ReactionManager.h"
-#include "../configuration/Options.h"
+#include "../configuration/options/Options.h"
 #include "structs/LocationData.h"
 
 class Randomizer

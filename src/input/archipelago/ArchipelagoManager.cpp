@@ -193,8 +193,8 @@ void ArchipelagoManager::CompareModVersion(const int serverVersion)
 
 void ArchipelagoManager::Connect()
 {
-    AP_Init(_settings._serverIP.c_str(), "Sonic Adventure DX", _settings.playerName.c_str(),
-            _settings._serverPassword.c_str());
+    AP_Init(_settings.serverIp.c_str(), "Sonic Adventure DX", _settings.playerName.c_str(),
+            _settings.serverPassword.c_str());
 
     AP_SetDeathLinkSupported(false);
     AP_SetItemClearCallback([this]() { ResetItems(); });
@@ -404,25 +404,25 @@ void ArchipelagoManager::EnqueueMessage(AP_Message* msg)
         }
     case AP_MessageType::Chat:
         {
-            if (_settings._showChatMessages)
+            if (_settings.showChatMessages)
                 _randomizer.QueueNewChatMessage(msg->text);
             return;
         }
     case AP_MessageType::Countdown:
         {
-            if (_settings._showCountdowns)
+            if (_settings.showCountdowns)
                 _randomizer.QueueNewChatMessage(msg->text);
             return;
         }
     case AP_MessageType::PlayerConnection:
         {
-            if (_settings._showPlayerConnections)
+            if (_settings.showPlayerConnections)
                 _randomizer.QueueNewChatMessage(msg->text);
             return;
         }
     case AP_MessageType::GoalReached:
         {
-            if (_settings._showGoalReached)
+            if (_settings.showGoalReached)
                 _randomizer.QueueNewChatMessage(msg->text);
             return;
         }

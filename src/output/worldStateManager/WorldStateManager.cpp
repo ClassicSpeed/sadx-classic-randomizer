@@ -420,7 +420,7 @@ void WorldStateManager::ShowLevelEntranceArrows()
 {
     if (!this->options.entranceRandomizer)
         return;
-    if (!this->settings._showEntranceIndicators)
+    if (!this->settings.showEntranceIndicators)
         return;
     for (LevelArrow levelArrow : _levelArrows)
     {

@@ -2,7 +2,7 @@
 
 #include "../../pch.h"
 #include <algorithm>
-#include "../../configuration/Options.h"
+#include "../../configuration/options/Options.h"
 #include "../../application/structs/LevelEntrances.h"
 #include "../../application/structs/UnlockStatus.h"
 #include "../../application/structs/VisitedLevels.h"

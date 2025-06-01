@@ -1,10 +1,44 @@
 #include "Settings.h"
 
-Settings::Settings(const IniFile* settingsIni)
+Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
 {
+    if (helperFunctions.Mods->find_by_name("Steam Achievements Mod"))
+    {
+        MessageBox(WindowHandle,
+                   L"The Steam Achievements Mod is not compatible with the SADX Archipelago Randomizer.\n\nPlease disable it and try again.",
+                   L"SADX Archipelago Error: Incompatible Mod", MB_OK | MB_ICONERROR);
+        exit(0);
+    }
+
+    if (helperFunctions.Mods->find_by_name("Fixes, Adds, and Beta Restores"))
+    {
+        MessageBox(WindowHandle,
+                   L"The Fixes, Adds, and Beta Restores Mod is not compatible with the SADX Archipelago Randomizer.\n\nPlease disable it and try again.",
+                   L"SADX Archipelago Error: Incompatible Mod", MB_OK | MB_ICONERROR);
+        exit(0);
+    }
+
+    if (helperFunctions.Mods->find_by_name("SADX:FE"))
+    {
+        MessageBox(WindowHandle,
+                   L"The SADX:FE Mod is not compatible with the SADX Archipelago Randomizer.\n\nPlease disable it and try again.",
+                   L"SADX Archipelago Error: Incompatible Mod", MB_OK | MB_ICONERROR);
+        exit(0);
+    }
+
+    const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");
+    if (!settingsIni)
+    {
+        MessageBox(WindowHandle,
+                   L"Your config.ini file is missing or invalid.\n\nPlease ensure that you have a valid config.ini file in the mod directory.",
+                   L"SADX Archipelago Error: Invalid settings file", MB_OK | MB_ICONERROR);
+        exit(0);
+    }
+
+
     this->playerName = Trim(settingsIni->getString("AP", "PlayerName"));
-    this->_serverIP = Trim(settingsIni->getString("AP", "IP"));
-    this->_serverPassword = settingsIni->getString("AP", "Password");
+    this->serverIp = Trim(settingsIni->getString("AP", "IP"));
+    this->serverPassword = settingsIni->getString("AP", "Password");
 
     this->deathLinkOverride = static_cast<DeathLinkOverride>(settingsIni->getInt("AP", "DeathLinkOverride", 0));
     this->ringLinkOverride = static_cast<RingLinkOverride>(settingsIni->getInt("AP", "RingLinkOverride", 0));
@@ -12,25 +46,25 @@ Settings::Settings(const IniFile* settingsIni)
     this->trapLinkOverride = static_cast<TrapLinkOverride>(settingsIni->getInt("AP", "TrapLinkOverride", 0));
 
 
-    this->_displayDuration = settingsIni->getFloat("Messages", "MessageDisplayDuration", 5.0f);
-    this->_debugFontSize = settingsIni->getInt("Messages", "MessageFontSize", 21);
-    this->_displayInGameTracker = static_cast<DisplayInGameTracker>(settingsIni->
+    this->displayDuration = settingsIni->getFloat("Messages", "MessageDisplayDuration", 5.0f);
+    this->debugFontSize = settingsIni->getInt("Messages", "MessageFontSize", 21);
+    this->displayInGameTracker = static_cast<DisplayInGameTracker>(settingsIni->
         getInt("Messages", "InGameTracker", 0));
     const int itemMessageColorR = settingsIni->getInt("Messages", "ItemMessageColorR", 33);
     const int itemMessageColorG = settingsIni->getInt("Messages", "ItemMessageColorG", 255);
     const int itemMessageColorB = settingsIni->getInt("Messages", "ItemMessageColorB", 33);
-    this->_displayMessageColor = (0xFF << 24) | itemMessageColorR << 16 | itemMessageColorG << 8 | itemMessageColorB;
+    this->displayMessageColor = (0xFF << 24) | itemMessageColorR << 16 | itemMessageColorG << 8 | itemMessageColorB;
 
     const int chatMessageColorR = settingsIni->getInt("Messages", "ChatMessageColorR", 255);
     const int chatMessageColorG = settingsIni->getInt("Messages", "ChatMessageColorG", 255);
     const int chatMessageColorB = settingsIni->getInt("Messages", "ChatMessageColorB", 255);
-    this->_chatMessageColor = (0xFF << 24) | chatMessageColorR << 16 | chatMessageColorG << 8 | chatMessageColorB;
+    this->chatMessageColor = (0xFF << 24) | chatMessageColorR << 16 | chatMessageColorG << 8 | chatMessageColorB;
 
 
-    this->_showChatMessages = settingsIni->getBool("Messages", "ShowChatMessages", true);
-    this->_showGoalReached = settingsIni->getBool("Messages", "ShowGoalReached", true);
-    this->_showCountdowns = settingsIni->getBool("Messages", "ShowCountdowns", true);
-    this->_showPlayerConnections = settingsIni->getBool("Messages", "ShowPlayerConnections", false);
+    this->showChatMessages = settingsIni->getBool("Messages", "ShowChatMessages", true);
+    this->showGoalReached = settingsIni->getBool("Messages", "ShowGoalReached", true);
+    this->showCountdowns = settingsIni->getBool("Messages", "ShowCountdowns", true);
+    this->showPlayerConnections = settingsIni->getBool("Messages", "ShowPlayerConnections", false);
 
 
     this->showCommentsSubtitles = settingsIni->getBool("CharacterVoiceReactions",
@@ -67,23 +101,21 @@ Settings::Settings(const IniFile* settingsIni)
         "MusicShuffle", "LifeCapsulesChangeSongsOverride", -1));
 
 
-    
-                                                                  
     this->autoSkipCutscenes = settingsIni->getBool("GameSettings", "AutoSkipCutscenes", true);
     this->skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
     this->noLifeLossOnRestart = settingsIni->getBool("GameSettings", "NoLifeLossOnRestart", true);
-    
+
     this->extendRingCapacity = settingsIni->getBool("GameSettings", "ExtendRingCapacity", false);
 
-    
+
     this->eggCarrierTransformationCutscene = settingsIni->getBool("GameSettings",
-                                                                       "EggCarrierTransformationCutscene", true);
+                                                                  "EggCarrierTransformationCutscene", true);
 
 
-    this-> _showEntranceIndicators = settingsIni->getBool("GameSettings",
-                                                             "ShowEntranceIndicators", true);
+    this->showEntranceIndicators = settingsIni->getBool("GameSettings",
+                                                        "ShowEntranceIndicators", true);
 
-    this-> chaoStatsMultiplier = settingsIni->getInt("Chao", "StatGainMultiplier", 1);
+    this->chaoStatsMultiplier = settingsIni->getInt("Chao", "StatGainMultiplier", 1);
 
     const int characterVoiceIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
     if (characterVoiceIndex == -1)
@@ -91,13 +123,12 @@ Settings::Settings(const IniFile* settingsIni)
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(0, 8);
-        this->_voiceMenuCharacter = dis(gen);
+        this->voiceMenuCharacter = dis(gen);
     }
     else
     {
-        this->_voiceMenuCharacter = characterVoiceIndex;
+        this->voiceMenuCharacter = characterVoiceIndex;
     }
-
 
 
     this->completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions", true);

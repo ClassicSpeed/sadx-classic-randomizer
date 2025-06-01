@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <map>
 #include "../../application/structs/LocationData.h"
-#include "../../configuration/Options.h"
+#include "../../configuration/options/Options.h"
 #include "../../application/structs/LevelStatus.h"
 #include "../../application/structs/MissionStatus.h"
 #include "../../application/structs/BossesStatus.h"

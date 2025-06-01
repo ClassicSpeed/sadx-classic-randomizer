@@ -1,7 +1,7 @@
 #pragma once
 #include "../../pch.h"
 #include <map>
-#include "../../configuration/Options.h"
+#include "../../configuration/options/Options.h"
 
 // Define a struct to hold the key
 struct CharacterLevelKey

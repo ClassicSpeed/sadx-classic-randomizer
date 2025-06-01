@@ -129,36 +129,22 @@ static std::string Trim(std::string s)
 class Settings
 {
 public:
-    static Settings& Init(const IniFile* settingsIni)
+    static Settings& Init(const char* path, const HelperFunctions& helperFunctions)
     {
         if (_instance == nullptr)
-            _instance = new Settings(settingsIni);
+            _instance = new Settings(path, helperFunctions);
         return *_instance;
     }
 
-    void SetCharacterVoiceReactions(bool newEggmanCommentOnCharacterUnlock,
-                                    bool newCurrentCharacterCommentOnCharacterUnlock,
-                                    bool newUnlockedCharacterCommentOnCharacterUnlock, bool newEggmanCommentOnKeyItems,
-                                    bool newTikalCommentOnKeyItems, bool newCurrentCharacterCommentOnKeyItems,
-                                    bool newShowCommentsSubtitles);
-    void SetCharacterVoiceReactions(bool newEggmanCommentOnTrap, bool newOtherCharactersCommentOnTrap,
-                                    bool newCurrentCharacterReactToTrap, bool newShowCommentsSubtitles);
-    void SetLinksOverrides(DeathLinkOverride newDeathLinkOverride, RingLinkOverride newRingLinkOverride,
-                           RingLossOverride newRingLossOverride, TrapLinkOverride newTrapLinkOverride);
-    void SetServerConfiguration(const std::string& serverIp, const std::string& newPlayerName,
-                                const std::string& serverPassword, bool showChatMessages, bool showGoalReached,
-                                bool showCountdowns, bool showPlayerConnections);
 
-
-    //Mod Settings    
     std::string playerName;
-    std::string _serverIP;
-    std::string _serverPassword;
+    std::string serverIp;
+    std::string serverPassword;
 
-    bool _showChatMessages = true;
-    bool _showGoalReached = true;
-    bool _showCountdowns = true;
-    bool _showPlayerConnections = false;
+    bool showChatMessages = true;
+    bool showGoalReached = true;
+    bool showCountdowns = true;
+    bool showPlayerConnections = false;
 
     DeathLinkOverride deathLinkOverride;
     RingLinkOverride ringLinkOverride;
@@ -166,13 +152,12 @@ public:
     TrapLinkOverride trapLinkOverride;
 
 
-    float _displayDuration = 6.0f;
-    unsigned __int16 _debugFontSize = 21;
-    DisplayInGameTracker _displayInGameTracker = DisplayTrackerWhenPaused;
-    int _displayMessageColor = 0xFF33FF33; //Green
-    int _chatMessageColor = 0xFFFFFFFF;
+    float displayDuration = 6.0f;
+    unsigned __int16 debugFontSize = 21;
+    DisplayInGameTracker displayInGameTracker = DisplayTrackerWhenPaused;
+    int displayMessageColor = 0xFF33FF33; //Green
+    int chatMessageColor = 0xFFFFFFFF;
 
-    
 
     bool eggmanCommentOnCharacterUnlock = true;
     bool currentCharacterCommentOnCharacterUnlock = true;
@@ -187,7 +172,7 @@ public:
     bool currentCharacterReactToTrap = true;
 
     bool showCommentsSubtitles = true;
-    
+
     std::string songsPath = "mods/SADX_Archipelago/";
     std::string sa2BAdxPath = "../../../../Sonic Adventure 2/resource/gd_PC/ADX/";
     std::string customAdxPath = "custom/";
@@ -202,23 +187,20 @@ public:
     LifeCapsulesChangeSongs lifeCapsulesChangeSongs = LifeCapsulesChangeSongsNone;
     int musicShuffleSeed = -1;
 
+    int voiceMenuCharacter = 0;
 
-
-    int _voiceMenuCharacter = 0;
-    
     bool autoSkipCutscenes = true;
     bool skipCredits = true;
     bool noLifeLossOnRestart = true;
-    
+
 
     bool completeMultipleLevelMissions = true;
     HomingAttackIndicator homingAttackIndicator = HomingAttackIndicatorDisabled;
 
-    
-    bool _showEntranceIndicators = true;
+    bool showEntranceIndicators = true;
     bool eggCarrierTransformationCutscene = true;
     int chaoStatsMultiplier = 1;
-    
+
     bool extendRingCapacity = false;
 
     mutable bool trackerArrow = true;
@@ -231,7 +213,7 @@ public:
     bool capsuleIndicator = true;
     bool fishIndicator = true;
     bool progressionIndicator = true;
-    
+
     NJS_COLOR arrowColor[6] = {
         {0xFF00FF00},
         {0xFF00FF00},
@@ -266,9 +248,8 @@ public:
         {0xFFD4AF37},
         {0xFFD4AF37},
     };
-    
 
 private:
-    explicit Settings(const IniFile* settingsIni);
+    explicit Settings(const char* path, const HelperFunctions& helperFunctions);
     inline static Settings* _instance = nullptr;
 };

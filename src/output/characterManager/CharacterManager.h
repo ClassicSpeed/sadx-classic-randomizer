@@ -2,11 +2,10 @@
 #include <queue>
 
 #include "../../pch.h"
-#include "../../configuration/Options.h"
+#include "../../configuration/options/Options.h"
 #include "../../application/structs/UnlockStatus.h"
 #include "../../application/structs/ItemData.h"
 #include "../../application/structs/WeightedRandomSelector.h"
-#include "../../configuration/Options.h"
 #include "../reactionManager/ReactionManager.h"
 
 

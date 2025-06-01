@@ -1,13 +1,12 @@
 #pragma once
 #include <chrono>
 
-#include "../pch.h"
-#include "../application/structs/LocationData.h"
-#include "../application/structs/ItemData.h"
-#include <string>
+#include "../../pch.h"
+#include "../../application/structs/LocationData.h"
+#include "../../application/structs/ItemData.h"
 #include <vector>
 
-#include "settings/Settings.h"
+#include "../settings/Settings.h"
 
 enum Goal
 {

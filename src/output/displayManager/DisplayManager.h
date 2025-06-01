@@ -9,9 +9,8 @@
 #include "../../application/structs/BossesStatus.h"
 #include "../../application/structs/ChaoStatus.h"
 #include "../../application/structs/VisitedLevels.h"
-#include "../../configuration/Options.h"
+#include "../../configuration/options/Options.h"
 #include "../../application/structs/LocationData.h"
-#include "../../configuration/Options.h"
 
 
 struct LocationData;
