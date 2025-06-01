@@ -67,7 +67,7 @@
             <SubSystem>Windows</SubSystem>
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <EnableUAC>false</EnableUAC>
-            <AdditionalDependencies>lib/APCpp/mbedcrypto.lib;lib/APCpp/mbedtls.lib;lib/APCpp/mbedx509.lib;Ws2_32.lib;Crypt32.lib;%(AdditionalDependencies);</AdditionalDependencies>
+            <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies);</AdditionalDependencies>
         </Link>
         <PreBuildEvent>
             <Command>call ./scripts/release-clean.bat</Command>
@@ -95,7 +95,7 @@
             <OptimizeReferences>true</OptimizeReferences>
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <EnableUAC>false</EnableUAC>
-            <AdditionalDependencies>lib/APCpp/mbedcrypto.lib;lib/APCpp/mbedtls.lib;lib/APCpp/mbedx509.lib;Ws2_32.lib;Crypt32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
+            <AdditionalDependencies>Ws2_32.lib;Crypt32.lib;%(AdditionalDependencies);</AdditionalDependencies>
         </Link>
         <PreBuildEvent>
             <Command>call ./scripts/release-clean.bat</Command>
