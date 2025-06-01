@@ -1,8 +1,7 @@
 #include "DisplayManager.h"
 
-#include <random>
 
-DisplayManager::DisplayManager(Options& options, Settings& settings): _options(options), _settings(_settings)
+DisplayManager::DisplayManager(Options& options, Settings& settings): _options(options), _settings(settings)
 {
     _charSelAdvaModeProcedureHook.Hook(OnCharSelAdvaModeProcedure);
     _cmnAdvaModeProcedureHook.Hook(OnCmnAdvaModeProcedure);
@@ -100,7 +99,7 @@ void DisplayManager::UpdateVisitedLevels(VisitedLevels visitedLevels)
 
 void DisplayManager::OnFrame()
 {
-    MenuVoice = _voiceMenuCharacter;
+    MenuVoice = _settings._voiceMenuCharacter;
     RemoveExpiredMessages();
 
     AddNewMessages();
@@ -468,20 +467,6 @@ void DisplayManager::UpdateChecks(const std::map<int, LocationData>& checkData)
 }
 
 
-void DisplayManager::UpdateVoiceMenuCharacter(const int characterVoiceIndex)
-{
-    if (characterVoiceIndex == -1)
-    {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, 8);
-        this->_voiceMenuCharacter = dis(gen);
-    }
-    else
-    {
-        this->_voiceMenuCharacter = characterVoiceIndex;
-    }
-}
 
 void DisplayManager::SetConnected()
 {

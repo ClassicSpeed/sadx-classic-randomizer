@@ -38,10 +38,10 @@ struct LevelArrow
 class WorldStateManager
 {
 public:
-    static WorldStateManager& Init(Options& options)
+    static WorldStateManager& Init(Options& options, Settings& settings)
     {
         if (_instance == nullptr)
-            _instance = new WorldStateManager(options);
+            _instance = new WorldStateManager(options, settings);
         return *_instance;
     }
 
@@ -59,12 +59,9 @@ public:
     void MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist);
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
     VisitedLevels GetVisitedLevels(int visitedLevel);
-    void SetEggCarrierTransformationCutscene(bool eggCarrierTransformation);
-    void SetChaoStatsMultiplier(int chaoStatsMultiplier);
-    void SetShowEntranceIndicators(bool showEntranceIndicators);
     Options& options;
+    Settings& settings;
     UnlockStatus unlockStatus;
-    bool eggCarrierTransformationCutscene = true;
     VisitedLevels visitedLevels;
     LevelEntrances levelEntrances = {
         {EmeraldCoast, EmeraldCoast},
@@ -81,9 +78,8 @@ public:
     };
 
 private:
-    explicit WorldStateManager(Options& options);
+    explicit WorldStateManager(Options& options, Settings& settings);
     inline static WorldStateManager* _instance = nullptr;
-    bool _showEntranceIndicators = true;
     mutable std::map<int, LocationData> _checkData;
     NJS_COLOR _wrongDoorColor[12] = {
         {0xAAFF0000},

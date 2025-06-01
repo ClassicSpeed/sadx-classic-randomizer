@@ -65,4 +65,96 @@ Settings::Settings(const IniFile* settingsIni)
         "MusicShuffle", "MusicShuffleConsistencyOverride", -1));
     this->lifeCapsulesChangeSongs = static_cast<LifeCapsulesChangeSongs>(settingsIni->getInt(
         "MusicShuffle", "LifeCapsulesChangeSongsOverride", -1));
+
+
+    
+                                                                  
+    this->autoSkipCutscenes = settingsIni->getBool("GameSettings", "AutoSkipCutscenes", true);
+    this->skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
+    this->noLifeLossOnRestart = settingsIni->getBool("GameSettings", "NoLifeLossOnRestart", true);
+    
+    this->extendRingCapacity = settingsIni->getBool("GameSettings", "ExtendRingCapacity", false);
+
+    
+    this->eggCarrierTransformationCutscene = settingsIni->getBool("GameSettings",
+                                                                       "EggCarrierTransformationCutscene", true);
+
+
+    this-> _showEntranceIndicators = settingsIni->getBool("GameSettings",
+                                                             "ShowEntranceIndicators", true);
+
+    this-> chaoStatsMultiplier = settingsIni->getInt("Chao", "StatGainMultiplier", 1);
+
+    const int characterVoiceIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
+    if (characterVoiceIndex == -1)
+    {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, 8);
+        this->_voiceMenuCharacter = dis(gen);
+    }
+    else
+    {
+        this->_voiceMenuCharacter = characterVoiceIndex;
+    }
+
+
+
+    this->completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions", true);
+    this->homingAttackIndicator = static_cast<HomingAttackIndicator>(settingsIni->getInt(
+        "GameSettings", "HomingAttackIndicatorEnabled", 0));
+
+
+    this->trackerArrow = settingsIni->getBool("Sanity", "TrackerArrow", true);
+    this->trackerArrowToggleable = settingsIni->getBool("Sanity", "TrackerArrowToggleable", false);
+    this->trackerArrowShowDistance = settingsIni->getBool("Sanity", "TrackerArrowShowDistance", true);
+    this->trackerArrowOverrideColor = settingsIni->getBool("Sanity", "TrackerArrowOverrideColor", false);
+    const int trackerArrowR = settingsIni->getInt("Sanity", "TrackerArrowR", 0);
+    const int trackerArrowG = settingsIni->getInt("Sanity", "TrackerArrowG", 0);
+    const int trackerArrowB = settingsIni->getInt("Sanity", "TrackerArrowB", 255);
+    const int trackerArrowColor = 0xFF << 24 | trackerArrowR << 16 | trackerArrowG << 8 | trackerArrowB;
+    this->arrowColor[0].color = trackerArrowColor;
+    this->arrowColor[1].color = trackerArrowColor;
+    this->arrowColor[2].color = trackerArrowColor;
+    this->arrowColor[3].color = trackerArrowColor;
+    this->arrowColor[4].color = trackerArrowColor;
+    this->arrowColor[5].color = trackerArrowColor;
+
+    this->enemyIndicator = settingsIni->getBool("Sanity", "EnemyIndicator", true);
+    const int enemyIndicatorR = settingsIni->getInt("Sanity", "EnemyIndicatorR", 255);
+    const int enemyIndicatorG = settingsIni->getInt("Sanity", "EnemyIndicatorG", 0);
+    const int enemyIndicatorB = settingsIni->getInt("Sanity", "EnemyIndicatorB", 0);
+    const int trackerEnemyIndicatorColor = 0xFF << 24 | enemyIndicatorR << 16 | enemyIndicatorG << 8 | enemyIndicatorB;
+    this->enemyIndicatorColor[0].color = trackerEnemyIndicatorColor;
+    this->enemyIndicatorColor[1].color = trackerEnemyIndicatorColor;
+    this->enemyIndicatorColor[2].color = trackerEnemyIndicatorColor;
+
+    this->capsuleIndicator = settingsIni->getBool("Sanity", "CapsuleIndicator", true);
+    const int capsuleIndicatorR = settingsIni->getInt("Sanity", "CapsuleIndicatorR", 0);
+    const int capsuleIndicatorG = settingsIni->getInt("Sanity", "CapsuleIndicatorG", 255);
+    const int capsuleIndicatorB = settingsIni->getInt("Sanity", "CapsuleIndicatorB", 0);
+    const int trackerCapsuleIndicatorColor = 0xFF << 24 | capsuleIndicatorR << 16 | capsuleIndicatorG << 8 |
+        capsuleIndicatorB;
+    this->capsuleIndicatorColor[0].color = trackerCapsuleIndicatorColor;
+    this->capsuleIndicatorColor[1].color = trackerCapsuleIndicatorColor;
+    this->capsuleIndicatorColor[2].color = trackerCapsuleIndicatorColor;
+
+    this->fishIndicator = settingsIni->getBool("Sanity", "FishIndicator", true);
+    const int fishIndicatorR = settingsIni->getInt("Sanity", "FishIndicatorR", 0);
+    const int fishIndicatorG = settingsIni->getInt("Sanity", "FishIndicatorG", 255);
+    const int fishIndicatorB = settingsIni->getInt("Sanity", "FishIndicatorB", 255);
+    const int trackerFishIndicatorColor = 0xFF << 24 | fishIndicatorR << 16 | fishIndicatorG << 8 | fishIndicatorB;
+    this->fishIndicatorColor[0].color = trackerFishIndicatorColor;
+    this->fishIndicatorColor[1].color = trackerFishIndicatorColor;
+    this->fishIndicatorColor[2].color = trackerFishIndicatorColor;
+
+    this->progressionIndicator = settingsIni->getBool("Sanity", "ProgressionItemIndicator", true);
+    const int progressionIndicatorR = settingsIni->getInt("Sanity", "ProgressionIndicatorR", 212);
+    const int progressionIndicatorG = settingsIni->getInt("Sanity", "ProgressionIndicatorG", 175);
+    const int progressionIndicatorB = settingsIni->getInt("Sanity", "ProgressionIndicatorB", 55);
+    const int progressionIndicatorColor = 0xFF << 24 | progressionIndicatorR << 16 | progressionIndicatorG << 8 |
+        progressionIndicatorB;
+    this->progressionItemIndicatorColor[0].color = progressionIndicatorColor;
+    this->progressionItemIndicatorColor[1].color = progressionIndicatorColor;
+    this->progressionItemIndicatorColor[2].color = progressionIndicatorColor;
 }

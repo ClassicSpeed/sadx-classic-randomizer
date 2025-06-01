@@ -25,6 +25,8 @@ constexpr int BEACH_GATE_STATION_SQUARE = 67;
 constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
 DataPointer(__int16, EggCarrierSunk, 0x3C62394);
 
+DataArray(int16_t, ChaoStatValues, 0x8895C8, 0x402);
+
 
 // //We pretend that the egg carrier is sunk so that the hedgehog hammer is works
 static bool __cdecl HandleHedgehogHammer()
@@ -203,7 +205,7 @@ static __int16 __cdecl HandleOnFinalEggDoorCheckB(int a1);
 char LeonTimer1 = 10;
 char LeonTimer2 = 30;
 
-WorldStateManager::WorldStateManager(Options& options): options(options)
+WorldStateManager::WorldStateManager(Options& options, Settings& settings): options(options), settings(settings)
 {
     visitedLevels = VisitedLevels();
     onSceneChangeMr_t.Hook(HandleMREntrance);
@@ -245,6 +247,15 @@ WorldStateManager::WorldStateManager(Options& options): options(options)
     WriteData<1>((char*)0x004A81C1, LeonTimer2); // Leon timer 2
     WriteData((float**)0x004CD75A, &_nj_screen_.w); // From SADXFE
     WriteData((float**)0x004CD77C, &_nj_screen_.h); // From SADXFE
+
+    
+    if (settings. chaoStatsMultiplier > 1 )
+    {
+        for (int i = 0x00; i < 0x402; i++)
+        {
+            ChaoStatValues[i] = ChaoStatValues[i] * settings.chaoStatsMultiplier;
+        }
+    }
 }
 
 
@@ -409,7 +420,7 @@ void WorldStateManager::ShowLevelEntranceArrows()
 {
     if (!this->options.entranceRandomizer)
         return;
-    if (!this->_showEntranceIndicators)
+    if (!this->settings._showEntranceIndicators)
         return;
     for (LevelArrow levelArrow : _levelArrows)
     {
@@ -439,7 +450,7 @@ void WorldStateManager::OnFrame()
     if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
         this->ShowLevelEntranceArrows();
 
-    if (this->eggCarrierTransformationCutscene)
+    if (this->settings.eggCarrierTransformationCutscene)
     {
         if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
             EggCarrierSunk = false;
@@ -711,28 +722,8 @@ VisitedLevels WorldStateManager::GetVisitedLevels(const int visitedLevel)
     return visitedLevels;
 }
 
-void WorldStateManager::SetEggCarrierTransformationCutscene(const bool eggCarrierTransformation)
-{
-    this->eggCarrierTransformationCutscene = eggCarrierTransformation;
-}
 
-DataArray(int16_t, ChaoStatValues, 0x8895C8, 0x402);
 
-void WorldStateManager::SetChaoStatsMultiplier(const int chaoStatsMultiplier)
-{
-    if (chaoStatsMultiplier > 1 && chaoStatsMultiplier <= 50)
-    {
-        for (int i = 0x00; i < 0x402; i++)
-        {
-            ChaoStatValues[i] = ChaoStatValues[i] * chaoStatsMultiplier;
-        }
-    }
-}
-
-void WorldStateManager::SetShowEntranceIndicators(const bool showEntranceIndicators)
-{
-    this->_showEntranceIndicators = showEntranceIndicators;
-}
 
 typedef struct
 {
@@ -886,7 +877,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     //Sky Chase Tarjet
     LoadNoNamePVM(&TARGET_TEXLIST);
 
-    if (worldStateManagerPtr->eggCarrierTransformationCutscene
+    if (worldStateManagerPtr->settings.eggCarrierTransformationCutscene
         && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
         LoadPVM("EC_SKY", &EC_SKY_TEXLIST);
 

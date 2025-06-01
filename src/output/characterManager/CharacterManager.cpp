@@ -13,7 +13,7 @@ void EmptyCall()
 {
 }
 
-CharacterManager::CharacterManager(Options& options, ReactionManager& reactionManager): options(options),
+CharacterManager::CharacterManager(Options& options,  Settings& settings, ReactionManager& reactionManager): options(options), settings(settings),
     reactionManager(reactionManager)
 {
     characterManagerPtr = this;
@@ -46,11 +46,6 @@ CharacterManager::CharacterManager(Options& options, ReactionManager& reactionMa
     HudDisplayRings_t.Hook(HandleHudDisplayRings);
 }
 
-
-void CharacterManager::SetExtendRingCapacity(const bool extendRingCapacity)
-{
-    this->extendRingCapacity = extendRingCapacity;
-}
 
 void CharacterManager::GiveUpgrade(const Upgrades upgrade)
 {
@@ -173,7 +168,7 @@ void CharacterManager::ProcessRings(const Sint16 amount)
         Rings = newRingAmount;
     }
 
-    const int maxRings = this->extendRingCapacity ? 99999 : 999;
+    const int maxRings = settings.extendRingCapacity ? 99999 : 999;
 
     if (amount > 0 && Rings < maxRings)
     {
@@ -602,7 +597,7 @@ FunctionHook<void, task*> onScoreDisplay_Main(0x42BCC0, [](task* tp)-> void
 
 void HandleHudDisplayRings(const signed int ringCount, unsigned char digits, NJS_SPRITE* hud)
 {
-    if (characterManagerPtr->extendRingCapacity)
+    if (characterManagerPtr->settings.extendRingCapacity)
         HudDisplayRings_t.Original(ringCount, 5, hud);
     else
         HudDisplayRings_t.Original(ringCount, digits, hud);
@@ -611,7 +606,7 @@ void HandleHudDisplayRings(const signed int ringCount, unsigned char digits, NJS
 // For big, we extend the ring capacity to 99999 if enabled
 FunctionHook<void, _SC_NUMBERS*> onDrawSNumbers(0x427BB0, [](_SC_NUMBERS* pscn)-> void
 {
-    if (characterManagerPtr->extendRingCapacity && CurrentCharacter == Characters_Big && pscn->max == 999)
+    if (characterManagerPtr->settings.extendRingCapacity && CurrentCharacter == Characters_Big && pscn->max == 999)
         pscn->max = 99999;
     onDrawSNumbers.Original(pscn);
 });

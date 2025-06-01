@@ -1,5 +1,6 @@
 #pragma once
 #include "../../pch.h"
+#include <random>
 
 
 enum DeathLinkOverride
@@ -91,6 +92,13 @@ enum LifeCapsulesChangeSongs
     LifeCapsulesChangeSongsNone = -1,
     LifeCapsulesChangeSongsEnabled = 0,
     LifeCapsulesChangeSongsDisabled = 1,
+};
+
+enum HomingAttackIndicator
+{
+    HomingAttackIndicatorDisabled = 0,
+    HomingAttackIndicatorEnabled = 1,
+    HomingAttackIndicatorEnabledNoSound = 2,
 };
 
 // TODO: Move to helpers
@@ -193,6 +201,72 @@ public:
     MusicShuffleConsistency musicShuffleConsistency = MusicShuffleConsistencyNone;
     LifeCapsulesChangeSongs lifeCapsulesChangeSongs = LifeCapsulesChangeSongsNone;
     int musicShuffleSeed = -1;
+
+
+
+    int _voiceMenuCharacter = 0;
+    
+    bool autoSkipCutscenes = true;
+    bool skipCredits = true;
+    bool noLifeLossOnRestart = true;
+    
+
+    bool completeMultipleLevelMissions = true;
+    HomingAttackIndicator homingAttackIndicator = HomingAttackIndicatorDisabled;
+
+    
+    bool _showEntranceIndicators = true;
+    bool eggCarrierTransformationCutscene = true;
+    int chaoStatsMultiplier = 1;
+    
+    bool extendRingCapacity = false;
+
+    mutable bool trackerArrow = true;
+    bool trackerArrowToggleable = false;
+    bool trackerArrowOverrideColor = true;
+    bool trackerArrowShowDistance = true;
+
+
+    bool enemyIndicator = true;
+    bool capsuleIndicator = true;
+    bool fishIndicator = true;
+    bool progressionIndicator = true;
+    
+    NJS_COLOR arrowColor[6] = {
+        {0xFF00FF00},
+        {0xFF00FF00},
+        {0xFF00FF00},
+        {0xFF00FF00},
+        {0xFF00FF00},
+        {0xFF00FF00},
+    };
+
+    NJS_COLOR enemyIndicatorColor[3] = {
+        {0xFFFF1400},
+        {0xFFFF1400},
+        {0xFFFF1400},
+    };
+    NJS_COLOR capsuleIndicatorColor[3] = {
+        {0xFFFF1400},
+        {0xFFFF1400},
+        {0xFFFF1400},
+    };
+    NJS_COLOR fishIndicatorColor[3] = {
+        {0xFFFF1400},
+        {0xFFFF1400},
+        {0xFFFF1400},
+    };
+    NJS_COLOR disabledIndicatorColor[3] = {
+        {0xFF222222},
+        {0xFF222222},
+        {0xFF222222},
+    };
+    NJS_COLOR progressionItemIndicatorColor[3] = {
+        {0xFFD4AF37},
+        {0xFFD4AF37},
+        {0xFFD4AF37},
+    };
+    
 
 private:
     explicit Settings(const IniFile* settingsIni);

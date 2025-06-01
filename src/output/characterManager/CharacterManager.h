@@ -24,13 +24,12 @@ struct RingDifference
 class CharacterManager
 {
 public:
-    static CharacterManager& Init(Options& options, ReactionManager& reactionManager)
+    static CharacterManager& Init(Options& options, Settings& settings,ReactionManager& reactionManager)
     {
         if (_instance == nullptr)
-            _instance = new CharacterManager(options, reactionManager);
+            _instance = new CharacterManager(options, settings, reactionManager);
         return *_instance;
     }
-    void SetExtendRingCapacity(bool extendRingCapacity);
 
     void GiveUpgrade(Upgrades upgrade);
     void RemoveUpgrade(Upgrades upgrade);
@@ -43,14 +42,14 @@ public:
     void SetStartingCharacter(int startingCharacterIndex);
     void RemoveStatusEffects();
     Options& options;
+    Settings& settings;
     ReactionManager& reactionManager;
     UnlockStatus unlockStatus;
     int lastRingAmount;
     bool reverseControlsEnabled = false;
-    bool extendRingCapacity = false;
 
 private:
-    explicit CharacterManager(Options& options, ReactionManager& reactionManager);
+    explicit CharacterManager(Options& options, Settings& settings,ReactionManager& reactionManager);
     inline static CharacterManager* _instance = nullptr;
     
     void ActivateFiller(FillerType filler);

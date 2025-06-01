@@ -15,7 +15,6 @@
 
 constexpr int SYNC_RATE = 10;
 
-void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperFunctions);
 void ReplaceEmblemImage(const char* path, const HelperFunctions& helperFunctions);
 
 extern "C" {
@@ -73,8 +72,8 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     options = &Options::Init(*settings);
     reactionManager = &ReactionManager::Init(*options, *settings);
     displayManager = &DisplayManager::Init(*options, *settings);
-    characterManager = &CharacterManager::Init(*options, *reactionManager);
-    worldStateManager = &WorldStateManager::Init(*options);
+    characterManager = &CharacterManager::Init(*options, *settings, *reactionManager);
+    worldStateManager = &WorldStateManager::Init(*options, *settings);
     itemRepository = &ItemRepository::Init();
     checkRepository = &LocationRepository::Init();
     archipelagoMessenger = &ArchipelagoMessenger::Init(*options);
@@ -84,12 +83,11 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
                                    *itemRepository,
                                    *checkRepository, *archipelagoMessenger, *saveFileManager, *musicManager,
                                    *reactionManager);
-    cheatsManager = &CheatsManager::Init();
+    cheatsManager = &CheatsManager::Init(*settings);
     archipelagoManager = &ArchipelagoManager::Init(*options, *settings, *randomizer);
-    eventDetector = &EventDetector::Init(*options, *settings,*randomizer);
+    eventDetector = &EventDetector::Init(*options, *settings, *randomizer);
     characterLoadingDetector = &CharacterLoadingDetector::Init(*randomizer);
 
-    LoadGameSettings(settingsIni, helperFunctions);
 
     ReplaceEmblemImage(path, helperFunctions);
     if (helperFunctions.Mods->find_by_name("Super Sonic"))
@@ -124,82 +122,6 @@ __declspec(dllexport) void __cdecl OnFrame()
 }
 
 __declspec(dllexport) ModInfo SADXModInfo = {ModLoaderVer}; // This is needed for the Mod Loader to recognize the DLL.
-}
-
-
-void LoadGameSettings(const IniFile* settingsIni, const HelperFunctions& helperFunctions)
-{
-    const int homingAttackIndicator = settingsIni->getInt("GameSettings", "HomingAttackIndicatorEnabled", 0);
-    const bool completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions",
-                                                                    true);
-    const bool autoSkipCutscenes = settingsIni->getBool("GameSettings", "AutoSkipCutscenes", true);
-    const bool eggCarrierTransformationCutscene = settingsIni->getBool("GameSettings",
-                                                                       "EggCarrierTransformationCutscene", true);
-    const bool skipCredits = settingsIni->getBool("GameSettings", "SkippableCredits", true);
-    const bool noLifeLossOnRestart = settingsIni->getBool("GameSettings", "NoLifeLossOnRestart", true);
-
-    const bool extendRingCapacity = settingsIni->getBool("GameSettings", "ExtendRingCapacity", false);
-
-    const bool showEntranceIndicators = settingsIni->getBool("GameSettings",
-                                                             "ShowEntranceIndicators", true);
-
-    const int voiceMenuIndex = settingsIni->getInt("CharacterVoiceReactions", "VoiceMenu", -1);
-
-
-    const int chaoStatsMultiplier = settingsIni->getInt("Chao", "StatGainMultiplier");
-
-    const bool trackerArrow = settingsIni->getBool("Sanity", "TrackerArrow", true);
-    const bool trackerArrowToggleable = settingsIni->getBool("Sanity", "TrackerArrowToggleable", false);
-    const bool trackerArrowShowDistance = settingsIni->getBool("Sanity", "TrackerArrowShowDistance", true);
-    const bool trackerArrowOverrideColor = settingsIni->getBool("Sanity", "TrackerArrowOverrideColor", false);
-    const int trackerArrowR = settingsIni->getInt("Sanity", "TrackerArrowR", 0);
-    const int trackerArrowG = settingsIni->getInt("Sanity", "TrackerArrowG", 0);
-    const int trackerArrowB = settingsIni->getInt("Sanity", "TrackerArrowB", 255);
-    const int trackerArrowColor = 0xFF << 24 | trackerArrowR << 16 | trackerArrowG << 8 | trackerArrowB;
-
-    const bool enemyIndicator = settingsIni->getBool("Sanity", "EnemyIndicator", true);
-    const int enemyIndicatorR = settingsIni->getInt("Sanity", "EnemyIndicatorR", 255);
-    const int enemyIndicatorG = settingsIni->getInt("Sanity", "EnemyIndicatorG", 0);
-    const int enemyIndicatorB = settingsIni->getInt("Sanity", "EnemyIndicatorB", 0);
-    const int enemyIndicatorColor = 0xFF << 24 | enemyIndicatorR << 16 | enemyIndicatorG << 8 | enemyIndicatorB;
-
-    const bool capsuleIndicator = settingsIni->getBool("Sanity", "CapsuleIndicator", true);
-    const int capsuleIndicatorR = settingsIni->getInt("Sanity", "CapsuleIndicatorR", 0);
-    const int capsuleIndicatorG = settingsIni->getInt("Sanity", "CapsuleIndicatorG", 255);
-    const int capsuleIndicatorB = settingsIni->getInt("Sanity", "CapsuleIndicatorB", 0);
-    const int capsuleIndicatorColor = 0xFF << 24 | capsuleIndicatorR << 16 | capsuleIndicatorG << 8 | capsuleIndicatorB;
-
-    const bool fishIndicator = settingsIni->getBool("Sanity", "FishIndicator", true);
-    const int fishIndicatorR = settingsIni->getInt("Sanity", "FishIndicatorR", 0);
-    const int fishIndicatorG = settingsIni->getInt("Sanity", "FishIndicatorG", 255);
-    const int fishIndicatorB = settingsIni->getInt("Sanity", "FishIndicatorB", 255);
-    const int fishIndicatorColor = 0xFF << 24 | fishIndicatorR << 16 | fishIndicatorG << 8 | fishIndicatorB;
-
-    const bool progressionIndicator = settingsIni->getBool("Sanity", "ProgressionItemIndicator", true);
-    const int progressionIndicatorR = settingsIni->getInt("Sanity", "ProgressionIndicatorR", 212);
-    const int progressionIndicatorG = settingsIni->getInt("Sanity", "ProgressionIndicatorG", 175);
-    const int progressionIndicatorB = settingsIni->getInt("Sanity", "ProgressionIndicatorB", 55);
-    const int progressionIndicatorColor = 0xFF << 24 | progressionIndicatorR << 16 | progressionIndicatorG << 8 |
-        progressionIndicatorB;
-
-
-  
-
-    displayManager->UpdateVoiceMenuCharacter(voiceMenuIndex);
-    cheatsManager->SetCheatsConfiguration(autoSkipCutscenes, skipCredits, noLifeLossOnRestart);
-    eventDetector->SetMultipleMissions(completeMultipleLevelMissions);
-    eventDetector->SetSanitySettings(trackerArrow, trackerArrowColor, trackerArrowToggleable,
-                                     trackerArrowShowDistance, trackerArrowOverrideColor,
-                                     enemyIndicator, enemyIndicatorColor,
-                                     capsuleIndicator, capsuleIndicatorColor,
-                                     fishIndicator, fishIndicatorColor,
-                                     progressionIndicator, progressionIndicatorColor);
-    eventDetector->setHomingAttackIndicator(static_cast<HomingAttackIndicator>(homingAttackIndicator));
-    worldStateManager->SetShowEntranceIndicators(showEntranceIndicators);
-    worldStateManager->SetEggCarrierTransformationCutscene(eggCarrierTransformationCutscene);
-    worldStateManager->SetChaoStatsMultiplier(chaoStatsMultiplier);
-    characterManager->SetExtendRingCapacity(extendRingCapacity);
-    
 }
 
 #define ReplacePNG_Common(a) do { \

@@ -149,7 +149,7 @@ bool HandleCheckMissionRequirements(const int mission, const int character, cons
     if (level <= LevelIDs_HotShelter)
     {
         //level - mission B
-        if (mission == MISSION_C && eventDetectorPtr->completeMultipleLevelMissions)
+        if (mission == MISSION_C && eventDetectorPtr->settings.completeMultipleLevelMissions)
         {
             if (ManualMissionBCheck(character))
             {
@@ -159,7 +159,7 @@ bool HandleCheckMissionRequirements(const int mission, const int character, cons
         }
 
         //level - mission A
-        if ((mission == MISSION_C || mission == MISSION_B) && eventDetectorPtr->completeMultipleLevelMissions)
+        if ((mission == MISSION_C || mission == MISSION_B) && eventDetectorPtr->settings.completeMultipleLevelMissions)
         {
             if (ManualMissionACheck(character, level))
             {
@@ -296,7 +296,7 @@ FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
     onSonicMain.Original(tp);
     if (CurrentCharacter != Characters_Sonic)
         return;
-    if (eventDetectorPtr->homingAttackIndicator == HomingAttackIndicatorDisabled)
+    if (eventDetectorPtr->settings.homingAttackIndicator == HomingAttackIndicatorDisabled)
         return;
 
     if (playerpwp[0]->free.sw[2] > 1 || !HomingAttackTarget_Sonic[0].entity)
@@ -354,7 +354,7 @@ FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
     if (lastClosestEnemy != closestEnemy)
     {
         lastClosestEnemy = closestEnemy;
-        if (eventDetectorPtr->homingAttackIndicator == HomingAttackIndicatorEnabled)
+        if (eventDetectorPtr->settings.homingAttackIndicator == HomingAttackIndicatorEnabled)
             PlaySound(1, 0, 0, 0);
     }
 
@@ -405,12 +405,13 @@ void EventDetector::OnPlayingFrame() const
 
     if (CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
     {
-        if (trackerArrowToggleable)
+        //TODO: Separate setting from state for settings.trackerArrow
+        if (settings.trackerArrowToggleable)
             for (const auto& button : PressedButtons)
                 if (button & WhistleButtons && Current_CharObj2 != nullptr)
-                    trackerArrow = !trackerArrow;
+                    settings.trackerArrow = !settings.trackerArrow;
 
-        if (!trackerArrow)
+        if (!settings.trackerArrow)
             return;
 
         if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
@@ -484,7 +485,7 @@ void EventDetector::OnPlayingFrame() const
             // Width of the base of the triangle
             float baseWidth = ARROW_BASE_WIDTH + EXTRA_BASE_WIDTH;
             float extraPercentage;
-            if (trackerArrowShowDistance)
+            if (settings.trackerArrowShowDistance)
             {
                 const double dz = arrowPosition.z - closestLocation->z;
                 const double dy = arrowPosition.y - closestLocation->y;
@@ -574,27 +575,27 @@ void EventDetector::OnPlayingFrame() const
 
             NJS_POINT3COL point3Col;
             point3Col.p = point;
-            if (trackerArrowOverrideColor)
+            if (settings.trackerArrowOverrideColor)
                 if (closestLocation->type == LocationEnemy)
                     for (int i = 0; i < 6; ++i)
-                        eventDetectorPtr->arrowColor[i] = enemyIndicatorColor[0];
+                        eventDetectorPtr->settings.arrowColor[i] = settings.enemyIndicatorColor[0];
                 else if (closestLocation->type == LocationCapsule)
                     for (int i = 0; i < 6; ++i)
-                        eventDetectorPtr->arrowColor[i] = capsuleIndicatorColor[0];
+                        eventDetectorPtr->settings.arrowColor[i] = settings.capsuleIndicatorColor[0];
                 else
                     for (int i = 0; i < 6; ++i)
-                        eventDetectorPtr->arrowColor[i] = fishIndicatorColor[0];
+                        eventDetectorPtr->settings.arrowColor[i] = settings.fishIndicatorColor[0];
 
-            if (trackerArrowShowDistance)
+            if (settings.trackerArrowShowDistance)
             {
                 uint8_t newAlpha = static_cast<uint8_t>(0xFF - (0xFF - 0x66) * extraPercentage);
 
                 for (int i = 0; i < 6; ++i)
                 {
-                    eventDetectorPtr->arrowColor[i].argb.a = newAlpha;
+                    eventDetectorPtr->settings.arrowColor[i].argb.a = newAlpha;
                 }
             }
-            point3Col.col = eventDetectorPtr->arrowColor;
+            point3Col.col = eventDetectorPtr->settings.arrowColor;
             njDrawTriangle3D(&point3Col, 6, NJD_TRANSPARENT);
         }
     }
@@ -639,56 +640,6 @@ void EventDetector::OnGenericEmblem(const signed int index)
     }
     if (checksFound)
         checkData = randomizer.GetCheckData();
-}
-
-void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
-{
-    this->completeMultipleLevelMissions = completeMultipleMissions;
-}
-
-void EventDetector::SetSanitySettings(const bool trackerArrow, const int trackerArrowColor,
-                                      const bool trackerArrowToggleable,
-                                      const bool trackerArrowShowDistance, const bool trackerArrowOverrideColor,
-                                      const bool enemyIndicator, const int enemyIndicatorColor,
-                                      const bool capsuleIndicator, const int capsuleIndicatorColor,
-                                      const bool fishIndicator, const int fishIndicatorColor,
-                                      const bool progressionIndicator, const int progressionIndicatorColor)
-{
-    this->trackerArrow = trackerArrow;
-    this->trackerArrowToggleable = trackerArrowToggleable;
-    this->trackerArrowShowDistance = trackerArrowShowDistance;
-    this->trackerArrowOverrideColor = trackerArrowOverrideColor;
-    this->arrowColor[0].color = trackerArrowColor;
-    this->arrowColor[1].color = trackerArrowColor;
-    this->arrowColor[2].color = trackerArrowColor;
-    this->arrowColor[3].color = trackerArrowColor;
-    this->arrowColor[4].color = trackerArrowColor;
-    this->arrowColor[5].color = trackerArrowColor;
-
-    this->enemyIndicator = enemyIndicator;
-    this->enemyIndicatorColor[0].color = enemyIndicatorColor;
-    this->enemyIndicatorColor[1].color = enemyIndicatorColor;
-    this->enemyIndicatorColor[2].color = enemyIndicatorColor;
-
-    this->capsuleIndicator = capsuleIndicator;
-    this->capsuleIndicatorColor[0].color = capsuleIndicatorColor;
-    this->capsuleIndicatorColor[1].color = capsuleIndicatorColor;
-    this->capsuleIndicatorColor[2].color = capsuleIndicatorColor;
-
-    this->fishIndicator = fishIndicator;
-    this->fishIndicatorColor[0].color = fishIndicatorColor;
-    this->fishIndicatorColor[1].color = fishIndicatorColor;
-    this->fishIndicatorColor[2].color = fishIndicatorColor;
-
-    this->progressionIndicator = progressionIndicator;
-    this->progressionItemIndicatorColor[0].color = progressionIndicatorColor;
-    this->progressionItemIndicatorColor[1].color = progressionIndicatorColor;
-    this->progressionItemIndicatorColor[2].color = progressionIndicatorColor;
-}
-
-void EventDetector::setHomingAttackIndicator(const HomingAttackIndicator homingAttackIndicator)
-{
-    this->homingAttackIndicator = homingAttackIndicator;
 }
 
 
@@ -1000,11 +951,11 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     }
 
 
-    if (indicatorType == EnemyIndicator && !eventDetectorPtr->enemyIndicator)
+    if (indicatorType == EnemyIndicator && !eventDetectorPtr->settings.enemyIndicator)
         return;
-    if (indicatorType == CapsuleIndicator && !eventDetectorPtr->capsuleIndicator)
+    if (indicatorType == CapsuleIndicator && !eventDetectorPtr->settings.capsuleIndicator)
         return;
-    if (indicatorType == FishIndicator && !eventDetectorPtr->capsuleIndicator)
+    if (indicatorType == FishIndicator && !eventDetectorPtr->settings.capsuleIndicator)
         return;
 
     const EntityData1* player = EntityData1Ptrs[0];
@@ -1066,17 +1017,17 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     NJS_POINT3COL point3Col;
     point3Col.p = point;
     if (!checked)
-        if (eventDetectorPtr->progressionIndicator && eventDetectorPtr->options.
+        if (eventDetectorPtr->settings.progressionIndicator && eventDetectorPtr->options.
                                                                         LocationHasProgressiveItem(locationId))
-            point3Col.col = eventDetectorPtr->progressionItemIndicatorColor;
+            point3Col.col = eventDetectorPtr->settings.progressionItemIndicatorColor;
         else if (indicatorType == EnemyIndicator)
-            point3Col.col = eventDetectorPtr->enemyIndicatorColor;
+            point3Col.col = eventDetectorPtr->settings.enemyIndicatorColor;
         else if (indicatorType == CapsuleIndicator)
-            point3Col.col = eventDetectorPtr->capsuleIndicatorColor;
+            point3Col.col = eventDetectorPtr->settings.capsuleIndicatorColor;
         else
-            point3Col.col = eventDetectorPtr->fishIndicatorColor;
+            point3Col.col = eventDetectorPtr->settings.fishIndicatorColor;
     else
-        point3Col.col = eventDetectorPtr->disabledIndicatorColor;
+        point3Col.col = eventDetectorPtr->settings.disabledIndicatorColor;
 
     njDrawTriangle3D(&point3Col, 3, 0x0);
 }

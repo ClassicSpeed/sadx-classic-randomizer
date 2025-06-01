@@ -40,7 +40,6 @@ public:
     void ShowStatusInformation(std::string information);
     void ShowGoalStatus();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
-    void UpdateVoiceMenuCharacter(int characterVoiceIndex);
     void SetConnected();
 
 private:
@@ -78,7 +77,6 @@ private:
     std::string GetMissionSTarget(bool showTarget, bool expertMode);
     void DisplayItemsUnlocked();
 
-    int _voiceMenuCharacter = 0;
 
     int _startLine = 2;
     size_t _displayCount = 5;
