@@ -13,8 +13,10 @@ void EmptyCall()
 {
 }
 
-CharacterManager::CharacterManager(Options& options,  Settings& settings, ReactionManager& reactionManager): options(options), settings(settings),
-    reactionManager(reactionManager)
+CharacterManager::CharacterManager(Options& options, Settings& settings, GameStatus& gameStatus,
+                                   ReactionManager& reactionManager): options(options), settings(settings),
+                                                                      gameStatus(gameStatus),
+                                                                      reactionManager(reactionManager)
 {
     characterManagerPtr = this;
     //Re-enable control after graving an emblem
@@ -136,10 +138,6 @@ FunctionHook<void, char> onGiveInvincibility(0x441F10, [](const char character)-
     onGiveInvincibility.Original(character);
 });
 
-void CharacterManager::UpdateUnlockStatus(const UnlockStatus newUnlockStatus)
-{
-    this->unlockStatus = newUnlockStatus;
-}
 
 void CharacterManager::KillPlayer()
 {
@@ -227,7 +225,6 @@ void CharacterManager::GiveFillerItem(const FillerType filler, const bool priori
 
 void CharacterManager::OnFrame()
 {
-    
     if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
         return;
     if (_fillerTimer > 0)
@@ -240,7 +237,7 @@ void CharacterManager::OnFrame()
         }
     }
 
-    if (options.lazyFishing && unlockStatus.bigPowerRodUnlocked)
+    if (options.lazyFishing && gameStatus.unlock.bigPowerRodUnlocked)
         RodTension = 0;
 
     if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
@@ -431,7 +428,7 @@ void CharacterManager::ActivateFiller(const FillerType filler)
 
 FunctionHook<int> getLureQuantity(0x46C870, []()-> int
 {
-    return characterManagerPtr->unlockStatus.bigLureQuantity;
+    return characterManagerPtr->gameStatus.unlock.bigLureQuantity;
 });
 
 void CharacterManager::SpawnSpring()

@@ -3,7 +3,6 @@
 
 #include "../../pch.h"
 #include "../../configuration/options/Options.h"
-#include "../../application/structs/UnlockStatus.h"
 #include "../../application/structs/ItemData.h"
 #include "../../application/structs/WeightedRandomSelector.h"
 #include "../reactionManager/ReactionManager.h"
@@ -22,10 +21,10 @@ struct RingDifference
 class CharacterManager : public IOnFrame
 {
 public:
-    static CharacterManager& Init(Options& options, Settings& settings, ReactionManager& reactionManager)
+    static CharacterManager& Init(Options& options, Settings& settings, GameStatus& gameStatus, ReactionManager& reactionManager)
     {
         if (_instance == nullptr)
-            _instance = new CharacterManager(options, settings, reactionManager);
+            _instance = new CharacterManager(options, settings,gameStatus,  reactionManager);
         return *_instance;
     }
 
@@ -33,7 +32,6 @@ public:
 
     void GiveUpgrade(Upgrades upgrade);
     void RemoveUpgrade(Upgrades upgrade);
-    void UpdateUnlockStatus(UnlockStatus unlockStatus);
     void KillPlayer();
     void ProcessRings(Sint16 amount);
     RingDifference GetRingDifference();
@@ -42,13 +40,13 @@ public:
     void RemoveStatusEffects();
     Options& options;
     Settings& settings;
+    GameStatus& gameStatus;
     ReactionManager& reactionManager;
-    UnlockStatus unlockStatus;
     int lastRingAmount;
     bool reverseControlsEnabled = false;
 
 private:
-    explicit CharacterManager(Options& options, Settings& settings, ReactionManager& reactionManager);
+    explicit CharacterManager(Options& options,  Settings& settings, GameStatus& gameStatus,ReactionManager& reactionManager);
     inline static CharacterManager* _instance = nullptr;
 
     void ActivateFiller(FillerType filler);

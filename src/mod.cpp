@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "application/Randomizer.h"
+#include "configuration/gameStatus/GameStatus.h"
 #include "input/archipelago/ArchipelagoManager.h"
 #include "input/cheatsManager/CheatsManager.h"
 #include "input/eventDetector/EventDetector.h"
@@ -18,17 +19,18 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
 {
     Settings& settings = Settings::Init(path, helperFunctions);
     Options& options = Options::Init(settings);
-    ReactionManager& reactionManager = ReactionManager::Init(options, settings);
-    DisplayManager& displayManager = DisplayManager::Init(options, settings, path, helperFunctions);
-    CharacterManager& characterManager = CharacterManager::Init(options, settings, reactionManager);
-    WorldStateManager& worldStateManager = WorldStateManager::Init(options, settings);
-    ItemRepository& itemRepository = ItemRepository::Init();
+    GameStatus& gameStatus = GameStatus::Init();
+    ReactionManager& reactionManager = ReactionManager::Init(settings, gameStatus);
+    DisplayManager& displayManager = DisplayManager::Init(options, settings, gameStatus, path, helperFunctions);
+    CharacterManager& characterManager = CharacterManager::Init(options, settings,gameStatus, reactionManager);
+    WorldStateManager& worldStateManager = WorldStateManager::Init(options, settings, gameStatus);
+    ItemRepository& itemRepository = ItemRepository::Init(gameStatus);
     LocationRepository& locationRepository = LocationRepository::Init();
     ArchipelagoMessenger& archipelagoMessenger = ArchipelagoMessenger::Init(options);
     SaveFileManager& saveFileManager = SaveFileManager::Init();
     MusicManager& musicManager = MusicManager::Init(options, settings, helperFunctions);
 
-    Randomizer& randomizer = Randomizer::Init(options, settings, displayManager, characterManager,
+    Randomizer& randomizer = Randomizer::Init(options, settings, gameStatus, displayManager, characterManager,
                                               worldStateManager, itemRepository, locationRepository,
                                               archipelagoMessenger, saveFileManager, musicManager, reactionManager);
 

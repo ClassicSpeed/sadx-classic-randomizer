@@ -3,13 +3,13 @@
 #include <string>
 #include "../../application/structs/ItemData.h"
 #include "../../application/structs/Message.h"
-#include "../../application/structs/UnlockStatus.h"
 #include "../../application/structs/LevelStatus.h"
 #include "../../application/structs/MissionStatus.h"
 #include "../../application/structs/BossesStatus.h"
 #include "../../application/structs/ChaoStatus.h"
 #include "../../application/structs/VisitedLevels.h"
 #include "../../configuration/options/Options.h"
+#include "../../configuration/gameStatus/GameStatus.h"
 #include "../../application/structs/LocationData.h"
 
 #define ReplacePNG_Common(a) do { \
@@ -18,22 +18,22 @@ helperFunctions.ReplaceFile("system\\" a ".PVR", pathbuf); \
 } while (0)
 
 
-
-class DisplayManager: public IOnFrame
+class DisplayManager : public IOnFrame
 {
 public:
-    static DisplayManager& Init(Options& options, Settings& settings, const char* path, const HelperFunctions& helperFunctions)
+    static DisplayManager& Init(Options& options, Settings& settings, GameStatus& gameStatus, const char* path,
+                                const HelperFunctions& helperFunctions)
     {
         if (_instance == nullptr)
-            _instance = new DisplayManager(options, settings, path, helperFunctions);
+            _instance = new DisplayManager(options, settings, gameStatus, path, helperFunctions);
         return *_instance;
     }
+
     void OnFrame() override;
 
     void QueueItemMessage(const std::string& message);
     void QueueChatMessage(const std::string& message);
     void ShowSongName(const std::string& songName);
-    void UpdateUnlockStatus(UnlockStatus unlockStatus);
     void UpdateLevelStatus(LevelStatus levelStatus);
     void UpdateMissionStatus(MissionStatus missionStatus);
     void UpdateBossesStatus(BossesStatus bossesStatus);
@@ -45,27 +45,29 @@ public:
     void SetConnected();
 
 private:
-    explicit DisplayManager(Options& options, Settings& settings, const char* path, const HelperFunctions& helperFunctions);
+    explicit DisplayManager(Options& options, Settings& settings, GameStatus& gameStatus, const char* path,
+                            const HelperFunctions& helperFunctions);
     inline static DisplayManager* _instance = nullptr;
     Options& _options;
     Settings& _settings;
+    GameStatus& _gameStatus;
 
     inline static FunctionHook<void, AdvaModeEnum> _charSelAdvaModeProcedureHook{0x505E60};
     static void OnCharSelAdvaModeProcedure(AdvaModeEnum adventureMode);
-    
+
     inline static FunctionHook<void, AdvaModeEnum> _cmnAdvaModeProcedureHook{0x505B40};
     static void OnCmnAdvaModeProcedure(AdvaModeEnum adventureMode);
-    
+
     inline static FunctionHook<Sint32> _finishedLevelMaybeHook{0x414090};
     static Sint32 OnFinishedLevelMaybe();
-    
+
     inline static FunctionHook<SEQ_SECTIONTBL*, int> _storySelectedHook{0x44EAF0};
     static SEQ_SECTIONTBL* OnStorySelected(int playerNumber);
-    
+
     inline static FunctionHook<BOOL> _loadMissionMenu{0x506410};
     inline static FunctionHook<BOOL> _loadTrialMenu{0x506780};
 
-    
+
     void OnEnterCharacterSelectScreen();
     void OnExitCharacterSelectScreen();
     void RemoveExpiredMessages();
@@ -103,7 +105,6 @@ private:
     std::clock_t _unlockStatusTimer;
     float _unlockStatusDelay = 0.3f;
 
-    UnlockStatus _unlockStatus;
     LevelStatus _levelStatus;
     MissionStatus _missionStatus;
     BossesStatus _bossesStatus;

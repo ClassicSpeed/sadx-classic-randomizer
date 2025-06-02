@@ -2,29 +2,27 @@
 
 #include "../../pch.h"
 #include "../../configuration/options/Options.h"
+#include "../../configuration/gameStatus/GameStatus.h"
 #include "../../application/structs/ItemData.h"
 #include "../../application/structs/WeightedRandomSelector.h"
-#include "../../application/structs/UnlockStatus.h"
 
 class ReactionManager
 {
 public:
-    static ReactionManager& Init(Options& options, Settings& settings)
+    static ReactionManager& Init(Settings& settings, GameStatus& gameStatus)
     {
         if (_instance == nullptr)
-            _instance = new ReactionManager(options, settings);
+            _instance = new ReactionManager(settings, gameStatus);
         return *_instance;
     }
-    void UpdateUnlockStatus(UnlockStatus newUnlockStatus);
     void PlayRandomVoiceForItem(const ItemData& item, int64_t itemId) const;
     void PlayRandomTrapVoice(FillerType filler);
 
 private:
-    explicit ReactionManager(Options& options, Settings& settings);
+    explicit ReactionManager(Settings& settings, GameStatus& gameStatus);
     inline static ReactionManager* _instance = nullptr;
-    Options& _options;
     Settings& _settings;
-    UnlockStatus _unlockStatus;
+    GameStatus& _gameStatus;
     std::map<int, std::string> _commentMap = {
         {498, "Long time no see."},
         {860, "Long time; no see!"},

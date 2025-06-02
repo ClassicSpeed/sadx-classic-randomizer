@@ -2,13 +2,13 @@
 
 #include <random>
 
-Randomizer::Randomizer(Options& options, Settings& settings, DisplayManager& displayManager,
+Randomizer::Randomizer(Options& options, Settings& settings, GameStatus& gameStatus, DisplayManager& displayManager,
                        CharacterManager& characterManager,
                        WorldStateManager& menuManager,
                        ItemRepository& itemRepository, LocationRepository& locationRepository,
                        ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager,
                        MusicManager& musicManager, ReactionManager& reactionManager)
-    : _options(options), _settings(settings), _displayManager(displayManager),
+    : _options(options), _settings(settings), _gameStatus(gameStatus), _displayManager(displayManager),
       _characterManager(characterManager),
       _worldStateManager(menuManager),
       _itemRepository(itemRepository),
@@ -118,20 +118,13 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
             _displayManager.QueueItemMessage("Linked " + item.displayName + " sent");
         }
     }
-
-    const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
-    _characterManager.UpdateUnlockStatus(unlockStatus);
-    _displayManager.UpdateUnlockStatus(unlockStatus);
-    _worldStateManager.UpdateUnlockStatus(unlockStatus);
-    _reactionManager.UpdateUnlockStatus(unlockStatus);
-
     if (item.type == ItemChaosEmerald)
     {
         _displayManager.ShowGoalStatus();
 
         if (this->_settings._superSonicModRunning)
         {
-            if (_itemRepository.GetUnlockStatus().GotAllChaosEmeralds())
+            if (_gameStatus.unlock.GotAllChaosEmeralds())
             {
                 SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
                 _displayManager.QueueItemMessage("You can now transform into Super Sonic!");
@@ -145,7 +138,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     else if (item.type == ItemEmblem)
     {
         _displayManager.ShowGoalStatus();
-        if (unlockStatus.currentEmblems == _options.emblemGoal && AreLastStoryRequirementsCompleted())
+        if (_gameStatus.unlock.currentEmblems == _options.emblemGoal && AreLastStoryRequirementsCompleted())
             _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
     }
 
@@ -155,10 +148,6 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
 void Randomizer::ResetItems()
 {
     _itemRepository.ResetItems();
-    const UnlockStatus unlockStatus = _itemRepository.GetUnlockStatus();
-    _characterManager.UpdateUnlockStatus(unlockStatus);
-    _displayManager.UpdateUnlockStatus(unlockStatus);
-    _worldStateManager.UpdateUnlockStatus(unlockStatus);
 }
 
 
@@ -239,7 +228,7 @@ bool Randomizer::AreLastStoryRequirementsCompleted() const
         missionsCompleted = _locationRepository.GetMissionStatus(_options).missionsCompleted >= _options.missionGoal;
 
     if (_options.goalRequiresChaosEmeralds)
-        chaosEmeraldsCompleted = _itemRepository.GetUnlockStatus().GotAllChaosEmeralds();
+        chaosEmeraldsCompleted = _gameStatus.unlock.GotAllChaosEmeralds();
 
     if (_options.goalRequiresBosses)
         bossesCompleted = _locationRepository.GetBossesStatus(_options).bossesCompleted >= _options.bossesGoal;

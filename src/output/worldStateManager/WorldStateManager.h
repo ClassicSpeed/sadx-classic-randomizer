@@ -3,8 +3,8 @@
 #include "../../pch.h"
 #include <algorithm>
 #include "../../configuration/options/Options.h"
+#include "../../configuration/gameStatus/GameStatus.h"
 #include "../../application/structs/LevelEntrances.h"
-#include "../../application/structs/UnlockStatus.h"
 #include "../../application/structs/VisitedLevels.h"
 
 
@@ -38,10 +38,10 @@ struct LevelArrow
 class WorldStateManager : public IOnFrame
 {
 public:
-    static WorldStateManager& Init(Options& options, Settings& settings)
+    static WorldStateManager& Init(Options& options, Settings& settings, GameStatus& gameStatus)
     {
         if (_instance == nullptr)
-            _instance = new WorldStateManager(options, settings);
+            _instance = new WorldStateManager(options, settings,gameStatus);
         return *_instance;
     }
 
@@ -49,7 +49,6 @@ public:
 
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
-    void UpdateUnlockStatus(UnlockStatus unlockStatus);
     void UpdateChecks(const std::map<int, LocationData>& checkData);
     void DrawDisableDoorIndicator(NJS_POINT3 basePoint, float angle);
     void DrawCorrectDoorIndicator(NJS_POINT3 basePoint, float angle);
@@ -61,7 +60,7 @@ public:
     VisitedLevels GetVisitedLevels(int visitedLevel);
     Options& options;
     Settings& settings;
-    UnlockStatus unlockStatus;
+    GameStatus& gameStatus;
     VisitedLevels visitedLevels;
     LevelEntrances levelEntrances = {
         {EmeraldCoast, EmeraldCoast},
@@ -78,7 +77,7 @@ public:
     };
 
 private:
-    explicit WorldStateManager(Options& options, Settings& settings);
+    explicit WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus);
     inline static WorldStateManager* _instance = nullptr;
     mutable std::map<int, LocationData> _checkData;
     NJS_COLOR _wrongDoorColor[12] = {

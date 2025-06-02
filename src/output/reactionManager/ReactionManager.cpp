@@ -3,13 +3,8 @@
 const char* subtitleBuffer[] = {NULL, NULL};
 
 
-ReactionManager::ReactionManager(Options& options, Settings& settings): _options(options), _settings(settings)
+ReactionManager::ReactionManager(Settings& settings, GameStatus& gameStatus): _settings(settings), _gameStatus(gameStatus)
 {
-}
-
-void ReactionManager::UpdateUnlockStatus(UnlockStatus newUnlockStatus)
-{
-    this->_unlockStatus = newUnlockStatus;
 }
 
 void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t itemId) const
@@ -276,13 +271,13 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
             selector.addNumber(487, 1); //These are for you; my friend!
             selector.addNumber(652, 1); //Chaos could use a little snack!
 
-            if (_unlockStatus.CountChaosEmeralds() == 4)
+            if (_gameStatus.unlock.CountChaosEmeralds() == 4)
             {
                 selector.addNumber(485, 5); //Now I have four lovely Emeralds!
                 selector.addNumber(697, 5); //Ha ha ha ha! Four! Count them; four Emeralds!
                 selector.addNumber(1083, 5); //Hahahahaha! I've got four Emeralds now.
             }
-            if (_unlockStatus.CountChaosEmeralds() == 6)
+            if (_gameStatus.unlock.CountChaosEmeralds() == 6)
             {
                 selector.addNumber(570, 5); //Now I have six of the Chaos Emeralds!
                 selector.addNumber(571, 5); //There's only one more left to find!
@@ -290,7 +285,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
         }
         if (_settings.tikalCommentOnKeyItems)
         {
-            if (_unlockStatus.CountChaosEmeralds() == 7)
+            if (_gameStatus.unlock.CountChaosEmeralds() == 7)
             {
                 selector.addNumber(1355, 1); //So these are the seven Emeralds.
             }

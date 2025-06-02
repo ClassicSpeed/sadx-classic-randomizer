@@ -128,7 +128,7 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
             FreeTask(tp);
     }
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
-        && worldStateManagerPtr->unlockStatus.keyDynamite)
+        && worldStateManagerPtr->gameStatus.unlock.keyDynamite)
     {
         //We find the cube collision that we created for the dynamite and delete it
         if (tp->twp->pos.x < -394 && tp->twp->pos.x > -392
@@ -205,7 +205,8 @@ static __int16 __cdecl HandleOnFinalEggDoorCheckB(int a1);
 char LeonTimer1 = 10;
 char LeonTimer2 = 30;
 
-WorldStateManager::WorldStateManager(Options& options, Settings& settings): options(options), settings(settings)
+WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus): options(options),
+    settings(settings), gameStatus(gameStatus)
 {
     visitedLevels = VisitedLevels();
     onSceneChangeMr_t.Hook(HandleMREntrance);
@@ -248,8 +249,8 @@ WorldStateManager::WorldStateManager(Options& options, Settings& settings): opti
     WriteData((float**)0x004CD75A, &_nj_screen_.w); // From SADXFE
     WriteData((float**)0x004CD77C, &_nj_screen_.h); // From SADXFE
 
-    
-    if (settings. chaoStatsMultiplier > 1 )
+
+    if (settings.chaoStatsMultiplier > 1)
     {
         for (int i = 0x00; i < 0x402; i++)
         {
@@ -273,11 +274,6 @@ void WorldStateManager::UnlockSuperSonic()
 {
     SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_PLAYABLE));
     WriteSaveFile();
-}
-
-void WorldStateManager::UpdateUnlockStatus(UnlockStatus newUnlockStatus)
-{
-    this->unlockStatus = newUnlockStatus;
 }
 
 void WorldStateManager::UpdateChecks(const std::map<int, LocationData>& checkData)
@@ -484,21 +480,21 @@ FunctionHook<BOOL> isChaos2DoorOpen(0x638D50, []()-> BOOL
 
 FunctionHook<BOOL> isStationDoorOpen(0x63AB70, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyStationFrontKey;
+    return worldStateManagerPtr->gameStatus.unlock.keyStationFrontKey;
 });
 
 FunctionHook<BOOL> isHotelDoorOpen(0x630900, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyHotelFrontKey;
+    return worldStateManagerPtr->gameStatus.unlock.keyHotelFrontKey;
 });
 
 FunctionHook<BOOL> isCasinoHotelDoorOpen(0x630970, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyHotelBackKey;
+    return worldStateManagerPtr->gameStatus.unlock.keyHotelBackKey;
 });
 FunctionHook<BOOL> isCasinoStationDoorOpen(0x638880, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyStationBackKey;
+    return worldStateManagerPtr->gameStatus.unlock.keyStationBackKey;
 });
 
 
@@ -723,8 +719,6 @@ VisitedLevels WorldStateManager::GetVisitedLevels(const int visitedLevel)
 }
 
 
-
-
 typedef struct
 {
     int x;
@@ -847,7 +841,7 @@ FunctionHook<Sint32> onPrepareLevel(0x415210, []()-> Sint32
 FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
 {
     onCountSetItemsMaybe.Original();
-    
+
     if (DemoPlaying > 0)
         return;
 
@@ -975,7 +969,7 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Amy);
     AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Gamma);
     AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Big);
-    
+
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Sonic);
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Tails);
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Knuckles);
@@ -1094,7 +1088,7 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
 {
     // We prevent the wind stone from spawning if the player doesn't have the item
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
-        && (!worldStateManagerPtr->unlockStatus.keyWindStone
+        && (!worldStateManagerPtr->gameStatus.unlock.keyWindStone
             || !worldStateManagerPtr->levelEntrances.canEnter(WindyValley, CurrentCharacter)))
         if (tp->twp->pos.x > 1390 && tp->twp->pos.x < 1395
             && tp->twp->pos.y > 190 && tp->twp->pos.y < 193
@@ -1113,7 +1107,7 @@ FunctionHook<void, task*> onEmployeeCard(0x63C370, [](task* tp)-> void
 {
     // We prevent the Employee card from spawning if the player doesn't have the item, or he can't use it
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4
-        && (!worldStateManagerPtr->unlockStatus.keyEmployeeCard
+        && (!worldStateManagerPtr->gameStatus.unlock.keyEmployeeCard
             || !worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)))
         return;
     onEmployeeCard.Original(tp);
@@ -1486,7 +1480,7 @@ FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
         return EventFlagArray[FLAG_E102_MR_WINDYSTONE] && worldStateManagerPtr->levelEntrances.canEnter(
             WindyValley, CurrentCharacter);
     return worldStateManagerPtr->levelEntrances.canEnter(WindyValley, CurrentCharacter) && worldStateManagerPtr->
-        unlockStatus.keyWindStone;
+        gameStatus.unlock.keyWindStone;
 });
 
 // Handles the Casinopolis entrance
@@ -1522,7 +1516,7 @@ FunctionHook<BOOL> isSpeedHighwayShutterOpen(0x63A2A0, []()-> BOOL
     if (CurrentCharacter == Characters_Sonic)
         return isSpeedHighwayShutterOpen.Original();
     return worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
-        && worldStateManagerPtr->unlockStatus.keyEmployeeCard;
+        && worldStateManagerPtr->gameStatus.unlock.keyEmployeeCard;
 });
 
 FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
@@ -1530,7 +1524,7 @@ FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
     if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter ==
             Characters_Big)
         && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
-        && worldStateManagerPtr->unlockStatus.keyEmployeeCard)
+        && worldStateManagerPtr->gameStatus.unlock.keyEmployeeCard)
         FreeTask(tp);
     else
         loadSpeedHighwayShutter.Original(tp);
@@ -1541,7 +1535,7 @@ FunctionHook<void, task*> loadSpeedHighwayShutter2(0x63A500, [](task* tp)-> void
     if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter ==
             Characters_Big)
         && worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
-        && worldStateManagerPtr->unlockStatus.keyEmployeeCard)
+        && worldStateManagerPtr->gameStatus.unlock.keyEmployeeCard)
         FreeTask(tp);
     else
         loadSpeedHighwayShutter2.Original(tp);
@@ -1673,7 +1667,7 @@ void HandleLostWorldEntranceCollision(const int a1)
 
 FunctionHook<BOOL> isAngelIslandOpen(0x534570, []()-> BOOL
 {
-    return worldStateManagerPtr->unlockStatus.keyDynamite;
+    return worldStateManagerPtr->gameStatus.unlock.keyDynamite;
 });
 
 //Prevents the monkey from blocking the entrance to Red Mountain for knuckles
@@ -1727,7 +1721,7 @@ FunctionHook<BOOL, int> preventKeyStoneFromSpawning(0x53C630, [](int a1)-> BOOL
             || CurrentCharacter == Characters_Gamma) && worldStateManagerPtr->levelEntrances.canEnter(
             IceCap, CurrentCharacter)))
     {
-        return worldStateManagerPtr->unlockStatus.keyIceStone;
+        return worldStateManagerPtr->gameStatus.unlock.keyIceStone;
     }
 
     return preventKeyStoneFromSpawning.Original(a1);

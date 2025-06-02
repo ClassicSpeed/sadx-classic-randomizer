@@ -13,21 +13,23 @@
 #include "structs/LocationData.h"
 constexpr int SYNC_RATE = 10;
 
-class Randomizer: public IOnFrame
+class Randomizer : public IOnFrame
 {
 public:
-    static Randomizer& Init(Options& options, Settings& settings, DisplayManager& displayManager,
+    static Randomizer& Init(Options& options, Settings& settings, GameStatus& gameStatus,
+                            DisplayManager& displayManager,
                             CharacterManager& characterManager, WorldStateManager& menuManager,
                             ItemRepository& itemRepository, LocationRepository& locationRepository,
                             ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager,
                             MusicManager& musicManager, ReactionManager& reactionManager)
     {
         if (_instance == nullptr)
-            _instance = new Randomizer(options, settings, displayManager, characterManager, menuManager,
+            _instance = new Randomizer(options, settings, gameStatus, displayManager, characterManager, menuManager,
                                        itemRepository, locationRepository, archipelagoMessenger,
                                        saveFileManager, musicManager, reactionManager);
         return *_instance;
     }
+
     void OnFrame() override;
 
     void OnCheckFound(int checkId) const;
@@ -59,7 +61,8 @@ public:
     void OnSaveFileLoaded();
 
 private:
-    Randomizer(Options& options, Settings& settings, DisplayManager& displayManager, CharacterManager& characterManager,
+    Randomizer(Options& options, Settings& settings, GameStatus& gameStatus, DisplayManager& displayManager,
+               CharacterManager& characterManager,
                WorldStateManager& menuManager,
                ItemRepository& itemRepository, LocationRepository& locationRepository,
                ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager, MusicManager& musicManager,
@@ -67,6 +70,7 @@ private:
     inline static Randomizer* _instance = nullptr;
     Options& _options;
     Settings& _settings;
+    GameStatus& _gameStatus;
     DisplayManager& _displayManager;
     CharacterManager& _characterManager;
     WorldStateManager& _worldStateManager;
@@ -87,6 +91,6 @@ private:
     std::clock_t _trapLinkCooldownTimer = -1;
 
     bool AreLastStoryRequirementsCompleted() const;
-    
+
     int _syncTimer = 0;
 };
