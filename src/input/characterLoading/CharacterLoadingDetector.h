@@ -16,7 +16,7 @@ public:
 
     void OnCharacterSelectScreenLoaded() const;
     void OnCharacterLoaded();
-    void OnPlayingFrame();
+    void OnFrame();
 
 private:
     explicit CharacterLoadingDetector(Randomizer& randomizer);

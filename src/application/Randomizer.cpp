@@ -2,17 +2,20 @@
 
 #include <random>
 
-Randomizer::Randomizer(Options& options, Settings& settings, DisplayManager& displayManager, CharacterManager& characterManager,
-            WorldStateManager& menuManager,
-            ItemRepository& itemRepository, LocationRepository& locationRepository,
-            ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager, MusicManager& musicManager, ReactionManager& reactionManager)
-     : _options(options), _settings(settings), _displayManager(displayManager),
-       _characterManager(characterManager),
-       _worldStateManager(menuManager),
-       _itemRepository(itemRepository),
-       _locationRepository(locationRepository),
-       _archipelagoMessenger(archipelagoMessenger),
-       _saveFileManager(saveFileManager), _musicManager(musicManager), _reactionManager(reactionManager),_deathPending(false)
+Randomizer::Randomizer(Options& options, Settings& settings, DisplayManager& displayManager,
+                       CharacterManager& characterManager,
+                       WorldStateManager& menuManager,
+                       ItemRepository& itemRepository, LocationRepository& locationRepository,
+                       ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager,
+                       MusicManager& musicManager, ReactionManager& reactionManager)
+    : _options(options), _settings(settings), _displayManager(displayManager),
+      _characterManager(characterManager),
+      _worldStateManager(menuManager),
+      _itemRepository(itemRepository),
+      _locationRepository(locationRepository),
+      _archipelagoMessenger(archipelagoMessenger),
+      _saveFileManager(saveFileManager), _musicManager(musicManager), _reactionManager(reactionManager),
+      _deathPending(false)
 
 {
     _displayManager.UpdateChecks(locationRepository.GetLocations());
@@ -206,7 +209,7 @@ void Randomizer::UpdateLevelEntrances()
         const auto actualLevel = static_cast<Levels>(second);
         levelEntrances.addRelationship(levelEntrance, actualLevel);
     }
-    
+
     _worldStateManager.UpdateLevelEntrances(levelEntrances);
 
     for (const auto& location : _locationRepository.GetLocations())
@@ -336,8 +339,15 @@ void Randomizer::ProcessDeath(const std::string& deathCause)
 }
 
 //Move to Own Manager
-void Randomizer::OnPlayingFrame()
+void Randomizer::OnFrame()
 {
+    if (_syncTimer == 0)
+        this->OnSync();
+    else
+        _syncTimer--;
+
+    if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
+        return;
     if (!_options.deathLinkActive)
         return;
     if (!_deathPending)
@@ -364,6 +374,7 @@ void Randomizer::OnPlayingFrame()
 
 void Randomizer::OnSync()
 {
+    _syncTimer = SYNC_RATE;
     if (!_options.ringLinkActive)
         return;
     const RingDifference ringDifference = _characterManager.GetRingDifference();
@@ -420,7 +431,6 @@ void Randomizer::ProcessTrapLink(std::string itemName, std::string message)
 
 void Randomizer::OnConnected()
 {
-
     //Levels
     const LevelStatus levelStatus = _locationRepository.GetLevelStatus(_options);
     _displayManager.UpdateLevelStatus(levelStatus);

@@ -36,8 +36,12 @@ void CharacterLoadingDetector::OnCharacterLoaded()
     _loadCharacterNextFrame = 5;
 }
 
-void CharacterLoadingDetector::OnPlayingFrame()
+void CharacterLoadingDetector::OnFrame()
 {
+    
+    if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
+        return;
+    
     if (_loadCharacterNextFrame > 1)
         _loadCharacterNextFrame--;
 

@@ -59,7 +59,7 @@ public:
     }
 
     bool IsTargetableCheck(const LocationData& location) const;
-    void OnPlayingFrame() const;
+    void OnFrame() const;
     void OnLevelEmblem(int character, int level, int mission);
     void OnGenericEmblem(int index);
     void OnTwinkleCircuitCompleted(int character);

@@ -380,8 +380,11 @@ FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
 });
 
 
-void EventDetector::OnPlayingFrame() const
+void EventDetector::OnFrame() const
 {
+    if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
+        return;
+
     if (DemoPlaying > 0)
         return;
 
@@ -1018,7 +1021,7 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     point3Col.p = point;
     if (!checked)
         if (eventDetectorPtr->settings.progressionIndicator && eventDetectorPtr->options.
-                                                                        LocationHasProgressiveItem(locationId))
+            LocationHasProgressiveItem(locationId))
             point3Col.col = eventDetectorPtr->settings.progressionItemIndicatorColor;
         else if (indicatorType == EnemyIndicator)
             point3Col.col = eventDetectorPtr->settings.enemyIndicatorColor;

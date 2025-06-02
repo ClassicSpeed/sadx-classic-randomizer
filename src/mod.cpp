@@ -13,13 +13,10 @@
 #include "output/saveFileManager/SaveFileManager.h"
 #include "output/worldStateManager/WorldStateManager.h"
 
-constexpr int SYNC_RATE = 10;
 
 void ReplaceEmblemImage(const char* path, const HelperFunctions& helperFunctions);
 
 extern "C" {
-int syncTimer = 0;
-
 Settings* settings = nullptr;
 Options* options = nullptr;
 ReactionManager* reactionManager = nullptr;
@@ -75,22 +72,10 @@ __declspec(dllexport) void __cdecl OnFrame()
     archipelagoManager->OnFrame();
     displayManager->OnFrame();
     worldStateManager->OnFrame();
-
-    if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
-    {
-        eventDetector->OnPlayingFrame();
-        characterLoadingDetector->OnPlayingFrame();
-        randomizer->OnPlayingFrame();
-        characterManager->OnPlayingFrame();
-    }
-
-    if (syncTimer == 0)
-    {
-        randomizer->OnSync();
-        syncTimer = SYNC_RATE;
-    }
-    else
-        syncTimer--;
+    eventDetector->OnFrame();
+    characterLoadingDetector->OnFrame();
+    randomizer->OnFrame();
+    characterManager->OnFrame();
 }
 
 __declspec(dllexport) ModInfo SADXModInfo = {ModLoaderVer}; // This is needed for the Mod Loader to recognize the DLL.

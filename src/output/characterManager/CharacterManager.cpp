@@ -225,8 +225,11 @@ void CharacterManager::GiveFillerItem(const FillerType filler, const bool priori
         _remainingFiller.push_back(filler);
 }
 
-void CharacterManager::OnPlayingFrame()
+void CharacterManager::OnFrame()
 {
+    
+    if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
+        return;
     if (_fillerTimer > 0)
     {
         const double timePassed = (std::clock() - this->_fillerTimer) / static_cast<double>(CLOCKS_PER_SEC);

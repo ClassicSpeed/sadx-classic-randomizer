@@ -11,6 +11,7 @@
 #include "../output/reactionManager/ReactionManager.h"
 #include "../configuration/options/Options.h"
 #include "structs/LocationData.h"
+constexpr int SYNC_RATE = 10;
 
 class Randomizer
 {
@@ -42,7 +43,7 @@ public:
     std::vector<CapsuleLocationData> GetCapsules();
     std::vector<EnemyLocationData> GetEnemies();
     void ProcessDeath(const std::string& deathCause);
-    void OnPlayingFrame();
+    void OnFrame();
     void OnSync();
     void OnDeath();
     void ProcessRings(Sint16 amount);
@@ -91,4 +92,6 @@ private:
 
 
     bool AreLastStoryRequirementsCompleted() const;
+    
+    int _syncTimer = 0;
 };

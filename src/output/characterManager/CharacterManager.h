@@ -37,7 +37,7 @@ public:
     void ProcessRings(Sint16 amount);
     RingDifference GetRingDifference();
     void GiveFillerItem(FillerType filler, bool priority);
-    void OnPlayingFrame();
+    void OnFrame();
     void SetStartingCharacter(int startingCharacterIndex);
     void RemoveStatusEffects();
     Options& options;
