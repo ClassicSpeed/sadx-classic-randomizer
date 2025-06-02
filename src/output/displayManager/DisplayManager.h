@@ -12,19 +12,23 @@
 #include "../../configuration/options/Options.h"
 #include "../../application/structs/LocationData.h"
 
+#define ReplacePNG_Common(a) do { \
+_snprintf_s(pathbuf, LengthOfArray(pathbuf), "%s\\textures\\pvr_common\\index.txt", path); \
+helperFunctions.ReplaceFile("system\\" a ".PVR", pathbuf); \
+} while (0)
 
-struct LocationData;
 
 
-class DisplayManager
+class DisplayManager: public IOnFrame
 {
 public:
-    static DisplayManager& Init(Options& options, Settings& settings)
+    static DisplayManager& Init(Options& options, Settings& settings, const char* path, const HelperFunctions& helperFunctions)
     {
         if (_instance == nullptr)
-            _instance = new DisplayManager(options, settings);
+            _instance = new DisplayManager(options, settings, path, helperFunctions);
         return *_instance;
     }
+    void OnFrame() override;
 
     void QueueItemMessage(const std::string& message);
     void QueueChatMessage(const std::string& message);
@@ -35,14 +39,13 @@ public:
     void UpdateBossesStatus(BossesStatus bossesStatus);
     void UpdateChaoStatus(ChaoStatus chaoStatus);
     void UpdateVisitedLevels(VisitedLevels visitedLevels);
-    void OnFrame();
     void ShowStatusInformation(std::string information);
     void ShowGoalStatus();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
     void SetConnected();
 
 private:
-    explicit DisplayManager(Options& options, Settings& settings);
+    explicit DisplayManager(Options& options, Settings& settings, const char* path, const HelperFunctions& helperFunctions);
     inline static DisplayManager* _instance = nullptr;
     Options& _options;
     Settings& _settings;

@@ -2,7 +2,7 @@
 
 #include "../../pch.h"
 
-class SaveFileManager
+class SaveFileManager : public IOnFrame
 {
 public:
     static SaveFileManager& Init()
@@ -11,15 +11,17 @@ public:
             _instance = new SaveFileManager();
         return *_instance;
     }
+    void OnFrame() override;
 
     void OnSaveFileLoaded();
-    void OnFrame();
     void StartAllMissions();
     void SetMissionCompleted(int mission);
 
 private:
-    SaveFileManager(){}
+    SaveFileManager()
+    {
+    }
+
     inline static SaveFileManager* _instance = nullptr;
     void OnSaveFileCreated();
-
 };

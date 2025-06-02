@@ -18,17 +18,18 @@ struct RingDifference
     int hardRingDifference;
 };
 
-     
 
-class CharacterManager
+class CharacterManager : public IOnFrame
 {
 public:
-    static CharacterManager& Init(Options& options, Settings& settings,ReactionManager& reactionManager)
+    static CharacterManager& Init(Options& options, Settings& settings, ReactionManager& reactionManager)
     {
         if (_instance == nullptr)
             _instance = new CharacterManager(options, settings, reactionManager);
         return *_instance;
     }
+
+    void OnFrame() override;
 
     void GiveUpgrade(Upgrades upgrade);
     void RemoveUpgrade(Upgrades upgrade);
@@ -37,7 +38,6 @@ public:
     void ProcessRings(Sint16 amount);
     RingDifference GetRingDifference();
     void GiveFillerItem(FillerType filler, bool priority);
-    void OnFrame();
     void SetStartingCharacter(int startingCharacterIndex);
     void RemoveStatusEffects();
     Options& options;
@@ -48,9 +48,9 @@ public:
     bool reverseControlsEnabled = false;
 
 private:
-    explicit CharacterManager(Options& options, Settings& settings,ReactionManager& reactionManager);
+    explicit CharacterManager(Options& options, Settings& settings, ReactionManager& reactionManager);
     inline static CharacterManager* _instance = nullptr;
-    
+
     void ActivateFiller(FillerType filler);
     void FreezePlayer();
     void IncrementGravity();
@@ -73,6 +73,4 @@ private:
     std::clock_t _gravityTimer = -1;
 
     std::clock_t _reverseControlsTimer = -1;
-
-
 };

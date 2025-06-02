@@ -188,4 +188,8 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
     this->progressionItemIndicatorColor[0].color = progressionIndicatorColor;
     this->progressionItemIndicatorColor[1].color = progressionIndicatorColor;
     this->progressionItemIndicatorColor[2].color = progressionIndicatorColor;
+
+
+    if (helperFunctions.Mods->find_by_name("Super Sonic"))
+        _superSonicModRunning = false;
 }

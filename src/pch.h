@@ -115,4 +115,9 @@ const std::unordered_map<int, std::tuple<int, int, int>>  GAMMA_TARGET_TIMES= {
 {LevelIDs_HotShelter, std::make_tuple(7200, 10800, 10800)},
 };
 
+class IOnFrame {
+public:
+    virtual void OnFrame() = 0;
+    virtual ~IOnFrame() = default;
+};
 #endif //PCH_H

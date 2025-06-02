@@ -48,7 +48,7 @@ enum IndicatorType
 };
 
 
-class EventDetector
+class EventDetector: public IOnFrame
 {
 public:
     static EventDetector& Init(Options& options, Settings& settings, Randomizer& randomizer)
@@ -57,9 +57,9 @@ public:
             _instance = new EventDetector(options, settings, randomizer);
         return *_instance;
     }
+    void OnFrame() override;
 
     bool IsTargetableCheck(const LocationData& location) const;
-    void OnFrame() const;
     void OnLevelEmblem(int character, int level, int mission);
     void OnGenericEmblem(int index);
     void OnTwinkleCircuitCompleted(int character);

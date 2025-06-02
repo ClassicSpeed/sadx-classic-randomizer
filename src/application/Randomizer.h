@@ -13,7 +13,7 @@
 #include "structs/LocationData.h"
 constexpr int SYNC_RATE = 10;
 
-class Randomizer
+class Randomizer: public IOnFrame
 {
 public:
     static Randomizer& Init(Options& options, Settings& settings, DisplayManager& displayManager,
@@ -28,6 +28,7 @@ public:
                                        saveFileManager, musicManager, reactionManager);
         return *_instance;
     }
+    void OnFrame() override;
 
     void OnCheckFound(int checkId) const;
     void OnItemReceived(int64_t itemId) const;
@@ -43,7 +44,6 @@ public:
     std::vector<CapsuleLocationData> GetCapsules();
     std::vector<EnemyLocationData> GetEnemies();
     void ProcessDeath(const std::string& deathCause);
-    void OnFrame();
     void OnSync();
     void OnDeath();
     void ProcessRings(Sint16 amount);
@@ -52,7 +52,6 @@ public:
     void OnCheckVersion(int serverVersion);
     void SetStartingCharacter(int startingCharacterIndex);
     void UpdateLevelEntrances();
-    void SetSuperSonicModRunning(bool isModRunning);
     void DisplaySongName(int songId);
     int GetSongForId(int songId);
     int GetNewSongForId(int songId, int currentSongId);
@@ -86,10 +85,6 @@ private:
 
     float _trapLinkCooldown = 5.0f;
     std::clock_t _trapLinkCooldownTimer = -1;
-
-
-    bool _superSonicModRunning = false;
-
 
     bool AreLastStoryRequirementsCompleted() const;
     

@@ -1,7 +1,7 @@
 #include "DisplayManager.h"
 
 
-DisplayManager::DisplayManager(Options& options, Settings& settings): _options(options), _settings(settings)
+DisplayManager::DisplayManager(Options& options, Settings& settings, const char* path, const HelperFunctions& helperFunctions): _options(options), _settings(settings)
 {
     _charSelAdvaModeProcedureHook.Hook(OnCharSelAdvaModeProcedure);
     _cmnAdvaModeProcedureHook.Hook(OnCmnAdvaModeProcedure);
@@ -11,6 +11,13 @@ DisplayManager::DisplayManager(Options& options, Settings& settings): _options(o
     //Blocks mission/trail menu
     _loadMissionMenu.Hook([]() -> BOOL { return false; });
     _loadTrialMenu.Hook([]() -> BOOL { return false; });
+
+    
+        char pathbuf[MAX_PATH];
+        ReplacePNG_Common("HYOJI_EMBLEM0");
+        ReplacePNG_Common("HYOJI_EMBLEM1");
+    
+
 }
 
 // On entering the character select screen while on the main menu

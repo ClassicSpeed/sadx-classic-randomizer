@@ -19,7 +19,7 @@ enum ConnectionStatus
     BadSaveFile,
 };
 
-class ArchipelagoManager
+class ArchipelagoManager: public IOnFrame
 {
 public:
     static ArchipelagoManager& Init(Options& options, Settings& settings, Randomizer& randomizer)
@@ -28,10 +28,10 @@ public:
             _instance = new ArchipelagoManager(options, settings, randomizer);
         return *_instance;
     }
+    void OnFrame() override;
 
     void Connect();
     bool IsValidSaveFile();
-    void OnFrame();
     bool IsWaitingForSaveFile();
     void ReceiveItem(int64_t itemId, bool notify);
     void ResetItems();

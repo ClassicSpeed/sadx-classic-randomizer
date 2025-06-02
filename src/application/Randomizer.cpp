@@ -64,7 +64,6 @@ void Randomizer::OnCheckFound(const int checkId) const
             && AreLastStoryRequirementsCompleted())
             _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
     }
-    PrintDebug("Check found: %d %s, and type: %d\n", checkId, check.displayName.c_str(), check.type);
     if (check.type == LocationChaoRace && _options.goalRequiresChaoRaces)
     {
         const ChaoStatus chaoStatus = _locationRepository.GetChaoStatus();
@@ -130,7 +129,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     {
         _displayManager.ShowGoalStatus();
 
-        if (this->_superSonicModRunning)
+        if (this->_settings._superSonicModRunning)
         {
             if (_itemRepository.GetUnlockStatus().GotAllChaosEmeralds())
             {
@@ -219,13 +218,6 @@ void Randomizer::UpdateLevelEntrances()
             _displayManager.UpdateVisitedLevels(_worldStateManager.GetVisitedLevels(location.second.level));
     }
 }
-
-//TODO: Move to STATUS?
-void Randomizer::SetSuperSonicModRunning(const bool isModRunning)
-{
-    _superSonicModRunning = isModRunning;
-}
-
 
 //TODO: Later, Move to Goal/Status Manager?
 bool Randomizer::AreLastStoryRequirementsCompleted() const

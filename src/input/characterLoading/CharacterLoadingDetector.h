@@ -4,7 +4,7 @@
 #include "../../application/Randomizer.h"
 
 
-class CharacterLoadingDetector
+class CharacterLoadingDetector: public IOnFrame
 {
 public:
     static CharacterLoadingDetector& Init(Randomizer& randomizer)
@@ -13,10 +13,10 @@ public:
             _instance = new CharacterLoadingDetector(randomizer);
         return *_instance;
     }
+    void OnFrame() override;
 
     void OnCharacterSelectScreenLoaded() const;
     void OnCharacterLoaded();
-    void OnFrame();
 
 private:
     explicit CharacterLoadingDetector(Randomizer& randomizer);

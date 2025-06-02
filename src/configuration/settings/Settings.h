@@ -248,6 +248,10 @@ public:
         {0xFFD4AF37},
         {0xFFD4AF37},
     };
+    
+
+
+    bool _superSonicModRunning = false;
 
 private:
     explicit Settings(const char* path, const HelperFunctions& helperFunctions);

@@ -35,7 +35,7 @@ struct LevelArrow
 };
 
 
-class WorldStateManager
+class WorldStateManager : public IOnFrame
 {
 public:
     static WorldStateManager& Init(Options& options, Settings& settings)
@@ -45,6 +45,7 @@ public:
         return *_instance;
     }
 
+    void OnFrame() override;
 
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
@@ -54,7 +55,6 @@ public:
     void DrawCorrectDoorIndicator(NJS_POINT3 basePoint, float angle);
     void DrawOtherDoorIndicator(NJS_POINT3 basePoint, float angle);
     void ShowLevelEntranceArrows();
-    void OnFrame();
     void SetStartingArea();
     void MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist);
     void UpdateLevelEntrances(LevelEntrances levelEntrances);

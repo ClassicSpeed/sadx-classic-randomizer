@@ -380,7 +380,7 @@ FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
 });
 
 
-void EventDetector::OnFrame() const
+void EventDetector::OnFrame()
 {
     if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
         return;
