@@ -1,51 +1,50 @@
 #include "CharacterManager.h"
-#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
 
-CharacterManager* characterManagerPtr;
 DataPointer(int, TimerEnabled, 0x912DF0);
 
-UsercallFuncVoid(HudDisplayRings_t, (signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud),
-                 (ringCount, digits, hud), 0x425960, rEAX, rBL, rESI);
-static void __cdecl HandleHudDisplayRings(signed int ringCount, unsigned __int8 digits, NJS_SPRITE* hud);
-static void __cdecl HandleRingLoss();
-
-void EmptyCall()
-{
-}
-
+CharacterManager::__hudDisplayRingsHook_t CharacterManager::_hudDisplayRingsHook;
 CharacterManager::CharacterManager(Options& options, Settings& settings, GameStatus& gameStatus,
-                                   ReactionManager& reactionManager): options(options), settings(settings),
-                                                                      gameStatus(gameStatus),
-                                                                      reactionManager(reactionManager)
+                                   ReactionManager& reactionManager): _options(options), _settings(settings),
+                                                                      _gameStatus(gameStatus),
+                                                                      _reactionManager(reactionManager)
 {
-    characterManagerPtr = this;
+    _set0RingsHook.Hook(OnSet0Rings);
+    _giveBarrierHook.Hook(OnGiveBarrier);
+    _giveMagneticBarrierHook.Hook(OnGiveMagneticBarrier);
+    _giveInvincibilityHook.Hook(OnGiveInvincibility);
+    _getLureQuantityHook.Hook(OnGetLureQuantity);
+    _writeAnalogsHook.Hook(OnWriteAnalogs);
+    _freezeTrapDisplayHook.Hook(OnFreezeTrapDisplay);
+    _scoreDisplayMainHook.Hook(OnScoreDisplayMain);
+    _drawSNumbersHook.Hook(OnDrawSNumbers);
+    _hudDisplayRingsHook.Hook(HandleHudDisplayRings);
+
+    //We override the Set0Rings call inside the HurtPlayer function;
+    WriteCall(reinterpret_cast<void*>(0x45072D), (void*)HandleRingLoss);
+
+
     //Re-enable control after graving an emblem
-    WriteCall((void*)0x4B4891, EnableControl);
-    WriteCall((void*)0x4B46C5, EnableControl);
+    WriteCall((void*)0x4B4891, (void*)EnableControl);
+    WriteCall((void*)0x4B46C5, (void*)EnableControl);
 
 
     //Re-enable control after graving a mission card
-    WriteCall((void*)0x595BFD, EnableControl);
-    WriteCall((void*)0x595C53, EnableControl);
-    WriteCall((void*)0x595C5D, EnableControl);
+    WriteCall((void*)0x595BFD, (void*)EnableControl);
+    WriteCall((void*)0x595C53, (void*)EnableControl);
+    WriteCall((void*)0x595C5D, (void*)EnableControl);
 
     //Re-enable control after finishing a mission
-    WriteCall((void*)0x592094, EnableControl);
-    WriteCall((void*)0x5920CA, EnableControl);
+    WriteCall((void*)0x592094, (void*)EnableControl);
+    WriteCall((void*)0x5920CA, (void*)EnableControl);
 
     //Re-enable pause after finishing a mission
-    WriteCall((void*)0x592048, EnablePause);
-    WriteCall((void*)0x5920AF, EnablePause);
+    WriteCall((void*)0x592048, (void*)EnablePause);
+    WriteCall((void*)0x5920AF, (void*)EnablePause);
 
     //Re-enable timer after finishing a mission
-    WriteCall((void*)0x592057, EmptyCall);
-    WriteCall((void*)0x592131, EmptyCall);
-    WriteCall((void*)0x59219E, EmptyCall);
-
-    //We override the Set0Rings call inside the HurtPlayer function;
-    WriteCall(reinterpret_cast<void*>(0x45072D), &HandleRingLoss);
-
-    HudDisplayRings_t.Hook(HandleHudDisplayRings);
+    WriteCall((void*)0x592057, (void*)EmptyCall);
+    WriteCall((void*)0x592131, (void*)EmptyCall);
+    WriteCall((void*)0x59219E, (void*)EmptyCall);
 }
 
 
@@ -85,19 +84,19 @@ void CharacterManager::RemoveUpgrade(const Upgrades upgrade)
 }
 
 //We don't send ring updates when set to zero
-FunctionHook<void> onSet0Rings(0x425AB0, []()-> void
+void CharacterManager::OnSet0Rings()
 {
-    onSet0Rings.Original();
-    characterManagerPtr->lastRingAmount = Rings;
-});
+    _set0RingsHook.Original();
+    _instance->_lastRingAmount = Rings;
+}
 
 
-static void __cdecl HandleRingLoss()
+void CharacterManager::HandleRingLoss()
 {
     //We preserve the last ring amount when the player is hurt
     //In practice, every set0ring call won't be synced except for this one
-    const int lastRingAmountBuffer = characterManagerPtr->lastRingAmount;
-    switch (characterManagerPtr->options.ringLoss)
+    const int lastRingAmountBuffer = _instance->_lastRingAmount;
+    switch (_instance->_options.ringLoss)
     {
     case Classic:
         Set0Rings();
@@ -114,29 +113,30 @@ static void __cdecl HandleRingLoss()
         KillHimP(0);
         break;
     }
-    characterManagerPtr->lastRingAmount = lastRingAmountBuffer;
+    _instance->_lastRingAmount = lastRingAmountBuffer;
 }
 
-FunctionHook<void, char> onGiveBarrier(0x441EA0, [](const char character)-> void
-{
-    if (characterManagerPtr->options.ringLoss == OneHitKnockOutNoShields)
-        return;
-    onGiveBarrier.Original(character);
-});
 
-FunctionHook<void, char> onGiveMagneticBarrier(0x441E30, [](const char character)-> void
+void CharacterManager::OnGiveBarrier(const char character)
 {
-    if (characterManagerPtr->options.ringLoss == OneHitKnockOutNoShields)
+    if (_instance->_options.ringLoss == OneHitKnockOutNoShields)
         return;
-    onGiveMagneticBarrier.Original(character);
-});
+    _giveBarrierHook.Original(character);
+}
 
-FunctionHook<void, char> onGiveInvincibility(0x441F10, [](const char character)-> void
+void CharacterManager::OnGiveMagneticBarrier(const char character)
 {
-    if (characterManagerPtr->options.ringLoss == OneHitKnockOutNoShields)
+    if (_instance->_options.ringLoss == OneHitKnockOutNoShields)
         return;
-    onGiveInvincibility.Original(character);
-});
+    _giveMagneticBarrierHook.Original(character);
+}
+
+void CharacterManager::OnGiveInvincibility(const char character)
+{
+    if (_instance->_options.ringLoss == OneHitKnockOutNoShields)
+        return;
+    _giveInvincibilityHook.Original(character);
+}
 
 
 void CharacterManager::KillPlayer()
@@ -148,9 +148,9 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 {
     if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
         return;
-    if (CurrentLevel == LevelIDs_PerfectChaos && !options.hardRingLinkActive)
+    if (CurrentLevel == LevelIDs_PerfectChaos && !_options.hardRingLinkActive)
         return;
-    if (!options.casinopolisRingLink && CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic)
+    if (!_options.casinopolisRingLink && CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic)
         return;
     if (GameState != MD_GAME_MAIN)
         return;
@@ -166,7 +166,7 @@ void CharacterManager::ProcessRings(const Sint16 amount)
         Rings = newRingAmount;
     }
 
-    const int maxRings = settings.extendRingCapacity ? 99999 : 999;
+    const int maxRings = _settings.extendRingCapacity ? 99999 : 999;
 
     if (amount > 0 && Rings < maxRings)
     {
@@ -174,7 +174,7 @@ void CharacterManager::ProcessRings(const Sint16 amount)
         PlaySound(RING_GAIN_SOUND_ID, nullptr, 0, nullptr);
     }
 
-    lastRingAmount = Rings;
+    _lastRingAmount = Rings;
 }
 
 RingDifference CharacterManager::GetRingDifference()
@@ -186,32 +186,32 @@ RingDifference CharacterManager::GetRingDifference()
 
     if (CurrentLevel == LevelIDs_PerfectChaos)
     {
-        if (!options.hardRingLinkActive)
+        if (!_options.hardRingLinkActive)
             return {0, 0};
-        ringDifference.hardRingDifference = Rings - lastRingAmount;
-        lastRingAmount = Rings;
+        ringDifference.hardRingDifference = Rings - _lastRingAmount;
+        _lastRingAmount = Rings;
         return ringDifference;
     }
 
     if (GameMode == GameModes_Mission && TimerEnabled == 0
         && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
     {
-        if (!options.hardRingLinkActive)
+        if (!_options.hardRingLinkActive)
         {
-            lastRingAmount = Rings;
+            _lastRingAmount = Rings;
             return {0, 0};
         }
-        ringDifference.hardRingDifference = Rings - lastRingAmount;
-        lastRingAmount = Rings;
+        ringDifference.hardRingDifference = Rings - _lastRingAmount;
+        _lastRingAmount = Rings;
         return ringDifference;
     }
 
-    if (!options.casinopolisRingLink && CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic)
+    if (!_options.casinopolisRingLink && CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic)
         return {0, 0};
 
 
-    ringDifference.ringDifference = Rings - lastRingAmount;
-    lastRingAmount = Rings;
+    ringDifference.ringDifference = Rings - _lastRingAmount;
+    _lastRingAmount = Rings;
     return ringDifference;
 }
 
@@ -237,7 +237,7 @@ void CharacterManager::OnFrame()
         }
     }
 
-    if (options.lazyFishing && gameStatus.unlock.bigPowerRodUnlocked)
+    if (_options.lazyFishing && _gameStatus.unlock.bigPowerRodUnlocked)
         RodTension = 0;
 
     if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
@@ -246,16 +246,16 @@ void CharacterManager::OnFrame()
         || CurrentLevel == LevelIDs_SkyChase2)
         return;
 
-    if (CurrentLevel >= LevelIDs_Chaos0 && CurrentLevel <= LevelIDs_E101R && !options.trapsOnBossFights)
+    if (CurrentLevel >= LevelIDs_Chaos0 && CurrentLevel <= LevelIDs_E101R && !_options.trapsOnBossFights)
         return;
 
-    if (CurrentLevel == LevelIDs_PerfectChaos && !options.trapsOnPerfectChaosFight)
+    if (CurrentLevel == LevelIDs_PerfectChaos && !_options.trapsOnPerfectChaosFight)
         return;
 
-    if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past && !options.trapsOnAdventureFields)
+    if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past && !_options.trapsOnAdventureFields)
         return;
 
-    if (CurrentLevel >= LevelIDs_SSGarden && CurrentLevel <= LevelIDs_ChaoRace && !options.trapsOnAdventureFields)
+    if (CurrentLevel >= LevelIDs_SSGarden && CurrentLevel <= LevelIDs_ChaoRace && !_options.trapsOnAdventureFields)
         return;
 
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
@@ -283,12 +283,12 @@ void CharacterManager::OnFrame()
         }
     }
 
-    if (_reverseControlsTimer > 0 && options.reverseControlsDuration > 0)
+    if (_reverseControlsTimer > 0 && _options.reverseControlsDuration > 0)
     {
         const double timePassed = (std::clock() - this->_reverseControlsTimer) / static_cast<double>(CLOCKS_PER_SEC);
-        if (timePassed > options.reverseControlsDuration)
+        if (timePassed > _options.reverseControlsDuration)
         {
-            reverseControlsEnabled = false;
+            _reverseControlsEnabled = false;
             _reverseControlsTimer = -1;
         }
     }
@@ -353,11 +353,12 @@ void CharacterManager::SetStartingCharacter(int startingCharacterIndex)
 
 void CharacterManager::RemoveStatusEffects()
 {
-    reverseControlsEnabled = false;
+    _reverseControlsEnabled = false;
     _reverseControlsTimer = -1;
 }
 
 TaskFunc(EBuyon_Main, 0x7B2E00);
+
 
 void CharacterManager::ActivateFiller(const FillerType filler)
 {
@@ -389,34 +390,34 @@ void CharacterManager::ActivateFiller(const FillerType filler)
     case IceTrap:
         this->FreezePlayer();
         DisablePause();
-        reactionManager.PlayRandomTrapVoice(filler);
+        _reactionManager.PlayRandomTrapVoice(filler);
         break;
     case SpringTrap:
         this->SpawnSpring();
         DisablePause();
-        reactionManager.PlayRandomTrapVoice(filler);
+        _reactionManager.PlayRandomTrapVoice(filler);
         break;
     case PoliceTrap:
         this->SpawnEnemies(EnemyPolice);
         DisablePause();
-        reactionManager.PlayRandomTrapVoice(filler);
+        _reactionManager.PlayRandomTrapVoice(filler);
         break;
     case BuyonTrap:
         this->SpawnEnemies(EBuyon_Main);
         DisablePause();
-        reactionManager.PlayRandomTrapVoice(filler);
+        _reactionManager.PlayRandomTrapVoice(filler);
         break;
 
     case ReverseTrap:
         this->ReverseControls();
         DisablePause();
-        reactionManager.PlayRandomTrapVoice(filler);
+        _reactionManager.PlayRandomTrapVoice(filler);
         break;
 
     case GravityTrap:
         this->IncrementGravity();
         DisablePause();
-        reactionManager.PlayRandomTrapVoice(filler);
+        _reactionManager.PlayRandomTrapVoice(filler);
         break;
 
     case NoFiller:
@@ -425,11 +426,10 @@ void CharacterManager::ActivateFiller(const FillerType filler)
     }
 }
 
-
-FunctionHook<int> getLureQuantity(0x46C870, []()-> int
+int CharacterManager::OnGetLureQuantity()
 {
-    return characterManagerPtr->gameStatus.unlock.bigLureQuantity;
-});
+    return _instance->_gameStatus.unlock.bigLureQuantity;
+}
 
 void CharacterManager::SpawnSpring()
 {
@@ -545,33 +545,31 @@ void CharacterManager::IncrementGravity()
 void CharacterManager::ReverseControls()
 {
     //If the player is already under the effect of reverse controls, set them back to normal
-    if (reverseControlsEnabled)
+    if (_reverseControlsEnabled)
     {
-        reverseControlsEnabled = false;
+        _reverseControlsEnabled = false;
         _reverseControlsTimer = -1;
     }
 
-    if (options.reverseControlsDuration > 0)
+    if (_options.reverseControlsDuration > 0)
         _reverseControlsTimer = std::clock();
-    reverseControlsEnabled = true;
+    _reverseControlsEnabled = true;
 }
 
 
-FunctionHook<void> onWriteAnalogs(0x40F170, []()-> void
+void CharacterManager::OnWriteAnalogs()
 {
-    if (characterManagerPtr->reverseControlsEnabled)
+    if (_instance->_reverseControlsEnabled)
     {
         ControllerPointers[0]->LeftStickX = -ControllerPointers[0]->LeftStickX;
         ControllerPointers[0]->LeftStickY = -ControllerPointers[0]->LeftStickY;
         ControllerPointers[0]->RightStickX = -ControllerPointers[0]->RightStickX;
         ControllerPointers[0]->RightStickY = -ControllerPointers[0]->RightStickY;
     }
-    onWriteAnalogs.Original();
-});
+    _writeAnalogsHook.Original();
+}
 
-
-//We scale up the freeze trap for Big and Gamma
-FunctionHook<void, task*> freezeTrapDisplay(0x4A2240, [](task* tp)-> void
+void CharacterManager::OnFreezeTrapDisplay(task* tp)
 {
     if (CurrentCharacter == Characters_Big || CurrentCharacter == Characters_Gamma)
     {
@@ -579,34 +577,34 @@ FunctionHook<void, task*> freezeTrapDisplay(0x4A2240, [](task* tp)-> void
         tp->twp->scl.y = 3;
         tp->twp->scl.z = 3;
     }
-    freezeTrapDisplay.Original(tp);
-});
+    _freezeTrapDisplayHook.Original(tp);
+}
 
 // We temporally set the game mode to trick the result screen into showing its full version
-FunctionHook<void, task*> onScoreDisplay_Main(0x42BCC0, [](task* tp)-> void
+void CharacterManager::OnScoreDisplayMain(task* tp)
 {
     //If Tails just lost, we don't do anything
     if (CurrentCharacter == Characters_Tails && RaceWinnerPlayer == 2)
-        return onScoreDisplay_Main.Original(tp);
+        return _scoreDisplayMainHook.Original(tp);
 
     const GameModes bufferGameMode = GameMode;
     GameMode = GameModes_Adventure_ActionStg;
-    onScoreDisplay_Main.Original(tp);
+    _scoreDisplayMainHook.Original(tp);
     GameMode = bufferGameMode;
-});
+}
 
-void HandleHudDisplayRings(const signed int ringCount, unsigned char digits, NJS_SPRITE* hud)
+void CharacterManager::HandleHudDisplayRings(const signed int ringCount, const unsigned char digits, NJS_SPRITE* hud)
 {
-    if (characterManagerPtr->settings.extendRingCapacity)
-        HudDisplayRings_t.Original(ringCount, 5, hud);
+    if (_instance->_settings.extendRingCapacity)
+        _hudDisplayRingsHook.Original(ringCount, 5, hud);
     else
-        HudDisplayRings_t.Original(ringCount, digits, hud);
+        _hudDisplayRingsHook.Original(ringCount, digits, hud);
 }
 
 // For big, we extend the ring capacity to 99999 if enabled
-FunctionHook<void, _SC_NUMBERS*> onDrawSNumbers(0x427BB0, [](_SC_NUMBERS* pscn)-> void
+void CharacterManager::OnDrawSNumbers(_SC_NUMBERS* pscn)
 {
-    if (characterManagerPtr->settings.extendRingCapacity && CurrentCharacter == Characters_Big && pscn->max == 999)
+    if (_instance->_settings.extendRingCapacity && CurrentCharacter == Characters_Big && pscn->max == 999)
         pscn->max = 99999;
-    onDrawSNumbers.Original(pscn);
-});
+    _drawSNumbersHook.Original(pscn);
+}
