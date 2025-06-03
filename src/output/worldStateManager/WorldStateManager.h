@@ -57,11 +57,10 @@ public:
     void SetStartingArea();
     void MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist);
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
-    VisitedLevels GetVisitedLevels(int visitedLevel);
+    void UpdateVisitedLevels(int visitedLevel);
     Options& options;
     Settings& settings;
     GameStatus& gameStatus;
-    VisitedLevels visitedLevels;
     LevelEntrances levelEntrances = {
         {EmeraldCoast, EmeraldCoast},
         {WindyValley, WindyValley},

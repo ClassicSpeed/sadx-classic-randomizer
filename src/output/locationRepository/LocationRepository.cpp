@@ -3,7 +3,8 @@
 #include "../../application/structs/MissionStatus.h"
 
 
-LocationRepository::LocationRepository()
+LocationRepository::LocationRepository(Options& options, GameStatus& gameStatus) : _options(options),
+    _gameStatus(gameStatus)
 {
     _checkData = {
         {100, LocationData::UpgradeLocation(FLAG_SONIC_SS_LIGHTSHOOSE, "Light Shoes Upgrade (Sonic)", 10)},
@@ -2054,12 +2055,24 @@ LocationRepository::LocationRepository()
 LocationData LocationRepository::SetLocationChecked(const int checkId)
 {
     _checkData[checkId].checked = true;
+    UpdateLevelStatus();
+    UpdateBossesStatus();
+    UpdateMissionStatus();
+    UpdateChaoStatus();
     return _checkData[checkId];
 }
 
 LocationData LocationRepository::GetLocation(const int checkId)
 {
     return _checkData[checkId];
+}
+
+void LocationRepository::ResetLocations()
+{
+    UpdateLevelStatus();
+    UpdateBossesStatus();
+    UpdateMissionStatus();
+    UpdateChaoStatus();
 }
 
 std::map<int, LocationData> LocationRepository::GetLocations()
@@ -2078,129 +2091,126 @@ std::vector<EnemyLocationData> LocationRepository::GetEnemyLocations()
 }
 
 
-LevelStatus LocationRepository::GetLevelStatus(Options options)
+void LocationRepository::UpdateLevelStatus()
 {
-    auto levelStatus = LevelStatus();
-    levelStatus.sonicEmeraldCoast = _checkData[1002].checked;
-    levelStatus.sonicWindyValley = _checkData[1102].checked;
-    levelStatus.sonicCasinopolis = _checkData[1202].checked;
-    levelStatus.sonicIceCap = _checkData[1302].checked;
-    levelStatus.sonicTwinklePark = _checkData[1402].checked;
-    levelStatus.sonicSpeedHighway = _checkData[1502].checked;
-    levelStatus.sonicRedMountain = _checkData[1602].checked;
-    levelStatus.sonicSkyDeck = _checkData[1702].checked;
-    levelStatus.sonicLostWorld = _checkData[1802].checked;
-    levelStatus.sonicFinalEgg = _checkData[1902].checked;
+    _gameStatus.levels.sonicEmeraldCoast = _checkData[1002].checked;
+    _gameStatus.levels.sonicWindyValley = _checkData[1102].checked;
+    _gameStatus.levels.sonicCasinopolis = _checkData[1202].checked;
+    _gameStatus.levels.sonicIceCap = _checkData[1302].checked;
+    _gameStatus.levels.sonicTwinklePark = _checkData[1402].checked;
+    _gameStatus.levels.sonicSpeedHighway = _checkData[1502].checked;
+    _gameStatus.levels.sonicRedMountain = _checkData[1602].checked;
+    _gameStatus.levels.sonicSkyDeck = _checkData[1702].checked;
+    _gameStatus.levels.sonicLostWorld = _checkData[1802].checked;
+    _gameStatus.levels.sonicFinalEgg = _checkData[1902].checked;
 
-    levelStatus.tailsWindyValley = _checkData[2002].checked;
-    levelStatus.tailsCasinopolis = _checkData[2102].checked;
-    levelStatus.tailsIceCap = _checkData[2202].checked;
-    levelStatus.tailsSkyDeck = _checkData[2302].checked;
-    levelStatus.tailsSpeedHighway = _checkData[2402].checked;
+    _gameStatus.levels.tailsWindyValley = _checkData[2002].checked;
+    _gameStatus.levels.tailsCasinopolis = _checkData[2102].checked;
+    _gameStatus.levels.tailsIceCap = _checkData[2202].checked;
+    _gameStatus.levels.tailsSkyDeck = _checkData[2302].checked;
+    _gameStatus.levels.tailsSpeedHighway = _checkData[2402].checked;
 
-    levelStatus.knucklesSpeedHighway = _checkData[3002].checked;
-    levelStatus.knucklesCasinopolis = _checkData[3102].checked;
-    levelStatus.knucklesRedMountain = _checkData[3202].checked;
-    levelStatus.knucklesLostWorld = _checkData[3302].checked;
-    levelStatus.knucklesSkyDeck = _checkData[3402].checked;
+    _gameStatus.levels.knucklesSpeedHighway = _checkData[3002].checked;
+    _gameStatus.levels.knucklesCasinopolis = _checkData[3102].checked;
+    _gameStatus.levels.knucklesRedMountain = _checkData[3202].checked;
+    _gameStatus.levels.knucklesLostWorld = _checkData[3302].checked;
+    _gameStatus.levels.knucklesSkyDeck = _checkData[3402].checked;
 
-    levelStatus.amyTwinklePark = _checkData[4002].checked;
-    levelStatus.amyHotShelter = _checkData[4102].checked;
-    levelStatus.amyFinalEgg = _checkData[4202].checked;
+    _gameStatus.levels.amyTwinklePark = _checkData[4002].checked;
+    _gameStatus.levels.amyHotShelter = _checkData[4102].checked;
+    _gameStatus.levels.amyFinalEgg = _checkData[4202].checked;
 
-    levelStatus.bigTwinklePark = _checkData[6002].checked;
-    levelStatus.bigIceCap = _checkData[6102].checked;
-    levelStatus.bigEmeraldCoast = _checkData[6202].checked;
-    levelStatus.bigHotShelter = _checkData[6302].checked;
+    _gameStatus.levels.bigTwinklePark = _checkData[6002].checked;
+    _gameStatus.levels.bigIceCap = _checkData[6102].checked;
+    _gameStatus.levels.bigEmeraldCoast = _checkData[6202].checked;
+    _gameStatus.levels.bigHotShelter = _checkData[6302].checked;
 
-    levelStatus.gammaFinalEgg = _checkData[5002].checked;
-    levelStatus.gammaWindyValley = _checkData[5102].checked;
-    levelStatus.gammaEmeraldCoast = _checkData[5202].checked;
-    levelStatus.gammaRedMountain = _checkData[5302].checked;
-    levelStatus.gammaHotShelter = _checkData[5402].checked;
+    _gameStatus.levels.gammaFinalEgg = _checkData[5002].checked;
+    _gameStatus.levels.gammaWindyValley = _checkData[5102].checked;
+    _gameStatus.levels.gammaEmeraldCoast = _checkData[5202].checked;
+    _gameStatus.levels.gammaRedMountain = _checkData[5302].checked;
+    _gameStatus.levels.gammaHotShelter = _checkData[5402].checked;
 
 
-    if (options.sonicActionStageMissions > 0 && options.playableSonic)
+    if (_options.sonicActionStageMissions > 0 && _options.playableSonic)
     {
         int count = 0;
-        if (levelStatus.sonicEmeraldCoast) count++;
-        if (levelStatus.sonicWindyValley) count++;
-        if (levelStatus.sonicCasinopolis) count++;
-        if (levelStatus.sonicIceCap) count++;
-        if (levelStatus.sonicTwinklePark) count++;
-        if (levelStatus.sonicSpeedHighway) count++;
-        if (levelStatus.sonicRedMountain) count++;
-        if (levelStatus.sonicSkyDeck) count++;
-        if (levelStatus.sonicLostWorld) count++;
-        if (levelStatus.sonicFinalEgg) count++;
+        if (_gameStatus.levels.sonicEmeraldCoast) count++;
+        if (_gameStatus.levels.sonicWindyValley) count++;
+        if (_gameStatus.levels.sonicCasinopolis) count++;
+        if (_gameStatus.levels.sonicIceCap) count++;
+        if (_gameStatus.levels.sonicTwinklePark) count++;
+        if (_gameStatus.levels.sonicSpeedHighway) count++;
+        if (_gameStatus.levels.sonicRedMountain) count++;
+        if (_gameStatus.levels.sonicSkyDeck) count++;
+        if (_gameStatus.levels.sonicLostWorld) count++;
+        if (_gameStatus.levels.sonicFinalEgg) count++;
 
-        levelStatus.sonicLevelsTotal = 10;
-        levelStatus.sonicLevelsCompleted = count;
+        _gameStatus.levels.sonicLevelsTotal = 10;
+        _gameStatus.levels.sonicLevelsCompleted = count;
     }
-    if (options.tailsActionStageMissions > 0 && options.playableTails)
+    if (_options.tailsActionStageMissions > 0 && _options.playableTails)
     {
         int count = 0;
-        if (levelStatus.tailsWindyValley) count++;
-        if (levelStatus.tailsCasinopolis) count++;
-        if (levelStatus.tailsIceCap) count++;
-        if (levelStatus.tailsSkyDeck) count++;
-        if (levelStatus.tailsSpeedHighway) count++;
-        levelStatus.tailsLevelsTotal = 5;
-        levelStatus.tailsLevelsCompleted = count;
+        if (_gameStatus.levels.tailsWindyValley) count++;
+        if (_gameStatus.levels.tailsCasinopolis) count++;
+        if (_gameStatus.levels.tailsIceCap) count++;
+        if (_gameStatus.levels.tailsSkyDeck) count++;
+        if (_gameStatus.levels.tailsSpeedHighway) count++;
+        _gameStatus.levels.tailsLevelsTotal = 5;
+        _gameStatus.levels.tailsLevelsCompleted = count;
     }
-    if (options.knucklesActionStageMissions > 0 && options.playableKnuckles)
+    if (_options.knucklesActionStageMissions > 0 && _options.playableKnuckles)
     {
         int count = 0;
-        if (levelStatus.knucklesSpeedHighway) count++;
-        if (levelStatus.knucklesCasinopolis) count++;
-        if (levelStatus.knucklesRedMountain) count++;
-        if (levelStatus.knucklesLostWorld) count++;
-        if (levelStatus.knucklesSkyDeck) count++;
-        levelStatus.knucklesLevelsTotal = 5;
-        levelStatus.knucklesLevelsCompleted = count;
+        if (_gameStatus.levels.knucklesSpeedHighway) count++;
+        if (_gameStatus.levels.knucklesCasinopolis) count++;
+        if (_gameStatus.levels.knucklesRedMountain) count++;
+        if (_gameStatus.levels.knucklesLostWorld) count++;
+        if (_gameStatus.levels.knucklesSkyDeck) count++;
+        _gameStatus.levels.knucklesLevelsTotal = 5;
+        _gameStatus.levels.knucklesLevelsCompleted = count;
     }
-    if (options.amyActionStageMissions > 0 && options.playableAmy)
+    if (_options.amyActionStageMissions > 0 && _options.playableAmy)
     {
         int count = 0;
-        if (levelStatus.amyTwinklePark) count++;
-        if (levelStatus.amyHotShelter) count++;
-        if (levelStatus.amyFinalEgg) count++;
-        levelStatus.amyLevelsTotal = 3;
-        levelStatus.amyLevelsCompleted = count;
+        if (_gameStatus.levels.amyTwinklePark) count++;
+        if (_gameStatus.levels.amyHotShelter) count++;
+        if (_gameStatus.levels.amyFinalEgg) count++;
+        _gameStatus.levels.amyLevelsTotal = 3;
+        _gameStatus.levels.amyLevelsCompleted = count;
     }
-    if (options.bigActionStageMissions > 0 && options.playableBig)
+    if (_options.bigActionStageMissions > 0 && _options.playableBig)
     {
         int count = 0;
-        if (levelStatus.bigTwinklePark) count++;
-        if (levelStatus.bigIceCap) count++;
-        if (levelStatus.bigEmeraldCoast) count++;
-        if (levelStatus.bigHotShelter) count++;
-        levelStatus.bigLevelsTotal = 4;
-        levelStatus.bigLevelsCompleted = count;
+        if (_gameStatus.levels.bigTwinklePark) count++;
+        if (_gameStatus.levels.bigIceCap) count++;
+        if (_gameStatus.levels.bigEmeraldCoast) count++;
+        if (_gameStatus.levels.bigHotShelter) count++;
+        _gameStatus.levels.bigLevelsTotal = 4;
+        _gameStatus.levels.bigLevelsCompleted = count;
     }
-    if (options.gammaActionStageMissions > 0 && options.playableGamma)
+    if (_options.gammaActionStageMissions > 0 && _options.playableGamma)
     {
         int count = 0;
-        if (levelStatus.gammaFinalEgg) count++;
-        if (levelStatus.gammaWindyValley) count++;
-        if (levelStatus.gammaEmeraldCoast) count++;
-        if (levelStatus.gammaRedMountain) count++;
-        if (levelStatus.gammaHotShelter) count++;
-        levelStatus.gammaLevelsTotal = 5;
-        levelStatus.gammaLevelsCompleted = count;
+        if (_gameStatus.levels.gammaFinalEgg) count++;
+        if (_gameStatus.levels.gammaWindyValley) count++;
+        if (_gameStatus.levels.gammaEmeraldCoast) count++;
+        if (_gameStatus.levels.gammaRedMountain) count++;
+        if (_gameStatus.levels.gammaHotShelter) count++;
+        _gameStatus.levels.gammaLevelsTotal = 5;
+        _gameStatus.levels.gammaLevelsCompleted = count;
     }
 
-    levelStatus.levelsCompleted = levelStatus.sonicLevelsCompleted + levelStatus.tailsLevelsCompleted
-        + levelStatus.knucklesLevelsCompleted + levelStatus.amyLevelsCompleted
-        + levelStatus.bigLevelsCompleted + levelStatus.gammaLevelsCompleted;
-
-    return levelStatus;
+    _gameStatus.levels.levelsCompleted = _gameStatus.levels.sonicLevelsCompleted + _gameStatus.levels.
+        tailsLevelsCompleted
+        + _gameStatus.levels.knucklesLevelsCompleted + _gameStatus.levels.amyLevelsCompleted
+        + _gameStatus.levels.bigLevelsCompleted + _gameStatus.levels.gammaLevelsCompleted;
 }
 
-MissionStatus LocationRepository::GetMissionStatus(Options options)
+void LocationRepository::UpdateMissionStatus()
 {
-    auto missionStatus = MissionStatus();
-    auto vector = options.missionBlacklist;
+    auto vector = _options.missionBlacklist;
     for (int index = 801; index <= 860; index++)
     {
         if (std::find(vector.begin(), vector.end(), _checkData[index].missionNumber) != vector.end())
@@ -2208,195 +2218,188 @@ MissionStatus LocationRepository::GetMissionStatus(Options options)
 
         if (_checkData[index].character == Characters_Sonic)
         {
-            missionStatus.sonicMissionsTotal++;
+            _gameStatus.missions.sonicMissionsTotal++;
             if (_checkData[index].checked)
-                missionStatus.sonicMissionsCompleted++;
+                _gameStatus.missions.sonicMissionsCompleted++;
         }
         else if (_checkData[index].character == Characters_Tails)
         {
-            missionStatus.tailsMissionsTotal++;
+            _gameStatus.missions.tailsMissionsTotal++;
             if (_checkData[index].checked)
-                missionStatus.tailsMissionsCompleted++;
+                _gameStatus.missions.tailsMissionsCompleted++;
         }
         else if (_checkData[index].character == Characters_Knuckles)
         {
-            missionStatus.knucklesMissionsTotal++;
+            _gameStatus.missions.knucklesMissionsTotal++;
             if (_checkData[index].checked)
-                missionStatus.knucklesMissionsCompleted++;
+                _gameStatus.missions.knucklesMissionsCompleted++;
         }
         else if (_checkData[index].character == Characters_Amy)
         {
-            missionStatus.amyMissionsTotal++;
+            _gameStatus.missions.amyMissionsTotal++;
             if (_checkData[index].checked)
-                missionStatus.amyMissionsCompleted++;
+                _gameStatus.missions.amyMissionsCompleted++;
         }
         else if (_checkData[index].character == Characters_Gamma)
         {
-            missionStatus.gammaMissionsTotal++;
+            _gameStatus.missions.gammaMissionsTotal++;
             if (_checkData[index].checked)
-                missionStatus.gammaMissionsCompleted++;
+                _gameStatus.missions.gammaMissionsCompleted++;
         }
         else if (_checkData[index].character == Characters_Big)
         {
-            missionStatus.bigMissionsTotal++;
+            _gameStatus.missions.bigMissionsTotal++;
             if (_checkData[index].checked)
-                missionStatus.bigMissionsCompleted++;
+                _gameStatus.missions.bigMissionsCompleted++;
         }
         if (_checkData[index].checked)
-            missionStatus.missionsCompleted++;
+            _gameStatus.missions.missionsCompleted++;
     }
-    return missionStatus;
 }
 
 
-BossesStatus LocationRepository::GetBossesStatus(const Options& options)
+void LocationRepository::UpdateBossesStatus()
 {
-    auto bossesStatus = BossesStatus();
     //Chaos 0
     if (_checkData[700].checked)
     {
-        bossesStatus.sonicBossesCompleted++;
-        bossesStatus.bossesCompleted++;
+        _gameStatus.bosses.sonicBossesCompleted++;
+        _gameStatus.bosses.bossesCompleted++;
     }
     //Chaos 2
     if (_checkData[710].checked)
     {
-        bossesStatus.knucklesBossesCompleted++;
-        bossesStatus.bossesCompleted++;
+        _gameStatus.bosses.knucklesBossesCompleted++;
+        _gameStatus.bosses.bossesCompleted++;
     }
     //Egg Walker
     if (_checkData[720].checked)
     {
-        bossesStatus.tailsBossesCompleted++;
-        bossesStatus.bossesCompleted++;
+        _gameStatus.bosses.tailsBossesCompleted++;
+        _gameStatus.bosses.bossesCompleted++;
     }
     //Egg Hornet 
-    if (options.unifyEggHornet)
+    if (_options.unifyEggHornet)
     {
         if (_checkData[739].checked)
         {
-            bossesStatus.sonicBossesCompleted++;
-            bossesStatus.tailsBossesCompleted++;
-            bossesStatus.bossesCompleted++;
+            _gameStatus.bosses.sonicBossesCompleted++;
+            _gameStatus.bosses.tailsBossesCompleted++;
+            _gameStatus.bosses.bossesCompleted++;
         }
     }
     else
     {
         if (_checkData[730].checked)
         {
-            bossesStatus.sonicBossesCompleted++;
-            bossesStatus.bossesCompleted++;
+            _gameStatus.bosses.sonicBossesCompleted++;
+            _gameStatus.bosses.bossesCompleted++;
         }
         if (_checkData[731].checked)
         {
-            bossesStatus.tailsBossesCompleted++;
-            bossesStatus.bossesCompleted++;
+            _gameStatus.bosses.tailsBossesCompleted++;
+            _gameStatus.bosses.bossesCompleted++;
         }
     }
 
     //Chaos 4 
-    if (options.unifyChaos4)
+    if (_options.unifyChaos4)
     {
         if (_checkData[749].checked)
         {
-            bossesStatus.sonicBossesCompleted++;
-            bossesStatus.tailsBossesCompleted++;
-            bossesStatus.knucklesBossesCompleted++;
-            bossesStatus.bossesCompleted++;
+            _gameStatus.bosses.sonicBossesCompleted++;
+            _gameStatus.bosses.tailsBossesCompleted++;
+            _gameStatus.bosses.knucklesBossesCompleted++;
+            _gameStatus.bosses.bossesCompleted++;
         }
     }
     else
     {
         if (_checkData[740].checked)
         {
-            bossesStatus.sonicBossesCompleted++;
-            bossesStatus.bossesCompleted++;
+            _gameStatus.bosses.sonicBossesCompleted++;
+            _gameStatus.bosses.bossesCompleted++;
         }
         if (_checkData[741].checked)
         {
-            bossesStatus.tailsBossesCompleted++;
-            bossesStatus.bossesCompleted++;
+            _gameStatus.bosses.tailsBossesCompleted++;
+            _gameStatus.bosses.bossesCompleted++;
         }
         if (_checkData[742].checked)
         {
-            bossesStatus.knucklesBossesCompleted++;
-            bossesStatus.bossesCompleted++;
+            _gameStatus.bosses.knucklesBossesCompleted++;
+            _gameStatus.bosses.bossesCompleted++;
         }
     }
     //Egg Viper
     if (_checkData[750].checked)
     {
-        bossesStatus.sonicBossesCompleted++;
-        bossesStatus.bossesCompleted++;
+        _gameStatus.bosses.sonicBossesCompleted++;
+        _gameStatus.bosses.bossesCompleted++;
     }
     //Beta
     if (_checkData[760].checked)
     {
-        bossesStatus.gammaBossesCompleted++;
-        bossesStatus.bossesCompleted++;
+        _gameStatus.bosses.gammaBossesCompleted++;
+        _gameStatus.bosses.bossesCompleted++;
     }
 
     //Chaos 6 
-    if (options.unifyChaos6)
+    if (_options.unifyChaos6)
     {
         if (_checkData[779].checked)
         {
-            bossesStatus.sonicBossesCompleted++;
-            bossesStatus.knucklesBossesCompleted++;
-            bossesStatus.bigBossesCompleted++;
-            bossesStatus.bossesCompleted++;
+            _gameStatus.bosses.sonicBossesCompleted++;
+            _gameStatus.bosses.knucklesBossesCompleted++;
+            _gameStatus.bosses.bigBossesCompleted++;
+            _gameStatus.bosses.bossesCompleted++;
         }
     }
     else
     {
         if (_checkData[770].checked)
         {
-            bossesStatus.sonicBossesCompleted++;
-            bossesStatus.bossesCompleted++;
+            _gameStatus.bosses.sonicBossesCompleted++;
+            _gameStatus.bosses.bossesCompleted++;
         }
 
         if (_checkData[771].checked)
         {
-            bossesStatus.knucklesBossesCompleted++;
-            bossesStatus.bossesCompleted++;
+            _gameStatus.bosses.knucklesBossesCompleted++;
+            _gameStatus.bosses.bossesCompleted++;
         }
 
         if (_checkData[772].checked)
         {
-            bossesStatus.bigBossesCompleted++;
-            bossesStatus.bossesCompleted++;
+            _gameStatus.bosses.bigBossesCompleted++;
+            _gameStatus.bosses.bossesCompleted++;
         }
     }
     //Beta 2
     if (_checkData[780].checked)
     {
-        bossesStatus.gammaBossesCompleted++;
-        bossesStatus.bossesCompleted++;
+        _gameStatus.bosses.gammaBossesCompleted++;
+        _gameStatus.bosses.bossesCompleted++;
     }
 
     //Zero
     if (_checkData[790].checked)
     {
-        bossesStatus.amyBossesCompleted++;
-        bossesStatus.bossesCompleted++;
+        _gameStatus.bosses.amyBossesCompleted++;
+        _gameStatus.bosses.bossesCompleted++;
     }
-
-    return bossesStatus;
 }
 
-ChaoStatus LocationRepository::GetChaoStatus()
+void LocationRepository::UpdateChaoStatus()
 {
-    auto chaoStatus = ChaoStatus();
     if (_checkData[905].checked)
-        chaoStatus.racesCompleted++;
+        _gameStatus.chao.racesCompleted++;
     if (_checkData[906].checked)
-        chaoStatus.racesCompleted++;
+        _gameStatus.chao.racesCompleted++;
     if (_checkData[907].checked)
-        chaoStatus.racesCompleted++;
+        _gameStatus.chao.racesCompleted++;
     if (_checkData[908].checked)
-        chaoStatus.racesCompleted++;
+        _gameStatus.chao.racesCompleted++;
     if (_checkData[909].checked)
-        chaoStatus.racesCompleted++;
-
-    return chaoStatus;
+        _gameStatus.chao.racesCompleted++;
 }

@@ -74,31 +74,6 @@ void DisplayManager::ShowSongName(const std::string& songName)
     }
 }
 
-void DisplayManager::UpdateLevelStatus(LevelStatus levelStatus)
-{
-    this->_levelStatus = levelStatus;
-}
-
-void DisplayManager::UpdateMissionStatus(MissionStatus missionStatus)
-{
-    this->_missionStatus = missionStatus;
-}
-
-void DisplayManager::UpdateBossesStatus(BossesStatus bossesStatus)
-{
-    this->_bossesStatus = bossesStatus;
-}
-
-void DisplayManager::UpdateChaoStatus(const ChaoStatus chaoStatus)
-{
-    this->_chaoStatus = chaoStatus;
-}
-
-void DisplayManager::UpdateVisitedLevels(VisitedLevels visitedLevels)
-{
-    this->_visitedLevels = visitedLevels;
-}
-
 void DisplayManager::OnFrame()
 {
     MenuVoice = _settings.voiceMenuCharacter;
@@ -321,7 +296,7 @@ void DisplayManager::DisplayGoalStatus()
     SetDebugFontColor(this->_displayEmblemColor);
 
     if (_options.goalRequiresLevels)
-        buffer.append(" Levels: " + std::to_string(_levelStatus.levelsCompleted) + "/"
+        buffer.append(" Levels: " + std::to_string(_gameStatus.levels.levelsCompleted) + "/"
             + std::to_string(_options.levelGoal));
 
     if (_options.goalRequiresEmblems)
@@ -329,16 +304,16 @@ void DisplayManager::DisplayGoalStatus()
             + std::to_string(_options.emblemGoal));
 
     if (_options.goalRequiresMissions)
-        buffer.append(" Missions: " + std::to_string(_missionStatus.missionsCompleted) + "/"
+        buffer.append(" Missions: " + std::to_string(_gameStatus.missions.missionsCompleted) + "/"
             + std::to_string(_options.missionGoal));
 
     if (_options.goalRequiresBosses)
-        buffer.append(" Bosses: " + std::to_string(_bossesStatus.bossesCompleted) + "/"
+        buffer.append(" Bosses: " + std::to_string(_gameStatus.bosses.bossesCompleted) + "/"
             + std::to_string(_options.bossesGoal));
 
     if (_options.goalRequiresChaoRaces)
-        buffer.append(" Races: " + std::to_string(_chaoStatus.racesCompleted) + "/"
-            + std::to_string(_chaoStatus.racesTotal));
+        buffer.append(" Races: " + std::to_string(_gameStatus.chao.racesCompleted) + "/"
+            + std::to_string(_gameStatus.chao.racesTotal));
 
     DisplayDebugString(
         NJM_LOCATION(2, this->_startLine - 1), buffer.c_str());
@@ -519,7 +494,7 @@ void DisplayManager::DisplayItemsUnlocked()
     {
         displayOffset++;
         buffer.clear();
-        buffer.append("Levels:   " + std::to_string(_levelStatus.levelsCompleted) + "/"
+        buffer.append("Levels:   " + std::to_string(_gameStatus.levels.levelsCompleted) + "/"
             + std::to_string(_options.levelGoal));
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
@@ -528,7 +503,7 @@ void DisplayManager::DisplayItemsUnlocked()
     {
         displayOffset++;
         buffer.clear();
-        buffer.append("Missions: " + std::to_string(_missionStatus.missionsCompleted) + "/"
+        buffer.append("Missions: " + std::to_string(_gameStatus.missions.missionsCompleted) + "/"
             + std::to_string(_options.missionGoal));
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
@@ -536,7 +511,7 @@ void DisplayManager::DisplayItemsUnlocked()
     {
         displayOffset++;
         buffer.clear();
-        buffer.append("Bosses:   " + std::to_string(_bossesStatus.bossesCompleted) + "/"
+        buffer.append("Bosses:   " + std::to_string(_gameStatus.bosses.bossesCompleted) + "/"
             + std::to_string(_options.bossesGoal));
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
@@ -544,8 +519,8 @@ void DisplayManager::DisplayItemsUnlocked()
     {
         displayOffset++;
         buffer.clear();
-        buffer.append("Races:    " + std::to_string(_chaoStatus.racesCompleted) + "/"
-            + std::to_string(_chaoStatus.racesTotal));
+        buffer.append("Races:    " + std::to_string(_gameStatus.chao.racesCompleted) + "/"
+            + std::to_string(_gameStatus.chao.racesTotal));
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     }
 
@@ -849,18 +824,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_gameStatus.unlock.sonicAncientLightUnlocked ? "AL" : "  ");
         if (_gameStatus.unlock.sonicUnlocked && _options.sonicActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.sonicLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.sonicLevelsTotal));
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.sonicLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.sonicLevelsTotal));
         }
         if (_gameStatus.unlock.sonicUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.sonicMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.sonicMissionsTotal));
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.sonicMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.sonicMissionsTotal));
         }
         if (_gameStatus.unlock.sonicUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.sonicBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.sonicBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.sonicBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.sonicBossesTotal));
         }
 
         SetDebugFontColor(this->_sonicColor);
@@ -872,18 +847,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(!_gameStatus.unlock.sonicAncientLightUnlocked ? "AL" : "  ");
         if (!_gameStatus.unlock.sonicUnlocked && _options.sonicActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.sonicLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.sonicLevelsTotal));
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.sonicLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.sonicLevelsTotal));
         }
         if (!_gameStatus.unlock.sonicUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.sonicMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.sonicMissionsTotal));
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.sonicMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.sonicMissionsTotal));
         }
         if (!_gameStatus.unlock.sonicUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.sonicBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.sonicBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.sonicBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.sonicBossesTotal));
         }
 
         SetDebugFontColor(this->_sonicColor & 0x00FFFFFF | 0x66000000);
@@ -900,18 +875,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append("   ");
         if (_gameStatus.unlock.tailsUnlocked && _options.tailsActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.tailsLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.tailsLevelsTotal) + " ");
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.tailsLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.tailsLevelsTotal) + " ");
         }
         if (_gameStatus.unlock.tailsUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.tailsMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.tailsMissionsTotal) + " ");
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.tailsMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.tailsMissionsTotal) + " ");
         }
         if (_gameStatus.unlock.tailsUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.tailsBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.tailsBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.tailsBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.tailsBossesTotal));
         }
         SetDebugFontColor(this->_tailsColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -922,18 +897,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append("   ");
         if (!_gameStatus.unlock.tailsUnlocked && _options.tailsActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.tailsLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.tailsLevelsTotal) + " ");
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.tailsLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.tailsLevelsTotal) + " ");
         }
         if (!_gameStatus.unlock.tailsUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.tailsMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.tailsMissionsTotal) + " ");
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.tailsMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.tailsMissionsTotal) + " ");
         }
         if (!_gameStatus.unlock.tailsUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.tailsBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.tailsBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.tailsBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.tailsBossesTotal));
         }
         SetDebugFontColor(this->_tailsColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -949,18 +924,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append("   ");
         if (_gameStatus.unlock.knucklesUnlocked && _options.knucklesActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.knucklesLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.knucklesLevelsTotal) + " ");
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.knucklesLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.knucklesLevelsTotal) + " ");
         }
         if (_gameStatus.unlock.knucklesUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.knucklesMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.knucklesMissionsTotal) + " ");
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.knucklesMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.knucklesMissionsTotal) + " ");
         }
         if (_gameStatus.unlock.knucklesUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.knucklesBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.knucklesBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.knucklesBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.knucklesBossesTotal));
         }
         SetDebugFontColor(this->_knucklesColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -971,18 +946,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append("   ");
         if (!_gameStatus.unlock.knucklesUnlocked && _options.knucklesActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.knucklesLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.knucklesLevelsTotal) + " ");
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.knucklesLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.knucklesLevelsTotal) + " ");
         }
         if (!_gameStatus.unlock.knucklesUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.knucklesMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.knucklesMissionsTotal) + " ");
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.knucklesMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.knucklesMissionsTotal) + " ");
         }
         if (!_gameStatus.unlock.knucklesUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.knucklesBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.knucklesBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.knucklesBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.knucklesBossesTotal));
         }
         SetDebugFontColor(this->_knucklesColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -998,18 +973,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append("   ");
         if (_gameStatus.unlock.amyUnlocked && _options.amyActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.amyLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.amyLevelsTotal) + " ");
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.amyLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.amyLevelsTotal) + " ");
         }
         if (_gameStatus.unlock.amyUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.amyMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.amyMissionsTotal) + " ");
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.amyMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.amyMissionsTotal) + " ");
         }
         if (_gameStatus.unlock.amyUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.amyBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.amyBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.amyBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.amyBossesTotal));
         }
         SetDebugFontColor(this->_amyColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1020,18 +995,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append("   ");
         if (!_gameStatus.unlock.amyUnlocked && _options.amyActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.amyLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.amyLevelsTotal) + " ");
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.amyLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.amyLevelsTotal) + " ");
         }
         if (!_gameStatus.unlock.amyUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.amyMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.amyMissionsTotal) + " ");
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.amyMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.amyMissionsTotal) + " ");
         }
         if (!_gameStatus.unlock.amyUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.amyBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.amyBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.amyBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.amyBossesTotal));
         }
         SetDebugFontColor(this->_amyColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1047,18 +1022,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_gameStatus.unlock.bigLureQuantity > 0 ? "L" + std::to_string(_gameStatus.unlock.bigLureQuantity) : "  ");
         if (_gameStatus.unlock.bigUnlocked && _options.bigActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.bigLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.bigLevelsTotal) + " ");
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.bigLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.bigLevelsTotal) + " ");
         }
         if (_gameStatus.unlock.bigUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.bigMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.bigMissionsTotal) + " ");
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.bigMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.bigMissionsTotal) + " ");
         }
         if (_gameStatus.unlock.bigUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.bigBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.bigBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.bigBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.bigBossesTotal));
         }
         SetDebugFontColor(this->_bigColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1069,18 +1044,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_gameStatus.unlock.bigLureQuantity == 0 ? "L0" : "  ");
         if (!_gameStatus.unlock.bigUnlocked && _options.bigActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.bigLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.bigLevelsTotal) + " ");
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.bigLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.bigLevelsTotal) + " ");
         }
         if (!_gameStatus.unlock.bigUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.bigMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.bigMissionsTotal) + " ");
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.bigMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.bigMissionsTotal) + " ");
         }
         if (!_gameStatus.unlock.bigUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.bigBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.bigBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.bigBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.bigBossesTotal));
         }
         SetDebugFontColor(this->_bigColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1095,18 +1070,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append("   ");
         if (_gameStatus.unlock.gammaUnlocked && _options.gammaActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.gammaLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.gammaLevelsTotal) + " ");
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.gammaLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.gammaLevelsTotal) + " ");
         }
         if (_gameStatus.unlock.gammaUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.gammaMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.gammaMissionsTotal) + " ");
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.gammaMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.gammaMissionsTotal) + " ");
         }
         if (_gameStatus.unlock.gammaUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.gammaBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.gammaBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.gammaBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.gammaBossesTotal));
         }
         SetDebugFontColor(this->_gammaColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1117,18 +1092,18 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append("   ");
         if (!_gameStatus.unlock.gammaUnlocked && _options.gammaActionStageMissions > 0 && _options.goalRequiresLevels)
         {
-            buffer.append(" L:" + std::to_string(_levelStatus.gammaLevelsCompleted)
-                + "/" + std::to_string(_levelStatus.gammaLevelsTotal) + " ");
+            buffer.append(" L:" + std::to_string(_gameStatus.levels.gammaLevelsCompleted)
+                + "/" + std::to_string(_gameStatus.levels.gammaLevelsTotal) + " ");
         }
         if (!_gameStatus.unlock.gammaUnlocked && _options.missionModeEnabled && _options.goalRequiresMissions)
         {
-            buffer.append(" M:" + std::to_string(_missionStatus.gammaMissionsCompleted)
-                + "/" + std::to_string(_missionStatus.gammaMissionsTotal) + " ");
+            buffer.append(" M:" + std::to_string(_gameStatus.missions.gammaMissionsCompleted)
+                + "/" + std::to_string(_gameStatus.missions.gammaMissionsTotal) + " ");
         }
         if (!_gameStatus.unlock.gammaUnlocked && _options.bossChecks && _options.goalRequiresBosses)
         {
-            buffer.append(" B:" + std::to_string(_bossesStatus.gammaBossesCompleted)
-                + "/" + std::to_string(_bossesStatus.gammaBossesTotal));
+            buffer.append(" B:" + std::to_string(_gameStatus.bosses.gammaBossesCompleted)
+                + "/" + std::to_string(_gameStatus.bosses.gammaBossesTotal));
         }
         SetDebugFontColor(this->_gammaColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1243,15 +1218,15 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("EC");
-        if (_visitedLevels.emeraldCoastEntranceVisited)
-            buffer.append("   ").append(_visitedLevels.emeraldCoastEntranceActualLevel);
+        if (_gameStatus.visitedLevels.emeraldCoastEntranceVisited)
+            buffer.append("   ").append(_gameStatus.visitedLevels.emeraldCoastEntranceActualLevel);
         else
             buffer.append("");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("   >");
-        if (!_visitedLevels.emeraldCoastEntranceVisited)
+        if (!_gameStatus.visitedLevels.emeraldCoastEntranceVisited)
             buffer.append(" ??");
         SetDebugFontColor(disabledKeyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1259,15 +1234,15 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("WV");
-        if (_visitedLevels.windyValleyEntranceVisited)
-            buffer.append("   ").append(_visitedLevels.windyValleyEntranceActualLevel);
+        if (_gameStatus.visitedLevels.windyValleyEntranceVisited)
+            buffer.append("   ").append(_gameStatus.visitedLevels.windyValleyEntranceActualLevel);
         else
             buffer.append("");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("   >");
-        if (!_visitedLevels.windyValleyEntranceVisited)
+        if (!_gameStatus.visitedLevels.windyValleyEntranceVisited)
             buffer.append(" ??");
         SetDebugFontColor(disabledKeyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1275,15 +1250,15 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("C ");
-        if (_visitedLevels.casinopolisEntranceVisited)
-            buffer.append("   ").append(_visitedLevels.casinopolisEntranceActualLevel);
+        if (_gameStatus.visitedLevels.casinopolisEntranceVisited)
+            buffer.append("   ").append(_gameStatus.visitedLevels.casinopolisEntranceActualLevel);
         else
             buffer.append("");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("   >");
-        if (!_visitedLevels.casinopolisEntranceVisited)
+        if (!_gameStatus.visitedLevels.casinopolisEntranceVisited)
             buffer.append(" ??");
         SetDebugFontColor(disabledKeyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1291,15 +1266,15 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("IC");
-        if (_visitedLevels.iceCapEntranceVisited)
-            buffer.append("   ").append(_visitedLevels.iceCapEntranceActualLevel);
+        if (_gameStatus.visitedLevels.iceCapEntranceVisited)
+            buffer.append("   ").append(_gameStatus.visitedLevels.iceCapEntranceActualLevel);
         else
             buffer.append("");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("   >");
-        if (!_visitedLevels.iceCapEntranceVisited)
+        if (!_gameStatus.visitedLevels.iceCapEntranceVisited)
             buffer.append(" ??");
         SetDebugFontColor(disabledKeyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1307,15 +1282,15 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("TP");
-        if (_visitedLevels.twinkleParkEntranceVisited)
-            buffer.append("   ").append(_visitedLevels.twinkleParkEntranceActualLevel);
+        if (_gameStatus.visitedLevels.twinkleParkEntranceVisited)
+            buffer.append("   ").append(_gameStatus.visitedLevels.twinkleParkEntranceActualLevel);
         else
             buffer.append("");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("   >");
-        if (!_visitedLevels.twinkleParkEntranceVisited)
+        if (!_gameStatus.visitedLevels.twinkleParkEntranceVisited)
             buffer.append(" ??");
         SetDebugFontColor(disabledKeyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1324,15 +1299,15 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("SH");
-        if (_visitedLevels.speedHighwayEntranceVisited)
-            buffer.append("   ").append(_visitedLevels.speedHighwayEntranceActualLevel);
+        if (_gameStatus.visitedLevels.speedHighwayEntranceVisited)
+            buffer.append("   ").append(_gameStatus.visitedLevels.speedHighwayEntranceActualLevel);
         else
             buffer.append("");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("   >");
-        if (!_visitedLevels.speedHighwayEntranceVisited)
+        if (!_gameStatus.visitedLevels.speedHighwayEntranceVisited)
             buffer.append(" ??");
         SetDebugFontColor(disabledKeyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1341,15 +1316,15 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("RM");
-        if (_visitedLevels.redMountainEntranceVisited)
-            buffer.append("   ").append(_visitedLevels.redMountainEntranceActualLevel);
+        if (_gameStatus.visitedLevels.redMountainEntranceVisited)
+            buffer.append("   ").append(_gameStatus.visitedLevels.redMountainEntranceActualLevel);
         else
             buffer.append("");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("   >");
-        if (!_visitedLevels.redMountainEntranceVisited)
+        if (!_gameStatus.visitedLevels.redMountainEntranceVisited)
             buffer.append(" ??");
         SetDebugFontColor(disabledKeyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1357,15 +1332,15 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("SD");
-        if (_visitedLevels.skyDeckEntranceVisited)
-            buffer.append("   ").append(_visitedLevels.skyDeckEntranceActualLevel);
+        if (_gameStatus.visitedLevels.skyDeckEntranceVisited)
+            buffer.append("   ").append(_gameStatus.visitedLevels.skyDeckEntranceActualLevel);
         else
             buffer.append("");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("   >");
-        if (!_visitedLevels.skyDeckEntranceVisited)
+        if (!_gameStatus.visitedLevels.skyDeckEntranceVisited)
             buffer.append(" ??");
         SetDebugFontColor(disabledKeyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1373,15 +1348,15 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("LW");
-        if (_visitedLevels.lostWorldEntranceVisited)
-            buffer.append("   ").append(_visitedLevels.lostWorldEntranceActualLevel);
+        if (_gameStatus.visitedLevels.lostWorldEntranceVisited)
+            buffer.append("   ").append(_gameStatus.visitedLevels.lostWorldEntranceActualLevel);
         else
             buffer.append("");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("   >");
-        if (!_visitedLevels.lostWorldEntranceVisited)
+        if (!_gameStatus.visitedLevels.lostWorldEntranceVisited)
             buffer.append(" ??");
         SetDebugFontColor(disabledKeyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1389,15 +1364,15 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("FE");
-        if (_visitedLevels.finalEggEntranceVisited)
-            buffer.append("   ").append(_visitedLevels.finalEggEntranceActualLevel);
+        if (_gameStatus.visitedLevels.finalEggEntranceVisited)
+            buffer.append("   ").append(_gameStatus.visitedLevels.finalEggEntranceActualLevel);
         else
             buffer.append("");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("   >");
-        if (!_visitedLevels.finalEggEntranceVisited)
+        if (!_gameStatus.visitedLevels.finalEggEntranceVisited)
             buffer.append(" ??");
         SetDebugFontColor(disabledKeyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
@@ -1405,15 +1380,15 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("HS");
-        if (_visitedLevels.hotShelterEntranceVisited)
-            buffer.append("   ").append(_visitedLevels.hotShelterEntranceActualLevel);
+        if (_gameStatus.visitedLevels.hotShelterEntranceVisited)
+            buffer.append("   ").append(_gameStatus.visitedLevels.hotShelterEntranceActualLevel);
         else
             buffer.append("");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("   >");
-        if (!_visitedLevels.hotShelterEntranceVisited)
+        if (!_gameStatus.visitedLevels.hotShelterEntranceVisited)
             buffer.append(" ??");
         SetDebugFontColor(disabledKeyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());

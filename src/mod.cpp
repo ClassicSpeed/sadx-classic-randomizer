@@ -25,7 +25,7 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     CharacterManager& characterManager = CharacterManager::Init(options, settings,gameStatus, reactionManager);
     WorldStateManager& worldStateManager = WorldStateManager::Init(options, settings, gameStatus);
     ItemRepository& itemRepository = ItemRepository::Init(gameStatus);
-    LocationRepository& locationRepository = LocationRepository::Init();
+    LocationRepository& locationRepository = LocationRepository::Init(options, gameStatus);
     ArchipelagoMessenger& archipelagoMessenger = ArchipelagoMessenger::Init(options);
     SaveFileManager& saveFileManager = SaveFileManager::Init();
     MusicManager& musicManager = MusicManager::Init(options, settings, helperFunctions);

@@ -3,11 +3,6 @@
 #include <string>
 #include "../../application/structs/ItemData.h"
 #include "../../application/structs/Message.h"
-#include "../../application/structs/LevelStatus.h"
-#include "../../application/structs/MissionStatus.h"
-#include "../../application/structs/BossesStatus.h"
-#include "../../application/structs/ChaoStatus.h"
-#include "../../application/structs/VisitedLevels.h"
 #include "../../configuration/options/Options.h"
 #include "../../configuration/gameStatus/GameStatus.h"
 #include "../../application/structs/LocationData.h"
@@ -34,11 +29,6 @@ public:
     void QueueItemMessage(const std::string& message);
     void QueueChatMessage(const std::string& message);
     void ShowSongName(const std::string& songName);
-    void UpdateLevelStatus(LevelStatus levelStatus);
-    void UpdateMissionStatus(MissionStatus missionStatus);
-    void UpdateBossesStatus(BossesStatus bossesStatus);
-    void UpdateChaoStatus(ChaoStatus chaoStatus);
-    void UpdateVisitedLevels(VisitedLevels visitedLevels);
     void ShowStatusInformation(std::string information);
     void ShowGoalStatus();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
@@ -105,11 +95,6 @@ private:
     std::clock_t _unlockStatusTimer;
     float _unlockStatusDelay = 0.3f;
 
-    LevelStatus _levelStatus;
-    MissionStatus _missionStatus;
-    BossesStatus _bossesStatus;
-    ChaoStatus _chaoStatus;
-    VisitedLevels _visitedLevels;
 
 
     int _keyItemColor = 0xFFF2C600;
