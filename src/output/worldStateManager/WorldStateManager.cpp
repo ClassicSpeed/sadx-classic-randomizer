@@ -5,6 +5,8 @@
 
 WorldStateManager* worldStateManagerPtr;
 
+DataPointer(int, ShowExitMenuTwinkleCircuit, 0x3C5D430);
+FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
 
 constexpr int WARP_EGG_CARRIER_INSIDE = 35;
 
@@ -95,21 +97,21 @@ static void __cdecl HandleWarp()
 
 //We don't create animals outside levels
 //Allow us to spawn enemies in the adventure fields
-FunctionHook<void, int, float, float, float> onCreateAnimal(0x4BE610, [](int e_num, float x, float y, float z)-> void
+void WorldStateManager::OnCreateAnimal(int e_num, float x, float y, float z)
 {
     if (CurrentLevel > LevelIDs_HedgehogHammer && CurrentLevel <= LevelIDs_HotShelter)
-        onCreateAnimal.Original(e_num, x, y, z);
-});
+        _createAnimalHook.Original(e_num, x, y, z);
+}
 
 //We delete the police enemy when transitioning between levels
-FunctionHook<void, task*> onPoliceEnemyMain(0x4B30E0, [](task* tp) -> void
+void WorldStateManager::OnPoliceEnemyMain(task* tp)
 {
     if (CutsceneMode == 3)
         return FreeTask(tp);
-    onPoliceEnemyMain.Original(tp);
-});
+    _policeEnemyMainHook.Original(tp);
+}
 
-FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
+void WorldStateManager::OnCollisionCube(task* tp)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
@@ -136,13 +138,11 @@ FunctionHook<void, task*> onCollisionCube(0x4D47E0, [](task* tp) -> void
             && tp->twp->pos.z < 891 && tp->twp->pos.z > 889)
             FreeTask(tp);
     }
-
-
     else
-        onCollisionCube.Original(tp);
-});
+        _collisionCubeHook.Original(tp);
+}
 
-FunctionHook<void, task*> onCollisionCylinder(0x4D4770, [](task* tp) -> void
+void WorldStateManager::OnCollisionCylinder(task* tp)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
     {
@@ -160,10 +160,9 @@ FunctionHook<void, task*> onCollisionCylinder(0x4D4770, [](task* tp) -> void
             && tp->twp->pos.z < 250 && tp->twp->pos.z > 240)
             FreeTask(tp);
     }
-
     else
-        onCollisionCylinder.Original(tp);
-});
+        _collisionCylinderHook.Original(tp);
+}
 
 static void __cdecl HandleWindyValleyEntrance();
 UsercallFuncVoid(onSceneChangeMr_t, (int a1), (a1), 0x539220, rEBX);
@@ -208,6 +207,62 @@ char LeonTimer2 = 30;
 WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus): options(options),
     settings(settings), gameStatus(gameStatus)
 {
+    _createAnimalHook.Hook(OnCreateAnimal);
+    _policeEnemyMainHook.Hook(OnPoliceEnemyMain);
+    _collisionCubeHook.Hook(OnCollisionCube);
+    _collisionCylinderHook.Hook(OnCollisionCylinder);
+    _howManyGameGearGamesHook.Hook(OnHowManyGameGearGames);
+    _isGameGearMenuEnabledHook.Hook(OnIsGameGearMenuEnabled);
+    _isChaos2DoorOpenHook.Hook(OnIsChaos2DoorOpen);
+    _isStationDoorOpenHook.Hook(OnIsStationDoorOpen);
+    _isHotelDoorOpenHook.Hook(OnIsHotelDoorOpen);
+    _isCasinoHotelDoorOpenHook.Hook(OnIsCasinoHotelDoorOpen);
+    _isCasinoStationDoorOpenHook.Hook(OnIsCasinoStationDoorOpen);
+    _showRecapHook.Hook(OnShowRecap);
+    _playVoiceHook.Hook(OnPlayVoice);
+    _addSecondsHook.Hook(OnAddSeconds);
+    _getEntranceMRuinsHook.Hook(OnGetEntranceMRuins);
+    _getEntranceEggCarrierHook.Hook(OnGetEntranceEggCarrier);
+    _getEntrancePastHook.Hook(OnGetEntrancePast);
+    _setTimeOfDayHook.Hook(OnSetTimeOfDay);
+    _adventureSetLevelAndActHook.Hook(OnAdventureSetLevelAndAct);
+    _prepareLevelHook.Hook(OnPrepareLevel);
+    _countSetItemsMaybeHook.Hook(OnCountSetItemsMaybe);
+    _emblemMainHook.Hook(OnEmblemMain);
+    _missionSetLoadHook.Hook(OnMissionSetLoad);
+    _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
+    _mysticRuinsKeyHook.Hook(OnMysticRuinsKey);
+    _employeeCardHook.Hook(OnEmployeeCard);
+    _bigHud_DrawWeightAndLifeHook.Hook(OnBigHud_DrawWeightAndLife);
+    _setStartPosReturnToFieldHook.Hook(OnSetStartPosReturnToField);
+    _sceneChangeMainStationSquareHook.Hook(OnSceneChangeMainStationSquare);
+    _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
+    _twinkleCircuitResultsMaybeHook.Hook(OnTwinkleCircuitResultsMaybe);
+    _isEmeraldCoastOpenHook.Hook(OnIsEmeraldCoastOpen);
+    _loadEmeraldCoastGateTargetsHook.Hook(OnLoadEmeraldCoastGateTargets);
+    _isWindyValleyOpenHook.Hook(OnIsWindyValleyOpen);
+    _isCasinoOpenHook.Hook(OnIsCasinoOpen);
+    _isSpeedHighwayShutterOpenHook.Hook(OnIsSpeedHighwayShutterOpen);
+    _loadSpeedHighwayShutterHook.Hook(OnLoadSpeedHighwayShutter);
+    _loadSpeedHighwayShutter2Hook.Hook(OnLoadSpeedHighwayShutter2);
+    _onOHighEleHook.Hook(OnOHighEle);
+    _isCityHallDoorOpenHook.Hook(OnIsCityHallDoorOpen);
+    _loadBarricadeHook.Hook(OnLoadBarricade);
+    _isFinalEggGammaDoorOpenHook.Hook(OnIsFinalEggGammaDoorOpen);
+    _onLoadSceneChangeMrHook.Hook(OnLoadSceneChangeMr);
+    _isFinalEggTowerActiveHook.Hook(OnIsFinalEggTowerActive);
+    _isFinalEggDoorActiveHook.Hook(OnIsFinalEggDoorActive);
+    _isLostWorldBackEntranceOpenHook.Hook(OnIsLostWorldBackEntranceOpen);
+    _isLostWorldFrontEntranceOpenHook.Hook(OnIsLostWorldFrontEntranceOpen);
+    _isAngelIslandOpenHook.Hook(OnIsAngelIslandOpen);
+    _isMonkeyDoorOpenHook.Hook(OnIsMonkeyDoorOpen);
+    _onLoadMonkeyCageHook.Hook(OnLoadMonkeyCage);
+    _onLoadLongLadderMrHook.Hook(OnLoadLongLadderMr);
+    _preventKeyStoneFromSpawningHook.Hook(OnPreventKeyStoneFromSpawning);
+    _onLoadPoolWaterHook.Hook(OnLoadPoolWater);
+    _onLoadPoolDoorHook.Hook(OnLoadPoolDoor);
+
+
     onSceneChangeMr_t.Hook(HandleMREntrance);
     onTwinkleParkDoor_t.Hook(HandleTwinkleParkEntrance);
     onTwinkleCircuitDoor_t.Hook(HandleTwinkleCircuitEntrance);
@@ -460,71 +515,69 @@ void WorldStateManager::OnFrame()
 }
 
 
-//Enable all GameGear Games
-FunctionHook<int> onHowManyGameGearGames(0x6FDA90, []()-> int
+// Enable all GameGear Games
+int WorldStateManager::OnHowManyGameGearGames()
 {
     return 12;
-});
+}
 
-FunctionHook<bool> onIsGameGearMenuEnabled(0x506460, []()-> bool
+bool WorldStateManager::OnIsGameGearMenuEnabled()
 {
     return true;
-});
+}
 
-//Allow Knuckles to fight Chaos 2
-FunctionHook<BOOL> isChaos2DoorOpen(0x638D50, []()-> BOOL
+// Allow Knuckles to fight Chaos 2
+BOOL WorldStateManager::OnIsChaos2DoorOpen()
 {
     return CurrentCharacter == Characters_Knuckles;
-});
+}
 
-FunctionHook<BOOL> isStationDoorOpen(0x63AB70, []()-> BOOL
+BOOL WorldStateManager::OnIsStationDoorOpen()
 {
     return worldStateManagerPtr->gameStatus.unlock.keyStationFrontKey;
-});
+}
 
-FunctionHook<BOOL> isHotelDoorOpen(0x630900, []()-> BOOL
+BOOL WorldStateManager::OnIsHotelDoorOpen()
 {
     return worldStateManagerPtr->gameStatus.unlock.keyHotelFrontKey;
-});
+}
 
-FunctionHook<BOOL> isCasinoHotelDoorOpen(0x630970, []()-> BOOL
+BOOL WorldStateManager::OnIsCasinoHotelDoorOpen()
 {
     return worldStateManagerPtr->gameStatus.unlock.keyHotelBackKey;
-});
-FunctionHook<BOOL> isCasinoStationDoorOpen(0x638880, []()-> BOOL
+}
+
+BOOL WorldStateManager::OnIsCasinoStationDoorOpen()
 {
     return worldStateManagerPtr->gameStatus.unlock.keyStationBackKey;
-});
+}
 
-
-//Prevents the recap screen from showing on the last story
-FunctionHook<int, int> showRecap(0x643C00, [](int _)-> int
+// Prevents the recap screen from showing on the last story
+int WorldStateManager::OnShowRecap(int _)
 {
     return -1;
-});
+}
 
 // Replace Super Sonic "Hmph" with "I'll show you what the Chaos Emeralds can really do."
-FunctionHook<void, int> onPlayVoice(0x425710, [](int a1)-> void
+void WorldStateManager::OnPlayVoice(int a1)
 {
     if (a1 == 396)
-        return onPlayVoice.Original(388);
+        return _playVoiceHook.Original(388);
+    return _playVoiceHook.Original(a1);
+}
 
-    return onPlayVoice.Original(a1);
-});
-
-//Prevents adding extra 10 seconds for Sonic and Tails
-FunctionHook<void, int> onAddSeconds(0x426640, [](int seconds)-> void
+// Prevents adding extra 10 seconds for Sonic and Tails
+void WorldStateManager::OnAddSeconds(int seconds)
 {
     if (seconds == 10 && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
         return;
+    return _addSecondsHook.Original(seconds);
+}
 
-    return onAddSeconds.Original(seconds);
-});
-
-//We create a custom spawn point after exiting sand hill
-FunctionHook<void, EntityData1*> onGetEntranceMRuins(0x530790, [](EntityData1* a1)-> void
+// We create a custom spawn point after exiting sand hill
+void WorldStateManager::OnGetEntranceMRuins(EntityData1* a1)
 {
-    onGetEntranceMRuins.Original(a1);
+    _getEntranceMRuinsHook.Original(a1);
     if (LastLevel == LevelIDs_SandHill)
     {
         a1->Position.x = -1500;
@@ -543,12 +596,12 @@ FunctionHook<void, EntityData1*> onGetEntranceMRuins(0x530790, [](EntityData1* a
         a1->Rotation.y = 4000;
         a1->Rotation.z = 0;
     }
-});
+}
 
-//We spawn in the middle on the runway for the transformed Egg Carrier
-FunctionHook<void, EntityData1*> onGetEntranceEggCarrier(0x52D820, [](EntityData1* a1)-> void
+// We spawn in the middle on the runway for the transformed Egg Carrier
+void WorldStateManager::OnGetEntranceEggCarrier(EntityData1* a1)
 {
-    onGetEntranceEggCarrier.Original(a1);
+    _getEntranceEggCarrierHook.Original(a1);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2 && LevelEntrance == 0)
     {
         a1->Position.x = 0;
@@ -558,12 +611,12 @@ FunctionHook<void, EntityData1*> onGetEntranceEggCarrier(0x52D820, [](EntityData
         a1->Rotation.y = 0x4000;
         a1->Rotation.z = 0;
     }
-});
+}
 
-//We spawn in front of the Master Emerald Shrine in the past when time traveling
-FunctionHook<void, EntityData1*> onGetEntrancePast(0x542180, [](EntityData1* a1)-> void
+// We spawn in front of the Master Emerald Shrine in the past when time traveling
+void WorldStateManager::OnGetEntrancePast(EntityData1* a1)
 {
-    onGetEntrancePast.Original(a1);
+    _getEntrancePastHook.Original(a1);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past2 && LastLevel == LevelIDs_MysticRuins)
     {
         a1->Position.x = 0;
@@ -573,22 +626,22 @@ FunctionHook<void, EntityData1*> onGetEntrancePast(0x542180, [](EntityData1* a1)
         a1->Rotation.y = 0x4000;
         a1->Rotation.z = 0;
     }
-});
+}
 
-//Set starting location when we get a game over 
-FunctionHook<void, Sint8> onSetTimeOfDay(0x412C00, [](Sint8 time)-> void
+// Set starting location when we get a game over
+void WorldStateManager::OnSetTimeOfDay(Sint8 time)
 {
-    onSetTimeOfDay.Original(time);
+    _setTimeOfDayHook.Original(time);
     if (GameState == MD_GAME_CONTINUE)
         worldStateManagerPtr->SetStartingArea();
-});
+}
 
-//Set starting location when starting the adventure
-FunctionHook<void> onAdventureSetLevelAndAct(0x4133E0, []()-> void
+// Set starting location when starting the adventure
+void WorldStateManager::OnAdventureSetLevelAndAct()
 {
-    onAdventureSetLevelAndAct.Original();
+    _adventureSetLevelAndActHook.Original();
     worldStateManagerPtr->SetStartingArea();
-});
+}
 
 void WorldStateManager::SetStartingArea()
 {
@@ -658,17 +711,25 @@ void WorldStateManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int
 void WorldStateManager::UpdateLevelEntrances(LevelEntrances levelEntrances)
 {
     this->levelEntrances = levelEntrances;
-    this->gameStatus.visitedLevels.emeraldCoastEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(EmeraldCoast);
-    this->gameStatus.visitedLevels.windyValleyEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(WindyValley);
-    this->gameStatus.visitedLevels.casinopolisEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(Casinopolis);
+    this->gameStatus.visitedLevels.emeraldCoastEntranceActualLevel = levelEntrances.
+        getLevelInitialsFromEntrance(EmeraldCoast);
+    this->gameStatus.visitedLevels.windyValleyEntranceActualLevel = levelEntrances.
+        getLevelInitialsFromEntrance(WindyValley);
+    this->gameStatus.visitedLevels.casinopolisEntranceActualLevel = levelEntrances.
+        getLevelInitialsFromEntrance(Casinopolis);
     this->gameStatus.visitedLevels.iceCapEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(IceCap);
-    this->gameStatus.visitedLevels.twinkleParkEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(TwinklePark);
-    this->gameStatus.visitedLevels.speedHighwayEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SpeedHighway);
-    this->gameStatus.visitedLevels.redMountainEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(RedMountain);
+    this->gameStatus.visitedLevels.twinkleParkEntranceActualLevel = levelEntrances.
+        getLevelInitialsFromEntrance(TwinklePark);
+    this->gameStatus.visitedLevels.speedHighwayEntranceActualLevel = levelEntrances.
+        getLevelInitialsFromEntrance(SpeedHighway);
+    this->gameStatus.visitedLevels.redMountainEntranceActualLevel = levelEntrances.
+        getLevelInitialsFromEntrance(RedMountain);
     this->gameStatus.visitedLevels.skyDeckEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(SkyDeck);
-    this->gameStatus.visitedLevels.lostWorldEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(LostWorld);
+    this->gameStatus.visitedLevels.lostWorldEntranceActualLevel = levelEntrances.
+        getLevelInitialsFromEntrance(LostWorld);
     this->gameStatus.visitedLevels.finalEggEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(FinalEgg);
-    this->gameStatus.visitedLevels.hotShelterEntranceActualLevel = levelEntrances.getLevelInitialsFromEntrance(HotShelter);
+    this->gameStatus.visitedLevels.hotShelterEntranceActualLevel = levelEntrances.
+        getLevelInitialsFromEntrance(HotShelter);
 }
 
 void WorldStateManager::UpdateVisitedLevels(const int visitedLevel)
@@ -713,7 +774,6 @@ void WorldStateManager::UpdateVisitedLevels(const int visitedLevel)
         break;
     default: break;
     }
-
 }
 
 
@@ -817,7 +877,7 @@ const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {
 const SETEntry WARP_TO_PAST = CreateSetEntry(WARP_MYSTIC_RUINS, {-2.5f, -240, 2397.5f});
 const SETEntry WARP_FROM_PAST = CreateSetEntry(WARP_PAST, {0, 7, 247.5f});
 
-FunctionHook<Sint32> onPrepareLevel(0x415210, []()-> Sint32
+Sint32 WorldStateManager::OnPrepareLevel()
 {
     Sint32 result;
     if ((CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Big) &&
@@ -825,20 +885,19 @@ FunctionHook<Sint32> onPrepareLevel(0x415210, []()-> Sint32
     {
         const char* originalCharId = CharIDStrings[CurrentCharacter];
         CharIDStrings[CurrentCharacter] = "S";
-        result = onPrepareLevel.Original();
+        result = _prepareLevelHook.Original();
         CharIDStrings[CurrentCharacter] = originalCharId;
     }
     else
     {
-        result = onPrepareLevel.Original();
+        result = _prepareLevelHook.Original();
     }
     return result;
-});
+}
 
-
-FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
+void WorldStateManager::OnCountSetItemsMaybe()
 {
-    onCountSetItemsMaybe.Original();
+    _countSetItemsMaybeHook.Original();
 
     if (DemoPlaying > 0)
         return;
@@ -974,11 +1033,10 @@ FunctionHook<void> onCountSetItemsMaybe(0x0046BD20, []()-> void
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Amy);
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Gamma);
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Big);
-});
-
+}
 
 // We move the emblem a little higher so Cream can get it.
-FunctionHook<void, task*> onEmblemMain(0x4B4940, [](task* tp)-> void
+void WorldStateManager::OnEmblemMain(task* tp)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Tails)
         if (tp->twp->pos.x > 386 && tp->twp->pos.x < 390
@@ -988,15 +1046,15 @@ FunctionHook<void, task*> onEmblemMain(0x4B4940, [](task* tp)-> void
             tp->twp->pos.y = -4;
         }
 
-    onEmblemMain.Original(tp);
-});
+    _emblemMainHook.Original(tp);
+}
 
-FunctionHook<void> onMissionSetLoad(0x591A70, []()-> void
+void WorldStateManager::OnMissionSetLoad()
 {
     if (!worldStateManagerPtr->options.missionModeEnabled)
         return;
 
-    onMissionSetLoad.Original();
+    _missionSetLoadHook.Original();
 
     for (int i = 0; i < MissionSetCount; ++i)
     {
@@ -1027,16 +1085,14 @@ FunctionHook<void> onMissionSetLoad(0x591A70, []()-> void
             }
         }
     }
-});
-
+}
 
 //Hook to change the level after beating the boss
-FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
+Sint32 WorldStateManager::OnFinishedLevelMaybe()
 {
-    const Sint32 response = onFinishedLevelMaybe.Original();
+    const Sint32 response = _finishedLevelMaybeHook.Original();
     if (GameState != MD_GAME_END)
         return response;
-
 
     if (CurrentLevel == LevelIDs_Chaos0)
     {
@@ -1080,9 +1136,9 @@ FunctionHook<Sint32> onFinishedLevelMaybe(0x414090, []()-> Sint32
         SetEntranceNumber(2);
     }
     return response;
-});
+}
 
-FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
+void WorldStateManager::OnMysticRuinsKey(task* tp)
 {
     // We prevent the wind stone from spawning if the player doesn't have the item
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
@@ -1098,38 +1154,36 @@ FunctionHook<void, task*> onMysticRuinsKey(0x532400, [](task* tp)-> void
         if (!worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter))
             return;
     }
-    onMysticRuinsKey.Original(tp);
-});
+    _mysticRuinsKeyHook.Original(tp);
+}
 
-FunctionHook<void, task*> onEmployeeCard(0x63C370, [](task* tp)-> void
+void WorldStateManager::OnEmployeeCard(task* tp)
 {
     // We prevent the Employee card from spawning if the player doesn't have the item, or he can't use it
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4
         && (!worldStateManagerPtr->gameStatus.unlock.keyEmployeeCard
             || !worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)))
         return;
-    onEmployeeCard.Original(tp);
-});
+    _employeeCardHook.Original(tp);
+}
 
 // We make Big's hud think we are not in the mission mode
-FunctionHook<void> onBigHud_DrawWeightAndLife(0x46FB00, []()-> void
+void WorldStateManager::OnBigHud_DrawWeightAndLife()
 {
     const GameModes bufferGameMode = GameMode;
     if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past)
         GameMode = GameModes_Adventure_Field;
     else
         GameMode = GameModes_Adventure_ActionStg;
-    onBigHud_DrawWeightAndLife.Original();
+    _bigHud_DrawWeightAndLifeHook.Original();
     GameMode = bufferGameMode;
-});
+}
 
-
-// Handles the return position
-FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> void
+void WorldStateManager::OnSetStartPosReturnToField(task* tp)
 {
     if (CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
     {
-        onSetStartPosReturnToField.Original(tp);
+        _setStartPosReturnToFieldHook.Original(tp);
         return;
     }
     const short currentLevelBuffer = CurrentLevel;
@@ -1139,7 +1193,7 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
     else
         CurrentLevel = LevelIDs_HotShelter;
 
-    onSetStartPosReturnToField.Original(tp);
+    _setStartPosReturnToFieldHook.Original(tp);
     CurrentLevel = currentLevelBuffer;
 
     const LevelIDs entranceLevel = worldStateManagerPtr->
@@ -1187,7 +1241,6 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
             FieldStartPos->YRot = 0x0C000;
         }
         break;
-
     case LevelIDs_LostWorld:
         if (CurrentCharacter == Characters_Knuckles)
         {
@@ -1226,10 +1279,9 @@ FunctionHook<void, task*> onSetStartPosReturnToField(0x414500, [](task* tp)-> vo
         break;
     default: ;
     }
-});
+}
 
-
-FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-> void
+void WorldStateManager::OnSceneChangeMainStationSquare(task* tp)
 {
     const auto& pos = tp->twp->pos;
 
@@ -1268,11 +1320,10 @@ FunctionHook<void, task*> onSceneChangeMainStationSquare(0x640850, [](task* tp)-
             SpeedHighway, CurrentCharacter);
     }
 
-    onSceneChangeMainStationSquare.Original(tp);
-});
+    _sceneChangeMainStationSquareHook.Original(tp);
+}
 
-// SpeedHighway (Mains Area)
-FunctionHook<void, Uint8, Uint8> onSetNextLevelAndActCutsceneMode(0x4145D0, [](Uint8 level, Uint8 act)-> void
+void WorldStateManager::OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
     {
@@ -1283,7 +1334,7 @@ FunctionHook<void, Uint8, Uint8> onSetNextLevelAndActCutsceneMode(0x4145D0, [](U
         {
             const LevelAndActIDs levelAndAct = worldStateManagerPtr->levelEntrances.getLevelAndActIdFromEntrance(
                 SpeedHighway, CurrentCharacter);
-            onSetNextLevelAndActCutsceneMode.Original(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
+            _setNextLevelAndActCutsceneModeHook.Original(GET_LEVEL(levelAndAct), GET_ACT(levelAndAct));
             return;
         }
     }
@@ -1292,7 +1343,7 @@ FunctionHook<void, Uint8, Uint8> onSetNextLevelAndActCutsceneMode(0x4145D0, [](U
     {
         if (!worldStateManagerPtr->options.multipleTwinkleCircuitChecks)
         {
-            onSetNextLevelAndActCutsceneMode.Original(level, 0);
+            _setNextLevelAndActCutsceneModeHook.Original(level, 0);
         }
         else
         {
@@ -1300,41 +1351,39 @@ FunctionHook<void, Uint8, Uint8> onSetNextLevelAndActCutsceneMode(0x4145D0, [](U
             {
             case Characters_Sonic:
                 // Samba GP Track
-                onSetNextLevelAndActCutsceneMode.Original(level, 2);
+                _setNextLevelAndActCutsceneModeHook.Original(level, 2);
                 break;
             case Characters_Tails:
                 //Similar to original but with more stuff
-                onSetNextLevelAndActCutsceneMode.Original(level, 1);
+                _setNextLevelAndActCutsceneModeHook.Original(level, 1);
                 break;
             case Characters_Knuckles:
                 //Harder Track with many sharp curves
-                onSetNextLevelAndActCutsceneMode.Original(level, 5);
+                _setNextLevelAndActCutsceneModeHook.Original(level, 5);
                 break;
             case Characters_Amy:
                 //Original Track
-                onSetNextLevelAndActCutsceneMode.Original(level, 0);
+                _setNextLevelAndActCutsceneModeHook.Original(level, 0);
                 break;
             case Characters_Gamma:
                 //Easier, round Track
-                onSetNextLevelAndActCutsceneMode.Original(level, 4);
+                _setNextLevelAndActCutsceneModeHook.Original(level, 4);
                 break;
             case Characters_Big:
                 //Track with large walls
-                onSetNextLevelAndActCutsceneMode.Original(level, 3);
+                _setNextLevelAndActCutsceneModeHook.Original(level, 3);
                 break;
-
             default:
-                onSetNextLevelAndActCutsceneMode.Original(level, 0);
+                _setNextLevelAndActCutsceneModeHook.Original(level, 0);
                 break;
             }
         }
         return;
     }
-    onSetNextLevelAndActCutsceneMode.Original(level, act);
-});
+    _setNextLevelAndActCutsceneModeHook.Original(level, act);
+}
 
-DataPointer(int, ShowExitMenuTwinkleCircuit, 0x3C5D430);
-FunctionHook<void, task*> onTwinkleCircuitResultsMaybe(0x4DAFB0, [](task* tp)-> void
+void WorldStateManager::OnTwinkleCircuitResultsMaybe(task* tp)
 {
     if (CurrentLevel == LevelIDs_TwinkleCircuit && ShowExitMenuTwinkleCircuit == 1)
     {
@@ -1343,8 +1392,8 @@ FunctionHook<void, task*> onTwinkleCircuitResultsMaybe(0x4DAFB0, [](task* tp)-> 
         return;
     }
 
-    return onTwinkleCircuitResultsMaybe.Original(tp);
-});
+    _twinkleCircuitResultsMaybeHook.Original(tp);
+}
 
 
 // WindyValley
@@ -1446,25 +1495,25 @@ void HandleSceneChangeEcOutside(int a1)
 }
 
 // Handles the Emerald Coast entrance
-FunctionHook<BOOL> isEmeraldCoastOpen(0x639A30, []()-> BOOL
+BOOL WorldStateManager::OnIsEmeraldCoastOpen()
 {
     if (CurrentCharacter == Characters_Gamma)
         return false;
     return worldStateManagerPtr->levelEntrances.canEnter(EmeraldCoast, CurrentCharacter);
-});
+}
 
-FunctionHook<void, task*> loadEmeraldCoastGateTargets(0x63A0C0, [](task* tp)-> void
+void WorldStateManager::OnLoadEmeraldCoastGateTargets(task* tp)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
         && !worldStateManagerPtr->levelEntrances.canEnter(EmeraldCoast, CurrentCharacter))
         FreeTask(tp);
     else
-        loadEmeraldCoastGateTargets.Original(tp);
-});
+        _loadEmeraldCoastGateTargetsHook.Original(tp);
+}
 
 // Handles the Windy Valley entrance
 // Makes Sonic, Tails and Gamma use the winds stone
-FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
+BOOL WorldStateManager::OnIsWindyValleyOpen()
 {
     if (CurrentCharacter == Characters_Sonic)
         return EventFlagArray[FLAG_SONIC_MR_WINDYSTONE] && worldStateManagerPtr->levelEntrances.canEnter(
@@ -1479,13 +1528,14 @@ FunctionHook<BOOL> isWindyValleyOpen(0x536E40, []()-> BOOL
             WindyValley, CurrentCharacter);
     return worldStateManagerPtr->levelEntrances.canEnter(WindyValley, CurrentCharacter) && worldStateManagerPtr->
         gameStatus.unlock.keyWindStone;
-});
+}
 
 // Handles the Casinopolis entrance
-FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
+BOOL WorldStateManager::OnIsCasinoOpen()
 {
     if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
-        return isCasinoOpen.Original() && worldStateManagerPtr->levelEntrances.canEnter(Casinopolis, CurrentCharacter);
+        return _isCasinoOpenHook.Original() && worldStateManagerPtr->levelEntrances.canEnter(
+            Casinopolis, CurrentCharacter);
 
     //We open the casino door for knuckles despite any story flags
     if (CurrentCharacter == Characters_Knuckles)
@@ -1493,8 +1543,7 @@ FunctionHook<BOOL> isCasinoOpen(0x6383E0, []()-> BOOL
             levelEntrances.canEnter(Casinopolis, CurrentCharacter);
 
     return worldStateManagerPtr->levelEntrances.canEnter(Casinopolis, CurrentCharacter);
-});
-
+}
 
 // Handles the Twinkle Park door
 static int __cdecl HandleTwinkleParkEntrance(const char character)
@@ -1508,16 +1557,17 @@ static int __cdecl HandleTwinkleCircuitEntrance(const char character)
     return worldStateManagerPtr->options.twinkleCircuitCheck;
 }
 
+
 // Speed Highway
-FunctionHook<BOOL> isSpeedHighwayShutterOpen(0x63A2A0, []()-> BOOL
+BOOL WorldStateManager::OnIsSpeedHighwayShutterOpen()
 {
     if (CurrentCharacter == Characters_Sonic)
-        return isSpeedHighwayShutterOpen.Original();
+        return _isSpeedHighwayShutterOpenHook.Original();
     return worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
         && worldStateManagerPtr->gameStatus.unlock.keyEmployeeCard;
-});
+}
 
-FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
+void WorldStateManager::OnLoadSpeedHighwayShutter(task* tp)
 {
     if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter ==
             Characters_Big)
@@ -1525,10 +1575,10 @@ FunctionHook<void, task*> loadSpeedHighwayShutter(0x63A530, [](task* tp)-> void
         && worldStateManagerPtr->gameStatus.unlock.keyEmployeeCard)
         FreeTask(tp);
     else
-        loadSpeedHighwayShutter.Original(tp);
-});
+        _loadSpeedHighwayShutterHook.Original(tp);
+}
 
-FunctionHook<void, task*> loadSpeedHighwayShutter2(0x63A500, [](task* tp)-> void
+void WorldStateManager::OnLoadSpeedHighwayShutter2(task* tp)
 {
     if ((CurrentCharacter == Characters_Gamma || CurrentCharacter == Characters_Amy || CurrentCharacter ==
             Characters_Big)
@@ -1536,42 +1586,40 @@ FunctionHook<void, task*> loadSpeedHighwayShutter2(0x63A500, [](task* tp)-> void
         && worldStateManagerPtr->gameStatus.unlock.keyEmployeeCard)
         FreeTask(tp);
     else
-        loadSpeedHighwayShutter2.Original(tp);
-});
+        _loadSpeedHighwayShutter2Hook.Original(tp);
+}
 
-FunctionHook<void, ObjectMaster*> onOHighEle(0x6393F0, [](ObjectMaster* tp)-> void
+void WorldStateManager::OnOHighEle(ObjectMaster* tp)
 {
     OEleboxIn(tp);
-});
+}
 
-
-FunctionHook<BOOL> isCityHallDoorOpen(0x636BF0, []()-> BOOL
+BOOL WorldStateManager::OnIsCityHallDoorOpen()
 {
-    return worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter) && isCityHallDoorOpen.
-        Original();
-});
+    return worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter) &&
+        _isCityHallDoorOpenHook.Original();
+}
 
 //We don't create Knuckles barricade if he doesn't have access to the level
-FunctionHook<void, task*> loadBarricade(0x637580, [](task* tp)-> void
+void WorldStateManager::OnLoadBarricade(task* tp)
 {
     if (CurrentCharacter == Characters_Knuckles && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
         if (!worldStateManagerPtr->levelEntrances.canEnter(SpeedHighway, CurrentCharacter))
             return FreeTask(tp);
 
-    loadBarricade.Original(tp);
-});
+    _loadBarricadeHook.Original(tp);
+}
 
-
-FunctionHook<BOOL, EntityData1*> isFinalEggGammaDoorOpen(0x53ED30, [](EntityData1* entity)-> BOOL
+BOOL WorldStateManager::OnIsFinalEggGammaDoorOpen(EntityData1* entity)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
         return true;
 
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_MysticRuins4)
-        return isFinalEggGammaDoorOpen.Original(entity);
+        return _isFinalEggGammaDoorOpenHook.Original(entity);
 
     if (entity->Position.y < 100)
-        return isFinalEggGammaDoorOpen.Original(entity);
+        return _isFinalEggGammaDoorOpenHook.Original(entity);
 
     if (entity->Position.z < -150)
     {
@@ -1580,10 +1628,9 @@ FunctionHook<BOOL, EntityData1*> isFinalEggGammaDoorOpen(0x53ED30, [](EntityData
         return worldStateManagerPtr->levelEntrances.canEnter(FinalEgg, CurrentCharacter);
     }
     return true;
-});
+}
 
-
-FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
+void WorldStateManager::OnLoadSceneChangeMr(task* tp)
 {
     // Final Egg
     if ((CurrentCharacter != Characters_Gamma)
@@ -1604,8 +1651,8 @@ FunctionHook<void, task*> onLoadSceneChangeMr(0x5394F0, [](task* tp)-> void
         }
     }
 
-    onLoadSceneChangeMr.Original(tp);
-});
+    _onLoadSceneChangeMrHook.Original(tp);
+}
 
 void HandleOnFinalEggDoorCheckA(const int a1)
 {
@@ -1624,19 +1671,18 @@ short HandleOnFinalEggDoorCheckB(const int a1)
     return result;
 }
 
-
-FunctionHook<BOOL> isFinalEggTowerActive(0x538550, []()-> BOOL
+BOOL WorldStateManager::OnIsFinalEggTowerActive()
 {
     return true;
-});
-FunctionHook<BOOL> isFinalEggDoorActive(0x53EDF0, []()-> BOOL
+}
+
+BOOL WorldStateManager::OnIsFinalEggDoorActive()
 {
     return true;
-});
-
+}
 
 //Makes knuckles able to enter the lost world using the keys
-FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
+BOOL WorldStateManager::OnIsLostWorldBackEntranceOpen()
 {
     if (CurrentCharacter == Characters_Knuckles)
         return ((EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[FLAG_KNUCKLES_MR_BLUECUBE]) ||
@@ -1644,16 +1690,15 @@ FunctionHook<BOOL> isLostWorldBackEntranceOpen(0x53B6C0, []()-> BOOL
             && worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
 
     return false;
-});
+}
 
 //Allows everyone to enter Lost World
-FunctionHook<BOOL> isLostWorldFrontEntranceOpen(0x532E60, []()-> BOOL
+BOOL WorldStateManager::OnIsLostWorldFrontEntranceOpen()
 {
     if (CurrentCharacter == Characters_Knuckles)
         return false;
     return worldStateManagerPtr->levelEntrances.canEnter(LostWorld, CurrentCharacter);
-});
-
+}
 
 void HandleLostWorldEntranceCollision(const int a1)
 {
@@ -1663,14 +1708,13 @@ void HandleLostWorldEntranceCollision(const int a1)
     CurrentCharacter = bufferCharacter;
 }
 
-FunctionHook<BOOL> isAngelIslandOpen(0x534570, []()-> BOOL
+BOOL WorldStateManager::OnIsAngelIslandOpen()
 {
     return worldStateManagerPtr->gameStatus.unlock.keyDynamite;
-});
+}
 
 //Prevents the monkey from blocking the entrance to Red Mountain for knuckles
-FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
-FunctionHook<BOOL, int> isMonkeyDoorOpen(0x53E5D0, [](int a1)-> BOOL
+BOOL WorldStateManager::OnIsMonkeyDoorOpen(int a1)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1)
         return true;
@@ -1681,11 +1725,10 @@ FunctionHook<BOOL, int> isMonkeyDoorOpen(0x53E5D0, [](int a1)-> BOOL
 
     //For everyone else, we return true if we are in the main mystic ruins area
     return worldStateManagerPtr->levelEntrances.canEnter(RedMountain, CurrentCharacter);
-});
-
+}
 
 // We only load the monkey if it's needed for opening the door
-FunctionHook<void, task*> onLoadMonkeyCage(0x540730, [](task* tp)-> void
+void WorldStateManager::OnLoadMonkeyCage(task* tp)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
@@ -1695,11 +1738,11 @@ FunctionHook<void, task*> onLoadMonkeyCage(0x540730, [](task* tp)-> void
         if (!worldStateManagerPtr->levelEntrances.canEnter(RedMountain, CurrentCharacter))
             return FreeTask(tp);
     }
-    onLoadMonkeyCage.Original(tp);
-});
+    _onLoadMonkeyCageHook.Original(tp);
+}
 
 // Removed the ladder on Ice Cap
-FunctionHook<void, task*> onLoadLongLadderMr(0x536CB0, [](task* tp)-> void
+void WorldStateManager::OnLoadLongLadderMr(task* tp)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
@@ -1708,11 +1751,10 @@ FunctionHook<void, task*> onLoadLongLadderMr(0x536CB0, [](task* tp)-> void
             return FreeTask(tp);
         }
     }
-    onLoadLongLadderMr.Original(tp);
-});
+    _onLoadLongLadderMrHook.Original(tp);
+}
 
-
-FunctionHook<BOOL, int> preventKeyStoneFromSpawning(0x53C630, [](int a1)-> BOOL
+BOOL WorldStateManager::OnPreventKeyStoneFromSpawning(int a1)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2
         && ((CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Knuckles
@@ -1722,8 +1764,8 @@ FunctionHook<BOOL, int> preventKeyStoneFromSpawning(0x53C630, [](int a1)-> BOOL
         return worldStateManagerPtr->gameStatus.unlock.keyIceStone;
     }
 
-    return preventKeyStoneFromSpawning.Original(a1);
-});
+    return _preventKeyStoneFromSpawningHook.Original(a1);
+}
 
 // HotShelter
 static int __cdecl HandleEggCarrierEggDoor(const int a1)
@@ -1770,26 +1812,27 @@ static int __cdecl HandleEggCarrierOutsideDoor(const int a1)
     return true;
 }
 
-FunctionHook<void, task*> onLoadPoolWater(0x51DC30, [](task* tp)-> void
+
+void WorldStateManager::OnLoadPoolWater(task* tp)
 {
     if (CurrentCharacter != Characters_Knuckles)
-        return onLoadPoolWater.Original(tp);
+        return _onLoadPoolWaterHook.Original(tp);
 
     if (!worldStateManagerPtr->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
-        return onLoadPoolWater.Original(tp);
+        return _onLoadPoolWaterHook.Original(tp);
 
     FreeTask(tp);
-});
+}
 
-FunctionHook<void, task*> onLoadPoolDoor(0x51E320, [](task* tp)-> void
+void WorldStateManager::OnLoadPoolDoor(task* tp)
 {
     if (CurrentCharacter != Characters_Knuckles)
-        return onLoadPoolDoor.Original(tp);
+        return _onLoadPoolDoorHook.Original(tp);
 
     if (!worldStateManagerPtr->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
-        return onLoadPoolDoor.Original(tp);
+        return _onLoadPoolDoorHook.Original(tp);
     FreeTask(tp);
-});
+}
 
 int HandleSkyDeckDoor(EntityData1* a1)
 {

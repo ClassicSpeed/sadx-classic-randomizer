@@ -47,6 +47,9 @@ public:
 
     void OnFrame() override;
 
+
+    
+
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
     void UpdateChecks(const std::map<int, LocationData>& checkData);
@@ -79,6 +82,168 @@ private:
     explicit WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus);
     inline static WorldStateManager* _instance = nullptr;
     mutable std::map<int, LocationData> _checkData;
+
+    inline static FunctionHook<void, int, float, float, float> _createAnimalHook{0x4BE610};
+    static void OnCreateAnimal(int e_num, float x, float y, float z);
+
+    inline static FunctionHook<void, task*> _policeEnemyMainHook{0x4B30E0};
+    static void OnPoliceEnemyMain(task* tp);
+
+    inline static FunctionHook<void, task*> _collisionCubeHook{0x4D47E0};
+    static void OnCollisionCube(task* tp);
+
+    inline static FunctionHook<void, task*> _collisionCylinderHook{0x4D4770};
+    static void OnCollisionCylinder(task* tp);
+
+    inline static FunctionHook<int> _howManyGameGearGamesHook{0x6FDA90};
+    static int OnHowManyGameGearGames();
+    
+    inline static FunctionHook<bool> _isGameGearMenuEnabledHook{0x506460};
+    static bool OnIsGameGearMenuEnabled();
+    
+    inline static FunctionHook<BOOL> _isChaos2DoorOpenHook{0x638D50};
+    static BOOL OnIsChaos2DoorOpen();
+    
+    inline static FunctionHook<BOOL> _isStationDoorOpenHook{0x63AB70};
+    static BOOL OnIsStationDoorOpen();
+    
+    inline static FunctionHook<BOOL> _isHotelDoorOpenHook{0x630900};
+    static BOOL OnIsHotelDoorOpen();
+    
+    inline static FunctionHook<BOOL> _isCasinoHotelDoorOpenHook{0x630970};
+    static BOOL OnIsCasinoHotelDoorOpen();
+    
+    inline static FunctionHook<BOOL> _isCasinoStationDoorOpenHook{0x638880};
+    static BOOL OnIsCasinoStationDoorOpen();
+    
+    inline static FunctionHook<int, int> _showRecapHook{0x643C00};
+    static int OnShowRecap(int _);
+    
+    inline static FunctionHook<void, int> _playVoiceHook{0x425710};
+    static void OnPlayVoice(int a1);
+    
+    inline static FunctionHook<void, int> _addSecondsHook{0x426640};
+    static void OnAddSeconds(int seconds);
+    
+    inline static FunctionHook<void, EntityData1*> _getEntranceMRuinsHook{0x530790};
+    static void OnGetEntranceMRuins(EntityData1* a1);
+    
+    inline static FunctionHook<void, EntityData1*> _getEntranceEggCarrierHook{0x52D820};
+    static void OnGetEntranceEggCarrier(EntityData1* a1);
+    
+    inline static FunctionHook<void, EntityData1*> _getEntrancePastHook{0x542180};
+    static void OnGetEntrancePast(EntityData1* a1);
+    
+    inline static FunctionHook<void, Sint8> _setTimeOfDayHook{0x412C00};
+    static void OnSetTimeOfDay(Sint8 time);
+    
+    inline static FunctionHook<void> _adventureSetLevelAndActHook{0x4133E0};
+    static void OnAdventureSetLevelAndAct();
+
+    inline static FunctionHook<Sint32> _prepareLevelHook{0x415210};
+    static Sint32 OnPrepareLevel();
+
+    inline static FunctionHook<void> _countSetItemsMaybeHook{0x0046BD20};
+    static void OnCountSetItemsMaybe();
+    
+    inline static FunctionHook<void, task*> _emblemMainHook{0x4B4940};
+    static void OnEmblemMain(task* tp);
+
+    inline static FunctionHook<void> _missionSetLoadHook{0x591A70};
+    static void OnMissionSetLoad();
+
+    inline static FunctionHook<Sint32> _finishedLevelMaybeHook{0x414090};
+    static Sint32 OnFinishedLevelMaybe();
+
+    inline static FunctionHook<void, task*> _mysticRuinsKeyHook{0x532400};
+    static void OnMysticRuinsKey(task* tp);
+
+    inline static FunctionHook<void, task*> _employeeCardHook{0x63C370};
+    static void OnEmployeeCard(task* tp);
+
+    inline static FunctionHook<void> _bigHud_DrawWeightAndLifeHook{0x46FB00};
+    static void OnBigHud_DrawWeightAndLife();
+
+    inline static FunctionHook<void, task*> _setStartPosReturnToFieldHook{0x414500};
+    static void OnSetStartPosReturnToField(task* tp);
+
+    inline static FunctionHook<void, task*> _sceneChangeMainStationSquareHook{0x640850};
+    static void OnSceneChangeMainStationSquare(task* tp);
+
+    inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActCutsceneModeHook{0x4145D0};
+    static void OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act);
+
+    inline static FunctionHook<void, task*> _twinkleCircuitResultsMaybeHook{0x4DAFB0};
+    static void OnTwinkleCircuitResultsMaybe(task* tp);
+    inline static FunctionHook<BOOL> _isEmeraldCoastOpenHook{0x639A30};
+    static BOOL OnIsEmeraldCoastOpen();
+
+    inline static FunctionHook<void, task*> _loadEmeraldCoastGateTargetsHook{0x63A0C0};
+    static void OnLoadEmeraldCoastGateTargets(task* tp);
+
+    inline static FunctionHook<BOOL> _isWindyValleyOpenHook{0x536E40};
+    static BOOL OnIsWindyValleyOpen();
+
+    inline static FunctionHook<BOOL> _isCasinoOpenHook{0x6383E0};
+    static BOOL OnIsCasinoOpen();
+
+    inline static FunctionHook<BOOL> _isSpeedHighwayShutterOpenHook{0x63A2A0};
+    static BOOL OnIsSpeedHighwayShutterOpen();
+
+    inline static FunctionHook<void, task*> _loadSpeedHighwayShutterHook{0x63A530};
+    static void OnLoadSpeedHighwayShutter(task* tp);
+
+    inline static FunctionHook<void, task*> _loadSpeedHighwayShutter2Hook{0x63A500};
+    static void OnLoadSpeedHighwayShutter2(task* tp);
+
+    inline static FunctionHook<void, ObjectMaster*> _onOHighEleHook{0x6393F0};
+    static void OnOHighEle(ObjectMaster* tp);
+
+    inline static FunctionHook<BOOL> _isCityHallDoorOpenHook{0x636BF0};
+    static BOOL OnIsCityHallDoorOpen();
+
+    inline static FunctionHook<void, task*> _loadBarricadeHook{0x637580};
+    static void OnLoadBarricade(task* tp);
+
+    inline static FunctionHook<BOOL, EntityData1*> _isFinalEggGammaDoorOpenHook{0x53ED30};
+    static BOOL OnIsFinalEggGammaDoorOpen(EntityData1* entity);
+
+    inline static FunctionHook<void, task*> _onLoadSceneChangeMrHook{0x5394F0};
+    static void OnLoadSceneChangeMr(task* tp);
+    
+    inline static FunctionHook<BOOL> _isFinalEggTowerActiveHook{0x538550};
+    static BOOL OnIsFinalEggTowerActive();
+
+    inline static FunctionHook<BOOL> _isFinalEggDoorActiveHook{0x53EDF0};
+    static BOOL OnIsFinalEggDoorActive();
+
+    inline static FunctionHook<BOOL> _isLostWorldBackEntranceOpenHook{0x53B6C0};
+    static BOOL OnIsLostWorldBackEntranceOpen();
+
+    inline static FunctionHook<BOOL> _isLostWorldFrontEntranceOpenHook{0x532E60};
+    static BOOL OnIsLostWorldFrontEntranceOpen();
+
+    inline static FunctionHook<BOOL> _isAngelIslandOpenHook{0x534570};
+    static BOOL OnIsAngelIslandOpen();
+
+    inline static FunctionHook<BOOL, int> _isMonkeyDoorOpenHook{0x53E5D0};
+    static BOOL OnIsMonkeyDoorOpen(int a1);
+
+    inline static FunctionHook<void, task*> _onLoadMonkeyCageHook{0x540730};
+    static void OnLoadMonkeyCage(task* tp);
+
+    inline static FunctionHook<void, task*> _onLoadLongLadderMrHook{0x536CB0};
+    static void OnLoadLongLadderMr(task* tp);
+
+    inline static FunctionHook<BOOL, int> _preventKeyStoneFromSpawningHook{0x53C630};
+    static BOOL OnPreventKeyStoneFromSpawning(int a1);
+
+    inline static FunctionHook<void, task*> _onLoadPoolWaterHook{0x51DC30};
+    static void OnLoadPoolWater(task* tp);
+
+    inline static FunctionHook<void, task*> _onLoadPoolDoorHook{0x51E320};
+    static void OnLoadPoolDoor(task* tp);
+    
     NJS_COLOR _wrongDoorColor[12] = {
         {0xAAFF0000},
         {0xAAFF0000},

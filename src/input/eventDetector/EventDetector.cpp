@@ -38,6 +38,65 @@ float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
 EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& randomizer) : options(options),
     settings(settings), randomizer(randomizer)
 {
+    _onLevelEmblemCollectedHook.Hook(OnLevelEmblemCollected);
+    _onGenericEmblemCollectedHook.Hook(OnGenericEmblemCollected);
+    _onSonicMainHook.Hook(OnSonicMain);
+    _seqGetSectionListHook.Hook(OnSeqGetSectionList);
+    _startLevelCutsceneHook.Hook(OnStartLevelCutscene);
+    _onMissionMenuRenderHook.Hook(OnMissionMenuRender);
+    _onSpeedUpCapsuleBrokenHook.Hook(OnSpeedUpCapsuleBroken);
+    _onInvincibilityCapsuleBrokenHook.Hook(OnInvincibilityCapsuleBroken);
+    _onFiveRingsCapsuleBrokenHook.Hook(OnFiveRingsCapsuleBroken);
+    _onTenRingsCapsuleHook.Hook(OnTenRingsCapsule);
+    _onRandomRingsCapsuleBrokenHook.Hook(OnRandomRingsCapsuleBroken);
+    _onShieldCapsuleBrokenHook.Hook(OnShieldCapsuleBroken);
+    _onExtraLifeCapsuleBrokenHook.Hook(OnExtraLifeCapsuleBroken);
+    _onBombCapsuleBrokenHook.Hook(OnBombCapsuleBroken);
+    _onElectricShieldCapsuleBrokenHook.Hook(OnElectricShieldCapsuleBroken);
+    _onKillHimPHook.Hook(OnKillHimP);
+    _onKillHimByFallingDownPHook.Hook(OnKillHimByFallingDownP);
+    _onScoreDisplayMainHook.Hook(OnScoreDisplayMain);
+    _onLoadLevelResultsHook.Hook(OnLoadLevelResults);
+    _onClearMissionHook.Hook(OnClearMission);
+    _onItemBoxMainHook.Hook(OnItemBoxMain);
+    _onAirItemBoxMainHook.Hook(OnAirItemBoxMain);
+    _onRhinotankLoadHook.Hook(OnRhinotankLoad);
+    _onKikiLoadHook.Hook(OnKikiLoad);
+    _onKikiMainHook.Hook(OnKikiMain);
+    _onWaterSpiderLoadHook.Hook(OnWaterSpiderLoad);
+    _onWaterSpiderMainHook.Hook(OnWaterSpiderMain);
+    _onBuyonMainHook.Hook(OnBuyonMain);
+    _onBoaBoaHeadLoadHook.Hook(OnBoaBoaHeadLoad);
+    _onLeonLoadHook.Hook(OnLeonLoad);
+    _onLeonMainHook.Hook(OnLeonMain);
+    _onSpinnerAMainHook.Hook(OnSpinnerAMain);
+    _onSpinnerBMainHook.Hook(OnSpinnerBMain);
+    _onSpinnerCMainHook.Hook(OnSpinnerCMain);
+    _onPoliceLoadHook.Hook(OnPoliceLoad);
+    _onPoliceMainHook.Hook(OnPoliceMain);
+    _onSpikeBallSpinnerALoadHook.Hook(OnSpikeBallSpinnerALoad);
+    _onSpikeBallSpinnerAMainHook.Hook(OnSpikeBallSpinnerAMain);
+    _onSpikeBallSpinnerBLoadHook.Hook(OnSpikeBallSpinnerBLoad);
+    _onSpikeBallSpinnerBMainHook.Hook(OnSpikeBallSpinnerBMain);
+    _onSpikeBallSpinnerCLoadHook.Hook(OnSpikeBallSpinnerCLoad);
+    _onSpikeBallSpinnerCMainHook.Hook(OnSpikeBallSpinnerCMain);
+    _onIceBallLoadHook.Hook(OnIceBallLoad);
+    _onIceBallMainAHook.Hook(OnIceBallMainA);
+    _onIceBallMainBHook.Hook(OnIceBallMainB);
+    _onEggKeeperLoadHook.Hook(OnEggKeeperLoad);
+    _onEggKeeperMainHook.Hook(OnEggKeeperMain);
+    _onDeadOutHook.Hook(OnDeadOut);
+    _onBuyonDestroyChildrenHook.Hook(OnBuyonDestroyChildren);
+    _onSaveTwinkleCircuitRecordHook.Hook(OnSaveTwinkleCircuitRecord);
+    _onFishMainHook.Hook(OnFishMain);
+    _onFishCaughtHook.Hook(OnFishCaught);
+    _onCheckEggHoldHook.Hook(OnCheckEggHold);
+    _onMissionStatueDeleteHook.Hook(OnMissionStatueDelete);
+    _onPlayMusicHook.Hook(OnPlayMusic);
+    _onPlayMusic2Hook.Hook(OnPlayMusic2);
+    _onPlayJingleHook.Hook(OnPlayJingle);
+
+
     PlayCharacterDeathSound_t.Hook(HandlePlayCharacterDeathSound);
     CheckMissionRequirements_t.Hook(HandleCheckMissionRequirements);
     CheckMissionRequirementsSubgame_t.Hook(HandleCheckMissionRequirementsSubgame);
@@ -195,26 +254,22 @@ bool HandleCheckMissionRequirementsSubgame(const int level, const int character,
     return CheckMissionRequirementsSubgame_t.Original(level, character, mission);
 }
 
-FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
-    0x4B4640, [](SaveFileData* saveFile, const int character, const signed int level, const int mission)-> void
-    {
-        onLevelEmblemCollected.Original(saveFile, character, level, mission);
-        if (DemoPlaying > 0)
-            return;
-        eventDetectorPtr->OnLevelEmblem(character, level, mission);
-    });
+void EventDetector::OnLevelEmblemCollected(SaveFileData* saveFile, const int character, const signed int level,
+                                           const int mission)
+{
+    _onLevelEmblemCollectedHook.Original(saveFile, character, level, mission);
+    if (DemoPlaying > 0)
+        return;
+    eventDetectorPtr->OnLevelEmblem(character, level, mission);
+}
 
-
-//FunctionPointer(void, SetEmblemCollected, (SaveFileData *savefile, signed int index), 0x4B3F30);
-FunctionHook<void, SaveFileData*, signed int> OnGenericEmblemCollected(
-    0x4B3F30, [](SaveFileData* savefile, signed int index)-> void
-    {
-        OnGenericEmblemCollected.Original(savefile, index);
-        if (DemoPlaying > 0)
-            return;
-        eventDetectorPtr->OnGenericEmblem(index);
-    });
-
+void EventDetector::OnGenericEmblemCollected(SaveFileData* savefile, signed int index)
+{
+    _onGenericEmblemCollectedHook.Original(savefile, index);
+    if (DemoPlaying > 0)
+        return;
+    eventDetectorPtr->OnGenericEmblem(index);
+}
 
 bool EventDetector::IsTargetableCheck(const LocationData& location) const
 {
@@ -291,9 +346,10 @@ NJS_VECTOR CalculateArrowPosition(const NJS_VECTOR& playerPosition, const Rotati
 }
 
 EntityData1* lastClosestEnemy = nullptr; // ebp
-FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
+
+void EventDetector::OnSonicMain(task* tp)
 {
-    onSonicMain.Original(tp);
+    _onSonicMainHook.Original(tp);
     if (CurrentCharacter != Characters_Sonic)
         return;
     if (eventDetectorPtr->settings.homingAttackIndicator == HomingAttackIndicatorDisabled)
@@ -377,7 +433,7 @@ FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
     njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
     njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
     ClampGlobalColorThing_Thing();
-});
+}
 
 
 void EventDetector::OnFrame()
@@ -645,9 +701,9 @@ void EventDetector::OnGenericEmblem(const signed int index)
         checkData = randomizer.GetCheckData();
 }
 
-
-FunctionHook<SEQ_SECTIONTBL*, int> seqGetSectionListHook(0x44EAF0, [](int playerno)-> SEQ_SECTIONTBL* {
-    SEQ_SECTIONTBL* ptr = seqGetSectionListHook.Original(playerno);
+SEQ_SECTIONTBL* EventDetector::OnSeqGetSectionList(int playerno)
+{
+    SEQ_SECTIONTBL* ptr = _seqGetSectionListHook.Original(playerno);
     if (LastStoryFlag == 1 && eventDetectorPtr->lastStoryState == LastStoryNotStarted)
     {
         //Start Perfect Chaos fight as soon as we load the story
@@ -656,10 +712,9 @@ FunctionHook<SEQ_SECTIONTBL*, int> seqGetSectionListHook(0x44EAF0, [](int player
         eventDetectorPtr->lastStoryState = LastStoryStarted;
     }
     return ptr;
-});
+}
 
-
-FunctionHook<void, short> startLevelCutsceneHook(0x413C90, [](const short scene) -> void
+void EventDetector::OnStartLevelCutscene(short scene)
 {
     if (LastStoryFlag == 1 && eventDetectorPtr->lastStoryState == LastStoryStarted && scene == 1)
     {
@@ -671,14 +726,14 @@ FunctionHook<void, short> startLevelCutsceneHook(0x413C90, [](const short scene)
         eventDetectorPtr->randomizer.OnGameCompleted();
         return;
     }
-    startLevelCutsceneHook.Original(scene);
-});
+    _startLevelCutsceneHook.Original(scene);
+}
 
-FunctionHook<BOOL> onMissionMenuRenderHook(0x506410, []()-> BOOL
+BOOL EventDetector::OnMissionMenuRender()
 {
     eventDetectorPtr->lastStoryState = LastStoryNotStarted;
-    return onMissionMenuRenderHook.Original();
-});
+    return _onMissionMenuRenderHook.Original();
+}
 
 
 int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
@@ -724,52 +779,60 @@ void CheckCapsule(const EntityData1* entity, const bool specificCapsule)
     }
 }
 
-FunctionHook<void, EntityData1*> onSpeedUpCapsuleBroken(0x4D6BF0, [](EntityData1* entity)-> void
+void EventDetector::OnSpeedUpCapsuleBroken(EntityData1* entity)
 {
-    onSpeedUpCapsuleBroken.Original(entity);
+    _onSpeedUpCapsuleBrokenHook.Original(entity);
     CheckCapsule(entity, eventDetectorPtr->options.powerUpCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onInvincibilityCapsuleBroken(0x4D6D80, [](EntityData1* entity)-> void
+}
+
+void EventDetector::OnInvincibilityCapsuleBroken(EntityData1* entity)
 {
-    onInvincibilityCapsuleBroken.Original(entity);
+    _onInvincibilityCapsuleBrokenHook.Original(entity);
     CheckCapsule(entity, eventDetectorPtr->options.powerUpCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onFiveRingsCapsuleBroken(0x4D6C50, [](EntityData1* entity)-> void
+}
+
+void EventDetector::OnFiveRingsCapsuleBroken(EntityData1* entity)
 {
-    onFiveRingsCapsuleBroken.Original(entity);
+    _onFiveRingsCapsuleBrokenHook.Original(entity);
     CheckCapsule(entity, eventDetectorPtr->options.ringCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onTenRingsCapsule(0x4D6C90, [](EntityData1* entity)-> void
+}
+
+void EventDetector::OnTenRingsCapsule(EntityData1* entity)
 {
-    onTenRingsCapsule.Original(entity);
+    _onTenRingsCapsuleHook.Original(entity);
     CheckCapsule(entity, eventDetectorPtr->options.ringCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onRandomRingsCapsuleBroken(0x4D6CD0, [](EntityData1* entity)-> void
+}
+
+void EventDetector::OnRandomRingsCapsuleBroken(EntityData1* entity)
 {
-    onRandomRingsCapsuleBroken.Original(entity);
+    _onRandomRingsCapsuleBrokenHook.Original(entity);
     CheckCapsule(entity, eventDetectorPtr->options.ringCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onShieldCapsuleBroken(0x4D6DC0, [](EntityData1* entity)-> void
+}
+
+void EventDetector::OnShieldCapsuleBroken(EntityData1* entity)
 {
-    onShieldCapsuleBroken.Original(entity);
+    _onShieldCapsuleBrokenHook.Original(entity);
     CheckCapsule(entity, eventDetectorPtr->options.shieldCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onExtraLifeCapsuleBroken(0x4D6D40, [](EntityData1* entity)-> void
+}
+
+void EventDetector::OnExtraLifeCapsuleBroken(EntityData1* entity)
 {
-    onExtraLifeCapsuleBroken.Original(entity);
+    _onExtraLifeCapsuleBrokenHook.Original(entity);
     CheckCapsule(entity, eventDetectorPtr->options.lifeCapsuleSanity);
     eventDetectorPtr->ShuffleSong();
-});
-FunctionHook<void, EntityData1*> onBombCapsuleBroken(0x4D6E00, [](EntityData1* entity)-> void
+}
+
+void EventDetector::OnBombCapsuleBroken(EntityData1* entity)
 {
-    onBombCapsuleBroken.Original(entity);
+    _onBombCapsuleBrokenHook.Original(entity);
     CheckCapsule(entity, eventDetectorPtr->options.powerUpCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onElectricShieldCapsuleBroken(0x4D6E40, [](EntityData1* entity)-> void
+}
+
+void EventDetector::OnElectricShieldCapsuleBroken(EntityData1* entity)
 {
-    onElectricShieldCapsuleBroken.Original(entity);
+    _onElectricShieldCapsuleBrokenHook.Original(entity);
     CheckCapsule(entity, eventDetectorPtr->options.shieldCapsuleSanity);
-});
+}
 
 //Make Sonic's capsule count as Tails'
 void HandleCapsuleBreak(task* tp)
@@ -800,18 +863,17 @@ void HandleCapsuleBreakAir(task* tp)
     OnCapsuleBreakAir_t.Original(tp);
 }
 
-
-FunctionHook<void, unsigned short> onKillHimP(0x440CD0, [](const unsigned short a1)-> void
+void EventDetector::OnKillHimP(unsigned short a1)
 {
-    onKillHimP.Original(a1);
+    _onKillHimPHook.Original(a1);
     eventDetectorPtr->randomizer.OnDeath();
-});
+}
 
-FunctionHook<void> onKillHimByFallingDownP(0x446AD0, []()-> void
+void EventDetector::OnKillHimByFallingDownP()
 {
-    onKillHimByFallingDownP.Original();
+    _onKillHimByFallingDownPHook.Original();
     eventDetectorPtr->randomizer.OnDeath();
-});
+}
 
 void HandlePlayCharacterDeathSound(task* tp, const int pid)
 {
@@ -826,20 +888,18 @@ void HandlePlayCharacterDeathSound(task* tp, const int pid)
 }
 
 
-// We detect if tails just lost
-FunctionHook<void, task*> onScoreDisplayMain(0x42BCC0, [](task* tp)-> void
+void EventDetector::OnScoreDisplayMain(task* tp)
 {
     //If Tails just lost, we send a death link
     if (CurrentCharacter == Characters_Tails && RaceWinnerPlayer == 2)
         eventDetectorPtr->randomizer.OnDeath();
 
-    return onScoreDisplayMain.Original(tp);
-});
+    return _onScoreDisplayMainHook.Original(tp);
+}
 
-
-FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
+void EventDetector::OnLoadLevelResults()
 {
-    onLoadLevelResults.Original();
+    _onLoadLevelResultsHook.Original();
     if (DemoPlaying > 0)
         return;
     if (CurrentLevel < LevelIDs_Chaos0 || CurrentLevel > LevelIDs_E101R)
@@ -886,11 +946,11 @@ FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
     }
     if (checksFound)
         eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
-});
+}
 
-FunctionHook<void, ObjectMaster*> onClearMission(0x5923C0, [](ObjectMaster* obj)-> void
+void EventDetector::OnClearMission(ObjectMaster* obj)
 {
-    onClearMission.Original(obj);
+    _onClearMissionHook.Original(obj);
 
     const int missionNumber = 1 + **reinterpret_cast<Sint8**>(&obj->SETData.SETData[1].LoadCount);
 
@@ -907,7 +967,7 @@ FunctionHook<void, ObjectMaster*> onClearMission(0x5923C0, [](ObjectMaster* obj)
     }
     if (checksFound)
         eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
-});
+}
 
 
 int GetEnemyFromPosition(const NJS_VECTOR& position)
@@ -1056,9 +1116,9 @@ bool GetCapsuleTypeOption(const Float type)
     }
 }
 
-FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
+void EventDetector::OnItemBoxMain(task* tp)
 {
-    OnItemBoxMain.Original(tp);
+    _onItemBoxMainHook.Original(tp);
     if (!eventDetectorPtr->options.capsuleSanity)
         return;
     if (!eventDetectorPtr->options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
@@ -1078,11 +1138,11 @@ FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
         const auto test = eventDetectorPtr->checkData.find(locationId);
         DrawIndicator(tp, false, test->second.checked, CapsuleIndicator, test->first);
     }
-});
+}
 
-FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
+void EventDetector::OnAirItemBoxMain(task* tp)
 {
-    OnAirItemBoxMain.Original(tp);
+    _onAirItemBoxMainHook.Original(tp);
     if (!eventDetectorPtr->options.capsuleSanity)
         return;
     if (!eventDetectorPtr->options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
@@ -1099,7 +1159,7 @@ FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
         const auto test = eventDetectorPtr->checkData.find(locationId);
         DrawIndicator(tp, true, test->second.checked, CapsuleIndicator, test->first);
     }
-});
+}
 
 void __cdecl EmptyTrackerFunction(task* obj)
 {
@@ -1146,7 +1206,7 @@ void CheckEnemy(task* tp)
     }
 }
 
-FunctionHook<void, task*> onRhinotankLoad(0x7A1380, [](task* tp)-> void
+void EventDetector::OnRhinotankLoad(task* tp)
 {
     CheckEnemy(tp);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_WindyValley3
@@ -1156,21 +1216,22 @@ FunctionHook<void, task*> onRhinotankLoad(0x7A1380, [](task* tp)-> void
     {
         tp->twp->pos.y = -2650.1;
     }
-    onRhinotankLoad.Original(tp);
-});
+    _onRhinotankLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onKikiLoad(0x4AD140, [](task* tp)-> void
+void EventDetector::OnKikiLoad(task* tp)
 {
     CheckEnemy(tp);
-    onKikiLoad.Original(tp);
-});
+    _onKikiLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onKikiMain(0x4ACF80, [](task* tp)-> void
+void EventDetector::OnKikiMain(task* tp)
 {
     CheckEnemy(tp);
-    onKikiMain.Original(tp);
-});
-FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
+    _onKikiMainHook.Original(tp);
+}
+
+void EventDetector::OnWaterSpiderLoad(task* tp)
 {
     //We change the spider location for sadx
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_TwinklePark2
@@ -1190,28 +1251,27 @@ FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
         tp->twp->pos.z = -869.65f;
     }
     CheckEnemy(tp);
-    onWaterSpiderLoad.Original(tp);
-});
+    _onWaterSpiderLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onWaterSpiderMain(0x7AA870, [](task* tp)-> void
+void EventDetector::OnWaterSpiderMain(task* tp)
 {
     CheckEnemy(tp);
-    onWaterSpiderMain.Original(tp);
-});
+    _onWaterSpiderMainHook.Original(tp);
+}
 
-FunctionHook<void, task*> onBuyonMain(0x7B2E00, [](task* tp)-> void
+void EventDetector::OnBuyonMain(task* tp)
 {
     CheckEnemy(tp);
-    onBuyonMain.Original(tp);
-});
+    _onBuyonMainHook.Original(tp);
+}
 
-FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
+void EventDetector::OnBoaBoaHeadLoad(task* tp)
 {
-    onBoaBoaHeadLoad.Original(tp);
+    _onBoaBoaHeadLoadHook.Original(tp);
     if (!eventDetectorPtr->options.enemySanity)
         return;
-    if (!eventDetectorPtr->options.
-                           GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+    if (!eventDetectorPtr->options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
     int enemyId = FindEnemyTrackerId(tp);
@@ -1227,74 +1287,82 @@ FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
         enemyId = GetEnemyFromPosition(tp->ptp->twp->pos);
         childTask->awp->work.sl[0] = enemyId;
     }
-});
+}
 
-FunctionHook<void, task*> onLeonLoad(0x4A85C0, [](task* tp)-> void
+void EventDetector::OnLeonLoad(task* tp)
 {
     CheckEnemy(tp);
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_WindyValley3 and CurrentCharacter == Characters_Tails
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_WindyValley3 && CurrentCharacter == Characters_Tails
         && tp->twp->pos.x > 408 && tp->twp->pos.x < 410
         && tp->twp->pos.y > -406 && tp->twp->pos.y < -403
         && tp->twp->pos.z > -1370 && tp->twp->pos.z < -1368)
     {
         tp->twp->pos.y = -401;
     }
-    onLeonLoad.Original(tp);
-});
-FunctionHook<void, task*> onLeonMain(0x4A83D0, [](task* tp)-> void
-{
-    CheckEnemy(tp);
-    onLeonMain.Original(tp);
-});
+    _onLeonLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onSpinnerAMain(0x4B0DF0, [](task* tp)-> void
+void EventDetector::OnLeonMain(task* tp)
 {
     CheckEnemy(tp);
-    onSpinnerAMain.Original(tp);
-});
-FunctionHook<void, task*> onSpinnerBMain(0x4B0F40, [](task* tp)-> void
+    _onLeonMainHook.Original(tp);
+}
+
+void EventDetector::OnSpinnerAMain(task* tp)
 {
     CheckEnemy(tp);
-    onSpinnerBMain.Original(tp);
-});
-//Electric Spinner
-FunctionHook<void, task*> onSpinnerCMain(0x4B1090, [](task* tp)-> void
+    _onSpinnerAMainHook.Original(tp);
+}
+
+void EventDetector::OnSpinnerBMain(task* tp)
 {
     CheckEnemy(tp);
-    onSpinnerCMain.Original(tp);
-});
-FunctionHook<void, task*> onPoliceLoad(0x4B3210, [](task* tp)-> void
+    _onSpinnerBMainHook.Original(tp);
+}
+
+void EventDetector::OnSpinnerCMain(task* tp)
 {
     CheckEnemy(tp);
-    onPoliceLoad.Original(tp);
-});
-FunctionHook<void, task*> onPoliceMain(0x4B30E0, [](task* tp)-> void
+    _onSpinnerCMainHook.Original(tp);
+}
+
+void EventDetector::OnPoliceLoad(task* tp)
 {
     CheckEnemy(tp);
-    onPoliceMain.Original(tp);
-});
-FunctionHook<void, task*> onSpikeBallSpinnerALoad(0x4AF190, [](task* tp)-> void
+    _onPoliceLoadHook.Original(tp);
+}
+
+void EventDetector::OnPoliceMain(task* tp)
 {
     CheckEnemy(tp);
-    onSpikeBallSpinnerALoad.Original(tp);
-});
-FunctionHook<void, task*> onSpikeBallSpinnerAMain(0x4AF030, [](task* tp)-> void
+    _onPoliceMainHook.Original(tp);
+}
+
+void EventDetector::OnSpikeBallSpinnerALoad(task* tp)
 {
     CheckEnemy(tp);
-    onSpikeBallSpinnerAMain.Original(tp);
-});
-FunctionHook<void, task*> onSpikeBallSpinnerBLoad(0x4AF500, [](task* tp)-> void
+    _onSpikeBallSpinnerALoadHook.Original(tp);
+}
+
+void EventDetector::OnSpikeBallSpinnerAMain(task* tp)
 {
     CheckEnemy(tp);
-    onSpikeBallSpinnerBLoad.Original(tp);
-});
-FunctionHook<void, task*> onSpikeBallSpinnerBMain(0x4AF3D0, [](task* tp)-> void
+    _onSpikeBallSpinnerAMainHook.Original(tp);
+}
+
+void EventDetector::OnSpikeBallSpinnerBLoad(task* tp)
 {
     CheckEnemy(tp);
-    onSpikeBallSpinnerBMain.Original(tp);
-});
-//Gola (Fire)
-FunctionHook<void, task*> onSpikeBallSpinnerCLoad(0x4AF860, [](task* tp)-> void
+    _onSpikeBallSpinnerBLoadHook.Original(tp);
+}
+
+void EventDetector::OnSpikeBallSpinnerBMain(task* tp)
+{
+    CheckEnemy(tp);
+    _onSpikeBallSpinnerBMainHook.Original(tp);
+}
+
+void EventDetector::OnSpikeBallSpinnerCLoad(task* tp)
 {
     CheckEnemy(tp);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_RedMountain1
@@ -1306,16 +1374,16 @@ FunctionHook<void, task*> onSpikeBallSpinnerCLoad(0x4AF860, [](task* tp)-> void
         tp->twp->pos.y = 581.37f;
         tp->twp->pos.z = -1831.20f;
     }
-    onSpikeBallSpinnerCLoad.Original(tp);
-});
+    _onSpikeBallSpinnerCLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onSpikeBallSpinnerCMain(0x4AF770, [](task* tp)-> void
+void EventDetector::OnSpikeBallSpinnerCMain(task* tp)
 {
     CheckEnemy(tp);
-    onSpikeBallSpinnerCMain.Original(tp);
-});
+    _onSpikeBallSpinnerCMainHook.Original(tp);
+}
 
-FunctionHook<void, task*> onIceBallLoad(0x4C8FB0, [](task* tp)-> void
+void EventDetector::OnIceBallLoad(task* tp)
 {
     CheckEnemy(tp);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_IceCap1
@@ -1325,29 +1393,32 @@ FunctionHook<void, task*> onIceBallLoad(0x4C8FB0, [](task* tp)-> void
     {
         tp->twp->pos.y = 42.28f;
     }
-    onIceBallLoad.Original(tp);
-});
-FunctionHook<void, task*> onIceBallMainA(0x4C8AC0, [](task* tp)-> void
-{
-    CheckEnemy(tp);
-    onIceBallMainA.Original(tp);
-});
-FunctionHook<void, task*> onIceBallMainB(0x4C8DD0, [](task* tp)-> void
-{
-    CheckEnemy(tp);
-    onIceBallMainB.Original(tp);
-});
+    _onIceBallLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onEggKeeperLoad(0x4A6700, [](task* tp)-> void
+void EventDetector::OnIceBallMainA(task* tp)
 {
     CheckEnemy(tp);
-    onEggKeeperLoad.Original(tp);
-});
-FunctionHook<void, task*> onEggKeeperMain(0x4A6420, [](task* tp)-> void
+    _onIceBallMainAHook.Original(tp);
+}
+
+void EventDetector::OnIceBallMainB(task* tp)
 {
     CheckEnemy(tp);
-    onEggKeeperMain.Original(tp);
-});
+    _onIceBallMainBHook.Original(tp);
+}
+
+void EventDetector::OnEggKeeperLoad(task* tp)
+{
+    CheckEnemy(tp);
+    _onEggKeeperLoadHook.Original(tp);
+}
+
+void EventDetector::OnEggKeeperMain(task* tp)
+{
+    CheckEnemy(tp);
+    _onEggKeeperMainHook.Original(tp);
+}
 
 
 void CheckDestroyedEnemy(task* tp)
@@ -1371,19 +1442,19 @@ void CheckDestroyedEnemy(task* tp)
     }
 }
 
-FunctionHook<void, task*> onDeadOut(0x46C150, [](task* tp)-> void
+void EventDetector::OnDeadOut(task* tp)
 {
     CheckDestroyedEnemy(tp);
-    onDeadOut.Original(tp);
-});
+    _onDeadOutHook.Original(tp);
+}
 
-FunctionHook<void, task*> onBuyonDestroyChildren(0x7B1500, [](task* tp)-> void
+void EventDetector::OnBuyonDestroyChildren(task* tp)
 {
     //We check the player actually destroyed the enemy, and it wasn't destroyed by a restart
     if (tp->twp->mode == 6)
         CheckDestroyedEnemy(tp);
-    onBuyonDestroyChildren.Original(tp);
-});
+    _onBuyonDestroyChildrenHook.Original(tp);
+}
 
 void HandleOnBoaBoaPartDestroyed(task* tp)
 {
@@ -1430,20 +1501,19 @@ void EventDetector::OnTwinkleCircuitCompleted(const int character)
     }
 }
 
-FunctionHook<signed int> onSaveTwinkleCircuitRecord(0x4B5BC0, []()-> signed int
+signed int EventDetector::OnSaveTwinkleCircuitRecord()
 {
     eventDetectorPtr->OnTwinkleCircuitCompleted(CurrentCharacter);
-    return onSaveTwinkleCircuitRecord.Original();
-});
+    return _onSaveTwinkleCircuitRecordHook.Original();
+}
 
-FunctionHook<void, task*> onFishMain(0x597010, [](task* tp)-> void
+void EventDetector::OnFishMain(task* tp)
 {
-    onFishMain.Original(tp);
+    _onFishMainHook.Original(tp);
     if (!eventDetectorPtr->options.fishSanity)
         return;
     if (CurrentCharacter != Characters_Big)
         return;
-
 
     const int fishType = tp->twp->value.w[1];
 
@@ -1461,12 +1531,11 @@ FunctionHook<void, task*> onFishMain(0x597010, [](task* tp)-> void
             break;
         }
     }
-});
+}
 
-
-FunctionHook<void, task*> onFishCaught(0x470160, [](task* tp)-> void
+void EventDetector::OnFishCaught(task* tp)
 {
-    onFishCaught.Original(tp);
+    _onFishCaughtHook.Original(tp);
     if (!eventDetectorPtr->options.fishSanity)
         return;
 
@@ -1490,10 +1559,9 @@ FunctionHook<void, task*> onFishCaught(0x470160, [](task* tp)-> void
     }
     if (checksFound)
         eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
-});
+}
 
-
-FunctionHook<void> onCheckEggHold(0x7151A0, []()-> void
+void EventDetector::OnCheckEggHold()
 {
     const int holdingItem = GetHoldingItemIDP(0);
     if (holdingItem == 5)
@@ -1506,16 +1574,15 @@ FunctionHook<void> onCheckEggHold(0x7151A0, []()-> void
         //Black Egg
         eventDetectorPtr->randomizer.OnCheckFound(902);
 
-    onCheckEggHold.Original();
-});
+    _onCheckEggHoldHook.Original();
+}
 
-//Burger Man delete function, should prevent the crash.
-FunctionHook<void, task*> onMissionStatueDelete(0x5934C0, [](task* tp)-> void
+void EventDetector::OnMissionStatueDelete(task* tp)
 {
     FreeTask(tp);
-});
+}
 
-FunctionHook<void, int> onPlayMusic(0x425690, [](const int songId)-> void
+void EventDetector::OnPlayMusic(int songId)
 {
     int shuffledSongId;
     if (songId == eventDetectorPtr->lastRealSongId)
@@ -1523,13 +1590,13 @@ FunctionHook<void, int> onPlayMusic(0x425690, [](const int songId)-> void
     else
         shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
 
-    onPlayMusic.Original(shuffledSongId);
+    _onPlayMusicHook.Original(shuffledSongId);
     eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
     eventDetectorPtr->lastRealSongId = songId;
     eventDetectorPtr->lastShuffledSongId = shuffledSongId;
-});
+}
 
-FunctionHook<void, int> onPlayMusic2(0x425800, [](const int songId)-> void
+void EventDetector::OnPlayMusic2(int songId)
 {
     int shuffledSongId;
     if (songId == eventDetectorPtr->lastRealSongId)
@@ -1537,19 +1604,19 @@ FunctionHook<void, int> onPlayMusic2(0x425800, [](const int songId)-> void
     else
         shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
 
-    onPlayMusic2.Original(shuffledSongId);
+    _onPlayMusic2Hook.Original(shuffledSongId);
     eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
     eventDetectorPtr->lastRealSongId = songId;
     eventDetectorPtr->lastShuffledSongId = shuffledSongId;
-});
+}
 
-FunctionHook<void, int> onPlayJingle(0x425860, [](const int songId)-> void
+void EventDetector::OnPlayJingle(int songId)
 {
     const int shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
-    onPlayJingle.Original(shuffledSongId);
+    _onPlayJingleHook.Original(shuffledSongId);
     if (eventDetectorPtr->settings.showSongNameForType == ShowSongNameForTypeEverything)
         eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
-});
+}
 
 void EventDetector::ShuffleSong()
 {
@@ -1565,6 +1632,6 @@ void EventDetector::ShuffleSong()
         return;
 
     const int shuffledSongId = randomizer.GetSongForId(eventDetectorPtr->lastRealSongId);
-    onPlayMusic.Original(shuffledSongId);
+    _onPlayMusicHook.Original(shuffledSongId);
     randomizer.DisplaySongName(shuffledSongId);
 }
