@@ -1,13 +1,9 @@
 ﻿#include "ArchipelagoManager.h"
 
-Randomizer* randomizerPtr = nullptr;
-ArchipelagoManager* archipelagoManagerPtr = nullptr;
 
 ArchipelagoManager::ArchipelagoManager(Options& options, Settings& settings, Randomizer& randomizer)
     : _options(options), _settings(settings), _randomizer(randomizer)
 {
-    randomizerPtr = &this->_randomizer;
-    archipelagoManagerPtr = this;
     _loadTrialMenuHook.Hook(OnLoadTrialMenu);
 }
 
@@ -74,19 +70,19 @@ bool ArchipelagoManager::IsWaitingForSaveFile()
 void ArchipelagoManager::ReceiveItem(const int64_t itemId, const bool notify)
 {
     PrintDebug(" --- Item received: %d\n", itemId);
-    randomizerPtr->OnItemReceived(itemId - _options.baseId);
+    _instance->_randomizer.OnItemReceived(itemId - _options.baseId);
 }
 
 void ArchipelagoManager::ResetItems()
 {
     PrintDebug(" --- Reset items\n");
-    randomizerPtr->ResetItems();
+    _instance->_randomizer.ResetItems();
 }
 
 void ArchipelagoManager::CheckLocation(const int64_t locationId)
 {
     PrintDebug(" --- Checked location %d\n", locationId);
-    randomizerPtr->MarkCheckedLocation(locationId - _options.baseId);
+    _instance->_randomizer.MarkCheckedLocation(locationId - _options.baseId);
 }
 
 void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
@@ -115,7 +111,7 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
                 deathCause = std::string(bounceData["cause"].asCString());
             else
                 deathCause = std::string("You were killed by ") + bounceData["source"].asCString();
-            randomizerPtr->ProcessDeath(deathCause);
+            _instance->_randomizer.ProcessDeath(deathCause);
             break;
         }
         if (!strcmp(tag.c_str(), "RingLink"))
@@ -129,7 +125,7 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
 
             const int amount = bounceData["amount"].asInt();
 
-            randomizerPtr->ProcessRings(amount);
+            _instance->_randomizer.ProcessRings(amount);
             break;
         }
         if (!strcmp(tag.c_str(), "HardRingLink"))
@@ -143,7 +139,7 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
 
             const int amount = bounceData["amount"].asInt();
 
-            randomizerPtr->ProcessRings(amount);
+            _instance->_randomizer.ProcessRings(amount);
             break;
         }
 
@@ -160,7 +156,7 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
             std::string trapName = bounceData["trap_name"].asCString();
             std::string message = "Received Linked " + trapName + " from " + bounceData["source"].asCString();
 
-            randomizerPtr->ProcessTrapLink(trapName, message);
+            _instance->_randomizer.ProcessTrapLink(trapName, message);
             break;
         }
     }
@@ -187,7 +183,7 @@ void ArchipelagoManager::CompareModVersion(const int serverVersion)
     }
     if (serverPatch != SADX_AP_VERSION_PATCH)
     {
-        randomizerPtr->MinorVersionMismatch(serverVer, modVer);
+        _instance->_randomizer.MinorVersionMismatch(serverVer, modVer);
     }
 }
 
@@ -233,7 +229,8 @@ void ArchipelagoManager::Connect()
 
     AP_REGISTER_INT_CALLBACK_CHARACTER("SonicCapsuleSanity", _options.SetCharacterCapsuleSanity, Characters_Sonic);
     AP_REGISTER_INT_CALLBACK_CHARACTER("TailsCapsuleSanity", _options.SetCharacterCapsuleSanity, Characters_Tails);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("KnucklesCapsuleSanity", _options.SetCharacterCapsuleSanity, Characters_Knuckles);
+    AP_REGISTER_INT_CALLBACK_CHARACTER("KnucklesCapsuleSanity", _options.SetCharacterCapsuleSanity,
+                                       Characters_Knuckles);
     AP_REGISTER_INT_CALLBACK_CHARACTER("AmyCapsuleSanity", _options.SetCharacterCapsuleSanity, Characters_Amy);
     AP_REGISTER_INT_CALLBACK_CHARACTER("GammaCapsuleSanity", _options.SetCharacterCapsuleSanity, Characters_Gamma);
     AP_REGISTER_INT_CALLBACK_CHARACTER("BigCapsuleSanity", _options.SetCharacterCapsuleSanity, Characters_Big);

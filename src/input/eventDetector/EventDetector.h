@@ -66,10 +66,6 @@ public:
     void OnTwinkleCircuitCompleted(int character);
     void ShuffleSong();
 
-    Options& options;
-    Settings& settings;
-    Randomizer& randomizer;
-
     LastStoryState lastStoryState = LastStoryNotStarted;
     std::vector<CapsuleLocationData> capsules;
     std::vector<EnemyLocationData> enemies;
@@ -84,6 +80,10 @@ public:
 private:
     explicit EventDetector(Options& options, Settings& settings, Randomizer& randomizer);
     inline static EventDetector* _instance = nullptr;
+
+    Options& _options;
+    Settings& _settings;
+    Randomizer& _randomizer;
 
     void CheckCapsule(const EntityData1* entity, bool specificCapsule);
     void CheckEnemy(task* tp);

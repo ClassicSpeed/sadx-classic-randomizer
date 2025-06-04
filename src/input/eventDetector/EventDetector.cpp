@@ -28,8 +28,8 @@ float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
     return result;
 }
 
-EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& randomizer) : options(options),
-    settings(settings), randomizer(randomizer)
+EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& randomizer) : _options(options),
+    _settings(settings), _randomizer(randomizer)
 {
     _onLevelEmblemCollectedHook.Hook(OnLevelEmblemCollected);
     _onGenericEmblemCollectedHook.Hook(OnGenericEmblemCollected);
@@ -200,7 +200,7 @@ bool EventDetector::HandleCheckMissionRequirements(const int mission, const int 
     if (level <= LevelIDs_HotShelter)
     {
         //level - mission B
-        if (mission == MISSION_C && _instance->settings.completeMultipleLevelMissions)
+        if (mission == MISSION_C && _instance->_settings.completeMultipleLevelMissions)
         {
             if (ManualMissionBCheck(character))
             {
@@ -210,7 +210,7 @@ bool EventDetector::HandleCheckMissionRequirements(const int mission, const int 
         }
 
         //level - mission A
-        if ((mission == MISSION_C || mission == MISSION_B) && _instance->settings.completeMultipleLevelMissions)
+        if ((mission == MISSION_C || mission == MISSION_B) && _instance->_settings.completeMultipleLevelMissions)
         {
             if (ManualMissionACheck(character, level))
             {
@@ -219,7 +219,7 @@ bool EventDetector::HandleCheckMissionRequirements(const int mission, const int 
             }
         }
 
-        if (ManualMissionSCheck(character, level, _instance->options.expertMode))
+        if (ManualMissionSCheck(character, level, _instance->_options.expertMode))
         {
             _instance->OnLevelEmblem(character, level, MISSION_S);
         }
@@ -274,25 +274,25 @@ bool EventDetector::IsTargetableCheck(const LocationData& location) const
 
     if (location.type == LocationEnemy)
     {
-        if (!_instance->options.enemySanity)
+        if (!_instance->_options.enemySanity)
             return false;
 
-        if (!_instance->options.GetCharacterEnemySanity(
+        if (!_instance->_options.GetCharacterEnemySanity(
             static_cast<Characters>(CurrentCharacter)))
             return false;
         return true;
     }
     if (location.type == LocationCapsule)
     {
-        if (!_instance->options.capsuleSanity)
+        if (!_instance->_options.capsuleSanity)
             return false;
-        if (!_instance->options.GetCharacterCapsuleSanity(
+        if (!_instance->_options.GetCharacterCapsuleSanity(
             static_cast<Characters>(CurrentCharacter)))
             return false;
-        if (!_instance->options.GetSpecificCapsuleSanity(
+        if (!_instance->_options.GetSpecificCapsuleSanity(
             static_cast<CapsuleType>(location.capsuleType)))
             return false;
-        if (!_instance->options.includePinballCapsules && location.level ==
+        if (!_instance->_options.includePinballCapsules && location.level ==
             LevelAndActIDs_Casinopolis3)
             return false;
         return true;
@@ -344,7 +344,7 @@ void EventDetector::OnSonicMain(task* tp)
     _onSonicMainHook.Original(tp);
     if (CurrentCharacter != Characters_Sonic)
         return;
-    if (_instance->settings.homingAttackIndicator == HomingAttackIndicatorDisabled)
+    if (_instance->_settings.homingAttackIndicator == HomingAttackIndicatorDisabled)
         return;
 
     if (playerpwp[0]->free.sw[2] > 1 || !HomingAttackTarget_Sonic[0].entity)
@@ -402,7 +402,7 @@ void EventDetector::OnSonicMain(task* tp)
     if (lastClosestEnemy != closestEnemy)
     {
         lastClosestEnemy = closestEnemy;
-        if (_instance->settings.homingAttackIndicator == HomingAttackIndicatorEnabled)
+        if (_instance->_settings.homingAttackIndicator == HomingAttackIndicatorEnabled)
             PlaySound(1, 0, 0, 0);
     }
 
@@ -447,22 +447,22 @@ void EventDetector::OnFrame()
         if ((check.second.type == LocationUpgrade || check.second.type == LocationChaoEgg) && !check.second.checked
             && GetEventFlag(static_cast<EventFlags>(check.second.eventFlag)))
         {
-            randomizer.OnCheckFound(check.first);
+            _randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        checkData = randomizer.GetCheckData();
+        checkData = _randomizer.GetCheckData();
 
     if (CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
     {
         //TODO: Separate setting from state for settings.trackerArrow
-        if (settings.trackerArrowToggleable)
+        if (_settings.trackerArrowToggleable)
             for (const auto& button : PressedButtons)
                 if (button & WhistleButtons && Current_CharObj2 != nullptr)
-                    settings.trackerArrow = !settings.trackerArrow;
+                    _settings.trackerArrow = !_settings.trackerArrow;
 
-        if (!settings.trackerArrow)
+        if (!_settings.trackerArrow)
             return;
 
         if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
@@ -536,7 +536,7 @@ void EventDetector::OnFrame()
             // Width of the base of the triangle
             float baseWidth = ARROW_BASE_WIDTH + EXTRA_BASE_WIDTH;
             float extraPercentage;
-            if (settings.trackerArrowShowDistance)
+            if (_settings.trackerArrowShowDistance)
             {
                 const double dz = arrowPosition.z - closestLocation->z;
                 const double dy = arrowPosition.y - closestLocation->y;
@@ -626,27 +626,27 @@ void EventDetector::OnFrame()
 
             NJS_POINT3COL point3Col;
             point3Col.p = point;
-            if (settings.trackerArrowOverrideColor)
+            if (_settings.trackerArrowOverrideColor)
                 if (closestLocation->type == LocationEnemy)
                     for (int i = 0; i < 6; ++i)
-                        _instance->settings.arrowColor[i] = settings.enemyIndicatorColor[0];
+                        _instance->_settings.arrowColor[i] = _settings.enemyIndicatorColor[0];
                 else if (closestLocation->type == LocationCapsule)
                     for (int i = 0; i < 6; ++i)
-                        _instance->settings.arrowColor[i] = settings.capsuleIndicatorColor[0];
+                        _instance->_settings.arrowColor[i] = _settings.capsuleIndicatorColor[0];
                 else
                     for (int i = 0; i < 6; ++i)
-                        _instance->settings.arrowColor[i] = settings.fishIndicatorColor[0];
+                        _instance->_settings.arrowColor[i] = _settings.fishIndicatorColor[0];
 
-            if (settings.trackerArrowShowDistance)
+            if (_settings.trackerArrowShowDistance)
             {
                 uint8_t newAlpha = static_cast<uint8_t>(0xFF - (0xFF - 0x66) * extraPercentage);
 
                 for (int i = 0; i < 6; ++i)
                 {
-                    _instance->settings.arrowColor[i].argb.a = newAlpha;
+                    _instance->_settings.arrowColor[i].argb.a = newAlpha;
                 }
             }
-            point3Col.col = _instance->settings.arrowColor;
+            point3Col.col = _instance->_settings.arrowColor;
             njDrawTriangle3D(&point3Col, 6, NJD_TRANSPARENT);
         }
     }
@@ -662,19 +662,19 @@ void EventDetector::OnLevelEmblem(const int character, const int level, const in
             && check.second.level == level
             && check.second.levelMission == mission)
         {
-            randomizer.OnCheckFound(check.first);
+            _randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
         if (check.second.type == LocationSubLevel && !check.second.checked
             && check.second.level == level
             && check.second.levelMission == mission)
         {
-            randomizer.OnCheckFound(check.first);
+            _randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        checkData = randomizer.GetCheckData();
+        checkData = _randomizer.GetCheckData();
 }
 
 void EventDetector::OnGenericEmblem(const signed int index)
@@ -685,12 +685,12 @@ void EventDetector::OnGenericEmblem(const signed int index)
         if ((check.second.type == LocationFieldEmblem || check.second.type == LocationChaoRace) && !check.second.checked
             && check.second.emblemId == index)
         {
-            randomizer.OnCheckFound(check.first);
+            _randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        checkData = randomizer.GetCheckData();
+        checkData = _randomizer.GetCheckData();
 }
 
 SEQ_SECTIONTBL* EventDetector::OnSeqGetSectionList(int playerno)
@@ -715,7 +715,7 @@ void EventDetector::OnStartLevelCutscene(short scene)
         WriteSaveFile();
         GameState = MD_GAME_FADEOUT_STAFFROLL;
         _instance->lastStoryState = LastStoryCompleted;
-        _instance->randomizer.OnGameCompleted();
+        _instance->_randomizer.OnGameCompleted();
         return;
     }
     _startLevelCutsceneHook.Original(scene);
@@ -753,77 +753,77 @@ void EventDetector::CheckCapsule(const EntityData1* entity, const bool specificC
 {
     if (DemoPlaying > 0)
         return;
-    if (!_instance->options.capsuleSanity)
+    if (!_instance->_options.capsuleSanity)
         return;
-    if (!_instance->options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
     if (!specificCapsule)
         return;
-    if (!_instance->options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
+    if (!_instance->_options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
     const int locationId = GetCapsuleCapsuleFromPosition(entity->Position);
     if (locationId > 0)
     {
-        _instance->randomizer.OnCheckFound(locationId);
-        _instance->checkData = _instance->randomizer.GetCheckData();
+        _instance->_randomizer.OnCheckFound(locationId);
+        _instance->checkData = _instance->_randomizer.GetCheckData();
     }
 }
 
 void EventDetector::OnSpeedUpCapsuleBroken(EntityData1* entity)
 {
     _onSpeedUpCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->options.powerUpCapsuleSanity);
+    _instance->CheckCapsule(entity, _instance->_options.powerUpCapsuleSanity);
 }
 
 void EventDetector::OnInvincibilityCapsuleBroken(EntityData1* entity)
 {
     _onInvincibilityCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->options.powerUpCapsuleSanity);
+    _instance->CheckCapsule(entity, _instance->_options.powerUpCapsuleSanity);
 }
 
 void EventDetector::OnFiveRingsCapsuleBroken(EntityData1* entity)
 {
     _onFiveRingsCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->options.ringCapsuleSanity);
+    _instance->CheckCapsule(entity, _instance->_options.ringCapsuleSanity);
 }
 
 void EventDetector::OnTenRingsCapsule(EntityData1* entity)
 {
     _onTenRingsCapsuleHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->options.ringCapsuleSanity);
+    _instance->CheckCapsule(entity, _instance->_options.ringCapsuleSanity);
 }
 
 void EventDetector::OnRandomRingsCapsuleBroken(EntityData1* entity)
 {
     _onRandomRingsCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->options.ringCapsuleSanity);
+    _instance->CheckCapsule(entity, _instance->_options.ringCapsuleSanity);
 }
 
 void EventDetector::OnShieldCapsuleBroken(EntityData1* entity)
 {
     _onShieldCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->options.shieldCapsuleSanity);
+    _instance->CheckCapsule(entity, _instance->_options.shieldCapsuleSanity);
 }
 
 void EventDetector::OnExtraLifeCapsuleBroken(EntityData1* entity)
 {
     _onExtraLifeCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->options.lifeCapsuleSanity);
+    _instance->CheckCapsule(entity, _instance->_options.lifeCapsuleSanity);
     _instance->ShuffleSong();
 }
 
 void EventDetector::OnBombCapsuleBroken(EntityData1* entity)
 {
     _onBombCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->options.powerUpCapsuleSanity);
+    _instance->CheckCapsule(entity, _instance->_options.powerUpCapsuleSanity);
 }
 
 void EventDetector::OnElectricShieldCapsuleBroken(EntityData1* entity)
 {
     _onElectricShieldCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->options.shieldCapsuleSanity);
+    _instance->CheckCapsule(entity, _instance->_options.shieldCapsuleSanity);
 }
 
 //Make Sonic's capsule count as Tails'
@@ -858,13 +858,13 @@ void EventDetector::HandleCapsuleBreakAir(task* tp)
 void EventDetector::OnKillHimP(unsigned short a1)
 {
     _onKillHimPHook.Original(a1);
-    _instance->randomizer.OnDeath();
+    _instance->_randomizer.OnDeath();
 }
 
 void EventDetector::OnKillHimByFallingDownP()
 {
     _onKillHimByFallingDownPHook.Original();
-    _instance->randomizer.OnDeath();
+    _instance->_randomizer.OnDeath();
 }
 
 void EventDetector::HandlePlayCharacterDeathSound(task* tp, const int pid)
@@ -875,7 +875,7 @@ void EventDetector::HandlePlayCharacterDeathSound(task* tp, const int pid)
     if (timePassed > _instance->deathDetectionCooldown)
     {
         _instance->deathCooldownTimer = std::clock();
-        _instance->randomizer.OnDeath();
+        _instance->_randomizer.OnDeath();
     }
 }
 
@@ -884,7 +884,7 @@ void EventDetector::OnScoreDisplayMain(task* tp)
 {
     //If Tails just lost, we send a death link
     if (CurrentCharacter == Characters_Tails && RaceWinnerPlayer == 2)
-        _instance->randomizer.OnDeath();
+        _instance->_randomizer.OnDeath();
 
     return _onScoreDisplayMainHook.Original(tp);
 }
@@ -896,7 +896,7 @@ void EventDetector::OnLoadLevelResults()
         return;
     if (CurrentLevel < LevelIDs_Chaos0 || CurrentLevel > LevelIDs_E101R)
         return;
-    if (!_instance->options.bossChecks)
+    if (!_instance->_options.bossChecks)
         return;
 
     bool checksFound = false;
@@ -905,39 +905,39 @@ void EventDetector::OnLoadLevelResults()
         if (check.second.type != LocationBossFight)
             continue;
 
-        if (_instance->options.unifyEggHornet && CurrentLevel == LevelIDs_EggHornet)
+        if (_instance->_options.unifyEggHornet && CurrentLevel == LevelIDs_EggHornet)
         {
             if (check.second.character == -1 && check.second.level == LevelIDs_EggHornet && !check.second.checked)
             {
-                _instance->randomizer.OnCheckFound(check.first);
+                _instance->_randomizer.OnCheckFound(check.first);
                 checksFound = true;
             }
         }
-        else if (_instance->options.unifyChaos4 && CurrentLevel == LevelIDs_Chaos4)
+        else if (_instance->_options.unifyChaos4 && CurrentLevel == LevelIDs_Chaos4)
         {
             if (check.second.character == -1 && check.second.level == LevelIDs_Chaos4 && !check.second.checked)
             {
-                _instance->randomizer.OnCheckFound(check.first);
+                _instance->_randomizer.OnCheckFound(check.first);
                 checksFound = true;
             }
         }
-        else if (_instance->options.unifyChaos6 && CurrentLevel == LevelIDs_Chaos6)
+        else if (_instance->_options.unifyChaos6 && CurrentLevel == LevelIDs_Chaos6)
         {
             if (check.second.character == -1 && check.second.level == LevelIDs_Chaos6 && !check.second.checked)
             {
-                _instance->randomizer.OnCheckFound(check.first);
+                _instance->_randomizer.OnCheckFound(check.first);
                 checksFound = true;
             }
         }
         else if (check.second.character == CurrentCharacter && check.second.level == CurrentLevel && !check.second.
             checked)
         {
-            _instance->randomizer.OnCheckFound(check.first);
+            _instance->_randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        _instance->checkData = _instance->randomizer.GetCheckData();
+        _instance->checkData = _instance->_randomizer.GetCheckData();
 }
 
 void EventDetector::OnClearMission(ObjectMaster* obj)
@@ -953,12 +953,12 @@ void EventDetector::OnClearMission(ObjectMaster* obj)
             continue;
         if (check.second.missionNumber == missionNumber && !check.second.checked)
         {
-            _instance->randomizer.OnCheckFound(check.first);
+            _instance->_randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        _instance->checkData = _instance->randomizer.GetCheckData();
+        _instance->checkData = _instance->_randomizer.GetCheckData();
 }
 
 
@@ -1007,11 +1007,11 @@ void EventDetector::DrawIndicator(const task* tp, const bool tallElement, const 
     }
 
 
-    if (indicatorType == EnemyIndicator && !_instance->settings.enemyIndicator)
+    if (indicatorType == EnemyIndicator && !_instance->_settings.enemyIndicator)
         return;
-    if (indicatorType == CapsuleIndicator && !_instance->settings.capsuleIndicator)
+    if (indicatorType == CapsuleIndicator && !_instance->_settings.capsuleIndicator)
         return;
-    if (indicatorType == FishIndicator && !_instance->settings.capsuleIndicator)
+    if (indicatorType == FishIndicator && !_instance->_settings.capsuleIndicator)
         return;
 
     const EntityData1* player = EntityData1Ptrs[0];
@@ -1073,17 +1073,17 @@ void EventDetector::DrawIndicator(const task* tp, const bool tallElement, const 
     NJS_POINT3COL point3Col;
     point3Col.p = point;
     if (!checked)
-        if (_instance->settings.progressionIndicator && _instance->options.
+        if (_instance->_settings.progressionIndicator && _instance->_options.
                                                                    LocationHasProgressiveItem(locationId))
-            point3Col.col = _instance->settings.progressionItemIndicatorColor;
+            point3Col.col = _instance->_settings.progressionItemIndicatorColor;
         else if (indicatorType == EnemyIndicator)
-            point3Col.col = _instance->settings.enemyIndicatorColor;
+            point3Col.col = _instance->_settings.enemyIndicatorColor;
         else if (indicatorType == CapsuleIndicator)
-            point3Col.col = _instance->settings.capsuleIndicatorColor;
+            point3Col.col = _instance->_settings.capsuleIndicatorColor;
         else
-            point3Col.col = _instance->settings.fishIndicatorColor;
+            point3Col.col = _instance->_settings.fishIndicatorColor;
     else
-        point3Col.col = _instance->settings.disabledIndicatorColor;
+        point3Col.col = _instance->_settings.disabledIndicatorColor;
 
     njDrawTriangle3D(&point3Col, 3, 0x0);
 }
@@ -1093,32 +1093,32 @@ bool EventDetector::GetCapsuleTypeOption(const Float type)
     switch (static_cast<int>(std::floor(type)))
     {
     case 6:
-        return _instance->options.lifeCapsuleSanity;
+        return _instance->_options.lifeCapsuleSanity;
     case 5:
     case 8:
-        return _instance->options.shieldCapsuleSanity;
+        return _instance->_options.shieldCapsuleSanity;
     case 2:
     case 3:
     case 4:
-        return _instance->options.ringCapsuleSanity;
+        return _instance->_options.ringCapsuleSanity;
     case 1:
     case 7:
     case 0:
     default:
-        return _instance->options.powerUpCapsuleSanity;
+        return _instance->_options.powerUpCapsuleSanity;
     }
 }
 
 void EventDetector::OnItemBoxMain(task* tp)
 {
     _onItemBoxMainHook.Original(tp);
-    if (!_instance->options.capsuleSanity)
+    if (!_instance->_options.capsuleSanity)
         return;
-    if (!_instance->options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
     if (!_instance->GetCapsuleTypeOption(tp->twp->scl.x))
         return;
-    if (!_instance->options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
+    if (!_instance->_options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
@@ -1136,13 +1136,13 @@ void EventDetector::OnItemBoxMain(task* tp)
 void EventDetector::OnAirItemBoxMain(task* tp)
 {
     _onAirItemBoxMainHook.Original(tp);
-    if (!_instance->options.capsuleSanity)
+    if (!_instance->_options.capsuleSanity)
         return;
-    if (!_instance->options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
     if (!_instance->GetCapsuleTypeOption(tp->twp->scl.x))
         return;
-    if (!_instance->options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
+    if (!_instance->_options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
@@ -1177,10 +1177,10 @@ int FindEnemyTrackerId(task* tp)
 
 void EventDetector::CheckEnemy(task* tp)
 {
-    if (!_instance->options.enemySanity)
+    if (!_instance->_options.enemySanity)
         return;
 
-    if (!_instance->options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
     int enemyId = FindEnemyTrackerId(tp);
@@ -1262,9 +1262,9 @@ void EventDetector::OnBuyonMain(task* tp)
 void EventDetector::OnBoaBoaHeadLoad(task* tp)
 {
     _onBoaBoaHeadLoadHook.Original(tp);
-    if (!_instance->options.enemySanity)
+    if (!_instance->_options.enemySanity)
         return;
-    if (!_instance->options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
     int enemyId = FindEnemyTrackerId(tp);
@@ -1416,10 +1416,10 @@ void EventDetector::OnEggKeeperMain(task* tp)
 
 void EventDetector::CheckDestroyedEnemy(task* tp)
 {
-    if (!_instance->options.enemySanity)
+    if (!_instance->_options.enemySanity)
         return;
 
-    if (!_instance->options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
     const int enemyId = FindEnemyTrackerId(tp);
@@ -1429,8 +1429,8 @@ void EventDetector::CheckDestroyedEnemy(task* tp)
         const auto test = _instance->checkData.find(enemyId);
         if (!test->second.checked)
         {
-            _instance->randomizer.OnCheckFound(enemyId);
-            _instance->checkData = _instance->randomizer.GetCheckData();
+            _instance->_randomizer.OnCheckFound(enemyId);
+            _instance->checkData = _instance->_randomizer.GetCheckData();
         }
     }
 }
@@ -1458,30 +1458,30 @@ void EventDetector::HandleOnBoaBoaPartDestroyed(task* tp)
 
 void EventDetector::OnTwinkleCircuitCompleted(const int character)
 {
-    if (!_instance->options.twinkleCircuitCheck)
+    if (!_instance->_options.twinkleCircuitCheck)
         return;
 
-    if (_instance->options.multipleTwinkleCircuitChecks)
+    if (_instance->_options.multipleTwinkleCircuitChecks)
     {
         switch (character)
         {
         case Characters_Sonic:
-            _instance->randomizer.OnCheckFound(40);
+            _instance->_randomizer.OnCheckFound(40);
             break;
         case Characters_Tails:
-            _instance->randomizer.OnCheckFound(41);
+            _instance->_randomizer.OnCheckFound(41);
             break;
         case Characters_Knuckles:
-            _instance->randomizer.OnCheckFound(42);
+            _instance->_randomizer.OnCheckFound(42);
             break;
         case Characters_Amy:
-            _instance->randomizer.OnCheckFound(43);
+            _instance->_randomizer.OnCheckFound(43);
             break;
         case Characters_Big:
-            _instance->randomizer.OnCheckFound(44);
+            _instance->_randomizer.OnCheckFound(44);
             break;
         case Characters_Gamma:
-            _instance->randomizer.OnCheckFound(45);
+            _instance->_randomizer.OnCheckFound(45);
             break;
 
         default:
@@ -1490,7 +1490,7 @@ void EventDetector::OnTwinkleCircuitCompleted(const int character)
     }
     else
     {
-        _instance->randomizer.OnCheckFound(15);
+        _instance->_randomizer.OnCheckFound(15);
     }
 }
 
@@ -1503,7 +1503,7 @@ signed int EventDetector::OnSaveTwinkleCircuitRecord()
 void EventDetector::OnFishMain(task* tp)
 {
     _onFishMainHook.Original(tp);
-    if (!_instance->options.fishSanity)
+    if (!_instance->_options.fishSanity)
         return;
     if (CurrentCharacter != Characters_Big)
         return;
@@ -1529,7 +1529,7 @@ void EventDetector::OnFishMain(task* tp)
 void EventDetector::OnFishCaught(task* tp)
 {
     _onFishCaughtHook.Original(tp);
-    if (!_instance->options.fishSanity)
+    if (!_instance->_options.fishSanity)
         return;
 
     const auto* v1 = reinterpret_cast<int*>(tp->twp);
@@ -1546,12 +1546,12 @@ void EventDetector::OnFishCaught(task* tp)
 
         if (check.second.fishType == fishType && !check.second.checked)
         {
-            _instance->randomizer.OnCheckFound(check.first);
+            _instance->_randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        _instance->checkData = _instance->randomizer.GetCheckData();
+        _instance->checkData = _instance->_randomizer.GetCheckData();
 }
 
 void EventDetector::OnCheckEggHold()
@@ -1559,13 +1559,13 @@ void EventDetector::OnCheckEggHold()
     const int holdingItem = GetHoldingItemIDP(0);
     if (holdingItem == 5)
         //Gold Egg
-        _instance->randomizer.OnCheckFound(900);
+        _instance->_randomizer.OnCheckFound(900);
     else if (holdingItem == 10)
         //Silver Egg
-        _instance->randomizer.OnCheckFound(901);
+        _instance->_randomizer.OnCheckFound(901);
     else if (holdingItem == 11)
         //Black Egg
-        _instance->randomizer.OnCheckFound(902);
+        _instance->_randomizer.OnCheckFound(902);
 
     _onCheckEggHoldHook.Original();
 }
@@ -1581,10 +1581,10 @@ void EventDetector::OnPlayMusic(int songId)
     if (songId == _instance->lastRealSongId)
         shuffledSongId = _instance->lastShuffledSongId;
     else
-        shuffledSongId = _instance->randomizer.GetSongForId(songId);
+        shuffledSongId = _instance->_randomizer.GetSongForId(songId);
 
     _onPlayMusicHook.Original(shuffledSongId);
-    _instance->randomizer.DisplaySongName(shuffledSongId);
+    _instance->_randomizer.DisplaySongName(shuffledSongId);
     _instance->lastRealSongId = songId;
     _instance->lastShuffledSongId = shuffledSongId;
 }
@@ -1595,36 +1595,36 @@ void EventDetector::OnPlayMusic2(int songId)
     if (songId == _instance->lastRealSongId)
         shuffledSongId = _instance->lastShuffledSongId;
     else
-        shuffledSongId = _instance->randomizer.GetSongForId(songId);
+        shuffledSongId = _instance->_randomizer.GetSongForId(songId);
 
     _onPlayMusic2Hook.Original(shuffledSongId);
-    _instance->randomizer.DisplaySongName(shuffledSongId);
+    _instance->_randomizer.DisplaySongName(shuffledSongId);
     _instance->lastRealSongId = songId;
     _instance->lastShuffledSongId = shuffledSongId;
 }
 
 void EventDetector::OnPlayJingle(int songId)
 {
-    const int shuffledSongId = _instance->randomizer.GetSongForId(songId);
+    const int shuffledSongId = _instance->_randomizer.GetSongForId(songId);
     _onPlayJingleHook.Original(shuffledSongId);
-    if (_instance->settings.showSongNameForType == ShowSongNameForTypeEverything)
-        _instance->randomizer.DisplaySongName(shuffledSongId);
+    if (_instance->_settings.showSongNameForType == ShowSongNameForTypeEverything)
+        _instance->_randomizer.DisplaySongName(shuffledSongId);
 }
 
 void EventDetector::ShuffleSong()
 {
-    if (this->options.musicShuffle == MusicShuffleNone
-        || this->options.musicShuffle == MusicShuffleDisabled
-        || this->options.musicShuffle == MusicShuffleSingularity)
+    if (this->_options.musicShuffle == MusicShuffleNone
+        || this->_options.musicShuffle == MusicShuffleDisabled
+        || this->_options.musicShuffle == MusicShuffleSingularity)
         return;
 
-    if (this->options.musicShuffleConsistency != MusicShuffleConsistencyPerPlay)
+    if (this->_options.musicShuffleConsistency != MusicShuffleConsistencyPerPlay)
         return;
 
-    if (this->options.lifeCapsulesChangeSongs != LifeCapsulesChangeSongsEnabled)
+    if (this->_options.lifeCapsulesChangeSongs != LifeCapsulesChangeSongsEnabled)
         return;
 
-    const int shuffledSongId = randomizer.GetSongForId(_instance->lastRealSongId);
+    const int shuffledSongId = _randomizer.GetSongForId(_instance->lastRealSongId);
     _onPlayMusicHook.Original(shuffledSongId);
-    randomizer.DisplaySongName(shuffledSongId);
+    _randomizer.DisplaySongName(shuffledSongId);
 }

@@ -59,9 +59,6 @@ public:
     void MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist);
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
     void UpdateVisitedLevels(int visitedLevel);
-    Options& options;
-    Settings& settings;
-    GameStatus& gameStatus;
     LevelEntrances levelEntrances = {
         {EmeraldCoast, EmeraldCoast},
         {WindyValley, WindyValley},
@@ -79,6 +76,10 @@ public:
 private:
     explicit WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus);
     inline static WorldStateManager* _instance = nullptr;
+    Options& _options;
+    Settings& _settings;
+    GameStatus& _gameStatus;
+    
     mutable std::map<int, LocationData> _checkData;
 
 
