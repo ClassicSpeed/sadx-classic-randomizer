@@ -85,6 +85,21 @@ private:
     explicit EventDetector(Options& options, Settings& settings, Randomizer& randomizer);
     inline static EventDetector* _instance = nullptr;
 
+    void CheckCapsule(const EntityData1* entity, bool specificCapsule);
+    void CheckEnemy(task* tp);
+    int GetEnemyFromPosition(const NJS_VECTOR& position);
+    void DrawIndicator(const task* tp, bool tallElement, bool checked, IndicatorType indicatorType, int locationId);
+    bool GetCapsuleTypeOption(Float type);
+    int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position);
+    void CheckDestroyedEnemy(task* tp);
+
+    static bool HandleCheckMissionRequirements(int mission, int character, int level);
+    static bool HandleCheckMissionRequirementsSubgame(int level, int character, int mission);
+    static void HandlePlayCharacterDeathSound(task* tp, int pid);
+    static void HandleOnBoaBoaPartDestroyed(task* tp);
+    static void HandleCapsuleBreak(task* tp);
+    static void HandleCapsuleBreakAir(task* tp);
+
     inline static FunctionHook<void, SaveFileData*, int, signed int, int> _onLevelEmblemCollectedHook{0x4B4640};
     static void OnLevelEmblemCollected(SaveFileData* saveFile, const int character, const signed int level,
                                        const int mission);
@@ -152,108 +167,108 @@ private:
     inline static FunctionHook<void, task*> _onAirItemBoxMainHook{0x4C07D0};
     static void OnAirItemBoxMain(task* tp);
 
-    // Rhinotank hooks
     inline static FunctionHook<void, task*> _onRhinotankLoadHook{0x7A1380};
     static void OnRhinotankLoad(task* tp);
 
-    // Kiki hooks
     inline static FunctionHook<void, task*> _onKikiLoadHook{0x4AD140};
     static void OnKikiLoad(task* tp);
+
     inline static FunctionHook<void, task*> _onKikiMainHook{0x4ACF80};
     static void OnKikiMain(task* tp);
 
-    // Water Spider hooks
     inline static FunctionHook<void, task*> _onWaterSpiderLoadHook{0x7AA960};
     static void OnWaterSpiderLoad(task* tp);
+
     inline static FunctionHook<void, task*> _onWaterSpiderMainHook{0x7AA870};
     static void OnWaterSpiderMain(task* tp);
 
-    // Buyon hooks
     inline static FunctionHook<void, task*> _onBuyonMainHook{0x7B2E00};
     static void OnBuyonMain(task* tp);
 
-    // Boa Boa hooks
     inline static FunctionHook<void, task*> _onBoaBoaHeadLoadHook{0x7A00F0};
     static void OnBoaBoaHeadLoad(task* tp);
 
-    // Leon hooks
     inline static FunctionHook<void, task*> _onLeonLoadHook{0x4A85C0};
     static void OnLeonLoad(task* tp);
+
     inline static FunctionHook<void, task*> _onLeonMainHook{0x4A83D0};
     static void OnLeonMain(task* tp);
 
-    // Spinner hooks
     inline static FunctionHook<void, task*> _onSpinnerAMainHook{0x4B0DF0};
     static void OnSpinnerAMain(task* tp);
+
     inline static FunctionHook<void, task*> _onSpinnerBMainHook{0x4B0F40};
     static void OnSpinnerBMain(task* tp);
+
     inline static FunctionHook<void, task*> _onSpinnerCMainHook{0x4B1090};
     static void OnSpinnerCMain(task* tp);
 
-    // Police hooks
     inline static FunctionHook<void, task*> _onPoliceLoadHook{0x4B3210};
     static void OnPoliceLoad(task* tp);
+
     inline static FunctionHook<void, task*> _onPoliceMainHook{0x4B30E0};
     static void OnPoliceMain(task* tp);
 
-    // Spike Ball Spinner hooks
     inline static FunctionHook<void, task*> _onSpikeBallSpinnerALoadHook{0x4AF190};
     static void OnSpikeBallSpinnerALoad(task* tp);
+
     inline static FunctionHook<void, task*> _onSpikeBallSpinnerAMainHook{0x4AF030};
     static void OnSpikeBallSpinnerAMain(task* tp);
+
     inline static FunctionHook<void, task*> _onSpikeBallSpinnerBLoadHook{0x4AF500};
     static void OnSpikeBallSpinnerBLoad(task* tp);
+
     inline static FunctionHook<void, task*> _onSpikeBallSpinnerBMainHook{0x4AF3D0};
     static void OnSpikeBallSpinnerBMain(task* tp);
+
     inline static FunctionHook<void, task*> _onSpikeBallSpinnerCLoadHook{0x4AF860};
     static void OnSpikeBallSpinnerCLoad(task* tp);
+
     inline static FunctionHook<void, task*> _onSpikeBallSpinnerCMainHook{0x4AF770};
     static void OnSpikeBallSpinnerCMain(task* tp);
 
-    // Ice Ball hooks
     inline static FunctionHook<void, task*> _onIceBallLoadHook{0x4C8FB0};
     static void OnIceBallLoad(task* tp);
+
     inline static FunctionHook<void, task*> _onIceBallMainAHook{0x4C8AC0};
     static void OnIceBallMainA(task* tp);
+
     inline static FunctionHook<void, task*> _onIceBallMainBHook{0x4C8DD0};
     static void OnIceBallMainB(task* tp);
 
-    // EggKeeper hooks
     inline static FunctionHook<void, task*> _onEggKeeperLoadHook{0x4A6700};
     static void OnEggKeeperLoad(task* tp);
+
     inline static FunctionHook<void, task*> _onEggKeeperMainHook{0x4A6420};
     static void OnEggKeeperMain(task* tp);
 
-    // Enemy destruction hooks
     inline static FunctionHook<void, task*> _onDeadOutHook{0x46C150};
     static void OnDeadOut(task* tp);
 
     inline static FunctionHook<void, task*> _onBuyonDestroyChildrenHook{0x7B1500};
     static void OnBuyonDestroyChildren(task* tp);
 
-    // Twinkle Circuit hooks
     inline static FunctionHook<signed int> _onSaveTwinkleCircuitRecordHook{0x4B5BC0};
     static signed int OnSaveTwinkleCircuitRecord();
 
-    // Fish hooks
     inline static FunctionHook<void, task*> _onFishMainHook{0x597010};
     static void OnFishMain(task* tp);
+
     inline static FunctionHook<void, task*> _onFishCaughtHook{0x470160};
     static void OnFishCaught(task* tp);
 
-    // Chao egg hooks
     inline static FunctionHook<void> _onCheckEggHoldHook{0x7151A0};
     static void OnCheckEggHold();
 
-    // Mission statue hooks
     inline static FunctionHook<void, task*> _onMissionStatueDeleteHook{0x5934C0};
     static void OnMissionStatueDelete(task* tp);
 
-    // Music hooks
     inline static FunctionHook<void, int> _onPlayMusicHook{0x425690};
     static void OnPlayMusic(int songId);
+
     inline static FunctionHook<void, int> _onPlayMusic2Hook{0x425800};
     static void OnPlayMusic2(int songId);
+
     inline static FunctionHook<void, int> _onPlayJingleHook{0x425860};
     static void OnPlayJingle(int songId);
 };

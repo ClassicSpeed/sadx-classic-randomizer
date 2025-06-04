@@ -41,14 +41,12 @@ public:
     static WorldStateManager& Init(Options& options, Settings& settings, GameStatus& gameStatus)
     {
         if (_instance == nullptr)
-            _instance = new WorldStateManager(options, settings,gameStatus);
+            _instance = new WorldStateManager(options, settings, gameStatus);
         return *_instance;
     }
 
     void OnFrame() override;
 
-
-    
 
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
@@ -83,6 +81,21 @@ private:
     inline static WorldStateManager* _instance = nullptr;
     mutable std::map<int, LocationData> _checkData;
 
+
+    static void __cdecl HandleWindyValleyEntrance();
+    static void __cdecl HandleMREntrance(int newScene);
+    static int __cdecl HandleTwinkleParkEntrance(char character);
+    static int __cdecl HandleTwinkleCircuitEntrance(char character);
+    static int __cdecl HandleEggCarrierEggDoor(int a1);
+    static int __cdecl HandleEggCarrierOutsideDoor(int a1);
+    static void __cdecl HandleSceneChangeEcInside(int a1, int a2);
+    static void __cdecl HandleSceneChangeEcOutside(int a1);
+    static int __cdecl HandleSkyDeckDoor(EntityData1* a1);
+    static void __cdecl HandleLostWorldEntranceCollision(int a1);
+    static void __cdecl HandleOnFinalEggDoorCheckA(int a1);
+    static __int16 __cdecl HandleOnFinalEggDoorCheckB(int a1);
+
+
     inline static FunctionHook<void, int, float, float, float> _createAnimalHook{0x4BE610};
     static void OnCreateAnimal(int e_num, float x, float y, float z);
 
@@ -97,46 +110,46 @@ private:
 
     inline static FunctionHook<int> _howManyGameGearGamesHook{0x6FDA90};
     static int OnHowManyGameGearGames();
-    
+
     inline static FunctionHook<bool> _isGameGearMenuEnabledHook{0x506460};
     static bool OnIsGameGearMenuEnabled();
-    
+
     inline static FunctionHook<BOOL> _isChaos2DoorOpenHook{0x638D50};
     static BOOL OnIsChaos2DoorOpen();
-    
+
     inline static FunctionHook<BOOL> _isStationDoorOpenHook{0x63AB70};
     static BOOL OnIsStationDoorOpen();
-    
+
     inline static FunctionHook<BOOL> _isHotelDoorOpenHook{0x630900};
     static BOOL OnIsHotelDoorOpen();
-    
+
     inline static FunctionHook<BOOL> _isCasinoHotelDoorOpenHook{0x630970};
     static BOOL OnIsCasinoHotelDoorOpen();
-    
+
     inline static FunctionHook<BOOL> _isCasinoStationDoorOpenHook{0x638880};
     static BOOL OnIsCasinoStationDoorOpen();
-    
+
     inline static FunctionHook<int, int> _showRecapHook{0x643C00};
     static int OnShowRecap(int _);
-    
+
     inline static FunctionHook<void, int> _playVoiceHook{0x425710};
     static void OnPlayVoice(int a1);
-    
+
     inline static FunctionHook<void, int> _addSecondsHook{0x426640};
     static void OnAddSeconds(int seconds);
-    
+
     inline static FunctionHook<void, EntityData1*> _getEntranceMRuinsHook{0x530790};
     static void OnGetEntranceMRuins(EntityData1* a1);
-    
+
     inline static FunctionHook<void, EntityData1*> _getEntranceEggCarrierHook{0x52D820};
     static void OnGetEntranceEggCarrier(EntityData1* a1);
-    
+
     inline static FunctionHook<void, EntityData1*> _getEntrancePastHook{0x542180};
     static void OnGetEntrancePast(EntityData1* a1);
-    
+
     inline static FunctionHook<void, Sint8> _setTimeOfDayHook{0x412C00};
     static void OnSetTimeOfDay(Sint8 time);
-    
+
     inline static FunctionHook<void> _adventureSetLevelAndActHook{0x4133E0};
     static void OnAdventureSetLevelAndAct();
 
@@ -145,7 +158,7 @@ private:
 
     inline static FunctionHook<void> _countSetItemsMaybeHook{0x0046BD20};
     static void OnCountSetItemsMaybe();
-    
+
     inline static FunctionHook<void, task*> _emblemMainHook{0x4B4940};
     static void OnEmblemMain(task* tp);
 
@@ -210,7 +223,7 @@ private:
 
     inline static FunctionHook<void, task*> _onLoadSceneChangeMrHook{0x5394F0};
     static void OnLoadSceneChangeMr(task* tp);
-    
+
     inline static FunctionHook<BOOL> _isFinalEggTowerActiveHook{0x538550};
     static BOOL OnIsFinalEggTowerActive();
 
@@ -243,7 +256,7 @@ private:
 
     inline static FunctionHook<void, task*> _onLoadPoolDoorHook{0x51E320};
     static void OnLoadPoolDoor(task* tp);
-    
+
     NJS_COLOR _wrongDoorColor[12] = {
         {0xAAFF0000},
         {0xAAFF0000},
