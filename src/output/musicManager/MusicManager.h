@@ -203,14 +203,9 @@ public:
             _instance = new MusicManager(options, settings, helperFunctions);
         return *_instance;
     }
+
     const SongData* FindSongById(int songId);
-    void ParseExtraFiles(const HelperFunctions& helperFunctions);
-    void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath,
-                           SongSource songSource);
-    SongType GetSongTypeFromString(const std::string& typeStr);
     void RandomizeMusic();
-    std::vector<int> GetPossibleSongIds(int id, std::mt19937& gen);
-    int GetSingularitySong();
     int GetSongForId(int songId);
     int GetNewSongForId(int songId, int currentSongId);
 
@@ -219,8 +214,15 @@ private:
     inline static MusicManager* _instance = nullptr;
     Options& _options;
     Settings& _settings;
-    
+
     void ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath);
+
+    std::vector<int> GetPossibleSongIds(int id, std::mt19937& gen);
+    int GetSingularitySong();
+    SongType GetSongTypeFromString(const std::string& typeStr);
+    void ParseExtraFiles(const HelperFunctions& helperFunctions);
+    void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot,
+                           std::string categoryPath, SongSource songSource);
     SongMap _songMap;
     std::unordered_map<int, std::vector<int>> _songRandomizationMap;
 };
