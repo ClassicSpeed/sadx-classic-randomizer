@@ -1,6 +1,6 @@
 #include "pch.h"
 
-#include "application/Randomizer.h"
+#include "application/randomizer/Randomizer.h"
 #include "configuration/gameStatus/GameStatus.h"
 #include "input/archipelago/ArchipelagoManager.h"
 #include "input/cheatsManager/CheatsManager.h"

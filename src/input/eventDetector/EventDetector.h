@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "../../application/Randomizer.h"
+#include "../../application/randomizer/Randomizer.h"
 #include "../../application/structs/LocationData.h"
 #include <unordered_map>
 

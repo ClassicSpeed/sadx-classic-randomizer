@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../../application/Randomizer.h"
+#include "../../application/randomizer/Randomizer.h"
 #include "../../configuration/options/Options.h"
 
 #define AP_REGISTER_INT_CALLBACK(key, method) \

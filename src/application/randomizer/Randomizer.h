@@ -1,16 +1,16 @@
 #pragma once
-#include "../pch.h"
-#include "../output/locationRepository/LocationRepository.h"
-#include "../output/displayManager/DisplayManager.h"
-#include "../output/itemRepository/ItemRepository.h"
-#include "../output/characterManager/CharacterManager.h"
-#include "../output/worldStateManager/WorldStateManager.h"
-#include "../output/archipelagoMessenger/ArchipelagoMessenger.h"
-#include "../output/saveFileManager/SaveFileManager.h"
-#include "../output/musicManager/MusicManager.h"
-#include "../output/reactionManager/ReactionManager.h"
-#include "../configuration/options/Options.h"
-#include "structs/LocationData.h"
+#include "../../pch.h"
+#include "../../output/locationRepository/LocationRepository.h"
+#include "../../output/displayManager/DisplayManager.h"
+#include "../../output/itemRepository/ItemRepository.h"
+#include "../../output/characterManager/CharacterManager.h"
+#include "../../output/worldStateManager/WorldStateManager.h"
+#include "../../output/archipelagoMessenger/ArchipelagoMessenger.h"
+#include "../../output/saveFileManager/SaveFileManager.h"
+#include "../../output/musicManager/MusicManager.h"
+#include "../../output/reactionManager/ReactionManager.h"
+#include "../../configuration/options/Options.h"
+#include "../structs/LocationData.h"
 constexpr int SYNC_RATE = 10;
 
 class Randomizer : public IOnFrame
@@ -50,7 +50,7 @@ public:
     void OnDeath();
     void ProcessRings(Sint16 amount);
     void ProcessTrapLink(std::string itemName, std::string message);
-    void ResetItems();
+    void ResetItems() const;
     void OnCheckVersion(int serverVersion);
     void UpdateLevelEntrances();
     void DisplaySongName(int songId);

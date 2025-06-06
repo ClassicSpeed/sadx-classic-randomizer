@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../pch.h"
-#include "../../application/Randomizer.h"
+#include "../../application/randomizer/Randomizer.h"
 
 
 class CharacterLoadingDetector: public IOnFrame

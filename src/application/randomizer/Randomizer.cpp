@@ -77,7 +77,6 @@ void Randomizer::MarkCheckedLocation(const int64_t checkId) const
     _worldStateManager.UpdateChecks(_locationRepository.GetLocations());
 }
 
-
 void Randomizer::OnItemReceived(const int64_t itemId) const
 {
     const bool ignore = _itemRepository.SetObtained(itemId);
@@ -128,7 +127,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     _reactionManager.PlayRandomVoiceForItem(item, itemId);
 }
 
-void Randomizer::ResetItems()
+void Randomizer::ResetItems() const
 {
     _itemRepository.ResetItems();
 }

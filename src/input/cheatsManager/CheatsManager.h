@@ -1,5 +1,5 @@
 #pragma once
-#include "../../application/Randomizer.h"
+#include "../../application/randomizer/Randomizer.h"
 
 class CheatsManager
 {
