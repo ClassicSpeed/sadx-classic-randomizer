@@ -159,14 +159,6 @@ void Randomizer::OnCheckVersion(int serverVersion)
     }
 }
 
-
-//TODO: Move to OnConnect
-void Randomizer::SetStartingCharacter(const int startingCharacterIndex)
-{
-    _characterManager.SetStartingCharacter(startingCharacterIndex);
-}
-
-//TODO: Move to OnConnect
 void Randomizer::UpdateLevelEntrances()
 {
     if (_options.levelEntrancesMap.empty())
@@ -463,17 +455,6 @@ void Randomizer::OnSaveFileLoaded()
 
 void Randomizer::DisplaySongName(const int songId)
 {
-    //TODO: Move logic to displayManager
-    if (_settings.showSongName == ShowSongNameAlwaysOff)
-        return;
-
-    if (_settings.showSongName == ShowSongNameWithSongShuffle && _options.musicShuffle == MusicShuffleNone)
-        return;
-
-    if (_settings.showSongNameForType == ShowSongNameForTypeOnlyActionLevels)
-        if (CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
-            return;
-
     const auto* song = _musicManager.FindSongById(songId);
     if (song != nullptr)
         _displayManager.ShowSongName("~ " + song->name + " ~");

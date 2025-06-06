@@ -456,7 +456,6 @@ void EventDetector::OnFrame()
 
     if (CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
     {
-        //TODO: Separate setting from state for settings.trackerArrow
         if (_settings.trackerArrowToggleable)
             for (const auto& button : PressedButtons)
                 if (button & WhistleButtons && Current_CharObj2 != nullptr)

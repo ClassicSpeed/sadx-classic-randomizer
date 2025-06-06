@@ -60,7 +60,6 @@ enum Levels
 };
 
 
-//TODO: Move to helpers?
 static int Clamp(const int value, const int min, const int max)
 {
     if (value < min) return min;

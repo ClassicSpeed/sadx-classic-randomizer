@@ -67,6 +67,17 @@ void DisplayManager::QueueChatMessage(const std::string& message)
 
 void DisplayManager::ShowSongName(const std::string& songName)
 {
+
+    if (_settings.showSongName == ShowSongNameAlwaysOff)
+        return;
+
+    if (_settings.showSongName == ShowSongNameWithSongShuffle && _options.musicShuffle == MusicShuffleNone)
+        return;
+
+    if (_settings.showSongNameForType == ShowSongNameForTypeOnlyActionLevels)
+        if (CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
+            return;
+    
     if (_songName != songName)
     {
         _songName = songName;

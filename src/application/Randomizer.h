@@ -52,7 +52,6 @@ public:
     void ProcessTrapLink(std::string itemName, std::string message);
     void ResetItems();
     void OnCheckVersion(int serverVersion);
-    void SetStartingCharacter(int startingCharacterIndex);
     void UpdateLevelEntrances();
     void DisplaySongName(int songId);
     int GetSongForId(int songId);
