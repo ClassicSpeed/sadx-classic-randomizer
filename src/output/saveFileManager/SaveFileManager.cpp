@@ -1,6 +1,14 @@
 #include "SaveFileManager.h"
 
 
+SaveFileManager::SaveFileManager()
+{
+    _howManyGameGearGamesHook.Hook(OnHowManyGameGearGames);
+    _isGameGearMenuEnabledHook.Hook(OnIsGameGearMenuEnabled);
+    _showRecapHook.Hook(OnShowRecap);
+}
+
+
 void SaveFileManager::OnSaveFileLoaded()
 {
     if (LevelClearCounts[0] == 0)
@@ -222,4 +230,47 @@ void SaveFileManager::SetMissionCompleted(const int mission)
     MissionFlags[mission - 1] &= ~MissionFlags_Started;
     MissionFlags[mission - 1] |= MissionFlags_Complete;
     WriteSaveFile();
+}
+
+void SaveFileManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
+{
+    for (StoryFlags storyFlag : storyFlags)
+    {
+        SetEventFlag(static_cast<EventFlags>(storyFlag));
+    }
+    WriteSaveFile();
+}
+
+void SaveFileManager::UnlockSuperSonic()
+{
+    SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_PLAYABLE));
+    WriteSaveFile();
+}
+
+void SaveFileManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist)
+{
+    for (const int mission : missionBlacklist)
+    {
+        MissionFlags[mission - 1] |= MissionFlags_Found;
+        MissionFlags[mission - 1] &= ~MissionFlags_Started;
+        MissionFlags[mission - 1] |= MissionFlags_Complete;
+    }
+    WriteSaveFile();
+}
+
+// Enable all GameGear Games
+int SaveFileManager::OnHowManyGameGearGames()
+{
+    return 12;
+}
+
+bool SaveFileManager::OnIsGameGearMenuEnabled()
+{
+    return true;
+}
+
+// Prevents the recap screen from showing on the last story
+int SaveFileManager::OnShowRecap(int _)
+{
+    return -1;
 }

@@ -77,14 +77,11 @@ public:
     void OnFrame() override;
 
 
-    void SetEventFlags(std::vector<StoryFlags> storyFlags);
-    void UnlockSuperSonic();
     void DrawDisableDoorIndicator(NJS_POINT3 basePoint, float angle);
     void DrawCorrectDoorIndicator(NJS_POINT3 basePoint, float angle);
     void DrawOtherDoorIndicator(NJS_POINT3 basePoint, float angle);
     void ShowLevelEntranceArrows();
     void SetStartingArea();
-    void MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist);
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
     void UpdateVisitedLevels(int visitedLevel);
     LevelEntrances levelEntrances = {
@@ -144,12 +141,6 @@ private:
     inline static FunctionHook<void, task*> _collisionCylinderHook{0x4D4770};
     static void OnCollisionCylinder(task* tp);
 
-    inline static FunctionHook<int> _howManyGameGearGamesHook{0x6FDA90};
-    static int OnHowManyGameGearGames();
-
-    inline static FunctionHook<bool> _isGameGearMenuEnabledHook{0x506460};
-    static bool OnIsGameGearMenuEnabled();
-
     inline static FunctionHook<BOOL> _isChaos2DoorOpenHook{0x638D50};
     static BOOL OnIsChaos2DoorOpen();
 
@@ -164,9 +155,6 @@ private:
 
     inline static FunctionHook<BOOL> _isCasinoStationDoorOpenHook{0x638880};
     static BOOL OnIsCasinoStationDoorOpen();
-
-    inline static FunctionHook<int, int> _showRecapHook{0x643C00};
-    static int OnShowRecap(int _);
 
     inline static FunctionHook<void, int> _playVoiceHook{0x425710};
     static void OnPlayVoice(int a1);

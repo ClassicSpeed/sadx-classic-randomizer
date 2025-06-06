@@ -63,7 +63,7 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     if (item.type == ItemUpgrade)
         _characterManager.GiveUpgrade(item.upgrade);
     else if (item.type == ItemCharacter || item.type == ItemKey)
-        _worldStateManager.SetEventFlags(item.eventFlags);
+        _saveFileManager.SetEventFlags(item.eventFlags);
     else if (item.type == ItemEmblem)
         _itemRepository.AddEmblem();
     else if (item.type == ItemFiller)
@@ -151,13 +151,11 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
     {
         if (item.second.type == ItemEmblem)
         {
-            //TODO: Do this in the save file manager?
             if (_gameStatus.lastStoryRequirementsCompleted)
-                _worldStateManager.UnlockSuperSonic();
+                _saveFileManager.UnlockSuperSonic();
         }
-        //TODO: Do this in the save file manager?
         if (item.second.type == ItemCharacter && item.second.obtained)
-            _worldStateManager.SetEventFlags(item.second.eventFlags);
+            _saveFileManager.SetEventFlags(item.second.eventFlags);
     }
 }
 
@@ -191,7 +189,7 @@ void Randomizer::OnConnected()
         SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
 
     // Music
-    _worldStateManager.MarkBlacklistedMissionsAsCompleted(_options.missionBlacklist);
+    _saveFileManager.MarkBlacklistedMissionsAsCompleted(_options.missionBlacklist);
     _musicManager.RandomizeMusic();
 
     //Starting Character

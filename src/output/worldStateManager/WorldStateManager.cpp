@@ -20,14 +20,11 @@ WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameS
     _policeEnemyMainHook.Hook(OnPoliceEnemyMain);
     _collisionCubeHook.Hook(OnCollisionCube);
     _collisionCylinderHook.Hook(OnCollisionCylinder);
-    _howManyGameGearGamesHook.Hook(OnHowManyGameGearGames);
-    _isGameGearMenuEnabledHook.Hook(OnIsGameGearMenuEnabled);
     _isChaos2DoorOpenHook.Hook(OnIsChaos2DoorOpen);
     _isStationDoorOpenHook.Hook(OnIsStationDoorOpen);
     _isHotelDoorOpenHook.Hook(OnIsHotelDoorOpen);
     _isCasinoHotelDoorOpenHook.Hook(OnIsCasinoHotelDoorOpen);
     _isCasinoStationDoorOpenHook.Hook(OnIsCasinoStationDoorOpen);
-    _showRecapHook.Hook(OnShowRecap);
     _playVoiceHook.Hook(OnPlayVoice);
     _addSecondsHook.Hook(OnAddSeconds);
     _getEntranceMRuinsHook.Hook(OnGetEntranceMRuins);
@@ -254,22 +251,6 @@ void WorldStateManager::HandleWarp()
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
 }
 
-//TODO: Move to savefile manager
-void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
-{
-    for (StoryFlags storyFlag : storyFlags)
-    {
-        SetEventFlag(static_cast<EventFlags>(storyFlag));
-    }
-    WriteSaveFile();
-}
-
-
-void WorldStateManager::UnlockSuperSonic()
-{
-    SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_PLAYABLE));
-    WriteSaveFile();
-}
 
 //TODO: Move to its own class
 void WorldStateManager::DrawDisableDoorIndicator(const NJS_POINT3 basePoint, const float angle)
@@ -451,17 +432,6 @@ void WorldStateManager::OnFrame()
         GameMode = GameModes_Mission;
 }
 
-//TODO: move to savefile manager
-// Enable all GameGear Games
-int WorldStateManager::OnHowManyGameGearGames()
-{
-    return 12;
-}
-
-bool WorldStateManager::OnIsGameGearMenuEnabled()
-{
-    return true;
-}
 
 // Allow Knuckles to fight Chaos 2
 BOOL WorldStateManager::OnIsChaos2DoorOpen()
@@ -489,12 +459,6 @@ BOOL WorldStateManager::OnIsCasinoStationDoorOpen()
     return _instance->_gameStatus.unlock.keyStationBackKey;
 }
 
-//TODO: move to savefile manager
-// Prevents the recap screen from showing on the last story
-int WorldStateManager::OnShowRecap(int _)
-{
-    return -1;
-}
 
 //TODO: move to reactions manager
 // Replace Super Sonic "Hmph" with "I'll show you what the Chaos Emeralds can really do."
@@ -636,18 +600,6 @@ void WorldStateManager::SetStartingArea()
         SetLevelAndAct(LevelIDs_StationSquare, 3);
         break;
     }
-}
-
-//TODO: move to savefile manager
-void WorldStateManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist)
-{
-    for (const int mission : missionBlacklist)
-    {
-        MissionFlags[mission - 1] |= MissionFlags_Found;
-        MissionFlags[mission - 1] &= ~MissionFlags_Started;
-        MissionFlags[mission - 1] |= MissionFlags_Complete;
-    }
-    WriteSaveFile();
 }
 
 //TODO: Move to visitedLevels
