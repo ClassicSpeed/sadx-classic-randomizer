@@ -5,18 +5,7 @@
 #include "../../configuration/options/Options.h"
 #include "../../configuration/gameStatus/GameStatus.h"
 #include "../../application/structs/LevelEntrances.h"
-
-
-constexpr float CROSS_SIZE_MIN = 4.0;
-constexpr float CROSS_SIZE_MAX = 12.0;
-constexpr float CROSS_SIZE_DIFF = CROSS_SIZE_MAX - CROSS_SIZE_MIN;
-
-
-constexpr float ARROW_SIZE_MAX = 10.0;
-constexpr float ARROW_SIZE_MIN = 10.0;
-
-constexpr double MIN_DRAW_DOOR_ARROW_DISTANCE = 50.0;
-constexpr double MAX_DRAW_DOOR_ARROW_DISTANCE = 100.0;
+#include "DoorIndicatorManager/DoorIndicatorManager.h"
 
 
 constexpr int WARP_EGG_CARRIER_INSIDE = 35;
@@ -76,10 +65,6 @@ public:
 
     void OnFrame() override;
 
-
-    void DrawDisableDoorIndicator(NJS_POINT3 basePoint, float angle);
-    void DrawCorrectDoorIndicator(NJS_POINT3 basePoint, float angle);
-    void DrawOtherDoorIndicator(NJS_POINT3 basePoint, float angle);
     void ShowLevelEntranceArrows();
     void SetStartingArea();
     void UpdateLevelEntrances(LevelEntrances levelEntrances);
@@ -104,6 +89,7 @@ private:
     Options& _options;
     Settings& _settings;
     GameStatus& _gameStatus;
+    DoorIndicatorManager _doorIndicatorManager;
 
     static void __cdecl OnSceneChangeMr(int newScene);
     static int __cdecl OnTwinkleParkDoor(char character);
@@ -280,32 +266,6 @@ private:
 
     inline static FunctionHook<void, task*> _loadPoolDoorHook{0x51E320};
     static void OnLoadPoolDoor(task* tp);
-
-    NJS_COLOR _wrongDoorColor[12] = {
-        {0xAAFF0000},
-        {0xAAFF0000},
-        {0xAAFF0000},
-        {0xAAFF0000},
-        {0xAAFF0000},
-        {0xAAFF0000},
-        {0xAAFF0000},
-        {0xAAFF0000},
-        {0xAAFF0000},
-        {0xAAFF0000},
-        {0xAAFF0000},
-        {0xAAFF0000},
-    };
-    NJS_COLOR _arrowColor = {0xAA00FF00};
-
-    NJS_COLOR _otherDoorColor[7] = {
-        {0xAAFF4D00},
-        {0xAAFF4D00},
-        {0xAAFF4D00},
-        {0xAAFF4D00},
-        {0xAAFF4D00},
-        {0xAAFF4D00},
-        {0xAAFF4D00},
-    };
     std::vector<LevelArrow> _levelArrows = {
 
         {
