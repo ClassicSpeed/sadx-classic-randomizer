@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "application/randomizer/Randomizer.h"
+#include "application/link/Link.h"
 #include "configuration/gameStatus/GameStatus.h"
 #include "input/archipelago/ArchipelagoManager.h"
 #include "input/cheatsManager/CheatsManager.h"
@@ -17,12 +18,15 @@ std::vector<IOnFrame*> onFrameObjects;
 
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
 {
+    //Configuration
     Settings& settings = Settings::Init(path, helperFunctions);
     Options& options = Options::Init(settings);
     GameStatus& gameStatus = GameStatus::Init();
+
+    // Output Managers
     ReactionManager& reactionManager = ReactionManager::Init(settings, gameStatus);
     DisplayManager& displayManager = DisplayManager::Init(options, settings, gameStatus, path, helperFunctions);
-    CharacterManager& characterManager = CharacterManager::Init(options, settings,gameStatus, reactionManager);
+    CharacterManager& characterManager = CharacterManager::Init(options, settings, gameStatus, reactionManager);
     WorldStateManager& worldStateManager = WorldStateManager::Init(options, settings, gameStatus);
     ItemRepository& itemRepository = ItemRepository::Init(gameStatus);
     LocationRepository& locationRepository = LocationRepository::Init(options, gameStatus);
@@ -30,18 +34,21 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     SaveFileManager& saveFileManager = SaveFileManager::Init();
     MusicManager& musicManager = MusicManager::Init(options, settings, helperFunctions);
 
+    //Randomizer
     Randomizer& randomizer = Randomizer::Init(options, settings, gameStatus, displayManager, characterManager,
                                               worldStateManager, itemRepository, locationRepository,
                                               archipelagoMessenger, saveFileManager, musicManager, reactionManager);
+    Link& link = Link::Init(options, settings, displayManager, characterManager, itemRepository, archipelagoMessenger);
 
+    // Input Handlers
     CheatsManager& cheatsManager = CheatsManager::Init(settings);
-    ArchipelagoManager& archipelagoManager = ArchipelagoManager::Init(options, settings, randomizer);
-    EventDetector& eventDetector = EventDetector::Init(options, settings, randomizer);
+    ArchipelagoManager& archipelagoManager = ArchipelagoManager::Init(options, settings, randomizer, link);
+    EventDetector& eventDetector = EventDetector::Init(options, settings, randomizer, link);
     CharacterLoadingDetector& characterLoadingDetector = CharacterLoadingDetector::Init(randomizer);
 
     onFrameObjects = {
         &saveFileManager, &archipelagoManager, &displayManager, &worldStateManager,
-        &eventDetector, &characterLoadingDetector, &randomizer, &characterManager
+        &eventDetector, &characterLoadingDetector, &link, &characterManager
     };
 }
 

@@ -28,8 +28,8 @@ float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
     return result;
 }
 
-EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& randomizer) : _options(options),
-    _settings(settings), _randomizer(randomizer)
+EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& randomizer, Link& link) : _options(options),
+    _settings(settings), _randomizer(randomizer), _link(link)
 {
     _onLevelEmblemCollectedHook.Hook(OnLevelEmblemCollected);
     _onGenericEmblemCollectedHook.Hook(OnGenericEmblemCollected);
@@ -857,13 +857,13 @@ void EventDetector::HandleCapsuleBreakAir(task* tp)
 void EventDetector::OnKillHimP(unsigned short a1)
 {
     _onKillHimPHook.Original(a1);
-    _instance->_randomizer.OnDeath();
+    _instance->_link.OnDeath();
 }
 
 void EventDetector::OnKillHimByFallingDownP()
 {
     _onKillHimByFallingDownPHook.Original();
-    _instance->_randomizer.OnDeath();
+    _instance->_link.OnDeath();
 }
 
 void EventDetector::HandlePlayCharacterDeathSound(task* tp, const int pid)
@@ -874,7 +874,7 @@ void EventDetector::HandlePlayCharacterDeathSound(task* tp, const int pid)
     if (timePassed > _instance->deathDetectionCooldown)
     {
         _instance->deathCooldownTimer = std::clock();
-        _instance->_randomizer.OnDeath();
+        _instance->_link.OnDeath();
     }
 }
 
@@ -883,7 +883,7 @@ void EventDetector::OnScoreDisplayMain(task* tp)
 {
     //If Tails just lost, we send a death link
     if (CurrentCharacter == Characters_Tails && RaceWinnerPlayer == 2)
-        _instance->_randomizer.OnDeath();
+        _instance->_link.OnDeath();
 
     return _onScoreDisplayMainHook.Original(tp);
 }

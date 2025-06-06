@@ -11,9 +11,8 @@
 #include "../../output/reactionManager/ReactionManager.h"
 #include "../../configuration/options/Options.h"
 #include "../structs/LocationData.h"
-constexpr int SYNC_RATE = 10;
 
-class Randomizer : public IOnFrame
+class Randomizer 
 {
 public:
     static Randomizer& Init(Options& options, Settings& settings, GameStatus& gameStatus,
@@ -30,7 +29,6 @@ public:
         return *_instance;
     }
 
-    void OnFrame() override;
 
     void OnCheckFound(int checkId) const;
     void OnItemReceived(int64_t itemId) const;
@@ -45,13 +43,7 @@ public:
     void QueueNewChatMessage(std::string information);
     std::vector<CapsuleLocationData> GetCapsules();
     std::vector<EnemyLocationData> GetEnemies();
-    void ProcessDeath(const std::string& deathCause);
-    void OnSync();
-    void OnDeath();
-    void ProcessRings(Sint16 amount);
-    void ProcessTrapLink(std::string itemName, std::string message);
     void ResetItems() const;
-    void OnCheckVersion(int serverVersion);
     void UpdateLevelEntrances();
     void DisplaySongName(int songId);
     int GetSongForId(int songId);
@@ -80,16 +72,8 @@ private:
     MusicManager& _musicManager;
     ReactionManager& _reactionManager;
 
-    std::string _pendingDeathCause;
-    bool _deathPending;
 
-    float _deathLinkCooldown = 5.0f;
-    std::clock_t _deathLinkCooldownTimer = -1;
-
-    float _trapLinkCooldown = 5.0f;
-    std::clock_t _trapLinkCooldownTimer = -1;
 
     bool AreLastStoryRequirementsCompleted() const;
 
-    int _syncTimer = 0;
 };

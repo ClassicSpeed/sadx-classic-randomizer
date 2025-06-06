@@ -1,8 +1,8 @@
 ﻿#include "ArchipelagoManager.h"
 
 
-ArchipelagoManager::ArchipelagoManager(Options& options, Settings& settings, Randomizer& randomizer)
-    : _options(options), _settings(settings), _randomizer(randomizer)
+ArchipelagoManager::ArchipelagoManager(Options& options, Settings& settings, Randomizer& randomizer, Link& link)
+    : _options(options), _settings(settings), _randomizer(randomizer), _link(link)
 {
     _loadTrialMenuHook.Hook(OnLoadTrialMenu);
 }
@@ -111,7 +111,7 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
                 deathCause = std::string(bounceData["cause"].asCString());
             else
                 deathCause = std::string("You were killed by ") + bounceData["source"].asCString();
-            _instance->_randomizer.ProcessDeath(deathCause);
+            _instance->_link.ProcessDeath(deathCause);
             break;
         }
         if (!strcmp(tag.c_str(), "RingLink"))
@@ -125,7 +125,7 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
 
             const int amount = bounceData["amount"].asInt();
 
-            _instance->_randomizer.ProcessRings(amount);
+            _instance->_link.ProcessRings(amount);
             break;
         }
         if (!strcmp(tag.c_str(), "HardRingLink"))
@@ -139,7 +139,7 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
 
             const int amount = bounceData["amount"].asInt();
 
-            _instance->_randomizer.ProcessRings(amount);
+            _instance->_link.ProcessRings(amount);
             break;
         }
 
@@ -156,7 +156,7 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
             std::string trapName = bounceData["trap_name"].asCString();
             std::string message = "Received Linked " + trapName + " from " + bounceData["source"].asCString();
 
-            _instance->_randomizer.ProcessTrapLink(trapName, message);
+            _instance->_link.ProcessTrapLink(trapName, message);
             break;
         }
     }

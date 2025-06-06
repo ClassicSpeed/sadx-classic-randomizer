@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "../../application/randomizer/Randomizer.h"
+#include "../../application/link/Link.h"
 #include "../../application/structs/LocationData.h"
 #include <unordered_map>
 
@@ -51,10 +52,10 @@ enum IndicatorType
 class EventDetector : public IOnFrame
 {
 public:
-    static EventDetector& Init(Options& options, Settings& settings, Randomizer& randomizer)
+    static EventDetector& Init(Options& options, Settings& settings, Randomizer& randomizer, Link& link)
     {
         if (_instance == nullptr)
-            _instance = new EventDetector(options, settings, randomizer);
+            _instance = new EventDetector(options, settings, randomizer, link);
         return *_instance;
     }
 
@@ -78,12 +79,13 @@ public:
     int lastShuffledSongId = -1;
 
 private:
-    explicit EventDetector(Options& options, Settings& settings, Randomizer& randomizer);
+    explicit EventDetector(Options& options, Settings& settings, Randomizer& randomizer, Link& link);
     inline static EventDetector* _instance = nullptr;
 
     Options& _options;
     Settings& _settings;
     Randomizer& _randomizer;
+    Link& _link;
 
     void CheckCapsule(const EntityData1* entity, bool specificCapsule);
     void CheckEnemy(task* tp);
