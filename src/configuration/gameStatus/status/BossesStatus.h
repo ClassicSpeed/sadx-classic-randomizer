@@ -8,7 +8,7 @@ struct BossesStatus
     int amyBossesTotal = 1;
     int bigBossesTotal = 1;
     int gammaBossesTotal = 2;
-    
+
     int sonicBossesCompleted = 0;
     int tailsBossesCompleted = 0;
     int knucklesBossesCompleted = 0;
@@ -18,5 +18,3 @@ struct BossesStatus
 
     int bossesCompleted = 0;
 };
-
-     

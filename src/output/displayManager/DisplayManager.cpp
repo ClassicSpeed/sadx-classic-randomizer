@@ -67,7 +67,6 @@ void DisplayManager::QueueChatMessage(const std::string& message)
 
 void DisplayManager::ShowSongName(const std::string& songName)
 {
-
     if (_settings.showSongName == ShowSongNameAlwaysOff)
         return;
 
@@ -77,7 +76,7 @@ void DisplayManager::ShowSongName(const std::string& songName)
     if (_settings.showSongNameForType == ShowSongNameForTypeOnlyActionLevels)
         if (CurrentLevel < LevelIDs_EmeraldCoast || CurrentLevel > LevelIDs_HotShelter)
             return;
-    
+
     if (_songName != songName)
     {
         _songName = songName;
@@ -285,9 +284,13 @@ void DisplayManager::DisplayGoalStatus()
         SetDebugFontColor(
             _gameStatus.unlock.whiteEmerald ? _whiteEmeraldColor : _whiteEmeraldColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "          W");
-        SetDebugFontColor(_gameStatus.unlock.redEmerald ? _redEmeraldColor : _redEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.redEmerald
+                              ? _redEmeraldColor
+                              : _redEmeraldColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "           R");
-        SetDebugFontColor(_gameStatus.unlock.cyanEmerald ? _cyanEmeraldColor : _cyanEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.cyanEmerald
+                              ? _cyanEmeraldColor
+                              : _cyanEmeraldColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "            C");
         SetDebugFontColor(_gameStatus.unlock.purpleEmerald
                               ? _purpleEmeraldColor
@@ -300,7 +303,9 @@ void DisplayManager::DisplayGoalStatus()
                               ? _yellowEmeraldColor
                               : _yellowEmeraldColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "               Y");
-        SetDebugFontColor(_gameStatus.unlock.blueEmerald ? _blueEmeraldColor : _blueEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.blueEmerald
+                              ? _blueEmeraldColor
+                              : _blueEmeraldColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine -1), "                B");
     }
 
@@ -449,12 +454,6 @@ void DisplayManager::OnExitCharacterSelectScreen()
     this->_inCharacterSelectScreen = false;
 }
 
-void DisplayManager::UpdateChecks(const std::map<int, LocationData>& checkData)
-{
-    this->_checkData = checkData;
-}
-
-
 void DisplayManager::SetConnected()
 {
     _connected = true;
@@ -554,9 +553,13 @@ void DisplayManager::DisplayItemsUnlocked()
         SetDebugFontColor(
             _gameStatus.unlock.whiteEmerald ? _whiteEmeraldColor : _whiteEmeraldColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "          W");
-        SetDebugFontColor(_gameStatus.unlock.redEmerald ? _redEmeraldColor : _redEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.redEmerald
+                              ? _redEmeraldColor
+                              : _redEmeraldColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "           R");
-        SetDebugFontColor(_gameStatus.unlock.cyanEmerald ? _cyanEmeraldColor : _cyanEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.cyanEmerald
+                              ? _cyanEmeraldColor
+                              : _cyanEmeraldColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "            C");
         SetDebugFontColor(_gameStatus.unlock.purpleEmerald
                               ? _purpleEmeraldColor
@@ -569,7 +572,9 @@ void DisplayManager::DisplayItemsUnlocked()
                               ? _yellowEmeraldColor
                               : _yellowEmeraldColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "               Y");
-        SetDebugFontColor(_gameStatus.unlock.blueEmerald ? _blueEmeraldColor : _blueEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.blueEmerald
+                              ? _blueEmeraldColor
+                              : _blueEmeraldColor & 0x00FFFFFF | 0x66000000);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "                B");
     }
 
@@ -674,52 +679,11 @@ void DisplayManager::DisplayItemsUnlocked()
         {
             buffer.clear();
             buffer.append("Enemies:  ");
-            int enemyCount = 0;
-            int enemyTotal = 0;
-            int actCount[5] = {0, 0, 0, 0, 0};
-            int actTotal[5] = {0, 0, 0, 0, 0};
-
-            for (const auto& check : _checkData)
-            {
-                if (check.second.character == CurrentCharacter && check.second.type == LocationEnemy &&
-                    GET_LEVEL(check.second.level) == CurrentLevel)
-                {
-                    int act = GET_ACT(check.second.level);
-                    if (act >= 0 && act < 5)
-                    {
-                        actTotal[act]++;
-                        if (check.second.checked)
-                            actCount[act]++;
-                    }
-                    enemyTotal++;
-                    if (check.second.checked)
-                        enemyCount++;
-                }
-            }
-            int actsWithEnemies = 0;
-            for (int i : actTotal)
-                if (i > 0)
-                    actsWithEnemies++;
 
 
+            int enemyCount = _gameStatus.enemySanity[CurrentLevel][CurrentCharacter].current;
+            int enemyTotal = _gameStatus.enemySanity[CurrentLevel][CurrentCharacter].total;
             buffer.append(std::to_string(enemyCount) + "/" + std::to_string(enemyTotal));
-            if (actsWithEnemies > 1)
-            {
-                bool firstActShow = false;
-                buffer.append(" (");
-                for (int i = 0; i < 5; i++)
-                {
-                    if (actTotal[i] == 0)
-                        continue;
-                    if (firstActShow)
-                        buffer.append("-");
-                    else
-                        firstActShow = true;
-                    buffer.append(std::to_string(actCount[i]) + "/" + std::to_string(actTotal[i]));
-                }
-                buffer.append(")");
-            }
-
             if (enemyTotal > 0)
             {
                 displayOffset++;
@@ -734,56 +698,10 @@ void DisplayManager::DisplayItemsUnlocked()
         {
             buffer.clear();
             buffer.append("Capsules: ");
-            int capsuleCount = 0;
-            int capsuleTotal = 0;
-            int actCount[5] = {0, 0, 0, 0, 0};
-            int actTotal[5] = {0, 0, 0, 0, 0};
 
-            for (const auto& check : _checkData)
-            {
-                if (check.second.character == CurrentCharacter && check.second.type == LocationCapsule &&
-                    GET_LEVEL(check.second.level) == CurrentLevel)
-                {
-                    if (!_options.GetSpecificCapsuleSanity(static_cast<CapsuleType>(check.second.capsuleType)))
-                        continue;
-
-                    if (!_options.includePinballCapsules && check.second.level == LevelAndActIDs_Casinopolis3)
-                        continue;
-
-                    int act = GET_ACT(check.second.level);
-                    if (act >= 0 && act < 5)
-                    {
-                        actTotal[act]++;
-                        if (check.second.checked)
-                            actCount[act]++;
-                    }
-                    capsuleTotal++;
-                    if (check.second.checked)
-                        capsuleCount++;
-                }
-            }
-            int actsWithEnemies = 0;
-            for (int i : actTotal)
-                if (i > 0)
-                    actsWithEnemies++;
+            int capsuleCount = _gameStatus.capsuleSanity[CurrentLevel][CurrentCharacter].current;
+            int capsuleTotal = _gameStatus.capsuleSanity[CurrentLevel][CurrentCharacter].total;
             buffer.append(std::to_string(capsuleCount) + "/" + std::to_string(capsuleTotal));
-            if (actsWithEnemies > 1)
-            {
-                bool firstActShow = false;
-                buffer.append(" (");
-                for (int i = 0; i < 5; i++)
-                {
-                    if (actTotal[i] == 0)
-                        continue;
-                    if (firstActShow)
-                        buffer.append("-");
-                    else
-                        firstActShow = true;
-
-                    buffer.append(std::to_string(actCount[i]) + "/" + std::to_string(actTotal[i]));
-                }
-                buffer.append(")");
-            }
             if (capsuleTotal > 0)
             {
                 displayOffset++;
@@ -797,20 +715,10 @@ void DisplayManager::DisplayItemsUnlocked()
         {
             buffer.clear();
             buffer.append("Fish:     ");
-            int fishCount = 0;
-            int fishTotal = 0;
 
-            for (const auto& check : _checkData)
-            {
-                if (CurrentCharacter == Characters_Big && check.second.type == LocationFish
-                    && check.second.level == CurrentLevel)
-                {
-                    fishTotal++;
-                    if (check.second.checked)
-                        fishCount++;
-                }
-            }
 
+            int fishCount = _gameStatus.fishSanity[CurrentLevel].current;
+            int fishTotal = _gameStatus.fishSanity[CurrentLevel].total;
             buffer.append(std::to_string(fishCount) + "/" + std::to_string(fishTotal));
 
             if (fishTotal > 0)
@@ -933,7 +841,8 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_gameStatus.unlock.knucklesShovelClawUnlocked ? "SC " : "   ");
         buffer.append(_gameStatus.unlock.knucklesFightingGlovesUnlocked ? "FG" : "  ");
         buffer.append("   ");
-        if (_gameStatus.unlock.knucklesUnlocked && _options.knucklesActionStageMissions > 0 && _options.goalRequiresLevels)
+        if (_gameStatus.unlock.knucklesUnlocked && _options.knucklesActionStageMissions > 0 && _options.
+            goalRequiresLevels)
         {
             buffer.append(" L:" + std::to_string(_gameStatus.levels.knucklesLevelsCompleted)
                 + "/" + std::to_string(_gameStatus.levels.knucklesLevelsTotal) + " ");
@@ -955,7 +864,8 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(!_gameStatus.unlock.knucklesShovelClawUnlocked ? "SC " : "   ");
         buffer.append(!_gameStatus.unlock.knucklesFightingGlovesUnlocked ? "FG" : "  ");
         buffer.append("   ");
-        if (!_gameStatus.unlock.knucklesUnlocked && _options.knucklesActionStageMissions > 0 && _options.goalRequiresLevels)
+        if (!_gameStatus.unlock.knucklesUnlocked && _options.knucklesActionStageMissions > 0 && _options.
+            goalRequiresLevels)
         {
             buffer.append(" L:" + std::to_string(_gameStatus.levels.knucklesLevelsCompleted)
                 + "/" + std::to_string(_gameStatus.levels.knucklesLevelsTotal) + " ");
@@ -1030,7 +940,9 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append(_gameStatus.unlock.bigUnlocked ? "B  " : "   ");
         buffer.append(_gameStatus.unlock.bigLifeBeltUnlocked ? "LB " : "   ");
         buffer.append(_gameStatus.unlock.bigPowerRodUnlocked ? "PR " : "   ");
-        buffer.append(_gameStatus.unlock.bigLureQuantity > 0 ? "L" + std::to_string(_gameStatus.unlock.bigLureQuantity) : "  ");
+        buffer.append(_gameStatus.unlock.bigLureQuantity > 0
+                          ? "L" + std::to_string(_gameStatus.unlock.bigLureQuantity)
+                          : "  ");
         if (_gameStatus.unlock.bigUnlocked && _options.bigActionStageMissions > 0 && _options.goalRequiresLevels)
         {
             buffer.append(" L:" + std::to_string(_gameStatus.levels.bigLevelsCompleted)

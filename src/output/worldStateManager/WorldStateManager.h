@@ -5,7 +5,6 @@
 #include "../../configuration/options/Options.h"
 #include "../../configuration/gameStatus/GameStatus.h"
 #include "../../application/structs/LevelEntrances.h"
-#include "../../application/structs/VisitedLevels.h"
 
 
 constexpr float CROSS_SIZE_MIN = 4.0;
@@ -50,7 +49,6 @@ public:
 
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
-    void UpdateChecks(const std::map<int, LocationData>& checkData);
     void DrawDisableDoorIndicator(NJS_POINT3 basePoint, float angle);
     void DrawCorrectDoorIndicator(NJS_POINT3 basePoint, float angle);
     void DrawOtherDoorIndicator(NJS_POINT3 basePoint, float angle);
@@ -79,9 +77,6 @@ private:
     Options& _options;
     Settings& _settings;
     GameStatus& _gameStatus;
-    
-    mutable std::map<int, LocationData> _checkData;
-
 
     static void __cdecl HandleWindyValleyEntrance();
     static void __cdecl HandleMREntrance(int newScene);

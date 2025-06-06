@@ -5,7 +5,6 @@
 #include "../../configuration/options/Options.h"
 
 
-
 class LocationRepository
 {
 public:
@@ -15,15 +14,16 @@ public:
             _instance = new LocationRepository(options, gameStatus);
         return *_instance;
     }
+
     LocationData SetLocationChecked(int checkId);
     LocationData GetLocation(int checkId);
-    void ResetLocations();
+    void UpdateStatus();
     std::map<int, LocationData> GetLocations();
     std::vector<CapsuleLocationData> GetCapsuleLocations();
     std::vector<EnemyLocationData> GetEnemyLocations();
 
 private:
-    explicit LocationRepository(Options& options,GameStatus& gameStatus);
+    explicit LocationRepository(Options& options, GameStatus& gameStatus);
     inline static LocationRepository* _instance = nullptr;
     Options& _options;
     GameStatus& _gameStatus;
@@ -34,4 +34,7 @@ private:
     void UpdateMissionStatus();
     void UpdateBossesStatus();
     void UpdateChaoStatus();
+    void UpdateEnemySanity();
+    void UpdateCapsuleSanity();
+    void UpdateFishSanity();
 };

@@ -1,10 +1,13 @@
 #pragma once
-#include "../../application/structs/BossesStatus.h"
-#include "../../application/structs/LevelStatus.h"
-#include "../../application/structs/UnlockStatus.h"
-#include "../../application/structs/ChaoStatus.h"
-#include "../../application/structs/MissionStatus.h"
-#include "../../application/structs/VisitedLevels.h"
+#include "status/BossesStatus.h"
+#include "status/LevelStatus.h"
+#include "status/UnlockStatus.h"
+#include "status/ChaoStatus.h"
+#include "status/MissionStatus.h"
+#include "status/VisitedLevels.h"
+#include "sanity/FishSanity.h"
+#include "sanity/EnemySanity.h"
+#include "sanity/CapsuleSanity.h"
 
 class GameStatus
 {
@@ -22,8 +25,11 @@ public:
     ChaoStatus chao;
     MissionStatus missions;
     VisitedLevels visitedLevels;
+    FishSanity fishSanity;
+    EnemySanity enemySanity;
+    CapsuleSanity capsuleSanity;
+
 private:
     explicit GameStatus();
     inline static GameStatus* _instance = nullptr;
-
 };

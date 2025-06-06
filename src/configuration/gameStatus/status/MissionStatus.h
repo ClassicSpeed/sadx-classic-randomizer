@@ -8,7 +8,7 @@ struct MissionStatus
     int amyMissionsTotal = 0;
     int bigMissionsTotal = 0;
     int gammaMissionsTotal = 0;
-    
+
     int sonicMissionsCompleted = 0;
     int tailsMissionsCompleted = 0;
     int knucklesMissionsCompleted = 0;
@@ -18,5 +18,3 @@ struct MissionStatus
 
     int missionsCompleted = 0;
 };
-
-     

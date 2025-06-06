@@ -56,7 +56,8 @@ struct UnlockStatus
 
     bool GotAllChaosEmeralds()
     {
-        return whiteEmerald && redEmerald && cyanEmerald && purpleEmerald && greenEmerald && yellowEmerald && blueEmerald;
+        return whiteEmerald && redEmerald && cyanEmerald && purpleEmerald && greenEmerald && yellowEmerald &&
+            blueEmerald;
     }
 
     int CountChaosEmeralds() const

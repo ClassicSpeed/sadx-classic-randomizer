@@ -31,7 +31,6 @@ public:
     void ShowSongName(const std::string& songName);
     void ShowStatusInformation(std::string information);
     void ShowGoalStatus();
-    void UpdateChecks(const std::map<int, LocationData>& checkData);
     void SetConnected();
 
 private:
@@ -96,7 +95,6 @@ private:
     float _unlockStatusDelay = 0.3f;
 
 
-
     int _keyItemColor = 0xFFF2C600;
 
     int _sonicColor = 0xFF0D7ADF;
@@ -114,7 +112,4 @@ private:
     int _greenEmeraldColor = 0xDD00FF00;
     int _yellowEmeraldColor = 0xDDFFFF00;
     int _blueEmeraldColor = 0xDD0000FF;
-
-
-    mutable std::map<int, LocationData> _checkData;
 };

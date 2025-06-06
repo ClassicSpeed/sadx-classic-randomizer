@@ -1,7 +1,5 @@
 ﻿#include "LocationRepository.h"
 
-#include "../../application/structs/MissionStatus.h"
-
 
 LocationRepository::LocationRepository(Options& options, GameStatus& gameStatus) : _options(options),
     _gameStatus(gameStatus)
@@ -2055,10 +2053,7 @@ LocationRepository::LocationRepository(Options& options, GameStatus& gameStatus)
 LocationData LocationRepository::SetLocationChecked(const int checkId)
 {
     _checkData[checkId].checked = true;
-    UpdateLevelStatus();
-    UpdateBossesStatus();
-    UpdateMissionStatus();
-    UpdateChaoStatus();
+    UpdateStatus();
     return _checkData[checkId];
 }
 
@@ -2067,12 +2062,15 @@ LocationData LocationRepository::GetLocation(const int checkId)
     return _checkData[checkId];
 }
 
-void LocationRepository::ResetLocations()
+void LocationRepository::UpdateStatus()
 {
     UpdateLevelStatus();
     UpdateBossesStatus();
     UpdateMissionStatus();
     UpdateChaoStatus();
+    UpdateEnemySanity();
+    UpdateCapsuleSanity();
+    UpdateFishSanity();
 }
 
 std::map<int, LocationData> LocationRepository::GetLocations()
@@ -2402,4 +2400,75 @@ void LocationRepository::UpdateChaoStatus()
         _gameStatus.chao.racesCompleted++;
     if (_checkData[909].checked)
         _gameStatus.chao.racesCompleted++;
+}
+
+void LocationRepository::UpdateEnemySanity()
+{
+    if (!_options.enemySanity)
+        return;
+
+    for (int level = LevelIDs_EmeraldCoast; level <= LevelIDs_HotShelter; level++)
+    {
+        for (int character = Characters_Sonic; character <= Characters_Big; character++)
+        {
+            _gameStatus.enemySanity[level][character].current = 0;
+            _gameStatus.enemySanity[level][character].total = 0;
+        }
+    }
+
+    for (const auto& [id, location] : _checkData)
+    {
+        if (location.type == LocationEnemy)
+        {
+            _gameStatus.enemySanity[GET_LEVEL(location.level)][location.character].total++;
+            if (location.checked)
+                _gameStatus.enemySanity[GET_LEVEL(location.level)][location.character].current++;
+        }
+    }
+}
+
+void LocationRepository::UpdateCapsuleSanity()
+{
+    if (!_options.capsuleSanity)
+        return;
+    for (int level = LevelIDs_EmeraldCoast; level <= LevelIDs_HotShelter; level++)
+    {
+        for (int character = Characters_Sonic; character <= Characters_Big; character++)
+        {
+            _gameStatus.capsuleSanity[level][character].current = 0;
+            _gameStatus.capsuleSanity[level][character].total = 0;
+        }
+    }
+
+    for (const auto& [id, location] : _checkData)
+    {
+        if (location.type == LocationCapsule)
+        {
+            _gameStatus.capsuleSanity[GET_LEVEL(location.level)][location.character].total++;
+            if (location.checked)
+                _gameStatus.capsuleSanity[GET_LEVEL(location.level)][location.character].current++;
+        }
+    }
+}
+
+void LocationRepository::UpdateFishSanity()
+{
+    if (!_options.fishSanity)
+        return;
+
+    for (int level = LevelIDs_EmeraldCoast; level <= LevelIDs_HotShelter; level++)
+    {
+        _gameStatus.fishSanity[level].current = 0;
+        _gameStatus.fishSanity[level].total = 0;
+    }
+
+    for (const auto& [id, location] : _checkData)
+    {
+        if (location.type == LocationFish)
+        {
+            _gameStatus.fishSanity[location.level].total++;
+            if (location.checked)
+                _gameStatus.fishSanity[location.level].current++;
+        }
+    }
 }

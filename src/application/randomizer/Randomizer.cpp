@@ -16,7 +16,6 @@ Randomizer::Randomizer(Options& options, Settings& settings, GameStatus& gameSta
       _saveFileManager(saveFileManager), _musicManager(musicManager), _reactionManager(reactionManager)
 
 {
-    _displayManager.UpdateChecks(locationRepository.GetLocations());
 }
 
 void Randomizer::OnCheckFound(const int checkId) const
@@ -33,8 +32,6 @@ void Randomizer::OnCheckFound(const int checkId) const
     _locationRepository.SetLocationChecked(checkId);
     _archipelagoMessenger.CheckLocation(checkId);
 
-    _displayManager.UpdateChecks(_locationRepository.GetLocations());
-    _worldStateManager.UpdateChecks(_locationRepository.GetLocations());
     if (check.type == LocationLevel && check.levelMission == MISSION_C && _options.goalRequiresLevels)
     {
         _displayManager.ShowGoalStatus();
@@ -69,10 +66,6 @@ void Randomizer::MarkCheckedLocation(const int64_t checkId) const
     LocationData locationData = _locationRepository.SetLocationChecked(checkId);
     if (locationData.type == LocationMission)
         _saveFileManager.SetMissionCompleted(locationData.missionNumber);
-
-    //TODO: Weird, check if we can move the data to status
-    _displayManager.UpdateChecks(_locationRepository.GetLocations());
-    _worldStateManager.UpdateChecks(_locationRepository.GetLocations());
 }
 
 void Randomizer::OnItemReceived(const int64_t itemId) const
@@ -237,10 +230,9 @@ std::vector<EnemyLocationData> Randomizer::GetEnemies()
 }
 
 
-
 void Randomizer::OnConnected()
 {
-    _locationRepository.ResetLocations();
+    _locationRepository.UpdateStatus();
 
     //Missions
     if (_options.autoStartMissions)

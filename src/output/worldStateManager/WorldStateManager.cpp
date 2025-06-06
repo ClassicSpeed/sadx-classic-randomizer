@@ -314,11 +314,6 @@ void WorldStateManager::UnlockSuperSonic()
     WriteSaveFile();
 }
 
-void WorldStateManager::UpdateChecks(const std::map<int, LocationData>& checkData)
-{
-    this->_checkData = checkData;
-}
-
 void WorldStateManager::DrawDisableDoorIndicator(const NJS_POINT3 basePoint, const float angle)
 {
     NJS_POINT3COL point3Col;

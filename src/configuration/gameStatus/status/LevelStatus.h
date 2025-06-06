@@ -46,7 +46,7 @@ struct LevelStatus
     int amyLevelsTotal = 0;
     int bigLevelsTotal = 0;
     int gammaLevelsTotal = 0;
-    
+
     int sonicLevelsCompleted = 0;
     int tailsLevelsCompleted = 0;
     int knucklesLevelsCompleted = 0;
@@ -56,5 +56,3 @@ struct LevelStatus
 
     int levelsCompleted = 0;
 };
-
-     
