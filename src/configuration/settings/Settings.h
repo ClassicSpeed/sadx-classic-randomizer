@@ -152,7 +152,7 @@ public:
 
 
     float displayDuration = 6.0f;
-    unsigned __int16 debugFontSize = 21;
+    uint16_t debugFontSize = 21;
     DisplayInGameTracker displayInGameTracker = DisplayTrackerWhenPaused;
     int displayMessageColor = 0xFF33FF33; //Green
     int chatMessageColor = 0xFFFFFFFF;
@@ -247,7 +247,6 @@ public:
         {0xFFD4AF37},
         {0xFFD4AF37},
     };
-    
 
 
     bool _superSonicModRunning = false;

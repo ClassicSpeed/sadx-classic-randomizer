@@ -151,10 +151,11 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
     {
         if (item.second.type == ItemEmblem)
         {
+            //TODO: Do this in the save file manager?
             if (_gameStatus.lastStoryRequirementsCompleted)
                 _worldStateManager.UnlockSuperSonic();
         }
-
+        //TODO: Do this in the save file manager?
         if (item.second.type == ItemCharacter && item.second.obtained)
             _worldStateManager.SetEventFlags(item.second.eventFlags);
     }

@@ -19,6 +19,28 @@ constexpr double MIN_DRAW_DOOR_ARROW_DISTANCE = 50.0;
 constexpr double MAX_DRAW_DOOR_ARROW_DISTANCE = 100.0;
 
 
+constexpr int WARP_EGG_CARRIER_INSIDE = 35;
+
+constexpr int WARP_STATION_SQUARE = 17;
+constexpr int WARP_MYSTIC_RUINS = 6;
+constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
+constexpr int WARP_PAST = 10;
+
+constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
+constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
+constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
+constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
+constexpr int CAVE_WIND_CHANGE_SCENE_MYSTIC_RUINS = 31;
+constexpr int EMBLEM_MYSTIC_RUINS = 65;
+
+constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
+constexpr int BEACH_GATE_STATION_SQUARE = 67;
+constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
+
+constexpr char LEON_TIMER1 = 10;
+constexpr char LEON_TIMER2 = 30;
+
+
 struct LevelArrow
 {
     LevelAndActIDs levelAndAct;
@@ -78,19 +100,29 @@ private:
     Settings& _settings;
     GameStatus& _gameStatus;
 
-    static void __cdecl HandleWindyValleyEntrance();
-    static void __cdecl HandleMREntrance(int newScene);
-    static int __cdecl HandleTwinkleParkEntrance(char character);
-    static int __cdecl HandleTwinkleCircuitEntrance(char character);
-    static int __cdecl HandleEggCarrierEggDoor(int a1);
-    static int __cdecl HandleEggCarrierOutsideDoor(int a1);
-    static void __cdecl HandleSceneChangeEcInside(int a1, int a2);
-    static void __cdecl HandleSceneChangeEcOutside(int a1);
-    static int __cdecl HandleSkyDeckDoor(EntityData1* a1);
-    static void __cdecl HandleLostWorldEntranceCollision(int a1);
-    static void __cdecl HandleOnFinalEggDoorCheckA(int a1);
-    static __int16 __cdecl HandleOnFinalEggDoorCheckB(int a1);
+    static void __cdecl OnSceneChangeMr(int newScene);
+    static int __cdecl OnTwinkleParkDoor(char character);
+    static int __cdecl OnTwinkleCircuitDoor(char character);
+    static int __cdecl OnEggCarrierEggDoor(int a1);
+    static int __cdecl OnEggCarrierOutsideDoor(int a1);
+    static void __cdecl OnSceneChangeEcInside(int a1, int a2);
+    static void __cdecl OnSceneChangeEcOutside(int a1);
+    static int __cdecl OnSkyDeckDoor(EntityData1* a1);
+    static void __cdecl OnLostWorldEntranceCollision(int a1);
+    static void __cdecl OnFinalEggDoorCheckA(int a1);
 
+
+    static int16_t __cdecl OnFinalEggDoorCheckB(int a1);
+
+    static void __cdecl HandleWarp();
+    static bool __cdecl HandleHedgehogHammer();
+    static void __cdecl HandleWindyValleyEntrance();
+
+
+    inline DataPointer(int, _showExitMenuTwinkleCircuit, 0x3C5D430);
+    inline DataPointer(int16_t, _eggCarrierSunk, 0x3C62394);
+    inline DataArray(int16_t, _chaoStatValues, 0x8895C8, 0x402);
+    inline FunctionPointer(int, _isMonkeyDead, (int a1), 0x53F920);
 
     inline static FunctionHook<void, int, float, float, float> _createAnimalHook{0x4BE610};
     static void OnCreateAnimal(int e_num, float x, float y, float z);
@@ -205,7 +237,7 @@ private:
     inline static FunctionHook<void, task*> _loadSpeedHighwayShutter2Hook{0x63A500};
     static void OnLoadSpeedHighwayShutter2(task* tp);
 
-    inline static FunctionHook<void, ObjectMaster*> _onOHighEleHook{0x6393F0};
+    inline static FunctionHook<void, ObjectMaster*> _oHighEleHook{0x6393F0};
     static void OnOHighEle(ObjectMaster* tp);
 
     inline static FunctionHook<BOOL> _isCityHallDoorOpenHook{0x636BF0};
@@ -217,7 +249,7 @@ private:
     inline static FunctionHook<BOOL, EntityData1*> _isFinalEggGammaDoorOpenHook{0x53ED30};
     static BOOL OnIsFinalEggGammaDoorOpen(EntityData1* entity);
 
-    inline static FunctionHook<void, task*> _onLoadSceneChangeMrHook{0x5394F0};
+    inline static FunctionHook<void, task*> _loadSceneChangeMrHook{0x5394F0};
     static void OnLoadSceneChangeMr(task* tp);
 
     inline static FunctionHook<BOOL> _isFinalEggTowerActiveHook{0x538550};
@@ -238,19 +270,19 @@ private:
     inline static FunctionHook<BOOL, int> _isMonkeyDoorOpenHook{0x53E5D0};
     static BOOL OnIsMonkeyDoorOpen(int a1);
 
-    inline static FunctionHook<void, task*> _onLoadMonkeyCageHook{0x540730};
+    inline static FunctionHook<void, task*> _loadMonkeyCageHook{0x540730};
     static void OnLoadMonkeyCage(task* tp);
 
-    inline static FunctionHook<void, task*> _onLoadLongLadderMrHook{0x536CB0};
+    inline static FunctionHook<void, task*> _loadLongLadderMrHook{0x536CB0};
     static void OnLoadLongLadderMr(task* tp);
 
     inline static FunctionHook<BOOL, int> _preventKeyStoneFromSpawningHook{0x53C630};
     static BOOL OnPreventKeyStoneFromSpawning(int a1);
 
-    inline static FunctionHook<void, task*> _onLoadPoolWaterHook{0x51DC30};
+    inline static FunctionHook<void, task*> _loadPoolWaterHook{0x51DC30};
     static void OnLoadPoolWater(task* tp);
 
-    inline static FunctionHook<void, task*> _onLoadPoolDoorHook{0x51E320};
+    inline static FunctionHook<void, task*> _loadPoolDoorHook{0x51E320};
     static void OnLoadPoolDoor(task* tp);
 
     NJS_COLOR _wrongDoorColor[12] = {

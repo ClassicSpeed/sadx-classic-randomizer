@@ -1,96 +1,120 @@
 #include "WorldStateManager.h"
 
-#include <algorithm>
-#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
+UsercallFuncVoid(sceneChangeMrHook, (int a1), (a1), 0x539220, rEBX);
+UsercallFunc(int, twinkleParkDoorHook, (char tpChar), (tpChar), 0x63EA90, rEAX, rESI);
+UsercallFunc(int, twinkleCircuitDoorHook, (char tpChar), (tpChar), 0x63F810, rEAX, rESI);
+UsercallFunc(int, eggCarrierEggDoorHook, (int a1), (a1), 0x52B420, rEAX, rESI);
+UsercallFunc(int, eggCarrierOutsideDoorHook, (int a1), (a1), 0x524070, rEAX, rESI);
+UsercallFuncVoid(sceneChangeECInsideHook, (int a1, int a2), (a1,a2), 0x52D690, rEAX, rECX);
+UsercallFuncVoid(sceneChangeECOutsideHook, (int a1), (a1), 0x524FE0, rEAX);
+UsercallFunc(int, skyDeckDoorHook, (EntityData1 * a1), (a1), 0x51DEB0, rEAX, rESI);
+UsercallFuncVoid(lostWorldEntranceCollisionHook, (int a1), (a1), 0x532960, rEDI);
+UsercallFuncVoid(finalEggDoorCheckAHook, (int a1), (a1), 0x53C130, rEAX);
+UsercallFunc(int16_t, finalEggDoorCheckBHook, (int a1), (a1), 0x53BC70, rAX, rEAX);
+DataArray(int, IslandDoorFlags, 0x111E010, 8);
 
-
-DataPointer(int, ShowExitMenuTwinkleCircuit, 0x3C5D430);
-FunctionPointer(int, isMonkeyDead, (int a1), 0x53F920);
-
-constexpr int WARP_EGG_CARRIER_INSIDE = 35;
-
-constexpr int WARP_STATION_SQUARE = 17;
-constexpr int WARP_MYSTIC_RUINS = 6;
-constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
-constexpr int WARP_PAST = 10;
-
-constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
-constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
-constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
-constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
-constexpr int CAVE_WIND_CHANGE_SCENE_MYSTIC_RUINS = 31;
-constexpr int EMBLEM_MYSTIC_RUINS = 65;
-
-constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
-constexpr int BEACH_GATE_STATION_SQUARE = 67;
-constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
-DataPointer(__int16, EggCarrierSunk, 0x3C62394);
-
-DataArray(int16_t, ChaoStatValues, 0x8895C8, 0x402);
-
-
-// //We pretend that the egg carrier is sunk so that the hedgehog hammer is works
-static bool __cdecl HandleHedgehogHammer()
+WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus): _options(options),
+    _settings(settings), _gameStatus(gameStatus)
 {
-    return GetEventFlag(EventFlags_Amy_WarriorFeather);
-}
+    _createAnimalHook.Hook(OnCreateAnimal);
+    _policeEnemyMainHook.Hook(OnPoliceEnemyMain);
+    _collisionCubeHook.Hook(OnCollisionCube);
+    _collisionCylinderHook.Hook(OnCollisionCylinder);
+    _howManyGameGearGamesHook.Hook(OnHowManyGameGearGames);
+    _isGameGearMenuEnabledHook.Hook(OnIsGameGearMenuEnabled);
+    _isChaos2DoorOpenHook.Hook(OnIsChaos2DoorOpen);
+    _isStationDoorOpenHook.Hook(OnIsStationDoorOpen);
+    _isHotelDoorOpenHook.Hook(OnIsHotelDoorOpen);
+    _isCasinoHotelDoorOpenHook.Hook(OnIsCasinoHotelDoorOpen);
+    _isCasinoStationDoorOpenHook.Hook(OnIsCasinoStationDoorOpen);
+    _showRecapHook.Hook(OnShowRecap);
+    _playVoiceHook.Hook(OnPlayVoice);
+    _addSecondsHook.Hook(OnAddSeconds);
+    _getEntranceMRuinsHook.Hook(OnGetEntranceMRuins);
+    _getEntranceEggCarrierHook.Hook(OnGetEntranceEggCarrier);
+    _getEntrancePastHook.Hook(OnGetEntrancePast);
+    _setTimeOfDayHook.Hook(OnSetTimeOfDay);
+    _adventureSetLevelAndActHook.Hook(OnAdventureSetLevelAndAct);
+    _prepareLevelHook.Hook(OnPrepareLevel);
+    _countSetItemsMaybeHook.Hook(OnCountSetItemsMaybe);
+    _emblemMainHook.Hook(OnEmblemMain);
+    _missionSetLoadHook.Hook(OnMissionSetLoad);
+    _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
+    _mysticRuinsKeyHook.Hook(OnMysticRuinsKey);
+    _employeeCardHook.Hook(OnEmployeeCard);
+    _bigHud_DrawWeightAndLifeHook.Hook(OnBigHud_DrawWeightAndLife);
+    _setStartPosReturnToFieldHook.Hook(OnSetStartPosReturnToField);
+    _sceneChangeMainStationSquareHook.Hook(OnSceneChangeMainStationSquare);
+    _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
+    _twinkleCircuitResultsMaybeHook.Hook(OnTwinkleCircuitResultsMaybe);
+    _isEmeraldCoastOpenHook.Hook(OnIsEmeraldCoastOpen);
+    _loadEmeraldCoastGateTargetsHook.Hook(OnLoadEmeraldCoastGateTargets);
+    _isWindyValleyOpenHook.Hook(OnIsWindyValleyOpen);
+    _isCasinoOpenHook.Hook(OnIsCasinoOpen);
+    _isSpeedHighwayShutterOpenHook.Hook(OnIsSpeedHighwayShutterOpen);
+    _loadSpeedHighwayShutterHook.Hook(OnLoadSpeedHighwayShutter);
+    _loadSpeedHighwayShutter2Hook.Hook(OnLoadSpeedHighwayShutter2);
+    _oHighEleHook.Hook(OnOHighEle);
+    _isCityHallDoorOpenHook.Hook(OnIsCityHallDoorOpen);
+    _loadBarricadeHook.Hook(OnLoadBarricade);
+    _isFinalEggGammaDoorOpenHook.Hook(OnIsFinalEggGammaDoorOpen);
+    _loadSceneChangeMrHook.Hook(OnLoadSceneChangeMr);
+    _isFinalEggTowerActiveHook.Hook(OnIsFinalEggTowerActive);
+    _isFinalEggDoorActiveHook.Hook(OnIsFinalEggDoorActive);
+    _isLostWorldBackEntranceOpenHook.Hook(OnIsLostWorldBackEntranceOpen);
+    _isLostWorldFrontEntranceOpenHook.Hook(OnIsLostWorldFrontEntranceOpen);
+    _isAngelIslandOpenHook.Hook(OnIsAngelIslandOpen);
+    _isMonkeyDoorOpenHook.Hook(OnIsMonkeyDoorOpen);
+    _loadMonkeyCageHook.Hook(OnLoadMonkeyCage);
+    _loadLongLadderMrHook.Hook(OnLoadLongLadderMr);
+    _preventKeyStoneFromSpawningHook.Hook(OnPreventKeyStoneFromSpawning);
+    _loadPoolWaterHook.Hook(OnLoadPoolWater);
+    _loadPoolDoorHook.Hook(OnLoadPoolDoor);
 
-static void __cdecl HandleWarp()
-{
-    DisableController(0);
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Sonic)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos0, 0);
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2 && CurrentCharacter ==
-        Characters_Tails)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggWalker, 0);
+    sceneChangeMrHook.Hook(OnSceneChangeMr);
+    twinkleParkDoorHook.Hook(OnTwinkleParkDoor);
+    twinkleCircuitDoorHook.Hook(OnTwinkleCircuitDoor);
+    eggCarrierEggDoorHook.Hook(OnEggCarrierEggDoor);
+    eggCarrierOutsideDoorHook.Hook(OnEggCarrierOutsideDoor);
+    sceneChangeECInsideHook.Hook(OnSceneChangeEcInside);
+    sceneChangeECOutsideHook.Hook(OnSceneChangeEcOutside);
+    skyDeckDoorHook.Hook(OnSkyDeckDoor);
+    lostWorldEntranceCollisionHook.Hook(OnLostWorldEntranceCollision);
+    finalEggDoorCheckAHook.Hook(OnFinalEggDoorCheckA);
+    finalEggDoorCheckBHook.Hook(OnFinalEggDoorCheckB);
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Sonic)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggViper, 0);
+    WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
+    WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehogHammer);
+    WriteCall(reinterpret_cast<void*>(0x537F52), &HandleWindyValleyEntrance);
+    WriteCall(reinterpret_cast<void*>(0x537F64), &HandleWindyValleyEntrance);
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Gamma)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_E101, 0);
+    //We allow Tails and Big to enter the Master Emerald Shrine
+    IslandDoorFlags[Characters_Tails] = FLAG_SONIC_MR_ISLANDDOOR;
+    IslandDoorFlags[Characters_Big] = FLAG_SONIC_MR_ISLANDDOOR;
+    IslandDoorFlags[Characters_Amy] = FLAG_SONIC_MR_ISLANDDOOR;
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
-            || CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Knuckles)
-        && EntityData1Ptrs[0]->Position.y < 100)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos4, 0);
+    //We replace the checkpoint for a warp object from the Egg Carrier
+    ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
+    ObjList_MRuins[WARP_MYSTIC_RUINS] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
+    ObjList_MRuins[EMBLEM_MYSTIC_RUINS].Distance = 1000000.0f;
+    ObjList_MRuins[EMBLEM_MYSTIC_RUINS].UseDistance = 1;
+    ObjList_ECarrier0[WARP_EGG_CARRIER_OUTSIDE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
+    ObjList_Past[WARP_PAST] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
-        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
-        && EntityData1Ptrs[0]->Position.y > 100 && EntityData1Ptrs[0]->Position.y < 150)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggHornet, 0);
+    WriteData<1>((char*)0x004A6B8C, LEON_TIMER1); // Leon timer 1
+    WriteData<1>((char*)0x004A81C1, LEON_TIMER2); // Leon timer 2
+    WriteData((float**)0x004CD75A, &_nj_screen_.w); // From SADXFE
+    WriteData((float**)0x004CD77C, &_nj_screen_.h); // From SADXFE
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
-        || CurrentCharacter == Characters_Tails) && EntityData1Ptrs[0]->Position.y > 150)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_SkyChase1, 0);
 
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Gamma)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_E101R, 0);
-
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Amy)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_Zero, 0);
-
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z > -500
-        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Big))
-
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 0);
-
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside && (CurrentCharacter == Characters_Knuckles))
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 1);
-
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z < -500
-        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_SkyChase2, 0);
-
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_Past, 1);
-
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past2)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 1);
-
-    else
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
+    if (settings.chaoStatsMultiplier > 1)
+    {
+        for (int i = 0x00; i < 0x402; i++)
+        {
+            _chaoStatValues[i] = _chaoStatValues[i] * settings.chaoStatsMultiplier;
+        }
+    }
 }
 
 
@@ -103,6 +127,7 @@ void WorldStateManager::OnCreateAnimal(int e_num, float x, float y, float z)
 }
 
 //We delete the police enemy when transitioning between levels
+//TODO: Do the same with the other enemies
 void WorldStateManager::OnPoliceEnemyMain(task* tp)
 {
     if (CutsceneMode == 3)
@@ -163,138 +188,69 @@ void WorldStateManager::OnCollisionCylinder(task* tp)
         _collisionCylinderHook.Original(tp);
 }
 
-UsercallFuncVoid(onSceneChangeMr_t, (int a1), (a1), 0x539220, rEBX);
 
-UsercallFunc(int, onTwinkleParkDoor_t, (char tpChar), (tpChar), 0x63EA90, rEAX, rESI);
-
-UsercallFunc(int, onTwinkleCircuitDoor_t, (char tpChar), (tpChar), 0x63F810, rEAX, rESI);
-
-
-UsercallFunc(int, onEggCarrierEggDoor_t, (int a1), (a1), 0x52B420, rEAX, rESI);
-
-
-UsercallFunc(int, onEggCarrierOutsideDoor_t, (int a1), (a1), 0x524070, rEAX, rESI);
-
-
-UsercallFuncVoid(_onSceneChangeECInside_t, (int a1, int a2), (a1,a2), 0x52D690, rEAX, rECX);
-
-UsercallFuncVoid(_onSceneChangeECOutside_t, (int a1), (a1), 0x524FE0, rEAX);
-
-UsercallFunc(int, onSkyDeckDoor_t, (EntityData1 * a1), (a1), 0x51DEB0, rEAX, rESI);
-
-UsercallFuncVoid(onLostWorldEntranceCollision_t, (int a1), (a1), 0x532960, rEDI);
-
-UsercallFuncVoid(onFinalEggDoorCheckA_t, (int a1), (a1), 0x53C130, rEAX);
-
-UsercallFunc(__int16, onFinalEggDoorCheckB_t, (int a1), (a1), 0x53BC70, rAX, rEAX);
-
-char LeonTimer1 = 10;
-char LeonTimer2 = 30;
-
-WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus): _options(options),
-    _settings(settings), _gameStatus(gameStatus)
+// //We pretend that the egg carrier is sunk so that the hedgehog hammer works
+bool WorldStateManager::HandleHedgehogHammer()
 {
-    _createAnimalHook.Hook(OnCreateAnimal);
-    _policeEnemyMainHook.Hook(OnPoliceEnemyMain);
-    _collisionCubeHook.Hook(OnCollisionCube);
-    _collisionCylinderHook.Hook(OnCollisionCylinder);
-    _howManyGameGearGamesHook.Hook(OnHowManyGameGearGames);
-    _isGameGearMenuEnabledHook.Hook(OnIsGameGearMenuEnabled);
-    _isChaos2DoorOpenHook.Hook(OnIsChaos2DoorOpen);
-    _isStationDoorOpenHook.Hook(OnIsStationDoorOpen);
-    _isHotelDoorOpenHook.Hook(OnIsHotelDoorOpen);
-    _isCasinoHotelDoorOpenHook.Hook(OnIsCasinoHotelDoorOpen);
-    _isCasinoStationDoorOpenHook.Hook(OnIsCasinoStationDoorOpen);
-    _showRecapHook.Hook(OnShowRecap);
-    _playVoiceHook.Hook(OnPlayVoice);
-    _addSecondsHook.Hook(OnAddSeconds);
-    _getEntranceMRuinsHook.Hook(OnGetEntranceMRuins);
-    _getEntranceEggCarrierHook.Hook(OnGetEntranceEggCarrier);
-    _getEntrancePastHook.Hook(OnGetEntrancePast);
-    _setTimeOfDayHook.Hook(OnSetTimeOfDay);
-    _adventureSetLevelAndActHook.Hook(OnAdventureSetLevelAndAct);
-    _prepareLevelHook.Hook(OnPrepareLevel);
-    _countSetItemsMaybeHook.Hook(OnCountSetItemsMaybe);
-    _emblemMainHook.Hook(OnEmblemMain);
-    _missionSetLoadHook.Hook(OnMissionSetLoad);
-    _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
-    _mysticRuinsKeyHook.Hook(OnMysticRuinsKey);
-    _employeeCardHook.Hook(OnEmployeeCard);
-    _bigHud_DrawWeightAndLifeHook.Hook(OnBigHud_DrawWeightAndLife);
-    _setStartPosReturnToFieldHook.Hook(OnSetStartPosReturnToField);
-    _sceneChangeMainStationSquareHook.Hook(OnSceneChangeMainStationSquare);
-    _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
-    _twinkleCircuitResultsMaybeHook.Hook(OnTwinkleCircuitResultsMaybe);
-    _isEmeraldCoastOpenHook.Hook(OnIsEmeraldCoastOpen);
-    _loadEmeraldCoastGateTargetsHook.Hook(OnLoadEmeraldCoastGateTargets);
-    _isWindyValleyOpenHook.Hook(OnIsWindyValleyOpen);
-    _isCasinoOpenHook.Hook(OnIsCasinoOpen);
-    _isSpeedHighwayShutterOpenHook.Hook(OnIsSpeedHighwayShutterOpen);
-    _loadSpeedHighwayShutterHook.Hook(OnLoadSpeedHighwayShutter);
-    _loadSpeedHighwayShutter2Hook.Hook(OnLoadSpeedHighwayShutter2);
-    _onOHighEleHook.Hook(OnOHighEle);
-    _isCityHallDoorOpenHook.Hook(OnIsCityHallDoorOpen);
-    _loadBarricadeHook.Hook(OnLoadBarricade);
-    _isFinalEggGammaDoorOpenHook.Hook(OnIsFinalEggGammaDoorOpen);
-    _onLoadSceneChangeMrHook.Hook(OnLoadSceneChangeMr);
-    _isFinalEggTowerActiveHook.Hook(OnIsFinalEggTowerActive);
-    _isFinalEggDoorActiveHook.Hook(OnIsFinalEggDoorActive);
-    _isLostWorldBackEntranceOpenHook.Hook(OnIsLostWorldBackEntranceOpen);
-    _isLostWorldFrontEntranceOpenHook.Hook(OnIsLostWorldFrontEntranceOpen);
-    _isAngelIslandOpenHook.Hook(OnIsAngelIslandOpen);
-    _isMonkeyDoorOpenHook.Hook(OnIsMonkeyDoorOpen);
-    _onLoadMonkeyCageHook.Hook(OnLoadMonkeyCage);
-    _onLoadLongLadderMrHook.Hook(OnLoadLongLadderMr);
-    _preventKeyStoneFromSpawningHook.Hook(OnPreventKeyStoneFromSpawning);
-    _onLoadPoolWaterHook.Hook(OnLoadPoolWater);
-    _onLoadPoolDoorHook.Hook(OnLoadPoolDoor);
+    return GetEventFlag(EventFlags_Amy_WarriorFeather);
+}
 
+void WorldStateManager::HandleWarp()
+{
+    DisableController(0);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Sonic)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos0, 0);
 
-    onSceneChangeMr_t.Hook(HandleMREntrance);
-    onTwinkleParkDoor_t.Hook(HandleTwinkleParkEntrance);
-    onTwinkleCircuitDoor_t.Hook(HandleTwinkleCircuitEntrance);
-    onEggCarrierEggDoor_t.Hook(HandleEggCarrierEggDoor);
-    onEggCarrierOutsideDoor_t.Hook(HandleEggCarrierOutsideDoor);
-    _onSceneChangeECInside_t.Hook(HandleSceneChangeEcInside);
-    _onSceneChangeECOutside_t.Hook(HandleSceneChangeEcOutside);
-    onSkyDeckDoor_t.Hook(HandleSkyDeckDoor);
-    onLostWorldEntranceCollision_t.Hook(HandleLostWorldEntranceCollision);
-    onFinalEggDoorCheckA_t.Hook(HandleOnFinalEggDoorCheckA);
-    onFinalEggDoorCheckB_t.Hook(HandleOnFinalEggDoorCheckB);
-    WriteCall(reinterpret_cast<void*>(0x5264C5), &HandleWarp);
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2 && CurrentCharacter ==
+        Characters_Tails)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggWalker, 0);
 
-    WriteCall(reinterpret_cast<void*>(0x528271), &HandleHedgehogHammer);
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Sonic)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggViper, 0);
 
-    WriteCall(reinterpret_cast<void*>(0x537F52), &HandleWindyValleyEntrance);
-    WriteCall(reinterpret_cast<void*>(0x537F64), &HandleWindyValleyEntrance);
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Gamma)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_E101, 0);
 
-    //We allow Tails and Big to enter the Master Emerald Shrine
-    DataArray(int, islandDoorFlags, 0x111E010, 8);
-    islandDoorFlags[Characters_Tails] = FLAG_SONIC_MR_ISLANDDOOR;
-    islandDoorFlags[Characters_Big] = FLAG_SONIC_MR_ISLANDDOOR;
-    islandDoorFlags[Characters_Amy] = FLAG_SONIC_MR_ISLANDDOOR;
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
+            || CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Knuckles)
+        && EntityData1Ptrs[0]->Position.y < 100)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos4, 0);
 
-    //We replace the checkpoint for a warp object from the Egg Carrier
-    ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
-    ObjList_MRuins[WARP_MYSTIC_RUINS] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
-    ObjList_MRuins[EMBLEM_MYSTIC_RUINS].Distance = 1000000.0f;
-    ObjList_MRuins[EMBLEM_MYSTIC_RUINS].UseDistance = 1;
-    ObjList_ECarrier0[WARP_EGG_CARRIER_OUTSIDE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
-    ObjList_Past[WARP_PAST] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
+        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+        && EntityData1Ptrs[0]->Position.y > 100 && EntityData1Ptrs[0]->Position.y < 150)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggHornet, 0);
 
-    WriteData<1>((char*)0x004A6B8C, LeonTimer1); // Leon timer 1
-    WriteData<1>((char*)0x004A81C1, LeonTimer2); // Leon timer 2
-    WriteData((float**)0x004CD75A, &_nj_screen_.w); // From SADXFE
-    WriteData((float**)0x004CD77C, &_nj_screen_.h); // From SADXFE
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
+        || CurrentCharacter == Characters_Tails) && EntityData1Ptrs[0]->Position.y > 150)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_SkyChase1, 0);
 
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Gamma)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_E101R, 0);
 
-    if (settings.chaoStatsMultiplier > 1)
-    {
-        for (int i = 0x00; i < 0x402; i++)
-        {
-            ChaoStatValues[i] = ChaoStatValues[i] * settings.chaoStatsMultiplier;
-        }
-    }
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Amy)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Zero, 0);
+
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z > -500
+        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Big))
+
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 0);
+
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && (CurrentCharacter == Characters_Knuckles))
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 1);
+
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z < -500
+        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_SkyChase2, 0);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Past, 1);
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past2)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 1);
+
+    else
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
 }
 
 
@@ -482,9 +438,9 @@ void WorldStateManager::OnFrame()
     if (this->_settings.eggCarrierTransformationCutscene)
     {
         if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
-            EggCarrierSunk = false;
+            _eggCarrierSunk = false;
         else
-            EggCarrierSunk = true;
+            _eggCarrierSunk = true;
     }
 
     if (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill)
@@ -1364,10 +1320,10 @@ void WorldStateManager::OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act)
 
 void WorldStateManager::OnTwinkleCircuitResultsMaybe(task* tp)
 {
-    if (CurrentLevel == LevelIDs_TwinkleCircuit && ShowExitMenuTwinkleCircuit == 1)
+    if (CurrentLevel == LevelIDs_TwinkleCircuit && _showExitMenuTwinkleCircuit == 1)
     {
         SetNextLevelAndAct_CutsceneMode(LevelIDs_StationSquare, GET_ACT(LevelAndActIDs_StationSquare6));
-        ShowExitMenuTwinkleCircuit = 0;
+        _showExitMenuTwinkleCircuit = 0;
         return;
     }
 
@@ -1387,7 +1343,7 @@ void WorldStateManager::HandleWindyValleyEntrance()
 }
 
 // MysticRuins
-void WorldStateManager::HandleMREntrance(const int newScene)
+void WorldStateManager::OnSceneChangeMr(const int newScene)
 {
     // Jungle Final Egg tower
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && newScene == 5)
@@ -1436,20 +1392,20 @@ void WorldStateManager::HandleMREntrance(const int newScene)
     }
     else
     {
-        onSceneChangeMr_t.Original(newScene);
+        sceneChangeMrHook.Original(newScene);
     }
 }
 
 
 // HotShelter
-void WorldStateManager::HandleSceneChangeEcInside(int a1, int a2)
+void WorldStateManager::OnSceneChangeEcInside(int a1, int a2)
 {
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierInside2)
-        return _onSceneChangeECInside_t.Original(a1, a2);
+        return sceneChangeECInsideHook.Original(a1, a2);
 
     const int doorId = *(_DWORD*)(a1 + 20);
     if (doorId != 512)
-        return _onSceneChangeECInside_t.Original(a1, a2);
+        return sceneChangeECInsideHook.Original(a1, a2);
 
     const LevelAndActIDs levelAndAct = _instance->levelEntrances.getLevelAndActIdFromEntrance(
         HotShelter, CurrentCharacter);
@@ -1459,14 +1415,14 @@ void WorldStateManager::HandleSceneChangeEcInside(int a1, int a2)
 
 
 // SkyDeck
-void WorldStateManager::HandleSceneChangeEcOutside(int a1)
+void WorldStateManager::OnSceneChangeEcOutside(int a1)
 {
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierOutside6 && levelact(CurrentLevel, CurrentAct) !=
         LevelAndActIDs_EggCarrierOutside2)
-        return _onSceneChangeECOutside_t.Original(a1);
+        return sceneChangeECOutsideHook.Original(a1);
     const int doorId = *(_DWORD*)(a1 + 20);
     if (doorId != 256)
-        return _onSceneChangeECOutside_t.Original(a1);
+        return sceneChangeECOutsideHook.Original(a1);
     const LevelAndActIDs levelAndAct = _instance->levelEntrances.getLevelAndActIdFromEntrance(
         SkyDeck, CurrentCharacter);
     camerahax_adventurefields();
@@ -1525,13 +1481,13 @@ BOOL WorldStateManager::OnIsCasinoOpen()
 }
 
 // Handles the Twinkle Park door
-int WorldStateManager::HandleTwinkleParkEntrance(const char character)
+int WorldStateManager::OnTwinkleParkDoor(const char character)
 {
     return _instance->levelEntrances.canEnter(TwinklePark, CurrentCharacter);
 }
 
 // Handles the Twinkle Circuit door
-int WorldStateManager::HandleTwinkleCircuitEntrance(const char character)
+int WorldStateManager::OnTwinkleCircuitDoor(const char character)
 {
     return _instance->_options.twinkleCircuitCheck;
 }
@@ -1630,22 +1586,22 @@ void WorldStateManager::OnLoadSceneChangeMr(task* tp)
         }
     }
 
-    _onLoadSceneChangeMrHook.Original(tp);
+    _loadSceneChangeMrHook.Original(tp);
 }
 
-void WorldStateManager::HandleOnFinalEggDoorCheckA(const int a1)
+void WorldStateManager::OnFinalEggDoorCheckA(const int a1)
 {
     const int bufferCharacter = CurrentCharacter;
     CurrentCharacter = Characters_Sonic;
-    onFinalEggDoorCheckA_t.Original(a1);
+    finalEggDoorCheckAHook.Original(a1);
     CurrentCharacter = bufferCharacter;
 }
 
-short WorldStateManager::HandleOnFinalEggDoorCheckB(const int a1)
+short WorldStateManager::OnFinalEggDoorCheckB(const int a1)
 {
     const int bufferCharacter = CurrentCharacter;
     CurrentCharacter = Characters_Sonic;
-    const int result = onFinalEggDoorCheckB_t.Original(a1);
+    const int result = finalEggDoorCheckBHook.Original(a1);
     CurrentCharacter = bufferCharacter;
     return result;
 }
@@ -1679,11 +1635,11 @@ BOOL WorldStateManager::OnIsLostWorldFrontEntranceOpen()
     return _instance->levelEntrances.canEnter(LostWorld, CurrentCharacter);
 }
 
-void WorldStateManager::HandleLostWorldEntranceCollision(const int a1)
+void WorldStateManager::OnLostWorldEntranceCollision(const int a1)
 {
     const int bufferCharacter = CurrentCharacter;
     CurrentCharacter = Characters_Sonic;
-    onLostWorldEntranceCollision_t.Original(a1);
+    lostWorldEntranceCollisionHook.Original(a1);
     CurrentCharacter = bufferCharacter;
 }
 
@@ -1700,7 +1656,7 @@ BOOL WorldStateManager::OnIsMonkeyDoorOpen(int a1)
 
     if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma
         || CurrentCharacter == Characters_Knuckles)
-        return isMonkeyDead(1) && _instance->levelEntrances.canEnter(RedMountain, CurrentCharacter);
+        return _isMonkeyDead(1) && _instance->levelEntrances.canEnter(RedMountain, CurrentCharacter);
 
     //For everyone else, we return true if we are in the main mystic ruins area
     return _instance->levelEntrances.canEnter(RedMountain, CurrentCharacter);
@@ -1717,7 +1673,7 @@ void WorldStateManager::OnLoadMonkeyCage(task* tp)
         if (!_instance->levelEntrances.canEnter(RedMountain, CurrentCharacter))
             return FreeTask(tp);
     }
-    _onLoadMonkeyCageHook.Original(tp);
+    _loadMonkeyCageHook.Original(tp);
 }
 
 // Removed the ladder on Ice Cap
@@ -1730,7 +1686,7 @@ void WorldStateManager::OnLoadLongLadderMr(task* tp)
             return FreeTask(tp);
         }
     }
-    _onLoadLongLadderMrHook.Original(tp);
+    _loadLongLadderMrHook.Original(tp);
 }
 
 BOOL WorldStateManager::OnPreventKeyStoneFromSpawning(int a1)
@@ -1747,14 +1703,14 @@ BOOL WorldStateManager::OnPreventKeyStoneFromSpawning(int a1)
 }
 
 // HotShelter
-int WorldStateManager::HandleEggCarrierEggDoor(const int a1)
+int WorldStateManager::OnEggCarrierEggDoor(const int a1)
 {
     // Middle door
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierInside2)
-        return onEggCarrierEggDoor_t.Original(a1);
+        return eggCarrierEggDoorHook.Original(a1);
 
     if (*reinterpret_cast<BYTE*>(a1 + 1) != 6)
-        return onEggCarrierEggDoor_t.Original(a1);
+        return eggCarrierEggDoorHook.Original(a1);
 
     if (!_instance->levelEntrances.canEnter(HotShelter, CurrentCharacter))
         return false;
@@ -1772,14 +1728,14 @@ int WorldStateManager::HandleEggCarrierEggDoor(const int a1)
     return true;
 }
 
-int WorldStateManager::HandleEggCarrierOutsideDoor(const int a1)
+int WorldStateManager::OnEggCarrierOutsideDoor(const int a1)
 {
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierOutside1)
-        return onEggCarrierOutsideDoor_t.Original(a1);
+        return eggCarrierOutsideDoorHook.Original(a1);
 
     const int doorId = *reinterpret_cast<BYTE*>(a1 + 1);
     if (doorId != 1)
-        return onEggCarrierOutsideDoor_t.Original(a1);
+        return eggCarrierOutsideDoorHook.Original(a1);
 
     const EntityData1* player = EntityData1Ptrs[0];
     const double dz = player->Position.z - *(float*)(a1 + 40);
@@ -1795,10 +1751,10 @@ int WorldStateManager::HandleEggCarrierOutsideDoor(const int a1)
 void WorldStateManager::OnLoadPoolWater(task* tp)
 {
     if (CurrentCharacter != Characters_Knuckles)
-        return _onLoadPoolWaterHook.Original(tp);
+        return _loadPoolWaterHook.Original(tp);
 
     if (!_instance->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
-        return _onLoadPoolWaterHook.Original(tp);
+        return _loadPoolWaterHook.Original(tp);
 
     FreeTask(tp);
 }
@@ -1806,14 +1762,14 @@ void WorldStateManager::OnLoadPoolWater(task* tp)
 void WorldStateManager::OnLoadPoolDoor(task* tp)
 {
     if (CurrentCharacter != Characters_Knuckles)
-        return _onLoadPoolDoorHook.Original(tp);
+        return _loadPoolDoorHook.Original(tp);
 
     if (!_instance->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
-        return _onLoadPoolDoorHook.Original(tp);
+        return _loadPoolDoorHook.Original(tp);
     FreeTask(tp);
 }
 
-int WorldStateManager::HandleSkyDeckDoor(EntityData1* a1)
+int WorldStateManager::OnSkyDeckDoor(EntityData1* a1)
 {
     if (!_instance->levelEntrances.canEnter(SkyDeck, CurrentCharacter))
         return false;
