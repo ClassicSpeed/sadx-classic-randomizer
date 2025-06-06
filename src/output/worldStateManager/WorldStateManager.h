@@ -40,7 +40,7 @@ constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
 constexpr char LEON_TIMER1 = 10;
 constexpr char LEON_TIMER2 = 30;
 
-
+//TODO: Move to it's own class
 struct LevelArrow
 {
     LevelAndActIDs levelAndAct;
@@ -54,6 +54,14 @@ struct LevelArrow
         return std::find(characters.begin(), characters.end(), characterToFind) != characters.end();
     }
 };
+
+
+typedef struct
+{
+    int x;
+    int y;
+    int z;
+} NJS_INT_POINT3;
 
 
 class WorldStateManager : public IOnFrame

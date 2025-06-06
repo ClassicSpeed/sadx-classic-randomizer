@@ -139,6 +139,7 @@ void WorldStateManager::OnCollisionCube(task* tp)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
+        //TODO: Simplify this with a function
         //We find the cube collision that prevent tails from entering the Master Emerald Shrine and delete it
         if (tp->twp->pos.x < -1070 && tp->twp->pos.x > -1080
             && tp->twp->pos.y < -210 && tp->twp->pos.y > -220
@@ -253,7 +254,7 @@ void WorldStateManager::HandleWarp()
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
 }
 
-
+//TODO: Move to savefile manager
 void WorldStateManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
 {
     for (StoryFlags storyFlag : storyFlags)
@@ -270,6 +271,7 @@ void WorldStateManager::UnlockSuperSonic()
     WriteSaveFile();
 }
 
+//TODO: Move to its own class
 void WorldStateManager::DrawDisableDoorIndicator(const NJS_POINT3 basePoint, const float angle)
 {
     NJS_POINT3COL point3Col;
@@ -449,7 +451,7 @@ void WorldStateManager::OnFrame()
         GameMode = GameModes_Mission;
 }
 
-
+//TODO: move to savefile manager
 // Enable all GameGear Games
 int WorldStateManager::OnHowManyGameGearGames()
 {
@@ -487,12 +489,14 @@ BOOL WorldStateManager::OnIsCasinoStationDoorOpen()
     return _instance->_gameStatus.unlock.keyStationBackKey;
 }
 
+//TODO: move to savefile manager
 // Prevents the recap screen from showing on the last story
 int WorldStateManager::OnShowRecap(int _)
 {
     return -1;
 }
 
+//TODO: move to reactions manager
 // Replace Super Sonic "Hmph" with "I'll show you what the Chaos Emeralds can really do."
 void WorldStateManager::OnPlayVoice(int a1)
 {
@@ -501,6 +505,7 @@ void WorldStateManager::OnPlayVoice(int a1)
     return _playVoiceHook.Original(a1);
 }
 
+//TODO: move to event detection manager
 // Prevents adding extra 10 seconds for Sonic and Tails
 void WorldStateManager::OnAddSeconds(int seconds)
 {
@@ -509,6 +514,8 @@ void WorldStateManager::OnAddSeconds(int seconds)
     return _addSecondsHook.Original(seconds);
 }
 
+//TODO: Register it?
+//TODO: Create a spawn point for Sky Deck/Egg Hornet
 // We create a custom spawn point after exiting sand hill
 void WorldStateManager::OnGetEntranceMRuins(EntityData1* a1)
 {
@@ -548,6 +555,7 @@ void WorldStateManager::OnGetEntranceEggCarrier(EntityData1* a1)
     }
 }
 
+//TODO: check if this is needed
 // We spawn in front of the Master Emerald Shrine in the past when time traveling
 void WorldStateManager::OnGetEntrancePast(EntityData1* a1)
 {
@@ -630,7 +638,7 @@ void WorldStateManager::SetStartingArea()
     }
 }
 
-
+//TODO: move to savefile manager
 void WorldStateManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist)
 {
     for (const int mission : missionBlacklist)
@@ -642,7 +650,7 @@ void WorldStateManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int
     WriteSaveFile();
 }
 
-
+//TODO: Move to visitedLevels
 void WorldStateManager::UpdateLevelEntrances(LevelEntrances levelEntrances)
 {
     this->levelEntrances = levelEntrances;
@@ -667,6 +675,7 @@ void WorldStateManager::UpdateLevelEntrances(LevelEntrances levelEntrances)
         getLevelInitialsFromEntrance(HotShelter);
 }
 
+//TODO:  Move to visitedLevels?
 void WorldStateManager::UpdateVisitedLevels(const int visitedLevel)
 {
     const LevelIDs visitedEntrance = levelEntrances.getEntranceLevelIdFromLevel(static_cast<LevelIDs>(visitedLevel));
@@ -711,14 +720,6 @@ void WorldStateManager::UpdateVisitedLevels(const int visitedLevel)
     }
 }
 
-
-typedef struct
-{
-    int x;
-    int y;
-    int z;
-} NJS_INT_POINT3;
-
 SETEntry CreateSetEntry(const int16_t objectType, const NJS_VECTOR& position, const NJS_INT_POINT3 rotation = {0, 0, 0},
                         const NJS_VECTOR& scale = {1, 1, 1})
 {
@@ -732,7 +733,7 @@ SETEntry CreateSetEntry(const int16_t objectType, const NJS_VECTOR& position, co
     return setEntry;
 }
 
-
+//TODO: Either move to its own class or make this the main thing world state manager does
 void AddSetToLevel(const SETEntry& newSetEntry, const LevelAndActIDs levelAndAct, const Characters character)
 {
     if (CurrentCharacter == character && levelact(CurrentLevel, CurrentAct) == levelAndAct)
@@ -812,6 +813,7 @@ const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {
 const SETEntry WARP_TO_PAST = CreateSetEntry(WARP_MYSTIC_RUINS, {-2.5f, -240, 2397.5f});
 const SETEntry WARP_FROM_PAST = CreateSetEntry(WARP_PAST, {0, 7, 247.5f});
 
+//We make the game load Sonic's set files for Angel Island when playing as Tails or Big
 Sint32 WorldStateManager::OnPrepareLevel()
 {
     Sint32 result;
@@ -971,6 +973,7 @@ void WorldStateManager::OnCountSetItemsMaybe()
 }
 
 // We move the emblem a little higher so Cream can get it.
+//Move a little lower since it clips with the ground
 void WorldStateManager::OnEmblemMain(task* tp)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Tails)
@@ -1022,6 +1025,7 @@ void WorldStateManager::OnMissionSetLoad()
     }
 }
 
+//TODO: Later, check if we can make the quit option in a boss return us to the field
 //Hook to change the level after beating the boss
 Sint32 WorldStateManager::OnFinishedLevelMaybe()
 {
@@ -1121,6 +1125,7 @@ void WorldStateManager::OnSetStartPosReturnToField(task* tp)
         _setStartPosReturnToFieldHook.Original(tp);
         return;
     }
+    // TODO: Register return positions for all characters
     const short currentLevelBuffer = CurrentLevel;
     if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
         || CurrentCharacter == Characters_Knuckles)
@@ -1260,6 +1265,7 @@ void WorldStateManager::OnSceneChangeMainStationSquare(task* tp)
 
 void WorldStateManager::OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act)
 {
+    // TODO: Maybe do this with all of the levels?
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
     {
         const EntityData1* player = EntityData1Ptrs[0];
@@ -1330,6 +1336,8 @@ void WorldStateManager::OnTwinkleCircuitResultsMaybe(task* tp)
     _twinkleCircuitResultsMaybeHook.Original(tp);
 }
 
+// TODO: Separate key items from story flags
+// TODO: Separate doors opening or not from the level entrances
 
 // WindyValley
 void WorldStateManager::HandleWindyValleyEntrance()
