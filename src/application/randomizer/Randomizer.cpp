@@ -2,8 +2,7 @@
 
 
 Randomizer::Randomizer(Options& options, Settings& settings, GameStatus& gameStatus, DisplayManager& displayManager,
-                       CharacterManager& characterManager,
-                       WorldStateManager& menuManager,
+                       CharacterManager& characterManager, WorldStateManager& menuManager,
                        ItemRepository& itemRepository, LocationRepository& locationRepository,
                        ArchipelagoMessenger& archipelagoMessenger, SaveFileManager& saveFileManager,
                        MusicManager& musicManager, ReactionManager& reactionManager)
@@ -32,33 +31,18 @@ void Randomizer::OnCheckFound(const int checkId) const
     _locationRepository.SetLocationChecked(checkId);
     _archipelagoMessenger.CheckLocation(checkId);
 
+    _gameStatus.CheckGoalRequirements();
     if (check.type == LocationLevel && check.levelMission == MISSION_C && _options.goalRequiresLevels)
-    {
         _displayManager.ShowGoalStatus();
-        if (_options.levelGoal == _gameStatus.levels.levelsCompleted
-            && AreLastStoryRequirementsCompleted())
-            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
-    }
+
     if (check.type == LocationMission && _options.goalRequiresMissions)
-    {
         _displayManager.ShowGoalStatus();
-        if (_options.missionGoal == _gameStatus.missions.missionsCompleted
-            && AreLastStoryRequirementsCompleted())
-            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
-    }
+
     if (check.type == LocationBossFight && _options.goalRequiresBosses)
-    {
         _displayManager.ShowGoalStatus();
-        if (_options.bossesGoal == _gameStatus.bosses.bossesCompleted
-            && AreLastStoryRequirementsCompleted())
-            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
-    }
+
     if (check.type == LocationChaoRace && _options.goalRequiresChaoRaces)
-    {
         _displayManager.ShowGoalStatus();
-        if (_gameStatus.chao.racesTotal >= _gameStatus.chao.racesCompleted && AreLastStoryRequirementsCompleted())
-            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
-    }
 }
 
 void Randomizer::MarkCheckedLocation(const int64_t checkId) const
@@ -91,6 +75,8 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
             _displayManager.QueueItemMessage("Linked " + item.displayName + " sent");
         }
     }
+
+    _gameStatus.CheckGoalRequirements();
     if (item.type == ItemChaosEmerald)
     {
         _displayManager.ShowGoalStatus();
@@ -103,17 +89,10 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
                 _displayManager.QueueItemMessage("You can now transform into Super Sonic!");
             }
         }
-
-        if (AreLastStoryRequirementsCompleted())
-            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
     }
-
     else if (item.type == ItemEmblem)
-    {
         _displayManager.ShowGoalStatus();
-        if (_gameStatus.unlock.currentEmblems == _options.emblemGoal && AreLastStoryRequirementsCompleted())
-            _displayManager.QueueItemMessage("You can now fight Perfect Chaos!");
-    }
+
 
     _reactionManager.PlayRandomVoiceForItem(item, itemId);
 }
@@ -147,38 +126,6 @@ void Randomizer::UpdateLevelEntrances()
     }
 }
 
-//TODO: Later, Move to Goal/Status Manager?
-bool Randomizer::AreLastStoryRequirementsCompleted() const
-{
-    bool levelsCompleted = true;
-    bool emblemsCompleted = true;
-    bool chaosEmeraldsCompleted = true;
-    bool missionsCompleted = true;
-    bool bossesCompleted = true;
-    bool chaoRacesCompleted = true;
-
-    if (_options.goalRequiresLevels)
-        levelsCompleted = _gameStatus.levels.levelsCompleted >= _options.levelGoal;
-
-    if (_options.goalRequiresEmblems)
-        emblemsCompleted = _itemRepository.GetEmblemCount() >= _options.emblemGoal;
-
-    if (_options.goalRequiresMissions)
-        missionsCompleted = _gameStatus.missions.missionsCompleted >= _options.missionGoal;
-
-    if (_options.goalRequiresChaosEmeralds)
-        chaosEmeraldsCompleted = _gameStatus.unlock.GotAllChaosEmeralds();
-
-    if (_options.goalRequiresBosses)
-        bossesCompleted = _gameStatus.bosses.bossesCompleted >= _options.bossesGoal;
-
-    if (_options.goalRequiresChaoRaces)
-        chaoRacesCompleted = _gameStatus.chao.racesCompleted >= _gameStatus.chao.racesTotal;
-
-    return levelsCompleted && emblemsCompleted && chaosEmeraldsCompleted && missionsCompleted && bossesCompleted &&
-        chaoRacesCompleted;
-}
-
 
 void Randomizer::OnCharacterLoaded() const
 {
@@ -204,7 +151,7 @@ void Randomizer::OnCharacterSelectScreenLoaded() const
     {
         if (item.second.type == ItemEmblem)
         {
-            if (AreLastStoryRequirementsCompleted())
+            if (_gameStatus.lastStoryRequirementsCompleted)
                 _worldStateManager.UnlockSuperSonic();
         }
 

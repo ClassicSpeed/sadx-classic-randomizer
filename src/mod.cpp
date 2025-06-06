@@ -21,7 +21,7 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     //Configuration
     Settings& settings = Settings::Init(path, helperFunctions);
     Options& options = Options::Init(settings);
-    GameStatus& gameStatus = GameStatus::Init();
+    GameStatus& gameStatus = GameStatus::Init(options);
 
     // Output Managers
     ReactionManager& reactionManager = ReactionManager::Init(settings, gameStatus);

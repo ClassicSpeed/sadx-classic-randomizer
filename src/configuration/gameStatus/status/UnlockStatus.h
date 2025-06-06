@@ -54,7 +54,7 @@ struct UnlockStatus
     bool keyEgglift;
     bool keyMonorail;
 
-    bool GotAllChaosEmeralds()
+    bool GotAllChaosEmeralds() const
     {
         return whiteEmerald && redEmerald && cyanEmerald && purpleEmerald && greenEmerald && yellowEmerald &&
             blueEmerald;

@@ -277,6 +277,14 @@ void DisplayManager::DisplayGoalStatus()
     SetDebugFontColor(this->_displayEmblemColor);
 
     std::string buffer;
+    if (_gameStatus.lastStoryRequirementsCompleted)
+    {
+        buffer.append("You can now fight Perfect Chaos!");
+        DisplayDebugString(
+            NJM_LOCATION(2, this->_startLine - 1), buffer.c_str());
+        return;
+    }
+
 
     if (_options.goalRequiresChaosEmeralds)
     {

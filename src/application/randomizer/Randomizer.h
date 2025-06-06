@@ -12,7 +12,7 @@
 #include "../../configuration/options/Options.h"
 #include "../structs/LocationData.h"
 
-class Randomizer 
+class Randomizer
 {
 public:
     static Randomizer& Init(Options& options, Settings& settings, GameStatus& gameStatus,
@@ -71,9 +71,4 @@ private:
     SaveFileManager& _saveFileManager;
     MusicManager& _musicManager;
     ReactionManager& _reactionManager;
-
-
-
-    bool AreLastStoryRequirementsCompleted() const;
-
 };
