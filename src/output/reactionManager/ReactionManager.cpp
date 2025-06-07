@@ -3,8 +3,10 @@
 const char* subtitleBuffer[] = {NULL, NULL};
 
 
-ReactionManager::ReactionManager(Settings& settings, GameStatus& gameStatus): _settings(settings), _gameStatus(gameStatus)
+ReactionManager::ReactionManager(Settings& settings, GameStatus& gameStatus): _settings(settings),
+                                                                              _gameStatus(gameStatus)
 {
+    _playVoiceHook.Hook(OnPlayVoice);
 }
 
 void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t itemId) const
@@ -750,4 +752,12 @@ void ReactionManager::PlayRandomTrapVoice(const FillerType filler)
             }
         }
     }
+}
+
+// Replace Super Sonic "Hmph" with "I'll show you what the Chaos Emeralds can really do."
+void ReactionManager::OnPlayVoice(const int a1)
+{
+    if (a1 == 396)
+        return _playVoiceHook.Original(388);
+    return _playVoiceHook.Original(a1);
 }

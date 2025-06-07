@@ -3,6 +3,7 @@
 DataPointer(int, TimerEnabled, 0x912DF0);
 
 CharacterManager::__hudDisplayRingsHook_t CharacterManager::_hudDisplayRingsHook;
+
 CharacterManager::CharacterManager(Options& options, Settings& settings, GameStatus& gameStatus,
                                    ReactionManager& reactionManager): _options(options), _settings(settings),
                                                                       _gameStatus(gameStatus),
@@ -18,6 +19,7 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     _scoreDisplayMainHook.Hook(OnScoreDisplayMain);
     _drawSNumbersHook.Hook(OnDrawSNumbers);
     _hudDisplayRingsHook.Hook(HandleHudDisplayRings);
+    _createAnimalHook.Hook(OnCreateAnimal);
 
     //We override the Set0Rings call inside the HurtPlayer function;
     WriteCall(reinterpret_cast<void*>(0x45072D), (void*)HandleRingLoss);
@@ -607,4 +609,12 @@ void CharacterManager::OnDrawSNumbers(_SC_NUMBERS* pscn)
     if (_instance->_settings.extendRingCapacity && CurrentCharacter == Characters_Big && pscn->max == 999)
         pscn->max = 99999;
     _drawSNumbersHook.Original(pscn);
+}
+
+//We don't create animals outside levels
+//Allow us to spawn enemies in the adventure fields
+void CharacterManager::OnCreateAnimal(int e_num, float x, float y, float z)
+{
+    if (CurrentLevel > LevelIDs_HedgehogHammer && CurrentLevel <= LevelIDs_HotShelter)
+        _createAnimalHook.Original(e_num, x, y, z);
 }

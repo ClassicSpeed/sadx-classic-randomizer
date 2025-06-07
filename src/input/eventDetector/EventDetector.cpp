@@ -28,7 +28,8 @@ float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
     return result;
 }
 
-EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& randomizer, Link& link) : _options(options),
+EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& randomizer, Link& link) :
+    _options(options),
     _settings(settings), _randomizer(randomizer), _link(link)
 {
     _onLevelEmblemCollectedHook.Hook(OnLevelEmblemCollected);
@@ -1073,7 +1074,7 @@ void EventDetector::DrawIndicator(const task* tp, const bool tallElement, const 
     point3Col.p = point;
     if (!checked)
         if (_instance->_settings.progressionIndicator && _instance->_options.
-                                                                   LocationHasProgressiveItem(locationId))
+                                                                    LocationHasProgressiveItem(locationId))
             point3Col.col = _instance->_settings.progressionItemIndicatorColor;
         else if (indicatorType == EnemyIndicator)
             point3Col.col = _instance->_settings.enemyIndicatorColor;
@@ -1254,6 +1255,10 @@ void EventDetector::OnWaterSpiderMain(task* tp)
 
 void EventDetector::OnBuyonMain(task* tp)
 {
+    //We delete the enemy when transitioning between levels
+    if (CutsceneMode == 3)
+        return FreeTask(tp);
+
     _instance->CheckEnemy(tp);
     _onBuyonMainHook.Original(tp);
 }
@@ -1326,6 +1331,10 @@ void EventDetector::OnPoliceLoad(task* tp)
 
 void EventDetector::OnPoliceMain(task* tp)
 {
+    //We delete the enemy when transitioning between levels
+    if (CutsceneMode == 3)
+        return FreeTask(tp);
+
     _instance->CheckEnemy(tp);
     _onPoliceMainHook.Original(tp);
 }

@@ -29,7 +29,6 @@ constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
 constexpr char LEON_TIMER1 = 10;
 constexpr char LEON_TIMER2 = 30;
 
-//TODO: Move to it's own class
 struct LevelArrow
 {
     LevelAndActIDs levelAndAct;
@@ -115,11 +114,6 @@ private:
     inline DataArray(int16_t, _chaoStatValues, 0x8895C8, 0x402);
     inline FunctionPointer(int, _isMonkeyDead, (int a1), 0x53F920);
 
-    inline static FunctionHook<void, int, float, float, float> _createAnimalHook{0x4BE610};
-    static void OnCreateAnimal(int e_num, float x, float y, float z);
-
-    inline static FunctionHook<void, task*> _policeEnemyMainHook{0x4B30E0};
-    static void OnPoliceEnemyMain(task* tp);
 
     inline static FunctionHook<void, task*> _collisionCubeHook{0x4D47E0};
     static void OnCollisionCube(task* tp);
@@ -141,9 +135,6 @@ private:
 
     inline static FunctionHook<BOOL> _isCasinoStationDoorOpenHook{0x638880};
     static BOOL OnIsCasinoStationDoorOpen();
-
-    inline static FunctionHook<void, int> _playVoiceHook{0x425710};
-    static void OnPlayVoice(int a1);
 
     inline static FunctionHook<void, int> _addSecondsHook{0x426640};
     static void OnAddSeconds(int seconds);

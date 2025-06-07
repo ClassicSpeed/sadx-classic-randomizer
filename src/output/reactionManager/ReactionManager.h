@@ -15,6 +15,7 @@ public:
             _instance = new ReactionManager(settings, gameStatus);
         return *_instance;
     }
+
     void PlayRandomVoiceForItem(const ItemData& item, int64_t itemId) const;
     void PlayRandomTrapVoice(FillerType filler);
 
@@ -23,6 +24,10 @@ private:
     inline static ReactionManager* _instance = nullptr;
     Settings& _settings;
     GameStatus& _gameStatus;
+
+    inline static FunctionHook<void, int> _playVoiceHook{0x425710};
+    static void OnPlayVoice(int a1);
+
     std::map<int, std::string> _commentMap = {
         {498, "Long time no see."},
         {860, "Long time; no see!"},
@@ -230,7 +235,7 @@ private:
         {295, "This hotel is nice!"},
         {289, "Trains are cool; too!"}
     };
-    
+
     std::map<int, std::string> _trapCommentMap = {
         {174, "Get a load of this!"},
         {171, "All systems; full power!"},

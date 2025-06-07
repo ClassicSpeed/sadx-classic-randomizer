@@ -18,8 +18,6 @@ WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameS
 {
     _doorIndicatorManager = DoorIndicatorManager();
 
-    _createAnimalHook.Hook(OnCreateAnimal);
-    _policeEnemyMainHook.Hook(OnPoliceEnemyMain);
     _collisionCubeHook.Hook(OnCollisionCube);
     _collisionCylinderHook.Hook(OnCollisionCylinder);
     _isChaos2DoorOpenHook.Hook(OnIsChaos2DoorOpen);
@@ -27,7 +25,6 @@ WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameS
     _isHotelDoorOpenHook.Hook(OnIsHotelDoorOpen);
     _isCasinoHotelDoorOpenHook.Hook(OnIsCasinoHotelDoorOpen);
     _isCasinoStationDoorOpenHook.Hook(OnIsCasinoStationDoorOpen);
-    _playVoiceHook.Hook(OnPlayVoice);
     _addSecondsHook.Hook(OnAddSeconds);
     _getEntranceMRuinsHook.Hook(OnGetEntranceMRuins);
     _getEntranceEggCarrierHook.Hook(OnGetEntranceEggCarrier);
@@ -114,24 +111,6 @@ WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameS
             _chaoStatValues[i] = _chaoStatValues[i] * settings.chaoStatsMultiplier;
         }
     }
-}
-
-
-//We don't create animals outside levels
-//Allow us to spawn enemies in the adventure fields
-void WorldStateManager::OnCreateAnimal(int e_num, float x, float y, float z)
-{
-    if (CurrentLevel > LevelIDs_HedgehogHammer && CurrentLevel <= LevelIDs_HotShelter)
-        _createAnimalHook.Original(e_num, x, y, z);
-}
-
-//We delete the police enemy when transitioning between levels
-//TODO: Do the same with the other enemies
-void WorldStateManager::OnPoliceEnemyMain(task* tp)
-{
-    if (CutsceneMode == 3)
-        return FreeTask(tp);
-    _policeEnemyMainHook.Original(tp);
 }
 
 void WorldStateManager::OnCollisionCube(task* tp)
@@ -329,15 +308,6 @@ BOOL WorldStateManager::OnIsCasinoStationDoorOpen()
     return _instance->_gameStatus.unlock.keyStationBackKey;
 }
 
-
-//TODO: move to reactions manager
-// Replace Super Sonic "Hmph" with "I'll show you what the Chaos Emeralds can really do."
-void WorldStateManager::OnPlayVoice(int a1)
-{
-    if (a1 == 396)
-        return _playVoiceHook.Original(388);
-    return _playVoiceHook.Original(a1);
-}
 
 //TODO: move to event detection manager
 // Prevents adding extra 10 seconds for Sonic and Tails

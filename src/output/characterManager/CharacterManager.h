@@ -81,8 +81,11 @@ private:
     inline static FunctionHook<void, _SC_NUMBERS*> _drawSNumbersHook{0x427BB0};
     static void OnDrawSNumbers(_SC_NUMBERS* pscn);
 
+    inline static FunctionHook<void, int, float, float, float> _createAnimalHook{0x4BE610};
+    static void OnCreateAnimal(int e_num, float x, float y, float z);
+
     UsercallFuncVoid(_hudDisplayRingsHook, (signed int ringCount, unsigned char digits, NJS_SPRITE* hud),
-                        (ringCount, digits, hud), 0x425960, rEAX, rBL, rESI);
+                     (ringCount, digits, hud), 0x425960, rEAX, rBL, rESI);
     static void __cdecl HandleHudDisplayRings(signed int ringCount, unsigned char digits, NJS_SPRITE* hud);
 
     static void __cdecl HandleRingLoss();
@@ -113,5 +116,4 @@ private:
     std::clock_t _gravityTimer = -1;
 
     std::clock_t _reverseControlsTimer = -1;
-    
 };
