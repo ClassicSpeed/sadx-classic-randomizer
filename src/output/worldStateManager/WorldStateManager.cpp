@@ -117,28 +117,21 @@ void WorldStateManager::OnCollisionCube(task* tp)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
-        //TODO: Simplify this with a function
         //We find the cube collision that prevent tails from entering the Master Emerald Shrine and delete it
-        if (tp->twp->pos.x < -1070 && tp->twp->pos.x > -1080
-            && tp->twp->pos.y < -210 && tp->twp->pos.y > -220
-            && tp->twp->pos.z < -1030 && tp->twp->pos.z > -1050)
+        if (IsNearPosition(tp->twp->pos, -1075, -215, -1040))
             FreeTask(tp);
     }
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Casinopolis2)
     {
         //We find the cube collision that prevent sonic from entering the life capsule path in SADX and delete it
-        if (tp->twp->pos.x < 2 && tp->twp->pos.x > 0
-            && tp->twp->pos.y < -1713 && tp->twp->pos.y > -1716
-            && tp->twp->pos.z < 2769 && tp->twp->pos.z > 2765)
+        if (IsNearPosition(tp->twp->pos, 1, -1715, 2767))
             FreeTask(tp);
     }
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
         && _instance->_gameStatus.unlock.keyDynamite)
     {
         //We find the cube collision that we created for the dynamite and delete it
-        if (tp->twp->pos.x < -394 && tp->twp->pos.x > -392
-            && tp->twp->pos.y < 121 && tp->twp->pos.y > 118
-            && tp->twp->pos.z < 891 && tp->twp->pos.z > 889)
+        if (IsNearPosition(tp->twp->pos, -393, 120, 890))
             FreeTask(tp);
     }
     else
@@ -150,17 +143,10 @@ void WorldStateManager::OnCollisionCylinder(task* tp)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
     {
         //We find the cylinder collision that prevent sonic from clipping into the city hall in the DC conversion
-        if (tp->twp->pos.x < 324 && tp->twp->pos.x > 320
-            && tp->twp->pos.y < -10 && tp->twp->pos.y > -20
-            && tp->twp->pos.z < 250 && tp->twp->pos.z > 240)
+        if (IsNearPosition(tp->twp->pos, 322, -15, 245))
             FreeTask(tp);
-    }
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
-    {
-        //We find the cylinder collision that prevent sonic from clipping into the city hall in the DC conversion
-        if (tp->twp->pos.x < 218 && tp->twp->pos.x > 215
-            && tp->twp->pos.y < -10 && tp->twp->pos.y > -20
-            && tp->twp->pos.z < 250 && tp->twp->pos.z > 240)
+            //We find the second cylinder collision
+        else if (IsNearPosition(tp->twp->pos, 216, -15, 245))
             FreeTask(tp);
     }
     else
@@ -769,9 +755,7 @@ void WorldStateManager::OnCountSetItemsMaybe()
 void WorldStateManager::OnEmblemMain(task* tp)
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Tails)
-        if (tp->twp->pos.x > 386 && tp->twp->pos.x < 390
-            && tp->twp->pos.y > -6 && tp->twp->pos.y < -5
-            && tp->twp->pos.z > 489 && tp->twp->pos.z < 492)
+        if (IsNearPosition(tp->twp->pos, 388, -5.5, 490.5))
         {
             tp->twp->pos.y = -4;
         }
@@ -793,23 +777,21 @@ void WorldStateManager::OnMissionSetLoad()
         {
             const NJS_VECTOR position = objData->SETEntry->Position;
             //We move the mission switch from Big's bed
-            if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && position.x > 1294 && position.x <
-                1298 && position.y > 130 && position.y < 133 && position.z > -729 && position.z < -726)
+            if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 &&
+                IsNearPosition(position, 1296, 131.5, -727.5))
             {
                 objData->SETEntry->Position = {1333, 120, -707};
             }
-            //We move the mission card in the sewer, so it doesn't clip with the srping
-            if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3 && position.x > 506 && position.x <
-                507 && position.y > -89 && position.y < -88 && position.z > 635 && position.z < 636)
+            //We move the mission card in the sewer, so it doesn't clip with the spring
+            if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3 &&
+                IsNearPosition(position, 506.5, -88.5, 635.5))
             {
                 objData->SETEntry->Position = {position.x, -70, position.z};
             }
 
             //We move the mission card 51 in the jungle, so Gamma can get it even if the Snake door is open
-            if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3
-                && position.x > -515 && position.x < -510
-                && position.y > 204 && position.y < 206
-                && position.z > -1128 && position.z < -1120)
+            if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 &&
+                IsNearPosition(position, -512.5, 205, -1124))
             {
                 objData->SETEntry->Position = {-515.9674, 70.18237, -989.24146};
             }
@@ -875,9 +857,7 @@ void WorldStateManager::OnMysticRuinsKey(task* tp)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
         && (!_instance->_gameStatus.unlock.keyWindStone
             || !_instance->levelEntrances.canEnter(WindyValley, CurrentCharacter)))
-        if (tp->twp->pos.x > 1390 && tp->twp->pos.x < 1395
-            && tp->twp->pos.y > 190 && tp->twp->pos.y < 193
-            && tp->twp->pos.z > 862 && tp->twp->pos.z < 865)
+        if (IsNearPosition(tp->twp->pos, 1392.5, 191.5, 863.5))
             return;
     // We don't spawn the golden/silver keys for knuckles if he can't enter LostWorld
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
@@ -1020,7 +1000,7 @@ void WorldStateManager::OnSceneChangeMainStationSquare(task* tp)
     // Emerald Coast Entrance
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
         && _instance->levelEntrances.canEnter(EmeraldCoast, CurrentCharacter)
-        && pos.x > -590 && pos.x < -580 && pos.y > -25 && pos.y < -15 && pos.z > 2130 && pos.z < 2140)
+        && IsNearPosition(pos, -585, -20, 2135))
     {
         tp->twp->ang.z = _instance->levelEntrances.getLevelAndActIdFromEntrance(
             EmeraldCoast, CurrentCharacter);
@@ -1028,7 +1008,7 @@ void WorldStateManager::OnSceneChangeMainStationSquare(task* tp)
     //  Casinopolis
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2
         && _instance->levelEntrances.canEnter(Casinopolis, CurrentCharacter)
-        && pos.x > -646 && pos.x < -642 && pos.y > -8 && pos.y < 4 && pos.z > 878 && pos.z < 882)
+        && IsNearPosition(pos, -644, -2, 880))
     {
         tp->twp->ang.z = _instance->levelEntrances.getLevelAndActIdFromEntrance(
             Casinopolis, CurrentCharacter);
@@ -1037,7 +1017,7 @@ void WorldStateManager::OnSceneChangeMainStationSquare(task* tp)
     // TwinklePark
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare6
         && _instance->levelEntrances.canEnter(TwinklePark, CurrentCharacter)
-        && pos.x > 850 && pos.x < 860 && pos.y > 40 && pos.y < 50 && pos.z > 1760 && pos.z < 1780)
+        && IsNearPosition(pos, 855, 45, 1770))
     {
         tp->twp->ang.z = _instance->levelEntrances.getLevelAndActIdFromEntrance(
             TwinklePark, CurrentCharacter);
@@ -1046,7 +1026,7 @@ void WorldStateManager::OnSceneChangeMainStationSquare(task* tp)
     // SpeedHighway (City Hall)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1
         && _instance->levelEntrances.canEnter(SpeedHighway, CurrentCharacter)
-        && pos.x > 269 && pos.x < 272 && pos.y > -4 && pos.y < 0 && pos.z > 232 && pos.z < 236)
+        && IsNearPosition(pos, 270.5, -2, 234))
     {
         tp->twp->ang.z = _instance->levelEntrances.getLevelAndActIdFromEntrance(
             SpeedHighway, CurrentCharacter);
@@ -1061,9 +1041,7 @@ void WorldStateManager::OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
     {
         const EntityData1* player = EntityData1Ptrs[0];
-        if (player->Position.x > 400 && player->Position.x < 550
-            && player->Position.y > -10 && player->Position.y < 50
-            && player->Position.z > 1300 && player->Position.z < 1450)
+        if (IsNearPosition(player->Position, 475, 20, 1375, 75))
         {
             const LevelAndActIDs levelAndAct = _instance->levelEntrances.getLevelAndActIdFromEntrance(
                 SpeedHighway, CurrentCharacter);
