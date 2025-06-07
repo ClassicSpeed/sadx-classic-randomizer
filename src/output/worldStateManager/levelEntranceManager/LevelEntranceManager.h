@@ -3,7 +3,7 @@
 #include "LevelEntrances.h"
 #include "../../../configuration/gameStatus/GameStatus.h"
 #include "../../../configuration/options/Options.h"
-#include "../doorIndicatorManager/DoorIndicatorManager.h"
+#include "DoorIndicatorManager.h"
 
 
 struct LevelArrow
