@@ -30,7 +30,7 @@ public:
         return *_instance;
     }
 
-    void UpdateLevelEntrances();
+    void SetLevelEntrances();
     void ShowLevelEntranceArrows();
     void UpdateVisitedLevels(int visitedLevel);
 

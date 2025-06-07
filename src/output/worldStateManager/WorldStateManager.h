@@ -18,7 +18,7 @@ public:
     }
 
     void OnFrame() override;
-    void UpdateLevelEntrances();
+    void SetLevelEntrances();
     void UpdateVisitedLevels(int visitedLevel);
 
 private:

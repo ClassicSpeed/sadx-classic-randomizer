@@ -49,7 +49,7 @@ LevelEntranceManager::LevelEntranceManager(Options& options, Settings& settings,
     WriteCall(reinterpret_cast<void*>(0x537F64), &HandleWindyValleyEntrance);
 }
 
-void LevelEntranceManager::UpdateLevelEntrances()
+void LevelEntranceManager::SetLevelEntrances()
 {
     this->_levelEntrances = LevelEntrances();
 

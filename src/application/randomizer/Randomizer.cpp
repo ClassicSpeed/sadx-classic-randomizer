@@ -54,8 +54,9 @@ void Randomizer::MarkCheckedLocation(const int64_t checkId) const
 
 void Randomizer::OnItemReceived(const int64_t itemId) const
 {
-    const bool ignore = _itemRepository.SetObtained(itemId);
-    if (ignore)
+    const bool alreadyProcessed = _itemRepository.SetObtained(itemId);
+
+    if (alreadyProcessed)
         return;
 
     const ItemData item = _itemRepository.GetItem(itemId);
@@ -107,7 +108,7 @@ void Randomizer::UpdateLevelEntrances()
     if (_options.levelEntrancesMap.empty())
         return;
 
-    _worldStateManager.UpdateLevelEntrances();
+    _worldStateManager.SetLevelEntrances();
 
     for (const auto& location : _locationRepository.GetLocations())
     {

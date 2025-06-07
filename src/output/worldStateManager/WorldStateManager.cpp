@@ -28,19 +28,6 @@ WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameS
     }
 }
 
-void WorldStateManager::OnCollisionCube(task* tp)
-{
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
-        && _instance->_gameStatus.unlock.keyDynamite)
-    {
-        //We find the cube collision that we created for the dynamite and delete it
-        if (IsNearPosition(tp->twp->pos, -393, 120, 890))
-            FreeTask(tp);
-    }
-    else
-        _collisionCubeHook.Original(tp);
-}
-
 void WorldStateManager::OnFrame()
 {
     if (DemoPlaying > 0)
@@ -52,6 +39,29 @@ void WorldStateManager::OnFrame()
         _levelEntranceManager.ShowLevelEntranceArrows();
 
     _setObjectManager.OnFrame();
+}
+
+void WorldStateManager::SetLevelEntrances()
+{
+    _levelEntranceManager.SetLevelEntrances();
+}
+
+void WorldStateManager::UpdateVisitedLevels(const int visitedLevel)
+{
+    _levelEntranceManager.UpdateVisitedLevels(visitedLevel);
+}
+
+void WorldStateManager::OnCollisionCube(task* tp)
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
+        && _instance->_gameStatus.unlock.keyDynamite)
+    {
+        //We find the cube collision that we created for the dynamite and delete it
+        if (IsNearPosition(tp->twp->pos, -393, 120, 890))
+            FreeTask(tp);
+    }
+    else
+        _collisionCubeHook.Original(tp);
 }
 
 BOOL WorldStateManager::OnIsStationDoorOpen()
@@ -74,16 +84,6 @@ BOOL WorldStateManager::OnIsCasinoStationDoorOpen()
     return _instance->_gameStatus.unlock.keyStationBackKey;
 }
 
-//TODO: Check if we can remove this
-void WorldStateManager::UpdateLevelEntrances()
-{
-    _levelEntranceManager.UpdateLevelEntrances();
-}
-
-void WorldStateManager::UpdateVisitedLevels(const int visitedLevel)
-{
-    _levelEntranceManager.UpdateVisitedLevels(visitedLevel);
-}
 
 void WorldStateManager::OnMysticRuinsKey(task* tp)
 {
@@ -120,8 +120,6 @@ void WorldStateManager::OnTwinkleCircuitResultsMaybe(task* tp)
 }
 
 // TODO: Separate key items from story flags
-// TODO: Separate doors opening or not from the level entrances
-
 
 // Handles the Windy Valley entrance
 // Makes Sonic, Tails and Gamma use the winds stone
