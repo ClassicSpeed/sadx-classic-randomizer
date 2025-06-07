@@ -107,16 +107,7 @@ void Randomizer::UpdateLevelEntrances()
     if (_options.levelEntrancesMap.empty())
         return;
 
-    LevelEntrances levelEntrances;
-
-    for (const auto& [first, second] : _options.levelEntrancesMap)
-    {
-        const auto levelEntrance = static_cast<Levels>(first);
-        const auto actualLevel = static_cast<Levels>(second);
-        levelEntrances.addRelationship(levelEntrance, actualLevel);
-    }
-
-    _worldStateManager.UpdateLevelEntrances(levelEntrances);
+    _worldStateManager.UpdateLevelEntrances();
 
     for (const auto& location : _locationRepository.GetLocations())
     {

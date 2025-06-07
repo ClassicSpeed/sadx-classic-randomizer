@@ -25,7 +25,6 @@ WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameS
     _isHotelDoorOpenHook.Hook(OnIsHotelDoorOpen);
     _isCasinoHotelDoorOpenHook.Hook(OnIsCasinoHotelDoorOpen);
     _isCasinoStationDoorOpenHook.Hook(OnIsCasinoStationDoorOpen);
-    _addSecondsHook.Hook(OnAddSeconds);
     _getEntranceMRuinsHook.Hook(OnGetEntranceMRuins);
     _getEntranceEggCarrierHook.Hook(OnGetEntranceEggCarrier);
     _getEntrancePastHook.Hook(OnGetEntrancePast);
@@ -295,15 +294,6 @@ BOOL WorldStateManager::OnIsCasinoStationDoorOpen()
 }
 
 
-//TODO: move to event detection manager
-// Prevents adding extra 10 seconds for Sonic and Tails
-void WorldStateManager::OnAddSeconds(int seconds)
-{
-    if (seconds == 10 && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
-        return;
-    return _addSecondsHook.Original(seconds);
-}
-
 //TODO: Register it?
 //TODO: Create a spawn point for Sky Deck/Egg Hornet
 // We create a custom spawn point after exiting sand hill
@@ -428,10 +418,17 @@ void WorldStateManager::SetStartingArea()
     }
 }
 
-//TODO: Move to visitedLevels
-void WorldStateManager::UpdateLevelEntrances(LevelEntrances levelEntrances)
+void WorldStateManager::UpdateLevelEntrances()
 {
-    this->levelEntrances = levelEntrances;
+    this->levelEntrances = LevelEntrances();
+
+    for (const auto& [first, second] : _options.levelEntrancesMap)
+    {
+        const auto levelEntrance = static_cast<Levels>(first);
+        const auto actualLevel = static_cast<Levels>(second);
+        levelEntrances.addRelationship(levelEntrance, actualLevel);
+    }
+
     this->_gameStatus.visitedLevels.emeraldCoastEntranceActualLevel = levelEntrances.
         getLevelInitialsFromEntrance(EmeraldCoast);
     this->_gameStatus.visitedLevels.windyValleyEntranceActualLevel = levelEntrances.

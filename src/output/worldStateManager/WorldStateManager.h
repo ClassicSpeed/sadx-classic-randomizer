@@ -75,7 +75,7 @@ public:
 
     void ShowLevelEntranceArrows();
     void SetStartingArea();
-    void UpdateLevelEntrances(LevelEntrances levelEntrances);
+    void UpdateLevelEntrances();
     void UpdateVisitedLevels(int visitedLevel);
     LevelEntrances levelEntrances = {
         {EmeraldCoast, EmeraldCoast},
@@ -144,9 +144,6 @@ private:
 
     inline static FunctionHook<BOOL> _isCasinoStationDoorOpenHook{0x638880};
     static BOOL OnIsCasinoStationDoorOpen();
-
-    inline static FunctionHook<void, int> _addSecondsHook{0x426640};
-    static void OnAddSeconds(int seconds);
 
     inline static FunctionHook<void, EntityData1*> _getEntranceMRuinsHook{0x530790};
     static void OnGetEntranceMRuins(EntityData1* a1);

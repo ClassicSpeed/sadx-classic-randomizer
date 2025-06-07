@@ -90,6 +90,8 @@ EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& r
     _onPlayMusic2Hook.Hook(OnPlayMusic2);
     _onPlayJingleHook.Hook(OnPlayJingle);
 
+    _addSecondsHook.Hook(OnAddSeconds);
+
 
     PlayCharacterDeathSound_t.Hook(HandlePlayCharacterDeathSound);
     CheckMissionRequirements_t.Hook(HandleCheckMissionRequirements);
@@ -1635,4 +1637,12 @@ void EventDetector::ShuffleSong()
     const int shuffledSongId = _randomizer.GetSongForId(_instance->lastRealSongId);
     _onPlayMusicHook.Original(shuffledSongId);
     _randomizer.DisplaySongName(shuffledSongId);
+}
+
+// Prevents adding extra 10 seconds for Sonic and Tails
+void EventDetector::OnAddSeconds(int seconds)
+{
+    if (seconds == 10 && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
+        return;
+    return _addSecondsHook.Original(seconds);
 }

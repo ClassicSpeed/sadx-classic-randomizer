@@ -273,4 +273,7 @@ private:
 
     inline static FunctionHook<void, int> _onPlayJingleHook{0x425860};
     static void OnPlayJingle(int songId);
+
+    inline static FunctionHook<void, int> _addSecondsHook{0x426640};
+    static void OnAddSeconds(int seconds);
 };
