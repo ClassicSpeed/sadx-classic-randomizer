@@ -32,15 +32,6 @@ typedef struct
 } NJS_INT_POINT3;
 
 
-// Checks if the given position is within 'tolerance' units of the target position
-inline bool IsNearPosition(const NJS_VECTOR& position, const float targetX, const float targetY, const float targetZ,
-                           const float tolerance = 3.0f)
-{
-    return (position.x > targetX - tolerance && position.x < targetX + tolerance) &&
-        (position.y > targetY - tolerance && position.y < targetY + tolerance) &&
-        (position.z > targetZ - tolerance && position.z < targetZ + tolerance);
-}
-
 class SetObjectManager : public IOnFrame
 {
 public:

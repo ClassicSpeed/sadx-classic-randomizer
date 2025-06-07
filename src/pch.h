@@ -116,6 +116,16 @@ const std::unordered_map<int, std::tuple<int, int, int>> GAMMA_TARGET_TIMES = {
     {LevelIDs_HotShelter, std::make_tuple(7200, 10800, 10800)},
 };
 
+// Checks if the given position is within 'tolerance' units of the target position
+inline bool IsNearPosition(const NJS_VECTOR& position, const float targetX, const float targetY, const float targetZ,
+                           const float tolerance = 3.0f)
+{
+    return (position.x > targetX - tolerance && position.x < targetX + tolerance) &&
+        (position.y > targetY - tolerance && position.y < targetY + tolerance) &&
+        (position.z > targetZ - tolerance && position.z < targetZ + tolerance);
+}
+
+
 class IOnFrame
 {
 public:
