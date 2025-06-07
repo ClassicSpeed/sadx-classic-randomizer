@@ -1,6 +1,10 @@
 #include "DoorIndicatorManager.h"
 
 
+DoorIndicatorManager::DoorIndicatorManager()
+{
+}
+
 void DoorIndicatorManager::DrawDisable(const NJS_POINT3 basePoint, const float angle)
 {
     NJS_POINT3COL point3Col;

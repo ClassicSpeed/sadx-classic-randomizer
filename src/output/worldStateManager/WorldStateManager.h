@@ -5,29 +5,9 @@
 #include "../../configuration/options/Options.h"
 #include "../../configuration/gameStatus/GameStatus.h"
 #include "../../application/structs/LevelEntrances.h"
-#include "DoorIndicatorManager/DoorIndicatorManager.h"
+#include "doorIndicatorManager/DoorIndicatorManager.h"
+#include "setObjectManager/SetObjectManager.h"
 
-
-constexpr int WARP_EGG_CARRIER_INSIDE = 35;
-
-constexpr int WARP_STATION_SQUARE = 17;
-constexpr int WARP_MYSTIC_RUINS = 6;
-constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
-constexpr int WARP_PAST = 10;
-
-constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
-constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
-constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
-constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
-constexpr int CAVE_WIND_CHANGE_SCENE_MYSTIC_RUINS = 31;
-constexpr int EMBLEM_MYSTIC_RUINS = 65;
-
-constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
-constexpr int BEACH_GATE_STATION_SQUARE = 67;
-constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
-
-constexpr char LEON_TIMER1 = 10;
-constexpr char LEON_TIMER2 = 30;
 
 struct LevelArrow
 {
@@ -44,23 +24,6 @@ struct LevelArrow
 };
 
 
-typedef struct
-{
-    int x;
-    int y;
-    int z;
-} NJS_INT_POINT3;
-
-// Checks if the given position is within 'tolerance' units of the target position
-inline bool IsNearPosition(const NJS_VECTOR& position, const float targetX, const float targetY, const float targetZ,
-                           const float tolerance = 3.0f)
-{
-    return (position.x > targetX - tolerance && position.x < targetX + tolerance) &&
-        (position.y > targetY - tolerance && position.y < targetY + tolerance) &&
-        (position.z > targetZ - tolerance && position.z < targetZ + tolerance);
-}
-
-
 class WorldStateManager : public IOnFrame
 {
 public:
@@ -72,12 +35,19 @@ public:
     }
 
     void OnFrame() override;
-
-    void ShowLevelEntranceArrows();
-    void SetStartingArea();
     void UpdateLevelEntrances();
     void UpdateVisitedLevels(int visitedLevel);
-    LevelEntrances levelEntrances = {
+
+private:
+    explicit WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus);
+    inline static WorldStateManager* _instance = nullptr;
+    Options& _options;
+    Settings& _settings;
+    GameStatus& _gameStatus;
+    DoorIndicatorManager& _doorIndicatorManager;
+    SetObjectManager& _setObjectManager;
+    void ShowLevelEntranceArrows();
+    LevelEntrances _levelEntrances = {
         {EmeraldCoast, EmeraldCoast},
         {WindyValley, WindyValley},
         {Casinopolis, Casinopolis},
@@ -91,47 +61,24 @@ public:
         {HotShelter, HotShelter},
     };
 
-private:
-    explicit WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus);
-    inline static WorldStateManager* _instance = nullptr;
-    Options& _options;
-    Settings& _settings;
-    GameStatus& _gameStatus;
-    DoorIndicatorManager _doorIndicatorManager;
-
     static void __cdecl OnSceneChangeMr(int newScene);
     static int __cdecl OnTwinkleParkDoor(char character);
-    static int __cdecl OnTwinkleCircuitDoor(char character);
     static int __cdecl OnEggCarrierEggDoor(int a1);
     static int __cdecl OnEggCarrierOutsideDoor(int a1);
     static void __cdecl OnSceneChangeEcInside(int a1, int a2);
     static void __cdecl OnSceneChangeEcOutside(int a1);
     static int __cdecl OnSkyDeckDoor(EntityData1* a1);
-    static void __cdecl OnLostWorldEntranceCollision(int a1);
-    static void __cdecl OnFinalEggDoorCheckA(int a1);
 
-
-    static int16_t __cdecl OnFinalEggDoorCheckB(int a1);
-
-    static void __cdecl HandleWarp();
-    static bool __cdecl HandleHedgehogHammer();
     static void __cdecl HandleWindyValleyEntrance();
 
 
     inline DataPointer(int, _showExitMenuTwinkleCircuit, 0x3C5D430);
-    inline DataPointer(int16_t, _eggCarrierSunk, 0x3C62394);
     inline DataArray(int16_t, _chaoStatValues, 0x8895C8, 0x402);
     inline FunctionPointer(int, _isMonkeyDead, (int a1), 0x53F920);
 
 
     inline static FunctionHook<void, task*> _collisionCubeHook{0x4D47E0};
     static void OnCollisionCube(task* tp);
-
-    inline static FunctionHook<void, task*> _collisionCylinderHook{0x4D4770};
-    static void OnCollisionCylinder(task* tp);
-
-    inline static FunctionHook<BOOL> _isChaos2DoorOpenHook{0x638D50};
-    static BOOL OnIsChaos2DoorOpen();
 
     inline static FunctionHook<BOOL> _isStationDoorOpenHook{0x63AB70};
     static BOOL OnIsStationDoorOpen();
@@ -145,44 +92,11 @@ private:
     inline static FunctionHook<BOOL> _isCasinoStationDoorOpenHook{0x638880};
     static BOOL OnIsCasinoStationDoorOpen();
 
-    inline static FunctionHook<void, EntityData1*> _getEntranceMRuinsHook{0x530790};
-    static void OnGetEntranceMRuins(EntityData1* a1);
-
-    inline static FunctionHook<void, EntityData1*> _getEntranceEggCarrierHook{0x52D820};
-    static void OnGetEntranceEggCarrier(EntityData1* a1);
-
-    inline static FunctionHook<void, EntityData1*> _getEntrancePastHook{0x542180};
-    static void OnGetEntrancePast(EntityData1* a1);
-
-    inline static FunctionHook<void, Sint8> _setTimeOfDayHook{0x412C00};
-    static void OnSetTimeOfDay(Sint8 time);
-
-    inline static FunctionHook<void> _adventureSetLevelAndActHook{0x4133E0};
-    static void OnAdventureSetLevelAndAct();
-
-    inline static FunctionHook<Sint32> _prepareLevelHook{0x415210};
-    static Sint32 OnPrepareLevel();
-
-    inline static FunctionHook<void> _countSetItemsMaybeHook{0x0046BD20};
-    static void OnCountSetItemsMaybe();
-
-    inline static FunctionHook<void, task*> _emblemMainHook{0x4B4940};
-    static void OnEmblemMain(task* tp);
-
-    inline static FunctionHook<void> _missionSetLoadHook{0x591A70};
-    static void OnMissionSetLoad();
-
-    inline static FunctionHook<Sint32> _finishedLevelMaybeHook{0x414090};
-    static Sint32 OnFinishedLevelMaybe();
-
     inline static FunctionHook<void, task*> _mysticRuinsKeyHook{0x532400};
     static void OnMysticRuinsKey(task* tp);
 
     inline static FunctionHook<void, task*> _employeeCardHook{0x63C370};
     static void OnEmployeeCard(task* tp);
-
-    inline static FunctionHook<void> _bigHud_DrawWeightAndLifeHook{0x46FB00};
-    static void OnBigHud_DrawWeightAndLife();
 
     inline static FunctionHook<void, task*> _setStartPosReturnToFieldHook{0x414500};
     static void OnSetStartPosReturnToField(task* tp);
@@ -195,6 +109,7 @@ private:
 
     inline static FunctionHook<void, task*> _twinkleCircuitResultsMaybeHook{0x4DAFB0};
     static void OnTwinkleCircuitResultsMaybe(task* tp);
+
     inline static FunctionHook<BOOL> _isEmeraldCoastOpenHook{0x639A30};
     static BOOL OnIsEmeraldCoastOpen();
 
@@ -230,12 +145,6 @@ private:
 
     inline static FunctionHook<void, task*> _loadSceneChangeMrHook{0x5394F0};
     static void OnLoadSceneChangeMr(task* tp);
-
-    inline static FunctionHook<BOOL> _isFinalEggTowerActiveHook{0x538550};
-    static BOOL OnIsFinalEggTowerActive();
-
-    inline static FunctionHook<BOOL> _isFinalEggDoorActiveHook{0x53EDF0};
-    static BOOL OnIsFinalEggDoorActive();
 
     inline static FunctionHook<BOOL> _isLostWorldBackEntranceOpenHook{0x53B6C0};
     static BOOL OnIsLostWorldBackEntranceOpen();
