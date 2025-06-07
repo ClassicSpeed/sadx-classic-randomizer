@@ -82,6 +82,7 @@ Levels LevelEntrances::getLevelFromEntrance(const Levels entrance) const
         return _entranceToLevel.at(entrance);
     return entrance;
 }
+
 std::string LevelEntrances::getLevelInitialsFromEntrance(const Levels entrance) const
 {
     Levels level = getLevelFromEntrance(entrance);

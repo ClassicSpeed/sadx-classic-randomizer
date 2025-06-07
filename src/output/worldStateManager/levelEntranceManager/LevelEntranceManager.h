@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../pch.h"
-#include "../../../application/structs/LevelEntrances.h"
+#include "LevelEntrances.h"
 #include "../../../configuration/gameStatus/GameStatus.h"
 #include "../../../configuration/options/Options.h"
 #include "../doorIndicatorManager/DoorIndicatorManager.h"

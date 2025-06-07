@@ -1,7 +1,22 @@
 #pragma once
-#include "../../pch.h"
+#include "../../../pch.h"
 #include <map>
-#include "../../configuration/options/Options.h"
+
+
+enum Levels
+{
+    EmeraldCoast = 11,
+    WindyValley,
+    Casinopolis,
+    IceCap,
+    TwinklePark,
+    SpeedHighway,
+    RedMountain,
+    SkyDeck,
+    LostWorld,
+    FinalEgg,
+    HotShelter
+};
 
 // Define a struct to hold the key
 struct CharacterLevelKey
@@ -17,7 +32,6 @@ struct CharacterLevelKey
         return level < other.level;
     }
 };
-
 
 
 class LevelEntrances

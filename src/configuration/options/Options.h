@@ -44,21 +44,6 @@ enum StartingArea
     NoStatingArea
 };
 
-enum Levels
-{
-    EmeraldCoast = 11,
-    WindyValley,
-    Casinopolis,
-    IceCap,
-    TwinklePark,
-    SpeedHighway,
-    RedMountain,
-    SkyDeck,
-    LostWorld,
-    FinalEgg,
-    HotShelter
-};
-
 
 static int Clamp(const int value, const int min, const int max)
 {
