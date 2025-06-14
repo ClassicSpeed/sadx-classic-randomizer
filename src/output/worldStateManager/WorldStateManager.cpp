@@ -4,11 +4,13 @@
 WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus): _options(options),
     _settings(settings), _gameStatus(gameStatus),
     _setObjectManager(SetObjectManager::Init(options, settings)),
-    _levelEntranceManager(LevelEntranceManager::Init(options, settings, gameStatus))
+    // _levelEntranceManager(LevelEntranceManager::Init(options, settings, gameStatus))
+    _adventureFieldEntranceManager(AdventureFieldEntranceManager::Init(options))
 {
     _collisionCubeHook.Hook(OnCollisionCube);
-    _isStationDoorOpenHook.Hook(OnIsStationDoorOpen);
-    _isHotelDoorOpenHook.Hook(OnIsHotelDoorOpen);
+    //TODO: Undo
+    // _isStationDoorOpenHook.Hook(OnIsStationDoorOpen);
+    // _isHotelDoorOpenHook.Hook(OnIsHotelDoorOpen);
     _isCasinoHotelDoorOpenHook.Hook(OnIsCasinoHotelDoorOpen);
     _isCasinoStationDoorOpenHook.Hook(OnIsCasinoStationDoorOpen);
     _mysticRuinsKeyHook.Hook(OnMysticRuinsKey);
@@ -35,20 +37,21 @@ void WorldStateManager::OnFrame()
     if (CurrentLevel == LevelIDs_PerfectChaos)
         return;
 
-    if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
-        _levelEntranceManager.ShowLevelEntranceArrows();
+    // if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
+    //     _levelEntranceManager.ShowLevelEntranceArrows();
 
     _setObjectManager.OnFrame();
+    _adventureFieldEntranceManager.ShowLevelEntranceArrows();
 }
 
 void WorldStateManager::SetLevelEntrances()
 {
-    _levelEntranceManager.SetLevelEntrances();
+    // _levelEntranceManager.SetLevelEntrances();
 }
 
 void WorldStateManager::UpdateVisitedLevels(const int visitedLevel)
 {
-    _levelEntranceManager.UpdateVisitedLevels(visitedLevel);
+    // _levelEntranceManager.UpdateVisitedLevels(visitedLevel);
 }
 
 void WorldStateManager::OnCollisionCube(task* tp)

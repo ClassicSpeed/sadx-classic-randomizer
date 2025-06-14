@@ -1,7 +1,6 @@
 #include "CharacterLoadingDetector.h"
 
 
-
 CharacterLoadingDetector::CharacterLoadingDetector(Randomizer& randomizer)
     : _randomizer(randomizer)
 {
@@ -38,10 +37,9 @@ void CharacterLoadingDetector::OnCharacterLoaded()
 
 void CharacterLoadingDetector::OnFrame()
 {
-    
     if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
         return;
-    
+
     if (_loadCharacterNextFrame > 1)
         _loadCharacterNextFrame--;
 
@@ -49,6 +47,18 @@ void CharacterLoadingDetector::OnFrame()
     if (_loadCharacterNextFrame == 1)
     {
         _randomizer.OnCharacterLoaded();
+
+        //TODO: Remove later
+        for (unsigned int i = 0; i < LevelClearCounts.size(); i++)
+            LevelClearCounts[i] = 1;
+
+        for (int i = 0; i < 512; i++)
+            CutsceneFlagArray[i] = 1;
+
+        for (int i = 0; i < 512; i++)
+            EventFlagArray[i] = 1;
+        WriteSaveFile();
+
         _loadCharacterNextFrame = 0;
     }
 }

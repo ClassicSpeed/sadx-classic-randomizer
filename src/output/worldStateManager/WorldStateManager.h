@@ -3,6 +3,7 @@
 #include "../../pch.h"
 #include <algorithm>
 #include "../../configuration/options/Options.h"
+#include "adventureFieldEntranceManager/AdventureFieldEntranceManager.h"
 #include "levelEntranceManager/LevelEntranceManager.h"
 #include "setObjectManager/SetObjectManager.h"
 
@@ -28,7 +29,8 @@ private:
     Settings& _settings;
     GameStatus& _gameStatus;
     SetObjectManager& _setObjectManager;
-    LevelEntranceManager& _levelEntranceManager;
+    AdventureFieldEntranceManager& _adventureFieldEntranceManager;
+    // LevelEntranceManager& _levelEntranceManager;
 
 
     inline DataPointer(int, _showExitMenuTwinkleCircuit, 0x3C5D430);

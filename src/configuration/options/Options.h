@@ -256,6 +256,9 @@ public:
     std::vector<int> missionBlacklist = {};
     bool expertMode = false;
 
+    //TODO: Change this
+    bool adventureFieldRandomized = true;
+
 private:
     explicit Options(Settings& settings);
     inline static Options* _instance = nullptr;

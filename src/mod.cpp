@@ -50,10 +50,32 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
         &saveFileManager, &archipelagoManager, &displayManager, &worldStateManager,
         &eventDetector, &characterLoadingDetector, &link, &characterManager
     };
+
+    gameStatus.unlock.keyTrain = true;
+    gameStatus.unlock.keyBoat = true;
+    gameStatus.unlock.keyRaft = true;
+    gameStatus.unlock.keyStationFrontKey = true;
+    gameStatus.unlock.keyStationBackKey = true;
+    gameStatus.unlock.keyHotelFrontKey = true;
+    gameStatus.unlock.keyHotelBackKey = true;
+    gameStatus.unlock.keyTwinkleParkTicket = true;
+    gameStatus.unlock.keyEmployeeCard = true;
+    gameStatus.unlock.keyDynamite = true;
+    gameStatus.unlock.keyIceStone = true;
+    gameStatus.unlock.keyWindStone = true;
+    gameStatus.unlock.keyJungleCart = true;
+    gameStatus.unlock.keyEgglift = true;
+    gameStatus.unlock.keyMonorail = true;
 }
 
 __declspec(dllexport) void __cdecl OnFrame()
 {
+    //TODO: Remove later
+    // for (const auto& button : PressedButtons)
+    //
+    //     if (button & WhistleButtons && Current_CharObj2 != nullptr)
+    //     {
+    //     }
     for (const auto manager : onFrameObjects)
         manager->OnFrame();
 }

@@ -39,6 +39,7 @@
 #define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
 #define GET_LEVEL(levelAct) ((levelAct) >> 8)
 #define GET_ACT(levelAct) ((levelAct) & 0xFF)
+#define GET_LEVEL_ACT(level, act) (static_cast<LevelAndActIDs>(((level) << 8) | ((act) & 0xFF)))
 #define BYTE1(x, n)   (*((uint8_t*)&(x)+1))
 
 
