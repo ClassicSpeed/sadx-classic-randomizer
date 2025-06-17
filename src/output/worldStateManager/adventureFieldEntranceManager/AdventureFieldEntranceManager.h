@@ -52,4 +52,19 @@ private:
 
     inline static FunctionHook<int, task*> _elevatorInSceneChangeHook{0x63D7C0};
     static int OnElevatorInSceneChange(task* tp);
+
+    inline static FunctionHook<void, task*> _sewerCarMainHook{0x639920};
+    static void OnSewerCarMain(task* tp);
+
+    inline static FunctionHook<void, task*> _collisionCubeHook{0x4D47E0};
+    static void OnCollisionCube(task* tp);
+
+    inline static FunctionHook<void, task*> _collisionSphereHook{0x4D4700};
+    static void OnCollisionSphere(task* tp);
+
+    inline static FunctionHook<void, task*> _sceneChangeMainStationSquareHook{0x640850};
+    static void OnSceneChangeMainStationSquare(task* tp);
+
+    inline static FunctionHook<void, task*> _characterUpgradeMainHook{0x4BF600};
+    static void OnCharacterUpgradeMain(task* tp);
 };

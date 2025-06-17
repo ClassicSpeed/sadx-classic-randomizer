@@ -135,6 +135,10 @@ inline SETEntry CreateSetEntry(const int16_t objectType, const NJS_VECTOR& posit
 const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f});
 const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635},
                                               {0, 0, 0}, {0.3f, 0, 51});
+const SETEntry SEWERS_SPRING_BIG = CreateSetEntry(2, {505, -89, 635},
+                                                  {0, 0, 0}, {0.1f, 1.2f, 0});
+const SETEntry EXTRA_SEWERS_SPRING = CreateSetEntry(2, {350, -115, 860},
+                                                    {0, 0, 0xE000}, {0, 0, 0});
 
 
 const SETEntry COLLISION_CUBE_MR = CreateSetEntry(COLLISION_CUBE_MYSTIC_RUINS, {-393.62f, 120, 890.06f},
@@ -161,6 +165,9 @@ const SETEntry BEACH_GATE_SS = CreateSetEntry(BEACH_GATE_STATION_SQUARE, {-525, 
 
 const SETEntry CITY_HALL_SCENE_CHANGE_SS = CreateSetEntry(SCENE_CHANGE_STATION_SQUARE, {270, -1, 234},
                                                           {0, 0, 0X402}, {8, 3.2, 0});
+
+const SETEntry CITY_HALL_SEWERS_SCENE_CHANGE_SS = CreateSetEntry(SCENE_CHANGE_STATION_SQUARE, {367, -50, 961},
+                                                                 {0, 0, 0X1A02}, {2, 2, 2});
 
 //Egg Carrier
 const SETEntry EGG_CARRIER_TRANSFORM_AREA_SPRING = CreateSetEntry(1, {-83.42, 0, 0.54});

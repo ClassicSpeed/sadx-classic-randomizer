@@ -7,8 +7,7 @@ enum EntranceId
     // City Hall
     CityHallToSsMain = 0,
     CityHallToSewers,
-    CityHallToSewersToyShop, //TODO: Doesn't exist, I have to add it to the game
-    CityHallToSpeedHighwayAlternative,
+    CityHallToSpeedHighway,
     CityHallToChaos0,
 
     // Station + Casino
@@ -20,7 +19,6 @@ enum EntranceId
 
     // Sewers
     SewersToCityHall,
-    SewersToCityHallToyShop,
     SewersToSsMain,
 
     // SSMain
@@ -29,7 +27,7 @@ enum EntranceId
     SsMainToCityHall,
     SsMainToTwinkleParkLobby,
     SsMainToEcOutside,
-    //SsMainToBridge, When transformed
+    SsMainToBridge,
     SsMainToSewers,
     SsMainToSpeedHighway,
 
@@ -48,7 +46,7 @@ enum EntranceId
     // MRMain
     MrMainToSsMain,
     MrMainToEcOutside,
-    // MrMainToEcBridge, When transformed
+    MrMainToBridge,
     MrMainToAngelIsland,
     MrMainToWindyValley,
     MrMainToJungle,
@@ -63,21 +61,6 @@ enum EntranceId
     AngelIslandToRedMountain,
     AngelIslandToPastAltar,
 
-    // Jungle
-    JungleToMrMain,
-    JungleToLostWorld,
-    JungleToLostWorldAlternative,
-    JungleToFinalEggTower,
-    JungleToSandHill,
-
-    // Final Egg Tower
-    FinalEggTowerToJungle,
-    FinalEggTowerToFinalEgg,
-    FinalEggTowerToFinalEggAlternative,
-    FinalEggTowerToBeta, //TODO: It's the same as FinalEggTowerToEggViper, merge it later
-    FinalEggTowerToEggViper,
-    //FinalEggTowerToEcInside??
-
     // Past Altar
     PastAltarToAngelIsland,
     PastAltarToPastMain,
@@ -85,27 +68,35 @@ enum EntranceId
     // Past Main
     PastMainToPastAltar,
 
+    // Jungle
+    JungleToMrMain,
+    JungleToLostWorld,
+    JungleToFinalEggTower,
+    JungleToSandHill,
+
+    // Final Egg Tower
+    FinalEggTowerToJungle,
+    FinalEggTowerToFinalEgg,
+    FinalEggTowerToBetaEggViper,
+    FinalEggTowerToEcInside,
+
 
     // Egg Carrier Outside (Untransformed)
     EcOutsideToSsMain,
     EcOutsideToMrMain,
     EcOutsideToSkyChase2,
-    EcOutsideToChaos6,
-    EcOutsideToZero,
-    EcOutsideToBetaMk2,
-    EcOutsideToPool,
+    EcOutsideToChaos6ZeroBeta,
     EcOutsideToEcInsideMonorail,
     EcOutsideToEcInsideEggLift,
     EcOutsideToCaptainRoom,
+    EcOutsideToPool,
 
     // Bridge (Transformed) //TODO: Check how to handle this
     BridgeToSsMain,
     BridgeToMrMain,
     BridgeToSkyDeck,
     BridgeToSkyChase2,
-    BridgeToChaos6,
-    BridgeToZero,
-    BridgeToBetaMk2,
+    BridgeToChaos6ZeroBeta,
     BridgeToEcInsideMonorail,
 
     // Deck (Transformed)  //TODO: Check how to handle this
@@ -128,7 +119,7 @@ enum EntranceId
     // Pool
     PoolToEcOutside,
     PoolToDeck,
-    PoolToSkyDeckAlternative,
+    PoolToSkyDeck,
 
     // Arsenal
     ArsenalToEcInside,
@@ -136,11 +127,11 @@ enum EntranceId
     // Egg Carrier Inside
     EcInsideToEcOutsideEggLift,
     EcInsideToEcOutsideMonorail,
-    EcInsideToEcBridgeEggLift, //TODO: Check how to handle this
-    EcInsideToEcDeckMonorail,
+    EcInsideToEcDeckEggLift,
+    EcInsideToEcBridgeMonorail,
     EcInsideToHotShelter,
     EcInsideToHedgehogHammer,
-    // EcInsideToFinalEggTower??,
+    EcInsideToFinalEggTower,
     EcInsideToWarpHall,
     EcInsideToArsenal,
     EcInsideToWaterTank,
@@ -175,37 +166,33 @@ enum EntranceId
     EcChaoGardenToMrChaoGarden,
 
 
-    /*
-        Chaos0
-        SpeedHighwayAlternative
-        Casinopolis
-        EggWalker
-        SpeedHighway
-        EmeraldCoast
-        Chaos2
-        TwinklePark
-        TwinkleCircuit
-        WindyValley
-        Chaos4
-        EggHornet
-        SkyChase1
-        IceCap
-        RedMountain
-        LostWorld
-        LostWorldAlternative
-        FinalEggTower
-        SandHill
-        FinalEgg
-        FinalEggAlternative
-        Beta
-        EggViper
-        SkyChase2
-        Chaos6
-        Zero
-        BetaMk2
-        SkyDeck
-    HotShelter
-     */
+    // Levels
+    SpeedHighwayToCityHall,
+    Chaos0ToCityHall,
+    CasinopolisToStation,
+    EggWalkerToStation,
+    SpeedHighwayToSsMain,
+    EmeraldCoastToHotel,
+    Chaos2ToHotel,
+    TwinkleParkToTwinkleParkLobby,
+    TwinkleCircuitToTwinkleParkLobby,
+    WindyValleyToMrMain,
+    Chaos4ToMrMain,
+    EggHornetToMrMain,
+    SkyChase1ToMrMain,
+    IceCapToAngelIsland,
+    RedMountainToAngelIsland,
+    LostWorldToJungle,
+    SandHillToJungle,
+    FinalEggToFinalEggTower,
+    BetaEggViperToFinalEggTower,
+    SkyChase2ToEcOutside,
+    SkyChase2ToBridge,
+    Chaos6ZeroBetaToEcOutside,
+    Chaos6ZeroBetaToBridge,
+    SkyDeckToBridge,
+    SkyDeckTPool,
+    HotShelterToEcInside,
 };
 
 struct AdventureFieldEntrance
@@ -249,26 +236,75 @@ private:
     std::vector<AdventureFieldEntrance> _entranceList = {};
 
     std::map<EntranceId, EntranceId> _entranceNewConnections = {
-        // SSMain connections
-        {SsMainToCityHall, CityHallToSsMain},
-        {SsMainToStation, StationToSsMain},
-        {SsMainToHotel, HotelToSsMain},
-        {SsMainToTwinkleParkLobby, TwinkleParkLobbyToSsMain},
-        {SsMainToEcOutside, EcOutsideToSsMain},
-
-        // City Hall connections
         {CityHallToSsMain, SsMainToCityHall},
 
-        // Station connections
+        {CityHallToSewers, SewersToCityHall},
+        {CityHallToSpeedHighway, SpeedHighwayToCityHall},
+        {CityHallToChaos0, Chaos0ToCityHall},
         {StationToSsMain, SsMainToStation},
+        {StationToMrMain, MrMainToSsMain},
+        {StationToCasinopolis, CasinopolisToStation},
+        {StationToHotel, HotelToStation},
+        {StationToEggWalker, EggWalkerToStation},
 
-        // Hotel connections
-        {HotelToSsMain, SsMainToHotel},
+        {SewersToSsMain, SsMainToSewers},
+        {SsMainToHotel, HotelToSsMain},
 
-        // Twinkle Park Lobby connections
-        {TwinkleParkLobbyToSsMain, SsMainToTwinkleParkLobby},
+        {SsMainToTwinkleParkLobby, TwinkleParkLobbyToSsMain},
 
-        // Egg Carrier Outside connections
-        {EcOutsideToSsMain, SsMainToEcOutside},
+        {SsMainToEcOutside, EcOutsideToSsMain},
+        {SsMainToSpeedHighway, SpeedHighwayToSsMain},
+        {HotelToEmeraldCoast, EmeraldCoastToHotel},
+        {HotelToSsChaoGarden, SsChaoGardenToHotel},
+        {HotelToChaos2, Chaos2ToHotel},
+        {TwinkleParkLobbyToTwinklePark, TwinkleParkToTwinkleParkLobby},
+        {TwinkleParkLobbyToTwinkleCircuit, TwinkleCircuitToTwinkleParkLobby},
+        {MrMainToEcOutside, EcOutsideToMrMain},
+        {MrMainToAngelIsland, AngelIslandToMrMain},
+        {MrMainToWindyValley, WindyValleyToMrMain,},
+        {MrMainToJungle, JungleToMrMain},
+        {MrMainToChaos4, Chaos4ToMrMain},
+        {MrMainToEggHornet, EggHornetToMrMain},
+        {MrMainToMrChaoGarden, MrChaoGardenToMrMain},
+        {MrMainToSkyChase1, SkyChase1ToMrMain},
+        {AngelIslandToIceCap, IceCapToAngelIsland},
+        {AngelIslandToRedMountain, RedMountainToAngelIsland},
+        {AngelIslandToPastAltar, PastAltarToAngelIsland},
+        {PastAltarToPastMain, PastMainToPastAltar},
+        {JungleToLostWorld, LostWorldToJungle},
+        {JungleToFinalEggTower, FinalEggTowerToJungle},
+        {JungleToSandHill, SandHillToJungle},
+        {FinalEggTowerToFinalEgg, FinalEggToFinalEggTower},
+        {FinalEggTowerToBetaEggViper, BetaEggViperToFinalEggTower},
+        {FinalEggTowerToEcInside, EcInsideToFinalEggTower},
+        {EcOutsideToSkyChase2, SkyChase2ToEcOutside},
+        {EcOutsideToChaos6ZeroBeta, Chaos6ZeroBetaToEcOutside},
+        {EcOutsideToEcInsideMonorail, EcInsideToEcOutsideMonorail},
+        {EcOutsideToEcInsideEggLift, EcInsideToEcOutsideEggLift},
+        {EcOutsideToCaptainRoom, CaptainRoomToEcOutside},
+        {EcOutsideToPool, PoolToEcOutside},
+        {BridgeToSsMain, SsMainToBridge},
+        {BridgeToMrMain, MrMainToBridge},
+        {BridgeToSkyDeck, SkyDeckToBridge},
+        {BridgeToSkyChase2, SkyChase2ToBridge},
+        {BridgeToChaos6ZeroBeta, Chaos6ZeroBetaToBridge},
+        {BridgeToEcInsideMonorail, EcInsideToEcBridgeMonorail},
+        {CaptainRoomToPrivateRoom, PrivateRoomToCaptainRoom},
+        {PrivateRoomToDeck, DeckToPrivateRoom},
+        {PrivateRoomToDeckAlternative, DeckToPrivateRoomAlternative},
+        {DeckToPool, PoolToDeck},
+        {DeckToCaptainRoom, CaptainRoomToDeck},
+        {DeckToEcInsideEggLift, EcInsideToEcDeckEggLift},
+        {PoolToSkyDeck, SkyDeckTPool},
+        {EcInsideToHotShelter, HotShelterToEcInside},
+        {EcInsideToHedgehogHammer, HedgehogHammerToEcInside},
+        {HedgehogHammerToPrisonHall, PrisonHallToHedgehogHammer},
+        {EcInsideToWarpHall, WarpHallToEcInside},
+        {WarpHallToEcChaoGarden, EcChaoGardenToWarpHall},
+        {EcInsideToArsenal, ArsenalToEcInside},
+        {EcInsideToWaterTank, WaterTankToEcInside},
+        {SsChaoGardenToEcChaoGarden, EcChaoGardenToSsChaoGarden},
+        {SsChaoGardenToMrChaoGarden, MrChaoGardenToSsChaoGarden},
+        {MrChaoGardenToEcChaoGarden, EcChaoGardenToMrChaoGarden},
     };
 };

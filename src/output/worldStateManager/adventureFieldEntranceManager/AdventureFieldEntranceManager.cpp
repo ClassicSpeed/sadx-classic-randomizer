@@ -15,6 +15,11 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _ssBoxLoadHook.Hook(OnSsBoxLoad);
     _elevatorOutHook.Hook(OnElevatorOut);
     _elevatorInSceneChangeHook.Hook(OnElevatorInSceneChange);
+    _sewerCarMainHook.Hook(OnSewerCarMain);
+    _collisionCubeHook.Hook(OnCollisionCube);
+    _collisionSphereHook.Hook(OnCollisionSphere);
+    _sceneChangeMainStationSquareHook.Hook(OnSceneChangeMainStationSquare);
+    _characterUpgradeMainHook.Hook(OnCharacterUpgradeMain);
 
     //Avoid the distance check for the Twinkle Park door
     WriteData<1>((void*)0x63E737, 0xEB);
@@ -200,4 +205,72 @@ int AdventureFieldEntranceManager::OnElevatorInSceneChange(task* tp)
             WriteData<1>((void*)0x63D7E3, 0x00); //Act
     }
     return _elevatorInSceneChangeHook.Original(tp);
+}
+
+void AdventureFieldEntranceManager::OnSewerCarMain(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _sewerCarMainHook.Original(tp);
+
+    FreeTask(tp);
+}
+
+void AdventureFieldEntranceManager::OnCollisionCube(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _collisionCubeHook.Original(tp);
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3)
+    {
+        //We find the cube collision that prevent Big from going up the sewers and delete it
+        if (IsNearPosition(tp->twp->pos, 415, -70, 860, 30))
+            return FreeTask(tp);
+    }
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
+    {
+        //We find the cube collision that prevent Gamma from entering the sewers and delete it
+        if (IsNearPosition(tp->twp->pos, 359, -26, 956))
+            return FreeTask(tp);
+    }
+
+    _collisionCubeHook.Original(tp);
+}
+
+void AdventureFieldEntranceManager::OnCollisionSphere(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _collisionSphereHook.Original(tp);
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
+    {
+        //We find the sphere collision that prevent Gamma from entering the sewers and delete it
+        if (IsNearPosition(tp->twp->pos, 367, -8, 963))
+            return FreeTask(tp);
+    }
+
+    _collisionSphereHook.Original(tp);
+}
+
+void AdventureFieldEntranceManager::OnSceneChangeMainStationSquare(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _sceneChangeMainStationSquareHook.Original(tp);
+
+    // Big sewers-toy shop door
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3 && CurrentCharacter == Characters_Big
+        && IsNearPosition(tp->twp->pos, 401, -2, 632, 2))
+        tp->twp->pos = {418, 0, 635};
+
+
+    _sceneChangeMainStationSquareHook.Original(tp);
+}
+
+void AdventureFieldEntranceManager::OnCharacterUpgradeMain(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _characterUpgradeMainHook.Original(tp);
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3 && CurrentCharacter == Characters_Big)
+        return FreeTask(tp);
+    return _characterUpgradeMainHook.Original(tp);
 }

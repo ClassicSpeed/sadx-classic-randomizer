@@ -88,9 +88,13 @@ EntranceId AdventureFieldEntranceMap::FindEntranceByLocation(
 
 EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId entranceId)
 {
-    auto it = _entranceNewConnections.find(entranceId);
-    if (it != _entranceNewConnections.end())
-        return it->second;
+    for (const auto& [entranceA, entranceB] : _entranceNewConnections)
+    {
+        if (entranceA == entranceId)
+            return entranceB;
+        if (entranceB == entranceId)
+            return entranceA;
+    }
     return entranceId;
 }
 
