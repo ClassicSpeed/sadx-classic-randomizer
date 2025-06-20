@@ -20,6 +20,10 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _collisionSphereHook.Hook(OnCollisionSphere);
     _sceneChangeMainStationSquareHook.Hook(OnSceneChangeMainStationSquare);
     _characterUpgradeMainHook.Hook(OnCharacterUpgradeMain);
+    _ssBoatMainHook.Hook(OnSsBoatMain);
+    _isSpeedHighwayShutterOpenHook.Hook(OnIsSpeedHighwayShutterOpen);
+    _loadSpeedHighwayShutterHook.Hook(OnLoadSpeedHighwayShutter);
+    _loadSpeedHighwayShutter2Hook.Hook(OnLoadSpeedHighwayShutter2);
 
     //Avoid the distance check for the Twinkle Park door
     WriteData<1>((void*)0x63E737, 0xEB);
@@ -133,13 +137,11 @@ BOOL AdventureFieldEntranceManager::OnIsHotelDoorOpen()
 
 TaskFunc(SomethingAboutTPDoor, 0x63E670);
 
-
 void AdventureFieldEntranceManager::OnTwinkleParkLobbyDoorFromStation(task* tp)
 {
     if (!_instance->_options.adventureFieldRandomized)
         return _twinkleParkLobbyDoorFromStationHook.Original(tp);
 
-    // return _twinkleParkLobbyDoorFromStationHook.Original(tp);
     const bool isDoorOpen = _instance->IsDoorOpen(SsMainToTwinkleParkLobby);
     if (!isDoorOpen)
         return _twinkleParkLobbyDoorFromStationHook.Original(tp);
@@ -170,6 +172,10 @@ void AdventureFieldEntranceManager::OnSsBoxLoad(task* tp)
 void AdventureFieldEntranceManager::OnElevatorOut(task* tp)
 {
     if (!_instance->_options.adventureFieldRandomized)
+        return _elevatorOutHook.Original(tp);
+
+    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4 && !_instance->IsDoorOpen(
+        SsMainToSewers))
         return _elevatorOutHook.Original(tp);
 
     OEleboxIn(reinterpret_cast<ObjectMaster*>(tp));
@@ -273,4 +279,46 @@ void AdventureFieldEntranceManager::OnCharacterUpgradeMain(task* tp)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3 && CurrentCharacter == Characters_Big)
         return FreeTask(tp);
     return _characterUpgradeMainHook.Original(tp);
+}
+
+void AdventureFieldEntranceManager::OnSsBoatMain(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _ssBoatMainHook.Original(tp);
+
+    if (!_instance->IsDoorOpen(CityHallToSsMain))
+        return FreeTask(tp);
+    return _ssBoatMainHook.Original(tp);
+}
+
+
+// Speed Highway
+//TODO: Check/move the unlock part to the main manager
+BOOL AdventureFieldEntranceManager::OnIsSpeedHighwayShutterOpen()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isSpeedHighwayShutterOpenHook.Original();
+    return _instance->IsDoorOpen(SsMainToSpeedHighway);
+}
+
+void AdventureFieldEntranceManager::OnLoadSpeedHighwayShutter(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        _loadSpeedHighwayShutterHook.Original(tp);
+    //TODO: Animate instead of removing the task
+    if (_instance->IsDoorOpen(SsMainToSpeedHighway))
+        return FreeTask(tp);
+
+    _loadSpeedHighwayShutterHook.Original(tp);
+}
+
+void AdventureFieldEntranceManager::OnLoadSpeedHighwayShutter2(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        _loadSpeedHighwayShutter2Hook.Original(tp);
+    //TODO: Animate instead of removing the task
+    if (_instance->IsDoorOpen(SsMainToSpeedHighway))
+        return FreeTask(tp);
+
+    _loadSpeedHighwayShutter2Hook.Original(tp);
 }

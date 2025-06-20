@@ -67,4 +67,16 @@ private:
 
     inline static FunctionHook<void, task*> _characterUpgradeMainHook{0x4BF600};
     static void OnCharacterUpgradeMain(task* tp);
+
+    inline static FunctionHook<void, task*> _ssBoatMainHook{0x63B610};
+    static void OnSsBoatMain(task* tp);
+
+    inline static FunctionHook<BOOL> _isSpeedHighwayShutterOpenHook{0x63A2A0};
+    static BOOL OnIsSpeedHighwayShutterOpen();
+
+    inline static FunctionHook<void, task*> _loadSpeedHighwayShutterHook{0x63A530};
+    static void OnLoadSpeedHighwayShutter(task* tp);
+
+    inline static FunctionHook<void, task*> _loadSpeedHighwayShutter2Hook{0x63A500};
+    static void OnLoadSpeedHighwayShutter2(task* tp);
 };

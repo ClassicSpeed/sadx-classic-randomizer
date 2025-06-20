@@ -16,13 +16,16 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {StationToSsMain, LevelAndActIDs_StationSquare2, 0, SsMainToStation, 0.0f, {0, 0, 0}},
 
         // Sewers
+        {SewersToSsMain, LevelAndActIDs_StationSquare3, 1, SsMainToSewers, 0, {174.09f, 6, 1897.51f}},
 
         // SSMain
         {SsMainToCityHall, LevelAndActIDs_StationSquare4, 1, CityHallToSsMain, 110.8F, {443, 15, 1077}},
         {SsMainToStation, LevelAndActIDs_StationSquare4, 0, StationToSsMain, 18.81f, {28, 41, 1388}},
         {SsMainToHotel, LevelAndActIDs_StationSquare4, 3, HotelToSsMain, 90, {-168, 15, 1685}},
         {SsMainToTwinkleParkLobby, LevelAndActIDs_StationSquare4, 4, TwinkleParkLobbyToSsMain, 90, {580, 65, 1772}},
-        {SsMainToEcOutside, LevelAndActIDs_StationSquare4, 6, EcOutsideToSsMain, 90, {580, 65, 1772}},
+        {SsMainToEcOutside, LevelAndActIDs_StationSquare4, 6, EcOutsideToSsMain, 30, {174.09f, 6, 1897.51f}},
+        {SsMainToSewers, LevelAndActIDs_StationSquare4, 2, SewersToSsMain, 0, {400, 58, 1450}},
+        {SsMainToSpeedHighway, LevelAndActIDs_StationSquare4, 5, SpeedHighwayToSsMain, 90, {380, 20, 1370}},
 
         // Hotel
         {HotelToSsMain, LevelAndActIDs_StationSquare5, 1, SsMainToHotel, 90, {-168, 15, 1685}},
@@ -34,6 +37,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Egg Carrier Outside (Untransformed)
         {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 0.0f, {0, 0, 0}},
+
+        //Speed Highway
+        {SpeedHighwayToSsMain, LevelAndActIDs_SpeedHighway1, 0, SsMainToSpeedHighway, 0, {0, 0, 0}},
     };
 }
 
