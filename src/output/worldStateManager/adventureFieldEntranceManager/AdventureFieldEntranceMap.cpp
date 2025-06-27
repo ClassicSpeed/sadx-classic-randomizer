@@ -14,6 +14,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         //Station
         {StationToSsMain, LevelAndActIDs_StationSquare2, 0, SsMainToStation, 0.0f, {0, 0, 0}},
+        //1 is casinoplis
+        {StationToHotel, LevelAndActIDs_StationSquare2, 2, HotelToStation, 0.0f, {0, 0, 0}},
 
         // Sewers
         {SewersToSsMain, LevelAndActIDs_StationSquare3, 1, SsMainToSewers, 0, {174.09f, 6, 1897.51f}},
@@ -28,7 +30,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {SsMainToSpeedHighway, LevelAndActIDs_StationSquare4, 5, SpeedHighwayToSsMain, 90, {380, 20, 1370}},
 
         // Hotel
-        {HotelToSsMain, LevelAndActIDs_StationSquare5, 1, SsMainToHotel, 90, {-168, 15, 1685}},
+        {HotelToSsMain, LevelAndActIDs_StationSquare5, 1, SsMainToHotel, 90, {-245.5, 13, 1685.25}},
+        {HotelToStation, LevelAndActIDs_StationSquare5, 3, StationToHotel, 0.0f, {-370, 13, 1605}},
 
 
         // Twinkle Park Lobby

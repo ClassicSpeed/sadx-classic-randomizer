@@ -79,6 +79,8 @@ BOOL WorldStateManager::OnIsHotelDoorOpen()
 
 BOOL WorldStateManager::OnIsCasinoHotelDoorOpen()
 {
+    if (_instance->_options.adventureFieldRandomized)
+        return _isCasinoHotelDoorOpenHook.Original();
     return _instance->_gameStatus.unlock.keyHotelBackKey;
 }
 

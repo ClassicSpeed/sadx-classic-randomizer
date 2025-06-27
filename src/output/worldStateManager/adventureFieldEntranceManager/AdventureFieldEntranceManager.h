@@ -38,8 +38,11 @@ private:
     inline static FunctionHook<BOOL> _isStationDoorOpenHook{0x63AB70};
     static BOOL OnIsStationDoorOpen();
 
-    inline static FunctionHook<BOOL> _isHotelDoorOpenHook{0x630900};
-    static BOOL OnIsHotelDoorOpen();
+    inline static FunctionHook<BOOL> _isHotelFrontDoorOpenHook{0x630900};
+    static BOOL OnIsHotelFrontDoorOpen();
+
+    inline static FunctionHook<BOOL> _isHotelBackDoorOpenHook{0x630970};
+    static BOOL OnIsHotelBackDoorOpen();
 
     inline static FunctionHook<void, task*> _twinkleParkLobbyDoorFromStationHook{0x63E6F0};
     static void OnTwinkleParkLobbyDoorFromStation(task* tp);

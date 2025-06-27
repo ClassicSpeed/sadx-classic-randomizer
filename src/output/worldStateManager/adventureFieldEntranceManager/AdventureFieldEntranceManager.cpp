@@ -10,7 +10,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 
     _isBarricadeGoneHook.Hook(OnIsBarricadeGone);
     _isStationDoorOpenHook.Hook(OnIsStationDoorOpen);
-    _isHotelDoorOpenHook.Hook(OnIsHotelDoorOpen);
+    _isHotelFrontDoorOpenHook.Hook(OnIsHotelFrontDoorOpen);
+    _isHotelBackDoorOpenHook.Hook(OnIsHotelBackDoorOpen);
     _twinkleParkLobbyDoorFromStationHook.Hook(OnTwinkleParkLobbyDoorFromStation);
     _ssBoxLoadHook.Hook(OnSsBoxLoad);
     _elevatorOutHook.Hook(OnElevatorOut);
@@ -27,6 +28,18 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 
     //Avoid the distance check for the Twinkle Park door
     WriteData<1>((void*)0x63E737, 0xEB);
+}
+
+bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
+{
+    //TODO: Implement the logic to check if the door is open based on the entranceId
+    return false;
+}
+
+bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
+{
+    //TODO: Implement the logic to check if the indicator should be shown based on the entranceId
+    return !IsDoorOpen(entranceId);
 }
 
 
@@ -70,19 +83,6 @@ void AdventureFieldEntranceManager::OnGetEntranceSs(taskwk* twp)
 }
 
 
-bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
-{
-    //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
-}
-
-bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
-{
-    //TODO: Implement the logic to check if the indicator should be shown based on the entranceId
-    return !IsDoorOpen(entranceId);
-}
-
-
 void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
 {
     for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetEntrances())
@@ -123,10 +123,10 @@ int AdventureFieldEntranceManager::OnIsStationDoorOpen()
     return _instance->IsDoorOpen(StationToSsMain);
 }
 
-BOOL AdventureFieldEntranceManager::OnIsHotelDoorOpen()
+BOOL AdventureFieldEntranceManager::OnIsHotelFrontDoorOpen()
 {
     if (!_instance->_options.adventureFieldRandomized)
-        return _isHotelDoorOpenHook.Original();
+        return _isHotelFrontDoorOpenHook.Original();
 
     if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
         return _instance->IsDoorOpen(SsMainToHotel);
@@ -134,6 +134,16 @@ BOOL AdventureFieldEntranceManager::OnIsHotelDoorOpen()
     return _instance->IsDoorOpen(HotelToSsMain);
 }
 
+BOOL AdventureFieldEntranceManager::OnIsHotelBackDoorOpen()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isHotelBackDoorOpenHook.Original();
+
+    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2)
+        return _instance->IsDoorOpen(StationToHotel);
+
+    return _instance->IsDoorOpen(HotelToStation);
+}
 
 TaskFunc(SomethingAboutTPDoor, 0x63E670);
 
