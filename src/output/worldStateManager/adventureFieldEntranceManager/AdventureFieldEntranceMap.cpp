@@ -32,6 +32,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         // Hotel
         {HotelToSsMain, LevelAndActIDs_StationSquare5, 1, SsMainToHotel, 90, {-245.5, 13, 1685.25}},
         {HotelToStation, LevelAndActIDs_StationSquare5, 3, StationToHotel, 0.0f, {-370, 13, 1605}},
+        {HotelToEmeraldCoast, LevelAndActIDs_StationSquare5, 2, EmeraldCoastToHotel, 135, {-520, 10, 2093}},
+        {HotelToSsChaoGarden, LevelAndActIDs_StationSquare5, 4, SsChaoGardenToHotel, 90, {-395, 13, 1700}},
+        {HotelToChaos2, LevelAndActIDs_StationSquare5, 5, Chaos2ToHotel, 90, {-395, 13, 1665}},
 
 
         // Twinkle Park Lobby
@@ -41,8 +44,18 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         // Egg Carrier Outside (Untransformed)
         {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 0.0f, {0, 0, 0}},
 
-        //Speed Highway
+        // SS Chao Garden
+        {SsChaoGardenToHotel, LevelAndActIDs_SSGarden, 0, HotelToSsChaoGarden, 90, {-395, 13, 1700}},
+
+
+        // Speed Highway
         {SpeedHighwayToSsMain, LevelAndActIDs_SpeedHighway1, 0, SsMainToSpeedHighway, 0, {0, 0, 0}},
+
+        // Emerald Coast
+        {EmeraldCoastToHotel, LevelAndActIDs_EmeraldCoast1, 0, HotelToEmeraldCoast, 0, {0, 0, 0}},
+
+        // Chaos 2
+        {Chaos2ToHotel, LevelAndActIDs_Chaos2, 0, HotelToChaos2, 0, {0, 0, 0}},
     };
 }
 

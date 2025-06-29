@@ -348,6 +348,8 @@ void SetObjectManager::HandleWarp()
 // Allow Knuckles to fight Chaos 2
 BOOL SetObjectManager::OnIsChaos2DoorOpen()
 {
+    if (_instance->_options.adventureFieldRandomized)
+        return _isChaos2DoorOpenHook.Original();
     return CurrentCharacter == Characters_Knuckles;
 }
 

@@ -82,4 +82,16 @@ private:
 
     inline static FunctionHook<void, task*> _loadSpeedHighwayShutter2Hook{0x63A500};
     static void OnLoadSpeedHighwayShutter2(task* tp);
+
+    inline static FunctionHook<BOOL> _isEmeraldCoastOpenHook{0x639A30};
+    static BOOL OnIsEmeraldCoastOpen();
+
+    inline static FunctionHook<void, task*> _loadEmeraldCoastGateTargetsHook{0x63A0C0};
+    static void OnLoadEmeraldCoastGateTargets(task* tp);
+
+    inline static FunctionHook<BOOL> _isChaos2DoorOpenHook{0x638D50};
+    static BOOL OnIsChaos2DoorOpen();
+
+    inline static FunctionHook<void, task*> _loadHotelElevatorHook{0x639380};
+    static void OnLoadHotelElevator(task* tp);
 };

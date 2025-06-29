@@ -25,6 +25,10 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isSpeedHighwayShutterOpenHook.Hook(OnIsSpeedHighwayShutterOpen);
     _loadSpeedHighwayShutterHook.Hook(OnLoadSpeedHighwayShutter);
     _loadSpeedHighwayShutter2Hook.Hook(OnLoadSpeedHighwayShutter2);
+    _isEmeraldCoastOpenHook.Hook(OnIsEmeraldCoastOpen);
+    _loadEmeraldCoastGateTargetsHook.Hook(OnLoadEmeraldCoastGateTargets);
+    _isChaos2DoorOpenHook.Hook(OnIsChaos2DoorOpen);
+    _loadHotelElevatorHook.Hook(OnLoadHotelElevator);
 
     //Avoid the distance check for the Twinkle Park door
     WriteData<1>((void*)0x63E737, 0xEB);
@@ -33,7 +37,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -325,10 +329,54 @@ void AdventureFieldEntranceManager::OnLoadSpeedHighwayShutter(task* tp)
 void AdventureFieldEntranceManager::OnLoadSpeedHighwayShutter2(task* tp)
 {
     if (!_instance->_options.adventureFieldRandomized)
-        _loadSpeedHighwayShutter2Hook.Original(tp);
+        return _loadSpeedHighwayShutter2Hook.Original(tp);
     //TODO: Animate instead of removing the task
     if (_instance->IsDoorOpen(SsMainToSpeedHighway))
         return FreeTask(tp);
 
     _loadSpeedHighwayShutter2Hook.Original(tp);
+}
+
+BOOL AdventureFieldEntranceManager::OnIsEmeraldCoastOpen()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isEmeraldCoastOpenHook.Original();
+
+    if (CurrentCharacter == Characters_Gamma)
+        return false;
+
+    return _instance->IsDoorOpen(HotelToEmeraldCoast);
+}
+
+void AdventureFieldEntranceManager::OnLoadEmeraldCoastGateTargets(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _loadEmeraldCoastGateTargetsHook.Original(tp);
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
+        && !_instance->IsDoorOpen(HotelToEmeraldCoast))
+        FreeTask(tp);
+    else
+        _loadEmeraldCoastGateTargetsHook.Original(tp);
+}
+
+
+BOOL AdventureFieldEntranceManager::OnIsChaos2DoorOpen()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isChaos2DoorOpenHook.Original();
+    return _instance->IsDoorOpen(HotelToChaos2);
+}
+
+TaskFunc(ClosedElevatorMain, 0x6391F0);
+
+void AdventureFieldEntranceManager::OnLoadHotelElevator(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _loadHotelElevatorHook.Original(tp);
+
+    _loadHotelElevatorHook.Original(tp);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
+        && !_instance->IsDoorOpen(HotelToSsChaoGarden))
+        tp->exec = ClosedElevatorMain;
 }
