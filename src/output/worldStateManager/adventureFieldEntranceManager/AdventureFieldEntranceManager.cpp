@@ -29,6 +29,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _loadEmeraldCoastGateTargetsHook.Hook(OnLoadEmeraldCoastGateTargets);
     _isChaos2DoorOpenHook.Hook(OnIsChaos2DoorOpen);
     _loadHotelElevatorHook.Hook(OnLoadHotelElevator);
+    _isCasinoOpenHook.Hook(OnIsCasinoOpen);
+    _isTrainInServiceHook.Hook(OnIsTrainInService);
 
     //Avoid the distance check for the Twinkle Park door
     WriteData<1>((void*)0x63E737, 0xEB);
@@ -379,4 +381,29 @@ void AdventureFieldEntranceManager::OnLoadHotelElevator(task* tp)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
         && !_instance->IsDoorOpen(HotelToSsChaoGarden))
         tp->exec = ClosedElevatorMain;
+}
+
+
+BOOL AdventureFieldEntranceManager::OnIsCasinoOpen()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isCasinoOpenHook.Original();
+
+    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+        return _isCasinoOpenHook.Original() && _instance->IsDoorOpen(StationToCasinopolis);
+
+    if (CurrentCharacter == Characters_Knuckles)
+        return GetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO)) && _instance->IsDoorOpen(
+            StationToCasinopolis);
+
+    return _instance->IsDoorOpen(StationToCasinopolis);
+}
+
+
+BOOL AdventureFieldEntranceManager::OnIsTrainInService()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isTrainInServiceHook.Original();
+
+    return _instance->IsDoorOpen(StationToMrMain);
 }

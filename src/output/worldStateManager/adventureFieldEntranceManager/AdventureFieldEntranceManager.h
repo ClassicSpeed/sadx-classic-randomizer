@@ -94,4 +94,10 @@ private:
 
     inline static FunctionHook<void, task*> _loadHotelElevatorHook{0x639380};
     static void OnLoadHotelElevator(task* tp);
+
+    inline static FunctionHook<BOOL> _isCasinoOpenHook{0x6383E0};
+    static BOOL OnIsCasinoOpen();
+
+    inline static FunctionHook<BOOL> _isTrainInServiceHook{0x539C60};
+    static BOOL OnIsTrainInService();
 };

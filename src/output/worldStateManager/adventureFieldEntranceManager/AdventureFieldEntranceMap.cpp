@@ -13,15 +13,22 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
 
         //Station
-        {StationToSsMain, LevelAndActIDs_StationSquare2, 0, SsMainToStation, 0.0f, {0, 0, 0}},
-        //1 is casinoplis
-        {StationToHotel, LevelAndActIDs_StationSquare2, 2, HotelToStation, 0.0f, {0, 0, 0}},
+        {StationToSsMain, LevelAndActIDs_StationSquare2, 0, SsMainToStation, 26, {59, 79, 1452}},
+        {StationToCasinopolis, LevelAndActIDs_StationSquare2, 1, CasinopolisToStation, 45, {-620, 12.5, 905}},
+        {StationToHotel, LevelAndActIDs_StationSquare2, 2, HotelToStation, 0.0f, {-445, 13, 1515}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {-236.8f, 153, 1237}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {-164, 153, 1204}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {-115, 153, 1179}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {-43, 153, 1142}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {4.6f, 153, 1116.4f}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {76.5f, 153, 1080.7f}},
+        //TODO: Add Egg Walker entrance
 
         // Sewers
         {SewersToSsMain, LevelAndActIDs_StationSquare3, 1, SsMainToSewers, 0, {174.09f, 6, 1897.51f}},
 
         // SSMain
-        {SsMainToCityHall, LevelAndActIDs_StationSquare4, 1, CityHallToSsMain, 110.8F, {443, 15, 1077}},
+        {SsMainToCityHall, LevelAndActIDs_StationSquare4, 1, CityHallToSsMain, 110.8F, {443, 13, 1077}},
         {SsMainToStation, LevelAndActIDs_StationSquare4, 0, StationToSsMain, 18.81f, {28, 41, 1388}},
         {SsMainToHotel, LevelAndActIDs_StationSquare4, 3, HotelToSsMain, 90, {-168, 15, 1685}},
         {SsMainToTwinkleParkLobby, LevelAndActIDs_StationSquare4, 4, TwinkleParkLobbyToSsMain, 90, {580, 65, 1772}},
@@ -41,6 +48,10 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {TwinkleParkLobbyToSsMain, LevelAndActIDs_StationSquare6, 0, SsMainToTwinkleParkLobby, 90, {580, 65, 1772}},
 
 
+        // MRMain
+        {MrMainToSsMain, LevelAndActIDs_MysticRuins1, 0, StationToMrMain, 0.0f, {0, 0, 0}},
+
+
         // Egg Carrier Outside (Untransformed)
         {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 0.0f, {0, 0, 0}},
 
@@ -53,6 +64,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Emerald Coast
         {EmeraldCoastToHotel, LevelAndActIDs_EmeraldCoast1, 0, HotelToEmeraldCoast, 0, {0, 0, 0}},
+
+        // Casinopolis
+        {CasinopolisToStation, LevelAndActIDs_Casinopolis1, 0, StationToCasinopolis, 0, {0, 0, 0}},
 
         // Chaos 2
         {Chaos2ToHotel, LevelAndActIDs_Chaos2, 0, HotelToChaos2, 0, {0, 0, 0}},
