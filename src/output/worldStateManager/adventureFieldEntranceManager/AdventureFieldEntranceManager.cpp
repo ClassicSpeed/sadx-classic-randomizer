@@ -34,6 +34,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 
     //Avoid the distance check for the Twinkle Park door
     WriteData<1>((void*)0x63E737, 0xEB);
+    //Allows players to return to the adventure field when quitting boss fights
+    WriteData<1>((void*)0x415F46, 0x19);
 }
 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)

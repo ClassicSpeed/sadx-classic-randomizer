@@ -50,7 +50,8 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
         &saveFileManager, &archipelagoManager, &displayManager, &worldStateManager,
         &eventDetector, &characterLoadingDetector, &link, &characterManager
     };
-
+    // TODO: Remove later
+    options.bossChecks = true;
     gameStatus.unlock.keyTrain = true;
     gameStatus.unlock.keyBoat = true;
     gameStatus.unlock.keyRaft = true;
@@ -70,12 +71,6 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
 
 __declspec(dllexport) void __cdecl OnFrame()
 {
-    //TODO: Remove later
-    // for (const auto& button : PressedButtons)
-    //
-    //     if (button & WhistleButtons && Current_CharObj2 != nullptr)
-    //     {
-    //     }
     for (const auto manager : onFrameObjects)
         manager->OnFrame();
 }

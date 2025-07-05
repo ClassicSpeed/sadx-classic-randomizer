@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0] - 2025-??-??
+
+### Changed
+
+- Now the player can exit any boss fight into the adventure field.
+
 ## [v1.1.2] - 2025-05-27
 
 ### Changed
