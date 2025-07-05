@@ -100,4 +100,7 @@ private:
 
     inline static FunctionHook<BOOL> _isTrainInServiceHook{0x539C60};
     static BOOL OnIsTrainInService();
+
+    inline static FunctionHook<void, task*> _ecWarpMainHook{0x526470};
+    static void OnEcWarpMain(task* tp);
 };

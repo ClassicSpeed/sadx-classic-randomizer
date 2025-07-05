@@ -213,6 +213,42 @@ void SetObjectManager::OnCountSetItemsMaybe()
 
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
+
+
+        if (_instance->_options.adventureFieldRandomized)
+        {
+            //Station Square Bosses
+            AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Tails);
+            AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Knuckles);
+            AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Amy);
+            AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Gamma);
+            AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Big);
+
+            AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Sonic);
+            AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Knuckles);
+            AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Amy);
+            AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Gamma);
+            AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Big);
+
+            //Mystic Ruins Bosses
+            AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
+            AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Amy);
+            AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Gamma);
+            AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Big);
+
+            AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Amy);
+            AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Gamma);
+            AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Big);
+
+            AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Tails);
+            AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Knuckles);
+            AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Amy);
+            AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Big);
+
+            //Egg Carrier Bosses
+            AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
+            AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
+        }
     }
     if (_instance->_options.skyChaseChecks)
     {
@@ -293,8 +329,7 @@ void SetObjectManager::HandleWarp()
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Sonic)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos0, 0);
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2 && CurrentCharacter ==
-        Characters_Tails)
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggWalker, 0);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Sonic)

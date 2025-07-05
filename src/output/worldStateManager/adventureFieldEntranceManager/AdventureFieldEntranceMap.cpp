@@ -22,7 +22,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {-43, 153, 1142}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {4.6f, 153, 1116.4f}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {76.5f, 153, 1080.7f}},
-        //TODO: Add Egg Walker entrance
+        {StationToEggWalker, LevelAndActIDs_StationSquare2, 1, EggWalkerToStation, 0, {-400, 13, 955}},
 
         // Sewers
         {SewersToSsMain, LevelAndActIDs_StationSquare3, 1, SsMainToSewers, 0, {174.09f, 6, 1897.51f}},
@@ -34,7 +34,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {SsMainToTwinkleParkLobby, LevelAndActIDs_StationSquare4, 4, TwinkleParkLobbyToSsMain, 90, {580, 65, 1772}},
         {SsMainToEcOutside, LevelAndActIDs_StationSquare4, 6, EcOutsideToSsMain, 30, {174.09f, 6, 1897.51f}},
         {SsMainToSewers, LevelAndActIDs_StationSquare4, 2, SewersToSsMain, 0, {400, 58, 1450}},
-        {SsMainToSpeedHighway, LevelAndActIDs_StationSquare4, 5, SpeedHighwayToSsMain, 90, {380, 20, 1370}},
+        {SsMainToSpeedHighway, LevelAndActIDs_StationSquare4, 5, SpeedHighwayToSsMain, 45, {380, 20, 1370}},
 
         // Hotel
         {HotelToSsMain, LevelAndActIDs_StationSquare5, 1, SsMainToHotel, 90, {-245.5, 13, 1685.25}},
@@ -70,6 +70,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Chaos 2
         {Chaos2ToHotel, LevelAndActIDs_Chaos2, 0, HotelToChaos2, 0, {0, 0, 0}},
+        // Egg Walker
+        {EggWalkerToStation, LevelAndActIDs_EggWalker, 0, StationToEggWalker, 0, {0, 0, 0}},
     };
 }
 

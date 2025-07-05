@@ -31,6 +31,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _loadHotelElevatorHook.Hook(OnLoadHotelElevator);
     _isCasinoOpenHook.Hook(OnIsCasinoOpen);
     _isTrainInServiceHook.Hook(OnIsTrainInService);
+    _ecWarpMainHook.Hook(OnEcWarpMain);
 
     //Avoid the distance check for the Twinkle Park door
     WriteData<1>((void*)0x63E737, 0xEB);
@@ -41,7 +42,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -408,4 +409,18 @@ BOOL AdventureFieldEntranceManager::OnIsTrainInService()
         return _isTrainInServiceHook.Original();
 
     return _instance->IsDoorOpen(StationToMrMain);
+}
+
+
+void AdventureFieldEntranceManager::OnEcWarpMain(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _ecWarpMainHook.Original(tp);
+
+    //TODO: Check by location
+    if (_instance->IsDoorOpen(StationToEggWalker))
+        return _ecWarpMainHook.Original(tp);
+
+    tp->twp->wtimer = 0;
+    _ecWarpMainHook.Original(tp);
 }
