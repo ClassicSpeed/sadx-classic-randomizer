@@ -417,8 +417,9 @@ void AdventureFieldEntranceManager::OnEcWarpMain(task* tp)
     if (!_instance->_options.adventureFieldRandomized)
         return _ecWarpMainHook.Original(tp);
 
-    //TODO: Check by location
-    if (_instance->IsDoorOpen(StationToEggWalker))
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2 && _instance->IsDoorOpen(StationToEggWalker)
+        || levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && _instance->IsDoorOpen(
+            CityHallToChaos0))
         return _ecWarpMainHook.Original(tp);
 
     tp->twp->wtimer = 0;

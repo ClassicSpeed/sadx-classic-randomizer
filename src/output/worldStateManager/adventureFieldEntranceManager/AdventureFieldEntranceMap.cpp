@@ -10,6 +10,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         //City Hall
         {CityHallToSsMain, LevelAndActIDs_StationSquare1, 1, SsMainToCityHall, 50.0f, {550.79f, 14.5, 856.22f}},
+        {CityHallToChaos0, LevelAndActIDs_StationSquare1, 1, Chaos0ToCityHall, 0, {270, 16, 450}},
 
 
         //Station
@@ -68,6 +69,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         // Casinopolis
         {CasinopolisToStation, LevelAndActIDs_Casinopolis1, 0, StationToCasinopolis, 0, {0, 0, 0}},
 
+        // Chaos 0
+        {Chaos0ToCityHall, LevelAndActIDs_Chaos0, 1, CityHallToChaos0, 0, {0, 0, 0}},
         // Chaos 2
         {Chaos2ToHotel, LevelAndActIDs_Chaos2, 0, HotelToChaos2, 0, {0, 0, 0}},
         // Egg Walker
