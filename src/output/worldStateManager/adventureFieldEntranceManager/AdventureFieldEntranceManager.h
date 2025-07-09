@@ -103,4 +103,7 @@ private:
 
     inline static FunctionHook<void, task*> _ecWarpMainHook{0x526470};
     static void OnEcWarpMain(task* tp);
+
+    inline static FunctionHook<void, task*> _openToyShopDoorMainHook{0x63E9E0};
+    static void OnOpenToyShopDoorMain(task* tp);
 };

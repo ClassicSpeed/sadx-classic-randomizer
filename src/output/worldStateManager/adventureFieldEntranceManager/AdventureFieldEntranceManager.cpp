@@ -32,6 +32,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isCasinoOpenHook.Hook(OnIsCasinoOpen);
     _isTrainInServiceHook.Hook(OnIsTrainInService);
     _ecWarpMainHook.Hook(OnEcWarpMain);
+    _openToyShopDoorMainHook.Hook(OnOpenToyShopDoorMain);
 
     //Avoid the distance check for the Twinkle Park door
     WriteData<1>((void*)0x63E737, 0xEB);
@@ -281,10 +282,20 @@ void AdventureFieldEntranceManager::OnSceneChangeMainStationSquare(task* tp)
     if (!_instance->_options.adventureFieldRandomized)
         return _sceneChangeMainStationSquareHook.Original(tp);
 
-    // Big sewers-toy shop door
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3 && CurrentCharacter == Characters_Big
-        && IsNearPosition(tp->twp->pos, 401, -2, 632, 2))
-        tp->twp->pos = {418, 0, 635};
+    // Sewers-toy shop door
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3
+        && IsNearPosition(tp->twp->pos, 401, -2, 632, 3))
+    {
+        if (_instance->IsDoorOpen(SewersToCityHall))
+        {
+            if (CurrentCharacter == Characters_Big)
+                tp->twp->pos = {418, 0, 635};
+        }
+        else
+        {
+            return;
+        }
+    }
 
 
     _sceneChangeMainStationSquareHook.Original(tp);
@@ -424,4 +435,17 @@ void AdventureFieldEntranceManager::OnEcWarpMain(task* tp)
 
     tp->twp->wtimer = 0;
     _ecWarpMainHook.Original(tp);
+}
+
+TaskFunc(ClosedToyShopDoorMain, 0x63E9A0);
+
+void AdventureFieldEntranceManager::OnOpenToyShopDoorMain(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _openToyShopDoorMainHook.Original(tp);
+
+    if (_instance->IsDoorOpen(SewersToCityHall))
+        return _openToyShopDoorMainHook.Original(tp);
+
+    ClosedToyShopDoorMain(tp);
 }

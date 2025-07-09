@@ -11,6 +11,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         //City Hall
         {CityHallToSsMain, LevelAndActIDs_StationSquare1, 1, SsMainToCityHall, 50.0f, {550.79f, 14.5, 856.22f}},
         {CityHallToChaos0, LevelAndActIDs_StationSquare1, 1, Chaos0ToCityHall, 0, {270, 16, 450}},
+        {CityHallToSewers, LevelAndActIDs_StationSquare1, 2, SewersToCityHall, 0, {0, 0, 0}},
 
 
         //Station
@@ -27,6 +28,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Sewers
         {SewersToSsMain, LevelAndActIDs_StationSquare3, 1, SsMainToSewers, 0, {174.09f, 6, 1897.51f}},
+        {SewersToCityHall, LevelAndActIDs_StationSquare3, 0, CityHallToSewers, 90, {433.5, 13, 635}},
 
         // SSMain
         {SsMainToCityHall, LevelAndActIDs_StationSquare4, 1, CityHallToSsMain, 110.8F, {443, 13, 1077}},
