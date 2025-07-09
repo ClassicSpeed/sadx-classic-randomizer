@@ -27,7 +27,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {StationToEggWalker, LevelAndActIDs_StationSquare2, 1, EggWalkerToStation, 0, {-400, 13, 955}},
 
         // Sewers
-        {SewersToSsMain, LevelAndActIDs_StationSquare3, 1, SsMainToSewers, 0, {174.09f, 6, 1897.51f}},
+        {SewersToSsMain, LevelAndActIDs_StationSquare3, 1, SsMainToSewers, 0, {395, -87, 1323}},
         {SewersToCityHall, LevelAndActIDs_StationSquare3, 0, CityHallToSewers, 90, {433.5, 13, 635}},
 
         // SSMain

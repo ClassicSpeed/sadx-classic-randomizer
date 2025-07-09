@@ -50,6 +50,9 @@ private:
     inline static FunctionHook<void, task*> _ssBoxLoadHook{0x636B30};
     static void OnSsBoxLoad(task* tp);
 
+    inline static FunctionHook<void, task*> _elevatorInHook{0x63DB70};
+    static void OnElevatorIn(task* tp);
+
     inline static FunctionHook<void, task*> _elevatorOutHook{0x63DB90};
     static void OnElevatorOut(task* tp);
 

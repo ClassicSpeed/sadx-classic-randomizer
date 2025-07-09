@@ -14,6 +14,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isHotelBackDoorOpenHook.Hook(OnIsHotelBackDoorOpen);
     _twinkleParkLobbyDoorFromStationHook.Hook(OnTwinkleParkLobbyDoorFromStation);
     _ssBoxLoadHook.Hook(OnSsBoxLoad);
+    _elevatorInHook.Hook(OnElevatorIn);
     _elevatorOutHook.Hook(OnElevatorOut);
     _elevatorInSceneChangeHook.Hook(OnElevatorInSceneChange);
     _sewerCarMainHook.Hook(OnSewerCarMain);
@@ -43,7 +44,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -198,8 +199,21 @@ void AdventureFieldEntranceManager::OnElevatorOut(task* tp)
         SsMainToSewers))
         return _elevatorOutHook.Original(tp);
 
-    OEleboxIn(reinterpret_cast<ObjectMaster*>(tp));
+    _elevatorInHook.Original(tp);
 }
+
+void AdventureFieldEntranceManager::OnElevatorIn(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _elevatorInHook.Original(tp);
+
+    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3 && !_instance->IsDoorOpen(
+        SewersToSsMain))
+        return _elevatorOutHook.Original(tp);
+
+    _elevatorInHook.Original(tp);
+}
+
 
 int AdventureFieldEntranceManager::OnElevatorInSceneChange(task* tp)
 {
