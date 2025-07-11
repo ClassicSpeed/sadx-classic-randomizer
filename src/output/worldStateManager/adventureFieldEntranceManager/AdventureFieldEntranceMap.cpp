@@ -11,7 +11,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         //City Hall
         {CityHallToSsMain, LevelAndActIDs_StationSquare1, 1, SsMainToCityHall, 50.0f, {550.79f, 14.5, 856.22f}},
         {CityHallToChaos0, LevelAndActIDs_StationSquare1, 1, Chaos0ToCityHall, 0, {270, 16, 450}},
-        {CityHallToSewers, LevelAndActIDs_StationSquare1, 2, SewersToCityHall, 0, {0, 0, 0}},
+        {CityHallToSewers, LevelAndActIDs_StationSquare1, 2, SewersToCityHall, 0, {361, 10, 941.5}},
 
 
         //Station
@@ -37,7 +37,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {SsMainToTwinkleParkLobby, LevelAndActIDs_StationSquare4, 4, TwinkleParkLobbyToSsMain, 90, {580, 65, 1772}},
         {SsMainToEcOutside, LevelAndActIDs_StationSquare4, 6, EcOutsideToSsMain, 30, {174.09f, 6, 1897.51f}},
         {SsMainToSewers, LevelAndActIDs_StationSquare4, 2, SewersToSsMain, 0, {400, 58, 1450}},
-        {SsMainToSpeedHighway, LevelAndActIDs_StationSquare4, 5, SpeedHighwayToSsMain, 45, {380, 20, 1370}},
+        {SsMainToSpeedHighway, LevelAndActIDs_StationSquare4, 5, SpeedHighwayToSsMain, 90, {380, 20, 1370}},
 
         // Hotel
         {HotelToSsMain, LevelAndActIDs_StationSquare5, 1, SsMainToHotel, 90, {-245.5, 13, 1685.25}},

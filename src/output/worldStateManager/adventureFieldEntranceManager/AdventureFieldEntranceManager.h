@@ -35,6 +35,12 @@ private:
     inline static FunctionHook<BOOL> _isBarricadeGoneHook{0x6389F0};
     static BOOL OnIsBarricadeGone();
 
+    inline static FunctionHook<void, task*> _wallMainHook{0x4D4850};
+    static void OnWallMain(task* tp);
+
+    inline static FunctionHook<void, task*> _ssCarMainHook{0x633250};
+    static void OnSsCarMain(task* tp);
+
     inline static FunctionHook<BOOL> _isStationDoorOpenHook{0x63AB70};
     static BOOL OnIsStationDoorOpen();
 
@@ -59,8 +65,11 @@ private:
     inline static FunctionHook<int, task*> _elevatorInSceneChangeHook{0x63D7C0};
     static int OnElevatorInSceneChange(task* tp);
 
-    inline static FunctionHook<void, task*> _sewerCarMainHook{0x639920};
-    static void OnSewerCarMain(task* tp);
+    inline static FunctionHook<void, task*> _sewerCarHandlePickUpHook{0x639800};
+    static void OnSewerCarHandlePickUp(task* tp);
+
+    inline static FunctionHook<BOOL> _spawnSewerCarHook{0x639740};
+    static BOOL OnSpawnSewerCar();
 
     inline static FunctionHook<void, task*> _collisionCubeHook{0x4D47E0};
     static void OnCollisionCube(task* tp);

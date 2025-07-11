@@ -146,6 +146,25 @@ void SetObjectManager::OnCountSetItemsMaybe()
         AddSetToLevel(SEWERS_SPRING_BIG, LevelAndActIDs_StationSquare3, Characters_Big);
         AddSetToLevel(EXTRA_SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Amy);
         AddSetToLevel(EXTRA_SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Big);
+
+        AddSetToLevel(SS_MAIN_BARRICADE_SS, LevelAndActIDs_StationSquare4, Characters_Knuckles);
+        AddSetToLevel(SS_MAIN_BARRICADE_SS, LevelAndActIDs_StationSquare4, Characters_Amy);
+        AddSetToLevel(SS_MAIN_BARRICADE_SS, LevelAndActIDs_StationSquare4, Characters_Gamma);
+        AddSetToLevel(SS_MAIN_BARRICADE_SS, LevelAndActIDs_StationSquare4, Characters_Big);
+
+        AddSetToLevel(CITY_HALL_BARRICADE_SS, LevelAndActIDs_StationSquare1, Characters_Sonic);
+        AddSetToLevel(CITY_HALL_BARRICADE_SS, LevelAndActIDs_StationSquare1, Characters_Tails);
+        AddSetToLevel(CITY_HALL_BARRICADE_SS, LevelAndActIDs_StationSquare1, Characters_Knuckles);
+        AddSetToLevel(CITY_HALL_BARRICADE_SS, LevelAndActIDs_StationSquare1, Characters_Amy);
+        AddSetToLevel(CITY_HALL_BARRICADE_SS, LevelAndActIDs_StationSquare1, Characters_Gamma);
+        AddSetToLevel(CITY_HALL_BARRICADE_SS, LevelAndActIDs_StationSquare1, Characters_Big);
+
+        AddSetToLevel(CITY_HALL_BARRICADE_WALL_SS, LevelAndActIDs_StationSquare1, Characters_Sonic);
+        AddSetToLevel(CITY_HALL_BARRICADE_WALL_SS, LevelAndActIDs_StationSquare1, Characters_Tails);
+        AddSetToLevel(CITY_HALL_BARRICADE_WALL_SS, LevelAndActIDs_StationSquare1, Characters_Knuckles);
+        AddSetToLevel(CITY_HALL_BARRICADE_WALL_SS, LevelAndActIDs_StationSquare1, Characters_Amy);
+        AddSetToLevel(CITY_HALL_BARRICADE_WALL_SS, LevelAndActIDs_StationSquare1, Characters_Gamma);
+        AddSetToLevel(CITY_HALL_BARRICADE_WALL_SS, LevelAndActIDs_StationSquare1, Characters_Big);
     }
 
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Sonic);

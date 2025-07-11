@@ -19,6 +19,7 @@ constexpr int EMBLEM_MYSTIC_RUINS = 65;
 constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
 constexpr int BEACH_GATE_STATION_SQUARE = 67;
 constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
+constexpr int BARRICADE_STATION_SQUARE = 74;
 
 constexpr char LEON_TIMER1 = 10;
 constexpr char LEON_TIMER2 = 30;
@@ -203,3 +204,10 @@ const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {
 //Past
 const SETEntry WARP_TO_PAST = CreateSetEntry(WARP_MYSTIC_RUINS, {-2.5f, -240, 2397.5f});
 const SETEntry WARP_FROM_PAST = CreateSetEntry(WARP_PAST, {0, 7, 247.5f});
+
+// Adventure Field Randomization
+const SETEntry SS_MAIN_BARRICADE_SS = CreateSetEntry(BARRICADE_STATION_SQUARE, {443, 1, 1077},
+                                                     {0, 0x5000, 0});
+const SETEntry CITY_HALL_BARRICADE_SS = CreateSetEntry(BARRICADE_STATION_SQUARE, {622.61f, 0, 875});
+const SETEntry CITY_HALL_BARRICADE_WALL_SS = CreateSetEntry(WALL_THAT_PUSHES_YOU_STATION_SQUARE, {622.61f, 0, 878},
+                                                            {0, 0x8000, 0}, {60, 50, 0});

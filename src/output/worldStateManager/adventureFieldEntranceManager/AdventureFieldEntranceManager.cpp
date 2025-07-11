@@ -9,6 +9,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _getEntranceSs.Hook(OnGetEntranceSs);
 
     _isBarricadeGoneHook.Hook(OnIsBarricadeGone);
+    _wallMainHook.Hook(OnWallMain);
+    _ssCarMainHook.Hook(OnSsCarMain);
     _isStationDoorOpenHook.Hook(OnIsStationDoorOpen);
     _isHotelFrontDoorOpenHook.Hook(OnIsHotelFrontDoorOpen);
     _isHotelBackDoorOpenHook.Hook(OnIsHotelBackDoorOpen);
@@ -17,7 +19,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _elevatorInHook.Hook(OnElevatorIn);
     _elevatorOutHook.Hook(OnElevatorOut);
     _elevatorInSceneChangeHook.Hook(OnElevatorInSceneChange);
-    _sewerCarMainHook.Hook(OnSewerCarMain);
+    _sewerCarHandlePickUpHook.Hook(OnSewerCarHandlePickUp);
+    _spawnSewerCarHook.Hook(OnSpawnSewerCar);
     _collisionCubeHook.Hook(OnCollisionCube);
     _collisionSphereHook.Hook(OnCollisionSphere);
     _sceneChangeMainStationSquareHook.Hook(OnSceneChangeMainStationSquare);
@@ -39,12 +42,18 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     WriteData<1>((void*)0x63E737, 0xEB);
     //Allows players to return to the adventure field when quitting boss fights
     WriteData<1>((void*)0x415F46, 0x19);
+
+
+    // Change the comparison value from 3 to 9
+    WriteData<1>((void*)0x638BF6, 0x09);
+    // Change the jump from jz (0x74) to jnz (0x75)
+    WriteData<1>((void*)0x638C00, 0x75);
 }
 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -121,6 +130,34 @@ BOOL AdventureFieldEntranceManager::OnIsBarricadeGone()
         return _instance->IsDoorOpen(SsMainToCityHall);
 
     return _instance->IsDoorOpen(CityHallToSsMain);
+}
+
+
+void AdventureFieldEntranceManager::OnWallMain(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _wallMainHook.Original(tp);
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
+    {
+        //We find the city hall to ssmain wall and delete it
+        if (_instance->IsDoorOpen(CityHallToSsMain) && IsNearPosition(tp->twp->pos, 622.61f, 0, 878))
+            return FreeTask(tp);
+    }
+    return _wallMainHook.Original(tp);
+}
+
+void AdventureFieldEntranceManager::OnSsCarMain(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _ssCarMainHook.Original(tp);
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && !_instance->IsDoorOpen(CityHallToSsMain))
+        return FreeTask(tp);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4 && !_instance->IsDoorOpen(SsMainToCityHall))
+        return FreeTask(tp);
+
+    return _ssCarMainHook.Original(tp);
 }
 
 int AdventureFieldEntranceManager::OnIsStationDoorOpen()
@@ -247,13 +284,32 @@ int AdventureFieldEntranceManager::OnElevatorInSceneChange(task* tp)
     return _elevatorInSceneChangeHook.Original(tp);
 }
 
-void AdventureFieldEntranceManager::OnSewerCarMain(task* tp)
+
+TaskFunc(DrawCar, 0x639790);
+
+void AdventureFieldEntranceManager::OnSewerCarHandlePickUp(task* tp)
 {
     if (!_instance->_options.adventureFieldRandomized)
-        return _sewerCarMainHook.Original(tp);
+        return _sewerCarHandlePickUpHook.Original(tp);
 
-    FreeTask(tp);
+    if (_instance->IsDoorOpen(CityHallToSewers))
+        return _sewerCarHandlePickUpHook.Original(tp);
+
+    //Big won't be able to pick up the car 
+    return DrawCar(tp);
 }
+
+BOOL AdventureFieldEntranceManager::OnSpawnSewerCar()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _spawnSewerCarHook.Original();
+
+    if (CurrentCharacter == Characters_Big)
+        return false;
+
+    return _instance->IsDoorOpen(CityHallToSewers);
+}
+
 
 void AdventureFieldEntranceManager::OnCollisionCube(task* tp)
 {
