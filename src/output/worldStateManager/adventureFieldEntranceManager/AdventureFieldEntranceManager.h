@@ -53,6 +53,9 @@ private:
     inline static FunctionHook<void, task*> _twinkleParkLobbyDoorFromStationHook{0x63E6F0};
     static void OnTwinkleParkLobbyDoorFromStation(task* tp);
 
+    inline static FunctionHook<void, task*> _twinkleParkLobbyDoorToStationHook{0x63E430};
+    static void OnTwinkleParkLobbyDoorToStation(task* tp);
+
     inline static FunctionHook<void, task*> _ssBoxLoadHook{0x636B30};
     static void OnSsBoxLoad(task* tp);
 
@@ -124,4 +127,7 @@ private:
 
     inline static FunctionHook<void, task*> _loadKnucklesBarricadeHook{0x637580};
     static void OnLoadKnucklesBarricade(task* tp);
+
+    static int __cdecl OnTwinkleCircuitDoor(char character);
+    static int __cdecl OnTwinkleParkDoor(char character);
 };

@@ -36,6 +36,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {SsMainToHotel, LevelAndActIDs_StationSquare4, 3, HotelToSsMain, 90, {-168, 15, 1685}},
         {SsMainToTwinkleParkLobby, LevelAndActIDs_StationSquare4, 4, TwinkleParkLobbyToSsMain, 90, {580, 65, 1772}},
         {SsMainToEcOutside, LevelAndActIDs_StationSquare4, 6, EcOutsideToSsMain, 30, {174.09f, 6, 1897.51f}},
+        //TODO: Add a connection to the EC bridge
         {SsMainToSewers, LevelAndActIDs_StationSquare4, 2, SewersToSsMain, 0, {400, 58, 1450}},
         {SsMainToSpeedHighway, LevelAndActIDs_StationSquare4, 5, SpeedHighwayToSsMain, 90, {380, 20, 1370}},
 
@@ -48,7 +49,15 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
 
         // Twinkle Park Lobby
-        {TwinkleParkLobbyToSsMain, LevelAndActIDs_StationSquare6, 0, SsMainToTwinkleParkLobby, 90, {580, 65, 1772}},
+        {TwinkleParkLobbyToSsMain, LevelAndActIDs_StationSquare6, 0, SsMainToTwinkleParkLobby, 90, {675, 65, 1771.5f}},
+        {
+            TwinkleParkLobbyToTwinkleCircuit, LevelAndActIDs_StationSquare6, 1, TwinkleCircuitToTwinkleParkLobby, 0,
+            {757, 65, 1735}
+        },
+        {
+            TwinkleParkLobbyToTwinklePark, LevelAndActIDs_StationSquare6, 2, TwinkleParkToTwinkleParkLobby, 90,
+            {804, 65, 1771.5f}
+        },
 
 
         // MRMain
@@ -72,12 +81,42 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         // Casinopolis
         {CasinopolisToStation, LevelAndActIDs_Casinopolis1, 0, StationToCasinopolis, 0, {0, 0, 0}},
 
+        // Twinkle Park
+        {TwinkleParkToTwinkleParkLobby, LevelAndActIDs_TwinklePark1, 0, TwinkleParkLobbyToTwinklePark, 0, {0, 0, 0}},
+
         // Chaos 0
         {Chaos0ToCityHall, LevelAndActIDs_Chaos0, 1, CityHallToChaos0, 0, {0, 0, 0}},
         // Chaos 2
         {Chaos2ToHotel, LevelAndActIDs_Chaos2, 0, HotelToChaos2, 0, {0, 0, 0}},
         // Egg Walker
         {EggWalkerToStation, LevelAndActIDs_EggWalker, 0, StationToEggWalker, 0, {0, 0, 0}},
+
+        // Twinkle Circuit
+        {
+            TwinkleCircuitToTwinkleParkLobby, LevelAndActIDs_TwinkleCircuit1, 0, TwinkleParkLobbyToTwinkleCircuit, 0,
+            {0, 0, 0}
+        },
+        {
+            TwinkleCircuitToTwinkleParkLobby, LevelAndActIDs_TwinkleCircuit2, 0, TwinkleParkLobbyToTwinkleCircuit, 0,
+            {0, 0, 0}
+        },
+        {
+            TwinkleCircuitToTwinkleParkLobby, LevelAndActIDs_TwinkleCircuit3, 0, TwinkleParkLobbyToTwinkleCircuit, 0,
+            {0, 0, 0}
+        },
+        {
+            TwinkleCircuitToTwinkleParkLobby, LevelAndActIDs_TwinkleCircuit4, 0, TwinkleParkLobbyToTwinkleCircuit, 0,
+            {0, 0, 0}
+        },
+        {
+            TwinkleCircuitToTwinkleParkLobby, LevelAndActIDs_TwinkleCircuit5, 0, TwinkleParkLobbyToTwinkleCircuit, 0,
+            {0, 0, 0}
+        },
+        {
+            TwinkleCircuitToTwinkleParkLobby, LevelAndActIDs_TwinkleCircuit6, 0, TwinkleParkLobbyToTwinkleCircuit, 0,
+            {0, 0, 0}
+        },
+
     };
 }
 

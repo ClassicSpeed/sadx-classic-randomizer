@@ -1,5 +1,7 @@
 #include "AdventureFieldEntranceManager.h"
 
+UsercallFunc(int, twinkleCircuitDoorHook, (char tpChar), (tpChar), 0x63F810, rEAX, rESI);
+UsercallFunc(int, twinkleParkDoorHook, (char tpChar), (tpChar), 0x63EA90, rEAX, rESI);
 
 AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): _options(options),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init()),
@@ -15,6 +17,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isHotelFrontDoorOpenHook.Hook(OnIsHotelFrontDoorOpen);
     _isHotelBackDoorOpenHook.Hook(OnIsHotelBackDoorOpen);
     _twinkleParkLobbyDoorFromStationHook.Hook(OnTwinkleParkLobbyDoorFromStation);
+    _twinkleParkLobbyDoorToStationHook.Hook(OnTwinkleParkLobbyDoorToStation);
     _ssBoxLoadHook.Hook(OnSsBoxLoad);
     _elevatorInHook.Hook(OnElevatorIn);
     _elevatorOutHook.Hook(OnElevatorOut);
@@ -39,9 +42,9 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _openToyShopDoorMainHook.Hook(OnOpenToyShopDoorMain);
     _isCityHallDoorOpenHook.Hook(OnIsCityHallDoorOpen);
     _loadKnucklesBarricadeHook.Hook(OnLoadKnucklesBarricade);
+    twinkleCircuitDoorHook.Hook(OnTwinkleCircuitDoor);
+    twinkleParkDoorHook.Hook(OnTwinkleParkDoor);
 
-    //Avoid the distance check for the Twinkle Park door
-    WriteData<1>((void*)0x63E737, 0xEB);
     //Allows players to return to the adventure field when quitting boss fights
     WriteData<1>((void*)0x415F46, 0x19);
 
@@ -98,6 +101,24 @@ void AdventureFieldEntranceManager::OnGetEntranceSs(taskwk* twp)
         {
             twp->pos = {395, -120, 1200};
             twp->ang = {0, 0xC000, 0};
+            return;
+        }
+    }
+    else if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare6)
+    {
+        if (GetLevelEntranceID() == 0)
+        {
+            twp->pos = {688.13f, 50, 1771.5f};
+            twp->ang = {0, 0, 0};
+            return;
+        }
+    }
+    else if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
+    {
+        if (GetLevelEntranceID() == 4)
+        {
+            twp->pos = {566.5, 50, 1771.5};
+            twp->ang = {0, 0x8000, 0};
             return;
         }
     }
@@ -195,12 +216,15 @@ BOOL AdventureFieldEntranceManager::OnIsHotelBackDoorOpen()
     return _instance->IsDoorOpen(HotelToStation);
 }
 
-TaskFunc(SomethingAboutTPDoor, 0x63E670);
+TaskFunc(SomethingAboutTPDoorA, 0x63E670);
 
 void AdventureFieldEntranceManager::OnTwinkleParkLobbyDoorFromStation(task* tp)
 {
     if (!_instance->_options.adventureFieldRandomized)
         return _twinkleParkLobbyDoorFromStationHook.Original(tp);
+
+    //We disable the distance check, and we manually check if the entrance is accessible
+    WriteData<1>((void*)0x63E737, 0xEB);
 
     const bool isDoorOpen = _instance->IsDoorOpen(SsMainToTwinkleParkLobby);
     if (!isDoorOpen)
@@ -209,10 +233,33 @@ void AdventureFieldEntranceManager::OnTwinkleParkLobbyDoorFromStation(task* tp)
 
     if (IsPlayerInsideSphere(&tp->twp->pos, 30.0))
     {
-        tp->exec = SomethingAboutTPDoor;
+        tp->exec = SomethingAboutTPDoorA;
         PlaySound(530, 0, 0, 0);
     }
     _twinkleParkLobbyDoorFromStationHook.Original(tp);
+}
+
+TaskFunc(SomethingAboutTPDoorB, 0x63E3B0);
+
+void AdventureFieldEntranceManager::OnTwinkleParkLobbyDoorToStation(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _twinkleParkLobbyDoorToStationHook.Original(tp);
+
+
+    //We disable the distance check, and we manually check if the entrance is accessible
+    WriteData<1>((void*)0x63E477, 0xEB);
+    const bool isDoorOpen = _instance->IsDoorOpen(TwinkleParkLobbyToSsMain);
+    if (!isDoorOpen)
+        return _twinkleParkLobbyDoorToStationHook.Original(tp);
+
+
+    if (IsPlayerInsideSphere(&tp->twp->pos, 20.0))
+    {
+        tp->exec = SomethingAboutTPDoorB;
+        PlaySound(530, 0, 0, 0);
+    }
+    _twinkleParkLobbyDoorToStationHook.Original(tp);
 }
 
 //We make the box behave like it does for Big
@@ -542,4 +589,20 @@ void AdventureFieldEntranceManager::OnLoadKnucklesBarricade(task* tp)
             return FreeTask(tp);
 
     _loadKnucklesBarricadeHook.Original(tp);
+}
+
+int AdventureFieldEntranceManager::OnTwinkleCircuitDoor(const char character)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return twinkleCircuitDoorHook.Original(character);
+
+    return _instance->IsDoorOpen(TwinkleParkLobbyToTwinkleCircuit);
+}
+
+int AdventureFieldEntranceManager::OnTwinkleParkDoor(const char character)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return twinkleParkDoorHook.Original(character);
+
+    return _instance->IsDoorOpen(TwinkleParkLobbyToTwinklePark);
 }
