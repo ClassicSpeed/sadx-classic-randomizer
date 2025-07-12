@@ -10,9 +10,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         //City Hall
         {CityHallToSsMain, LevelAndActIDs_StationSquare1, 1, SsMainToCityHall, 50.0f, {550.79f, 14.5, 856.22f}},
-        {CityHallToChaos0, LevelAndActIDs_StationSquare1, 1, Chaos0ToCityHall, 0, {270, 16, 450}},
+        {CityHallToChaos0, LevelAndActIDs_StationSquare1, 0, Chaos0ToCityHall, 0, {270, 16, 450}},
         {CityHallToSewers, LevelAndActIDs_StationSquare1, 2, SewersToCityHall, 0, {361, 10, 941.5}},
-
+        {CityHallToSpeedHighway, LevelAndActIDs_StationSquare1, 0, SpeedHighwayToCityHall, 0, {270, 20, 255}},
 
         //Station
         {StationToSsMain, LevelAndActIDs_StationSquare2, 0, SsMainToStation, 26, {59, 79, 1452}},
@@ -64,6 +64,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Speed Highway
         {SpeedHighwayToSsMain, LevelAndActIDs_SpeedHighway1, 0, SsMainToSpeedHighway, 0, {0, 0, 0}},
+        {SpeedHighwayToCityHall, LevelAndActIDs_SpeedHighway3, 0, CityHallToSpeedHighway, 0, {0, 0, 0}},
 
         // Emerald Coast
         {EmeraldCoastToHotel, LevelAndActIDs_EmeraldCoast1, 0, HotelToEmeraldCoast, 0, {0, 0, 0}},

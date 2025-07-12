@@ -118,4 +118,10 @@ private:
 
     inline static FunctionHook<void, task*> _openToyShopDoorMainHook{0x63E9E0};
     static void OnOpenToyShopDoorMain(task* tp);
+
+    inline static FunctionHook<BOOL> _isCityHallDoorOpenHook{0x636BF0};
+    static BOOL OnIsCityHallDoorOpen();
+
+    inline static FunctionHook<void, task*> _loadKnucklesBarricadeHook{0x637580};
+    static void OnLoadKnucklesBarricade(task* tp);
 };

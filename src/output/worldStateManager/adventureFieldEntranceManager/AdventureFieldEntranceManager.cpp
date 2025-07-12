@@ -37,6 +37,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isTrainInServiceHook.Hook(OnIsTrainInService);
     _ecWarpMainHook.Hook(OnEcWarpMain);
     _openToyShopDoorMainHook.Hook(OnOpenToyShopDoorMain);
+    _isCityHallDoorOpenHook.Hook(OnIsCityHallDoorOpen);
+    _loadKnucklesBarricadeHook.Hook(OnLoadKnucklesBarricade);
 
     //Avoid the distance check for the Twinkle Park door
     WriteData<1>((void*)0x63E737, 0xEB);
@@ -518,4 +520,26 @@ void AdventureFieldEntranceManager::OnOpenToyShopDoorMain(task* tp)
         return _openToyShopDoorMainHook.Original(tp);
 
     ClosedToyShopDoorMain(tp);
+}
+
+
+BOOL AdventureFieldEntranceManager::OnIsCityHallDoorOpen()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isCityHallDoorOpenHook.Original();
+
+    return _instance->IsDoorOpen(CityHallToSpeedHighway);
+}
+
+//We don't create Knuckles barricade if he doesn't have access to the level
+void AdventureFieldEntranceManager::OnLoadKnucklesBarricade(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _loadKnucklesBarricadeHook.Original(tp);
+
+    if (CurrentCharacter == Characters_Knuckles && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
+        if (!_instance->IsDoorOpen(CityHallToSpeedHighway))
+            return FreeTask(tp);
+
+    _loadKnucklesBarricadeHook.Original(tp);
 }
