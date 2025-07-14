@@ -538,7 +538,10 @@ BOOL AdventureFieldEntranceManager::OnIsTrainInService()
     if (!_instance->_options.adventureFieldRandomized)
         return _isTrainInServiceHook.Original();
 
-    return _instance->IsDoorOpen(StationToMrMain);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2)
+        return _instance->IsDoorOpen(StationToMrMain);
+
+    return _instance->IsDoorOpen(MrMainToSsMain);
 }
 
 

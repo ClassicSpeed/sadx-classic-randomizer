@@ -61,7 +61,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
 
         // MRMain
-        {MrMainToSsMain, LevelAndActIDs_MysticRuins1, 0, StationToMrMain, 0.0f, {0, 0, 0}},
+        {MrMainToSsMain, LevelAndActIDs_MysticRuins1, 0, StationToMrMain, 56.25f, {0, 228, 1207}},
 
 
         // Egg Carrier Outside (Untransformed)
