@@ -62,6 +62,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // MRMain
         {MrMainToSsMain, LevelAndActIDs_MysticRuins1, 0, StationToMrMain, 56.25f, {0, 228, 1207}},
+        {MrMainToChaos4, LevelAndActIDs_MysticRuins1, 0, Chaos4ToMrMain, 0, {80, 87, 180}},
+        {MrMainToEggHornet, LevelAndActIDs_MysticRuins1, 0, EggHornetToMrMain, 0, {950, 142, 950}},
+        {MrMainToSkyChase1, LevelAndActIDs_MysticRuins1, 0, SkyChase1ToMrMain, 90, {1561, 206, 900}},
 
 
         // Egg Carrier Outside (Untransformed)
@@ -90,6 +93,10 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {Chaos2ToHotel, LevelAndActIDs_Chaos2, 0, HotelToChaos2, 0, {0, 0, 0}},
         // Egg Walker
         {EggWalkerToStation, LevelAndActIDs_EggWalker, 0, StationToEggWalker, 0, {0, 0, 0}},
+        // Chaos 4
+        {Chaos4ToMrMain, LevelAndActIDs_Chaos4, 0, MrMainToChaos4, 0, {0, 0, 0}},
+        // Egg Hornet
+        {EggHornetToMrMain, LevelAndActIDs_EggHornet, 0, MrMainToEggHornet, 0, {0, 0, 0}},
 
         // Twinkle Circuit
         {
@@ -116,6 +123,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
             TwinkleCircuitToTwinkleParkLobby, LevelAndActIDs_TwinkleCircuit6, 0, TwinkleParkLobbyToTwinkleCircuit, 0,
             {0, 0, 0}
         },
+        // Sky Chase 1
+        {SkyChase1ToMrMain, LevelAndActIDs_SkyChase1, 0, MrMainToSkyChase1, 0, {0, 0, 0}},
 
     };
 }

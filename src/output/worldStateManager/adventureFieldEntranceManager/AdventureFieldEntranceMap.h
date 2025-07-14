@@ -193,6 +193,8 @@ enum EntranceId
     SkyDeckToBridge,
     SkyDeckTPool,
     HotShelterToEcInside,
+
+    InvalidEntranceId
 };
 
 struct AdventureFieldEntrance

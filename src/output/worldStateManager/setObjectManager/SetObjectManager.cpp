@@ -58,7 +58,7 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings): _optio
 void SetObjectManager::OnFrame()
 {
     if (_options.skyChaseChecks && (CurrentCharacter == Characters_Sonic || (CurrentCharacter == Characters_Tails && !
-        _options.missionModeEnabled)))
+        _options.missionModeEnabled)) && !_options.adventureFieldRandomized)
         EventFlagArray[33] = 1;
 
 
@@ -271,17 +271,43 @@ void SetObjectManager::OnCountSetItemsMaybe()
     }
     if (_instance->_options.skyChaseChecks)
     {
-        AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Sonic);
-        if (_instance->_options.missionModeEnabled)
+        if (_instance->_options.adventureFieldRandomized)
+        {
+            AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Sonic);
             AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
+            AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
+            AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Amy);
+            AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Gamma);
+            AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Big);
+
+            AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Knuckles);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Amy);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Big);
+
+            AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Knuckles);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Amy);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Big);
+        }
         else
-            AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
+        {
+            AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Sonic);
+            if (_instance->_options.missionModeEnabled)
+                AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
+            else
+                AddSetToLevel(WARP_SKY_CHASE_1_WITH_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
 
-        AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
-        AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
 
-        AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
-        AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC1, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
+            AddSetToLevel(WARP_SKY_CHASE_2_EC2, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
+        }
     }
 
     //Time Travel 
@@ -345,7 +371,7 @@ bool SetObjectManager::HandleHedgehogHammer()
 void SetObjectManager::HandleWarp()
 {
     DisableController(0);
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Sonic)
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos0, 0);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2)
@@ -357,18 +383,14 @@ void SetObjectManager::HandleWarp()
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Gamma)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_E101, 0);
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
-            || CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Knuckles)
-        && EntityData1Ptrs[0]->Position.y < 100)
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && EntityData1Ptrs[0]->Position.y < 100)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos4, 0);
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
-        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
-        && EntityData1Ptrs[0]->Position.y > 100 && EntityData1Ptrs[0]->Position.y < 150)
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && EntityData1Ptrs[0]->Position.y > 100
+        && EntityData1Ptrs[0]->Position.y < 150)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggHornet, 0);
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && (CurrentCharacter == Characters_Sonic
-        || CurrentCharacter == Characters_Tails) && EntityData1Ptrs[0]->Position.y > 150)
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && EntityData1Ptrs[0]->Position.y > 150)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_SkyChase1, 0);
 
     else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Gamma)

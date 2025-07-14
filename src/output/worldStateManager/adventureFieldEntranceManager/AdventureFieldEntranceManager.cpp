@@ -545,19 +545,37 @@ BOOL AdventureFieldEntranceManager::OnIsTrainInService()
 }
 
 
+EntranceId GetBossEntrance()
+{
+    switch (levelact(CurrentLevel, CurrentAct))
+    {
+    case LevelAndActIDs_StationSquare2:
+        return StationToEggWalker;
+    case LevelAndActIDs_StationSquare1:
+        return CityHallToChaos0;
+    case LevelAndActIDs_MysticRuins1:
+        if (EntityData1Ptrs[0]->Position.y < 100)
+            return MrMainToChaos4;
+        if (EntityData1Ptrs[0]->Position.y < 150)
+            return MrMainToEggHornet;
+        return MrMainToSkyChase1;
+    default:
+        return InvalidEntranceId;
+    }
+}
+
 void AdventureFieldEntranceManager::OnEcWarpMain(task* tp)
 {
     if (!_instance->_options.adventureFieldRandomized)
         return _ecWarpMainHook.Original(tp);
 
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2 && _instance->IsDoorOpen(StationToEggWalker)
-        || levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && _instance->IsDoorOpen(
-            CityHallToChaos0))
+    if (_instance->IsDoorOpen(GetBossEntrance()))
         return _ecWarpMainHook.Original(tp);
 
     tp->twp->wtimer = 0;
     _ecWarpMainHook.Original(tp);
 }
+
 
 TaskFunc(ClosedToyShopDoorMain, 0x63E9A0);
 
