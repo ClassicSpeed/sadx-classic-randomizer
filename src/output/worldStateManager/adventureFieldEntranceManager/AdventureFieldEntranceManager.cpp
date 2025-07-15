@@ -44,6 +44,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _loadKnucklesBarricadeHook.Hook(OnLoadKnucklesBarricade);
     twinkleCircuitDoorHook.Hook(OnTwinkleCircuitDoor);
     twinkleParkDoorHook.Hook(OnTwinkleParkDoor);
+    _mrRaftMainHook.Hook(OnMrRaftMain);
 
     //Allows players to return to the adventure field when quitting boss fights
     WriteData<1>((void*)0x415F46, 0x19);
@@ -435,7 +436,7 @@ void AdventureFieldEntranceManager::OnSsBoatMain(task* tp)
     if (!_instance->_options.adventureFieldRandomized)
         return _ssBoatMainHook.Original(tp);
 
-    if (!_instance->IsDoorOpen(CityHallToSsMain))
+    if (!_instance->IsDoorOpen(SsMainToEcOutside))
         return FreeTask(tp);
     return _ssBoatMainHook.Original(tp);
 }
@@ -626,4 +627,14 @@ int AdventureFieldEntranceManager::OnTwinkleParkDoor(const char character)
         return twinkleParkDoorHook.Original(character);
 
     return _instance->IsDoorOpen(TwinkleParkLobbyToTwinklePark);
+}
+
+void AdventureFieldEntranceManager::OnMrRaftMain(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _mrRaftMainHook.Original(tp);
+
+    if (!_instance->IsDoorOpen(MrMainToEcOutside))
+        return FreeTask(tp);
+    return _mrRaftMainHook.Original(tp);
 }

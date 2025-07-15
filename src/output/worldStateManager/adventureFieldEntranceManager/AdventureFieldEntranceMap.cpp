@@ -65,10 +65,12 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {MrMainToChaos4, LevelAndActIDs_MysticRuins1, 0, Chaos4ToMrMain, 0, {80, 87, 180}},
         {MrMainToEggHornet, LevelAndActIDs_MysticRuins1, 0, EggHornetToMrMain, 0, {950, 142, 950}},
         {MrMainToSkyChase1, LevelAndActIDs_MysticRuins1, 0, SkyChase1ToMrMain, 90, {1561, 206, 900}},
+        {MrMainToEcOutside, LevelAndActIDs_MysticRuins1, 0, EcOutsideToMrMain, 147.5f, {-70, -385, 1264}},
 
 
         // Egg Carrier Outside (Untransformed)
         {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 0.0f, {0, 0, 0}},
+        {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 0.0f, {0, 0, 0}},
 
         // SS Chao Garden
         {SsChaoGardenToHotel, LevelAndActIDs_SSGarden, 0, HotelToSsChaoGarden, 90, {-395, 13, 1700}},

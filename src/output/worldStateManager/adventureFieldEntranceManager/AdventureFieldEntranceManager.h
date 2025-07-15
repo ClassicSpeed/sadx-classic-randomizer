@@ -130,4 +130,7 @@ private:
 
     static int __cdecl OnTwinkleCircuitDoor(char character);
     static int __cdecl OnTwinkleParkDoor(char character);
+
+    inline static FunctionHook<void, task*> _mrRaftMainHook{0x539BB0};
+    static void OnMrRaftMain(task* tp);
 };
