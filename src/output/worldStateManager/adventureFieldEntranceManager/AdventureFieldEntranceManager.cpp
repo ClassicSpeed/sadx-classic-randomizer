@@ -2,6 +2,7 @@
 
 UsercallFunc(int, twinkleCircuitDoorHook, (char tpChar), (tpChar), 0x63F810, rEAX, rESI);
 UsercallFunc(int, twinkleParkDoorHook, (char tpChar), (tpChar), 0x63EA90, rEAX, rESI);
+UsercallFunc(signed int, mrCartHook, (int tp), (tp), 0x53DC60, rEAX, rESI);
 
 AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): _options(options),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init()),
@@ -45,7 +46,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     twinkleCircuitDoorHook.Hook(OnTwinkleCircuitDoor);
     twinkleParkDoorHook.Hook(OnTwinkleParkDoor);
     _mrRaftMainHook.Hook(OnMrRaftMain);
-
+    mrCartHook.Hook(OnMrCartMain);
     //Allows players to return to the adventure field when quitting boss fights
     WriteData<1>((void*)0x415F46, 0x19);
 
@@ -637,4 +638,14 @@ void AdventureFieldEntranceManager::OnMrRaftMain(task* tp)
     if (!_instance->IsDoorOpen(MrMainToEcOutside))
         return FreeTask(tp);
     return _mrRaftMainHook.Original(tp);
+}
+
+int AdventureFieldEntranceManager::OnMrCartMain(int tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return mrCartHook.Original(tp);
+
+    if (((task*)tp)->twp->scl.x > 0)
+        return _instance->IsDoorOpen(MrMainToMrChaoGarden);
+    return _instance->IsDoorOpen(MrMainToJungle);
 }

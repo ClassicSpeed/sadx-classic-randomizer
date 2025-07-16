@@ -51,11 +51,11 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         // Twinkle Park Lobby
         {TwinkleParkLobbyToSsMain, LevelAndActIDs_StationSquare6, 0, SsMainToTwinkleParkLobby, 90, {675, 65, 1771.5f}},
         {
-            TwinkleParkLobbyToTwinkleCircuit, LevelAndActIDs_StationSquare6, 1, TwinkleCircuitToTwinkleParkLobby, 0,
+            TwinkleParkLobbyToTwinkleCircuit, LevelAndActIDs_StationSquare6, 2, TwinkleCircuitToTwinkleParkLobby, 0,
             {757, 65, 1735}
         },
         {
-            TwinkleParkLobbyToTwinklePark, LevelAndActIDs_StationSquare6, 2, TwinkleParkToTwinkleParkLobby, 90,
+            TwinkleParkLobbyToTwinklePark, LevelAndActIDs_StationSquare6, 1, TwinkleParkToTwinkleParkLobby, 90,
             {804, 65, 1771.5f}
         },
 
@@ -66,6 +66,12 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {MrMainToEggHornet, LevelAndActIDs_MysticRuins1, 0, EggHornetToMrMain, 0, {950, 142, 950}},
         {MrMainToSkyChase1, LevelAndActIDs_MysticRuins1, 0, SkyChase1ToMrMain, 90, {1561, 206, 900}},
         {MrMainToEcOutside, LevelAndActIDs_MysticRuins1, 0, EcOutsideToMrMain, 147.5f, {-70, -385, 1264}},
+        {MrMainToJungle, LevelAndActIDs_MysticRuins1, 2, JungleToMrMain, 211, {-200.86f, 81.5, -69.51f}},
+        {MrMainToMrChaoGarden, LevelAndActIDs_MysticRuins1, 4, MrChaoGardenToMrMain, 111, {1696, 17.5, -86}},
+
+
+        // Jungle
+        {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 0.0f, {0, 0, 0}},
 
 
         // Egg Carrier Outside (Untransformed)
@@ -74,6 +80,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // SS Chao Garden
         {SsChaoGardenToHotel, LevelAndActIDs_SSGarden, 0, HotelToSsChaoGarden, 90, {-395, 13, 1700}},
+
+        // Mr Chao Garden
+        {MrChaoGardenToMrMain, LevelAndActIDs_MRGarden, 0, MrMainToMrChaoGarden, 0.0f, {0, 0, 0}},
 
 
         // Speed Highway

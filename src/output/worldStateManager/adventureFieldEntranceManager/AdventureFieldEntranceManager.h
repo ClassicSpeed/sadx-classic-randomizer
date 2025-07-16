@@ -133,4 +133,6 @@ private:
 
     inline static FunctionHook<void, task*> _mrRaftMainHook{0x539BB0};
     static void OnMrRaftMain(task* tp);
+
+    static signed int __cdecl OnMrCartMain(int tp);
 };
