@@ -71,7 +71,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
 
         // Jungle
-        {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 0.0f, {0, 0, 0}},
+        {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 137.36f, {-1143, 369, 418}},
 
 
         // Egg Carrier Outside (Untransformed)

@@ -2,7 +2,7 @@
 
 UsercallFunc(int, twinkleCircuitDoorHook, (char tpChar), (tpChar), 0x63F810, rEAX, rESI);
 UsercallFunc(int, twinkleParkDoorHook, (char tpChar), (tpChar), 0x63EA90, rEAX, rESI);
-UsercallFunc(signed int, mrCartHook, (int tp), (tp), 0x53DC60, rEAX, rESI);
+UsercallFunc(signed int, mrCartHook, (task* tp), (tp), 0x53DC60, rEAX, rESI);
 
 AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): _options(options),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init()),
@@ -640,12 +640,14 @@ void AdventureFieldEntranceManager::OnMrRaftMain(task* tp)
     return _mrRaftMainHook.Original(tp);
 }
 
-int AdventureFieldEntranceManager::OnMrCartMain(int tp)
+int AdventureFieldEntranceManager::OnMrCartMain(task* tp)
 {
     if (!_instance->_options.adventureFieldRandomized)
         return mrCartHook.Original(tp);
 
-    if (((task*)tp)->twp->scl.x > 0)
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
+        return _instance->IsDoorOpen(JungleToMrMain);
+    if (tp->twp->scl.x > 0)
         return _instance->IsDoorOpen(MrMainToMrChaoGarden);
     return _instance->IsDoorOpen(MrMainToJungle);
 }
