@@ -47,6 +47,9 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     twinkleParkDoorHook.Hook(OnTwinkleParkDoor);
     _mrRaftMainHook.Hook(OnMrRaftMain);
     mrCartHook.Hook(OnMrCartMain);
+    _isAngelIslandOpenHook.Hook(OnIsAngelIslandOpen);
+
+
     //Allows players to return to the adventure field when quitting boss fights
     WriteData<1>((void*)0x415F46, 0x19);
 
@@ -60,7 +63,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -650,4 +653,12 @@ int AdventureFieldEntranceManager::OnMrCartMain(task* tp)
     if (tp->twp->scl.x > 0)
         return _instance->IsDoorOpen(MrMainToMrChaoGarden);
     return _instance->IsDoorOpen(MrMainToJungle);
+}
+
+
+BOOL AdventureFieldEntranceManager::OnIsAngelIslandOpen()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isAngelIslandOpenHook.Original();
+    return _instance->IsDoorOpen(MrMainToAngelIsland);
 }

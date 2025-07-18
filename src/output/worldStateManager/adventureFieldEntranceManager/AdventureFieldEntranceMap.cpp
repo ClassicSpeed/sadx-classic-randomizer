@@ -68,7 +68,10 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {MrMainToEcOutside, LevelAndActIDs_MysticRuins1, 0, EcOutsideToMrMain, 147.5f, {-70, -385, 1264}},
         {MrMainToJungle, LevelAndActIDs_MysticRuins1, 2, JungleToMrMain, 211, {-200.86f, 81.5, -69.51f}},
         {MrMainToMrChaoGarden, LevelAndActIDs_MysticRuins1, 4, MrChaoGardenToMrMain, 111, {1696, 17.5, -86}},
+        {MrMainToAngelIsland, LevelAndActIDs_MysticRuins1, 1, AngelIslandToMrMain, 112.5f, {-347, 120, 869}},
 
+        // Angel Island
+        {AngelIslandToMrMain, LevelAndActIDs_MysticRuins2, 0, MrMainToAngelIsland, 0.0f, {0, 0, 0}},
 
         // Jungle
         {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 137.36f, {-1143, 369, 418}},

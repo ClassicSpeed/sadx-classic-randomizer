@@ -135,4 +135,7 @@ private:
     static void OnMrRaftMain(task* tp);
 
     static signed int __cdecl OnMrCartMain(task* tp);
+
+    inline static FunctionHook<BOOL> _isAngelIslandOpenHook{0x534570};
+    static BOOL OnIsAngelIslandOpen();
 };

@@ -136,6 +136,8 @@ BOOL WorldStateManager::OnIsWindyValleyOpen()
 
 BOOL WorldStateManager::OnIsAngelIslandOpen()
 {
+    if (_instance->_options.adventureFieldRandomized)
+        return _isAngelIslandOpenHook.Original();
     return _instance->_gameStatus.unlock.keyDynamite;
 }
 
