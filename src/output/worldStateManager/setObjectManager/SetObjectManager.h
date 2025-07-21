@@ -15,6 +15,7 @@ constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
 constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
 constexpr int CAVE_WIND_CHANGE_SCENE_MYSTIC_RUINS = 31;
 constexpr int EMBLEM_MYSTIC_RUINS = 65;
+constexpr int WIND_STONE_MYSTIC_RUINS = 21;
 
 constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
 constexpr int BEACH_GATE_STATION_SQUARE = 67;
@@ -154,6 +155,9 @@ const SETEntry ICE_CAP_LADDER_MR = CreateSetEntry(LONG_LADDER_MYSTIC_RUINS, {-14
 
 const SETEntry CAVE_WIND_CHANGE_SCENE_MR = CreateSetEntry(CAVE_WIND_CHANGE_SCENE_MYSTIC_RUINS, {-727, 168, 744});
 
+const SETEntry WIND_STONE_MR = CreateSetEntry(WIND_STONE_MYSTIC_RUINS, {1392.39f, 191, 863.86f},
+                                              {0xFF57, 0x8220, 0xF920}, {1, 0, 0});
+
 
 const SETEntry RED_MOUNTAIN_DOOR_MR = CreateSetEntry(RED_MOUNTAIN_DOOR_MYSTIC_RUINS, {-1960.7f, -350.19f, 1652.01f},
                                                      {0x1, 0xBEFB, 0xFF6E}, {0.3f, 0, 0});
@@ -165,13 +169,13 @@ const SETEntry BEACH_GATE_SS = CreateSetEntry(BEACH_GATE_STATION_SQUARE, {-525, 
                                               {0, 0x2000, 0});
 
 const SETEntry CITY_HALL_SCENE_CHANGE_SS = CreateSetEntry(SCENE_CHANGE_STATION_SQUARE, {270, -1, 234},
-                                                          {0, 0, 0X402}, {8, 3.2, 0});
+                                                          {0, 0, 0X402}, {8, 3.2f, 0});
 
 const SETEntry CITY_HALL_SEWERS_SCENE_CHANGE_SS = CreateSetEntry(SCENE_CHANGE_STATION_SQUARE, {367, -50, 961},
                                                                  {0, 0, 0X1A02}, {2, 2, 2});
 
 //Egg Carrier
-const SETEntry EGG_CARRIER_TRANSFORM_AREA_SPRING = CreateSetEntry(1, {-83.42, 0, 0.54});
+const SETEntry EGG_CARRIER_TRANSFORM_AREA_SPRING = CreateSetEntry(1, {-83.42, 0, 0.54f});
 
 //Station Square Bosses
 const SETEntry WARP_CHAOS0 = CreateSetEntry(WARP_STATION_SQUARE, {270, 0, 450});

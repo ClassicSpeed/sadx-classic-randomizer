@@ -310,6 +310,12 @@ void SetObjectManager::OnCountSetItemsMaybe()
         }
     }
 
+    if (_instance->_options.adventureFieldRandomized)
+    {
+        AddSetToLevel(WIND_STONE_MR, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
+        AddSetToLevel(WIND_STONE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
+        AddSetToLevel(WIND_STONE_MR, LevelAndActIDs_MysticRuins1, Characters_Big);
+    }
     //Time Travel 
     AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Sonic);
     AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Tails);

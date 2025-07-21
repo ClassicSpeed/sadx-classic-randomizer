@@ -48,6 +48,11 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _mrRaftMainHook.Hook(OnMrRaftMain);
     mrCartHook.Hook(OnMrCartMain);
     _isAngelIslandOpenHook.Hook(OnIsAngelIslandOpen);
+    _mysticRuinsKeyHook.Hook(OnMysticRuinsKey);
+    _mysticRuinsLockHook.Hook(OnMysticRuinsLock);
+    _isWindyValleyOpenHook.Hook(OnIsWindyValleyOpen);
+    _preventMrStoneSpawnHook.Hook(OnPreventMrStoneSpawn);
+    _getCharacterIdHook.Hook(OnGetCharacterId);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -63,7 +68,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -661,4 +666,56 @@ BOOL AdventureFieldEntranceManager::OnIsAngelIslandOpen()
     if (!_instance->_options.adventureFieldRandomized)
         return _isAngelIslandOpenHook.Original();
     return _instance->IsDoorOpen(MrMainToAngelIsland);
+}
+
+
+void AdventureFieldEntranceManager::OnMysticRuinsKey(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _mysticRuinsKeyHook.Original(tp);
+
+
+    // We prevent the wind stone from spawning if the player cannot access the Windy Valley entrance
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
+        && !_instance->IsDoorOpen(MrMainToWindyValley))
+        if (IsNearPosition(tp->twp->pos, 1392.5, 191.5, 863.5))
+            return;
+
+    const int bufferCharacter = CurrentCharacter;
+    CurrentCharacter = Characters_Sonic;
+    _mysticRuinsKeyHook.Original(tp);
+    CurrentCharacter = bufferCharacter;
+}
+
+void AdventureFieldEntranceManager::OnMysticRuinsLock(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _mysticRuinsLockHook.Original(tp);
+    const int bufferCharacter = CurrentCharacter;
+    CurrentCharacter = Characters_Sonic;
+    _mysticRuinsLockHook.Original(tp);
+    CurrentCharacter = bufferCharacter;
+}
+
+
+BOOL AdventureFieldEntranceManager::OnIsWindyValleyOpen()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isWindyValleyOpenHook.Original();
+
+    return EventFlagArray[FLAG_SONIC_MR_WINDYSTONE];
+}
+
+BOOL AdventureFieldEntranceManager::OnPreventMrStoneSpawn()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _preventMrStoneSpawnHook.Original();
+    return false;
+}
+
+int AdventureFieldEntranceManager::OnGetCharacterId(char index)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _getCharacterIdHook.Original(index);
+    return CurrentCharacter;
 }

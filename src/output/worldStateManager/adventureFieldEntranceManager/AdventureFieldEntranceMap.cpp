@@ -69,6 +69,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {MrMainToJungle, LevelAndActIDs_MysticRuins1, 2, JungleToMrMain, 211, {-200.86f, 81.5, -69.51f}},
         {MrMainToMrChaoGarden, LevelAndActIDs_MysticRuins1, 4, MrChaoGardenToMrMain, 111, {1696, 17.5, -86}},
         {MrMainToAngelIsland, LevelAndActIDs_MysticRuins1, 1, AngelIslandToMrMain, 112.5f, {-347, 120, 869}},
+        {MrMainToWindyValley, LevelAndActIDs_MysticRuins1, 3, WindyValleyToMrMain, 145, {640, 80, -143}},
 
         // Angel Island
         {AngelIslandToMrMain, LevelAndActIDs_MysticRuins2, 0, MrMainToAngelIsland, 0.0f, {0, 0, 0}},
@@ -100,6 +101,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Twinkle Park
         {TwinkleParkToTwinkleParkLobby, LevelAndActIDs_TwinklePark1, 0, TwinkleParkLobbyToTwinklePark, 0, {0, 0, 0}},
+
+        // Windy Valley
+        {WindyValleyToMrMain, LevelAndActIDs_WindyValley1, 0, MrMainToWindyValley, 0, {0, 0, 0}},
 
         // Chaos 0
         {Chaos0ToCityHall, LevelAndActIDs_Chaos0, 1, CityHallToChaos0, 0, {0, 0, 0}},

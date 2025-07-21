@@ -92,6 +92,9 @@ BOOL WorldStateManager::OnIsCasinoStationDoorOpen()
 
 void WorldStateManager::OnMysticRuinsKey(task* tp)
 {
+    if (_instance->_options.adventureFieldRandomized)
+        return _mysticRuinsKeyHook.Original(tp);
+
     // We prevent the wind stone from spawning if the player doesn't have the item
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
         && !_instance->_gameStatus.unlock.keyWindStone)
@@ -130,6 +133,9 @@ void WorldStateManager::OnTwinkleCircuitResultsMaybe(task* tp)
 // Makes Sonic, Tails and Gamma use the winds stone
 BOOL WorldStateManager::OnIsWindyValleyOpen()
 {
+    if (_instance->_options.adventureFieldRandomized)
+        return _isWindyValleyOpenHook.Original();
+
     //TODO: Test if this works
     return _isWindyValleyOpenHook.Original() && _instance->_gameStatus.unlock.keyWindStone;
 }

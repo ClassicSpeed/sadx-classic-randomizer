@@ -138,4 +138,20 @@ private:
 
     inline static FunctionHook<BOOL> _isAngelIslandOpenHook{0x534570};
     static BOOL OnIsAngelIslandOpen();
+
+    inline static FunctionHook<void, task*> _mysticRuinsKeyHook{0x532400};
+    static void OnMysticRuinsKey(task* tp);
+
+    inline static FunctionHook<void, task*> _mysticRuinsLockHook{0x53CA60};
+    static void OnMysticRuinsLock(task* tp);
+
+
+    inline static FunctionHook<BOOL> _isWindyValleyOpenHook{0x536E40};
+    static BOOL OnIsWindyValleyOpen();
+
+    inline static FunctionHook<BOOL> _preventMrStoneSpawnHook{0x53C630};
+    static BOOL OnPreventMrStoneSpawn();
+
+    inline static FunctionHook<int, char> _getCharacterIdHook{0x441970};
+    static int OnGetCharacterId(char index);
 };
