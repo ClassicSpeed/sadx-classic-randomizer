@@ -73,6 +73,11 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Angel Island
         {AngelIslandToMrMain, LevelAndActIDs_MysticRuins2, 0, MrMainToAngelIsland, 0.0f, {0, 0, 0}},
+        {AngelIslandToPastAltar, LevelAndActIDs_MysticRuins2, 3, PastAltarToAngelIsland, 0.0f, {-2.5f, -225, 2397.5f}},
+
+        //Past Altar
+        {PastAltarToAngelIsland, LevelAndActIDs_Past2, 0, AngelIslandToPastAltar, 0.0f, {0, 24, 247.5f}},
+
 
         // Jungle
         {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 137.36f, {-1143, 369, 418}},

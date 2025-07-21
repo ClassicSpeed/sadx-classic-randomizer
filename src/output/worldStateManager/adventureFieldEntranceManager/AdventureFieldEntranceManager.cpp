@@ -569,6 +569,10 @@ EntranceId GetBossEntrance()
         if (EntityData1Ptrs[0]->Position.y < 150)
             return MrMainToEggHornet;
         return MrMainToSkyChase1;
+    case LevelAndActIDs_MysticRuins2:
+        return AngelIslandToPastAltar;
+    case LevelAndActIDs_Past2:
+        return PastAltarToAngelIsland;
     default:
         return InvalidEntranceId;
     }
