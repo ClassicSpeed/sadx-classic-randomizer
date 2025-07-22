@@ -145,7 +145,6 @@ private:
     inline static FunctionHook<void, task*> _mysticRuinsLockHook{0x53CA60};
     static void OnMysticRuinsLock(task* tp);
 
-
     inline static FunctionHook<BOOL> _isWindyValleyOpenHook{0x536E40};
     static BOOL OnIsWindyValleyOpen();
 
@@ -154,4 +153,7 @@ private:
 
     inline static FunctionHook<int, char> _getCharacterIdHook{0x441970};
     static int OnGetCharacterId(char index);
+
+    inline static FunctionHook<void, task*> _pastSceneChangeHook{0x545670};
+    static void OnPastSceneChange(task* tp);
 };

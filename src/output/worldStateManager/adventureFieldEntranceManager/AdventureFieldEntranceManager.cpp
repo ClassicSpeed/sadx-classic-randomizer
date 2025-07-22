@@ -53,6 +53,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isWindyValleyOpenHook.Hook(OnIsWindyValleyOpen);
     _preventMrStoneSpawnHook.Hook(OnPreventMrStoneSpawn);
     _getCharacterIdHook.Hook(OnGetCharacterId);
+    _pastSceneChangeHook.Hook(OnPastSceneChange);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -722,4 +723,26 @@ int AdventureFieldEntranceManager::OnGetCharacterId(char index)
     if (!_instance->_options.adventureFieldRandomized)
         return _getCharacterIdHook.Original(index);
     return CurrentCharacter;
+}
+
+void AdventureFieldEntranceManager::OnPastSceneChange(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _pastSceneChangeHook.Original(tp);
+
+    // Past Main
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past1
+        && IsNearPosition(tp->twp->pos, 1.907, 13, 1512.719))
+    {
+        if (!_instance->IsDoorOpen(PastMainToPastAltar))
+            return FreeTask(tp);
+    }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past2
+        && IsNearPosition(tp->twp->pos, 223.44, -2, 1836.12))
+    {
+        if (!_instance->IsDoorOpen(PastAltarToPastMain))
+            return FreeTask(tp);
+    }
+
+    _pastSceneChangeHook.Original(tp);
 }
