@@ -54,6 +54,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _preventMrStoneSpawnHook.Hook(OnPreventMrStoneSpawn);
     _getCharacterIdHook.Hook(OnGetCharacterId);
     _pastSceneChangeHook.Hook(OnPastSceneChange);
+    _isFinalEggEggmanDoorOpenHook.Hook(OnIsFinalEggEggmanDoorOpen);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -745,4 +746,16 @@ void AdventureFieldEntranceManager::OnPastSceneChange(task* tp)
     }
 
     _pastSceneChangeHook.Original(tp);
+}
+
+
+BOOL AdventureFieldEntranceManager::OnIsFinalEggEggmanDoorOpen(EntityData1* entity)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isFinalEggEggmanDoorOpenHook.Original(entity);
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
+        return _instance->IsDoorOpen(JungleToFinalEggTower);
+
+    return _isFinalEggEggmanDoorOpenHook.Original(entity);
 }

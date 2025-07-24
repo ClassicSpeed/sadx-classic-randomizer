@@ -82,9 +82,12 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         //Past Main
         {PastMainToPastAltar, LevelAndActIDs_Past1, 0, PastAltarToPastMain, 0.0f, {1.907f, 28, 1512.719f}},
 
-
         // Jungle
         {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 137.36f, {-1143, 369, 418}},
+        {JungleToFinalEggTower, LevelAndActIDs_MysticRuins3, 1, FinalEggTowerToJungle, 0, {71, 17, -1687.5}},
+
+        // Final Egg Tower
+        {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 0, 0}},
 
 
         // Egg Carrier Outside (Untransformed)

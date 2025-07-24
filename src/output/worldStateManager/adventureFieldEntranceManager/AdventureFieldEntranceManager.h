@@ -156,4 +156,7 @@ private:
 
     inline static FunctionHook<void, task*> _pastSceneChangeHook{0x545670};
     static void OnPastSceneChange(task* tp);
+
+    inline static FunctionHook<BOOL, EntityData1*> _isFinalEggEggmanDoorOpenHook{0x53ED30};
+    static BOOL OnIsFinalEggEggmanDoorOpen(EntityData1* entity);
 };
