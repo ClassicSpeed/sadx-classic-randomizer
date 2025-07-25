@@ -55,6 +55,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _getCharacterIdHook.Hook(OnGetCharacterId);
     _pastSceneChangeHook.Hook(OnPastSceneChange);
     _isFinalEggEggmanDoorOpenHook.Hook(OnIsFinalEggEggmanDoorOpen);
+    _isMonkeyDoorOpenHook.Hook(OnIsMonkeyDoorOpen);
+    _loadMonkeyCageHook.Hook(OnLoadMonkeyCage);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -70,7 +72,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -758,4 +760,33 @@ BOOL AdventureFieldEntranceManager::OnIsFinalEggEggmanDoorOpen(EntityData1* enti
         return _instance->IsDoorOpen(JungleToFinalEggTower);
 
     return _isFinalEggEggmanDoorOpenHook.Original(entity);
+}
+
+
+//Prevents the monkey from blocking the entrance to Red Mountain for knuckles
+BOOL AdventureFieldEntranceManager::OnIsMonkeyDoorOpen(int a1)
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1)
+        return true;
+
+    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma
+        || CurrentCharacter == Characters_Knuckles)
+        return _isMonkeyDead(1) && _instance->_instance->IsDoorOpen(AngelIslandToRedMountain);
+
+    //For everyone else, we return true if we are in the main mystic ruins area
+    return _instance->_instance->IsDoorOpen(AngelIslandToRedMountain);
+}
+
+// We only load the monkey if it's needed for opening the door
+void AdventureFieldEntranceManager::OnLoadMonkeyCage(task* tp)
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+    {
+        if (CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Big
+            || CurrentCharacter == Characters_Amy)
+            return FreeTask(tp);
+        if (!_instance->_instance->IsDoorOpen(AngelIslandToRedMountain))
+            return FreeTask(tp);
+    }
+    _loadMonkeyCageHook.Original(tp);
 }

@@ -73,6 +73,10 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Angel Island
         {AngelIslandToMrMain, LevelAndActIDs_MysticRuins2, 0, MrMainToAngelIsland, 0.0f, {0, 0, 0}},
+        {
+            AngelIslandToRedMountain, LevelAndActIDs_MysticRuins2, 2, RedMountainToAngelIsland, 268,
+            {-1955, -335, 1651.75f}
+        },
         {AngelIslandToPastAltar, LevelAndActIDs_MysticRuins2, 3, PastAltarToAngelIsland, 0.0f, {-2.5f, -225, 2397.5f}},
 
         //Past Altar
@@ -116,6 +120,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Windy Valley
         {WindyValleyToMrMain, LevelAndActIDs_WindyValley1, 0, MrMainToWindyValley, 0, {0, 0, 0}},
+
+        // Red Mountain
+        {RedMountainToAngelIsland, LevelAndActIDs_RedMountain1, 0, AngelIslandToRedMountain, 0, {0, 0, 0}},
 
         // Chaos 0
         {Chaos0ToCityHall, LevelAndActIDs_Chaos0, 1, CityHallToChaos0, 0, {0, 0, 0}},

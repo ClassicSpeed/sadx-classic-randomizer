@@ -159,4 +159,12 @@ private:
 
     inline static FunctionHook<BOOL, EntityData1*> _isFinalEggEggmanDoorOpenHook{0x53ED30};
     static BOOL OnIsFinalEggEggmanDoorOpen(EntityData1* entity);
+
+    inline FunctionPointer(int, _isMonkeyDead, (int a1), 0x53F920);
+
+    inline static FunctionHook<BOOL, int> _isMonkeyDoorOpenHook{0x53E5D0};
+    static BOOL OnIsMonkeyDoorOpen(int a1);
+
+    inline static FunctionHook<void, task*> _loadMonkeyCageHook{0x540730};
+    static void OnLoadMonkeyCage(task* tp);
 };
