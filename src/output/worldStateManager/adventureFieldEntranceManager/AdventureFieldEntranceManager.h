@@ -167,4 +167,7 @@ private:
 
     inline static FunctionHook<void, task*> _loadMonkeyCageHook{0x540730};
     static void OnLoadMonkeyCage(task* tp);
+
+    inline static FunctionHook<void, task*> _changeSceneCave2Hook{0x536ED0};
+    static void OnChangeSceneCave2(task* tp);
 };

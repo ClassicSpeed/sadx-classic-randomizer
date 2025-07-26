@@ -57,6 +57,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isFinalEggEggmanDoorOpenHook.Hook(OnIsFinalEggEggmanDoorOpen);
     _isMonkeyDoorOpenHook.Hook(OnIsMonkeyDoorOpen);
     _loadMonkeyCageHook.Hook(OnLoadMonkeyCage);
+    _changeSceneCave2Hook.Hook(OnChangeSceneCave2);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -72,7 +73,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -179,6 +180,12 @@ void AdventureFieldEntranceManager::OnWallMain(task* tp)
     {
         //We find the city hall to ssmain wall and delete it
         if (_instance->IsDoorOpen(CityHallToSsMain) && IsNearPosition(tp->twp->pos, 622.61f, 0, 878))
+            return FreeTask(tp);
+    }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+    {
+        //We find the angel island to mrmain wall and delete it
+        if (_instance->IsDoorOpen(AngelIslandToMrMain) && IsNearPosition(tp->twp->pos, -22.45f, 12.04f, 11.62f))
             return FreeTask(tp);
     }
     return _wallMainHook.Original(tp);
@@ -789,4 +796,19 @@ void AdventureFieldEntranceManager::OnLoadMonkeyCage(task* tp)
             return FreeTask(tp);
     }
     _loadMonkeyCageHook.Original(tp);
+}
+
+void AdventureFieldEntranceManager::OnChangeSceneCave2(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _changeSceneCave2Hook.Original(tp);
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2
+        && IsNearPosition(tp->twp->pos, 56, -100, -13))
+    {
+        if (!_instance->IsDoorOpen(AngelIslandToMrMain))
+            return FreeTask(tp);
+    }
+
+    _changeSceneCave2Hook.Original(tp);
 }

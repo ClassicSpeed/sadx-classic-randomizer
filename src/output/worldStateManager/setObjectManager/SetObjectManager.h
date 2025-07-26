@@ -10,6 +10,7 @@ constexpr int WARP_EGG_CARRIER_OUTSIDE = 6;
 constexpr int WARP_PAST = 10;
 
 constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
+constexpr int WALL_THAT_PUSHES_YOU_MYSTIC_RUINS = 43;
 constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
 constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
 constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
@@ -158,7 +159,6 @@ const SETEntry CAVE_WIND_CHANGE_SCENE_MR = CreateSetEntry(CAVE_WIND_CHANGE_SCENE
 const SETEntry WIND_STONE_MR = CreateSetEntry(WIND_STONE_MYSTIC_RUINS, {1392.39f, 191, 863.86f},
                                               {0xFF57, 0x8220, 0xF920}, {1, 0, 0});
 
-
 const SETEntry RED_MOUNTAIN_DOOR_MR = CreateSetEntry(RED_MOUNTAIN_DOOR_MYSTIC_RUINS, {-1960.7f, -350.19f, 1652.01f},
                                                      {0x1, 0xBEFB, 0xFF6E}, {0.3f, 0, 0});
 
@@ -215,3 +215,8 @@ const SETEntry SS_MAIN_BARRICADE_SS = CreateSetEntry(BARRICADE_STATION_SQUARE, {
 const SETEntry CITY_HALL_BARRICADE_SS = CreateSetEntry(BARRICADE_STATION_SQUARE, {622.61f, 0, 875});
 const SETEntry CITY_HALL_BARRICADE_WALL_SS = CreateSetEntry(WALL_THAT_PUSHES_YOU_STATION_SQUARE, {622.61f, 0, 878},
                                                             {0, 0x8000, 0}, {60, 50, 0});
+
+
+const SETEntry EXTRA_WALL_FROM_ANGEL_ISLAND_MR = CreateSetEntry(WALL_THAT_PUSHES_YOU_MYSTIC_RUINS,
+                                                                {-22.44872f, 12.040001f, 11.618795f},
+                                                                {0xFE7CA, 0xFCDE6, 0xFE8E}, {100, 56, 5});

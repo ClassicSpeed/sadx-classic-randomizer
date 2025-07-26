@@ -165,6 +165,13 @@ void SetObjectManager::OnCountSetItemsMaybe()
         AddSetToLevel(CITY_HALL_BARRICADE_WALL_SS, LevelAndActIDs_StationSquare1, Characters_Amy);
         AddSetToLevel(CITY_HALL_BARRICADE_WALL_SS, LevelAndActIDs_StationSquare1, Characters_Gamma);
         AddSetToLevel(CITY_HALL_BARRICADE_WALL_SS, LevelAndActIDs_StationSquare1, Characters_Big);
+
+        AddSetToLevel(EXTRA_WALL_FROM_ANGEL_ISLAND_MR, LevelAndActIDs_MysticRuins2, Characters_Sonic);
+        AddSetToLevel(EXTRA_WALL_FROM_ANGEL_ISLAND_MR, LevelAndActIDs_MysticRuins2, Characters_Tails);
+        AddSetToLevel(EXTRA_WALL_FROM_ANGEL_ISLAND_MR, LevelAndActIDs_MysticRuins2, Characters_Knuckles);
+        AddSetToLevel(EXTRA_WALL_FROM_ANGEL_ISLAND_MR, LevelAndActIDs_MysticRuins2, Characters_Amy);
+        AddSetToLevel(EXTRA_WALL_FROM_ANGEL_ISLAND_MR, LevelAndActIDs_MysticRuins2, Characters_Gamma);
+        AddSetToLevel(EXTRA_WALL_FROM_ANGEL_ISLAND_MR, LevelAndActIDs_MysticRuins2, Characters_Big);
     }
 
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Sonic);
