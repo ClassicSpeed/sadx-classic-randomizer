@@ -170,4 +170,8 @@ private:
 
     inline static FunctionHook<void, task*> _changeSceneCave2Hook{0x536ED0};
     static void OnChangeSceneCave2(task* tp);
+
+
+    inline static FunctionHook<BOOL> _isLostWorldFrontEntranceOpenHook{0x532E60};
+    static BOOL OnIsLostWorldFrontEntranceOpen();
 };

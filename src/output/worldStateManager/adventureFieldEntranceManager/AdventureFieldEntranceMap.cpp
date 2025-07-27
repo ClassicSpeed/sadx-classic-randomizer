@@ -88,6 +88,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Jungle
         {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 137.36f, {-1143, 369, 418}},
+        {JungleToLostWorld, LevelAndActIDs_MysticRuins3, 2, LostWorldToJungle, 180, {-516, 100, -994}},
         {JungleToFinalEggTower, LevelAndActIDs_MysticRuins3, 1, FinalEggTowerToJungle, 0, {71, 17, -1687.5}},
 
         // Final Egg Tower
@@ -123,6 +124,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Red Mountain
         {RedMountainToAngelIsland, LevelAndActIDs_RedMountain1, 0, AngelIslandToRedMountain, 0, {0, 0, 0}},
+
+        // Lost World
+        {LostWorldToJungle, LevelAndActIDs_LostWorld1, 0, JungleToLostWorld, 0, {0, 0, 0}},
 
         // Chaos 0
         {Chaos0ToCityHall, LevelAndActIDs_Chaos0, 1, CityHallToChaos0, 0, {0, 0, 0}},
