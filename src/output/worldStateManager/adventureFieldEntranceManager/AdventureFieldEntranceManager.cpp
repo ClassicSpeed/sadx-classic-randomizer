@@ -59,6 +59,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _loadMonkeyCageHook.Hook(OnLoadMonkeyCage);
     _changeSceneCave2Hook.Hook(OnChangeSceneCave2);
     _isLostWorldFrontEntranceOpenHook.Hook(OnIsLostWorldFrontEntranceOpen);
+    _isSandHillOpenHook.Hook(OnIsSandHillOpen);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -820,4 +821,12 @@ BOOL AdventureFieldEntranceManager::OnIsLostWorldFrontEntranceOpen()
         return _isLostWorldFrontEntranceOpenHook.Original();
 
     return _instance->IsDoorOpen(JungleToLostWorld);
+}
+
+BOOL AdventureFieldEntranceManager::OnIsSandHillOpen()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isSandHillOpenHook.Original();
+
+    return _instance->IsDoorOpen(JungleToSandHill);
 }

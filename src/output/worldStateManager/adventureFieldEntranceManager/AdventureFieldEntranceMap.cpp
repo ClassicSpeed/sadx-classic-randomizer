@@ -73,10 +73,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Angel Island
         {AngelIslandToMrMain, LevelAndActIDs_MysticRuins2, 0, MrMainToAngelIsland, 90, {0, 15, 0}},
-        {
-            AngelIslandToRedMountain, LevelAndActIDs_MysticRuins2, 2, RedMountainToAngelIsland, 268,
-            {-1955, -335, 1651.75f}
-        },
+        //TODO: ICE CAP
+        {AngelIslandToRedMountain, LevelAndActIDs_MysticRuins2, 2, RedMountainToAngelIsland, 268, {-1955, -335, 1652}},
         {AngelIslandToPastAltar, LevelAndActIDs_MysticRuins2, 3, PastAltarToAngelIsland, 0.0f, {-2.5f, -225, 2397.5f}},
 
         //Past Altar
@@ -90,6 +88,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 137.36f, {-1143, 369, 418}},
         {JungleToLostWorld, LevelAndActIDs_MysticRuins3, 2, LostWorldToJungle, 180, {-516, 100, -994}},
         {JungleToFinalEggTower, LevelAndActIDs_MysticRuins3, 1, FinalEggTowerToJungle, 0, {71, 17, -1687.5}},
+        {JungleToSandHill, LevelAndActIDs_MysticRuins3, 3, SandHillToJungle, 90, {-1555.5, 55, -69.5}},
 
         // Final Egg Tower
         {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 0, 0}},
@@ -166,6 +165,10 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         },
         // Sky Chase 1
         {SkyChase1ToMrMain, LevelAndActIDs_SkyChase1, 0, MrMainToSkyChase1, 0, {0, 0, 0}},
+
+
+        // Sand Hill
+        {SandHillToJungle, LevelAndActIDs_SandHill, 0, JungleToSandHill, 0, {0, 0, 0}},
 
     };
 }
