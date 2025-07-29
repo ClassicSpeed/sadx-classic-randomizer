@@ -92,6 +92,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Final Egg Tower
         {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 124, 166.5}},
+        {FinalEggTowerToBetaEggViper, LevelAndActIDs_MysticRuins4, 3, BetaEggViperToFinalEggTower, 45, {0, 16, 0}},
 
 
         // Egg Carrier Outside (Untransformed)
@@ -137,6 +138,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {Chaos4ToMrMain, LevelAndActIDs_Chaos4, 0, MrMainToChaos4, 0, {0, 0, 0}},
         // Egg Hornet
         {EggHornetToMrMain, LevelAndActIDs_EggHornet, 0, MrMainToEggHornet, 0, {0, 0, 0}},
+        // Egg Viper
+        {BetaEggViperToFinalEggTower, LevelAndActIDs_EggViper, 0, FinalEggTowerToBetaEggViper, 0, {0, 0, 0}},
 
         // Twinkle Circuit
         {
