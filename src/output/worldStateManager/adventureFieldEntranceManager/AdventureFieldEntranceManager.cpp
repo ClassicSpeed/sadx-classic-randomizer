@@ -768,6 +768,10 @@ BOOL AdventureFieldEntranceManager::OnIsFinalEggEggmanDoorOpen(EntityData1* enti
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
         return _instance->IsDoorOpen(JungleToFinalEggTower);
 
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && IsNearPosition(
+        entity->Position, 0, 109, 175))
+        return _instance->IsDoorOpen(FinalEggTowerToJungle);
+
     return _isFinalEggEggmanDoorOpenHook.Original(entity);
 }
 

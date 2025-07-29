@@ -86,12 +86,12 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Jungle
         {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 137.36f, {-1143, 369, 418}},
-        {JungleToLostWorld, LevelAndActIDs_MysticRuins3, 2, LostWorldToJungle, 180, {-516, 100, -994}},
-        {JungleToFinalEggTower, LevelAndActIDs_MysticRuins3, 1, FinalEggTowerToJungle, 0, {71, 17, -1687.5}},
+        {JungleToLostWorld, LevelAndActIDs_MysticRuins3, 2, LostWorldToJungle, 180, {-516, 100, -994}}, //1 is knuckles
+        {JungleToFinalEggTower, LevelAndActIDs_MysticRuins3, 4, FinalEggTowerToJungle, 0, {71, 17, -1687.5}},
         {JungleToSandHill, LevelAndActIDs_MysticRuins3, 3, SandHillToJungle, 90, {-1555.5, 55, -69.5}},
 
         // Final Egg Tower
-        {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 0, 0}},
+        {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 124, 166.5}},
 
 
         // Egg Carrier Outside (Untransformed)
