@@ -71,12 +71,14 @@ enum EntranceId
     // Jungle
     JungleToMrMain,
     JungleToLostWorld,
+    JungleToLostWorldKnuckles,
     JungleToFinalEggTower,
     JungleToSandHill,
 
     // Final Egg Tower
     FinalEggTowerToJungle,
     FinalEggTowerToFinalEgg,
+    FinalEggTowerToFinalEggGamma,
     FinalEggTowerToBetaEggViper,
     FinalEggTowerToEcInside,
 
@@ -183,8 +185,10 @@ enum EntranceId
     IceCapToAngelIsland,
     RedMountainToAngelIsland,
     LostWorldToJungle,
+    LostWorldToJungleKnuckles,
     SandHillToJungle,
     FinalEggToFinalEggTower,
+    FinalEggToFinalEggTowerGamma,
     BetaEggViperToFinalEggTower,
     SkyChase2ToEcOutside,
     SkyChase2ToBridge,
@@ -277,6 +281,7 @@ private:
         {JungleToFinalEggTower, FinalEggTowerToJungle},
         {JungleToSandHill, SandHillToJungle},
         {FinalEggTowerToFinalEgg, FinalEggToFinalEggTower},
+        {FinalEggTowerToFinalEggGamma, FinalEggToFinalEggTowerGamma},
         {FinalEggTowerToBetaEggViper, BetaEggViperToFinalEggTower},
         {FinalEggTowerToEcInside, EcInsideToFinalEggTower},
         {EcOutsideToSkyChase2, SkyChase2ToEcOutside},

@@ -75,7 +75,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -773,6 +773,10 @@ BOOL AdventureFieldEntranceManager::OnIsFinalEggEggmanDoorOpen(EntityData1* enti
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && IsNearPosition(
         entity->Position, 0, 109, 175))
         return _instance->IsDoorOpen(FinalEggTowerToJungle);
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && IsNearPosition(
+        entity->Position, 0, 109, -175))
+        return _instance->IsDoorOpen(FinalEggTowerToFinalEggGamma);
 
     return _isFinalEggEggmanDoorOpenHook.Original(entity);
 }
