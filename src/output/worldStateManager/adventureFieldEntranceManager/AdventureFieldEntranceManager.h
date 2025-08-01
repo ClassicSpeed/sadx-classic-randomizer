@@ -180,6 +180,8 @@ private:
     inline static FunctionHook<void, task*> _loadSceneChangeMrHook{0x5394F0};
     static void OnLoadSceneChangeMr(task* tp);
 
-
     static void __cdecl OnSceneChangeMr(int newScene);
+
+    inline static FunctionHook<BOOL> _isLostWorldBackEntranceOpenHook{0x53B6C0};
+    static BOOL OnIsLostWorldBackEntranceOpen();
 };

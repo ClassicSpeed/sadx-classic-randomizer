@@ -63,6 +63,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isSandHillOpenHook.Hook(OnIsSandHillOpen);
     _loadSceneChangeMrHook.Hook(OnLoadSceneChangeMr);
     sceneChangeMrHook.Hook(OnSceneChangeMr);
+    _isLostWorldBackEntranceOpenHook.Hook(OnIsLostWorldBackEntranceOpen);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -697,6 +698,16 @@ void AdventureFieldEntranceManager::OnMysticRuinsKey(task* tp)
         return _mysticRuinsKeyHook.Original(tp);
 
 
+    // We don't spawn the golden/silver keys for knuckles if he can't enter LostWorld
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
+    {
+        if (!_instance->IsDoorOpen(JungleToLostWorldAlternative))
+            return;
+
+        return _mysticRuinsKeyHook.Original(tp);
+    }
+
+
     // We prevent the wind stone from spawning if the player cannot access the Windy Valley entrance
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
         && !_instance->IsDoorOpen(MrMainToWindyValley))
@@ -779,7 +790,7 @@ BOOL AdventureFieldEntranceManager::OnIsFinalEggEggmanDoorOpen(EntityData1* enti
 
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && IsNearPosition(
         entity->Position, 0, 109, -175))
-        return _instance->IsDoorOpen(FinalEggTowerToFinalEggGamma);
+        return _instance->IsDoorOpen(FinalEggTowerToFinalEggAlternative);
 
 
     return _isFinalEggEggmanDoorOpenHook.Original(entity);
@@ -870,12 +881,12 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
         sceneChangeMrHook.Original(newScene);
 
 
-    // Jungle Final Egg tower
+    //  Final Egg 
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4)
     {
         if (newScene == 2)
         {
-            if (_instance->IsDoorOpen(FinalEggTowerToFinalEggGamma))
+            if (_instance->IsDoorOpen(FinalEggTowerToFinalEggAlternative))
             {
                 return SetNextLevelAndAct_CutsceneMode(
                     GET_LEVEL(LevelAndActIDs_FinalEgg3), GET_ACT(LevelAndActIDs_FinalEgg3));
@@ -892,5 +903,45 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
             return;
         }
     }
+
+    // Lost world
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
+    {
+        if (newScene == 6)
+        {
+            if (_instance->IsDoorOpen(JungleToLostWorld))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_LostWorld1), GET_ACT(LevelAndActIDs_LostWorld1));
+            }
+            return;
+        }
+        if (newScene == 7)
+        {
+            if (_instance->IsDoorOpen(JungleToLostWorldAlternative))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_LostWorld2), GET_ACT(LevelAndActIDs_LostWorld2));
+            }
+            return;
+        }
+    }
+
     sceneChangeMrHook.Original(newScene);
+}
+
+
+//Makes knuckles able to enter the lost world using the keys and everyone without them
+BOOL AdventureFieldEntranceManager::OnIsLostWorldBackEntranceOpen()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isLostWorldBackEntranceOpenHook.Original();
+
+    if (!_instance->IsDoorOpen(JungleToLostWorldAlternative))
+        return false;
+
+    if (CurrentCharacter != Characters_Knuckles)
+        return true;
+
+    return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[FLAG_KNUCKLES_MR_BLUECUBE];
 }

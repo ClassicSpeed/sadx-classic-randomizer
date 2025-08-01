@@ -87,14 +87,18 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         // Jungle
         {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 137.36f, {-1143, 369, 418}},
         {JungleToLostWorld, LevelAndActIDs_MysticRuins3, 2, LostWorldToJungle, 180, {-516, 100, -994}},
-        //TODO: JungleToLostWorldKnuckles 1 is knuckles
+        {
+            JungleToLostWorldAlternative, LevelAndActIDs_MysticRuins3, 1, LostWorldToJungleAlternative, 180,
+            {-516, 103, -1327}
+        },
         {JungleToFinalEggTower, LevelAndActIDs_MysticRuins3, 4, FinalEggTowerToJungle, 0, {71, 17, -1687.5}},
         {JungleToSandHill, LevelAndActIDs_MysticRuins3, 3, SandHillToJungle, 90, {-1555.5, 55, -69.5}},
 
         // Final Egg Tower
         {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 124, 166.5}},
         {
-            FinalEggTowerToFinalEggGamma, LevelAndActIDs_MysticRuins4, 1, FinalEggGammaToFinalEggTower, 0.0f,
+            FinalEggTowerToFinalEggAlternative, LevelAndActIDs_MysticRuins4, 1, FinalEggToFinalEggTowerAlternative,
+            0.0f,
             {0, 124, -155}
         },
         {FinalEggTowerToFinalEgg, LevelAndActIDs_MysticRuins4, 2, FinalEggToFinalEggTower, 115, {175, 135, -25.75}},
@@ -133,9 +137,13 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Lost World
         {LostWorldToJungle, LevelAndActIDs_LostWorld1, 0, JungleToLostWorld, 0, {0, 0, 0}},
+        {LostWorldToJungleAlternative, LevelAndActIDs_LostWorld2, 0, JungleToLostWorldAlternative, 0, {0, 0, 0}},
 
         // Final Egg
-        {FinalEggGammaToFinalEggTower, LevelAndActIDs_FinalEgg3, 0, FinalEggTowerToFinalEggGamma, 0, {0, 0, 0}},
+        {
+            FinalEggToFinalEggTowerAlternative, LevelAndActIDs_FinalEgg3, 0, FinalEggTowerToFinalEggAlternative, 0,
+            {0, 0, 0}
+        },
         {FinalEggToFinalEggTower, LevelAndActIDs_FinalEgg1, 0, FinalEggTowerToFinalEgg, 0, {0, 0, 0}},
 
         // Chaos 0
