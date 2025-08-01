@@ -176,4 +176,10 @@ private:
 
     inline static FunctionHook<BOOL> _isSandHillOpenHook{0x53EAF0};
     static BOOL OnIsSandHillOpen();
+
+    inline static FunctionHook<void, task*> _loadSceneChangeMrHook{0x5394F0};
+    static void OnLoadSceneChangeMr(task* tp);
+
+
+    static void __cdecl OnSceneChangeMr(int newScene);
 };

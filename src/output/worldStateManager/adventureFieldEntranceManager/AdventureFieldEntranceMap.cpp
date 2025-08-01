@@ -94,9 +94,10 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         // Final Egg Tower
         {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 124, 166.5}},
         {
-            FinalEggTowerToFinalEggGamma, LevelAndActIDs_MysticRuins4, 1, FinalEggToFinalEggTowerGamma, 0.0f,
+            FinalEggTowerToFinalEggGamma, LevelAndActIDs_MysticRuins4, 1, FinalEggGammaToFinalEggTower, 0.0f,
             {0, 124, -155}
         },
+        {FinalEggTowerToFinalEgg, LevelAndActIDs_MysticRuins4, 2, FinalEggToFinalEggTower, 115, {175, 135, -25.75}},
         {FinalEggTowerToBetaEggViper, LevelAndActIDs_MysticRuins4, 3, BetaEggViperToFinalEggTower, 45, {0, 16, 0}},
 
 
@@ -134,7 +135,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {LostWorldToJungle, LevelAndActIDs_LostWorld1, 0, JungleToLostWorld, 0, {0, 0, 0}},
 
         // Final Egg
-        {FinalEggToFinalEggTowerGamma, LevelAndActIDs_FinalEgg3, 0, FinalEggTowerToFinalEggGamma, 0, {0, 0, 0}},
+        {FinalEggGammaToFinalEggTower, LevelAndActIDs_FinalEgg3, 0, FinalEggTowerToFinalEggGamma, 0, {0, 0, 0}},
+        {FinalEggToFinalEggTower, LevelAndActIDs_FinalEgg1, 0, FinalEggTowerToFinalEgg, 0, {0, 0, 0}},
 
         // Chaos 0
         {Chaos0ToCityHall, LevelAndActIDs_Chaos0, 1, CityHallToChaos0, 0, {0, 0, 0}},

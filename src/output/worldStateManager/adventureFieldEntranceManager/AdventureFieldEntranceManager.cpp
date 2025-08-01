@@ -3,6 +3,7 @@
 UsercallFunc(int, twinkleCircuitDoorHook, (char tpChar), (tpChar), 0x63F810, rEAX, rESI);
 UsercallFunc(int, twinkleParkDoorHook, (char tpChar), (tpChar), 0x63EA90, rEAX, rESI);
 UsercallFunc(signed int, mrCartHook, (task* tp), (tp), 0x53DC60, rEAX, rESI);
+UsercallFuncVoid(sceneChangeMrHook, (int a1), (a1), 0x539220, rEBX);
 
 AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): _options(options),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init()),
@@ -60,6 +61,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _changeSceneCave2Hook.Hook(OnChangeSceneCave2);
     _isLostWorldFrontEntranceOpenHook.Hook(OnIsLostWorldFrontEntranceOpen);
     _isSandHillOpenHook.Hook(OnIsSandHillOpen);
+    _loadSceneChangeMrHook.Hook(OnLoadSceneChangeMr);
+    sceneChangeMrHook.Hook(OnSceneChangeMr);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -75,7 +78,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -778,6 +781,7 @@ BOOL AdventureFieldEntranceManager::OnIsFinalEggEggmanDoorOpen(EntityData1* enti
         entity->Position, 0, 109, -175))
         return _instance->IsDoorOpen(FinalEggTowerToFinalEggGamma);
 
+
     return _isFinalEggEggmanDoorOpenHook.Original(entity);
 }
 
@@ -839,4 +843,54 @@ BOOL AdventureFieldEntranceManager::OnIsSandHillOpen()
         return _isSandHillOpenHook.Original();
 
     return _instance->IsDoorOpen(JungleToSandHill);
+}
+
+void AdventureFieldEntranceManager::OnLoadSceneChangeMr(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _loadSceneChangeMrHook.Original(tp);
+
+    // Final Egg
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && tp->twp->ang.x == 3)
+    {
+        if (!_instance->IsDoorOpen(FinalEggTowerToFinalEgg))
+        {
+            return FreeTask(tp);
+        }
+    }
+
+    _loadSceneChangeMrHook.Original(tp);
+}
+
+
+// MysticRuins
+void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        sceneChangeMrHook.Original(newScene);
+
+
+    // Jungle Final Egg tower
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4)
+    {
+        if (newScene == 2)
+        {
+            if (_instance->IsDoorOpen(FinalEggTowerToFinalEggGamma))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_FinalEgg3), GET_ACT(LevelAndActIDs_FinalEgg3));
+            }
+            return;
+        }
+        if (newScene == 3)
+        {
+            if (_instance->IsDoorOpen(FinalEggTowerToFinalEgg))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_FinalEgg1), GET_ACT(LevelAndActIDs_FinalEgg1));
+            }
+            return;
+        }
+    }
+    sceneChangeMrHook.Original(newScene);
 }
