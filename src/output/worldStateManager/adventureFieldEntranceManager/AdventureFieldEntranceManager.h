@@ -184,4 +184,7 @@ private:
 
     inline static FunctionHook<BOOL> _isLostWorldBackEntranceOpenHook{0x53B6C0};
     static BOOL OnIsLostWorldBackEntranceOpen();
+
+    inline static FunctionHook<void, task*> _loadLongLadderMrHook{0x536CB0};
+    static void OnLoadLongLadderMr(task* tp);
 };

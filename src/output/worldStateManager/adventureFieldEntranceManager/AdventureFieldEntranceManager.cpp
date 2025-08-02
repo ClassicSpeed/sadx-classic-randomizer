@@ -64,6 +64,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _loadSceneChangeMrHook.Hook(OnLoadSceneChangeMr);
     sceneChangeMrHook.Hook(OnSceneChangeMr);
     _isLostWorldBackEntranceOpenHook.Hook(OnIsLostWorldBackEntranceOpen);
+    _loadLongLadderMrHook.Hook(OnLoadLongLadderMr);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -881,6 +882,20 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
         sceneChangeMrHook.Original(newScene);
 
 
+    // Ice Cap
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+    {
+        if (newScene == 1)
+        {
+            if (_instance->IsDoorOpen(AngelIslandToIceCap))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_IceCap1), GET_ACT(LevelAndActIDs_IceCap1));
+            }
+            return;
+        }
+    }
+
     //  Final Egg 
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4)
     {
@@ -944,4 +959,18 @@ BOOL AdventureFieldEntranceManager::OnIsLostWorldBackEntranceOpen()
         return true;
 
     return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[FLAG_KNUCKLES_MR_BLUECUBE];
+}
+
+
+// Removed the ladder on Ice Cap
+void AdventureFieldEntranceManager::OnLoadLongLadderMr(task* tp)
+{
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+    {
+        if (!_instance->IsDoorOpen(AngelIslandToIceCap))
+        {
+            return FreeTask(tp);
+        }
+    }
+    _loadLongLadderMrHook.Original(tp);
 }
