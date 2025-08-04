@@ -4,6 +4,8 @@ UsercallFunc(int, twinkleCircuitDoorHook, (char tpChar), (tpChar), 0x63F810, rEA
 UsercallFunc(int, twinkleParkDoorHook, (char tpChar), (tpChar), 0x63EA90, rEAX, rESI);
 UsercallFunc(signed int, mrCartHook, (task* tp), (tp), 0x53DC60, rEAX, rESI);
 UsercallFuncVoid(sceneChangeMrHook, (int a1), (a1), 0x539220, rEBX);
+UsercallFuncVoid(sceneChangeECInsideHook, (int a1, int a2), (a1,a2), 0x52D690, rEAX, rECX);
+UsercallFunc(int, eggCarrierInsideEggDoorHook, (int a1), (a1), 0x52B420, rEAX, rESI);
 
 AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): _options(options),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init()),
@@ -65,6 +67,9 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     sceneChangeMrHook.Hook(OnSceneChangeMr);
     _isLostWorldBackEntranceOpenHook.Hook(OnIsLostWorldBackEntranceOpen);
     _loadLongLadderMrHook.Hook(OnLoadLongLadderMr);
+    sceneChangeECInsideHook.Hook(OnSceneChangeEcInside);
+
+    eggCarrierInsideEggDoorHook.Hook(OnEggCarrierEggDoor);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -80,7 +85,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -965,6 +970,9 @@ BOOL AdventureFieldEntranceManager::OnIsLostWorldBackEntranceOpen()
 // Removed the ladder on Ice Cap
 void AdventureFieldEntranceManager::OnLoadLongLadderMr(task* tp)
 {
+    if (!_instance->_options.adventureFieldRandomized)
+        return _loadLongLadderMrHook.Original(tp);
+
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
         if (!_instance->IsDoorOpen(AngelIslandToIceCap))
@@ -973,4 +981,55 @@ void AdventureFieldEntranceManager::OnLoadLongLadderMr(task* tp)
         }
     }
     _loadLongLadderMrHook.Original(tp);
+}
+
+
+// HotShelter
+void AdventureFieldEntranceManager::OnSceneChangeEcInside(int a1, int a2)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return sceneChangeECInsideHook.Original(a1, a2);
+
+
+    if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierInside2)
+        return sceneChangeECInsideHook.Original(a1, a2);
+
+    const int doorId = *(_DWORD*)(a1 + 20);
+    if (doorId != 512)
+        return sceneChangeECInsideHook.Original(a1, a2);
+
+
+    camerahax_adventurefields();
+    return SetNextLevelAndAct_CutsceneMode(
+        GET_LEVEL(LevelAndActIDs_HotShelter1), GET_ACT(LevelAndActIDs_HotShelter1));
+}
+
+
+// HotShelter
+int AdventureFieldEntranceManager::OnEggCarrierEggDoor(const int a1)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return eggCarrierInsideEggDoorHook.Original(a1);
+
+    // Middle door
+    if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierInside2)
+        return eggCarrierInsideEggDoorHook.Original(a1);
+
+    if (*reinterpret_cast<BYTE*>(a1 + 1) != 6)
+        return eggCarrierInsideEggDoorHook.Original(a1);
+
+    if (!_instance->IsDoorOpen(EcInsideToHotShelter))
+        return false;
+
+    const EntityData1* player = EntityData1Ptrs[0];
+    const double dz = player->Position.z - *(float*)(a1 + 40);
+    const double dy = player->Position.y - *(float*)(a1 + 36);
+    const double dx = player->Position.x - *(float*)(a1 + 32);
+    const double distance = dx * dx + dy * dy + dz * dz;
+    if (squareroot(distance) > 50.0)
+        return false;
+
+    if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
+        return IsSwitchPressed(1);
+    return true;
 }

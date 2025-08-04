@@ -187,4 +187,9 @@ private:
 
     inline static FunctionHook<void, task*> _loadLongLadderMrHook{0x536CB0};
     static void OnLoadLongLadderMr(task* tp);
+
+
+    static void __cdecl OnSceneChangeEcInside(int a1, int a2);
+
+    static int __cdecl OnEggCarrierEggDoor(int a1);
 };

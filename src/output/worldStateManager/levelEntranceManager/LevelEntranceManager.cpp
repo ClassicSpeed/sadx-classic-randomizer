@@ -4,7 +4,7 @@ UsercallFuncVoid(sceneChangeMrHook, (int a1), (a1), 0x539220, rEBX);
 UsercallFuncVoid(sceneChangeECInsideHook, (int a1, int a2), (a1,a2), 0x52D690, rEAX, rECX);
 UsercallFuncVoid(sceneChangeECOutsideHook, (int a1), (a1), 0x524FE0, rEAX);
 UsercallFunc(int, twinkleParkDoorHook, (char tpChar), (tpChar), 0x63EA90, rEAX, rESI);
-UsercallFunc(int, eggCarrierEggDoorHook, (int a1), (a1), 0x52B420, rEAX, rESI);
+UsercallFunc(int, eggCarrierInsideEggDoorHook, (int a1), (a1), 0x52B420, rEAX, rESI);
 UsercallFunc(int, eggCarrierOutsideDoorHook, (int a1), (a1), 0x524070, rEAX, rESI);
 UsercallFunc(int, skyDeckDoorHook, (EntityData1 * a1), (a1), 0x51DEB0, rEAX, rESI);
 
@@ -37,7 +37,7 @@ LevelEntranceManager::LevelEntranceManager(Options& options, Settings& settings,
     _loadPoolDoorHook.Hook(OnLoadPoolDoor);
     _preventKeyStoneFromSpawningHook.Hook(OnPreventKeyStoneFromSpawning);
 
-    eggCarrierEggDoorHook.Hook(OnEggCarrierEggDoor);
+    eggCarrierInsideEggDoorHook.Hook(OnEggCarrierEggDoor);
     eggCarrierOutsideDoorHook.Hook(OnEggCarrierOutsideDoor);
     skyDeckDoorHook.Hook(OnSkyDeckDoor);
     twinkleParkDoorHook.Hook(OnTwinkleParkDoor);
@@ -660,10 +660,10 @@ int LevelEntranceManager::OnEggCarrierEggDoor(const int a1)
 {
     // Middle door
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierInside2)
-        return eggCarrierEggDoorHook.Original(a1);
+        return eggCarrierInsideEggDoorHook.Original(a1);
 
     if (*reinterpret_cast<BYTE*>(a1 + 1) != 6)
-        return eggCarrierEggDoorHook.Original(a1);
+        return eggCarrierInsideEggDoorHook.Original(a1);
 
     if (!_instance->_levelEntrances.canEnter(HotShelter, CurrentCharacter))
         return false;

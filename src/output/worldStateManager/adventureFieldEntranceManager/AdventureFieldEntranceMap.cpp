@@ -109,6 +109,10 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 0.0f, {0, 0, 0}},
         {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 0.0f, {0, 0, 0}},
 
+        // Egg Carrier Inside
+        {EcInsideToHotShelter, LevelAndActIDs_EggCarrierInside2, 0, HotShelterToEcInside, 0.0f, {0, 15, 245}},
+
+
         // SS Chao Garden
         {SsChaoGardenToHotel, LevelAndActIDs_SSGarden, 0, HotelToSsChaoGarden, 90, {-395, 13, 1700}},
 
@@ -148,6 +152,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
             {0, 0, 0}
         },
         {FinalEggToFinalEggTower, LevelAndActIDs_FinalEgg1, 0, FinalEggTowerToFinalEgg, 0, {0, 0, 0}},
+
+        // Hot Shelter
+        {HotShelterToEcInside, LevelAndActIDs_HotShelter1, 0, EcInsideToHotShelter, 0.0f, {0, 0, 0}},
 
         // Chaos 0
         {Chaos0ToCityHall, LevelAndActIDs_Chaos0, 1, CityHallToChaos0, 0, {0, 0, 0}},
