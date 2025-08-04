@@ -111,6 +111,14 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Egg Carrier Inside
         {EcInsideToHotShelter, LevelAndActIDs_EggCarrierInside2, 0, HotShelterToEcInside, 0.0f, {0, 15, 245}},
+        {
+            EcInsideToHedgehogHammer, LevelAndActIDs_EggCarrierInside2, 0, HedgehogHammerToEcInside, 135,
+            {-62, 15, 192.5}
+        },
+
+
+        // Hedgehog Hammer
+        {HedgehogHammerToEcInside, LevelAndActIDs_EggCarrierInside3, 1, EcInsideToHedgehogHammer, 0.0f, {0, 0, 0}},
 
 
         // SS Chao Garden

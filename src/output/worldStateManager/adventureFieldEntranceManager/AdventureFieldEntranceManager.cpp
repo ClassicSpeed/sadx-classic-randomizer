@@ -85,7 +85,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1011,25 +1011,45 @@ int AdventureFieldEntranceManager::OnEggCarrierEggDoor(const int a1)
     if (!_instance->_options.adventureFieldRandomized)
         return eggCarrierInsideEggDoorHook.Original(a1);
 
+
     // Middle door
-    if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierInside2)
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside2)
+    {
+        if (*reinterpret_cast<BYTE*>(a1 + 1) == 6)
+        {
+            if (!_instance->IsDoorOpen(EcInsideToHotShelter))
+                return false;
+
+            const EntityData1* player = EntityData1Ptrs[0];
+            const double dz = player->Position.z - *(float*)(a1 + 40);
+            const double dy = player->Position.y - *(float*)(a1 + 36);
+            const double dx = player->Position.x - *(float*)(a1 + 32);
+            const double distance = dx * dx + dy * dy + dz * dz;
+            if (squareroot(distance) > 50.0)
+                return false;
+
+            if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
+                return IsSwitchPressed(1);
+            return true;
+        }
+        if (*reinterpret_cast<BYTE*>(a1 + 1) == 2)
+        {
+            if (!_instance->IsDoorOpen(EcInsideToHedgehogHammer))
+                return false;
+
+            const EntityData1* player = EntityData1Ptrs[0];
+            const double dz = player->Position.z - *(float*)(a1 + 40);
+            const double dy = player->Position.y - *(float*)(a1 + 36);
+            const double dx = player->Position.x - *(float*)(a1 + 32);
+            const double distance = dx * dx + dy * dy + dz * dz;
+            if (squareroot(distance) > 50.0)
+                return false;
+
+            if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
+                return IsSwitchPressed(0);
+            return true;
+        }
         return eggCarrierInsideEggDoorHook.Original(a1);
-
-    if (*reinterpret_cast<BYTE*>(a1 + 1) != 6)
-        return eggCarrierInsideEggDoorHook.Original(a1);
-
-    if (!_instance->IsDoorOpen(EcInsideToHotShelter))
-        return false;
-
-    const EntityData1* player = EntityData1Ptrs[0];
-    const double dz = player->Position.z - *(float*)(a1 + 40);
-    const double dy = player->Position.y - *(float*)(a1 + 36);
-    const double dx = player->Position.x - *(float*)(a1 + 32);
-    const double distance = dx * dx + dy * dy + dz * dz;
-    if (squareroot(distance) > 50.0)
-        return false;
-
-    if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
-        return IsSwitchPressed(1);
-    return true;
+    }
+    return eggCarrierInsideEggDoorHook.Original(a1);
 }

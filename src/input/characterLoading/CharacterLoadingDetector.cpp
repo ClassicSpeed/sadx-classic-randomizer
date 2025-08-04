@@ -55,7 +55,7 @@ void CharacterLoadingDetector::OnFrame()
         for (int i = 0; i < 512; i++)
             CutsceneFlagArray[i] = 1;
 
-        for (int i = 0; i < 512; i++)
+        for (int i = SSVAR_EGG_ON; i < 512; i++)
             EventFlagArray[i] = 1;
 
 
