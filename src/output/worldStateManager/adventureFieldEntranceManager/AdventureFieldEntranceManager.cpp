@@ -5,7 +5,7 @@ UsercallFunc(int, twinkleParkDoorHook, (char tpChar), (tpChar), 0x63EA90, rEAX, 
 UsercallFunc(signed int, mrCartHook, (task* tp), (tp), 0x53DC60, rEAX, rESI);
 UsercallFuncVoid(sceneChangeMrHook, (int a1), (a1), 0x539220, rEBX);
 UsercallFuncVoid(sceneChangeECInsideHook, (int a1, int a2), (a1,a2), 0x52D690, rEAX, rECX);
-UsercallFunc(int, eggCarrierInsideEggDoorHook, (int a1), (a1), 0x52B420, rEAX, rESI);
+UsercallFunc(int, eggCarrierInsideEggDoorHook, (const taskwk* twp), (twp), 0x52B420, rEAX, rESI);
 
 AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): _options(options),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init()),
@@ -1005,51 +1005,67 @@ void AdventureFieldEntranceManager::OnSceneChangeEcInside(int a1, int a2)
 }
 
 
+bool AdventureFieldEntranceManager::IsPlayerNearDoor(const taskwk* twp)
+{
+    const EntityData1* player = EntityData1Ptrs[0];
+    const double dz = player->Position.z - twp->pos.z;
+    const double dy = player->Position.y - twp->pos.y;
+    const double dx = player->Position.x - twp->pos.x;
+    const double distance = dx * dx + dy * dy + dz * dz;
+    return squareroot(distance) <= 50.0;
+}
+
 // HotShelter
-int AdventureFieldEntranceManager::OnEggCarrierEggDoor(const int a1)
+int AdventureFieldEntranceManager::OnEggCarrierEggDoor(const taskwk* twp)
 {
     if (!_instance->_options.adventureFieldRandomized)
-        return eggCarrierInsideEggDoorHook.Original(a1);
+        return eggCarrierInsideEggDoorHook.Original(twp);
 
-
-    // Middle door
+    //EC inside main
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside2)
     {
-        if (*reinterpret_cast<BYTE*>(a1 + 1) == 6)
+        // Middle door
+        if (twp->smode == 6)
         {
             if (!_instance->IsDoorOpen(EcInsideToHotShelter))
                 return false;
 
-            const EntityData1* player = EntityData1Ptrs[0];
-            const double dz = player->Position.z - *(float*)(a1 + 40);
-            const double dy = player->Position.y - *(float*)(a1 + 36);
-            const double dx = player->Position.x - *(float*)(a1 + 32);
-            const double distance = dx * dx + dy * dy + dz * dz;
-            if (squareroot(distance) > 50.0)
+            if (!IsPlayerNearDoor(twp))
                 return false;
 
             if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
                 return IsSwitchPressed(1);
             return true;
         }
-        if (*reinterpret_cast<BYTE*>(a1 + 1) == 2)
+        // Hedgehog hammer door
+        if (twp->smode == 2)
         {
             if (!_instance->IsDoorOpen(EcInsideToHedgehogHammer))
                 return false;
 
-            const EntityData1* player = EntityData1Ptrs[0];
-            const double dz = player->Position.z - *(float*)(a1 + 40);
-            const double dy = player->Position.y - *(float*)(a1 + 36);
-            const double dx = player->Position.x - *(float*)(a1 + 32);
-            const double distance = dx * dx + dy * dy + dz * dz;
-            if (squareroot(distance) > 50.0)
+            if (!IsPlayerNearDoor(twp))
                 return false;
 
             if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
                 return IsSwitchPressed(0);
             return true;
         }
-        return eggCarrierInsideEggDoorHook.Original(a1);
+        return eggCarrierInsideEggDoorHook.Original(twp);
     }
-    return eggCarrierInsideEggDoorHook.Original(a1);
+
+    // Hedgehog hammer 
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside3)
+    {
+        if (twp->smode == 4)
+        {
+            if (!_instance->IsDoorOpen(HedgehogHammerToEcInside))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
+        return eggCarrierInsideEggDoorHook.Original(twp);
+    }
+    return eggCarrierInsideEggDoorHook.Original(twp);
 }
