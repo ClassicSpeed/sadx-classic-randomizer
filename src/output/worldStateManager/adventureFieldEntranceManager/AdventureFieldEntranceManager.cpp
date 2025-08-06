@@ -1065,6 +1065,29 @@ int AdventureFieldEntranceManager::OnEggCarrierEggDoor(const taskwk* twp)
                 return false;
             return true;
         }
+        if (twp->smode == 1)
+        {
+            if (!_instance->IsDoorOpen(HedgehogHammerToPrisonHall))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
+        return eggCarrierInsideEggDoorHook.Original(twp);
+    }
+    // Prison hall
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside4)
+    {
+        if (twp->smode == 1)
+        {
+            if (!_instance->IsDoorOpen(PrisonHallToHedgehogHammer))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
         return eggCarrierInsideEggDoorHook.Original(twp);
     }
     return eggCarrierInsideEggDoorHook.Original(twp);

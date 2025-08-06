@@ -119,6 +119,13 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Hedgehog Hammer
         {HedgehogHammerToEcInside, LevelAndActIDs_EggCarrierInside3, 1, EcInsideToHedgehogHammer, 90, {90, 15, 0}},
+        {HedgehogHammerToPrisonHall, LevelAndActIDs_EggCarrierInside3, 0, PrisonHallToHedgehogHammer, 90, {-90, 15, 0}},
+
+        // Prison Hall
+        {
+            PrisonHallToHedgehogHammer, LevelAndActIDs_EggCarrierInside4, 0, HedgehogHammerToPrisonHall, 90,
+            {144, 15, 60}
+        },
 
 
         // SS Chao Garden
