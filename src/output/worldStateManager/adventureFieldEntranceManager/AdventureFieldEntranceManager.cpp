@@ -1050,6 +1050,15 @@ int AdventureFieldEntranceManager::OnEggCarrierEggDoor(const taskwk* twp)
                 return IsSwitchPressed(0);
             return true;
         }
+        // Arsenal door
+        if (twp->smode == 0 && IsNearPosition(twp->pos, 190, 80.1, 0))
+        {
+            if (!_instance->IsDoorOpen(EcInsideToArsenal))
+                return false;
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
         return eggCarrierInsideEggDoorHook.Original(twp);
     }
 

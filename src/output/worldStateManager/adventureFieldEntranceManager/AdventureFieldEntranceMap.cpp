@@ -109,12 +109,17 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 0.0f, {0, 0, 0}},
         {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 0.0f, {0, 0, 0}},
 
+        // Arsenal
+        {ArsenalToEcInside, LevelAndActIDs_EggCarrierInside1, 0, EcInsideToArsenal, 0.0f, {0, 0, 0}},
+
+
         // Egg Carrier Inside
         {EcInsideToHotShelter, LevelAndActIDs_EggCarrierInside2, 1, HotShelterToEcInside, 0.0f, {0, 15, 245}},
         {
             EcInsideToHedgehogHammer, LevelAndActIDs_EggCarrierInside2, 3, HedgehogHammerToEcInside, 135,
             {-62, 15, 192.5}
         },
+        {EcInsideToArsenal, LevelAndActIDs_EggCarrierInside2, 4, ArsenalToEcInside, 90, {183.5, 95, 0}},
 
 
         // Hedgehog Hammer
