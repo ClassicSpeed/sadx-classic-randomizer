@@ -1020,7 +1020,16 @@ int AdventureFieldEntranceManager::OnEggCarrierEggDoor(const taskwk* twp)
 {
     if (!_instance->_options.adventureFieldRandomized)
         return eggCarrierInsideEggDoorHook.Original(twp);
+    // Arsenal
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside1)
+    {
+        if (!_instance->IsDoorOpen(ArsenalToEcInside))
+            return false;
 
+        if (!IsPlayerNearDoor(twp))
+            return false;
+        return true;
+    }
     //EC inside main
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside2)
     {
@@ -1054,6 +1063,15 @@ int AdventureFieldEntranceManager::OnEggCarrierEggDoor(const taskwk* twp)
         if (twp->smode == 0 && IsNearPosition(twp->pos, 190, 80.1, 0))
         {
             if (!_instance->IsDoorOpen(EcInsideToArsenal))
+                return false;
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
+        // Water Tank door
+        if (twp->smode == 0 && IsNearPosition(twp->pos, -190, 80.1, -280))
+        {
+            if (!_instance->IsDoorOpen(EcInsideToWaterTank))
                 return false;
             if (!IsPlayerNearDoor(twp))
                 return false;
@@ -1098,6 +1116,17 @@ int AdventureFieldEntranceManager::OnEggCarrierEggDoor(const taskwk* twp)
             return true;
         }
         return eggCarrierInsideEggDoorHook.Original(twp);
+    }
+
+    // Arsenal
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside5)
+    {
+        if (!_instance->IsDoorOpen(WaterTankToEcInside))
+            return false;
+
+        if (!IsPlayerNearDoor(twp))
+            return false;
+        return true;
     }
     return eggCarrierInsideEggDoorHook.Original(twp);
 }

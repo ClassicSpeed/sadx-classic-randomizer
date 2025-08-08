@@ -110,7 +110,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 0.0f, {0, 0, 0}},
 
         // Arsenal
-        {ArsenalToEcInside, LevelAndActIDs_EggCarrierInside1, 0, EcInsideToArsenal, 0.0f, {0, 0, 0}},
+        {ArsenalToEcInside, LevelAndActIDs_EggCarrierInside1, 0, EcInsideToArsenal, 90, {-106, 123, 0}},
 
 
         // Egg Carrier Inside
@@ -119,7 +119,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
             EcInsideToHedgehogHammer, LevelAndActIDs_EggCarrierInside2, 3, HedgehogHammerToEcInside, 135,
             {-62, 15, 192.5}
         },
-        {EcInsideToArsenal, LevelAndActIDs_EggCarrierInside2, 4, ArsenalToEcInside, 90, {183.5, 95, 0}},
+        {EcInsideToWaterTank, LevelAndActIDs_EggCarrierInside2, 4, WaterTankToEcInside, 90, {-183, 95, -280}},
+        {EcInsideToArsenal, LevelAndActIDs_EggCarrierInside2, 5, ArsenalToEcInside, 90, {183.5, 95, 0}},
 
 
         // Hedgehog Hammer
@@ -131,7 +132,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
             PrisonHallToHedgehogHammer, LevelAndActIDs_EggCarrierInside4, 0, HedgehogHammerToPrisonHall, 90,
             {144, 15, 60}
         },
-
+        // Water Tank
+        {WaterTankToEcInside, LevelAndActIDs_EggCarrierInside5, 0, EcInsideToWaterTank, 90, {95.5, 71, 0}},
 
         // SS Chao Garden
         {SsChaoGardenToHotel, LevelAndActIDs_SSGarden, 0, HotelToSsChaoGarden, 90, {-395, 13, 1700}},
