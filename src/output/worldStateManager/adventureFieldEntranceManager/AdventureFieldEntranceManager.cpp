@@ -6,6 +6,7 @@ UsercallFunc(signed int, mrCartHook, (task* tp), (tp), 0x53DC60, rEAX, rESI);
 UsercallFuncVoid(sceneChangeMrHook, (int a1), (a1), 0x539220, rEBX);
 UsercallFuncVoid(sceneChangeECInsideHook, (int a1, int a2), (a1,a2), 0x52D690, rEAX, rECX);
 UsercallFunc(int, eggCarrierInsideEggDoorHook, (const taskwk* twp), (twp), 0x52B420, rEAX, rESI);
+UsercallFunc(int, eggCarrierOutsideEggDoorHook, (const taskwk* twp), (twp), 0x524070, rEAX, rESI);
 
 AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): _options(options),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init()),
@@ -69,7 +70,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _loadLongLadderMrHook.Hook(OnLoadLongLadderMr);
     sceneChangeECInsideHook.Hook(OnSceneChangeEcInside);
 
-    eggCarrierInsideEggDoorHook.Hook(OnEggCarrierEggDoor);
+    eggCarrierInsideEggDoorHook.Hook(OnEggCarrierInsideEggDoor);
+    eggCarrierOutsideEggDoorHook.Hook(OnEggCarrierOutsideEggDoor);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -85,7 +87,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1015,8 +1017,7 @@ bool AdventureFieldEntranceManager::IsPlayerNearDoor(const taskwk* twp)
     return squareroot(distance) <= 50.0;
 }
 
-// HotShelter
-int AdventureFieldEntranceManager::OnEggCarrierEggDoor(const taskwk* twp)
+int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
 {
     if (!_instance->_options.adventureFieldRandomized)
         return eggCarrierInsideEggDoorHook.Original(twp);
@@ -1129,4 +1130,23 @@ int AdventureFieldEntranceManager::OnEggCarrierEggDoor(const taskwk* twp)
         return true;
     }
     return eggCarrierInsideEggDoorHook.Original(twp);
+}
+
+
+int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return eggCarrierOutsideEggDoorHook.Original(twp);
+    // Arsenal
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside6)
+    {
+        if (!_instance->IsDoorOpen(PoolToEcOutside))
+            return false;
+
+        if (!IsPlayerNearDoor(twp))
+            return false;
+        return true;
+    }
+
+    return eggCarrierOutsideEggDoorHook.Original(twp);
 }

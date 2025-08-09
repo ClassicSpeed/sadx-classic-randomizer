@@ -192,7 +192,9 @@ private:
 
     static void __cdecl OnSceneChangeEcInside(int a1, int a2);
 
-    static int __cdecl OnEggCarrierEggDoor(const taskwk* twp);
+    static int __cdecl OnEggCarrierInsideEggDoor(const taskwk* twp);
+
+    static int __cdecl OnEggCarrierOutsideEggDoor(const taskwk* twp);
 
 
     static bool IsPlayerNearDoor(const taskwk* twp);

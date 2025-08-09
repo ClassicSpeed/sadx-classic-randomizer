@@ -119,8 +119,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
 
         // Privated Pool
-        {PoolToEcOutside, LevelAndActIDs_EggCarrierOutside6, 0, EcOutsideToPool, 0.0f, {4.5, 25, 25}},
-        {PoolToDeck, LevelAndActIDs_EggCarrierOutside6, 0, DeckToPool, 0.0f, {4.5, 25, 25}},
+        {PoolToEcOutside, LevelAndActIDs_EggCarrierOutside6, 0, EcOutsideToPool, 90, {4.5, 25, 25}},
+        {PoolToDeck, LevelAndActIDs_EggCarrierOutside6, 0, DeckToPool, 90, {4.5, 25, 25}},
 
 
         // Arsenal
