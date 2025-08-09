@@ -228,7 +228,8 @@ public:
         return *_instance;
     }
 
-    AdventureFieldEntrance* GetNewConnection(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
+    AdventureFieldEntrance* GetNewConnection(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation,
+                                             bool isEggCarrierTransformed);
     const std::vector<AdventureFieldEntrance>& GetEntrances() const;
 
 private:
@@ -237,7 +238,7 @@ private:
 
     EntranceId FindEntranceByLocation(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
     EntranceId GetReplacementConnection(EntranceId entranceId);
-    AdventureFieldEntrance* FindEntranceById(EntranceId entranceId);
+    AdventureFieldEntrance* FindEntranceById(EntranceId entranceId, bool isEggCarrierTransformed);
 
     std::vector<AdventureFieldEntrance> _entranceList = {};
 

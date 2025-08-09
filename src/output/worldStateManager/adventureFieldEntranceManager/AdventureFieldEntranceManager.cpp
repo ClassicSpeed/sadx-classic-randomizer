@@ -85,7 +85,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -102,7 +102,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
 
     PrintDebug("------AdventureFieldEntranceManager: Setting next level and act to %d, %d \n", level, act);
     AdventureFieldEntrance* newEntrance = _instance->_adventureFieldEntranceMap.GetNewConnection(
-        GET_LEVEL_ACT(CurrentLevel, CurrentAct),GET_LEVEL_ACT(level, act));
+        GET_LEVEL_ACT(CurrentLevel, CurrentAct), GET_LEVEL_ACT(level, act), _instance->_isEggCarrierTransformed);
 
 
     if (newEntrance != nullptr)
