@@ -1148,5 +1148,43 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
         return true;
     }
 
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
+    {
+        if (IsNearPosition(twp->pos, 0, 744.5, 1080.7))
+        {
+            if (!_instance->IsDoorOpen(EcOutsideToPool))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
+    }
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
+    {
+        if (IsNearPosition(twp->pos, 0, 744.5, 1080.7))
+        {
+            if (!_instance->IsDoorOpen(EcOutsideToPool))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
+    }
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside3)
+    {
+        if (IsNearPosition(twp->pos, 0, 1536.5897, 3574.001))
+        {
+            if (!_instance->IsDoorOpen(DeckToPool))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
+    }
+
     return eggCarrierOutsideEggDoorHook.Original(twp);
 }
