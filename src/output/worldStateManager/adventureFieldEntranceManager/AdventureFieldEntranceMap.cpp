@@ -108,10 +108,11 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         // Egg Carrier Outside (Untransformed)
         {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 0.0f, {0, 0, 0}},
         {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 0.0f, {0, 0, 0}},
-
+        {EcOutsideToSkyChase2, LevelAndActIDs_EggCarrierOutside1, 0, SkyChase2ToEcOutside, 0, {0, 715, -1100}},
         {EcOutsideToPool, LevelAndActIDs_EggCarrierOutside1, 1, PoolToEcOutside, 0.0f, {0, 759.5f, 1074.2f}},
 
         // Bridge (Transformed)
+        {BridgeToSkyChase2, LevelAndActIDs_EggCarrierOutside2, 0, SkyChase2ToBridge, 0, {0, 665, -1100}},
 
 
         // Deck (Transformed)
@@ -232,6 +233,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         },
         // Sky Chase 1
         {SkyChase1ToMrMain, LevelAndActIDs_SkyChase1, 0, MrMainToSkyChase1, 0, {0, 0, 0}},
+        // Sky Chase 2
+        {SkyChase2ToEcOutside, LevelAndActIDs_SkyChase2, 0, EcOutsideToSkyChase2, 0, {0, 0, 0}},
+        {SkyChase2ToBridge, LevelAndActIDs_SkyChase2, 0, BridgeToSkyChase2, 0, {0, 0, 0}},
 
 
         // Sand Hill

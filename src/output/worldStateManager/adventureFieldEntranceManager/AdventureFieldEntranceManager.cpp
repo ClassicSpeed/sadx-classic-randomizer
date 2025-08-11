@@ -600,6 +600,10 @@ EntranceId GetBossEntrance()
         return PastAltarToAngelIsland;
     case LevelAndActIDs_MysticRuins4:
         return FinalEggTowerToBetaEggViper;
+    case LevelAndActIDs_EggCarrierOutside1:
+        return EcOutsideToSkyChase2;
+    case LevelAndActIDs_EggCarrierOutside2:
+        return BridgeToSkyChase2;
     default:
         return InvalidEntranceId;
     }

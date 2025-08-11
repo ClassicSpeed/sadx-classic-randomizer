@@ -52,6 +52,7 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     };
     // TODO: Remove later
     options.bossChecks = true;
+    options.skyChaseChecks = true;
     gameStatus.unlock.keyTrain = true;
     gameStatus.unlock.keyBoat = true;
     gameStatus.unlock.keyRaft = true;
