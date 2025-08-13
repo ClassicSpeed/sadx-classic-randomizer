@@ -121,6 +121,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
             BridgeToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside2, 0, Chaos6ZeroBetaToBridge, 0,
             {0, 765.5f, -385.69f}
         },
+        {BridgeToSkyDeck, LevelAndActIDs_EggCarrierOutside2, 1, SkyDeckToBridge, 0, {0, 767, 391}},
 
 
         // Deck (Transformed)
@@ -200,6 +201,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Hot Shelter
         {HotShelterToEcInside, LevelAndActIDs_HotShelter1, 0, EcInsideToHotShelter, 0.0f, {0, 0, 0}},
+
+        // Sky Deck
+        {SkyDeckToBridge, LevelAndActIDs_SkyDeck1, 1, BridgeToSkyDeck, 0.0f, {0, 0, 0}},
 
         // Chaos 0
         {Chaos0ToCityHall, LevelAndActIDs_Chaos0, 1, CityHallToChaos0, 0, {0, 0, 0}},

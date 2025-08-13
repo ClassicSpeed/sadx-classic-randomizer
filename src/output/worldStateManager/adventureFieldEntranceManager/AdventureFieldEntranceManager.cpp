@@ -7,6 +7,7 @@ UsercallFuncVoid(sceneChangeMrHook, (int a1), (a1), 0x539220, rEBX);
 UsercallFuncVoid(sceneChangeECInsideHook, (int a1, int a2), (a1,a2), 0x52D690, rEAX, rECX);
 UsercallFunc(int, eggCarrierInsideEggDoorHook, (const taskwk* twp), (twp), 0x52B420, rEAX, rESI);
 UsercallFunc(int, eggCarrierOutsideEggDoorHook, (const taskwk* twp), (twp), 0x524070, rEAX, rESI);
+UsercallFunc(int, skyDeckDoorHook, (taskwk* twp), (twp), 0x51DEB0, rEAX, rESI);
 
 AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): _options(options),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init()),
@@ -69,9 +70,9 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isLostWorldBackEntranceOpenHook.Hook(OnIsLostWorldBackEntranceOpen);
     _loadLongLadderMrHook.Hook(OnLoadLongLadderMr);
     sceneChangeECInsideHook.Hook(OnSceneChangeEcInside);
-
     eggCarrierInsideEggDoorHook.Hook(OnEggCarrierInsideEggDoor);
     eggCarrierOutsideEggDoorHook.Hook(OnEggCarrierOutsideEggDoor);
+    skyDeckDoorHook.Hook(OnSkyDeckDoor);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -1195,4 +1196,18 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
     }
 
     return eggCarrierOutsideEggDoorHook.Original(twp);
+}
+
+
+int AdventureFieldEntranceManager::OnSkyDeckDoor(taskwk* twp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return skyDeckDoorHook.Original(twp);
+
+    if (!_instance->IsDoorOpen(BridgeToSkyDeck))
+        return false;
+
+    if (!IsPlayerNearDoor(twp))
+        return false;
+    return true;
 }

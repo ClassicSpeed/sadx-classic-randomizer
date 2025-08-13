@@ -189,13 +189,13 @@ private:
     inline static FunctionHook<void, task*> _loadLongLadderMrHook{0x536CB0};
     static void OnLoadLongLadderMr(task* tp);
 
-
     static void __cdecl OnSceneChangeEcInside(int a1, int a2);
 
     static int __cdecl OnEggCarrierInsideEggDoor(const taskwk* twp);
 
     static int __cdecl OnEggCarrierOutsideEggDoor(const taskwk* twp);
 
-
     static bool IsPlayerNearDoor(const taskwk* twp);
+
+    static int __cdecl OnSkyDeckDoor(taskwk* twp);
 };
