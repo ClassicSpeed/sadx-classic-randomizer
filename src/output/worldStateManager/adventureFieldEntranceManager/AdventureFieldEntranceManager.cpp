@@ -601,8 +601,12 @@ EntranceId GetBossEntrance()
     case LevelAndActIDs_MysticRuins4:
         return FinalEggTowerToBetaEggViper;
     case LevelAndActIDs_EggCarrierOutside1:
+        if (EntityData1Ptrs[0]->Position.z > -500)
+            return EcOutsideToChaos6ZeroBeta;
         return EcOutsideToSkyChase2;
     case LevelAndActIDs_EggCarrierOutside2:
+        if (EntityData1Ptrs[0]->Position.z > -500)
+            return BridgeToChaos6ZeroBeta;
         return BridgeToSkyChase2;
     default:
         return InvalidEntranceId;

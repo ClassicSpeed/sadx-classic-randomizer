@@ -110,9 +110,17 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 0.0f, {0, 0, 0}},
         {EcOutsideToSkyChase2, LevelAndActIDs_EggCarrierOutside1, 0, SkyChase2ToEcOutside, 0, {0, 715, -1100}},
         {EcOutsideToPool, LevelAndActIDs_EggCarrierOutside1, 1, PoolToEcOutside, 0.0f, {0, 759.5f, 1074.2f}},
+        {
+            EcOutsideToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside1, 0, Chaos6ZeroBetaToEcOutside, 0,
+            {0, 765.5f, -385.69f}
+        },
 
         // Bridge (Transformed)
         {BridgeToSkyChase2, LevelAndActIDs_EggCarrierOutside2, 0, SkyChase2ToBridge, 0, {0, 665, -1100}},
+        {
+            BridgeToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside2, 0, Chaos6ZeroBetaToBridge, 0,
+            {0, 765.5f, -385.69f}
+        },
 
 
         // Deck (Transformed)
@@ -201,6 +209,11 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {EggWalkerToStation, LevelAndActIDs_EggWalker, 0, StationToEggWalker, 0, {0, 0, 0}},
         // Chaos 4
         {Chaos4ToMrMain, LevelAndActIDs_Chaos4, 0, MrMainToChaos4, 0, {0, 0, 0}},
+
+        // Chaos 6
+        {Chaos6ZeroBetaToEcOutside, LevelAndActIDs_Chaos6Sonic, 0, EcOutsideToChaos6ZeroBeta, 0, {0, 0, 0}},
+        {Chaos6ZeroBetaToBridge, LevelAndActIDs_Chaos6Sonic, 0, BridgeToChaos6ZeroBeta, 0, {0, 0, 0}},
+
         // Egg Hornet
         {EggHornetToMrMain, LevelAndActIDs_EggHornet, 0, MrMainToEggHornet, 0, {0, 0, 0}},
         // Egg Viper
