@@ -88,7 +88,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1146,17 +1146,8 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
 {
     if (!_instance->_options.adventureFieldRandomized)
         return eggCarrierOutsideEggDoorHook.Original(twp);
-    // Arsenal
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside6)
-    {
-        if (!_instance->IsDoorOpen(PoolToEcOutside))
-            return false;
 
-        if (!IsPlayerNearDoor(twp))
-            return false;
-        return true;
-    }
-
+    // EC outside 
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
     {
         if (IsNearPosition(twp->pos, 0, 744.5, 1080.7))
@@ -1168,13 +1159,10 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
                 return false;
             return true;
         }
-    }
 
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
-    {
-        if (IsNearPosition(twp->pos, 0, 744.5, 1080.7))
+        if (IsNearPosition(twp->pos, 0, 740, 433))
         {
-            if (!_instance->IsDoorOpen(EcOutsideToPool))
+            if (!_instance->IsDoorOpen(EcOutsideToCaptainRoom))
                 return false;
 
             if (!IsPlayerNearDoor(twp))
@@ -1182,6 +1170,7 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
             return true;
         }
     }
+    // Deck (transformed)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside3)
     {
         if (IsNearPosition(twp->pos, 0, 1536.5897, 3574.001))
@@ -1193,6 +1182,35 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
                 return false;
             return true;
         }
+        if (IsNearPosition(twp->pos, 0, 1710, 2918))
+        {
+            if (!_instance->IsDoorOpen(DeckToCaptainRoom))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
+    }
+    // Captain's room
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
+    {
+        if (!_instance->IsDoorOpen(CaptainRoomToEcOutside))
+            return false;
+
+        if (!IsPlayerNearDoor(twp))
+            return false;
+        return true;
+    }
+    // Pool
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside6)
+    {
+        if (!_instance->IsDoorOpen(PoolToEcOutside))
+            return false;
+
+        if (!IsPlayerNearDoor(twp))
+            return false;
+        return true;
     }
 
     return eggCarrierOutsideEggDoorHook.Original(twp);

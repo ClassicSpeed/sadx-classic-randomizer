@@ -114,6 +114,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
             EcOutsideToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside1, 0, Chaos6ZeroBetaToEcOutside, 0,
             {0, 765.5f, -385.69f}
         },
+        {EcOutsideToCaptainRoom, LevelAndActIDs_EggCarrierOutside1, 2, CaptainRoomToEcOutside, 0.0f, {0, 755, 438}},
 
         // Bridge (Transformed)
         {BridgeToSkyChase2, LevelAndActIDs_EggCarrierOutside2, 0, SkyChase2ToBridge, 0, {0, 665, -1100}},
@@ -126,9 +127,13 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Deck (Transformed)
         {DeckToPool, LevelAndActIDs_EggCarrierOutside3, 1, PoolToDeck, 0.0f, {0, 1551.5897f, 3566.501f}},
+        {DeckToCaptainRoom, LevelAndActIDs_EggCarrierOutside3, 4, CaptainRoomToDeck, 0.0f, {0, 1725, 2923}},
 
+        // Captain Room
+        {CaptainRoomToEcOutside, LevelAndActIDs_EggCarrierOutside4, 0, EcOutsideToCaptainRoom, 90, {34.5, 113, 0}},
+        {CaptainRoomToDeck, LevelAndActIDs_EggCarrierOutside4, 0, DeckToCaptainRoom, 90, {0, 1725, 2923}},
 
-        // Privated Pool
+        // Private Pool
         {PoolToEcOutside, LevelAndActIDs_EggCarrierOutside6, 0, EcOutsideToPool, 90, {4.5, 25, 25}},
         {PoolToDeck, LevelAndActIDs_EggCarrierOutside6, 0, DeckToPool, 90, {4.5, 25, 25}},
 
@@ -337,6 +342,12 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const Entran
         case PoolToEcOutside:
             actualEntranceId = PoolToDeck;
             break;
+        case CaptainRoomToEcOutside:
+            actualEntranceId = CaptainRoomToDeck;
+            break;
+        case EcOutsideToCaptainRoom:
+            actualEntranceId = DeckToCaptainRoom;
+            break;
         default:
             break;
         }
@@ -351,6 +362,11 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const Entran
         case PoolToDeck:
             actualEntranceId = PoolToEcOutside;
             break;
+        case CaptainRoomToDeck:
+            actualEntranceId = CaptainRoomToEcOutside;
+            break;
+        case DeckToCaptainRoom:
+            actualEntranceId = EcOutsideToCaptainRoom;
         default:
             break;
         }

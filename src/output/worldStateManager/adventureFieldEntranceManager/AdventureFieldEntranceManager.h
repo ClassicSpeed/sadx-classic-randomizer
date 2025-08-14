@@ -22,7 +22,7 @@ private:
     Options& _options;
     AdventureFieldEntranceMap& _adventureFieldEntranceMap;
     DoorIndicatorManager& _doorIndicatorManager;
-    bool _isEggCarrierTransformed = true;
+    bool _isEggCarrierTransformed = false;
 
     bool IsDoorOpen(EntranceId entranceId);
     bool ShowDisableDoorIndicator(EntranceId entranceId);
