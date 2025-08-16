@@ -172,6 +172,13 @@ void SetObjectManager::OnCountSetItemsMaybe()
         AddSetToLevel(EXTRA_WALL_FROM_ANGEL_ISLAND_MR, LevelAndActIDs_MysticRuins2, Characters_Amy);
         AddSetToLevel(EXTRA_WALL_FROM_ANGEL_ISLAND_MR, LevelAndActIDs_MysticRuins2, Characters_Gamma);
         AddSetToLevel(EXTRA_WALL_FROM_ANGEL_ISLAND_MR, LevelAndActIDs_MysticRuins2, Characters_Big);
+
+        AddSetToLevel(EGG_CAP_EC, LevelAndActIDs_EggCarrierOutside5, Characters_Sonic);
+        AddSetToLevel(EGG_CAP_EC, LevelAndActIDs_EggCarrierOutside5, Characters_Tails);
+        AddSetToLevel(EGG_CAP_EC, LevelAndActIDs_EggCarrierOutside5, Characters_Knuckles);
+        AddSetToLevel(EGG_CAP_EC, LevelAndActIDs_EggCarrierOutside5, Characters_Amy);
+        AddSetToLevel(EGG_CAP_EC, LevelAndActIDs_EggCarrierOutside5, Characters_Gamma);
+        AddSetToLevel(EGG_CAP_EC, LevelAndActIDs_EggCarrierOutside5, Characters_Big);
     }
 
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Sonic);
@@ -195,8 +202,10 @@ void SetObjectManager::OnCountSetItemsMaybe()
 
     AddSetToLevel(ICE_CAP_SPRING, LevelAndActIDs_MysticRuins2, Characters_Amy);
 
-    AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Amy);
+    AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Sonic);
+    AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Tails);
     AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Knuckles);
+    AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Amy);
     AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Big);
     AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Gamma);
 

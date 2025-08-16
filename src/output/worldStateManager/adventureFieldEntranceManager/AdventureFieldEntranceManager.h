@@ -198,4 +198,10 @@ private:
     static bool IsPlayerNearDoor(const taskwk* twp);
 
     static int __cdecl OnSkyDeckDoor(taskwk* twp);
+
+    inline static FunctionHook<void, task*> _eggCapHook{0x51FF90};
+    static void OnEggCap(task* tp);
+
+    inline static FunctionHook<void, task*> _springMainHook{0x7A4C30};
+    static void OnSpringMain(task* tp);
 };

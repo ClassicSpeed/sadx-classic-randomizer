@@ -73,6 +73,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     eggCarrierInsideEggDoorHook.Hook(OnEggCarrierInsideEggDoor);
     eggCarrierOutsideEggDoorHook.Hook(OnEggCarrierOutsideEggDoor);
     skyDeckDoorHook.Hook(OnSkyDeckDoor);
+    _eggCapHook.Hook(OnEggCap);
+    _springMainHook.Hook(OnSpringMain);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -88,7 +90,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1228,4 +1230,40 @@ int AdventureFieldEntranceManager::OnSkyDeckDoor(taskwk* twp)
     if (!IsPlayerNearDoor(twp))
         return false;
     return true;
+}
+
+//Delete Spring/EggCap
+
+
+void AdventureFieldEntranceManager::OnEggCap(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _eggCapHook.Original(tp);
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
+    {
+        if (_instance->IsDoorOpen(CaptainRoomToPrivateRoom))
+            return FreeTask(tp);
+    }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside5)
+    {
+        if (_instance->IsDoorOpen(PrivateRoomToCaptainRoom))
+            return FreeTask(tp);
+    }
+    return _eggCapHook.Original(tp);
+}
+
+
+// TaskFunc(ObjectSpring, 0x7A4C30);
+void AdventureFieldEntranceManager::OnSpringMain(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _springMainHook.Original(tp);
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside5)
+    {
+        if (!_instance->IsDoorOpen(PrivateRoomToCaptainRoom) && IsNearPosition(tp->twp->pos, -83.42f, 0, 0.54f))
+            return FreeTask(tp);
+    }
+    return _wallMainHook.Original(tp);
 }

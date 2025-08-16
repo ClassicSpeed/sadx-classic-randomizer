@@ -23,6 +23,9 @@ constexpr int BEACH_GATE_STATION_SQUARE = 67;
 constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
 constexpr int BARRICADE_STATION_SQUARE = 74;
 
+constexpr int EGG_CAP_EGG_CARRIER_OUTSIDE = 30;
+
+
 constexpr char LEON_TIMER1 = 10;
 constexpr char LEON_TIMER2 = 30;
 
@@ -175,7 +178,7 @@ const SETEntry CITY_HALL_SEWERS_SCENE_CHANGE_SS = CreateSetEntry(SCENE_CHANGE_ST
                                                                  {0, 0, 0X1A02}, {2, 2, 2});
 
 //Egg Carrier
-const SETEntry EGG_CARRIER_TRANSFORM_AREA_SPRING = CreateSetEntry(1, {-83.42, 0, 0.54f});
+const SETEntry EGG_CARRIER_TRANSFORM_AREA_SPRING = CreateSetEntry(1, {-83.42f, 0, 0.54f});
 
 //Station Square Bosses
 const SETEntry WARP_CHAOS0 = CreateSetEntry(WARP_STATION_SQUARE, {270, 0, 450});
@@ -219,4 +222,6 @@ const SETEntry CITY_HALL_BARRICADE_WALL_SS = CreateSetEntry(WALL_THAT_PUSHES_YOU
 
 const SETEntry EXTRA_WALL_FROM_ANGEL_ISLAND_MR = CreateSetEntry(WALL_THAT_PUSHES_YOU_MYSTIC_RUINS,
                                                                 {-22.44872f, 12.040001f, 11.618795f},
-                                                                {0xFE7CA, 0xFCDE6, 0xFE8E}, {100, 56, 5});
+                                                                {0xFE7CA, 0xFCDE6, 0xFE8E}, {100, 50, 5});
+const SETEntry EGG_CAP_EC = CreateSetEntry(EGG_CAP_EGG_CARRIER_OUTSIDE, {-79.92f, 51, 0.04f},
+                                           {0x8000, 0, 0});
