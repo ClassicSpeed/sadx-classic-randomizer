@@ -24,6 +24,7 @@ constexpr int WALL_THAT_PUSHES_YOU_STATION_SQUARE = 93;
 constexpr int BARRICADE_STATION_SQUARE = 74;
 
 constexpr int EGG_CAP_EGG_CARRIER_OUTSIDE = 30;
+constexpr int SCENE_CHANGE_EGG_CARRIER_OUTSIDE = 8;
 
 
 constexpr char LEON_TIMER1 = 10;
@@ -225,3 +226,6 @@ const SETEntry EXTRA_WALL_FROM_ANGEL_ISLAND_MR = CreateSetEntry(WALL_THAT_PUSHES
                                                                 {0xFE7CA, 0xFCDE6, 0xFE8E}, {100, 50, 5});
 const SETEntry EGG_CAP_EC = CreateSetEntry(EGG_CAP_EGG_CARRIER_OUTSIDE, {-79.92f, 51, 0.04f},
                                            {0x8000, 0, 0});
+
+const SETEntry SCENE_CHANGE_CAPTAIN_ROOM_EC = CreateSetEntry(SCENE_CHANGE_EGG_CARRIER_OUTSIDE, {-80, 63, 0},
+                                                             {0x4, 0x2E8F, 0}, {18, 27, 0});

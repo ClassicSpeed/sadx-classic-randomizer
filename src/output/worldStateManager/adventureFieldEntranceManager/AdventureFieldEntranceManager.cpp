@@ -1232,9 +1232,6 @@ int AdventureFieldEntranceManager::OnSkyDeckDoor(taskwk* twp)
     return true;
 }
 
-//Delete Spring/EggCap
-
-
 void AdventureFieldEntranceManager::OnEggCap(task* tp)
 {
     if (!_instance->_options.adventureFieldRandomized)
@@ -1254,7 +1251,6 @@ void AdventureFieldEntranceManager::OnEggCap(task* tp)
 }
 
 
-// TaskFunc(ObjectSpring, 0x7A4C30);
 void AdventureFieldEntranceManager::OnSpringMain(task* tp)
 {
     if (!_instance->_options.adventureFieldRandomized)

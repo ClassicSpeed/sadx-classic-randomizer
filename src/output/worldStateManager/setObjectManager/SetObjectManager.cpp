@@ -179,6 +179,13 @@ void SetObjectManager::OnCountSetItemsMaybe()
         AddSetToLevel(EGG_CAP_EC, LevelAndActIDs_EggCarrierOutside5, Characters_Amy);
         AddSetToLevel(EGG_CAP_EC, LevelAndActIDs_EggCarrierOutside5, Characters_Gamma);
         AddSetToLevel(EGG_CAP_EC, LevelAndActIDs_EggCarrierOutside5, Characters_Big);
+
+        AddSetToLevel(SCENE_CHANGE_CAPTAIN_ROOM_EC, LevelAndActIDs_EggCarrierOutside4, Characters_Sonic);
+        AddSetToLevel(SCENE_CHANGE_CAPTAIN_ROOM_EC, LevelAndActIDs_EggCarrierOutside4, Characters_Tails);
+        AddSetToLevel(SCENE_CHANGE_CAPTAIN_ROOM_EC, LevelAndActIDs_EggCarrierOutside4, Characters_Knuckles);
+        AddSetToLevel(SCENE_CHANGE_CAPTAIN_ROOM_EC, LevelAndActIDs_EggCarrierOutside4, Characters_Amy);
+        AddSetToLevel(SCENE_CHANGE_CAPTAIN_ROOM_EC, LevelAndActIDs_EggCarrierOutside4, Characters_Gamma);
+        AddSetToLevel(SCENE_CHANGE_CAPTAIN_ROOM_EC, LevelAndActIDs_EggCarrierOutside4, Characters_Big);
     }
 
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Sonic);
