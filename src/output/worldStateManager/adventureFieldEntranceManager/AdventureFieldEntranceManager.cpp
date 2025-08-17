@@ -90,7 +90,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1187,6 +1187,15 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
         if (IsNearPosition(twp->pos, 0, 1710, 2918))
         {
             if (!_instance->IsDoorOpen(DeckToCaptainRoom))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
+        if (IsNearPosition(twp->pos, 73.79, 1520, 2873))
+        {
+            if (!_instance->IsDoorOpen(DeckToPrivateRoom))
                 return false;
 
             if (!IsPlayerNearDoor(twp))
