@@ -90,7 +90,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1212,6 +1212,19 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
         if (!IsPlayerNearDoor(twp))
             return false;
         return true;
+    }
+    // Private room
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside5)
+    {
+        if (IsNearPosition(twp->pos, -39, 0, -60))
+        {
+            if (!_instance->IsDoorOpen(PrivateRoomToDeck))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
     }
     // Pool
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside6)
