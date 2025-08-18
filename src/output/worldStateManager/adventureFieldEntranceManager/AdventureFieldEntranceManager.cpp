@@ -1202,6 +1202,15 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
                 return false;
             return true;
         }
+        if (IsNearPosition(twp->pos, -54, 1640, 2968))
+        {
+            if (!_instance->IsDoorOpen(DeckToPrivateRoomAlternative))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
     }
     // Captain's room
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
@@ -1212,6 +1221,34 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
         if (!IsPlayerNearDoor(twp))
             return false;
         return true;
+    }
+    // Private room
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside5)
+    {
+        if (IsNearPosition(twp->pos, 28, 0, -34) || IsNearPosition(twp->pos, 28, 0, 34))
+        {
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
+        if (IsNearPosition(twp->pos, -39, 0, -60))
+        {
+            if (!_instance->IsDoorOpen(PrivateRoomToDeck))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
+        if (IsNearPosition(twp->pos, 212, 0, 111))
+        {
+            if (!_instance->IsDoorOpen(PrivateRoomToDeckAlternative))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
     }
     // Pool
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside6)
