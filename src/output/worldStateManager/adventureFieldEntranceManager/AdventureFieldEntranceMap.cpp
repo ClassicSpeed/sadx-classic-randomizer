@@ -312,6 +312,7 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
 EntranceId AdventureFieldEntranceMap::FindEntranceByLocation(
     const LevelAndActIDs sourceLocation, const LevelAndActIDs destinationLocation)
 {
+    std::vector<AdventureFieldEntrance*> possibleEntrances;
     for (auto& entrance : _entranceList)
     {
         if (entrance.levelAndActId == sourceLocation)
@@ -321,13 +322,33 @@ EntranceId AdventureFieldEntranceMap::FindEntranceByLocation(
                 if (destEntrance.levelAndActId == destinationLocation &&
                     destEntrance.connectsTo == entrance.entranceId)
                 {
-                    return entrance.entranceId;
+                    possibleEntrances.push_back(&entrance);
                 }
             }
         }
     }
 
-    return static_cast<EntranceId>(-1); // Return invalid ID if not found
+    if (possibleEntrances.empty())
+        return static_cast<EntranceId>(-1);
+
+    const NJS_POINT3& playerPos = EntityData1Ptrs[0]->Position;
+    float minDist = FLT_MAX;
+    auto closestId = static_cast<EntranceId>(-1);
+
+    for (const auto* entrance : possibleEntrances)
+    {
+        const NJS_POINT3& pos = entrance->indicatorPosition;
+        float dist = (playerPos.x - pos.x) * (playerPos.x - pos.x) +
+            (playerPos.y - pos.y) * (playerPos.y - pos.y) +
+            (playerPos.z - pos.z) * (playerPos.z - pos.z);
+        if (dist < minDist)
+        {
+            minDist = dist;
+            closestId = entrance->entranceId;
+        }
+    }
+
+    return closestId;
 }
 
 EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId entranceId)
