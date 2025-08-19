@@ -138,6 +138,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {CaptainRoomToEcOutside, LevelAndActIDs_EggCarrierOutside4, 0, EcOutsideToCaptainRoom, 90, {34.5, 113, 0}},
         {CaptainRoomToDeck, LevelAndActIDs_EggCarrierOutside4, 0, DeckToCaptainRoom, 90, {0, 1725, 2923}},
         {CaptainRoomToPrivateRoom, LevelAndActIDs_EggCarrierOutside4, 0, PrivateRoomToCaptainRoom, 90, {-80, 113, 0}},
+        {DeckToPrivateRoom, LevelAndActIDs_EggCarrierOutside3, 3, PrivateRoomToDeck, 64.37f, {79.65f, 1535, 2875.8f}},
 
         // Private Room
         {PrivateRoomToCaptainRoom, LevelAndActIDs_EggCarrierOutside5, 2, CaptainRoomToPrivateRoom, 90, {-83, 37, 0}},
