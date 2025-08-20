@@ -204,4 +204,13 @@ private:
 
     inline static FunctionHook<void, task*> _springMainHook{0x7A4C30};
     static void OnSpringMain(task* tp);
+
+    inline static FunctionHook<BOOL> _isMonorailEnabledHook{0x521250};
+    static BOOL OnIsMonorailEnabled();
+
+    inline static FunctionHook<BOOL> _isOutsideEggLiftEnabledHook{0x5217A0};
+    static BOOL OnIsOutsideEggLiftEnabled();
+
+    inline static FunctionHook<BOOL> _isInsideEggLiftEnabledHook{0x51B9A0};
+    static BOOL OnIsInsideEggLiftEnabled();
 };

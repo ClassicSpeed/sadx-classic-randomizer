@@ -75,6 +75,9 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     skyDeckDoorHook.Hook(OnSkyDeckDoor);
     _eggCapHook.Hook(OnEggCap);
     _springMainHook.Hook(OnSpringMain);
+    _isMonorailEnabledHook.Hook(OnIsMonorailEnabled);
+    _isOutsideEggLiftEnabledHook.Hook(OnIsOutsideEggLiftEnabled);
+    _isInsideEggLiftEnabledHook.Hook(OnIsInsideEggLiftEnabled);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -90,7 +93,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1308,4 +1311,34 @@ void AdventureFieldEntranceManager::OnSpringMain(task* tp)
             return FreeTask(tp);
     }
     return _wallMainHook.Original(tp);
+}
+
+
+BOOL AdventureFieldEntranceManager::OnIsMonorailEnabled()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isMonorailEnabledHook.Original();
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
+        return _instance->IsDoorOpen(EcOutsideToEcInsideMonorail);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2)
+        return _instance->IsDoorOpen(BridgeToEcInsideMonorail);
+
+    return _instance->IsDoorOpen(EcInsideToEcOutsideMonorail);
+}
+
+BOOL AdventureFieldEntranceManager::OnIsOutsideEggLiftEnabled()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isOutsideEggLiftEnabledHook.Original();
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
+        return _instance->IsDoorOpen(EcOutsideToEcInsideEggLift);
+    return _instance->IsDoorOpen(DeckToEcInsideEggLift);
+}
+
+
+BOOL AdventureFieldEntranceManager::OnIsInsideEggLiftEnabled()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isInsideEggLiftEnabledHook.Original();
+    return _instance->IsDoorOpen(EcInsideToEcOutsideEggLift);
 }

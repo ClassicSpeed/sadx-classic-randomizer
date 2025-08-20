@@ -106,6 +106,18 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
 
         // Egg Carrier Outside (Untransformed)
+        {
+            EcOutsideToEcInsideEggLift, LevelAndActIDs_EggCarrierOutside1, 3, EcInsideToEcOutsideEggLift, 0.0f,
+            {0, 750, 970}
+        },
+        {
+            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 0, EcInsideToEcOutsideMonorail, 90,
+            {311.5f, 595.7f, -342.7f}
+        },
+        {
+            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 0, EcInsideToEcOutsideMonorail, 90,
+            {311.5f, 595.7f, -422}
+        },
         {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 0.0f, {0, 0, 0}},
         {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 0.0f, {0, 0, 0}},
         {EcOutsideToSkyChase2, LevelAndActIDs_EggCarrierOutside1, 0, SkyChase2ToEcOutside, 0, {0, 715, -1100}},
@@ -117,6 +129,14 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {EcOutsideToCaptainRoom, LevelAndActIDs_EggCarrierOutside1, 2, CaptainRoomToEcOutside, 0.0f, {0, 755, 438}},
 
         // Bridge (Transformed)
+        {
+            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 0, EcInsideToBridgeMonorail, 90,
+            {311.5f, 595.7f, -342.7f}
+        },
+        {
+            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 0, EcInsideToBridgeMonorail, 90,
+            {311.5f, 595.7f, -422}
+        },
         {BridgeToSkyChase2, LevelAndActIDs_EggCarrierOutside2, 0, SkyChase2ToBridge, 0, {0, 665, -1100}},
         {
             BridgeToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside2, 0, Chaos6ZeroBetaToBridge, 0,
@@ -126,6 +146,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
 
         // Deck (Transformed)
+        {DeckToEcInsideEggLift, LevelAndActIDs_EggCarrierOutside3, 0, EcInsideToDeckEggLift, 0.0f, {0, 1540, 3462}},
         {DeckToPool, LevelAndActIDs_EggCarrierOutside3, 1, PoolToDeck, 0.0f, {0, 1551.5897f, 3566.501f}},
         {DeckToCaptainRoom, LevelAndActIDs_EggCarrierOutside3, 4, CaptainRoomToDeck, 0.0f, {0, 1725, 2923}},
         {DeckToPrivateRoom, LevelAndActIDs_EggCarrierOutside3, 2, PrivateRoomToDeck, 64.37f, {79.65f, 1535, 2875.8f}},
@@ -158,6 +179,22 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
 
         // Egg Carrier Inside
+        {
+            EcInsideToEcOutsideEggLift, LevelAndActIDs_EggCarrierInside2, 0, EcOutsideToEcInsideEggLift, 0.0f,
+            {0, 65, -330.25f}
+        },
+        {EcInsideToDeckEggLift, LevelAndActIDs_EggCarrierInside2, 0, DeckToEcInsideEggLift, 0.0f, {0, 65, -330.25f}},
+        {
+            EcInsideToEcOutsideMonorail, LevelAndActIDs_EggCarrierInside2, 0, EcOutsideToEcInsideMonorail, 90,
+            {60, 22, 0}
+        },
+        {
+            EcInsideToEcOutsideMonorail, LevelAndActIDs_EggCarrierInside2, 0, EcOutsideToEcInsideMonorail, 90,
+            {60, 22, -80}
+        },
+        {EcInsideToBridgeMonorail, LevelAndActIDs_EggCarrierInside2, 0, BridgeToEcInsideMonorail, 90, {60, 22, 0}},
+        {EcInsideToBridgeMonorail, LevelAndActIDs_EggCarrierInside2, 0, BridgeToEcInsideMonorail, 90, {60, 22, -80}},
+
         {EcInsideToHotShelter, LevelAndActIDs_EggCarrierInside2, 1, HotShelterToEcInside, 0.0f, {0, 15, 245}},
         {
             EcInsideToHedgehogHammer, LevelAndActIDs_EggCarrierInside2, 3, HedgehogHammerToEcInside, 135,
@@ -384,6 +421,18 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const Entran
         case EcOutsideToCaptainRoom:
             actualEntranceId = DeckToCaptainRoom;
             break;
+        case EcOutsideToEcInsideMonorail:
+            actualEntranceId = BridgeToEcInsideMonorail;
+            break;
+        case EcOutsideToEcInsideEggLift:
+            actualEntranceId = DeckToEcInsideEggLift;
+            break;
+        case EcInsideToEcOutsideMonorail:
+            actualEntranceId = EcInsideToBridgeMonorail;
+            break;
+        case EcInsideToEcOutsideEggLift:
+            actualEntranceId = EcInsideToDeckEggLift;
+            break;
         default:
             break;
         }
@@ -403,6 +452,20 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const Entran
             break;
         case DeckToCaptainRoom:
             actualEntranceId = EcOutsideToCaptainRoom;
+            break;
+
+        case BridgeToEcInsideMonorail:
+            actualEntranceId = EcOutsideToEcInsideMonorail;
+            break;
+        case DeckToEcInsideEggLift:
+            actualEntranceId = EcOutsideToEcInsideEggLift;
+            break;
+        case EcInsideToBridgeMonorail:
+            actualEntranceId = EcInsideToEcOutsideMonorail;
+            break;
+        case EcInsideToDeckEggLift:
+            actualEntranceId = EcInsideToEcOutsideEggLift;
+            break;
         default:
             break;
         }
