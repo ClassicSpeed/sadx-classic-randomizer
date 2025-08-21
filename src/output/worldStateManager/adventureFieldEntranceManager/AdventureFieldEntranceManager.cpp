@@ -78,6 +78,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isMonorailEnabledHook.Hook(OnIsMonorailEnabled);
     _isOutsideEggLiftEnabledHook.Hook(OnIsOutsideEggLiftEnabled);
     _isInsideEggLiftEnabledHook.Hook(OnIsInsideEggLiftEnabled);
+    _loadPoolDoorHook.Hook(OnLoadPoolDoor);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -1273,9 +1274,16 @@ int AdventureFieldEntranceManager::OnSkyDeckDoor(taskwk* twp)
     if (!_instance->_options.adventureFieldRandomized)
         return skyDeckDoorHook.Original(twp);
 
-    if (!_instance->IsDoorOpen(BridgeToSkyDeck))
-        return false;
+    //Bridge
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2)
+    {
+        if (!_instance->IsDoorOpen(BridgeToSkyDeck))
+            return false;
 
+        if (!IsPlayerNearDoor(twp))
+            return false;
+        return true;
+    }
     if (!IsPlayerNearDoor(twp))
         return false;
     return true;
@@ -1341,4 +1349,14 @@ BOOL AdventureFieldEntranceManager::OnIsInsideEggLiftEnabled()
     if (!_instance->_options.adventureFieldRandomized)
         return _isInsideEggLiftEnabledHook.Original();
     return _instance->IsDoorOpen(EcInsideToEcOutsideEggLift);
+}
+
+void AdventureFieldEntranceManager::OnLoadPoolDoor(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _loadPoolDoorHook.Original(tp);
+
+    if (!_instance->IsDoorOpen(PoolToSkyDeck))
+        return _loadPoolDoorHook.Original(tp);
+    FreeTask(tp);
 }

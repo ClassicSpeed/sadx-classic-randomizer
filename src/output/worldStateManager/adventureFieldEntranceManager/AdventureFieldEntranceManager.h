@@ -213,4 +213,7 @@ private:
 
     inline static FunctionHook<BOOL> _isInsideEggLiftEnabledHook{0x51B9A0};
     static BOOL OnIsInsideEggLiftEnabled();
+
+    inline static FunctionHook<void, task*> _loadPoolDoorHook{0x51E320};
+    static void OnLoadPoolDoor(task* tp);
 };

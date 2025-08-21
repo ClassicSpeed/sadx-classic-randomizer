@@ -172,6 +172,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         // Pool
         {PoolToEcOutside, LevelAndActIDs_EggCarrierOutside6, 0, EcOutsideToPool, 90, {4.5, 25, 25}},
         {PoolToDeck, LevelAndActIDs_EggCarrierOutside6, 0, DeckToPool, 90, {4.5, 25, 25}},
+        {PoolToSkyDeck, LevelAndActIDs_EggCarrierOutside6, 1, SkyDeckToPool, 90, {67, -54.5f, 0}},
 
 
         // Arsenal
@@ -260,7 +261,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {HotShelterToEcInside, LevelAndActIDs_HotShelter1, 0, EcInsideToHotShelter, 0.0f, {0, 0, 0}},
 
         // Sky Deck
-        {SkyDeckToBridge, LevelAndActIDs_SkyDeck1, 1, BridgeToSkyDeck, 0.0f, {0, 0, 0}},
+        {SkyDeckToBridge, LevelAndActIDs_SkyDeck1, 0, BridgeToSkyDeck, 0.0f, {0, 0, 0}},
+        {SkyDeckToPool, LevelAndActIDs_SkyDeck1, 0, PoolToSkyDeck, 0.0f, {0, 0, 0}},
 
         // Chaos 0
         {Chaos0ToCityHall, LevelAndActIDs_Chaos0, 1, CityHallToChaos0, 0, {0, 0, 0}},

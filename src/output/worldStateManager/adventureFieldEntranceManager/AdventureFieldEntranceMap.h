@@ -195,7 +195,7 @@ enum EntranceId
     Chaos6ZeroBetaToEcOutside,
     Chaos6ZeroBetaToBridge,
     SkyDeckToBridge,
-    SkyDeckTPool,
+    SkyDeckToPool,
     HotShelterToEcInside,
 
     InvalidEntranceId
@@ -304,7 +304,7 @@ private:
         {DeckToPool, PoolToDeck},
         {DeckToCaptainRoom, CaptainRoomToDeck},
         {DeckToEcInsideEggLift, EcInsideToDeckEggLift},
-        {PoolToSkyDeck, SkyDeckTPool},
+        {PoolToSkyDeck, SkyDeckToPool},
         {EcInsideToHotShelter, HotShelterToEcInside},
         {EcInsideToHedgehogHammer, HedgehogHammerToEcInside},
         {HedgehogHammerToPrisonHall, PrisonHallToHedgehogHammer},
