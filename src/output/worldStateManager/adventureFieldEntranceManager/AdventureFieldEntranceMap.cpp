@@ -36,7 +36,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {SsMainToHotel, LevelAndActIDs_StationSquare4, 3, HotelToSsMain, 90, {-168, 15, 1685}},
         {SsMainToTwinkleParkLobby, LevelAndActIDs_StationSquare4, 4, TwinkleParkLobbyToSsMain, 90, {580, 65, 1772}},
         {SsMainToEcOutside, LevelAndActIDs_StationSquare4, 6, EcOutsideToSsMain, 30, {174.09f, 6, 1897.51f}},
-        //TODO: Add a connection to the EC bridge
+        {SsMainToBridge, LevelAndActIDs_StationSquare4, 6, BridgeToSsMain, 30, {174.09f, 6, 1897.51f}},
         {SsMainToSewers, LevelAndActIDs_StationSquare4, 2, SewersToSsMain, 0, {400, 58, 1450}},
         {SsMainToSpeedHighway, LevelAndActIDs_StationSquare4, 5, SpeedHighwayToSsMain, 90, {380, 20, 1370}},
 
@@ -66,6 +66,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {MrMainToEggHornet, LevelAndActIDs_MysticRuins1, 0, EggHornetToMrMain, 0, {950, 142, 950}},
         {MrMainToSkyChase1, LevelAndActIDs_MysticRuins1, 0, SkyChase1ToMrMain, 90, {1561, 206, 900}},
         {MrMainToEcOutside, LevelAndActIDs_MysticRuins1, 0, EcOutsideToMrMain, 147.5f, {-70, -385, 1264}},
+        {MrMainToBridge, LevelAndActIDs_MysticRuins1, 0, BridgeToMrMain, 147.5f, {-70, -385, 1264}},
         {MrMainToJungle, LevelAndActIDs_MysticRuins1, 2, JungleToMrMain, 211, {-200.86f, 81.5, -69.51f}},
         {MrMainToMrChaoGarden, LevelAndActIDs_MysticRuins1, 4, MrChaoGardenToMrMain, 111, {1696, 17.5, -86}},
         {MrMainToAngelIsland, LevelAndActIDs_MysticRuins1, 1, AngelIslandToMrMain, 112.5f, {-347, 120, 869}},
@@ -137,6 +138,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
             BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 0, EcInsideToBridgeMonorail, 90,
             {311.5f, 595.7f, -422}
         },
+        {BridgeToSsMain, LevelAndActIDs_EggCarrierOutside2, 0, SsMainToBridge, 0.0f, {0, 0, 0}},
+        {BridgeToMrMain, LevelAndActIDs_EggCarrierOutside2, 0, MrMainToBridge, 0.0f, {0, 0, 0}},
         {BridgeToSkyChase2, LevelAndActIDs_EggCarrierOutside2, 0, SkyChase2ToBridge, 0, {0, 665, -1100}},
         {
             BridgeToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside2, 0, Chaos6ZeroBetaToBridge, 0,
@@ -435,6 +438,12 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const Entran
         case EcInsideToEcOutsideEggLift:
             actualEntranceId = EcInsideToDeckEggLift;
             break;
+        case EcOutsideToSsMain:
+            actualEntranceId = BridgeToSsMain;
+            break;
+        case EcOutsideToMrMain:
+            actualEntranceId = BridgeToMrMain;
+            break;
         default:
             break;
         }
@@ -455,7 +464,6 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const Entran
         case DeckToCaptainRoom:
             actualEntranceId = EcOutsideToCaptainRoom;
             break;
-
         case BridgeToEcInsideMonorail:
             actualEntranceId = EcOutsideToEcInsideMonorail;
             break;
@@ -467,6 +475,12 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const Entran
             break;
         case EcInsideToDeckEggLift:
             actualEntranceId = EcInsideToEcOutsideEggLift;
+            break;
+        case BridgeToSsMain:
+            actualEntranceId = EcOutsideToSsMain;
+            break;
+        case BridgeToMrMain:
+            actualEntranceId = EcOutsideToMrMain;
             break;
         default:
             break;
