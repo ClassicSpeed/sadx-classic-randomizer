@@ -31,7 +31,7 @@ private:
     static void OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act);
 
     inline static FunctionHook<void, taskwk*> _getEntranceSs{0x62F6D0};
-    static void OnGetEntranceSs(taskwk* tp);
+    static void OnGetEntranceSs(taskwk* twp);
 
     inline static FunctionHook<BOOL> _isBarricadeGoneHook{0x6389F0};
     static BOOL OnIsBarricadeGone();
@@ -134,7 +134,6 @@ private:
 
     inline static FunctionHook<void, task*> _mrRaftMainHook{0x539BB0};
     static void OnMrRaftMain(task* tp);
-
     static signed int __cdecl OnMrCartMain(task* tp);
 
     inline static FunctionHook<BOOL> _isAngelIslandOpenHook{0x534570};
@@ -216,4 +215,13 @@ private:
 
     inline static FunctionHook<void, task*> _loadPoolDoorHook{0x51E320};
     static void OnLoadPoolDoor(task* tp);
+
+    inline static FunctionHook<BOOL> _isEggCarrierSunkHook{0x412E70};
+    static BOOL IsEggCarrierSunk();
+
+    inline static FunctionHook<BOOL> _isEcBoatEnabledHook{0x51C7B0};
+    static BOOL IsEcBoatEnabled();
+
+    inline static FunctionHook<BOOL> _isEcRaftEnabledHook{0x51CA80};
+    static BOOL IsEcRaftEnabled();
 };

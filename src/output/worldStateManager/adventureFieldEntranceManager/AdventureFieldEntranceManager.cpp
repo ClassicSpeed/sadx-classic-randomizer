@@ -79,6 +79,9 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isOutsideEggLiftEnabledHook.Hook(OnIsOutsideEggLiftEnabled);
     _isInsideEggLiftEnabledHook.Hook(OnIsInsideEggLiftEnabled);
     _loadPoolDoorHook.Hook(OnLoadPoolDoor);
+    _isEggCarrierSunkHook.Hook(IsEggCarrierSunk);
+    _isEcBoatEnabledHook.Hook(IsEcBoatEnabled);
+    _isEcRaftEnabledHook.Hook(IsEcRaftEnabled);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -94,7 +97,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1359,4 +1362,42 @@ void AdventureFieldEntranceManager::OnLoadPoolDoor(task* tp)
     if (!_instance->IsDoorOpen(PoolToSkyDeck))
         return _loadPoolDoorHook.Original(tp);
     FreeTask(tp);
+}
+
+BOOL AdventureFieldEntranceManager::IsEggCarrierSunk()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isEggCarrierSunkHook.Original();
+    return true;
+}
+
+BOOL AdventureFieldEntranceManager::IsEcBoatEnabled()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isEcBoatEnabledHook.Original();
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1 && _instance->IsDoorOpen(
+        EcOutsideToSsMain))
+        return true;
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2 && _instance->
+        IsDoorOpen(BridgeToSsMain))
+        return true;
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4 && _instance->IsDoorOpen(SsMainToEcOutside))
+        return true;
+    return false;
+}
+
+
+BOOL AdventureFieldEntranceManager::IsEcRaftEnabled()
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _isEcRaftEnabledHook.Original();
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1 && _instance->IsDoorOpen(
+        EcOutsideToMrMain))
+        return true;
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2 && _instance->
+        IsDoorOpen(BridgeToMrMain))
+        return true;
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4 && _instance->IsDoorOpen(MrMainToEcOutside))
+        return true;
+    return false;
 }

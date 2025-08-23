@@ -119,8 +119,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
             EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 0, EcInsideToEcOutsideMonorail, 90,
             {311.5f, 595.7f, -422}
         },
-        {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 0.0f, {0, 0, 0}},
-        {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 0.0f, {0, 0, 0}},
+        {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 90, {326, 584.4f, -723}},
+        {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 90, {-326, 584.4f, -723}},
         {EcOutsideToSkyChase2, LevelAndActIDs_EggCarrierOutside1, 0, SkyChase2ToEcOutside, 0, {0, 715, -1100}},
         {EcOutsideToPool, LevelAndActIDs_EggCarrierOutside1, 1, PoolToEcOutside, 0.0f, {0, 759.5f, 1074.2f}},
         {
@@ -138,8 +138,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
             BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 0, EcInsideToBridgeMonorail, 90,
             {311.5f, 595.7f, -422}
         },
-        {BridgeToSsMain, LevelAndActIDs_EggCarrierOutside2, 0, SsMainToBridge, 0.0f, {0, 0, 0}},
-        {BridgeToMrMain, LevelAndActIDs_EggCarrierOutside2, 0, MrMainToBridge, 0.0f, {0, 0, 0}},
+        {BridgeToSsMain, LevelAndActIDs_EggCarrierOutside2, 0, SsMainToBridge, 90, {326, 584.4f, -723}},
+        {BridgeToMrMain, LevelAndActIDs_EggCarrierOutside2, 0, MrMainToBridge, 90, {-326, 584.4f, -723}},
         {BridgeToSkyChase2, LevelAndActIDs_EggCarrierOutside2, 0, SkyChase2ToBridge, 0, {0, 665, -1100}},
         {
             BridgeToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside2, 0, Chaos6ZeroBetaToBridge, 0,
