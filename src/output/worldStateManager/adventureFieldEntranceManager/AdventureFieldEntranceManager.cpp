@@ -15,6 +15,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 {
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
     _getEntranceSs.Hook(OnGetEntranceSs);
+    _getEntranceEc.Hook(OnGetEntranceEc);
 
     _isBarricadeGoneHook.Hook(OnIsBarricadeGone);
     _wallMainHook.Hook(OnWallMain);
@@ -82,6 +83,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
     _isEggCarrierSunkHook.Hook(IsEggCarrierSunk);
     _isEcBoatEnabledHook.Hook(IsEcBoatEnabled);
     _isEcRaftEnabledHook.Hook(IsEcRaftEnabled);
+    _hiddenGateMainHook.Hook(OnHiddenGateMain);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -97,7 +99,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -162,6 +164,23 @@ void AdventureFieldEntranceManager::OnGetEntranceSs(taskwk* twp)
         }
     }
     _getEntranceSs.Original(twp);
+}
+
+void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _getEntranceEc.Original(twp);
+
+    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside2)
+    {
+        if (GetLevelEntranceID() == 2)
+        {
+            twp->pos = {47, 0, 172};
+            twp->ang = {0, 0xA000, 0};
+            return;
+        }
+    }
+    _getEntranceEc.Original(twp);
 }
 
 
@@ -817,6 +836,9 @@ BOOL AdventureFieldEntranceManager::OnIsFinalEggEggmanDoorOpen(EntityData1* enti
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && IsNearPosition(
         entity->Position, 0, 109, -175))
         return _instance->IsDoorOpen(FinalEggTowerToFinalEggAlternative);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && IsNearPosition(
+        entity->Position, 0, 0, -185.69f, 7.071068f))
+        return _instance->IsDoorOpen(FinalEggTowerToEcInside);
 
 
     return _isFinalEggEggmanDoorOpenHook.Original(entity);
@@ -942,6 +964,15 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
             }
             return;
         }
+        if (newScene == 5)
+        {
+            if (_instance->IsDoorOpen(FinalEggTowerToEcInside))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_EggCarrierInside2), GET_ACT(LevelAndActIDs_EggCarrierInside2));
+            }
+            return;
+        }
     }
 
     // Lost world
@@ -1014,14 +1045,21 @@ void AdventureFieldEntranceManager::OnSceneChangeEcInside(int a1, int a2)
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierInside2)
         return sceneChangeECInsideHook.Original(a1, a2);
 
-    const int doorId = *(_DWORD*)(a1 + 20);
-    if (doorId != 512)
-        return sceneChangeECInsideHook.Original(a1, a2);
 
-
-    camerahax_adventurefields();
-    return SetNextLevelAndAct_CutsceneMode(
-        GET_LEVEL(LevelAndActIDs_HotShelter1), GET_ACT(LevelAndActIDs_HotShelter1));
+    taskwk* twp = (taskwk*)a1;
+    if (IsNearPosition(twp->pos, 0, 0, 287))
+    {
+        camerahax_adventurefields();
+        return SetNextLevelAndAct_CutsceneMode(
+            GET_LEVEL(LevelAndActIDs_HotShelter1), GET_ACT(LevelAndActIDs_HotShelter1));
+    }
+    if (IsNearPosition(twp->pos, 86, -3, 216))
+    {
+        camerahax_adventurefields();
+        return SetNextLevelAndAct_CutsceneMode(
+            GET_LEVEL(LevelAndActIDs_MysticRuins4), GET_ACT(LevelAndActIDs_MysticRuins4));
+    }
+    return sceneChangeECInsideHook.Original(a1, a2);
 }
 
 
@@ -1092,6 +1130,16 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
         {
             if (!_instance->IsDoorOpen(EcInsideToWaterTank))
                 return false;
+            if (!IsPlayerNearDoor(twp))
+                return false;
+            return true;
+        }
+        // Left door
+        if (twp->smode == 5)
+        {
+            if (!_instance->IsDoorOpen(EcInsideToFinalEggTower))
+                return false;
+
             if (!IsPlayerNearDoor(twp))
                 return false;
             return true;
@@ -1400,4 +1448,13 @@ BOOL AdventureFieldEntranceManager::IsEcRaftEnabled()
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4 && _instance->IsDoorOpen(MrMainToEcOutside))
         return true;
     return false;
+}
+
+void AdventureFieldEntranceManager::OnHiddenGateMain(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _hiddenGateMainHook.Original(tp);
+    if (IsNearPosition(tp->twp->pos, -0.02f, 20.34f, -191.17f))
+        return FreeTask(tp);
+    return _hiddenGateMainHook.Original(tp);
 }

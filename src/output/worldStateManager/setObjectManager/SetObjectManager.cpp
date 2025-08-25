@@ -186,6 +186,20 @@ void SetObjectManager::OnCountSetItemsMaybe()
         AddSetToLevel(SCENE_CHANGE_CAPTAIN_ROOM_EC, LevelAndActIDs_EggCarrierOutside4, Characters_Amy);
         AddSetToLevel(SCENE_CHANGE_CAPTAIN_ROOM_EC, LevelAndActIDs_EggCarrierOutside4, Characters_Gamma);
         AddSetToLevel(SCENE_CHANGE_CAPTAIN_ROOM_EC, LevelAndActIDs_EggCarrierOutside4, Characters_Big);
+
+        AddSetToLevel(FINAL_EGG_TO_EC_MR, LevelAndActIDs_MysticRuins4, Characters_Sonic);
+        AddSetToLevel(FINAL_EGG_TO_EC_MR, LevelAndActIDs_MysticRuins4, Characters_Tails);
+        AddSetToLevel(FINAL_EGG_TO_EC_MR, LevelAndActIDs_MysticRuins4, Characters_Knuckles);
+        AddSetToLevel(FINAL_EGG_TO_EC_MR, LevelAndActIDs_MysticRuins4, Characters_Amy);
+        AddSetToLevel(FINAL_EGG_TO_EC_MR, LevelAndActIDs_MysticRuins4, Characters_Gamma);
+        AddSetToLevel(FINAL_EGG_TO_EC_MR, LevelAndActIDs_MysticRuins4, Characters_Big);
+
+        AddSetToLevel(SCENE_CHANGE_LEFT_DOOR_EC, LevelAndActIDs_EggCarrierInside2, Characters_Sonic);
+        AddSetToLevel(SCENE_CHANGE_LEFT_DOOR_EC, LevelAndActIDs_EggCarrierInside2, Characters_Tails);
+        AddSetToLevel(SCENE_CHANGE_LEFT_DOOR_EC, LevelAndActIDs_EggCarrierInside2, Characters_Knuckles);
+        AddSetToLevel(SCENE_CHANGE_LEFT_DOOR_EC, LevelAndActIDs_EggCarrierInside2, Characters_Amy);
+        AddSetToLevel(SCENE_CHANGE_LEFT_DOOR_EC, LevelAndActIDs_EggCarrierInside2, Characters_Gamma);
+        AddSetToLevel(SCENE_CHANGE_LEFT_DOOR_EC, LevelAndActIDs_EggCarrierInside2, Characters_Big);
     }
 
     AddSetToLevel(COLLISION_CUBE_MR, LevelAndActIDs_MysticRuins1, Characters_Sonic);

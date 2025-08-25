@@ -104,6 +104,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         },
         {FinalEggTowerToFinalEgg, LevelAndActIDs_MysticRuins4, 2, FinalEggToFinalEggTower, 115, {175, 135, -25.75}},
         {FinalEggTowerToBetaEggViper, LevelAndActIDs_MysticRuins4, 3, BetaEggViperToFinalEggTower, 45, {0, 16, 0}},
+        {FinalEggTowerToEcInside, LevelAndActIDs_MysticRuins4, 3, EcInsideToFinalEggTower, 0, {0, 15, -175}},
 
 
         // Egg Carrier Outside (Untransformed)
@@ -206,6 +207,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         },
         {EcInsideToWaterTank, LevelAndActIDs_EggCarrierInside2, 4, WaterTankToEcInside, 90, {-183, 95, -280}},
         {EcInsideToArsenal, LevelAndActIDs_EggCarrierInside2, 5, ArsenalToEcInside, 90, {183.5, 95, 0}},
+
+        {EcInsideToFinalEggTower, LevelAndActIDs_EggCarrierInside2, 2, FinalEggTowerToEcInside, 45, {62, 15, 192.5}},
 
 
         // Hedgehog Hammer

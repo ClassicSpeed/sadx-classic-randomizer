@@ -33,6 +33,9 @@ private:
     inline static FunctionHook<void, taskwk*> _getEntranceSs{0x62F6D0};
     static void OnGetEntranceSs(taskwk* twp);
 
+    inline static FunctionHook<void, taskwk*> _getEntranceEc{0x52D820};
+    static void OnGetEntranceEc(taskwk* twp);
+
     inline static FunctionHook<BOOL> _isBarricadeGoneHook{0x6389F0};
     static BOOL OnIsBarricadeGone();
 
@@ -224,4 +227,8 @@ private:
 
     inline static FunctionHook<BOOL> _isEcRaftEnabledHook{0x51CA80};
     static BOOL IsEcRaftEnabled();
+
+
+    inline static FunctionHook<void, task*> _hiddenGateMainHook{0x53C3E0};
+    static void OnHiddenGateMain(task* tp);
 };

@@ -25,6 +25,7 @@ constexpr int BARRICADE_STATION_SQUARE = 74;
 
 constexpr int EGG_CAP_EGG_CARRIER_OUTSIDE = 30;
 constexpr int SCENE_CHANGE_EGG_CARRIER_OUTSIDE = 8;
+constexpr int SCENE_CHANGE_EGG_CARRIER_INSIDE = 7;
 
 
 constexpr char LEON_TIMER1 = 10;
@@ -229,3 +230,10 @@ const SETEntry EGG_CAP_EC = CreateSetEntry(EGG_CAP_EGG_CARRIER_OUTSIDE, {-79.92f
 
 const SETEntry SCENE_CHANGE_CAPTAIN_ROOM_EC = CreateSetEntry(SCENE_CHANGE_EGG_CARRIER_OUTSIDE, {-80, 63, 0},
                                                              {0x4, 0x2E8F, 0}, {18, 27, 0});
+
+const SETEntry FINAL_EGG_TO_EC_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {0, 16, -211.69},
+                                                   {5, 0, 0}, {20, 20, 0});
+
+
+const SETEntry SCENE_CHANGE_LEFT_DOOR_EC = CreateSetEntry(SCENE_CHANGE_EGG_CARRIER_INSIDE, {86, -3, 216},
+                                                          {0x32, 0, 1}, {21, 19, 0});
