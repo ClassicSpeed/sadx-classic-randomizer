@@ -133,4 +133,17 @@ public:
     virtual void OnFrame() = 0;
     virtual ~IOnFrame() = default;
 };
+
+
+inline NJS_TEXNAME entranceTextNames[1] = {
+    {nullptr, 0, 0} // filename, attr, texaddr
+};
+
+inline NJS_TEXLIST entranceTextList = {
+    entranceTextNames, // pointer to texture array
+    1 // number of textures
+};
+
+inline PVMEntry EntranceSign = {"entrances", &entranceTextList};
+
 #endif //PCH_H

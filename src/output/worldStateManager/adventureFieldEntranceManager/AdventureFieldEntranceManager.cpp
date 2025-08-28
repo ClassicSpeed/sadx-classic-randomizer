@@ -183,6 +183,7 @@ void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)
     _getEntranceEc.Original(twp);
 }
 
+inline NJS_TEXANIM texanim_my_texture[] = {{20, 20, 10, 10, 0, 0, 255, 255, 0, NJD_SPRITE_COLOR}};
 
 void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
 {
@@ -194,8 +195,18 @@ void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
         if (!ShowDisableDoorIndicator(adventureFieldEntrance.entranceId))
             continue;
 
-        _doorIndicatorManager.DrawDisable(adventureFieldEntrance.indicatorPosition,
-                                          adventureFieldEntrance.indicatorAngle);
+
+        njSetTexture(&entranceTextList);
+        njPushMatrix(0);
+        njTranslate(0, adventureFieldEntrance.indicatorPosition.x, adventureFieldEntrance.indicatorPosition.y,
+                    adventureFieldEntrance.indicatorPosition.z);
+        njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+        njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+        njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+        SetMaterial(255, 255, 255, 255);
+        NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, texanim_my_texture};
+        njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+        njPopMatrix(1u);
     }
 }
 

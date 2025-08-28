@@ -50,6 +50,10 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
         &saveFileManager, &archipelagoManager, &displayManager, &worldStateManager,
         &eventDetector, &characterLoadingDetector, &link, &characterManager
     };
+
+    helperFunctions.RegisterCommonObjectPVM(EntranceSign);
+
+
     // TODO: Remove later
     options.bossChecks = true;
     options.skyChaseChecks = true;
