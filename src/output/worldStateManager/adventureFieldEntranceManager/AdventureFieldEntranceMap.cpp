@@ -209,7 +209,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {EcInsideToArsenal, LevelAndActIDs_EggCarrierInside2, 5, ArsenalToEcInside, 90, {183.5, 95, 0}},
 
         {EcInsideToFinalEggTower, LevelAndActIDs_EggCarrierInside2, 2, FinalEggTowerToEcInside, 45, {62, 15, 192.5}},
-
+        {EcInsideToWarpHall, LevelAndActIDs_EggCarrierInside2, 6, WarpHallToEcInside, 0, {0, 0, 0}},
 
         // Hedgehog Hammer
         {HedgehogHammerToEcInside, LevelAndActIDs_EggCarrierInside3, 1, EcInsideToHedgehogHammer, 90, {90, 15, 0}},
@@ -220,14 +220,21 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
             PrisonHallToHedgehogHammer, LevelAndActIDs_EggCarrierInside4, 0, HedgehogHammerToPrisonHall, 90,
             {144, 15, 60}
         },
+
         // Water Tank
         {WaterTankToEcInside, LevelAndActIDs_EggCarrierInside5, 0, EcInsideToWaterTank, 90, {95.5, 71, 0}},
+
+        // Warp Hall
+        {WarpHallToEcInside, LevelAndActIDs_EggCarrierInside6, 0, EcInsideToWarpHall, 0, {0, 15, 62.5}},
 
         // SS Chao Garden
         {SsChaoGardenToHotel, LevelAndActIDs_SSGarden, 0, HotelToSsChaoGarden, 90, {-395, 13, 1700}},
 
         // Mr Chao Garden
         {MrChaoGardenToMrMain, LevelAndActIDs_MRGarden, 0, MrMainToMrChaoGarden, 0.0f, {0, 0, 0}},
+
+        // Ec ChaoGarden
+        {EcChaoGardenToWarpHall, LevelAndActIDs_ECGarden, 0, WarpHallToEcChaoGarden, 0.0f, {0, 0, 0}},
 
 
         // Speed Highway

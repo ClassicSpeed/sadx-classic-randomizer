@@ -9,7 +9,7 @@ UsercallFunc(int, eggCarrierInsideEggDoorHook, (const taskwk* twp), (twp), 0x52B
 UsercallFunc(int, eggCarrierOutsideEggDoorHook, (const taskwk* twp), (twp), 0x524070, rEAX, rESI);
 UsercallFunc(int, skyDeckDoorHook, (taskwk* twp), (twp), 0x51DEB0, rEAX, rESI);
 
-AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): _options(options),
+AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) : _options(options),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init()),
     _doorIndicatorManager(DoorIndicatorManager::Init())
 {
@@ -99,7 +99,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options): 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1189,6 +1189,16 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside5)
     {
         if (!_instance->IsDoorOpen(WaterTankToEcInside))
+            return false;
+
+        if (!IsPlayerNearDoor(twp))
+            return false;
+        return true;
+    }
+    // Warp Hall
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside6)
+    {
+        if (!_instance->IsDoorOpen(WarpHallToEcInside))
             return false;
 
         if (!IsPlayerNearDoor(twp))
