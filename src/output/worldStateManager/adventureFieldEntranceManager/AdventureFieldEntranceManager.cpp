@@ -183,7 +183,7 @@ void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)
     _getEntranceEc.Original(twp);
 }
 
-inline NJS_TEXANIM texanim_my_texture[] = {{20, 20, 10, 10, 0, 0, 255, 255, 0, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM texanim_my_texture[] = {{18, 18, 9, 9, 0, 0, 255, 255, 0, NJD_SPRITE_COLOR}};
 
 void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
 {
@@ -648,6 +648,10 @@ EntranceId GetBossEntrance()
         if (EntityData1Ptrs[0]->Position.z > -500)
             return BridgeToChaos6ZeroBeta;
         return BridgeToSkyChase2;
+    case LevelAndActIDs_EggCarrierInside6:
+        return WarpHallToEcChaoGarden;
+    case LevelAndActIDs_ECGarden:
+        return EcChaoGardenToWarpHall;
     default:
         return InvalidEntranceId;
     }

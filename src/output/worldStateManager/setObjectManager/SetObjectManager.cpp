@@ -6,7 +6,7 @@ UsercallFuncVoid(finalEggDoorCheckAHook, (int a1), (a1), 0x53C130, rEAX);
 UsercallFunc(int16_t, finalEggDoorCheckBHook, (int a1), (a1), 0x53BC70, rAX, rEAX);
 UsercallFuncVoid(lostWorldEntranceCollisionHook, (int a1), (a1), 0x532960, rEDI);
 
-SetObjectManager::SetObjectManager(Options& options, Settings& settings): _options(options), _settings(settings)
+SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _options(options), _settings(settings)
 {
     _countSetItemsMaybeHook.Hook(OnCountSetItemsMaybe);
     _collisionCubeHook.Hook(OnCollisionCube);
@@ -460,6 +460,8 @@ void SetObjectManager::HandleWarp()
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past2)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 1);
 
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_ECGarden)
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_EggCarrierInside, 5);
     else
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
 }
