@@ -461,9 +461,15 @@ void SetObjectManager::HandleWarp()
         SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 1);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_ECGarden)
+    {
+        PrintDebug("----------Debug: Warp from EC Garden to EC Inside Cutscene\n");
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggCarrierInside, 5);
+    }
     else
+    {
+        PrintDebug("-----------Debug: Warp to EC Garden\n");
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
+    }
 }
 
 // Allow Knuckles to fight Chaos 2

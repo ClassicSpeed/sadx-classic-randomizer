@@ -99,7 +99,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) :
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1130,6 +1130,18 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
             if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
                 return IsSwitchPressed(0);
             return true;
+        }
+        // Warp/Chao Garden door
+        if (twp->smode == 3)
+        {
+            if (!_instance->IsDoorOpen(EcInsideToWarpHall))
+                return false;
+
+            if (!IsPlayerNearDoor(twp))
+                return false;
+
+            //EGGMAN puzzle solved
+            return EventFlagArray[40];
         }
         // Arsenal door
         if (twp->smode == 0 && IsNearPosition(twp->pos, 190, 80.1, 0))

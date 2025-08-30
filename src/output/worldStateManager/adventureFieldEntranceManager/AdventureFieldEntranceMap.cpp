@@ -209,7 +209,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {EcInsideToArsenal, LevelAndActIDs_EggCarrierInside2, 5, ArsenalToEcInside, 90, {183.5, 95, 0}},
 
         {EcInsideToFinalEggTower, LevelAndActIDs_EggCarrierInside2, 2, FinalEggTowerToEcInside, 45, {62, 15, 192.5}},
-        {EcInsideToWarpHall, LevelAndActIDs_EggCarrierInside2, 6, WarpHallToEcInside, 0, {0, 0, 0}},
+        {EcInsideToWarpHall, LevelAndActIDs_EggCarrierInside2, 6, WarpHallToEcInside, 0, {0, 75, -560}},
 
         // Hedgehog Hammer
         {HedgehogHammerToEcInside, LevelAndActIDs_EggCarrierInside3, 1, EcInsideToHedgehogHammer, 90, {90, 15, 0}},
