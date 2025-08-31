@@ -228,7 +228,9 @@ private:
     inline static FunctionHook<BOOL> _isEcRaftEnabledHook{0x51CA80};
     static BOOL IsEcRaftEnabled();
 
-
     inline static FunctionHook<void, task*> _hiddenGateMainHook{0x53C3E0};
     static void OnHiddenGateMain(task* tp);
+
+    inline static FunctionHook<void, task*> _chaoWarpMainHook{0x7293E0};
+    static void OnChaoWarpMain(task* tp);
 };

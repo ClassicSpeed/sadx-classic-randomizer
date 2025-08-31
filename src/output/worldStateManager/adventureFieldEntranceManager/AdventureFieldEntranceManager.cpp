@@ -84,6 +84,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) :
     _isEcBoatEnabledHook.Hook(IsEcBoatEnabled);
     _isEcRaftEnabledHook.Hook(IsEcRaftEnabled);
     _hiddenGateMainHook.Hook(OnHiddenGateMain);
+    _chaoWarpMainHook.Hook(OnChaoWarpMain);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -99,7 +100,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) :
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1494,4 +1495,19 @@ void AdventureFieldEntranceManager::OnHiddenGateMain(task* tp)
     if (IsNearPosition(tp->twp->pos, -0.02f, 20.34f, -191.17f))
         return FreeTask(tp);
     return _hiddenGateMainHook.Original(tp);
+}
+
+void AdventureFieldEntranceManager::OnChaoWarpMain(task* tp)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _chaoWarpMainHook.Original(tp);
+
+    if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_ECGarden)
+        return _chaoWarpMainHook.Original(tp);
+
+    if (_instance->IsDoorOpen(EcChaoGardenToWarpHall))
+        return _chaoWarpMainHook.Original(tp);
+
+    tp->twp->wtimer = 0;
+    _chaoWarpMainHook.Original(tp);
 }
