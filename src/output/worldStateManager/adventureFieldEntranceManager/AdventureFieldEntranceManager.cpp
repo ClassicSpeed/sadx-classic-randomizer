@@ -1505,7 +1505,13 @@ void AdventureFieldEntranceManager::OnChaoWarpMain(task* tp)
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_ECGarden)
         return _chaoWarpMainHook.Original(tp);
 
-    if (_instance->IsDoorOpen(EcChaoGardenToWarpHall))
+    if (IsNearPosition(tp->twp->pos, -288.75f, 5, -99.12f) && _instance->IsDoorOpen(EcChaoGardenToWarpHall))
+        return _chaoWarpMainHook.Original(tp);
+
+    if (IsNearPosition(tp->twp->pos, 80.47f, 70.86f, -41.76f) && _instance->IsDoorOpen(EcChaoGardenToMrChaoGarden))
+        return _chaoWarpMainHook.Original(tp);
+
+    if (IsNearPosition(tp->twp->pos, 92.5f, 70.86f, -10.77f) && _instance->IsDoorOpen(EcChaoGardenToSsChaoGarden))
         return _chaoWarpMainHook.Original(tp);
 
     tp->twp->wtimer = 0;

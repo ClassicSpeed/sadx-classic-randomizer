@@ -230,12 +230,22 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // SS Chao Garden
         {SsChaoGardenToHotel, LevelAndActIDs_SSGarden, 0, HotelToSsChaoGarden, 90, {-395, 13, 1700}},
+        {SsChaoGardenToEcChaoGarden, LevelAndActIDs_SSGarden, 0, EcChaoGardenToSsChaoGarden, 0, {0, 0, 0}},
 
         // Mr Chao Garden
         {MrChaoGardenToMrMain, LevelAndActIDs_MRGarden, 0, MrMainToMrChaoGarden, 0.0f, {0, 0, 0}},
+        {MrChaoGardenToEcChaoGarden, LevelAndActIDs_MRGarden, 0, EcChaoGardenToMrChaoGarden, 0, {0, 0, 0}},
 
         // Ec ChaoGarden
-        {EcChaoGardenToWarpHall, LevelAndActIDs_ECGarden, 0, WarpHallToEcChaoGarden, 0.0f, {-290, 20, -100}},
+        {EcChaoGardenToWarpHall, LevelAndActIDs_ECGarden, 0, WarpHallToEcChaoGarden, 0.0f, {-288.75f, 20, -99.12f}},
+        {
+            EcChaoGardenToMrChaoGarden, LevelAndActIDs_ECGarden, 0, MrChaoGardenToEcChaoGarden, 125,
+            {80.47f, 85.86f, -41.76f}
+        },
+        {
+            EcChaoGardenToSsChaoGarden, LevelAndActIDs_ECGarden, 0, SsChaoGardenToEcChaoGarden, 118,
+            {92.5f, 85.86f, -10.77f}
+        },
 
 
         // Speed Highway
