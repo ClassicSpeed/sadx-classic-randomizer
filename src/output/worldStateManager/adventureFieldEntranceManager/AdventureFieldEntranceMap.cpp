@@ -228,13 +228,29 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {WarpHallToEcInside, LevelAndActIDs_EggCarrierInside6, 0, EcInsideToWarpHall, 0, {0, 15, 62.5}},
         {WarpHallToEcChaoGarden, LevelAndActIDs_EggCarrierInside6, 1, EcChaoGardenToWarpHall, 90, {0, 20, 0}},
 
+        //TODO: Update with DC and DX values
+        //TODO: Check why the function to change the destination doesn't work
         // SS Chao Garden
         {SsChaoGardenToHotel, LevelAndActIDs_SSGarden, 0, HotelToSsChaoGarden, 90, {-395, 13, 1700}},
-        {SsChaoGardenToEcChaoGarden, LevelAndActIDs_SSGarden, 0, EcChaoGardenToSsChaoGarden, 0, {0, 0, 0}},
+        {
+            SsChaoGardenToMrChaoGarden, LevelAndActIDs_SSGarden, 0, MrChaoGardenToSsChaoGarden, 221.58f,
+            {161.91f, 18, 127.91f}
+        },
+        {
+            SsChaoGardenToEcChaoGarden, LevelAndActIDs_SSGarden, 0, EcChaoGardenToSsChaoGarden, 221.58f,
+            {184.88f, 18, 107.09f}
+        },
 
         // Mr Chao Garden
         {MrChaoGardenToMrMain, LevelAndActIDs_MRGarden, 0, MrMainToMrChaoGarden, 0.0f, {0, 0, 0}},
-        {MrChaoGardenToEcChaoGarden, LevelAndActIDs_MRGarden, 0, EcChaoGardenToMrChaoGarden, 0, {0, 0, 0}},
+        {
+            MrChaoGardenToSsChaoGarden, LevelAndActIDs_MRGarden, 0, SsChaoGardenToMrChaoGarden, 321.5f,
+            {207.1346f, 30.302727f, -112.03846f}
+        },
+        {
+            MrChaoGardenToEcChaoGarden, LevelAndActIDs_MRGarden, 0, EcChaoGardenToMrChaoGarden, 321.5f,
+            {233.55714f, 30.302727f, -90.21587f}
+        },
 
         // Ec ChaoGarden
         {EcChaoGardenToWarpHall, LevelAndActIDs_ECGarden, 0, WarpHallToEcChaoGarden, 0.0f, {-288.75f, 20, -99.12f}},

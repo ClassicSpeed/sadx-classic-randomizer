@@ -100,7 +100,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) :
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return true;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -1501,18 +1501,34 @@ void AdventureFieldEntranceManager::OnChaoWarpMain(task* tp)
 {
     if (!_instance->_options.adventureFieldRandomized)
         return _chaoWarpMainHook.Original(tp);
+    //TODO: Update with DC and DX values
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_ECGarden)
+    {
+        if (IsNearPosition(tp->twp->pos, -288.75f, 5, -99.12f) && _instance->IsDoorOpen(EcChaoGardenToWarpHall))
+            return _chaoWarpMainHook.Original(tp);
 
-    if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_ECGarden)
-        return _chaoWarpMainHook.Original(tp);
+        if (IsNearPosition(tp->twp->pos, 80.47f, 70.86f, -41.76f) && _instance->IsDoorOpen(EcChaoGardenToMrChaoGarden))
+            return _chaoWarpMainHook.Original(tp);
 
-    if (IsNearPosition(tp->twp->pos, -288.75f, 5, -99.12f) && _instance->IsDoorOpen(EcChaoGardenToWarpHall))
-        return _chaoWarpMainHook.Original(tp);
+        if (IsNearPosition(tp->twp->pos, 92.5f, 70.86f, -10.77f) && _instance->IsDoorOpen(EcChaoGardenToSsChaoGarden))
+            return _chaoWarpMainHook.Original(tp);
+    }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_SSGarden)
+    {
+        if (IsNearPosition(tp->twp->pos, 184.88f, 3, 107.09f) && _instance->IsDoorOpen(SsChaoGardenToEcChaoGarden))
+            return _chaoWarpMainHook.Original(tp);
 
-    if (IsNearPosition(tp->twp->pos, 80.47f, 70.86f, -41.76f) && _instance->IsDoorOpen(EcChaoGardenToMrChaoGarden))
-        return _chaoWarpMainHook.Original(tp);
+        if (IsNearPosition(tp->twp->pos, 161.91f, 3, 127.91f) && _instance->IsDoorOpen(SsChaoGardenToMrChaoGarden))
+            return _chaoWarpMainHook.Original(tp);
+    }
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MRGarden)
+    {
+        if (IsNearPosition(tp->twp->pos, 207, 15, -112) && _instance->IsDoorOpen(MrChaoGardenToSsChaoGarden))
+            return _chaoWarpMainHook.Original(tp);
 
-    if (IsNearPosition(tp->twp->pos, 92.5f, 70.86f, -10.77f) && _instance->IsDoorOpen(EcChaoGardenToSsChaoGarden))
-        return _chaoWarpMainHook.Original(tp);
+        if (IsNearPosition(tp->twp->pos, 233.5f, 15, -90) && _instance->IsDoorOpen(MrChaoGardenToEcChaoGarden))
+            return _chaoWarpMainHook.Original(tp);
+    }
 
     tp->twp->wtimer = 0;
     _chaoWarpMainHook.Original(tp);
