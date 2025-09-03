@@ -1507,22 +1507,38 @@ void AdventureFieldEntranceManager::OnChaoWarpMain(task* tp)
         if (IsNearPosition(tp->twp->pos, -288.75f, 5, -99.12f) && _instance->IsDoorOpen(EcChaoGardenToWarpHall))
             return _chaoWarpMainHook.Original(tp);
 
+        //DC
         if (IsNearPosition(tp->twp->pos, 80.47f, 70.86f, -41.76f) && _instance->IsDoorOpen(EcChaoGardenToMrChaoGarden))
             return _chaoWarpMainHook.Original(tp);
 
         if (IsNearPosition(tp->twp->pos, 92.5f, 70.86f, -10.77f) && _instance->IsDoorOpen(EcChaoGardenToSsChaoGarden))
             return _chaoWarpMainHook.Original(tp);
+
+        //DX
+        if (IsNearPosition(tp->twp->pos, 80.0, 16.5, -42.0) && _instance->IsDoorOpen(EcChaoGardenToMrChaoGarden))
+            return _chaoWarpMainHook.Original(tp);
+
+        if (IsNearPosition(tp->twp->pos, 93.0, 16.2f, -11.0) && _instance->IsDoorOpen(EcChaoGardenToSsChaoGarden))
+            return _chaoWarpMainHook.Original(tp);
     }
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_SSGarden)
     {
+        //DC
         if (IsNearPosition(tp->twp->pos, 184.88f, 3, 107.09f) && _instance->IsDoorOpen(SsChaoGardenToEcChaoGarden))
             return _chaoWarpMainHook.Original(tp);
 
         if (IsNearPosition(tp->twp->pos, 161.91f, 3, 127.91f) && _instance->IsDoorOpen(SsChaoGardenToMrChaoGarden))
             return _chaoWarpMainHook.Original(tp);
+
+        //DX
+        if (IsNearPosition(tp->twp->pos, 170.0, 1.75, 108.0) && _instance->IsDoorOpen(SsChaoGardenToEcChaoGarden))
+            return _chaoWarpMainHook.Original(tp);
+        if (IsNearPosition(tp->twp->pos, 148.0, 1.75, 124.0) && _instance->IsDoorOpen(SsChaoGardenToMrChaoGarden))
+            return _chaoWarpMainHook.Original(tp);
     }
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MRGarden)
     {
+        //DX & DC
         if (IsNearPosition(tp->twp->pos, 207, 15, -112) && _instance->IsDoorOpen(MrChaoGardenToSsChaoGarden))
             return _chaoWarpMainHook.Original(tp);
 
