@@ -100,7 +100,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) :
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     //TODO: Implement the logic to check if the door is open based on the entranceId
-    return true;
+    return false;
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
@@ -116,8 +116,22 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
         return _setNextLevelAndActCutsceneModeHook.Original(level, act);
 
     PrintDebug("------AdventureFieldEntranceManager: Setting next level and act to %d, %d \n", level, act);
+    LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
+    if (CurrentChaoStage == SADXChaoStage_EggCarrier)
+    {
+        currentLevelAndAct = LevelAndActIDs_ECGarden;
+    }
+    else if (CurrentChaoStage == SADXChaoStage_StationSquare)
+    {
+        currentLevelAndAct = LevelAndActIDs_SSGarden;
+    }
+    else if (CurrentChaoStage == SADXChaoStage_MysticRuins)
+    {
+        currentLevelAndAct = LevelAndActIDs_MRGarden;
+    }
+
     AdventureFieldEntrance* newEntrance = _instance->_adventureFieldEntranceMap.GetNewConnection(
-        GET_LEVEL_ACT(CurrentLevel, CurrentAct), GET_LEVEL_ACT(level, act), _instance->_isEggCarrierTransformed);
+        currentLevelAndAct, GET_LEVEL_ACT(level, act), _instance->_isEggCarrierTransformed);
 
 
     if (newEntrance != nullptr)
@@ -137,7 +151,7 @@ void AdventureFieldEntranceManager::OnGetEntranceSs(taskwk* twp)
     if (!_instance->_options.adventureFieldRandomized)
         return _getEntranceSs.Original(twp);
 
-    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3)
+    if (CurrentStageAndAct == LevelAndActIDs_StationSquare3)
     {
         if (GetLevelEntranceID() == 1)
         {
@@ -146,7 +160,7 @@ void AdventureFieldEntranceManager::OnGetEntranceSs(taskwk* twp)
             return;
         }
     }
-    else if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare6)
+    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare6)
     {
         if (GetLevelEntranceID() == 0)
         {
@@ -155,7 +169,7 @@ void AdventureFieldEntranceManager::OnGetEntranceSs(taskwk* twp)
             return;
         }
     }
-    else if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
+    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
     {
         if (GetLevelEntranceID() == 4)
         {
@@ -172,7 +186,7 @@ void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)
     if (!_instance->_options.adventureFieldRandomized)
         return _getEntranceEc.Original(twp);
 
-    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside2)
+    if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside2)
     {
         if (GetLevelEntranceID() == 2)
         {
@@ -188,9 +202,23 @@ inline NJS_TEXANIM texanim_my_texture[] = {{18, 18, 9, 9, 0, 0, 255, 255, 0, NJD
 
 void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
 {
+    LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
+    if (CurrentChaoStage == SADXChaoStage_EggCarrier)
+    {
+        currentLevelAndAct = LevelAndActIDs_ECGarden;
+    }
+    else if (CurrentChaoStage == SADXChaoStage_StationSquare)
+    {
+        currentLevelAndAct = LevelAndActIDs_SSGarden;
+    }
+    else if (CurrentChaoStage == SADXChaoStage_MysticRuins)
+    {
+        currentLevelAndAct = LevelAndActIDs_MRGarden;
+    }
+
     for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetEntrances())
     {
-        if (CurrentStageAndAct != adventureFieldEntrance.levelAndActId)
+        if (currentLevelAndAct != adventureFieldEntrance.levelAndActId)
             continue;
 
         if (!ShowDisableDoorIndicator(adventureFieldEntrance.entranceId))
@@ -219,7 +247,7 @@ BOOL AdventureFieldEntranceManager::OnIsBarricadeGone()
     if (!_instance->_options.adventureFieldRandomized)
         return _isBarricadeGoneHook.Original();
 
-    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
+    if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
         return _instance->IsDoorOpen(SsMainToCityHall);
 
     return _instance->IsDoorOpen(CityHallToSsMain);
@@ -264,7 +292,7 @@ int AdventureFieldEntranceManager::OnIsStationDoorOpen()
     if (!_instance->_options.adventureFieldRandomized)
         return _isStationDoorOpenHook.Original();
 
-    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
+    if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
         return _instance->IsDoorOpen(SsMainToStation);
 
     return _instance->IsDoorOpen(StationToSsMain);
@@ -275,7 +303,7 @@ BOOL AdventureFieldEntranceManager::OnIsHotelFrontDoorOpen()
     if (!_instance->_options.adventureFieldRandomized)
         return _isHotelFrontDoorOpenHook.Original();
 
-    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4)
+    if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
         return _instance->IsDoorOpen(SsMainToHotel);
 
     return _instance->IsDoorOpen(HotelToSsMain);
@@ -286,7 +314,7 @@ BOOL AdventureFieldEntranceManager::OnIsHotelBackDoorOpen()
     if (!_instance->_options.adventureFieldRandomized)
         return _isHotelBackDoorOpenHook.Original();
 
-    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2)
+    if (CurrentStageAndAct == LevelAndActIDs_StationSquare2)
         return _instance->IsDoorOpen(StationToHotel);
 
     return _instance->IsDoorOpen(HotelToStation);
@@ -357,7 +385,7 @@ void AdventureFieldEntranceManager::OnElevatorOut(task* tp)
     if (!_instance->_options.adventureFieldRandomized)
         return _elevatorOutHook.Original(tp);
 
-    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4 && !_instance->IsDoorOpen(
+    if (CurrentStageAndAct == LevelAndActIDs_StationSquare4 && !_instance->IsDoorOpen(
         SsMainToSewers))
         return _elevatorOutHook.Original(tp);
 
@@ -369,7 +397,7 @@ void AdventureFieldEntranceManager::OnElevatorIn(task* tp)
     if (!_instance->_options.adventureFieldRandomized)
         return _elevatorInHook.Original(tp);
 
-    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3 && !_instance->IsDoorOpen(
+    if (CurrentStageAndAct == LevelAndActIDs_StationSquare3 && !_instance->IsDoorOpen(
         SewersToSsMain))
         return _elevatorOutHook.Original(tp);
 
@@ -382,7 +410,7 @@ int AdventureFieldEntranceManager::OnElevatorInSceneChange(task* tp)
     if (!_instance->_options.adventureFieldRandomized)
         return _elevatorInSceneChangeHook.Original(tp);
 
-    if (GET_LEVEL_ACT(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3)
+    if (CurrentStageAndAct == LevelAndActIDs_StationSquare3)
     {
         // From Sewers to SSMain
         WriteData<1>((void*)0x63D7DC, 0x02); //Entrance
@@ -1502,7 +1530,7 @@ void AdventureFieldEntranceManager::OnChaoWarpMain(task* tp)
     if (!_instance->_options.adventureFieldRandomized)
         return _chaoWarpMainHook.Original(tp);
 
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_ECGarden)
+    if (CurrentChaoStage == SADXChaoStage_EggCarrier)
     {
         if (IsNearPosition(tp->twp->pos, -288.75f, 5, -99.12f))
         {

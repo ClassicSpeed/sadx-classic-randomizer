@@ -6,6 +6,10 @@
 AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 {
     _entranceList = {
+        //TODO: SS garden - Hotel
+        //TODO: MR garden - MRMain
+        //Fix control disable when transitioning into the  same stage with vehicles
+        //Fix icecap door?
 
 
         //City Hall
