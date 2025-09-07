@@ -6,7 +6,6 @@
 AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 {
     _entranceList = {
-        //TODO: SS garden - Hotel
         //TODO: MR garden - MRMain
         //Fix control disable when transitioning into the  same stage with vehicles
         //Fix icecap door?
@@ -233,7 +232,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {WarpHallToEcChaoGarden, LevelAndActIDs_EggCarrierInside6, 1, EcChaoGardenToWarpHall, 90, {0, 20, 0}},
 
         // SS Chao Garden
-        {SsChaoGardenToHotel, LevelAndActIDs_SSGarden, 0, HotelToSsChaoGarden, 90, {-395, 13, 1700}},
+        {SsChaoGardenToHotel, LevelAndActIDs_SSGarden, 0, HotelToSsChaoGarden, 0, {-0.03f, 15, 234.52f}},
         // Mr Chao Garden
         {MrChaoGardenToMrMain, LevelAndActIDs_MRGarden, 0, MrMainToMrChaoGarden, 0.0f, {0, 0, 0}},
         // Ec ChaoGarden

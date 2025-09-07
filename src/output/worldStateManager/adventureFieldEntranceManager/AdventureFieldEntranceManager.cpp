@@ -41,8 +41,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) :
     _loadSpeedHighwayShutter2Hook.Hook(OnLoadSpeedHighwayShutter2);
     _isEmeraldCoastOpenHook.Hook(OnIsEmeraldCoastOpen);
     _loadEmeraldCoastGateTargetsHook.Hook(OnLoadEmeraldCoastGateTargets);
-    _isChaos2DoorOpenHook.Hook(OnIsChaos2DoorOpen);
-    _loadHotelElevatorHook.Hook(OnLoadHotelElevator);
+    _elevatorMainHook.Hook(OnElevatorMain);
     _isCasinoOpenHook.Hook(OnIsCasinoOpen);
     _isTrainInServiceHook.Hook(OnIsTrainInService);
     _ecWarpMainHook.Hook(OnEcWarpMain);
@@ -85,6 +84,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) :
     _isEcRaftEnabledHook.Hook(IsEcRaftEnabled);
     _hiddenGateMainHook.Hook(OnHiddenGateMain);
     _chaoWarpMainHook.Hook(OnChaoWarpMain);
+    _chaoGardenChanceSceneHook.Hook(OnChaoGardenChanceScene);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -600,24 +600,26 @@ void AdventureFieldEntranceManager::OnLoadEmeraldCoastGateTargets(task* tp)
 }
 
 
-BOOL AdventureFieldEntranceManager::OnIsChaos2DoorOpen()
+void AdventureFieldEntranceManager::OnElevatorMain(task* tp)
 {
     if (!_instance->_options.adventureFieldRandomized)
-        return _isChaos2DoorOpenHook.Original();
-    return _instance->IsDoorOpen(HotelToChaos2);
-}
+        return _elevatorMainHook.Original(tp);
 
-TaskFunc(ClosedElevatorMain, 0x6391F0);
 
-void AdventureFieldEntranceManager::OnLoadHotelElevator(task* tp)
-{
-    if (!_instance->_options.adventureFieldRandomized)
-        return _loadHotelElevatorHook.Original(tp);
-
-    _loadHotelElevatorHook.Original(tp);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
+        && IsNearPosition(tp->twp->pos, -399.99f, 0, 1700)
         && !_instance->IsDoorOpen(HotelToSsChaoGarden))
-        tp->exec = ClosedElevatorMain;
+        tp->twp->mode = 8;
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
+        && IsNearPosition(tp->twp->pos, -399.99f, 0, 1665)
+        && !_instance->IsDoorOpen(HotelToSsChaoGarden))
+        tp->twp->mode = 8;
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_SSGarden
+        && !_instance->IsDoorOpen(SsChaoGardenToHotel))
+        tp->twp->mode = 8;
+    _elevatorMainHook.Original(tp);
 }
 
 
@@ -1539,4 +1541,16 @@ void AdventureFieldEntranceManager::OnChaoWarpMain(task* tp)
         }
     }
     _chaoWarpMainHook.Original(tp);
+}
+
+task* AdventureFieldEntranceManager::OnChaoGardenChanceScene(int a1, int a2)
+{
+    if (!_instance->_options.adventureFieldRandomized)
+        return _chaoGardenChanceSceneHook.Original(a1, a2);
+    if (CurrentChaoStage == SADXChaoStage_StationSquare)
+    {
+        if (!_instance->IsDoorOpen(SsChaoGardenToHotel))
+            return nullptr;
+    }
+    return _chaoGardenChanceSceneHook.Original(a1, a2);
 }
