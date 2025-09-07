@@ -134,6 +134,7 @@ private:
 
     inline static FunctionHook<void, task*> _mrRaftMainHook{0x539BB0};
     static void OnMrRaftMain(task* tp);
+
     static signed int __cdecl OnMrCartMain(task* tp);
 
     inline static FunctionHook<BOOL> _isAngelIslandOpenHook{0x534570};
@@ -233,4 +234,8 @@ private:
 
     inline static FunctionHook<task*, int, int> _chaoGardenChanceSceneHook{0x715730};
     static task* OnChaoGardenChanceScene(int a1, int a2);
+
+
+    inline static FunctionHook<void, task*> _mrCartMainHook{0x53DE80};
+    static void OnMrCarMain(task* tp);
 };

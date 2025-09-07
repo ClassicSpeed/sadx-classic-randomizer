@@ -85,6 +85,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) :
     _hiddenGateMainHook.Hook(OnHiddenGateMain);
     _chaoWarpMainHook.Hook(OnChaoWarpMain);
     _chaoGardenChanceSceneHook.Hook(OnChaoGardenChanceScene);
+    _mrCartMainHook.Hook(OnMrCarMain);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -1550,6 +1551,12 @@ task* AdventureFieldEntranceManager::OnChaoGardenChanceScene(int a1, int a2)
     if (CurrentChaoStage == SADXChaoStage_StationSquare)
     {
         if (!_instance->IsDoorOpen(SsChaoGardenToHotel))
+            return nullptr;
+    }
+    //TODO: This won't work for DC, need to change in the future
+    else if (CurrentChaoStage == SADXChaoStage_MysticRuins)
+    {
+        if (!_instance->IsDoorOpen(MrChaoGardenToMrMain))
             return nullptr;
     }
     return _chaoGardenChanceSceneHook.Original(a1, a2);
