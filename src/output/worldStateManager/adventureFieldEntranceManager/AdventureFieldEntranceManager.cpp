@@ -85,7 +85,6 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) :
     _hiddenGateMainHook.Hook(OnHiddenGateMain);
     _chaoWarpMainHook.Hook(OnChaoWarpMain);
     _chaoGardenChanceSceneHook.Hook(OnChaoGardenChanceScene);
-    _mrCartMainHook.Hook(OnMrCarMain);
 
 
     //Allows players to return to the adventure field when quitting boss fights

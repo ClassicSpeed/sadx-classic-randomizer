@@ -234,8 +234,4 @@ private:
 
     inline static FunctionHook<task*, int, int> _chaoGardenChanceSceneHook{0x715730};
     static task* OnChaoGardenChanceScene(int a1, int a2);
-
-
-    inline static FunctionHook<void, task*> _mrCartMainHook{0x53DE80};
-    static void OnMrCarMain(task* tp);
 };
