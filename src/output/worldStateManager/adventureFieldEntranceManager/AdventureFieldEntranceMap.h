@@ -67,6 +67,8 @@ enum EntranceId
 
     // Past Main
     PastMainToPastAltar,
+    //TODO: Implement
+    PastMainToJungle,
 
     // Jungle
     JungleToMrMain,
@@ -74,6 +76,7 @@ enum EntranceId
     JungleToLostWorldAlternative,
     JungleToFinalEggTower,
     JungleToSandHill,
+    JungleToPastMain,
 
     // Final Egg Tower
     FinalEggTowerToJungle,
@@ -278,6 +281,7 @@ private:
         {AngelIslandToRedMountain, RedMountainToAngelIsland},
         {AngelIslandToPastAltar, PastAltarToAngelIsland},
         {PastAltarToPastMain, PastMainToPastAltar},
+        {PastMainToJungle, JungleToPastMain},
         {JungleToLostWorld, LostWorldToJungle},
         {JungleToLostWorldAlternative, LostWorldToJungleAlternative},
         {JungleToFinalEggTower, FinalEggTowerToJungle},
