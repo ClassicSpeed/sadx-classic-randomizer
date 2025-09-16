@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.3] - 2025-09-16
+
+### Fixed
+
+- Fixed Hard Ring Link packets being sent as normal Ring Link packets after defeating bosses.
+
 ## [v1.1.2] - 2025-05-27
 
 ### Changed

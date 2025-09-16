@@ -204,7 +204,7 @@ RingDifference CharacterManager::GetRingDifference()
     }
 
     if (GameMode == GameModes_Mission && TimerEnabled == 0
-        && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
+        && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_E101R)
     {
         if (!options.hardRingLinkActive)
         {
