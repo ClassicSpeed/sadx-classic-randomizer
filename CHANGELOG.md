@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Fixed Hard Ring Link packets being sent as normal Ring Link packets after defeating bosses.
+- Fixed Lazy Fishing not working in the Adventure Field
 
 ## [v1.1.2] - 2025-05-27
 

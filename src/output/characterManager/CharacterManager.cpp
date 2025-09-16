@@ -257,17 +257,18 @@ void CharacterManager::OnPlayingFrame()
     if (CurrentLevel == LevelIDs_PerfectChaos && !_trapsOnPerfectChaosFight)
         return;
 
+    if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
+        return;
+
+    if (options.lazyFishing && unlockStatus.bigPowerRodUnlocked)
+        RodTension = 0;
+
     if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past && !_trapsOnAdventureFields)
         return;
 
     if (CurrentLevel >= LevelIDs_SSGarden && CurrentLevel <= LevelIDs_ChaoRace && !_trapsOnAdventureFields)
         return;
 
-    if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
-        return;
-
-    if (options.lazyFishing && unlockStatus.bigPowerRodUnlocked)
-        RodTension = 0;
 
     if (PauseEnabled == 0)
         return;
