@@ -40,6 +40,14 @@ CharacterManager::CharacterManager()
     WriteCall((void*)0x592131, EmptyCall);
     WriteCall((void*)0x59219E, EmptyCall);
 
+
+    //Re-enable control inside of Sky Deck Cannon
+    WriteCall((void*)0x5FC81B, EnablePause);
+    WriteCall((void*)0x5FC8B0, EnablePause);
+    WriteCall((void*)0x5FC8FE, EnablePause);
+    WriteCall((void*)0x5FC9A2, EnablePause);
+    WriteCall((void*)0x5FCA36, EnablePause);
+
     HudDisplayRings_t.Hook(HandleHudDisplayRings);
 }
 

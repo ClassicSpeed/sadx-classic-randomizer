@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.1.3] - 2025-09-16
 
+
+### Changed
+- Players can now pause the game while inside of the cannon in Sky Deck.
+
 ### Fixed
 
 - Fixed Hard Ring Link packets being sent as normal Ring Link packets after defeating bosses.
