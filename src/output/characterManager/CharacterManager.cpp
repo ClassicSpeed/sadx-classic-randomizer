@@ -5,9 +5,9 @@ DataPointer(int, TimerEnabled, 0x912DF0);
 CharacterManager::__hudDisplayRingsHook_t CharacterManager::_hudDisplayRingsHook;
 
 CharacterManager::CharacterManager(Options& options, Settings& settings, GameStatus& gameStatus,
-                                   ReactionManager& reactionManager): _options(options), _settings(settings),
-                                                                      _gameStatus(gameStatus),
-                                                                      _reactionManager(reactionManager)
+                                   ReactionManager& reactionManager) : _options(options), _settings(settings),
+                                                                       _gameStatus(gameStatus),
+                                                                       _reactionManager(reactionManager)
 {
     _set0RingsHook.Hook(OnSet0Rings);
     _giveBarrierHook.Hook(OnGiveBarrier);
@@ -44,23 +44,20 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     WriteCall((void*)0x5920AF, (void*)EnablePause);
 
     //Re-enable timer after finishing a mission
-    WriteCall((void*)0x592057, EmptyCall);
-    WriteCall((void*)0x592131, EmptyCall);
-    WriteCall((void*)0x59219E, EmptyCall);
+    WriteCall((void*)0x592057, (void*)EmptyCall);
+    WriteCall((void*)0x592131, (void*)EmptyCall);
+    WriteCall((void*)0x59219E, (void*)EmptyCall);
 
 
     //Re-enable control inside of Sky Deck Cannon
-    WriteCall((void*)0x5FC81B, EnablePause);
-    WriteCall((void*)0x5FC8B0, EnablePause);
-    WriteCall((void*)0x5FC8FE, EnablePause);
-    WriteCall((void*)0x5FC9A2, EnablePause);
-    WriteCall((void*)0x5FCA36, EnablePause);
+    WriteCall((void*)0x5FC81B, (void*)EnablePause);
+    WriteCall((void*)0x5FC8B0, (void*)EnablePause);
+    WriteCall((void*)0x5FC8FE, (void*)EnablePause);
+    WriteCall((void*)0x5FC9A2, (void*)EnablePause);
+    WriteCall((void*)0x5FCA36, (void*)EnablePause);
 
 
-    //Allows players to return to the adventure field when quitting boss fights
-    WriteData<1>((void*)0x415F46, 0x19);
-
-    HudDisplayRings_t.Hook(HandleHudDisplayRings);
+    _hudDisplayRingsHook.Hook(HandleHudDisplayRings);
 }
 
 

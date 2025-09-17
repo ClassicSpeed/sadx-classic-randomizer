@@ -235,13 +235,12 @@ bool EventDetector::HandleCheckMissionRequirementsSubgame(const int level, const
     if (level >= LevelIDs_SkyChase1 && level <= LevelIDs_SandHill)
     {
         _instance->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_B);
-ø
+
         if (ManualSubLevelMissionACheck(level))
         {
             SetLevelEmblemCollected(&SaveFile, character, level, SUB_LEVEL_MISSION_A);
             _instance->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
         }
-        
     }
     return CheckMissionRequirementsSubgame_t.Original(level, character, mission);
 }

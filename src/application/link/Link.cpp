@@ -38,6 +38,9 @@ void Link::OnFrame()
         return;
     if (!IsControllerEnabled(0))
         return;
+    if (CurrentChaoStage == SADXChaoStage_Race || CurrentChaoStage == SADXChaoStage_RaceEntry
+        || CurrentChaoStage == SADXChaoStage_ChaoTransporter || CurrentChaoStage == SADXChaoStage_BlackMarket)
+        return;
 
 
     const double timePassed = (std::clock() - _deathLinkCooldownTimer) / static_cast<double>(CLOCKS_PER_SEC);
