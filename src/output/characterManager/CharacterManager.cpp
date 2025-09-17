@@ -55,9 +55,6 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     WriteCall((void*)0x5FC8FE, (void*)EnablePause);
     WriteCall((void*)0x5FC9A2, (void*)EnablePause);
     WriteCall((void*)0x5FCA36, (void*)EnablePause);
-
-
-    _hudDisplayRingsHook.Hook(HandleHudDisplayRings);
 }
 
 
