@@ -2,11 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.0] - 2025-??-??
+## [v1.1.3] - 2025-09-16
 
 ### Changed
 
+- Players can now pause the game while inside of the cannon in Sky Deck.
+- Death Link will no longer will affect players during Chao races.
 - Now the player can exit any boss fight into the adventure field.
+
+### Fixed
+
+- Fixed Hard Ring Link packets being sent as normal Ring Link packets after defeating bosses.
+- Fixed Lazy Fishing not working in the Adventure Field
+- Fixed bug where the game will give you multiple capsules as Tails when Sonic breaks a capsule.
+- Fixed Sky Chase 2 A mission check not triggering.
+- Capsules check will be sent regardless of your specific capsule-sanity settings.
+  This is to prevent issues with wrongly mapped capsules that will be fixed in the future.
 
 ## [v1.1.2] - 2025-05-27
 

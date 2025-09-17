@@ -235,16 +235,13 @@ bool EventDetector::HandleCheckMissionRequirementsSubgame(const int level, const
     if (level >= LevelIDs_SkyChase1 && level <= LevelIDs_SandHill)
     {
         _instance->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_B);
-
-        //sublevel - mission A
-        if (mission == SUB_LEVEL_MISSION_B)
+ø
+        if (ManualSubLevelMissionACheck(level))
         {
-            if (ManualSubLevelMissionACheck(level))
-            {
-                SetLevelEmblemCollected(&SaveFile, character, level, SUB_LEVEL_MISSION_A);
-                _instance->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
-            }
+            SetLevelEmblemCollected(&SaveFile, character, level, SUB_LEVEL_MISSION_A);
+            _instance->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
         }
+        
     }
     return CheckMissionRequirementsSubgame_t.Original(level, character, mission);
 }
@@ -759,8 +756,8 @@ void EventDetector::CheckCapsule(const EntityData1* entity, const bool specificC
         return;
     if (!_instance->_options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
-    if (!specificCapsule)
-        return;
+    // if (!specificCapsule)
+    //     return;
     if (!_instance->_options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
@@ -836,8 +833,7 @@ void EventDetector::HandleCapsuleBreak(task* tp)
         if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask ==
             GetPlayerTaskPointer(1))
         {
-            item_info[ItemBox_CurrentItem].effect_func(tp->twp);
-            DoThingWithItemBoxPowerupIndex(ItemBox_CurrentItem);
+            tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
         }
     }
     OnCapsuleBreak_t.Original(tp);
@@ -850,8 +846,7 @@ void EventDetector::HandleCapsuleBreakAir(task* tp)
         if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask ==
             GetPlayerTaskPointer(1))
         {
-            item_info[ItemBox_CurrentItem].effect_func(tp->twp);
-            DoThingWithItemBoxPowerupIndex(ItemBox_CurrentItem);
+            tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
         }
     }
     OnCapsuleBreakAir_t.Original(tp);
