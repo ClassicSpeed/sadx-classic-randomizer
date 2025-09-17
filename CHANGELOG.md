@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Players can now pause the game while inside of the cannon in Sky Deck.
+- Death Link will no longer will affect players during Chao races.
 
 ### Fixed
 
