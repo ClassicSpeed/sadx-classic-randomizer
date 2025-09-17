@@ -1437,7 +1437,7 @@ void AdventureFieldEntranceManager::OnSpringMain(task* tp)
         if (!_instance->IsDoorOpen(PrivateRoomToCaptainRoom) && IsNearPosition(tp->twp->pos, -83.42f, 0, 0.54f))
             return FreeTask(tp);
     }
-    return _wallMainHook.Original(tp);
+    return _springMainHook.Original(tp);
 }
 
 
