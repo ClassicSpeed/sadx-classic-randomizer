@@ -48,6 +48,10 @@ CharacterManager::CharacterManager()
     WriteCall((void*)0x5FC9A2, EnablePause);
     WriteCall((void*)0x5FCA36, EnablePause);
 
+
+    //Allows players to return to the adventure field when quitting boss fights
+    WriteData<1>((void*)0x415F46, 0x19);
+
     HudDisplayRings_t.Hook(HandleHudDisplayRings);
 }
 
