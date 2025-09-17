@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Hard Ring Link packets being sent as normal Ring Link packets after defeating bosses.
 - Fixed Lazy Fishing not working in the Adventure Field
 - Fixed bug where the game will give you multiple capsules as Tails when Sonic breaks a capsule.
+- Fixed Sky Chase 2 A mission check not triggering.
 
 ## [v1.1.2] - 2025-05-27
 

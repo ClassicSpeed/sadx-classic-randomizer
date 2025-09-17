@@ -181,14 +181,10 @@ bool HandleCheckMissionRequirementsSubgame(const int level, const int character,
     {
         eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_B);
 
-        //sublevel - mission A
-        if (mission == SUB_LEVEL_MISSION_B)
+        if (ManualSubLevelMissionACheck(level))
         {
-            if (ManualSubLevelMissionACheck(level))
-            {
-                SetLevelEmblemCollected(&SaveFile, character, level, SUB_LEVEL_MISSION_A);
-                eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
-            }
+            SetLevelEmblemCollected(&SaveFile, character, level, SUB_LEVEL_MISSION_A);
+            eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
         }
     }
     return CheckMissionRequirementsSubgame_t.Original(level, character, mission);
