@@ -691,7 +691,8 @@ void EventDetector::setHomingAttackIndicator(const HomingAttackIndicator homingA
 }
 
 
-FunctionHook<SEQ_SECTIONTBL*, int> seqGetSectionListHook(0x44EAF0, [](int playerno)-> SEQ_SECTIONTBL* {
+FunctionHook<SEQ_SECTIONTBL*, int> seqGetSectionListHook(0x44EAF0, [](int playerno)-> SEQ_SECTIONTBL*
+{
     SEQ_SECTIONTBL* ptr = seqGetSectionListHook.Original(playerno);
     if (LastStoryFlag == 1 && eventDetectorPtr->lastStoryState == LastStoryNotStarted)
     {
@@ -824,8 +825,7 @@ void HandleCapsuleBreak(task* tp)
         if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask ==
             GetPlayerTaskPointer(1))
         {
-            item_info[ItemBox_CurrentItem].effect_func(tp->twp);
-            DoThingWithItemBoxPowerupIndex(ItemBox_CurrentItem);
+            tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
         }
     }
     OnCapsuleBreak_t.Original(tp);
@@ -838,8 +838,7 @@ void HandleCapsuleBreakAir(task* tp)
         if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask ==
             GetPlayerTaskPointer(1))
         {
-            item_info[ItemBox_CurrentItem].effect_func(tp->twp);
-            DoThingWithItemBoxPowerupIndex(ItemBox_CurrentItem);
+            tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
         }
     }
     OnCapsuleBreakAir_t.Original(tp);
@@ -1592,9 +1591,10 @@ FunctionHook<void, int> onPlayJingle(0x425860, [](const int songId)-> void
 {
     const int shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
     onPlayJingle.Original(shuffledSongId);
-    if(eventDetectorPtr->randomizer.GetOptions().showSongNameForType == ShowSongNameForTypeEverything)
+    if (eventDetectorPtr->randomizer.GetOptions().showSongNameForType == ShowSongNameForTypeEverything)
         eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
 });
+
 void EventDetector::ShuffleSong()
 {
     if (randomizer.GetOptions().musicShuffle == MusicShuffleNone
