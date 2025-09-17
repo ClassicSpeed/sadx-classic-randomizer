@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file.
 - Fixed Lazy Fishing not working in the Adventure Field
 - Fixed bug where the game will give you multiple capsules as Tails when Sonic breaks a capsule.
 - Fixed Sky Chase 2 A mission check not triggering.
+- Capsules check will be sent regardless of your specific capsule-sanity settings.
+  This is to prevent issues with wrongly mapped capsules that will be fixed in the future.
 
 ## [v1.1.2] - 2025-05-27
 

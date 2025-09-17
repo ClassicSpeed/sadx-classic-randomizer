@@ -752,8 +752,8 @@ void CheckCapsule(const EntityData1* entity, const bool specificCapsule)
         return;
     if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
         return;
-    if (!specificCapsule)
-        return;
+    // if (!specificCapsule)
+    //     return;
     if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
