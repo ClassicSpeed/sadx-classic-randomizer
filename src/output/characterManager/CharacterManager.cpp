@@ -40,6 +40,18 @@ CharacterManager::CharacterManager()
     WriteCall((void*)0x592131, EmptyCall);
     WriteCall((void*)0x59219E, EmptyCall);
 
+
+    //Re-enable control inside of Sky Deck Cannon
+    WriteCall((void*)0x5FC81B, EnablePause);
+    WriteCall((void*)0x5FC8B0, EnablePause);
+    WriteCall((void*)0x5FC8FE, EnablePause);
+    WriteCall((void*)0x5FC9A2, EnablePause);
+    WriteCall((void*)0x5FCA36, EnablePause);
+
+
+    //Allows players to return to the adventure field when quitting boss fights
+    WriteData<1>((void*)0x415F46, 0x19);
+
     HudDisplayRings_t.Hook(HandleHudDisplayRings);
 }
 
@@ -204,7 +216,7 @@ RingDifference CharacterManager::GetRingDifference()
     }
 
     if (GameMode == GameModes_Mission && TimerEnabled == 0
-        && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
+        && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_E101R)
     {
         if (!options.hardRingLinkActive)
         {
@@ -257,17 +269,18 @@ void CharacterManager::OnPlayingFrame()
     if (CurrentLevel == LevelIDs_PerfectChaos && !_trapsOnPerfectChaosFight)
         return;
 
+    if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
+        return;
+
+    if (options.lazyFishing && unlockStatus.bigPowerRodUnlocked)
+        RodTension = 0;
+
     if (CurrentLevel >= LevelIDs_StationSquare && CurrentLevel <= LevelIDs_Past && !_trapsOnAdventureFields)
         return;
 
     if (CurrentLevel >= LevelIDs_SSGarden && CurrentLevel <= LevelIDs_ChaoRace && !_trapsOnAdventureFields)
         return;
 
-    if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
-        return;
-
-    if (options.lazyFishing && unlockStatus.bigPowerRodUnlocked)
-        RodTension = 0;
 
     if (PauseEnabled == 0)
         return;

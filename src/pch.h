@@ -9,7 +9,7 @@
 
 #define SADX_AP_VERSION_MAJOR 1
 #define SADX_AP_VERSION_MINOR 1
-#define SADX_AP_VERSION_PATCH 2
+#define SADX_AP_VERSION_PATCH 3
 
 #define MISSION_S  3
 #define MISSION_C  2
@@ -103,16 +103,16 @@ const std::unordered_map<int, std::tuple<int, int, int>> KNUCKLES_TARGET_TIMES =
 
 const std::unordered_map<int, std::tuple<int, int, int>> AMY_TARGET_TIMES = {
     {LevelIDs_TwinklePark, std::make_tuple(7200, 5400, 5400)},
-{LevelIDs_HotShelter, std::make_tuple(23400, 12600, 9900)},
-{LevelIDs_FinalEgg, std::make_tuple(9000, 6300, 6300)},
+    {LevelIDs_HotShelter, std::make_tuple(23400, 12600, 9900)},
+    {LevelIDs_FinalEgg, std::make_tuple(9000, 6300, 6300)},
 };
 
-const std::unordered_map<int, std::tuple<int, int, int>>  GAMMA_TARGET_TIMES= {
+const std::unordered_map<int, std::tuple<int, int, int>> GAMMA_TARGET_TIMES = {
     {LevelIDs_FinalEgg, std::make_tuple(9000, 11700, 11700)},
-{LevelIDs_EmeraldCoast, std::make_tuple(10800, 11700, 11700)},
-{LevelIDs_WindyValley, std::make_tuple(10800, 20700, 20700)},
-{LevelIDs_RedMountain, std::make_tuple(10800, 12600, 12600)},
-{LevelIDs_HotShelter, std::make_tuple(7200, 10800, 10800)},
+    {LevelIDs_EmeraldCoast, std::make_tuple(10800, 11700, 11700)},
+    {LevelIDs_WindyValley, std::make_tuple(10800, 20700, 20700)},
+    {LevelIDs_RedMountain, std::make_tuple(10800, 12600, 12600)},
+    {LevelIDs_HotShelter, std::make_tuple(7200, 10800, 10800)},
 };
 
 #endif //PCH_H
