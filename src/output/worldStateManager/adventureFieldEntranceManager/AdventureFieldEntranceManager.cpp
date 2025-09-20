@@ -95,18 +95,18 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) :
     WriteData<1>((void*)0x638BF6, 0x09);
     // Change the jump from jz (0x74) to jnz (0x75)
     WriteData<1>((void*)0x638C00, 0x75);
+
+    this->_doorLogicStrategy = std::make_unique<DefaultDoorLogicStrategy>();
 }
 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
-    //TODO: Implement the logic to check if the door is open based on the entranceId
-    return false;
+    return _doorLogicStrategy->IsDoorOpen(entranceId);
 }
 
 bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId entranceId)
 {
-    //TODO: Implement the logic to check if the indicator should be shown based on the entranceId
-    return !IsDoorOpen(entranceId);
+    return _doorLogicStrategy->ShowDisableDoorIndicator(entranceId);
 }
 
 

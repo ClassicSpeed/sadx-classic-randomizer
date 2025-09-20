@@ -3,6 +3,9 @@
 #include "../../../pch.h"
 #include "../../../configuration/options/Options.h"
 #include "../doorIndicatorManager/DoorIndicatorManager.h"
+#include "DoorLogic/IDoorLogicStrategy.h"
+#include "DoorLogic/DefaultDoorLogicStrategy.h"
+#include "DoorLogic/AnotherDoorLogicStrategy.h"
 
 class AdventureFieldEntranceManager
 {
@@ -23,6 +26,7 @@ private:
     AdventureFieldEntranceMap& _adventureFieldEntranceMap;
     DoorIndicatorManager& _doorIndicatorManager;
     bool _isEggCarrierTransformed = false;
+    std::unique_ptr<IDoorLogicStrategy> _doorLogicStrategy;
 
     bool IsDoorOpen(EntranceId entranceId);
     bool ShowDisableDoorIndicator(EntranceId entranceId);
