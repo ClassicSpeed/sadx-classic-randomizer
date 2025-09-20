@@ -669,6 +669,10 @@ EntranceId GetBossEntrance()
         return AngelIslandToPastAltar;
     case LevelAndActIDs_Past2:
         return PastAltarToAngelIsland;
+    case LevelAndActIDs_MysticRuins3:
+        return JungleToPastMain;
+    case LevelAndActIDs_Past1:
+        return PastMainToJungle;
     case LevelAndActIDs_MysticRuins4:
         return FinalEggTowerToBetaEggViper;
     case LevelAndActIDs_EggCarrierOutside1:

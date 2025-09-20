@@ -367,6 +367,20 @@ void SetObjectManager::OnCountSetItemsMaybe()
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Amy);
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Gamma);
     AddSetToLevel(WARP_FROM_PAST, LevelAndActIDs_Past2, Characters_Big);
+
+    AddSetToLevel(WARP_TO_PAST_2, LevelAndActIDs_MysticRuins3, Characters_Sonic);
+    AddSetToLevel(WARP_TO_PAST_2, LevelAndActIDs_MysticRuins3, Characters_Tails);
+    AddSetToLevel(WARP_TO_PAST_2, LevelAndActIDs_MysticRuins3, Characters_Knuckles);
+    AddSetToLevel(WARP_TO_PAST_2, LevelAndActIDs_MysticRuins3, Characters_Amy);
+    AddSetToLevel(WARP_TO_PAST_2, LevelAndActIDs_MysticRuins3, Characters_Gamma);
+    AddSetToLevel(WARP_TO_PAST_2, LevelAndActIDs_MysticRuins3, Characters_Big);
+
+    AddSetToLevel(WARP_FROM_PAST_2, LevelAndActIDs_Past1, Characters_Sonic);
+    AddSetToLevel(WARP_FROM_PAST_2, LevelAndActIDs_Past1, Characters_Tails);
+    AddSetToLevel(WARP_FROM_PAST_2, LevelAndActIDs_Past1, Characters_Knuckles);
+    AddSetToLevel(WARP_FROM_PAST_2, LevelAndActIDs_Past1, Characters_Amy);
+    AddSetToLevel(WARP_FROM_PAST_2, LevelAndActIDs_Past1, Characters_Gamma);
+    AddSetToLevel(WARP_FROM_PAST_2, LevelAndActIDs_Past1, Characters_Big);
 }
 
 
@@ -460,6 +474,18 @@ void SetObjectManager::HandleWarp()
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past2)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 1);
 
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
+    {
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_Past, 0);
+    }
+
+
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past1)
+    {
+        SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 2);
+    }
+
+
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_ECGarden)
     {
         PrintDebug("----------Debug: Warp from EC Garden to EC Inside Cutscene\n");
@@ -483,26 +509,22 @@ BOOL SetObjectManager::OnIsChaos2DoorOpen()
 //TODO: Register it?
 //TODO: Create a spawn point for Sky Deck/Egg Hornet
 // We create a custom spawn point after exiting sand hill
-void SetObjectManager::OnGetEntranceMRuins(EntityData1* a1)
+void SetObjectManager::OnGetEntranceMRuins(taskwk* twp)
 {
-    _getEntranceMRuinsHook.Original(a1);
-    if (LastLevel == LevelIDs_SandHill)
+    _getEntranceMRuinsHook.Original(twp);
+
+    if (CurrentStageAndAct == LevelAndActIDs_MysticRuins3)
     {
-        a1->Position.x = -1500;
-        a1->Position.y = 50;
-        a1->Position.z = -70;
-        a1->Rotation.x = 0;
-        a1->Rotation.y = 4000;
-        a1->Rotation.z = 0;
-    }
-    else if (LastLevel == LevelIDs_Past)
-    {
-        a1->Position.x = -2.5f;
-        a1->Position.y = -240;
-        a1->Position.z = 2480;
-        a1->Rotation.x = 0;
-        a1->Rotation.y = 4000;
-        a1->Rotation.z = 0;
+        if (GetLevelEntranceID() == 3)
+        {
+            twp->pos = {-1500, 50, -70};
+            twp->ang = {0, 0x4000, 0};
+        }
+        else if (GetLevelEntranceID() == 5)
+        {
+            twp->pos = {-667, 90.5f, -1150};
+            twp->ang = {0, 0x4000, 0};
+        }
     }
 }
 
@@ -523,17 +545,27 @@ void SetObjectManager::OnGetEntranceEggCarrier(EntityData1* a1)
 
 //TODO: check if this is needed
 // We spawn in front of the Master Emerald Shrine in the past when time traveling
-void SetObjectManager::OnGetEntrancePast(EntityData1* a1)
+void SetObjectManager::OnGetEntrancePast(taskwk* twp)
 {
-    _getEntrancePastHook.Original(a1);
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past2 && LastLevel == LevelIDs_MysticRuins)
+    _getEntrancePastHook.Original(twp);
+
+    if (CurrentStageAndAct == LevelAndActIDs_Past2 || levelact(NextLevel, NextAct) == LevelAndActIDs_Past2)
     {
-        a1->Position.x = 0;
-        a1->Position.y = 10;
-        a1->Position.z = 380;
-        a1->Rotation.x = 0;
-        a1->Rotation.y = 0x4000;
-        a1->Rotation.z = 0;
+        if (GetLevelEntranceID() == 1)
+        {
+            twp->pos = {0, 10, 300};
+            twp->ang = {0, 0x4000, 0};
+            return;
+        }
+    }
+    if (CurrentStageAndAct == LevelAndActIDs_Past1 || levelact(NextLevel, NextAct) == LevelAndActIDs_Past1)
+    {
+        if (GetLevelEntranceID() == 2)
+        {
+            twp->pos = {-151.5f, 300, 30};
+            twp->ang = {0, 0x4000, 0};
+            return;
+        }
     }
 }
 

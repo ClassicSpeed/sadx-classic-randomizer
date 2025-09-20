@@ -73,14 +73,14 @@ private:
     inline static FunctionHook<BOOL> _isChaos2DoorOpenHook{0x638D50};
     static BOOL OnIsChaos2DoorOpen();
 
-    inline static FunctionHook<void, EntityData1*> _getEntranceMRuinsHook{0x530790};
-    static void OnGetEntranceMRuins(EntityData1* a1);
+    inline static FunctionHook<void, taskwk*> _getEntranceMRuinsHook{0x530790};
+    static void OnGetEntranceMRuins(taskwk* twp);
 
     inline static FunctionHook<void, EntityData1*> _getEntranceEggCarrierHook{0x52D820};
     static void OnGetEntranceEggCarrier(EntityData1* a1);
 
-    inline static FunctionHook<void, EntityData1*> _getEntrancePastHook{0x542180};
-    static void OnGetEntrancePast(EntityData1* a1);
+    inline static FunctionHook<void, taskwk*> _getEntrancePastHook{0x542180};
+    static void OnGetEntrancePast(taskwk* twp);
 
     inline static FunctionHook<void, Sint8> _setTimeOfDayHook{0x412C00};
     static void OnSetTimeOfDay(Sint8 time);
@@ -212,7 +212,9 @@ const SETEntry WARP_SKY_CHASE_2_EC2 = CreateSetEntry(WARP_EGG_CARRIER_OUTSIDE, {
 
 //Past
 const SETEntry WARP_TO_PAST = CreateSetEntry(WARP_MYSTIC_RUINS, {-2.5f, -240, 2397.5f});
+const SETEntry WARP_TO_PAST_2 = CreateSetEntry(WARP_MYSTIC_RUINS, {-667, 90.5f, -1181});
 const SETEntry WARP_FROM_PAST = CreateSetEntry(WARP_PAST, {0, 7, 247.5f});
+const SETEntry WARP_FROM_PAST_2 = CreateSetEntry(WARP_PAST, {-151.5f, 300, 0});
 
 // Adventure Field Randomization
 const SETEntry SS_MAIN_BARRICADE_SS = CreateSetEntry(BARRICADE_STATION_SQUARE, {443, 1, 1077},
