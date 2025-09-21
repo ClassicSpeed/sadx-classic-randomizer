@@ -60,10 +60,10 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     gameStatus.unlock.keyTrain = true;
     gameStatus.unlock.keyBoat = true;
     gameStatus.unlock.keyRaft = true;
-    gameStatus.unlock.keyStationFrontKey = true;
-    gameStatus.unlock.keyStationBackKey = true;
-    gameStatus.unlock.keyHotelFrontKey = true;
-    gameStatus.unlock.keyHotelBackKey = true;
+    gameStatus.unlock.keyStationKey = true;
+    gameStatus.unlock.keyShutterKey = true;
+    gameStatus.unlock.keyHotelKey = true;
+    gameStatus.unlock.keyCasinoKey = true;
     gameStatus.unlock.keyTwinkleParkTicket = true;
     gameStatus.unlock.keyEmployeeCard = true;
     gameStatus.unlock.keyDynamite = true;

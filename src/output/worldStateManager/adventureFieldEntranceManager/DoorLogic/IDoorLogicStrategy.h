@@ -1,5 +1,8 @@
 #pragma once
 #include "../AdventureFieldEntranceMap.h"
+#include "../../../configuration/gameStatus/GameStatus.h"
+#include "../../../configuration/options/Options.h"
+#include "../../../configuration/settings/Settings.h"
 
 class IDoorLogicStrategy
 {

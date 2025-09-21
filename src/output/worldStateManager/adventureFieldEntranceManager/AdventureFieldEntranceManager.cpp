@@ -9,7 +9,8 @@ UsercallFunc(int, eggCarrierInsideEggDoorHook, (const taskwk* twp), (twp), 0x52B
 UsercallFunc(int, eggCarrierOutsideEggDoorHook, (const taskwk* twp), (twp), 0x524070, rEAX, rESI);
 UsercallFunc(int, skyDeckDoorHook, (taskwk* twp), (twp), 0x51DEB0, rEAX, rESI);
 
-AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) : _options(options),
+AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus) :
+    _options(options), _gameStatus(gameStatus),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init()),
     _doorIndicatorManager(DoorIndicatorManager::Init())
 {
@@ -96,7 +97,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options) :
     // Change the jump from jz (0x74) to jnz (0x75)
     WriteData<1>((void*)0x638C00, 0x75);
 
-    this->_doorLogicStrategy = std::make_unique<DefaultDoorLogicStrategy>();
+    this->_doorLogicStrategy = std::make_unique<DefaultDoorLogicStrategy>(options, gameStatus);
 }
 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)

@@ -258,6 +258,8 @@ public:
 
     //TODO: Change this
     bool adventureFieldRandomized = true;
+    //TODO: Change this
+    bool connectFinalEggToEggCarrier;
 
 private:
     explicit Options(Settings& settings);

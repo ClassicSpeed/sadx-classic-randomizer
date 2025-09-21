@@ -126,7 +126,7 @@ bool ItemRepository::SetObtained(const int64_t itemId)
     _itemsReceived++;
     _itemData[itemId].obtained = true;
     UpdateUnlockStatus();
-    
+
     //We save in the save file the number of items received
     if (_itemsReceived > this->GetSavedItemReceived())
         this->UpdateItemsReceived(_itemsReceived);
@@ -163,7 +163,6 @@ int ItemRepository::AddEmblem()
 
 void ItemRepository::UpdateUnlockStatus()
 {
-
     _gameStatus.unlock.currentEmblems = _emblemCount;
 
     _gameStatus.unlock.whiteEmerald = _itemData[92].obtained;
@@ -198,25 +197,29 @@ void ItemRepository::UpdateUnlockStatus()
     _gameStatus.unlock.bigUnlocked = _itemData[6].obtained;
     _gameStatus.unlock.bigLifeBeltUnlocked = _itemData[60].obtained;
     _gameStatus.unlock.bigPowerRodUnlocked = _itemData[61].obtained;
-    _gameStatus.unlock.bigLureQuantity = _itemData[62].obtained + _itemData[63].obtained + _itemData[64].obtained + _itemData[
-        65].obtained;
+    _gameStatus.unlock.bigLureQuantity = _itemData[62].obtained + _itemData[63].obtained + _itemData[64].obtained +
+        _itemData[
+            65].obtained;
 
 
     _gameStatus.unlock.keyTrain = _itemData[80].obtained;
     _gameStatus.unlock.keyBoat = _itemData[81].obtained;
     _gameStatus.unlock.keyRaft = _itemData[82].obtained;
-    _gameStatus.unlock.keyHotelFrontKey = _itemData[83].obtained;
-    _gameStatus.unlock.keyHotelBackKey = _itemData[84].obtained;
+    _gameStatus.unlock.keyHotelKey = _itemData[83].obtained;
+    _gameStatus.unlock.keyCasinoKey = _itemData[84].obtained;
     _gameStatus.unlock.keyTwinkleParkTicket = _itemData[85].obtained;
     _gameStatus.unlock.keyEmployeeCard = _itemData[86].obtained;
     _gameStatus.unlock.keyIceStone = _itemData[87].obtained;
     _gameStatus.unlock.keyWindStone = _itemData[120].obtained;
     _gameStatus.unlock.keyDynamite = _itemData[88].obtained;
     _gameStatus.unlock.keyJungleCart = _itemData[89].obtained;
-    _gameStatus.unlock.keyStationFrontKey = _itemData[121].obtained;
-    _gameStatus.unlock.keyStationBackKey = _itemData[122].obtained;
+    _gameStatus.unlock.keyStationKey = _itemData[121].obtained;
+    _gameStatus.unlock.keyShutterKey = _itemData[122].obtained;
     _gameStatus.unlock.keyEgglift = _itemData[123].obtained;
     _gameStatus.unlock.keyMonorail = _itemData[124].obtained;
+    _gameStatus.unlock.keyPoolKey = _itemData[125].obtained;
+    _gameStatus.unlock.keyPolicePass = _itemData[126].obtained;
+    _gameStatus.unlock.keyTimeMachine = _itemData[127].obtained;
 }
 
 void ItemRepository::ResetItems()
@@ -259,7 +262,6 @@ FillerType ItemRepository::GetFillerFromName(const std::string& trapName)
         return NoFiller;
 
     return itemNameToFillerId[trapName];
-
 }
 
 //We use the metal sonic emblems space

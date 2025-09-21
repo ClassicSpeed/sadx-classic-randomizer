@@ -10,19 +10,20 @@
 class AdventureFieldEntranceManager
 {
 public:
-    static AdventureFieldEntranceManager& Init(Options& options)
+    static AdventureFieldEntranceManager& Init(Options& options, GameStatus& gameStatus)
     {
         if (_instance == nullptr)
-            _instance = new AdventureFieldEntranceManager(options);
+            _instance = new AdventureFieldEntranceManager(options, gameStatus);
         return *_instance;
     }
 
     void ShowLevelEntranceArrows();
 
 private:
-    explicit AdventureFieldEntranceManager(Options& options);
+    explicit AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus);
     inline static AdventureFieldEntranceManager* _instance = nullptr;
     Options& _options;
+    GameStatus& _gameStatus;
     AdventureFieldEntranceMap& _adventureFieldEntranceMap;
     DoorIndicatorManager& _doorIndicatorManager;
     bool _isEggCarrierTransformed = false;

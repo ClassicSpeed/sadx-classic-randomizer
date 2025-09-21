@@ -157,18 +157,12 @@ enum EntranceId
 
     // SS Chao Garden
     SsChaoGardenToHotel,
-    SsChaoGardenToEcChaoGarden,
-    SsChaoGardenToMrChaoGarden,
 
     // Mr Chao Garden
     MrChaoGardenToMrMain,
-    MrChaoGardenToSsChaoGarden,
-    MrChaoGardenToEcChaoGarden,
 
     // Ec Chao Garden
     EcChaoGardenToWarpHall,
-    EcChaoGardenToSsChaoGarden,
-    EcChaoGardenToMrChaoGarden,
 
 
     // Levels
@@ -316,8 +310,5 @@ private:
         {WarpHallToEcChaoGarden, EcChaoGardenToWarpHall},
         {EcInsideToArsenal, ArsenalToEcInside},
         {EcInsideToWaterTank, WaterTankToEcInside},
-        {SsChaoGardenToEcChaoGarden, EcChaoGardenToSsChaoGarden},
-        {SsChaoGardenToMrChaoGarden, MrChaoGardenToSsChaoGarden},
-        {MrChaoGardenToEcChaoGarden, EcChaoGardenToMrChaoGarden},
     };
 };

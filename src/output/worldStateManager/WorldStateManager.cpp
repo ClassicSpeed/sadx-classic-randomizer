@@ -1,11 +1,11 @@
 #include "WorldStateManager.h"
 
 
-WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus): _options(options),
+WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus) : _options(options),
     _settings(settings), _gameStatus(gameStatus),
     _setObjectManager(SetObjectManager::Init(options, settings)),
     // _levelEntranceManager(LevelEntranceManager::Init(options, settings, gameStatus))
-    _adventureFieldEntranceManager(AdventureFieldEntranceManager::Init(options))
+    _adventureFieldEntranceManager(AdventureFieldEntranceManager::Init(options, gameStatus))
 {
     _collisionCubeHook.Hook(OnCollisionCube);
     //TODO: Undo
@@ -69,24 +69,24 @@ void WorldStateManager::OnCollisionCube(task* tp)
 
 BOOL WorldStateManager::OnIsStationDoorOpen()
 {
-    return _instance->_gameStatus.unlock.keyStationFrontKey;
+    return _instance->_gameStatus.unlock.keyStationKey;
 }
 
 BOOL WorldStateManager::OnIsHotelDoorOpen()
 {
-    return _instance->_gameStatus.unlock.keyHotelFrontKey;
+    return _instance->_gameStatus.unlock.keyHotelKey;
 }
 
 BOOL WorldStateManager::OnIsCasinoHotelDoorOpen()
 {
     if (_instance->_options.adventureFieldRandomized)
         return _isCasinoHotelDoorOpenHook.Original();
-    return _instance->_gameStatus.unlock.keyHotelBackKey;
+    return _instance->_gameStatus.unlock.keyCasinoKey;
 }
 
 BOOL WorldStateManager::OnIsCasinoStationDoorOpen()
 {
-    return _instance->_gameStatus.unlock.keyStationBackKey;
+    return _instance->_gameStatus.unlock.keyShutterKey;
 }
 
 

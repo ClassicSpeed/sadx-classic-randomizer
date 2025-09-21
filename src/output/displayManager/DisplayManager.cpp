@@ -2,8 +2,8 @@
 
 
 DisplayManager::DisplayManager(Options& options, Settings& settings, GameStatus& gameStatus, const char* path,
-                               const HelperFunctions& helperFunctions): _options(options), _settings(settings),
-                                                                        _gameStatus(gameStatus)
+                               const HelperFunctions& helperFunctions) : _options(options), _settings(settings),
+                                                                         _gameStatus(gameStatus)
 {
     _charSelAdvaModeProcedureHook.Hook(OnCharSelAdvaModeProcedure);
     _cmnAdvaModeProcedureHook.Hook(OnCmnAdvaModeProcedure);
@@ -1062,28 +1062,28 @@ void DisplayManager::DisplayItemsUnlocked()
     displayOffset++;
     buffer.clear();
     buffer.append("Hotel   ");
-    buffer.append(_gameStatus.unlock.keyHotelFrontKey ? "Front " : "      ");
-    buffer.append(_gameStatus.unlock.keyHotelBackKey ? "Back" : "    ");
+    buffer.append(_gameStatus.unlock.keyHotelKey ? "Front " : "      ");
+    buffer.append(_gameStatus.unlock.keyCasinoKey ? "Back" : "    ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     buffer.clear();
     buffer.append("     :  ");
-    buffer.append(!_gameStatus.unlock.keyHotelFrontKey ? "Front|" : "     |");
-    buffer.append(!_gameStatus.unlock.keyHotelBackKey ? "Back" : "    ");
+    buffer.append(!_gameStatus.unlock.keyHotelKey ? "Front|" : "     |");
+    buffer.append(!_gameStatus.unlock.keyCasinoKey ? "Back" : "    ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
     displayOffset++;
     buffer.clear();
     buffer.append("Station ");
-    buffer.append(_gameStatus.unlock.keyStationFrontKey ? "Front " : "      ");
-    buffer.append(_gameStatus.unlock.keyStationBackKey ? "Back" : "    ");
+    buffer.append(_gameStatus.unlock.keyStationKey ? "Front " : "      ");
+    buffer.append(_gameStatus.unlock.keyShutterKey ? "Back" : "    ");
     SetDebugFontColor(_keyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
     buffer.clear();
     buffer.append("       :");
-    buffer.append(!_gameStatus.unlock.keyStationFrontKey ? "Front|" : "     |");
-    buffer.append(!_gameStatus.unlock.keyStationBackKey ? "Back" : "    ");
+    buffer.append(!_gameStatus.unlock.keyStationKey ? "Front|" : "     |");
+    buffer.append(!_gameStatus.unlock.keyShutterKey ? "Back" : "    ");
     SetDebugFontColor(disabledKeyItemColor);
     DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 

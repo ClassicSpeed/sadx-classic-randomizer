@@ -41,10 +41,10 @@ struct UnlockStatus
     bool keyTrain;
     bool keyBoat;
     bool keyRaft;
-    bool keyStationFrontKey;
-    bool keyStationBackKey;
-    bool keyHotelFrontKey;
-    bool keyHotelBackKey;
+    bool keyStationKey;
+    bool keyShutterKey;
+    bool keyHotelKey;
+    bool keyCasinoKey;
     bool keyTwinkleParkTicket;
     bool keyEmployeeCard;
     bool keyDynamite;
@@ -53,6 +53,9 @@ struct UnlockStatus
     bool keyJungleCart;
     bool keyEgglift;
     bool keyMonorail;
+    bool keyPoolKey;
+    bool keyPolicePass;
+    bool keyTimeMachine;
 
     bool GotAllChaosEmeralds() const
     {
