@@ -97,7 +97,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     // Change the jump from jz (0x74) to jnz (0x75)
     WriteData<1>((void*)0x638C00, 0x75);
 
-    this->_doorLogicStrategy = std::make_unique<DefaultDoorLogicStrategy>(options, gameStatus);
+    // this->_doorLogicStrategy = std::make_unique<DefaultDoorLogicStrategy>(options, gameStatus);
+    this->_doorLogicStrategy = std::make_unique<AnotherDoorLogicStrategy>();
 }
 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
@@ -199,7 +200,7 @@ void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)
     _getEntranceEc.Original(twp);
 }
 
-inline NJS_TEXANIM texanim_my_texture[] = {{18, 18, 9, 9, 0, 0, 255, 255, 0, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM texanim_my_texture[] = {{18, 18, 9, 9, 255, 255, 0, 0, 1, NJD_SPRITE_COLOR}};
 
 void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
 {

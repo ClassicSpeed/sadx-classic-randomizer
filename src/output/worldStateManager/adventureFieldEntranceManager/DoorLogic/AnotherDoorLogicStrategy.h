@@ -6,7 +6,7 @@ public:
     bool IsDoorOpen(EntranceId entranceId) override
     {
         // Example logic
-        return entranceId % 3 != 0;
+        return false;
     }
 
     bool ShowDisableDoorIndicator(EntranceId entranceId) override

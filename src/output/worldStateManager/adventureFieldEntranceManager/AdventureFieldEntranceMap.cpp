@@ -13,48 +13,48 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         //City Hall
         {CityHallToSsMain, LevelAndActIDs_StationSquare1, 1, SsMainToCityHall, 50.0f, {550.79f, 14.5, 856.22f}},
-        {CityHallToChaos0, LevelAndActIDs_StationSquare1, 0, Chaos0ToCityHall, 0, {270, 16, 450}},
+        {CityHallToChaos0, LevelAndActIDs_StationSquare1, 0, Chaos0ToCityHall, 180, {270, 16, 450}},
         {CityHallToSewers, LevelAndActIDs_StationSquare1, 2, SewersToCityHall, 0, {361, 10, 941.5}},
-        {CityHallToSpeedHighway, LevelAndActIDs_StationSquare1, 0, SpeedHighwayToCityHall, 0, {270, 20, 255}},
+        {CityHallToSpeedHighway, LevelAndActIDs_StationSquare1, 0, SpeedHighwayToCityHall, 180, {270, 20, 255}},
 
         //Station
         {StationToSsMain, LevelAndActIDs_StationSquare2, 0, SsMainToStation, 26, {59, 79, 1452}},
-        {StationToCasinopolis, LevelAndActIDs_StationSquare2, 1, CasinopolisToStation, 45, {-620, 12.5, 905}},
+        {StationToCasinopolis, LevelAndActIDs_StationSquare2, 1, CasinopolisToStation, 225, {-620, 12.5, 905}},
         {StationToHotel, LevelAndActIDs_StationSquare2, 2, HotelToStation, 0.0f, {-445, 13, 1515}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {-236.8f, 153, 1237}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {-164, 153, 1204}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {-115, 153, 1179}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {-43, 153, 1142}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {4.6f, 153, 1116.4f}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 26, {76.5f, 153, 1080.7f}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-236.8f, 153, 1237}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-164, 153, 1204}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-115, 153, 1179}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-43, 153, 1142}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {4.6f, 153, 1116.4f}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {76.5f, 153, 1080.7f}},
         {StationToEggWalker, LevelAndActIDs_StationSquare2, 1, EggWalkerToStation, 0, {-400, 13, 955}},
 
         // Sewers
         {SewersToSsMain, LevelAndActIDs_StationSquare3, 1, SsMainToSewers, 0, {395, -87, 1323}},
-        {SewersToCityHall, LevelAndActIDs_StationSquare3, 0, CityHallToSewers, 90, {433.5, 13, 635}},
+        {SewersToCityHall, LevelAndActIDs_StationSquare3, 0, CityHallToSewers, 270, {433.5, 13, 635}},
 
         // SSMain
         {SsMainToCityHall, LevelAndActIDs_StationSquare4, 1, CityHallToSsMain, 110.8F, {443, 13, 1077}},
-        {SsMainToStation, LevelAndActIDs_StationSquare4, 0, StationToSsMain, 18.81f, {28, 41, 1388}},
-        {SsMainToHotel, LevelAndActIDs_StationSquare4, 3, HotelToSsMain, 90, {-168, 15, 1685}},
+        {SsMainToStation, LevelAndActIDs_StationSquare4, 0, StationToSsMain, 198.81f, {28, 41, 1388}},
+        {SsMainToHotel, LevelAndActIDs_StationSquare4, 3, HotelToSsMain, 270, {-168, 15, 1685}},
         {SsMainToTwinkleParkLobby, LevelAndActIDs_StationSquare4, 4, TwinkleParkLobbyToSsMain, 90, {580, 65, 1772}},
         {SsMainToEcOutside, LevelAndActIDs_StationSquare4, 6, EcOutsideToSsMain, 30, {174.09f, 6, 1897.51f}},
         {SsMainToBridge, LevelAndActIDs_StationSquare4, 6, BridgeToSsMain, 30, {174.09f, 6, 1897.51f}},
-        {SsMainToSewers, LevelAndActIDs_StationSquare4, 2, SewersToSsMain, 0, {400, 58, 1450}},
+        {SsMainToSewers, LevelAndActIDs_StationSquare4, 2, SewersToSsMain, 180, {400, 58, 1450}},
         {SsMainToSpeedHighway, LevelAndActIDs_StationSquare4, 5, SpeedHighwayToSsMain, 90, {380, 20, 1370}},
 
         // Hotel
         {HotelToSsMain, LevelAndActIDs_StationSquare5, 1, SsMainToHotel, 90, {-245.5, 13, 1685.25}},
-        {HotelToStation, LevelAndActIDs_StationSquare5, 3, StationToHotel, 0.0f, {-370, 13, 1605}},
-        {HotelToEmeraldCoast, LevelAndActIDs_StationSquare5, 2, EmeraldCoastToHotel, 135, {-520, 10, 2093}},
-        {HotelToSsChaoGarden, LevelAndActIDs_StationSquare5, 4, SsChaoGardenToHotel, 90, {-395, 13, 1700}},
-        {HotelToChaos2, LevelAndActIDs_StationSquare5, 5, Chaos2ToHotel, 90, {-395, 13, 1665}},
+        {HotelToStation, LevelAndActIDs_StationSquare5, 3, StationToHotel, 180, {-370, 13, 1605}},
+        {HotelToEmeraldCoast, LevelAndActIDs_StationSquare5, 2, EmeraldCoastToHotel, 315, {-520, 10, 2093}},
+        {HotelToSsChaoGarden, LevelAndActIDs_StationSquare5, 4, SsChaoGardenToHotel, 270, {-395, 13, 1700}},
+        {HotelToChaos2, LevelAndActIDs_StationSquare5, 5, Chaos2ToHotel, 270, {-395, 13, 1665}},
 
 
         // Twinkle Park Lobby
-        {TwinkleParkLobbyToSsMain, LevelAndActIDs_StationSquare6, 0, SsMainToTwinkleParkLobby, 90, {675, 65, 1771.5f}},
+        {TwinkleParkLobbyToSsMain, LevelAndActIDs_StationSquare6, 0, SsMainToTwinkleParkLobby, 270, {675, 65, 1771.5f}},
         {
-            TwinkleParkLobbyToTwinkleCircuit, LevelAndActIDs_StationSquare6, 2, TwinkleCircuitToTwinkleParkLobby, 0,
+            TwinkleParkLobbyToTwinkleCircuit, LevelAndActIDs_StationSquare6, 2, TwinkleCircuitToTwinkleParkLobby, 180,
             {757, 65, 1735}
         },
         {
@@ -65,24 +65,24 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // MRMain
         {MrMainToSsMain, LevelAndActIDs_MysticRuins1, 0, StationToMrMain, 56.25f, {0, 228, 1207}},
-        {MrMainToChaos4, LevelAndActIDs_MysticRuins1, 0, Chaos4ToMrMain, 0, {80, 87, 180}},
+        {MrMainToChaos4, LevelAndActIDs_MysticRuins1, 0, Chaos4ToMrMain, 180, {80, 87, 180}},
         {MrMainToEggHornet, LevelAndActIDs_MysticRuins1, 0, EggHornetToMrMain, 0, {950, 142, 950}},
         {MrMainToSkyChase1, LevelAndActIDs_MysticRuins1, 0, SkyChase1ToMrMain, 90, {1561, 206, 900}},
         {MrMainToEcOutside, LevelAndActIDs_MysticRuins1, 0, EcOutsideToMrMain, 147.5f, {-70, -385, 1264}},
         {MrMainToBridge, LevelAndActIDs_MysticRuins1, 0, BridgeToMrMain, 147.5f, {-70, -385, 1264}},
         {MrMainToJungle, LevelAndActIDs_MysticRuins1, 2, JungleToMrMain, 211, {-200.86f, 81.5, -69.51f}},
         {MrMainToMrChaoGarden, LevelAndActIDs_MysticRuins1, 4, MrChaoGardenToMrMain, 111, {1696, 17.5, -86}},
-        {MrMainToAngelIsland, LevelAndActIDs_MysticRuins1, 1, AngelIslandToMrMain, 112.5f, {-347, 120, 869}},
+        {MrMainToAngelIsland, LevelAndActIDs_MysticRuins1, 1, AngelIslandToMrMain, 270, {-347, 120, 869}},
         {MrMainToWindyValley, LevelAndActIDs_MysticRuins1, 3, WindyValleyToMrMain, 145, {640, 80, -143}},
 
         // Angel Island
         {AngelIslandToMrMain, LevelAndActIDs_MysticRuins2, 0, MrMainToAngelIsland, 90, {0, 15, 0}},
-        {AngelIslandToIceCap, LevelAndActIDs_MysticRuins2, 1, IceCapToAngelIsland, 100, {-1425, 53, 353}},
+        {AngelIslandToIceCap, LevelAndActIDs_MysticRuins2, 1, IceCapToAngelIsland, 280, {-1425, 53, 353}},
         {AngelIslandToRedMountain, LevelAndActIDs_MysticRuins2, 2, RedMountainToAngelIsland, 268, {-1955, -335, 1652}},
-        {AngelIslandToPastAltar, LevelAndActIDs_MysticRuins2, 3, PastAltarToAngelIsland, 0.0f, {-2.5f, -225, 2397.5f}},
+        {AngelIslandToPastAltar, LevelAndActIDs_MysticRuins2, 3, PastAltarToAngelIsland, 90, {-2.5f, -225, 2397.5f}},
 
         //Past Altar
-        {PastAltarToAngelIsland, LevelAndActIDs_Past2, 1, AngelIslandToPastAltar, 0.0f, {0, 24, 247.5f}},
+        {PastAltarToAngelIsland, LevelAndActIDs_Past2, 1, AngelIslandToPastAltar, 180, {0, 24, 247.5f}},
         {PastAltarToPastMain, LevelAndActIDs_Past2, 0, PastMainToPastAltar, 0.0f, {223.44f, -9.5, 1815.62f}},
 
         //Past Main
@@ -90,26 +90,26 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {PastMainToJungle, LevelAndActIDs_Past1, 2, JungleToPastMain, 90, {-151.5f, 315, 0}},
 
         // Jungle
-        {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 137.36f, {-1143, 369, 418}},
+        {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 317.36f, {-1143, 369, 418}},
         {JungleToLostWorld, LevelAndActIDs_MysticRuins3, 2, LostWorldToJungle, 180, {-516, 100, -994}},
         {
-            JungleToLostWorldAlternative, LevelAndActIDs_MysticRuins3, 1, LostWorldToJungleAlternative, 180,
+            JungleToLostWorldAlternative, LevelAndActIDs_MysticRuins3, 1, LostWorldToJungleAlternative, 0,
             {-516, 103, -1327}
         },
-        {JungleToFinalEggTower, LevelAndActIDs_MysticRuins3, 4, FinalEggTowerToJungle, 0, {71, 17, -1687.5}},
-        {JungleToSandHill, LevelAndActIDs_MysticRuins3, 3, SandHillToJungle, 90, {-1555.5, 55, -69.5}},
-        {JungleToPastMain, LevelAndActIDs_MysticRuins3, 5, PastMainToJungle, 90, {-667, 105.5f, -1181}},
+        {JungleToFinalEggTower, LevelAndActIDs_MysticRuins3, 4, FinalEggTowerToJungle, 180, {71, 17, -1687.5}},
+        {JungleToSandHill, LevelAndActIDs_MysticRuins3, 3, SandHillToJungle, 270, {-1555.5, 55, -69.5}},
+        {JungleToPastMain, LevelAndActIDs_MysticRuins3, 5, PastMainToJungle, 180, {-667, 105.5f, -1181}},
 
         // Final Egg Tower
         {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 124, 166.5}},
         {
             FinalEggTowerToFinalEggAlternative, LevelAndActIDs_MysticRuins4, 1, FinalEggToFinalEggTowerAlternative,
-            0.0f,
+            180,
             {0, 124, -155}
         },
         {FinalEggTowerToFinalEgg, LevelAndActIDs_MysticRuins4, 2, FinalEggToFinalEggTower, 115, {175, 135, -25.75}},
-        {FinalEggTowerToBetaEggViper, LevelAndActIDs_MysticRuins4, 3, BetaEggViperToFinalEggTower, 45, {0, 16, 0}},
-        {FinalEggTowerToEcInside, LevelAndActIDs_MysticRuins4, 3, EcInsideToFinalEggTower, 0, {0, 15, -175}},
+        {FinalEggTowerToBetaEggViper, LevelAndActIDs_MysticRuins4, 3, BetaEggViperToFinalEggTower, 225, {0, 16, 0}},
+        {FinalEggTowerToEcInside, LevelAndActIDs_MysticRuins4, 3, EcInsideToFinalEggTower, 180, {0, 15, -175}},
 
 
         // Egg Carrier Outside (Untransformed)
@@ -118,35 +118,35 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
             {0, 750, 970}
         },
         {
-            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 0, EcInsideToEcOutsideMonorail, 90,
+            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 0, EcInsideToEcOutsideMonorail, 270,
             {311.5f, 595.7f, -342.7f}
         },
         {
-            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 0, EcInsideToEcOutsideMonorail, 90,
+            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 0, EcInsideToEcOutsideMonorail, 270,
             {311.5f, 595.7f, -422}
         },
         {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 90, {326, 584.4f, -723}},
-        {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 90, {-326, 584.4f, -723}},
-        {EcOutsideToSkyChase2, LevelAndActIDs_EggCarrierOutside1, 0, SkyChase2ToEcOutside, 0, {0, 715, -1100}},
+        {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 270, {-326, 584.4f, -723}},
+        {EcOutsideToSkyChase2, LevelAndActIDs_EggCarrierOutside1, 0, SkyChase2ToEcOutside, 180, {0, 715, -1100}},
         {EcOutsideToPool, LevelAndActIDs_EggCarrierOutside1, 1, PoolToEcOutside, 0.0f, {0, 759.5f, 1074.2f}},
         {
             EcOutsideToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside1, 0, Chaos6ZeroBetaToEcOutside, 0,
             {0, 765.5f, -385.69f}
         },
-        {EcOutsideToCaptainRoom, LevelAndActIDs_EggCarrierOutside1, 2, CaptainRoomToEcOutside, 0.0f, {0, 755, 438}},
+        {EcOutsideToCaptainRoom, LevelAndActIDs_EggCarrierOutside1, 2, CaptainRoomToEcOutside, 180, {0, 755, 438}},
 
         // Bridge (Transformed)
         {
-            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 0, EcInsideToBridgeMonorail, 90,
+            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 0, EcInsideToBridgeMonorail, 270,
             {311.5f, 595.7f, -342.7f}
         },
         {
-            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 0, EcInsideToBridgeMonorail, 90,
+            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 0, EcInsideToBridgeMonorail, 270,
             {311.5f, 595.7f, -422}
         },
         {BridgeToSsMain, LevelAndActIDs_EggCarrierOutside2, 0, SsMainToBridge, 90, {326, 584.4f, -723}},
-        {BridgeToMrMain, LevelAndActIDs_EggCarrierOutside2, 0, MrMainToBridge, 90, {-326, 584.4f, -723}},
-        {BridgeToSkyChase2, LevelAndActIDs_EggCarrierOutside2, 0, SkyChase2ToBridge, 0, {0, 665, -1100}},
+        {BridgeToMrMain, LevelAndActIDs_EggCarrierOutside2, 0, MrMainToBridge, 270, {-326, 584.4f, -723}},
+        {BridgeToSkyChase2, LevelAndActIDs_EggCarrierOutside2, 0, SkyChase2ToBridge, 180, {0, 665, -1100}},
         {
             BridgeToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside2, 0, Chaos6ZeroBetaToBridge, 0,
             {0, 765.5f, -385.69f}
@@ -157,43 +157,42 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         // Deck (Transformed)
         {DeckToEcInsideEggLift, LevelAndActIDs_EggCarrierOutside3, 0, EcInsideToDeckEggLift, 0.0f, {0, 1540, 3462}},
         {DeckToPool, LevelAndActIDs_EggCarrierOutside3, 1, PoolToDeck, 0.0f, {0, 1551.5897f, 3566.501f}},
-        {DeckToCaptainRoom, LevelAndActIDs_EggCarrierOutside3, 4, CaptainRoomToDeck, 0.0f, {0, 1725, 2923}},
-        {DeckToPrivateRoom, LevelAndActIDs_EggCarrierOutside3, 2, PrivateRoomToDeck, 64.37f, {79.65f, 1535, 2875.8f}},
+        {DeckToCaptainRoom, LevelAndActIDs_EggCarrierOutside3, 4, CaptainRoomToDeck, 180, {0, 1725, 2923}},
+        {DeckToPrivateRoom, LevelAndActIDs_EggCarrierOutside3, 2, PrivateRoomToDeck, 244.37f, {79.65f, 1535, 2875.8f}},
         {
-            DeckToPrivateRoomAlternative, LevelAndActIDs_EggCarrierOutside3, 3, PrivateRoomToDeckAlternative, 0.0f,
+            DeckToPrivateRoomAlternative, LevelAndActIDs_EggCarrierOutside3, 3, PrivateRoomToDeckAlternative, 180,
             {-54, 1655, 2972.5f}
         },
 
         // Captain Room
         {CaptainRoomToEcOutside, LevelAndActIDs_EggCarrierOutside4, 0, EcOutsideToCaptainRoom, 90, {34.5, 113, 0}},
         {CaptainRoomToDeck, LevelAndActIDs_EggCarrierOutside4, 0, DeckToCaptainRoom, 90, {0, 1725, 2923}},
-        {CaptainRoomToPrivateRoom, LevelAndActIDs_EggCarrierOutside4, 0, PrivateRoomToCaptainRoom, 90, {-80, 113, 0}},
-        {DeckToPrivateRoom, LevelAndActIDs_EggCarrierOutside3, 3, PrivateRoomToDeck, 64.37f, {79.65f, 1535, 2875.8f}},
+        {CaptainRoomToPrivateRoom, LevelAndActIDs_EggCarrierOutside4, 0, PrivateRoomToCaptainRoom, 0, {-80, 113, 0}},
 
         // Private Room
-        {PrivateRoomToCaptainRoom, LevelAndActIDs_EggCarrierOutside5, 2, CaptainRoomToPrivateRoom, 90, {-83, 37, 0}},
-        {PrivateRoomToDeck, LevelAndActIDs_EggCarrierOutside5, 0, DeckToPrivateRoom, 0, {-39, 15, -52.5f}},
+        {PrivateRoomToCaptainRoom, LevelAndActIDs_EggCarrierOutside5, 2, CaptainRoomToPrivateRoom, 270, {-83, 37, 0}},
+        {PrivateRoomToDeck, LevelAndActIDs_EggCarrierOutside5, 0, DeckToPrivateRoom, 180, {-39, 15, -52.5f}},
         {
-            PrivateRoomToDeckAlternative, LevelAndActIDs_EggCarrierOutside5, 1, DeckToPrivateRoomAlternative, 270,
+            PrivateRoomToDeckAlternative, LevelAndActIDs_EggCarrierOutside5, 1, DeckToPrivateRoomAlternative, 90,
             {204, 15, 111}
         },
 
         // Pool
-        {PoolToEcOutside, LevelAndActIDs_EggCarrierOutside6, 0, EcOutsideToPool, 90, {4.5, 25, 25}},
-        {PoolToDeck, LevelAndActIDs_EggCarrierOutside6, 0, DeckToPool, 90, {4.5, 25, 25}},
-        {PoolToSkyDeck, LevelAndActIDs_EggCarrierOutside6, 1, SkyDeckToPool, 90, {67, -54.5f, 0}},
+        {PoolToEcOutside, LevelAndActIDs_EggCarrierOutside6, 0, EcOutsideToPool, 270, {4.5, 25, 25}},
+        {PoolToDeck, LevelAndActIDs_EggCarrierOutside6, 0, DeckToPool, 270, {4.5, 25, 25}},
+        {PoolToSkyDeck, LevelAndActIDs_EggCarrierOutside6, 1, SkyDeckToPool, 270, {67, -54.5f, 0}},
 
 
         // Arsenal
-        {ArsenalToEcInside, LevelAndActIDs_EggCarrierInside1, 0, EcInsideToArsenal, 90, {-106, 123, 0}},
+        {ArsenalToEcInside, LevelAndActIDs_EggCarrierInside1, 0, EcInsideToArsenal, 270, {-106, 123, 0}},
 
 
         // Egg Carrier Inside
         {
-            EcInsideToEcOutsideEggLift, LevelAndActIDs_EggCarrierInside2, 0, EcOutsideToEcInsideEggLift, 0.0f,
+            EcInsideToEcOutsideEggLift, LevelAndActIDs_EggCarrierInside2, 0, EcOutsideToEcInsideEggLift, 180,
             {0, 65, -330.25f}
         },
-        {EcInsideToDeckEggLift, LevelAndActIDs_EggCarrierInside2, 0, DeckToEcInsideEggLift, 0.0f, {0, 65, -330.25f}},
+        {EcInsideToDeckEggLift, LevelAndActIDs_EggCarrierInside2, 0, DeckToEcInsideEggLift, 180, {0, 65, -330.25f}},
         {
             EcInsideToEcOutsideMonorail, LevelAndActIDs_EggCarrierInside2, 0, EcOutsideToEcInsideMonorail, 90,
             {60, 22, 0}
@@ -207,18 +206,21 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         {EcInsideToHotShelter, LevelAndActIDs_EggCarrierInside2, 1, HotShelterToEcInside, 0.0f, {0, 15, 245}},
         {
-            EcInsideToHedgehogHammer, LevelAndActIDs_EggCarrierInside2, 3, HedgehogHammerToEcInside, 135,
+            EcInsideToHedgehogHammer, LevelAndActIDs_EggCarrierInside2, 3, HedgehogHammerToEcInside, 315,
             {-62, 15, 192.5}
         },
-        {EcInsideToWaterTank, LevelAndActIDs_EggCarrierInside2, 4, WaterTankToEcInside, 90, {-183, 95, -280}},
+        {EcInsideToWaterTank, LevelAndActIDs_EggCarrierInside2, 4, WaterTankToEcInside, 270, {-183, 95, -280}},
         {EcInsideToArsenal, LevelAndActIDs_EggCarrierInside2, 5, ArsenalToEcInside, 90, {183.5, 95, 0}},
 
         {EcInsideToFinalEggTower, LevelAndActIDs_EggCarrierInside2, 2, FinalEggTowerToEcInside, 45, {62, 15, 192.5}},
-        {EcInsideToWarpHall, LevelAndActIDs_EggCarrierInside2, 6, WarpHallToEcInside, 0, {0, 75, -560}},
+        {EcInsideToWarpHall, LevelAndActIDs_EggCarrierInside2, 6, WarpHallToEcInside, 180, {0, 75, -560}},
 
         // Hedgehog Hammer
         {HedgehogHammerToEcInside, LevelAndActIDs_EggCarrierInside3, 1, EcInsideToHedgehogHammer, 90, {90, 15, 0}},
-        {HedgehogHammerToPrisonHall, LevelAndActIDs_EggCarrierInside3, 0, PrisonHallToHedgehogHammer, 90, {-90, 15, 0}},
+        {
+            HedgehogHammerToPrisonHall, LevelAndActIDs_EggCarrierInside3, 0, PrisonHallToHedgehogHammer, 270,
+            {-90, 15, 0}
+        },
 
         // Prison Hall
         {

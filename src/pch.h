@@ -135,13 +135,14 @@ public:
 };
 
 
-inline NJS_TEXNAME entranceTextNames[1] = {
-    {nullptr, 0, 0} // filename, attr, texaddr
+inline NJS_TEXNAME entranceTextNames[2] = {
+    {nullptr, 0, 0}, // filename, attr, texaddr
+    {nullptr, 0, 2} // filename, attr, texaddr
 };
 
 inline NJS_TEXLIST entranceTextList = {
     entranceTextNames, // pointer to texture array
-    1 // number of textures
+    2 // number of textures
 };
 
 inline PVMEntry EntranceSign = {"entrances", &entranceTextList};
