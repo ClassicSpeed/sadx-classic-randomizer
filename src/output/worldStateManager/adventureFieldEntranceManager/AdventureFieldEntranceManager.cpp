@@ -200,7 +200,8 @@ void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)
     _getEntranceEc.Original(twp);
 }
 
-inline NJS_TEXANIM texanim_my_texture[] = {{18, 18, 9, 9, 255, 255, 0, 0, 1, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM emblem_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 1, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM number_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 2, NJD_SPRITE_COLOR}};
 
 void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
 {
@@ -235,8 +236,24 @@ void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
         njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
         njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
         SetMaterial(255, 255, 255, 255);
-        NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, texanim_my_texture};
+        NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, emblem_lock_anim};
         njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+        njPopMatrix(1u);
+
+        njSetTexture(&entranceTextList);
+        njPushMatrix(0);
+        float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
+        float offsetX = 0.1f * sinf(angleRad);
+        float offsetZ = 0.1f * cosf(angleRad);
+
+        njTranslate(0, adventureFieldEntrance.indicatorPosition.x - offsetX, adventureFieldEntrance.indicatorPosition.y,
+                    adventureFieldEntrance.indicatorPosition.z - offsetZ);
+        njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+        njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+        njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+        SetMaterial(255, 255, 255, 255);
+        NJS_SPRITE mySprite2 = {{0}, 1, 1, 0, &entranceTextList, number_lock_anim};
+        njDrawSprite3D(&mySprite2, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
         njPopMatrix(1u);
     }
 }
