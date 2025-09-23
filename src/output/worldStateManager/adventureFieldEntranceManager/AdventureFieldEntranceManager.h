@@ -17,6 +17,8 @@ public:
         return *_instance;
     }
 
+    void showNumber(const AdventureFieldEntrance& adventureFieldEntrance, float posX, float posY, int number,
+                    float zOffset);
     void ShowLevelEntranceArrows();
 
 private:
