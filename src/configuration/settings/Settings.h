@@ -101,6 +101,14 @@ enum HomingAttackIndicator
     HomingAttackIndicatorEnabledNoSound = 2,
 };
 
+enum AdventureFieldRandomization
+{
+    AdventureFieldRandomizationDisabled = 0,
+    AdventureFieldRandomizationLevels = 1,
+    AdventureFieldRandomizationLevelsExtra = 2,
+    AdventureFieldRandomizationFull = 2,
+};
+
 static std::string LeftTrim(std::string s)
 {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch)

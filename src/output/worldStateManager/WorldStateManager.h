@@ -4,7 +4,6 @@
 #include <algorithm>
 #include "../../configuration/options/Options.h"
 #include "adventureFieldEntranceManager/AdventureFieldEntranceManager.h"
-#include "levelEntranceManager/LevelEntranceManager.h"
 #include "setObjectManager/SetObjectManager.h"
 
 

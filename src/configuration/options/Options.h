@@ -256,10 +256,16 @@ public:
     std::vector<int> missionBlacklist = {};
     bool expertMode = false;
 
-    //TODO: Change this
-    bool adventureFieldRandomized = true;
-    //TODO: Change this
+
+    //TODO: Make this a value
     bool connectFinalEggToEggCarrier;
+
+    //TODO: Change this
+    bool emblemGating = true;
+    std::map<int, int> entranceEmblemValueMap;
+
+    AdventureFieldRandomization entranceRandomization = AdventureFieldRandomizationDisabled;
+    std::map<int, int> entranceRandomizationMap;
 
 private:
     explicit Options(Settings& settings);

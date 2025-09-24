@@ -58,7 +58,7 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _opti
 void SetObjectManager::OnFrame()
 {
     if (_options.skyChaseChecks && (CurrentCharacter == Characters_Sonic || (CurrentCharacter == Characters_Tails && !
-        _options.missionModeEnabled)) && !_options.adventureFieldRandomized)
+        _options.missionModeEnabled)) && !_options.emblemGating)
         EventFlagArray[33] = 1;
 
 
@@ -133,7 +133,7 @@ void SetObjectManager::OnCountSetItemsMaybe()
 
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
-    if (_instance->_options.adventureFieldRandomized)
+    if (_instance->_options.emblemGating)
     {
         AddSetToLevel(CITY_HALL_SEWERS_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Knuckles);
         AddSetToLevel(CITY_HALL_SEWERS_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Amy);
@@ -271,7 +271,7 @@ void SetObjectManager::OnCountSetItemsMaybe()
         AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
 
 
-        if (_instance->_options.adventureFieldRandomized)
+        if (_instance->_options.emblemGating)
         {
             //Station Square Bosses
             AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Tails);
@@ -308,7 +308,7 @@ void SetObjectManager::OnCountSetItemsMaybe()
     }
     if (_instance->_options.skyChaseChecks)
     {
-        if (_instance->_options.adventureFieldRandomized)
+        if (_instance->_options.emblemGating)
         {
             AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Sonic);
             AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Tails);
@@ -347,7 +347,7 @@ void SetObjectManager::OnCountSetItemsMaybe()
         }
     }
 
-    if (_instance->_options.adventureFieldRandomized)
+    if (_instance->_options.emblemGating)
     {
         AddSetToLevel(WIND_STONE_MR, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
         AddSetToLevel(WIND_STONE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
@@ -501,7 +501,7 @@ void SetObjectManager::HandleWarp()
 // Allow Knuckles to fight Chaos 2
 BOOL SetObjectManager::OnIsChaos2DoorOpen()
 {
-    if (_instance->_options.adventureFieldRandomized)
+    if (_instance->_options.emblemGating)
         return _isChaos2DoorOpenHook.Original();
     return CurrentCharacter == Characters_Knuckles;
 }

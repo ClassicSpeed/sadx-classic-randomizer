@@ -37,9 +37,6 @@ void WorldStateManager::OnFrame()
     if (CurrentLevel == LevelIDs_PerfectChaos)
         return;
 
-    // if (Current_CharObj2 != nullptr && EntityData1Ptrs[0] != nullptr)
-    //     _levelEntranceManager.ShowLevelEntranceArrows();
-
     _setObjectManager.OnFrame();
     _adventureFieldEntranceManager.ShowLevelEntranceArrows();
 }
@@ -79,7 +76,7 @@ BOOL WorldStateManager::OnIsHotelDoorOpen()
 
 BOOL WorldStateManager::OnIsCasinoHotelDoorOpen()
 {
-    if (_instance->_options.adventureFieldRandomized)
+    if (_instance->_options.emblemGating)
         return _isCasinoHotelDoorOpenHook.Original();
     return _instance->_gameStatus.unlock.keyCasinoKey;
 }
@@ -92,7 +89,7 @@ BOOL WorldStateManager::OnIsCasinoStationDoorOpen()
 
 void WorldStateManager::OnMysticRuinsKey(task* tp)
 {
-    if (_instance->_options.adventureFieldRandomized)
+    if (_instance->_options.emblemGating)
         return _mysticRuinsKeyHook.Original(tp);
 
     // We prevent the wind stone from spawning if the player doesn't have the item
@@ -133,7 +130,7 @@ void WorldStateManager::OnTwinkleCircuitResultsMaybe(task* tp)
 // Makes Sonic, Tails and Gamma use the winds stone
 BOOL WorldStateManager::OnIsWindyValleyOpen()
 {
-    if (_instance->_options.adventureFieldRandomized)
+    if (_instance->_options.emblemGating)
         return _isWindyValleyOpenHook.Original();
 
     //TODO: Test if this works
@@ -142,7 +139,7 @@ BOOL WorldStateManager::OnIsWindyValleyOpen()
 
 BOOL WorldStateManager::OnIsAngelIslandOpen()
 {
-    if (_instance->_options.adventureFieldRandomized)
+    if (_instance->_options.emblemGating)
         return _isAngelIslandOpenHook.Original();
     return _instance->_gameStatus.unlock.keyDynamite;
 }
