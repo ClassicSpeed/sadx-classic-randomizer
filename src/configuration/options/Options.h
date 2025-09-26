@@ -4,6 +4,7 @@
 #include "../../pch.h"
 #include "../../application/structs/LocationData.h"
 #include "../../application/structs/ItemData.h"
+#include "../../output/worldStateManager/adventureFieldEntranceManager/AdventureFieldEntranceMap.h"
 #include <vector>
 
 #include "../settings/Settings.h"
@@ -262,10 +263,14 @@ public:
 
     //TODO: Change this
     bool emblemGating = true;
-    std::map<int, int> entranceEmblemValueMap;
+    std::map<EntranceId, int> entranceEmblemValueMap = {
+        {SsMainToStation, 5},
+        {SsMainToCityHall, 14},
+        {SsMainToHotel, 15},
+    };
 
     AdventureFieldRandomization entranceRandomization = AdventureFieldRandomizationDisabled;
-    std::map<int, int> entranceRandomizationMap;
+    std::map<EntranceId, EntranceId> entranceRandomizationMap;
 
 private:
     explicit Options(Settings& settings);

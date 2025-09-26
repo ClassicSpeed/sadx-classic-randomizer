@@ -20,6 +20,8 @@ public:
     void showNumber(const AdventureFieldEntrance& adventureFieldEntrance, float posX, float posY, int number,
                     float zOffset);
     void ShowLevelEntranceArrows();
+    void ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x, float y, float zBase,
+                           float xStep, bool leftJustify);
 
 private:
     explicit AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus);

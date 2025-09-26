@@ -98,7 +98,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     WriteData<1>((void*)0x638C00, 0x75);
 
     // this->_doorLogicStrategy = std::make_unique<DefaultDoorLogicStrategy>(options, gameStatus);
-    this->_doorLogicStrategy = std::make_unique<AnotherDoorLogicStrategy>();
+    this->_doorLogicStrategy = std::make_unique<AnotherDoorLogicStrategy>(options, gameStatus);
 }
 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
@@ -280,15 +280,53 @@ void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
         njDrawSprite3D(&mySprite2, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
         njPopMatrix(1u);
 
+        const auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
+        if (entranceValue != _options.entranceEmblemValueMap.end())
+        {
+            ShowNumberDynamic(adventureFieldEntrance, _gameStatus.unlock.currentEmblems, -10, 2, -0.01f, 4, false);
+            ShowNumberDynamic(adventureFieldEntrance, entranceValue->second, 2, -2, -0.04f, 4, true);
+        }
+    }
+}
 
-        showNumber(adventureFieldEntrance, -10, 2, 0, -0.01f);
-        showNumber(adventureFieldEntrance, -6, 2, 0, -0.02f);
-        showNumber(adventureFieldEntrance, -2, 2, 5, -0.03f);
+void AdventureFieldEntranceManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x,
+                                                      float y, float zBase, float xStep, bool leftJustify)
+{
+    if (number < 0 || number > 999) return;
 
+    int hundreds = number / 100;
+    int tens = (number / 10) % 10;
+    int ones = number % 10;
 
-        showNumber(adventureFieldEntrance, 2, -2, 9, -0.04f);
-        showNumber(adventureFieldEntrance, 6, -2, 7, -0.05f);
-        showNumber(adventureFieldEntrance, 10, -2, 6, -0.06f);
+    if (number >= 100)
+    {
+        showNumber(entrance, x, y, hundreds, zBase);
+        showNumber(entrance, x + xStep, y, tens, zBase - 0.01f);
+        showNumber(entrance, x + 2 * xStep, y, ones, zBase - 0.02f);
+    }
+    else if (number >= 10)
+    {
+        if (leftJustify)
+        {
+            showNumber(entrance, x, y, tens, zBase - 0.01f);
+            showNumber(entrance, x + xStep, y, ones, zBase - 0.02f);
+        }
+        else
+        {
+            showNumber(entrance, x + xStep, y, tens, zBase - 0.01f);
+            showNumber(entrance, x + 2 * xStep, y, ones, zBase - 0.02f);
+        }
+    }
+    else
+    {
+        if (leftJustify)
+        {
+            showNumber(entrance, x, y, ones, zBase - 0.02f);
+        }
+        else
+        {
+            showNumber(entrance, x + 2 * xStep, y, ones, zBase - 0.02f);
+        }
     }
 }
 
