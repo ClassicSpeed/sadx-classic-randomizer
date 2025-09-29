@@ -234,8 +234,8 @@ private:
     inline static AdventureFieldEntranceMap* _instance = nullptr;
 
     EntranceId FindEntranceByLocation(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
-    EntranceId GetReplacementConnection(EntranceId entranceId);
-    AdventureFieldEntrance* FindEntranceById(EntranceId entranceId, bool isEggCarrierTransformed);
+    EntranceId GetReplacementConnection(EntranceId fromEntranceId, bool isEggCarrierTransformed);
+    AdventureFieldEntrance* FindEntranceById(EntranceId entranceId);
 
     std::vector<AdventureFieldEntrance> _entranceList = {};
 

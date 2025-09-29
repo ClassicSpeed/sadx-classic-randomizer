@@ -354,13 +354,13 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
     PrintDebug("------AdventureFieldEntranceMap: Found entrance %d for source location %d, %d\n",
                sourceEntranceId, GET_LEVEL(sourceLocation), GET_ACT(sourceLocation));
 
-    const EntranceId destinationEntranceId = GetReplacementConnection(sourceEntranceId);
+    const EntranceId destinationEntranceId = GetReplacementConnection(sourceEntranceId, isEggCarrierTransformed);
 
     PrintDebug("------AdventureFieldEntranceMap: Found replacement connection %d for entrance %d\n",
                destinationEntranceId, sourceEntranceId);
 
 
-    AdventureFieldEntrance* newEntrance = FindEntranceById(destinationEntranceId, isEggCarrierTransformed);
+    AdventureFieldEntrance* newEntrance = FindEntranceById(destinationEntranceId);
     PrintDebug("------AdventureFieldEntranceMap: Found entrance by ID %d, %d\n",
                GET_LEVEL(newEntrance->levelAndActId), GET_ACT(newEntrance->levelAndActId));
     return newEntrance;
@@ -409,26 +409,23 @@ EntranceId AdventureFieldEntranceMap::FindEntranceByLocation(
     return closestId;
 }
 
-EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId entranceId)
+EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId fromEntranceId,
+                                                               const bool isEggCarrierTransformed)
 {
+    EntranceId toEntranceId;
     for (const auto& [entranceA, entranceB] : _entranceNewConnections)
     {
-        if (entranceA == entranceId)
-            return entranceB;
-        if (entranceB == entranceId)
-            return entranceA;
+        if (entranceA == fromEntranceId)
+            toEntranceId = entranceB;
+        if (entranceB == fromEntranceId)
+            toEntranceId = entranceA;
     }
-    return entranceId;
-}
 
 
-AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const EntranceId entranceId,
-                                                                    const bool isEggCarrierTransformed)
-{
-    EntranceId actualEntranceId = entranceId;
+    EntranceId actualEntranceId = toEntranceId;
     if (isEggCarrierTransformed)
     {
-        switch (entranceId)
+        switch (toEntranceId)
         {
         case EcOutsideToPool:
             actualEntranceId = DeckToPool;
@@ -466,7 +463,7 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const Entran
     }
     else
     {
-        switch (entranceId)
+        switch (toEntranceId)
         {
         case DeckToPool:
             actualEntranceId = EcOutsideToPool;
@@ -502,12 +499,16 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const Entran
             break;
         }
     }
-    PrintDebug("------AdventureFieldEntranceMap: Looking for entrance ID %d (actual ID %d)\n",
-               entranceId, actualEntranceId);
 
+    return actualEntranceId;
+}
+
+
+AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const EntranceId entranceId)
+{
     for (auto& entrance : _entranceList)
     {
-        if (entrance.entranceId == actualEntranceId)
+        if (entrance.entranceId == entranceId)
             return &entrance;
     }
 
