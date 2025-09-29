@@ -139,6 +139,7 @@ public:
     bool MusicSourceIncludeSa2B() const;
     bool MusicSourceIncludeCustom() const;
     bool IsTrapEnabled(FillerType filler) const;
+    void SetEntranceEmblemValueMap(const std::map<int, int>& map);
 
 
     //Constant values
@@ -263,11 +264,7 @@ public:
 
     //TODO: Change this
     bool emblemGating = true;
-    std::map<EntranceId, int> entranceEmblemValueMap = {
-        {SsMainToStation, 5},
-        {SsMainToCityHall, 14},
-        {SsMainToHotel, 15},
-    };
+    std::map<int, int> entranceEmblemValueMap = {};
 
     AdventureFieldRandomization entranceRandomization = AdventureFieldRandomizationDisabled;
     std::map<EntranceId, EntranceId> entranceRandomizationMap;

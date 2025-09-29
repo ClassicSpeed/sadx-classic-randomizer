@@ -1,7 +1,7 @@
 #include "Options.h"
 
 
-Options::Options(Settings& settings): _settings(settings)
+Options::Options(Settings& settings) : _settings(settings)
 {
 }
 
@@ -184,6 +184,12 @@ void Options::LevelEntranceMap(const std::map<int, int>& levelEntrancesValues)
     this->levelEntrancesMap = levelEntrancesValues;
 }
 
+void Options::SetEntranceEmblemValueMap(const std::map<int, int>& entranceEmblemValueMap)
+{
+    this->entranceEmblemValueMap = entranceEmblemValueMap;
+}
+
+
 void Options::SetEntranceRandomizer(const int enableEntranceRandomizer)
 {
     this->entranceRandomizer = enableEntranceRandomizer;
@@ -203,11 +209,12 @@ void Options::SendDeathLinkChance(const int newSendDeathLinkChance)
 {
     this->sendDeathLinkChance = Clamp(newSendDeathLinkChance, 1, 100);
 }
+
 void Options::ReceiveDeathLinkChance(const int newReceiveDeathLinkChance)
 {
     this->receiveDeathLinkChance = Clamp(newReceiveDeathLinkChance, 1, 100);
 }
-    
+
 void Options::SetRingLink(const int newRingLinkActive)
 {
     if (_settings.ringLinkOverride == RingLinkForceEnabled
@@ -313,7 +320,6 @@ void Options::SetMusicShuffle(const int newMusicShuffle)
         this->musicShuffle = static_cast<MusicShuffle>(newMusicShuffle);
     else
         this->musicShuffle = _settings.musicShuffle;
-    
 }
 
 void Options::SetMusicShuffleConsistency(const int newMusicShuffleConsistency)
@@ -670,5 +676,3 @@ bool Options::IsTrapEnabled(const FillerType filler) const
 
     return false;
 }
-
-

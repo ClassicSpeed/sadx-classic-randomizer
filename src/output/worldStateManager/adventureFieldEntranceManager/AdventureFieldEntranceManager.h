@@ -5,7 +5,7 @@
 #include "../doorIndicatorManager/DoorIndicatorManager.h"
 #include "DoorLogic/IDoorLogicStrategy.h"
 #include "DoorLogic/DefaultDoorLogicStrategy.h"
-#include "DoorLogic/AnotherDoorLogicStrategy.h"
+#include "DoorLogic/EmblemGatingDoorLogicStrategy.h"
 
 class AdventureFieldEntranceManager
 {

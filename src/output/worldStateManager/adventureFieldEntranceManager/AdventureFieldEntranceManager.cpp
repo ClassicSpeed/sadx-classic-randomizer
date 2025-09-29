@@ -98,7 +98,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     WriteData<1>((void*)0x638C00, 0x75);
 
     // this->_doorLogicStrategy = std::make_unique<DefaultDoorLogicStrategy>(options, gameStatus);
-    this->_doorLogicStrategy = std::make_unique<AnotherDoorLogicStrategy>(options, gameStatus);
+    this->_doorLogicStrategy = std::make_unique<EmblemGatingDoorLogicStrategy>(
+        options, gameStatus, _adventureFieldEntranceMap);
 }
 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
@@ -280,7 +281,14 @@ void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
         njDrawSprite3D(&mySprite2, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
         njPopMatrix(1u);
 
-        const auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
+        auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
+
+        if (entranceValue == _options.entranceEmblemValueMap.end())
+        {
+            const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(
+                adventureFieldEntrance.entranceId, false);
+            entranceValue = _options.entranceEmblemValueMap.find(oppositeEntrance);
+        }
         if (entranceValue != _options.entranceEmblemValueMap.end())
         {
             ShowNumberDynamic(adventureFieldEntrance, _gameStatus.unlock.currentEmblems, -10, 2, -0.01f, 4, false);

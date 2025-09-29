@@ -67,7 +67,6 @@ enum EntranceId
 
     // Past Main
     PastMainToPastAltar,
-    //TODO: Implement
     PastMainToJungle,
 
     // Jungle
@@ -96,7 +95,7 @@ enum EntranceId
     EcOutsideToCaptainRoom,
     EcOutsideToPool,
 
-    // Bridge (Transformed) //TODO: Check how to handle this
+    // Bridge (Transformed) 
     BridgeToSsMain,
     BridgeToMrMain,
     BridgeToSkyDeck,
@@ -104,22 +103,22 @@ enum EntranceId
     BridgeToChaos6ZeroBeta,
     BridgeToEcInsideMonorail,
 
-    // Deck (Transformed)  //TODO: Check how to handle this
+    // Deck (Transformed) 
     DeckToPool,
-    DeckToCaptainRoom, //TODO: Probably needs a spring
+    DeckToCaptainRoom,
     DeckToPrivateRoom,
-    DeckToPrivateRoomAlternative, //Higher entrance TODO: Probably needs a spring
+    DeckToPrivateRoomAlternative,
     DeckToEcInsideEggLift,
 
     // Captain Room
     CaptainRoomToEcOutside,
     CaptainRoomToDeck,
-    CaptainRoomToPrivateRoom, //TODO: Needs to open the floor
+    CaptainRoomToPrivateRoom,
 
     // Private Room
     PrivateRoomToCaptainRoom,
-    PrivateRoomToDeck, //TODO: What happens when transformed?
-    PrivateRoomToDeckAlternative, //Higher entrance
+    PrivateRoomToDeck,
+    PrivateRoomToDeckAlternative,
 
     // Pool
     PoolToEcOutside,
@@ -228,14 +227,14 @@ public:
     AdventureFieldEntrance* GetNewConnection(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation,
                                              bool isEggCarrierTransformed);
     const std::vector<AdventureFieldEntrance>& GetEntrances() const;
+    EntranceId GetReplacementConnection(EntranceId fromEntranceId, bool isEggCarrierTransformed);
 
 private:
     explicit AdventureFieldEntranceMap();
     inline static AdventureFieldEntranceMap* _instance = nullptr;
 
     EntranceId FindEntranceByLocation(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
-    EntranceId GetReplacementConnection(EntranceId entranceId);
-    AdventureFieldEntrance* FindEntranceById(EntranceId entranceId, bool isEggCarrierTransformed);
+    AdventureFieldEntrance* FindEntranceById(EntranceId entranceId);
 
     std::vector<AdventureFieldEntrance> _entranceList = {};
 
@@ -311,4 +310,17 @@ private:
         {EcInsideToArsenal, ArsenalToEcInside},
         {EcInsideToWaterTank, WaterTankToEcInside},
     };
+
+    static EntranceId GetOpposite(EntranceId id)
+    {
+        switch (id)
+        {
+        case StationToSsMain: return SsMainToStation;
+        case SsMainToStation: return StationToSsMain;
+        case CityHallToSsMain: return SsMainToCityHall;
+        case SsMainToCityHall: return CityHallToSsMain;
+        // ... add all other pairs here ...
+        default: return InvalidEntranceId;
+        }
+    }
 };

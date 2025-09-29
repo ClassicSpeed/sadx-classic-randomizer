@@ -255,6 +255,7 @@ void ArchipelagoManager::Connect()
 
     AP_REGISTER_MAP_CALLBACK("LevelEntranceMap", _options.LevelEntranceMap);
     AP_REGISTER_INT_CALLBACK("EntranceRandomizer", _options.SetEntranceRandomizer);
+    AP_REGISTER_MAP_CALLBACK("EntranceEmblemValueMap", _options.SetEntranceEmblemValueMap);
 
     AP_REGISTER_INT_CALLBACK("DeathLink", _options.SetDeathLink);
     AP_REGISTER_INT_CALLBACK("SendDeathLinkChance", _options.SendDeathLinkChance);
