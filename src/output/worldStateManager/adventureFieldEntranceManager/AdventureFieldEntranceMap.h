@@ -10,36 +10,48 @@ enum EntranceId
     CityHallToSpeedHighway,
     CityHallToChaos0,
 
-    // Station + Casino
+    // Station
     StationToSsMain,
     StationToMrMain,
-    StationToCasinopolis,
-    StationToHotel,
-    StationToEggWalker,
+    StationToCasino,
+
+    //Casino
+    CasinoToStation,
+    CasinoToCasinopolis,
+    CasinoToHotel,
+    CasinoToEggWalker,
 
     // Sewers
     SewersToCityHall,
-    SewersToSsMain,
+    SewersToTwinkleParkTunnel,
 
     // SSMain
     SsMainToHotel,
     SsMainToStation,
     SsMainToCityHall,
-    SsMainToTwinkleParkLobby,
+    SsMainToTwinkleParkTunnel,
     SsMainToEcOutside,
     SsMainToBridge,
-    SsMainToSewers,
     SsMainToSpeedHighway,
 
     // Hotel
     HotelToSsMain,
-    HotelToStation,
-    HotelToEmeraldCoast,
+    HotelToCasino,
     HotelToSsChaoGarden,
     HotelToChaos2,
+    HotelToHotelPool,
+
+    // Hotel Pool
+    HotelPoolToHotel,
+    HotelPoolToEmeraldCoast,
+
+    // Twinkle Park Tunnel
+    TwinkleParkTunnelToSsMain,
+    TwinkleParkTunnelToTwinkleParkLobby,
+    TwinkleParkTunnelToSewers,
 
     // Twinkle Park Lobby
-    TwinkleParkLobbyToSsMain,
+    TwinkleParkLobbyToTwinkleParkTunnel,
     TwinkleParkLobbyToTwinklePark,
     TwinkleParkLobbyToTwinkleCircuit,
 
@@ -57,9 +69,13 @@ enum EntranceId
 
     // Angel Island
     AngelIslandToMrMain,
-    AngelIslandToIceCap,
+    AngelIslandToIceCave,
     AngelIslandToRedMountain,
     AngelIslandToPastAltar,
+
+    // Ice Cave
+    IceCaveToAngelIsland,
+    IceCaveToIceCap,
 
     // Past Altar
     PastAltarToAngelIsland,
@@ -167,10 +183,10 @@ enum EntranceId
     // Levels
     SpeedHighwayToCityHall,
     Chaos0ToCityHall,
-    CasinopolisToStation,
-    EggWalkerToStation,
+    CasinopolisToCasino,
+    EggWalkerToCasino,
     SpeedHighwayToSsMain,
-    EmeraldCoastToHotel,
+    EmeraldCoastToHotelPool,
     Chaos2ToHotel,
     TwinkleParkToTwinkleParkLobby,
     TwinkleCircuitToTwinkleParkLobby,
@@ -178,7 +194,7 @@ enum EntranceId
     Chaos4ToMrMain,
     EggHornetToMrMain,
     SkyChase1ToMrMain,
-    IceCapToAngelIsland,
+    IceCapToIceCave,
     RedMountainToAngelIsland,
     LostWorldToJungle,
     LostWorldToJungleAlternative,
@@ -234,7 +250,6 @@ private:
     inline static AdventureFieldEntranceMap* _instance = nullptr;
 
     EntranceId FindEntranceByLocation(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
-    EntranceId GetReplacementConnection(EntranceId fromEntranceId, bool isEggCarrierTransformed);
     AdventureFieldEntrance* FindEntranceById(EntranceId entranceId);
 
     std::vector<AdventureFieldEntrance> _entranceList = {};
@@ -247,18 +262,18 @@ private:
         {CityHallToChaos0, Chaos0ToCityHall},
         {StationToSsMain, SsMainToStation},
         {StationToMrMain, MrMainToSsMain},
-        {StationToCasinopolis, CasinopolisToStation},
-        {StationToHotel, HotelToStation},
-        {StationToEggWalker, EggWalkerToStation},
+        {CasinoToCasinopolis, CasinopolisToCasino},
+        {CasinoToHotel, HotelToCasino},
+        {CasinoToEggWalker, EggWalkerToCasino},
 
-        {SewersToSsMain, SsMainToSewers},
+        {SewersToTwinkleParkTunnel, TwinkleParkTunnelToSewers},
         {SsMainToHotel, HotelToSsMain},
 
-        {SsMainToTwinkleParkLobby, TwinkleParkLobbyToSsMain},
+        {TwinkleParkTunnelToTwinkleParkLobby, TwinkleParkLobbyToTwinkleParkTunnel},
 
         {SsMainToEcOutside, EcOutsideToSsMain},
         {SsMainToSpeedHighway, SpeedHighwayToSsMain},
-        {HotelToEmeraldCoast, EmeraldCoastToHotel},
+        {HotelPoolToEmeraldCoast, EmeraldCoastToHotelPool},
         {HotelToSsChaoGarden, SsChaoGardenToHotel},
         {HotelToChaos2, Chaos2ToHotel},
         {TwinkleParkLobbyToTwinklePark, TwinkleParkToTwinkleParkLobby},
@@ -271,7 +286,7 @@ private:
         {MrMainToEggHornet, EggHornetToMrMain},
         {MrMainToMrChaoGarden, MrChaoGardenToMrMain},
         {MrMainToSkyChase1, SkyChase1ToMrMain},
-        {AngelIslandToIceCap, IceCapToAngelIsland},
+        {IceCaveToIceCap, IceCapToIceCave},
         {AngelIslandToRedMountain, RedMountainToAngelIsland},
         {AngelIslandToPastAltar, PastAltarToAngelIsland},
         {PastAltarToPastMain, PastMainToPastAltar},

@@ -437,9 +437,9 @@ BOOL AdventureFieldEntranceManager::OnIsHotelBackDoorOpen()
         return _isHotelBackDoorOpenHook.Original();
 
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare2)
-        return _instance->IsDoorOpen(StationToHotel);
+        return _instance->IsDoorOpen(CasinoToHotel);
 
-    return _instance->IsDoorOpen(HotelToStation);
+    return _instance->IsDoorOpen(HotelToCasino);
 }
 
 TaskFunc(SomethingAboutTPDoorA, 0x63E670);
@@ -452,7 +452,7 @@ void AdventureFieldEntranceManager::OnTwinkleParkLobbyDoorFromStation(task* tp)
     //We disable the distance check, and we manually check if the entrance is accessible
     WriteData<1>((void*)0x63E737, 0xEB);
 
-    const bool isDoorOpen = _instance->IsDoorOpen(SsMainToTwinkleParkLobby);
+    const bool isDoorOpen = _instance->IsDoorOpen(TwinkleParkTunnelToTwinkleParkLobby);
     if (!isDoorOpen)
         return _twinkleParkLobbyDoorFromStationHook.Original(tp);
 
@@ -475,7 +475,7 @@ void AdventureFieldEntranceManager::OnTwinkleParkLobbyDoorToStation(task* tp)
 
     //We disable the distance check, and we manually check if the entrance is accessible
     WriteData<1>((void*)0x63E477, 0xEB);
-    const bool isDoorOpen = _instance->IsDoorOpen(TwinkleParkLobbyToSsMain);
+    const bool isDoorOpen = _instance->IsDoorOpen(TwinkleParkLobbyToTwinkleParkTunnel);
     if (!isDoorOpen)
         return _twinkleParkLobbyDoorToStationHook.Original(tp);
 
@@ -508,7 +508,7 @@ void AdventureFieldEntranceManager::OnElevatorOut(task* tp)
         return _elevatorOutHook.Original(tp);
 
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare4 && !_instance->IsDoorOpen(
-        SsMainToSewers))
+        TwinkleParkTunnelToSewers))
         return _elevatorOutHook.Original(tp);
 
     _elevatorInHook.Original(tp);
@@ -520,7 +520,7 @@ void AdventureFieldEntranceManager::OnElevatorIn(task* tp)
         return _elevatorInHook.Original(tp);
 
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare3 && !_instance->IsDoorOpen(
-        SewersToSsMain))
+        SewersToTwinkleParkTunnel))
         return _elevatorOutHook.Original(tp);
 
     _elevatorInHook.Original(tp);
@@ -706,7 +706,7 @@ BOOL AdventureFieldEntranceManager::OnIsEmeraldCoastOpen()
     if (CurrentCharacter == Characters_Gamma)
         return false;
 
-    return _instance->IsDoorOpen(HotelToEmeraldCoast);
+    return _instance->IsDoorOpen(HotelPoolToEmeraldCoast);
 }
 
 void AdventureFieldEntranceManager::OnLoadEmeraldCoastGateTargets(task* tp)
@@ -715,7 +715,7 @@ void AdventureFieldEntranceManager::OnLoadEmeraldCoastGateTargets(task* tp)
         return _loadEmeraldCoastGateTargetsHook.Original(tp);
 
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
-        && !_instance->IsDoorOpen(HotelToEmeraldCoast))
+        && !_instance->IsDoorOpen(HotelPoolToEmeraldCoast))
         FreeTask(tp);
     else
         _loadEmeraldCoastGateTargetsHook.Original(tp);
@@ -751,13 +751,13 @@ BOOL AdventureFieldEntranceManager::OnIsCasinoOpen()
         return _isCasinoOpenHook.Original();
 
     if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
-        return _isCasinoOpenHook.Original() && _instance->IsDoorOpen(StationToCasinopolis);
+        return _isCasinoOpenHook.Original() && _instance->IsDoorOpen(CasinoToCasinopolis);
 
     if (CurrentCharacter == Characters_Knuckles)
         return GetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO)) && _instance->IsDoorOpen(
-            StationToCasinopolis);
+            CasinoToCasinopolis);
 
-    return _instance->IsDoorOpen(StationToCasinopolis);
+    return _instance->IsDoorOpen(CasinoToCasinopolis);
 }
 
 
@@ -778,7 +778,7 @@ EntranceId GetBossEntrance()
     switch (levelact(CurrentLevel, CurrentAct))
     {
     case LevelAndActIDs_StationSquare2:
-        return StationToEggWalker;
+        return CasinoToEggWalker;
     case LevelAndActIDs_StationSquare1:
         return CityHallToChaos0;
     case LevelAndActIDs_MysticRuins1:
@@ -1106,7 +1106,7 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
     {
         if (newScene == 1)
         {
-            if (_instance->IsDoorOpen(AngelIslandToIceCap))
+            if (_instance->IsDoorOpen(IceCaveToIceCap))
             {
                 return SetNextLevelAndAct_CutsceneMode(
                     GET_LEVEL(LevelAndActIDs_IceCap1), GET_ACT(LevelAndActIDs_IceCap1));
@@ -1198,7 +1198,7 @@ void AdventureFieldEntranceManager::OnLoadLongLadderMr(task* tp)
 
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
-        if (!_instance->IsDoorOpen(AngelIslandToIceCap))
+        if (!_instance->IsDoorOpen(IceCaveToIceCap))
         {
             return FreeTask(tp);
         }

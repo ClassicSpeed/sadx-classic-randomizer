@@ -26,16 +26,16 @@ public:
             return _gameStatus.unlock.keyStationKey;
         case StationToMrMain:
             return _gameStatus.unlock.keyTrain;
-        case StationToCasinopolis: // TODO: Check
+        case CasinoToCasinopolis: // TODO: Check
             return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
                 || CurrentCharacter == Characters_Knuckles;
-        case StationToHotel:
+        case CasinoToHotel:
             return _gameStatus.unlock.keyCasinoKey;
-        case StationToEggWalker:
+        case CasinoToEggWalker:
             return CurrentCharacter == Characters_Tails;
         case SewersToCityHall:
             return true;
-        case SewersToSsMain:
+        case SewersToTwinkleParkTunnel:
             return CurrentCharacter == Characters_Big;
         case SsMainToHotel:
             return _gameStatus.unlock.keyHotelKey;
@@ -43,29 +43,29 @@ public:
             return _gameStatus.unlock.keyStationKey;
         case SsMainToCityHall:
             return _gameStatus.unlock.keyPolicePass;
-        case SsMainToTwinkleParkLobby:
+        case TwinkleParkTunnelToTwinkleParkLobby:
             return true;
         case SsMainToEcOutside:
             return _gameStatus.unlock.keyBoat;
         case SsMainToBridge:
             return _gameStatus.unlock.keyBoat;
-        case SsMainToSewers:
+        case TwinkleParkTunnelToSewers:
             return CurrentCharacter == Characters_Big;
         case SsMainToSpeedHighway:
             return (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
                 && _gameStatus.unlock.keyEmployeeCard;
         case HotelToSsMain:
             return _gameStatus.unlock.keyHotelKey;
-        case HotelToStation:
+        case HotelToCasino:
             return _gameStatus.unlock.keyCasinoKey;
-        case HotelToEmeraldCoast:
+        case HotelPoolToEmeraldCoast:
             return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma
                 || CurrentCharacter == Characters_Big;
         case HotelToSsChaoGarden:
             return true;
         case HotelToChaos2:
             return CurrentCharacter == Characters_Knuckles;
-        case TwinkleParkLobbyToSsMain:
+        case TwinkleParkLobbyToTwinkleParkTunnel:
             return true;
         case TwinkleParkLobbyToTwinklePark:
             return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy
@@ -95,7 +95,7 @@ public:
             return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails;
         case AngelIslandToMrMain:
             return _gameStatus.unlock.keyDynamite;
-        case AngelIslandToIceCap: // TODO: Check
+        case IceCaveToIceCap: // TODO: Check
             return _gameStatus.unlock.keyIceStone;
         case AngelIslandToRedMountain:
             return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma
@@ -240,10 +240,10 @@ public:
             return true;
         case SpeedHighwayToCityHall:
         case Chaos0ToCityHall:
-        case CasinopolisToStation:
-        case EggWalkerToStation:
+        case CasinopolisToCasino:
+        case EggWalkerToCasino:
         case SpeedHighwayToSsMain:
-        case EmeraldCoastToHotel:
+        case EmeraldCoastToHotelPool:
         case Chaos2ToHotel:
         case TwinkleParkToTwinkleParkLobby:
         case TwinkleCircuitToTwinkleParkLobby:
@@ -251,7 +251,7 @@ public:
         case Chaos4ToMrMain:
         case EggHornetToMrMain:
         case SkyChase1ToMrMain:
-        case IceCapToAngelIsland:
+        case IceCapToIceCave:
         case RedMountainToAngelIsland:
         case LostWorldToJungle:
         case LostWorldToJungleAlternative:

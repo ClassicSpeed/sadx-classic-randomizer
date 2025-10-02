@@ -19,40 +19,46 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         //Station
         {StationToSsMain, LevelAndActIDs_StationSquare2, 0, SsMainToStation, 26, {59, 79, 1452}},
-        {StationToCasinopolis, LevelAndActIDs_StationSquare2, 1, CasinopolisToStation, 225, {-620, 12.5, 905}},
-        {StationToHotel, LevelAndActIDs_StationSquare2, 2, HotelToStation, 0.0f, {-445, 13, 1515}},
+        {CasinoToCasinopolis, LevelAndActIDs_StationSquare2, 1, CasinopolisToCasino, 225, {-620, 12.5, 905}},
+        {CasinoToHotel, LevelAndActIDs_StationSquare2, 2, HotelToCasino, 0.0f, {-445, 13, 1515}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-236.8f, 153, 1237}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-164, 153, 1204}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-115, 153, 1179}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-43, 153, 1142}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {4.6f, 153, 1116.4f}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {76.5f, 153, 1080.7f}},
-        {StationToEggWalker, LevelAndActIDs_StationSquare2, 1, EggWalkerToStation, 0, {-400, 13, 955}},
+        {CasinoToEggWalker, LevelAndActIDs_StationSquare2, 1, EggWalkerToCasino, 0, {-400, 13, 955}},
 
         // Sewers
-        {SewersToSsMain, LevelAndActIDs_StationSquare3, 1, SsMainToSewers, 0, {395, -87, 1323}},
+        {SewersToTwinkleParkTunnel, LevelAndActIDs_StationSquare3, 1, TwinkleParkTunnelToSewers, 0, {395, -87, 1323}},
         {SewersToCityHall, LevelAndActIDs_StationSquare3, 0, CityHallToSewers, 270, {433.5, 13, 635}},
 
         // SSMain
         {SsMainToCityHall, LevelAndActIDs_StationSquare4, 1, CityHallToSsMain, 110.8F, {443, 13, 1077}},
         {SsMainToStation, LevelAndActIDs_StationSquare4, 0, StationToSsMain, 198.81f, {28, 41, 1388}},
         {SsMainToHotel, LevelAndActIDs_StationSquare4, 3, HotelToSsMain, 270, {-168, 15, 1685}},
-        {SsMainToTwinkleParkLobby, LevelAndActIDs_StationSquare4, 4, TwinkleParkLobbyToSsMain, 90, {580, 65, 1772}},
+        {
+            TwinkleParkTunnelToTwinkleParkLobby, LevelAndActIDs_StationSquare4, 4, TwinkleParkLobbyToTwinkleParkTunnel,
+            90, {580, 65, 1772}
+        },
         {SsMainToEcOutside, LevelAndActIDs_StationSquare4, 6, EcOutsideToSsMain, 30, {174.09f, 6, 1897.51f}},
         {SsMainToBridge, LevelAndActIDs_StationSquare4, 6, BridgeToSsMain, 30, {174.09f, 6, 1897.51f}},
-        {SsMainToSewers, LevelAndActIDs_StationSquare4, 2, SewersToSsMain, 180, {400, 58, 1450}},
+        {TwinkleParkTunnelToSewers, LevelAndActIDs_StationSquare4, 2, SewersToTwinkleParkTunnel, 180, {400, 58, 1450}},
         {SsMainToSpeedHighway, LevelAndActIDs_StationSquare4, 5, SpeedHighwayToSsMain, 90, {380, 20, 1370}},
 
         // Hotel
         {HotelToSsMain, LevelAndActIDs_StationSquare5, 1, SsMainToHotel, 90, {-245.5, 13, 1685.25}},
-        {HotelToStation, LevelAndActIDs_StationSquare5, 3, StationToHotel, 180, {-370, 13, 1605}},
-        {HotelToEmeraldCoast, LevelAndActIDs_StationSquare5, 2, EmeraldCoastToHotel, 315, {-520, 10, 2093}},
+        {HotelToCasino, LevelAndActIDs_StationSquare5, 3, CasinoToHotel, 180, {-370, 13, 1605}},
+        {HotelPoolToEmeraldCoast, LevelAndActIDs_StationSquare5, 2, EmeraldCoastToHotelPool, 315, {-520, 10, 2093}},
         {HotelToSsChaoGarden, LevelAndActIDs_StationSquare5, 4, SsChaoGardenToHotel, 270, {-395, 13, 1700}},
         {HotelToChaos2, LevelAndActIDs_StationSquare5, 5, Chaos2ToHotel, 270, {-395, 13, 1665}},
 
 
         // Twinkle Park Lobby
-        {TwinkleParkLobbyToSsMain, LevelAndActIDs_StationSquare6, 0, SsMainToTwinkleParkLobby, 270, {675, 65, 1771.5f}},
+        {
+            TwinkleParkLobbyToTwinkleParkTunnel, LevelAndActIDs_StationSquare6, 0, TwinkleParkTunnelToTwinkleParkLobby,
+            270, {675, 65, 1771.5f}
+        },
         {
             TwinkleParkLobbyToTwinkleCircuit, LevelAndActIDs_StationSquare6, 2, TwinkleCircuitToTwinkleParkLobby, 180,
             {757, 65, 1735}
@@ -77,7 +83,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Angel Island
         {AngelIslandToMrMain, LevelAndActIDs_MysticRuins2, 0, MrMainToAngelIsland, 90, {0, 15, 0}},
-        {AngelIslandToIceCap, LevelAndActIDs_MysticRuins2, 1, IceCapToAngelIsland, 280, {-1425, 53, 353}},
+        {IceCaveToIceCap, LevelAndActIDs_MysticRuins2, 1, IceCapToIceCave, 280, {-1425, 53, 353}},
         {AngelIslandToRedMountain, LevelAndActIDs_MysticRuins2, 2, RedMountainToAngelIsland, 268, {-1955, -335, 1652}},
         {AngelIslandToPastAltar, LevelAndActIDs_MysticRuins2, 3, PastAltarToAngelIsland, 90, {-2.5f, -225, 2397.5f}},
 
@@ -248,10 +254,10 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {SpeedHighwayToCityHall, LevelAndActIDs_SpeedHighway3, 0, CityHallToSpeedHighway, 0, {0, 0, 0}},
 
         // Emerald Coast
-        {EmeraldCoastToHotel, LevelAndActIDs_EmeraldCoast1, 0, HotelToEmeraldCoast, 0, {0, 0, 0}},
+        {EmeraldCoastToHotelPool, LevelAndActIDs_EmeraldCoast1, 0, HotelPoolToEmeraldCoast, 0, {0, 0, 0}},
 
         // Casinopolis
-        {CasinopolisToStation, LevelAndActIDs_Casinopolis1, 0, StationToCasinopolis, 0, {0, 0, 0}},
+        {CasinopolisToCasino, LevelAndActIDs_Casinopolis1, 0, CasinoToCasinopolis, 0, {0, 0, 0}},
 
         // Twinkle Park
         {TwinkleParkToTwinkleParkLobby, LevelAndActIDs_TwinklePark1, 0, TwinkleParkLobbyToTwinklePark, 0, {0, 0, 0}},
@@ -260,7 +266,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {WindyValleyToMrMain, LevelAndActIDs_WindyValley1, 0, MrMainToWindyValley, 0, {0, 0, 0}},
 
         // Ice Cap
-        {IceCapToAngelIsland, LevelAndActIDs_IceCap1, 0, AngelIslandToIceCap, 0, {0, 0, 0}},
+        {IceCapToIceCave, LevelAndActIDs_IceCap1, 0, IceCaveToIceCap, 0, {0, 0, 0}},
 
         // Red Mountain
         {RedMountainToAngelIsland, LevelAndActIDs_RedMountain1, 0, AngelIslandToRedMountain, 0, {0, 0, 0}},
@@ -288,7 +294,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         // Chaos 2
         {Chaos2ToHotel, LevelAndActIDs_Chaos2, 0, HotelToChaos2, 0, {0, 0, 0}},
         // Egg Walker
-        {EggWalkerToStation, LevelAndActIDs_EggWalker, 0, StationToEggWalker, 0, {0, 0, 0}},
+        {EggWalkerToCasino, LevelAndActIDs_EggWalker, 0, CasinoToEggWalker, 0, {0, 0, 0}},
         // Chaos 4
         {Chaos4ToMrMain, LevelAndActIDs_Chaos4, 0, MrMainToChaos4, 0, {0, 0, 0}},
 
