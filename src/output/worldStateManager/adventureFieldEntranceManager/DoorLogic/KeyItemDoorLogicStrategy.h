@@ -1,10 +1,10 @@
 #include "IDoorLogicStrategy.h"
 
 
-class DefaultDoorLogicStrategy : public IDoorLogicStrategy
+class KeyItemDoorLogicStrategy : public IDoorLogicStrategy
 {
 public:
-    DefaultDoorLogicStrategy(Options& options, GameStatus& gameStatus)
+    KeyItemDoorLogicStrategy(Options& options, GameStatus& gameStatus)
         : _options(options),
           _gameStatus(gameStatus)
     {
@@ -26,7 +26,11 @@ public:
             return _gameStatus.unlock.keyStationKey;
         case StationToMrMain:
             return _gameStatus.unlock.keyTrain;
-        case CasinoToCasinopolis: // TODO: Check
+        case StationToCasino:
+            return _gameStatus.unlock.keyShutterKey;
+        case CasinoToStation:
+            return _gameStatus.unlock.keyShutterKey;
+        case CasinoToCasinopolis:
             return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
                 || CurrentCharacter == Characters_Knuckles;
         case CasinoToHotel:
@@ -43,14 +47,12 @@ public:
             return _gameStatus.unlock.keyStationKey;
         case SsMainToCityHall:
             return _gameStatus.unlock.keyPolicePass;
-        case TwinkleParkTunnelToTwinkleParkLobby:
-            return true;
+        case SsMainToTwinkleParkTunnel:
+            return _gameStatus.unlock.keyTwinkleParkTicket;
         case SsMainToEcOutside:
             return _gameStatus.unlock.keyBoat;
         case SsMainToBridge:
             return _gameStatus.unlock.keyBoat;
-        case TwinkleParkTunnelToSewers:
-            return CurrentCharacter == Characters_Big;
         case SsMainToSpeedHighway:
             return (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
                 && _gameStatus.unlock.keyEmployeeCard;
@@ -58,13 +60,23 @@ public:
             return _gameStatus.unlock.keyHotelKey;
         case HotelToCasino:
             return _gameStatus.unlock.keyCasinoKey;
-        case HotelPoolToEmeraldCoast:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma
-                || CurrentCharacter == Characters_Big;
         case HotelToSsChaoGarden:
             return true;
         case HotelToChaos2:
             return CurrentCharacter == Characters_Knuckles;
+        case HotelToHotelPool:
+            return _gameStatus.unlock.keyPoolKey;
+        case HotelPoolToHotel:
+            return _gameStatus.unlock.keyPoolKey;
+        case HotelPoolToEmeraldCoast:
+            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma
+                || CurrentCharacter == Characters_Big;
+        case TwinkleParkTunnelToSsMain:
+            return _gameStatus.unlock.keyTwinkleParkTicket;
+        case TwinkleParkTunnelToTwinkleParkLobby:
+            return true;
+        case TwinkleParkTunnelToSewers:
+            return CurrentCharacter == Characters_Big;
         case TwinkleParkLobbyToTwinkleParkTunnel:
             return true;
         case TwinkleParkLobbyToTwinklePark:
@@ -80,7 +92,7 @@ public:
             return _gameStatus.unlock.keyRaft;
         case MrMainToAngelIsland:
             return _gameStatus.unlock.keyDynamite;
-        case MrMainToWindyValley: // TODO: Check
+        case MrMainToWindyValley:
             return _gameStatus.unlock.keyWindStone;
         case MrMainToJungle:
             return _gameStatus.unlock.keyJungleCart;
@@ -95,13 +107,18 @@ public:
             return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails;
         case AngelIslandToMrMain:
             return _gameStatus.unlock.keyDynamite;
-        case IceCaveToIceCap: // TODO: Check
+        case AngelIslandToIceCave:
             return _gameStatus.unlock.keyIceStone;
         case AngelIslandToRedMountain:
             return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma
                 || CurrentCharacter == Characters_Knuckles;
         case AngelIslandToPastAltar:
             return _gameStatus.unlock.keyTimeMachine;
+        case IceCaveToAngelIsland:
+            return _gameStatus.unlock.keyIceStone;
+        case IceCaveToIceCap:
+            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails || CurrentCharacter ==
+                Characters_Big;
         case PastAltarToAngelIsland:
             return _gameStatus.unlock.keyTimeMachine;
         case PastAltarToPastMain:
@@ -114,7 +131,7 @@ public:
             return _gameStatus.unlock.keyJungleCart;
         case JungleToLostWorld:
             return CurrentCharacter == Characters_Sonic;
-        case JungleToLostWorldAlternative: // TODO: Check
+        case JungleToLostWorldAlternative:
             return CurrentCharacter == Characters_Knuckles;
         case JungleToFinalEggTower:
             return true;
@@ -268,7 +285,6 @@ public:
         case HotShelterToEcInside:
             return true;
         case InvalidEntranceId:
-
             return false;
         }
         return false;
@@ -283,8 +299,3 @@ private:
     Options& _options;
     GameStatus& _gameStatus;
 };
-
-
-//TODO: Implement normal gameplay with key items
-//TODO: Implement normal gameplay with emblems
-//TODO: Implement random gameplay with emblems
