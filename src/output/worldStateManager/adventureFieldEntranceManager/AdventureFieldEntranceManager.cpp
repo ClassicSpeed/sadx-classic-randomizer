@@ -1023,8 +1023,7 @@ BOOL AdventureFieldEntranceManager::OnIsMonkeyDoorOpen(int a1)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1)
         return true;
 
-    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma
-        || CurrentCharacter == Characters_Knuckles)
+    if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma)
         return _isMonkeyDead(1) && _instance->_instance->IsDoorOpen(AngelIslandToRedMountain);
 
     //For everyone else, we return true if we are in the main mystic ruins area
@@ -1037,7 +1036,7 @@ void AdventureFieldEntranceManager::OnLoadMonkeyCage(task* tp)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
         if (CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Big
-            || CurrentCharacter == Characters_Amy)
+            || CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Knuckles)
             return FreeTask(tp);
         if (!_instance->_instance->IsDoorOpen(AngelIslandToRedMountain))
             return FreeTask(tp);
