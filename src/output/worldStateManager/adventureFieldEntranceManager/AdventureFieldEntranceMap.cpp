@@ -343,11 +343,29 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {SandHillToJungle, LevelAndActIDs_SandHill, 0, JungleToSandHill, 0, {0, 0, 0}},
 
     };
+    _staticConnectionList = {
+        {StationToCasino, LevelAndActIDs_StationSquare2, 0, CasinoToStation, 206, {-202, 82, 1319}},
+        {CasinoToStation, LevelAndActIDs_StationSquare2, 0, StationToCasino, 26, {-206, 82, 1310}},
+
+        {SsMainToTwinkleParkTunnel, LevelAndActIDs_StationSquare4, 0, TwinkleParkTunnelToSsMain, 0, {0, 0, 0}},
+        {TwinkleParkTunnelToSsMain, LevelAndActIDs_StationSquare4, 0, SsMainToTwinkleParkTunnel, 0, {0, 0, 0}},
+
+        {HotelToHotelPool, LevelAndActIDs_StationSquare5, 0, HotelPoolToHotel, 0, {0, 0, 0}},
+        {HotelPoolToHotel, LevelAndActIDs_StationSquare5, 0, HotelToHotelPool, 0, {0, 0, 0}},
+
+        {AngelIslandToIceCave, LevelAndActIDs_MysticRuins2, 0, IceCaveToAngelIsland, 0, {0, 0, 0}},
+        {IceCaveToAngelIsland, LevelAndActIDs_MysticRuins2, 0, AngelIslandToIceCave, 0, {0, 0, 0}},
+    };
 }
 
 const std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetEntrances() const
 {
     return _entranceList;
+}
+
+const std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetStaticEntrances() const
+{
+    return _staticConnectionList;
 }
 
 AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(

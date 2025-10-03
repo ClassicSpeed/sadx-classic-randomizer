@@ -47,10 +47,6 @@ private:
 
     inline static FunctionHook<BOOL> _isCasinoHotelDoorOpenHook{0x630970};
     static BOOL OnIsCasinoHotelDoorOpen();
-
-    inline static FunctionHook<BOOL> _isCasinoStationDoorOpenHook{0x638880};
-    static BOOL OnIsCasinoStationDoorOpen();
-
     inline static FunctionHook<void, task*> _mysticRuinsKeyHook{0x532400};
     static void OnMysticRuinsKey(task* tp);
 

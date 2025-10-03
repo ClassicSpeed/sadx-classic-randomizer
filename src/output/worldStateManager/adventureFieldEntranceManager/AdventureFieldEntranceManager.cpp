@@ -22,6 +22,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _wallMainHook.Hook(OnWallMain);
     _ssCarMainHook.Hook(OnSsCarMain);
     _isStationDoorOpenHook.Hook(OnIsStationDoorOpen);
+    _isCasinoStationDoorOpenHook.Hook(OnIsCasinoStationDoorOpen);
     _isHotelFrontDoorOpenHook.Hook(OnIsHotelFrontDoorOpen);
     _isHotelBackDoorOpenHook.Hook(OnIsHotelBackDoorOpen);
     _twinkleParkLobbyDoorFromStationHook.Hook(OnTwinkleParkLobbyDoorFromStation);
@@ -224,6 +225,55 @@ inline NJS_TEXANIM* GetNumberAnim(int num)
     return (num >= 0 && num <= 9) ? number_anims[num] : number_0_lock_anim;
 }
 
+void AdventureFieldEntranceManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance)
+{
+    njSetTexture(&entranceTextList);
+    njPushMatrix(0);
+    float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
+    float offsetX = 0.02f * sinf(angleRad);
+    float offsetZ = 0.02f * cosf(angleRad);
+
+    njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
+                adventureFieldEntrance.indicatorPosition.z + offsetZ);
+    njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+    SetMaterial(255, 255, 255, 255);
+    NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, emblem_lock_anim};
+    njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+
+
+    njSetTexture(&entranceTextList);
+    njPushMatrix(0);
+    offsetX = 0.01f * sinf(angleRad);
+    offsetZ = 0.01f * cosf(angleRad);
+
+    njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
+                adventureFieldEntrance.indicatorPosition.z + offsetZ);
+    njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+    SetMaterial(255, 255, 255, 255);
+    NJS_SPRITE mySprite2 = {{0}, 1, 1, 0, &entranceTextList, line_lock_anim};
+    njDrawSprite3D(&mySprite2, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+
+    auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
+
+    if (entranceValue == _options.entranceEmblemValueMap.end())
+    {
+        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(
+            adventureFieldEntrance.entranceId, false);
+        entranceValue = _options.entranceEmblemValueMap.find(oppositeEntrance);
+    }
+    if (entranceValue != _options.entranceEmblemValueMap.end())
+    {
+        ShowNumberDynamic(adventureFieldEntrance, _gameStatus.unlock.currentEmblems, -10, 2, -0.01f, 4, false);
+        ShowNumberDynamic(adventureFieldEntrance, entranceValue->second, 2, -2, -0.04f, 4, true);
+    }
+}
+
 void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
 {
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
@@ -248,52 +298,17 @@ void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
         if (!ShowDisableDoorIndicator(adventureFieldEntrance.entranceId))
             continue;
 
+        ShowDoorEmblemRequirement(adventureFieldEntrance);
+    }
+    for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetStaticEntrances())
+    {
+        if (currentLevelAndAct != adventureFieldEntrance.levelAndActId)
+            continue;
 
-        njSetTexture(&entranceTextList);
-        njPushMatrix(0);
-        float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
-        float offsetX = 0.02f * sinf(angleRad);
-        float offsetZ = 0.02f * cosf(angleRad);
+        if (!ShowDisableDoorIndicator(adventureFieldEntrance.entranceId))
+            continue;
 
-        njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
-                    adventureFieldEntrance.indicatorPosition.z + offsetZ);
-        njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
-        njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
-        njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
-        SetMaterial(255, 255, 255, 255);
-        NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, emblem_lock_anim};
-        njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-        njPopMatrix(1u);
-
-
-        njSetTexture(&entranceTextList);
-        njPushMatrix(0);
-        offsetX = 0.01f * sinf(angleRad);
-        offsetZ = 0.01f * cosf(angleRad);
-
-        njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
-                    adventureFieldEntrance.indicatorPosition.z + offsetZ);
-        njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
-        njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
-        njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
-        SetMaterial(255, 255, 255, 255);
-        NJS_SPRITE mySprite2 = {{0}, 1, 1, 0, &entranceTextList, line_lock_anim};
-        njDrawSprite3D(&mySprite2, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-        njPopMatrix(1u);
-
-        auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
-
-        if (entranceValue == _options.entranceEmblemValueMap.end())
-        {
-            const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(
-                adventureFieldEntrance.entranceId, false);
-            entranceValue = _options.entranceEmblemValueMap.find(oppositeEntrance);
-        }
-        if (entranceValue != _options.entranceEmblemValueMap.end())
-        {
-            ShowNumberDynamic(adventureFieldEntrance, _gameStatus.unlock.currentEmblems, -10, 2, -0.01f, 4, false);
-            ShowNumberDynamic(adventureFieldEntrance, entranceValue->second, 2, -2, -0.04f, 4, true);
-        }
+        ShowDoorEmblemRequirement(adventureFieldEntrance);
     }
 }
 
@@ -419,6 +434,13 @@ int AdventureFieldEntranceManager::OnIsStationDoorOpen()
 
     return _instance->IsDoorOpen(StationToSsMain);
 }
+
+
+BOOL AdventureFieldEntranceManager::OnIsCasinoStationDoorOpen()
+{
+    return _instance->IsDoorOpen(StationToCasino);
+}
+
 
 BOOL AdventureFieldEntranceManager::OnIsHotelFrontDoorOpen()
 {

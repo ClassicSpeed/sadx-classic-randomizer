@@ -19,6 +19,7 @@ public:
 
     void showNumber(const AdventureFieldEntrance& adventureFieldEntrance, float posX, float posY, int number,
                     float zOffset);
+    void ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance);
     void ShowLevelEntranceArrows();
     void ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x, float y, float zBase,
                            float xStep, bool leftJustify);
@@ -56,6 +57,9 @@ private:
 
     inline static FunctionHook<BOOL> _isStationDoorOpenHook{0x63AB70};
     static BOOL OnIsStationDoorOpen();
+
+    inline static FunctionHook<BOOL> _isCasinoStationDoorOpenHook{0x638880};
+    static BOOL OnIsCasinoStationDoorOpen();
 
     inline static FunctionHook<BOOL> _isHotelFrontDoorOpenHook{0x630900};
     static BOOL OnIsHotelFrontDoorOpen();

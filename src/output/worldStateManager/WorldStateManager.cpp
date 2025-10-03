@@ -12,7 +12,6 @@ WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameS
     // _isStationDoorOpenHook.Hook(OnIsStationDoorOpen);
     // _isHotelDoorOpenHook.Hook(OnIsHotelDoorOpen);
     _isCasinoHotelDoorOpenHook.Hook(OnIsCasinoHotelDoorOpen);
-    _isCasinoStationDoorOpenHook.Hook(OnIsCasinoStationDoorOpen);
     _mysticRuinsKeyHook.Hook(OnMysticRuinsKey);
     _employeeCardHook.Hook(OnEmployeeCard);
     _twinkleCircuitResultsMaybeHook.Hook(OnTwinkleCircuitResultsMaybe);
@@ -80,12 +79,6 @@ BOOL WorldStateManager::OnIsCasinoHotelDoorOpen()
         return _isCasinoHotelDoorOpenHook.Original();
     return _instance->_gameStatus.unlock.keyCasinoKey;
 }
-
-BOOL WorldStateManager::OnIsCasinoStationDoorOpen()
-{
-    return _instance->_gameStatus.unlock.keyShutterKey;
-}
-
 
 void WorldStateManager::OnMysticRuinsKey(task* tp)
 {

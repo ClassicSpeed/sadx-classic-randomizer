@@ -243,6 +243,7 @@ public:
     AdventureFieldEntrance* GetNewConnection(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation,
                                              bool isEggCarrierTransformed);
     const std::vector<AdventureFieldEntrance>& GetEntrances() const;
+    const std::vector<AdventureFieldEntrance>& GetStaticEntrances() const;
     EntranceId GetReplacementConnection(EntranceId fromEntranceId, bool isEggCarrierTransformed);
 
 private:
@@ -253,6 +254,7 @@ private:
     AdventureFieldEntrance* FindEntranceById(EntranceId entranceId);
 
     std::vector<AdventureFieldEntrance> _entranceList = {};
+    std::vector<AdventureFieldEntrance> _staticConnectionList = {};
 
     std::map<EntranceId, EntranceId> _entranceNewConnections = {
         {CityHallToSsMain, SsMainToCityHall},
