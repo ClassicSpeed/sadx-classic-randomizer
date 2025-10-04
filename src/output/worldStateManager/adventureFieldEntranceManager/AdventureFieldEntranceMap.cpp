@@ -350,8 +350,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {SsMainToTwinkleParkTunnel, LevelAndActIDs_StationSquare4, 0, TwinkleParkTunnelToSsMain, 0, {0, 0, 0}},
         {TwinkleParkTunnelToSsMain, LevelAndActIDs_StationSquare4, 0, SsMainToTwinkleParkTunnel, 0, {0, 0, 0}},
 
-        {HotelToHotelPool, LevelAndActIDs_StationSquare5, 0, HotelPoolToHotel, 0, {0, 0, 0}},
-        {HotelPoolToHotel, LevelAndActIDs_StationSquare5, 0, HotelToHotelPool, 0, {0, 0, 0}},
+        {HotelToHotelPool, LevelAndActIDs_StationSquare5, 0, HotelPoolToHotel, 0, {-380, 15, 1828}},
+        {HotelPoolToHotel, LevelAndActIDs_StationSquare5, 0, HotelToHotelPool, 180, {-380, 15, 1834}},
 
         {AngelIslandToIceCave, LevelAndActIDs_MysticRuins2, 0, IceCaveToAngelIsland, 0, {0, 0, 0}},
         {IceCaveToAngelIsland, LevelAndActIDs_MysticRuins2, 0, AngelIslandToIceCave, 0, {0, 0, 0}},

@@ -25,6 +25,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _isCasinoStationDoorOpenHook.Hook(OnIsCasinoStationDoorOpen);
     _isHotelFrontDoorOpenHook.Hook(OnIsHotelFrontDoorOpen);
     _isHotelBackDoorOpenHook.Hook(OnIsHotelBackDoorOpen);
+    _isHotelPoolDoorOpenHook.Hook(OnIsHotelPoolDoorOpen);
     _twinkleParkLobbyDoorFromStationHook.Hook(OnTwinkleParkLobbyDoorFromStation);
     _twinkleParkLobbyDoorToStationHook.Hook(OnTwinkleParkLobbyDoorToStation);
     _ssBoxLoadHook.Hook(OnSsBoxLoad);
@@ -462,6 +463,14 @@ BOOL AdventureFieldEntranceManager::OnIsHotelBackDoorOpen()
         return _instance->IsDoorOpen(CasinoToHotel);
 
     return _instance->IsDoorOpen(HotelToCasino);
+}
+
+BOOL AdventureFieldEntranceManager::OnIsHotelPoolDoorOpen()
+{
+    if (!_instance->_options.emblemGating)
+        return _isHotelPoolDoorOpenHook.Original();
+
+    return _instance->IsDoorOpen(HotelToHotelPool);
 }
 
 TaskFunc(SomethingAboutTPDoorA, 0x63E670);
