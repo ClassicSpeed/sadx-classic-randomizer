@@ -26,6 +26,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _isHotelFrontDoorOpenHook.Hook(OnIsHotelFrontDoorOpen);
     _isHotelBackDoorOpenHook.Hook(OnIsHotelBackDoorOpen);
     _isHotelPoolDoorOpenHook.Hook(OnIsHotelPoolDoorOpen);
+    _isTwinkleParkElevatorOpenHook.Hook(OnIsTwinkleParkElevatorOpen);
     _twinkleParkLobbyDoorFromStationHook.Hook(OnTwinkleParkLobbyDoorFromStation);
     _twinkleParkLobbyDoorToStationHook.Hook(OnTwinkleParkLobbyDoorToStation);
     _ssBoxLoadHook.Hook(OnSsBoxLoad);
@@ -471,6 +472,14 @@ BOOL AdventureFieldEntranceManager::OnIsHotelPoolDoorOpen()
         return _isHotelPoolDoorOpenHook.Original();
 
     return _instance->IsDoorOpen(HotelToHotelPool);
+}
+
+BOOL AdventureFieldEntranceManager::OnIsTwinkleParkElevatorOpen()
+{
+    if (!_instance->_options.emblemGating)
+        return _isTwinkleParkElevatorOpenHook.Original();
+
+    return _instance->IsDoorOpen(SsMainToTwinkleParkTunnel);
 }
 
 TaskFunc(SomethingAboutTPDoorA, 0x63E670);

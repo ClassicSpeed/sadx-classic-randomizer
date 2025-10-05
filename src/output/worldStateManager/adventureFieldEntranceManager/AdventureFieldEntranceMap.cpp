@@ -344,17 +344,23 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
     };
     _staticConnectionList = {
-        {StationToCasino, LevelAndActIDs_StationSquare2, 0, CasinoToStation, 206, {-202, 82, 1319}},
-        {CasinoToStation, LevelAndActIDs_StationSquare2, 0, StationToCasino, 26, {-206, 82, 1310}},
+        {StationToCasino, LevelAndActIDs_StationSquare2, -1, CasinoToStation, 206, {-202, 82, 1319}},
+        {CasinoToStation, LevelAndActIDs_StationSquare2, -1, StationToCasino, 26, {-206, 82, 1310}},
 
-        {SsMainToTwinkleParkTunnel, LevelAndActIDs_StationSquare4, 0, TwinkleParkTunnelToSsMain, 0, {0, 0, 0}},
-        {TwinkleParkTunnelToSsMain, LevelAndActIDs_StationSquare4, 0, SsMainToTwinkleParkTunnel, 0, {0, 0, 0}},
+        {
+            SsMainToTwinkleParkTunnel, LevelAndActIDs_StationSquare4, -1, TwinkleParkTunnelToSsMain, 90,
+            {370, 21, 1606.5}
+        },
+        {
+            TwinkleParkTunnelToSsMain, LevelAndActIDs_StationSquare4, -1, SsMainToTwinkleParkTunnel, 90,
+            {400, 62, 1606.5}
+        },
 
-        {HotelToHotelPool, LevelAndActIDs_StationSquare5, 0, HotelPoolToHotel, 0, {-380, 15, 1828}},
-        {HotelPoolToHotel, LevelAndActIDs_StationSquare5, 0, HotelToHotelPool, 180, {-380, 15, 1834}},
+        {HotelToHotelPool, LevelAndActIDs_StationSquare5, -1, HotelPoolToHotel, 0, {-380, 15, 1828}},
+        {HotelPoolToHotel, LevelAndActIDs_StationSquare5, -1, HotelToHotelPool, 180, {-380, 15, 1834}},
 
-        {AngelIslandToIceCave, LevelAndActIDs_MysticRuins2, 0, IceCaveToAngelIsland, 0, {0, 0, 0}},
-        {IceCaveToAngelIsland, LevelAndActIDs_MysticRuins2, 0, AngelIslandToIceCave, 0, {0, 0, 0}},
+        {AngelIslandToIceCave, LevelAndActIDs_MysticRuins2, -1, IceCaveToAngelIsland, 0, {0, 0, 0}},
+        {IceCaveToAngelIsland, LevelAndActIDs_MysticRuins2, -1, AngelIslandToIceCave, 0, {0, 0, 0}},
     };
 }
 

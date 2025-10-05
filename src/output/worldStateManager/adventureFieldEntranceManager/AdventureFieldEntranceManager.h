@@ -70,6 +70,9 @@ private:
     inline static FunctionHook<BOOL> _isHotelPoolDoorOpenHook{0x6309E0};
     static BOOL OnIsHotelPoolDoorOpen();
 
+    inline static FunctionHook<BOOL> _isTwinkleParkElevatorOpenHook{0X63DBB0};
+    static BOOL OnIsTwinkleParkElevatorOpen();
+
     inline static FunctionHook<void, task*> _twinkleParkLobbyDoorFromStationHook{0x63E6F0};
     static void OnTwinkleParkLobbyDoorFromStation(task* tp);
 
