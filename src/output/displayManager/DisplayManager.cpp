@@ -86,6 +86,12 @@ void DisplayManager::ShowSongName(const std::string& songName)
 
 void DisplayManager::OnFrame()
 {
+    for (const auto& button : PressedButtons)
+
+        if (button & WhistleButtons && Current_CharObj2 != nullptr)
+        {
+            _gameStatus.unlock.currentEmblems++;
+        }
     MenuVoice = _settings.voiceMenuCharacter;
     RemoveExpiredMessages();
 

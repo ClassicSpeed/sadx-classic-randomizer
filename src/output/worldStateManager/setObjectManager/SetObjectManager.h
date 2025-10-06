@@ -148,9 +148,6 @@ const SETEntry SEWERS_SPRING_BIG = CreateSetEntry(2, {505, -89, 635},
 const SETEntry EXTRA_SEWERS_SPRING = CreateSetEntry(2, {350, -115, 860},
                                                     {0, 0, 0xE000}, {0, 0, 0});
 
-
-const SETEntry COLLISION_CUBE_MR = CreateSetEntry(COLLISION_CUBE_MYSTIC_RUINS, {-393.62f, 120, 890.06f},
-                                                  {0xFEFF, 0x4BF1, 0xFD6A}, {60, 80, 10});
 const SETEntry RED_MOUNTAIN_SCENE_CHANGE_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {-2100, -304, 1650},
                                                              {0, 0, 0}, {40, 50, 0});
 

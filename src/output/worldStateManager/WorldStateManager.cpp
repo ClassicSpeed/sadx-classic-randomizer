@@ -7,17 +7,7 @@ WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameS
     // _levelEntranceManager(LevelEntranceManager::Init(options, settings, gameStatus))
     _adventureFieldEntranceManager(AdventureFieldEntranceManager::Init(options, gameStatus))
 {
-    _collisionCubeHook.Hook(OnCollisionCube);
-    //TODO: Undo
-    // _isStationDoorOpenHook.Hook(OnIsStationDoorOpen);
-    // _isHotelDoorOpenHook.Hook(OnIsHotelDoorOpen);
-    _isCasinoHotelDoorOpenHook.Hook(OnIsCasinoHotelDoorOpen);
-    _mysticRuinsKeyHook.Hook(OnMysticRuinsKey);
-    _employeeCardHook.Hook(OnEmployeeCard);
     _twinkleCircuitResultsMaybeHook.Hook(OnTwinkleCircuitResultsMaybe);
-    _isWindyValleyOpenHook.Hook(OnIsWindyValleyOpen);
-    _isAngelIslandOpenHook.Hook(OnIsAngelIslandOpen);
-    _preventKeyStoneFromSpawningHook.Hook(OnPreventKeyStoneFromSpawning);
 
 
     if (settings.chaoStatsMultiplier > 1)
@@ -50,61 +40,6 @@ void WorldStateManager::UpdateVisitedLevels(const int visitedLevel)
     // _levelEntranceManager.UpdateVisitedLevels(visitedLevel);
 }
 
-void WorldStateManager::OnCollisionCube(task* tp)
-{
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
-        && _instance->_gameStatus.unlock.keyDynamite)
-    {
-        //We find the cube collision that we created for the dynamite and delete it
-        if (IsNearPosition(tp->twp->pos, -393, 120, 890))
-            FreeTask(tp);
-    }
-    else
-        _collisionCubeHook.Original(tp);
-}
-
-BOOL WorldStateManager::OnIsStationDoorOpen()
-{
-    return _instance->_gameStatus.unlock.keyStationKey;
-}
-
-BOOL WorldStateManager::OnIsHotelDoorOpen()
-{
-    return _instance->_gameStatus.unlock.keyHotelKey;
-}
-
-BOOL WorldStateManager::OnIsCasinoHotelDoorOpen()
-{
-    if (_instance->_options.emblemGating)
-        return _isCasinoHotelDoorOpenHook.Original();
-    return _instance->_gameStatus.unlock.keyCasinoKey;
-}
-
-void WorldStateManager::OnMysticRuinsKey(task* tp)
-{
-    if (_instance->_options.emblemGating)
-        return _mysticRuinsKeyHook.Original(tp);
-
-    // We prevent the wind stone from spawning if the player doesn't have the item
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
-        && !_instance->_gameStatus.unlock.keyWindStone)
-        if (IsNearPosition(tp->twp->pos, 1392.5, 191.5, 863.5))
-            return;
-
-    _mysticRuinsKeyHook.Original(tp);
-}
-
-void WorldStateManager::OnEmployeeCard(task* tp)
-{
-    // We prevent the Employee card from spawning if the player doesn't have the item
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4
-        && !_instance->_gameStatus.unlock.keyEmployeeCard
-    )
-        return;
-    _employeeCardHook.Original(tp);
-}
-
-
 void WorldStateManager::OnTwinkleCircuitResultsMaybe(task* tp)
 {
     if (CurrentLevel == LevelIDs_TwinkleCircuit && _showExitMenuTwinkleCircuit == 1)
@@ -115,36 +50,4 @@ void WorldStateManager::OnTwinkleCircuitResultsMaybe(task* tp)
     }
 
     _twinkleCircuitResultsMaybeHook.Original(tp);
-}
-
-// TODO: Separate key items from story flags
-
-// Handles the Windy Valley entrance
-// Makes Sonic, Tails and Gamma use the winds stone
-BOOL WorldStateManager::OnIsWindyValleyOpen()
-{
-    if (_instance->_options.emblemGating)
-        return _isWindyValleyOpenHook.Original();
-
-    //TODO: Test if this works
-    return _isWindyValleyOpenHook.Original() && _instance->_gameStatus.unlock.keyWindStone;
-}
-
-BOOL WorldStateManager::OnIsAngelIslandOpen()
-{
-    if (_instance->_options.emblemGating)
-        return _isAngelIslandOpenHook.Original();
-    return _instance->_gameStatus.unlock.keyDynamite;
-}
-
-BOOL WorldStateManager::OnPreventKeyStoneFromSpawning(int a1)
-{
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2
-        && (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Knuckles
-            || CurrentCharacter == Characters_Gamma))
-    {
-        return _instance->_gameStatus.unlock.keyIceStone && _preventKeyStoneFromSpawningHook.Original(a1);
-    }
-
-    return _preventKeyStoneFromSpawningHook.Original(a1);
 }
