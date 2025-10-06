@@ -1000,6 +1000,9 @@ BOOL AdventureFieldEntranceManager::OnPreventMrStoneSpawn()
 {
     if (!_instance->_options.emblemGating)
         return _preventMrStoneSpawnHook.Original();
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+        return _instance->IsDoorOpen(AngelIslandToIceCave);
     return false;
 }
 

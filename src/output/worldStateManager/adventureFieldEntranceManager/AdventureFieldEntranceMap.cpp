@@ -359,8 +359,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
         {HotelToHotelPool, LevelAndActIDs_StationSquare5, -1, HotelPoolToHotel, 0, {-380, 15, 1828}},
         {HotelPoolToHotel, LevelAndActIDs_StationSquare5, -1, HotelToHotelPool, 180, {-380, 15, 1834}},
 
-        {AngelIslandToIceCave, LevelAndActIDs_MysticRuins2, -1, IceCaveToAngelIsland, 0, {0, 0, 0}},
-        {IceCaveToAngelIsland, LevelAndActIDs_MysticRuins2, -1, AngelIslandToIceCave, 0, {0, 0, 0}},
+        {AngelIslandToIceCave, LevelAndActIDs_MysticRuins2, -1, IceCaveToAngelIsland, 270, {-480.3f, 20, 290.4f}},
+        {IceCaveToAngelIsland, LevelAndActIDs_MysticRuins2, -1, AngelIslandToIceCave, 90, {-497.26f, 20, 289.4f}},
     };
 }
 

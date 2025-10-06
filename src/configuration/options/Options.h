@@ -265,8 +265,8 @@ public:
     //TODO: Change this
     bool emblemGating = true;
     std::map<int, int> entranceEmblemValueMap = {
-        {SsMainToTwinkleParkTunnel, 5},
-        {TwinkleParkTunnelToSsMain, 6},
+        {AngelIslandToIceCave, 5},
+        {IceCaveToAngelIsland, 6},
     };
 
     AdventureFieldRandomization entranceRandomization = AdventureFieldRandomizationDisabled;
