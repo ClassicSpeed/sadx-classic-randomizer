@@ -583,33 +583,55 @@ void SetObjectManager::SetStartingArea()
         return;
     switch (this->_options.GetCharacterStartingArea(static_cast<Characters>(CurrentCharacter)))
     {
-    case StationSquareMain:
+    case CityHall:
+        SetLevelAndAct(LevelIDs_StationSquare, 0);
+        break;
+    case SSMain:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
         break;
     case Station:
         SetLevelAndAct(LevelIDs_StationSquare, 1);
         SetEntranceNumber(0);
         break;
-    case HotelArea:
+    case Hotel:
+        SetLevelAndAct(LevelIDs_StationSquare, 0);
+        break;
+    case HotelPool:
         SetLevelAndAct(LevelIDs_StationSquare, 4);
         break;
-    case CasinoArea:
+    case Casino:
         SetLevelAndAct(LevelIDs_StationSquare, 1);
         SetEntranceNumber(2);
         break;
-    case TwinkleParkArea:
+    case TPLobby:
         SetLevelAndAct(LevelIDs_StationSquare, 5);
         break;
-    case MysticRuinsMain:
+    case MRMain:
         SetLevelAndAct(LevelIDs_MysticRuins, 0);
+        break;
+    case AngelIsland:
+        SetLevelAndAct(LevelIDs_MysticRuins, 1);
+        SetEntranceNumber(1);
         break;
     case Jungle:
         SetLevelAndAct(LevelIDs_MysticRuins, 2);
         break;
-    case EggCarrierOutside:
+    case FinalEggTower:
+        SetLevelAndAct(LevelIDs_MysticRuins, 3);
+        break;
+    case PastMain:
+        SetLevelAndAct(LevelIDs_Past, 0);
+        break;
+    case PastAltar:
+        SetLevelAndAct(LevelIDs_Past, 1);
+        break;
+    case ECOutside:
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
         break;
-    case EggCarrierInside:
+    case ECPool:
+        SetLevelAndAct(LevelIDs_EggCarrierOutside, 5);
+        break;
+    case ECInside:
         ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_TRANSFORM));
         ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_TRANSFORM));
         ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_TRANSFORM));
@@ -618,12 +640,13 @@ void SetObjectManager::SetStartingArea()
         ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_TRANSFORM));
         SetLevelAndAct(LevelIDs_EggCarrierInside, 1);
         break;
-    case AngelIsland:
-        SetLevelAndAct(LevelIDs_MysticRuins, 1);
-        SetEntranceNumber(1);
+    case Arsenal:
+        SetLevelAndAct(LevelIDs_EggCarrierInside, 0);
         break;
-    case EggCarrierFrontDeck:
-    case NoStatingArea:
+    case WaterTank:
+        SetLevelAndAct(LevelIDs_EggCarrierInside, 4);
+        break;
+    default:
         SetLevelAndAct(LevelIDs_StationSquare, 3);
         break;
     }
@@ -698,7 +721,6 @@ void SetObjectManager::OnMissionSetLoad()
     }
 }
 
-//TODO: Later, check if we can make the quit option in a boss return us to the field
 //Hook to change the level after beating the boss
 Sint32 SetObjectManager::OnFinishedLevelMaybe()
 {

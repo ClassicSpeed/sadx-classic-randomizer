@@ -52,26 +52,6 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     };
 
     helperFunctions.RegisterCommonObjectPVM(EntranceSign);
-
-
-    // TODO: Remove later
-    options.bossChecks = true;
-    options.skyChaseChecks = true;
-    gameStatus.unlock.keyTrain = true;
-    gameStatus.unlock.keyBoat = true;
-    gameStatus.unlock.keyRaft = true;
-    gameStatus.unlock.keyStationKey = true;
-    gameStatus.unlock.keyShutterKey = true;
-    gameStatus.unlock.keyHotelKey = true;
-    gameStatus.unlock.keyCasinoKey = true;
-    gameStatus.unlock.keyTwinkleParkTicket = true;
-    gameStatus.unlock.keyEmployeeCard = true;
-    gameStatus.unlock.keyDynamite = true;
-    gameStatus.unlock.keyIceStone = true;
-    gameStatus.unlock.keyWindStone = true;
-    gameStatus.unlock.keyJungleCart = true;
-    gameStatus.unlock.keyEgglift = true;
-    gameStatus.unlock.keyMonorail = true;
 }
 
 __declspec(dllexport) void __cdecl OnFrame()

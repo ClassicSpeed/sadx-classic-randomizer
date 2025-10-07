@@ -576,7 +576,7 @@ StartingArea Options::GetCharacterStartingArea(const Characters character) const
     case Characters_MetalSonic:
         break;
     }
-    return StationSquareMain;
+    return SSMain;
 }
 
 void Options::SetPlayableCharacter(const Characters character, const bool playable)
