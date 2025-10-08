@@ -44,6 +44,11 @@ void Options::LogicLevel(const int logicLevel)
         this->expertMode = false;
 }
 
+void Options::SetGatingMode(const int gatingMode)
+{
+    this->gatingMode = static_cast<GatingMode>(gatingMode);
+}
+
 void Options::EmblemsForPerfectChaos(const int newEmblemGoal)
 {
     this->emblemGoal = max(1, newEmblemGoal);

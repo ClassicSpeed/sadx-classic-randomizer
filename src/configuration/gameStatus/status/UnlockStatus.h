@@ -2,7 +2,7 @@
 
 struct UnlockStatus
 {
-    int currentEmblems;
+    int currentEmblems = 0;
 
     bool whiteEmerald;
     bool redEmerald;

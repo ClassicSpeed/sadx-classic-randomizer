@@ -62,6 +62,13 @@ enum StartingArea
     NoStatingArea
 };
 
+enum GatingMode
+{
+    EmblemGating = 0,
+    KeyItemGating,
+    NoGating
+};
+
 
 static int Clamp(const int value, const int min, const int max)
 {
@@ -88,6 +95,7 @@ public:
     void GoalRequiresBosses(int newGoalRequiresBosses);
     void GoalRequiresChaoRaces(int newGoalRequiresChaoRaces);
     void LogicLevel(int logicLevel);
+    void SetGatingMode(int gatingMode);
     void EmblemsForPerfectChaos(int newEmblemGoal);
     void LevelForPerfectChaos(int newLevelGoal);
     void MissionForPerfectChaos(int newMissionGoal);
@@ -281,6 +289,7 @@ public:
 
     //TODO: Change this
     bool emblemGating = true;
+    GatingMode gatingMode = EmblemGating;
     std::map<int, int> entranceEmblemValueMap = {
         {MrMainToAngelIsland, 5},
         {AngelIslandToMrMain, 5},
