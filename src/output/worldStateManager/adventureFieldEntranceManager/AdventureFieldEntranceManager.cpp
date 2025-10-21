@@ -216,6 +216,7 @@ inline NJS_TEXANIM number_6_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 9, NJD
 inline NJS_TEXANIM number_7_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 10, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM number_8_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 11, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM number_9_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 12, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM base_map[] = {{18, 18, 9, 9, 255, 255, 0, 0, 13, NJD_SPRITE_COLOR}};
 
 // Helper to get the correct number anim
 inline NJS_TEXANIM* GetNumberAnim(int num)
@@ -229,6 +230,8 @@ inline NJS_TEXANIM* GetNumberAnim(int num)
 
 void AdventureFieldEntranceManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance)
 {
+    this->ShowMap();
+
     njSetTexture(&entranceTextList);
     njPushMatrix(0);
     float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
@@ -375,6 +378,16 @@ void AdventureFieldEntranceManager::showNumber(const AdventureFieldEntrance& adv
     SetMaterial(255, 255, 255, 255);
     NJS_SPRITE numRight = {{0}, 1, 1, 0, &entranceTextList, GetNumberAnim(number)};
     njDrawSprite3D(&numRight, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+}
+
+void AdventureFieldEntranceManager::ShowMap()
+{
+    njPushMatrix(0);
+    njSetTexture(&entranceTextList);
+    NJS_SPRITE mySprite = {{_nj_screen_.cx, _nj_screen_.cy, 1}, -35, -35, 0, &entranceTextList, base_map};
+    njRotateX(0, 0x8000);
+    njDrawSprite2D_ForcePriority(&mySprite, 0, 200, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
 }
 

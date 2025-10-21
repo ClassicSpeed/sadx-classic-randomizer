@@ -442,7 +442,7 @@ EntranceId AdventureFieldEntranceMap::FindEntranceByLocation(
 EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId fromEntranceId,
                                                                const bool isEggCarrierTransformed)
 {
-    EntranceId toEntranceId;
+    EntranceId toEntranceId = InvalidEntranceId;
     for (const auto& [entranceA, entranceB] : _entranceNewConnections)
     {
         if (entranceA == fromEntranceId)

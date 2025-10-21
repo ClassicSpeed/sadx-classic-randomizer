@@ -19,6 +19,7 @@ public:
 
     void showNumber(const AdventureFieldEntrance& adventureFieldEntrance, float posX, float posY, int number,
                     float zOffset);
+    void ShowMap();
     void ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance);
     void ShowLevelEntranceArrows();
     void ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x, float y, float zBase,

@@ -291,8 +291,8 @@ public:
     bool emblemGating = true;
     GatingMode gatingMode = EmblemGating;
     std::map<int, int> entranceEmblemValueMap = {
-        {MrMainToAngelIsland, 5},
-        {AngelIslandToMrMain, 5},
+        {SsMainToStation, 5},
+        {SsMainToHotel, 3},
     };
 
     AdventureFieldRandomization entranceRandomization = AdventureFieldRandomizationDisabled;
