@@ -381,14 +381,106 @@ void AdventureFieldEntranceManager::showNumber(const AdventureFieldEntrance& adv
     njPopMatrix(1u);
 }
 
+void AdventureFieldEntranceManager::DrawEntrancePoint(float x, float y)
+{
+    float squareSize = 6.0f;
+    float halfSize = squareSize / 2.0f;
+    DrawRect_Queue(_nj_screen_.cx - x - halfSize,
+                   _nj_screen_.cy - y - halfSize,
+                   _nj_screen_.cx - x + halfSize,
+                   _nj_screen_.cy - y + halfSize,
+                   62041.496f,
+                   0xFFFF0000,
+                   QueuedModelFlagsB_EnableZWrite);
+}
+
 void AdventureFieldEntranceManager::ShowMap()
 {
     njPushMatrix(0);
     njSetTexture(&entranceTextList);
-    NJS_SPRITE mySprite = {{_nj_screen_.cx, _nj_screen_.cy, 1}, -35, -35, 0, &entranceTextList, base_map};
+    NJS_SPRITE mySprite = {{_nj_screen_.cx, _nj_screen_.cy, 1}, -50, -50, 0, &entranceTextList, base_map};
     njRotateX(0, 0x8000);
     njDrawSprite2D_ForcePriority(&mySprite, 0, 200, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
+
+
+    // FunctionPointer(void, njDrawCircle2D, (NJS_POINT2COL *p, Int n, Float pri, Uint32 attr), 0x77DFC0);
+    // njPushMatrix(0);
+    // njSetTexture(&entranceTextList);
+    // NJS_SPRITE myTestEmblem = {
+    //     {_nj_screen_.cx - 220, _nj_screen_.cy - 165, 1}, -1.5, -1.5, 0, &entranceTextList, emblem_lock_anim
+    // };
+    // njRotateX(0, 0x8000);
+    // njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    // njPopMatrix(1u);
+
+    /*   
+       NJS_POINT2 points[] = {
+           {_nj_screen_.cx - 220, _nj_screen_.cy - 165},
+           {_nj_screen_.cx - 225, _nj_screen_.cy - 165},
+           {_nj_screen_.cx - 220, _nj_screen_.cy - 160}
+       };
+       NJS_COLOR color[3] = {
+           {0xFFD4AF37},
+           {0xFFD4AF37},
+           {0xFFD4AF37},
+       };
+       NJS_POINT2COL point2Col;
+       point2Col.p = points;
+       point2Col.col = color;
+       njDrawTriangle2D(&point2Col, 1, 300, NJD_TRANSPARENT);*/
+
+
+    DrawEntrancePoint(220.0f, 163.0f);
+
+    DrawEntrancePoint(335.0f, 165.0f);
+    DrawEntrancePoint(342.0f, 124.0f);
+
+
+    NJS_POINT2 points[] = {
+        {_nj_screen_.cx - 335.0f - 1, _nj_screen_.cy - 165},
+        {_nj_screen_.cx - 335.0f + 1, _nj_screen_.cy - 165},
+        {_nj_screen_.cx - 342.0f - 1, _nj_screen_.cy - 124},
+        {_nj_screen_.cx - 342.0f + 1, _nj_screen_.cy - 124},
+    };
+
+    NJS_COLOR linecol[4];
+    NJS_POINT2COL linep2;
+
+    linep2.p = points;
+    linep2.col = linecol;
+    linep2.tex = NULL;
+    linep2.num = 4;
+
+
+    linep2.col[0].color = 0xFFFF0000;
+    linep2.col[1].color = 0xFFFF0000;
+    linep2.col[2].color = 0xFFFF0000;
+    linep2.col[3].color = 0xFFFF0000;
+
+    // Draw2DLinesMaybe_Queue(&linep2, 2, 62041.496f, 0x0, QueuedModelFlagsB_EnableZWrite);
+    Draw2DLinesMaybe_Queue(&linep2, 4, 62041.496f, NJD_FILL, QueuedModelFlagsB_SomeTextureThing);
+
+
+    // DrawRect_Queue(_nj_screen_.cx - 217,
+    //                _nj_screen_.cy - 160,
+    //                _nj_screen_.cx - 223,
+    //                _nj_screen_.cy - 166, 62041.496f,
+    //                0xFFFF0000,
+    //                QueuedModelFlagsB_EnableZWrite);
+
+    // njPushMatrix(0);
+    // njSetTexture(&entranceTextList);
+    // NJS_SPRITE myTestEmblem = {{_nj_screen_.cx-220, _nj_screen_.cy-165, 1}, -1.5, -1.5, 0, &entranceTextList, emblem_lock_anim};
+    // njRotateX(0, 0x8000);
+    // njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    // njPopMatrix(1u);
+    // njPushMatrix(0);
+    // njSetTexture(&entranceTextList);
+    // NJS_SPRITE myTestNumber = {{_nj_screen_.cx-220, _nj_screen_.cy-165, 1}, -3, -3, 0, &entranceTextList, number_5_lock_anim};
+    // njRotateX(0, 0x8000);
+    // njDrawSprite2D_ForcePriority(&myTestNumber, 0, 400, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    // njPopMatrix(1u);
 }
 
 
