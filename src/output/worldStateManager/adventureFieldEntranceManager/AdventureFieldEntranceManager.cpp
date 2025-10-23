@@ -383,15 +383,57 @@ void AdventureFieldEntranceManager::showNumber(const AdventureFieldEntrance& adv
 
 void AdventureFieldEntranceManager::DrawEntrancePoint(float x, float y)
 {
-    float squareSize = 6.0f;
+    const float actualX = 450 - (900.0 * x / 1024.0);
+    const float actualY = 450 - (900.0 * y / 1024.0);
+
+    const float squareSize = 6.0f;
     float halfSize = squareSize / 2.0f;
-    DrawRect_Queue(_nj_screen_.cx - x - halfSize,
-                   _nj_screen_.cy - y - halfSize,
-                   _nj_screen_.cx - x + halfSize,
-                   _nj_screen_.cy - y + halfSize,
+    DrawRect_Queue(_nj_screen_.cx - actualX - halfSize,
+                   _nj_screen_.cy - actualY - halfSize,
+                   _nj_screen_.cx - actualX + halfSize,
+                   _nj_screen_.cy - actualY + halfSize,
                    62041.496f,
-                   0xFFFF0000,
+                   0xFFFFFFFF,
                    QueuedModelFlagsB_EnableZWrite);
+}
+
+void AdventureFieldEntranceManager::DrawLine(float x1, float y1, float x2, float y2)
+{
+    const float actualX1 = 450 - (900.0 * x1 / 1024.0);
+    const float actualY1 = 450 - (900.0 * y1 / 1024.0);
+    const float actualX2 = 450 - (900.0 * x2 / 1024.0);
+    const float actualY2 = 450 - (900.0 * y2 / 1024.0);
+
+    NJS_POINT2 points[] = {
+        {_nj_screen_.cx - actualX1 - 1, _nj_screen_.cy - actualY1 - 1},
+        {_nj_screen_.cx - actualX1 + 1, _nj_screen_.cy - actualY1 + 1},
+        {_nj_screen_.cx - actualX2 - 1, _nj_screen_.cy - actualY2 - 1},
+        {_nj_screen_.cx - actualX2 + 1, _nj_screen_.cy - actualY2 + 1},
+    };
+
+    NJS_COLOR linecol[4];
+    NJS_POINT2COL linep2;
+
+    linep2.p = points;
+    linep2.col = linecol;
+    linep2.tex = NULL;
+    linep2.num = 4;
+
+
+    linep2.col[0].color = 0xFFFFFFFF;
+    linep2.col[1].color = 0xFFFFFFFF;
+    linep2.col[2].color = 0xFFFFFFFF;
+    linep2.col[3].color = 0xFFFFFFFF;
+
+    Draw2DLinesMaybe_Queue(&linep2, 4, 62041.496f, NJD_FILL, QueuedModelFlagsB_SomeTextureThing);
+}
+
+
+void AdventureFieldEntranceManager::MakeConnection(float x1, float y1, float x2, float y2)
+{
+    DrawEntrancePoint(x1, y1);
+    DrawEntrancePoint(x2, y2);
+    DrawLine(x1, y1, x2, y2);
 }
 
 void AdventureFieldEntranceManager::ShowMap()
@@ -431,35 +473,31 @@ void AdventureFieldEntranceManager::ShowMap()
        njDrawTriangle2D(&point2Col, 1, 300, NJD_TRANSPARENT);*/
 
 
-    DrawEntrancePoint(220.0f, 163.0f);
+    MakeConnection(109, 221, 70, 256);
 
-    DrawEntrancePoint(335.0f, 165.0f);
-    DrawEntrancePoint(342.0f, 124.0f);
-
-
-    NJS_POINT2 points[] = {
-        {_nj_screen_.cx - 335.0f - 1, _nj_screen_.cy - 165},
-        {_nj_screen_.cx - 335.0f + 1, _nj_screen_.cy - 165},
-        {_nj_screen_.cx - 342.0f - 1, _nj_screen_.cy - 124},
-        {_nj_screen_.cx - 342.0f + 1, _nj_screen_.cy - 124},
-    };
-
-    NJS_COLOR linecol[4];
-    NJS_POINT2COL linep2;
-
-    linep2.p = points;
-    linep2.col = linecol;
-    linep2.tex = NULL;
-    linep2.num = 4;
+    MakeConnection(615, 717, 653, 717);
+    MakeConnection(717, 672, 773, 655);
+    MakeConnection(812, 616, 860, 600);
+    MakeConnection(750, 781, 789, 789);
+    MakeConnection(702, 850, 702, 884);
 
 
-    linep2.col[0].color = 0xFFFF0000;
-    linep2.col[1].color = 0xFFFF0000;
-    linep2.col[2].color = 0xFFFF0000;
-    linep2.col[3].color = 0xFFFF0000;
+    // DrawEntrancePoint(0, 0);
+    // DrawEntrancePoint(0, 1024);
+    // DrawEntrancePoint(1024, 0);
+    // DrawEntrancePoint(1024, 1024);
 
-    // Draw2DLinesMaybe_Queue(&linep2, 2, 62041.496f, 0x0, QueuedModelFlagsB_EnableZWrite);
-    Draw2DLinesMaybe_Queue(&linep2, 4, 62041.496f, NJD_FILL, QueuedModelFlagsB_SomeTextureThing);
+
+    // DrawEntrancePoint(0, 0);
+    // DrawEntrancePoint(0, 1024);
+
+
+    // DrawEntrancePoint(220.0f, 163.0f);
+    //
+    // DrawEntrancePoint(335.0f, 165.0f);
+    // DrawEntrancePoint(342.0f, 124.0f);
+    //
+    // DrawLine(335, 165, 342, 124);
 
 
     // DrawRect_Queue(_nj_screen_.cx - 217,
