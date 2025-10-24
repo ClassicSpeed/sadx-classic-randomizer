@@ -292,8 +292,8 @@ public:
     GatingMode gatingMode = EmblemGating;
     std::map<int, int> entranceEmblemValueMap = {
         {SsMainToStation, 5},
-        {SsMainToHotel, 3},
-        {CityHallToSsMain, 4},
+        {SsMainToHotel, 103},
+        {CityHallToSsMain, 45},
         {CityHallToSewers, 7},
         {CityHallToSpeedHighway, 9},
         {CityHallToChaos0, 12},

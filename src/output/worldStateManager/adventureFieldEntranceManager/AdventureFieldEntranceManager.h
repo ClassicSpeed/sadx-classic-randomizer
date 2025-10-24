@@ -19,6 +19,7 @@ public:
 
     void showNumber(const AdventureFieldEntrance& adventureFieldEntrance, float posX, float posY, int number,
                     float zOffset);
+    void showNumberMap(float posX, float posY, int number);
     void DrawEntrancePoint(float x, float y);
     void DrawLine(float x1, float y1, float x2, float y2);
     void MakeConnection(float x1, float y1, float x2, float y2);
@@ -29,6 +30,7 @@ public:
     void ShowLevelEntranceArrows();
     void ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x, float y, float zBase,
                            float xStep, bool leftJustify);
+    void ShowNumberDynamicMap(int number, float x, float y);
 
 private:
     explicit AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus);

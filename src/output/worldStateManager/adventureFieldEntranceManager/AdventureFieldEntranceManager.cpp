@@ -361,6 +361,32 @@ void AdventureFieldEntranceManager::ShowNumberDynamic(const AdventureFieldEntran
     }
 }
 
+
+void AdventureFieldEntranceManager::ShowNumberDynamicMap(int number, float x, float y)
+{
+    if (number < 0 || number > 999) return;
+
+    int hundreds = number / 100;
+    int tens = (number / 10) % 10;
+    int ones = number % 10;
+
+    if (number >= 100)
+    {
+        showNumberMap(x - 10, y, hundreds);
+        showNumberMap(x, y, tens);
+        showNumberMap(x + 10, y, ones);
+    }
+    else if (number >= 10)
+    {
+        showNumberMap(x - 5, y, tens);
+        showNumberMap(x + 5, y, ones);
+    }
+    else
+    {
+        showNumberMap(x, y, ones);
+    }
+}
+
 void AdventureFieldEntranceManager::showNumber(const AdventureFieldEntrance& adventureFieldEntrance, const float posX,
                                                const float posY, const int number, const float zOffset)
 {
@@ -381,6 +407,19 @@ void AdventureFieldEntranceManager::showNumber(const AdventureFieldEntrance& adv
     SetMaterial(255, 255, 255, 255);
     NJS_SPRITE numRight = {{0}, 1, 1, 0, &entranceTextList, GetNumberAnim(number)};
     njDrawSprite3D(&numRight, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+}
+
+
+void AdventureFieldEntranceManager::showNumberMap(const float posX, const float posY, const int number)
+{
+    njPushMatrix(0);
+    njSetTexture(&entranceTextList);
+    NJS_SPRITE numberSprite = {
+        {_nj_screen_.cx - posX, _nj_screen_.cy - posY, 1}, -3, -3, 0, &entranceTextList, GetNumberAnim(number)
+    };
+    njRotateX(0, 0x8000);
+    njDrawSprite2D_ForcePriority(&numberSprite, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
 }
 
@@ -459,6 +498,7 @@ void AdventureFieldEntranceManager::DrawEmblemNumberInMap(AdventureFieldEntrance
     njRotateX(0, 0x8000);
     njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
+    ShowNumberDynamicMap(doorCost, x, y);
 }
 
 void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance)
