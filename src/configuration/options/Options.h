@@ -293,6 +293,10 @@ public:
     std::map<int, int> entranceEmblemValueMap = {
         {SsMainToStation, 5},
         {SsMainToHotel, 3},
+        {CityHallToSsMain, 4},
+        {CityHallToSewers, 7},
+        {CityHallToSpeedHighway, 9},
+        {CityHallToChaos0, 12},
     };
 
     AdventureFieldRandomization entranceRandomization = AdventureFieldRandomizationDisabled;

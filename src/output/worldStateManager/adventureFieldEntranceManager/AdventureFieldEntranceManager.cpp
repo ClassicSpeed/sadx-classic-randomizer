@@ -230,8 +230,6 @@ inline NJS_TEXANIM* GetNumberAnim(int num)
 
 void AdventureFieldEntranceManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance)
 {
-    this->ShowMap();
-
     njSetTexture(&entranceTextList);
     njPushMatrix(0);
     float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
@@ -315,6 +313,11 @@ void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
 
         ShowDoorEmblemRequirement(adventureFieldEntrance);
     }
+
+
+    for (const auto& button : HeldButtons)
+        if (button & WhistleButtons && Current_CharObj2 != nullptr)
+            this->ShowMap();
 }
 
 void AdventureFieldEntranceManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x,
@@ -436,6 +439,50 @@ void AdventureFieldEntranceManager::MakeConnection(float x1, float y1, float x2,
     DrawLine(x1, y1, x2, y2);
 }
 
+void AdventureFieldEntranceManager::DrawEmblemNumberInMap(AdventureFieldEntrance adventureFieldEntrance, int doorCost)
+{
+    auto entranceValue = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
+
+    if (entranceValue == entranceLocationInMap.end())
+        return;
+
+
+    const float x = 450 - (900.0 * entranceValue->second.x / 1024.0);
+    const float y = 450 - (900.0 * entranceValue->second.y / 1024.0);
+
+
+    njPushMatrix(0);
+    njSetTexture(&entranceTextList);
+    NJS_SPRITE myTestEmblem = {
+        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, emblem_lock_anim
+    };
+    njRotateX(0, 0x8000);
+    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+}
+
+void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance)
+{
+    auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
+
+    if (entranceValue == _options.entranceEmblemValueMap.end())
+    {
+        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(
+            adventureFieldEntrance.entranceId, false);
+        entranceValue = _options.entranceEmblemValueMap.find(oppositeEntrance);
+    }
+    if (entranceValue == _options.entranceEmblemValueMap.end())
+        return;
+
+
+    if (_gameStatus.unlock.currentEmblems >= entranceValue->second)
+        return;
+
+    int doorCost = entranceValue->second;
+
+    DrawEmblemNumberInMap(adventureFieldEntrance, doorCost);
+}
+
 void AdventureFieldEntranceManager::ShowMap()
 {
     njPushMatrix(0);
@@ -445,16 +492,11 @@ void AdventureFieldEntranceManager::ShowMap()
     njDrawSprite2D_ForcePriority(&mySprite, 0, 200, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
 
+    for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetEntrances())
+    {
+        DrawMapEmblem(adventureFieldEntrance);
+    }
 
-    // FunctionPointer(void, njDrawCircle2D, (NJS_POINT2COL *p, Int n, Float pri, Uint32 attr), 0x77DFC0);
-    // njPushMatrix(0);
-    // njSetTexture(&entranceTextList);
-    // NJS_SPRITE myTestEmblem = {
-    //     {_nj_screen_.cx - 220, _nj_screen_.cy - 165, 1}, -1.5, -1.5, 0, &entranceTextList, emblem_lock_anim
-    // };
-    // njRotateX(0, 0x8000);
-    // njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    // njPopMatrix(1u);
 
     /*   
        NJS_POINT2 points[] = {

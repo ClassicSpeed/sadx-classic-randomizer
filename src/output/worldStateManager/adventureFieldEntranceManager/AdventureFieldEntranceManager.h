@@ -22,6 +22,8 @@ public:
     void DrawEntrancePoint(float x, float y);
     void DrawLine(float x1, float y1, float x2, float y2);
     void MakeConnection(float x1, float y1, float x2, float y2);
+    void DrawEmblemNumberInMap(AdventureFieldEntrance adventureFieldEntrance, int doorCost);
+    void DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance);
     void ShowMap();
     void ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance);
     void ShowLevelEntranceArrows();
@@ -257,4 +259,146 @@ private:
 
     inline static FunctionHook<task*, int, int> _chaoGardenChanceSceneHook{0x715730};
     static task* OnChaoGardenChanceScene(int a1, int a2);
+
+    std::map<int, NJS_POINT2> entranceLocationInMap = {
+
+        // City Hall
+        {CityHallToSsMain, {848, 198}},
+        {CityHallToSewers, {820, 132}},
+        {CityHallToSpeedHighway, {768, 39}},
+        {CityHallToChaos0, {768, 82}},
+        // Station
+        {StationToSsMain, {704, 321}},
+        {StationToMrMain, {681, 263}},
+        {StationToCasino, {642, 288}},
+        //Casino
+        {CasinoToStation, {642, 288}},
+        {CasinoToCasinopolis, {559, 203}},
+        {CasinoToHotel, {603, 330}},
+        {CasinoToEggWalker, {616, 216}},
+        // Sewers
+        {SewersToCityHall, {928, 91}},
+        {SewersToTwinkleParkTunnel, {927, 313}},
+        // SSMain
+        {SsMainToHotel, {687, 405}},
+        {SsMainToStation, {734, 331}},
+        {SsMainToCityHall, {853, 227}},
+        {SsMainToTwinkleParkTunnel, {814, 387}},
+        {SsMainToEcOutside, {765, 444}},
+        {SsMainToBridge, {765, 444}},
+        {SsMainToSpeedHighway, {839, 338}},
+        // Hotel
+        {HotelToSsMain, {628, 396}},
+        {HotelToCasino, {591, 376}},
+        {HotelToSsChaoGarden, {578, 401}},
+        {HotelToChaos2, {578, 389}},
+        {HotelToHotelPool, {590, 420}},
+        // Hotel Pool
+        {HotelPoolToHotel, {590, 420}},
+        {HotelPoolToEmeraldCoast, {530, 504}},
+        // Twinkle Park Tunnel
+        {TwinkleParkTunnelToSsMain, {814, 387}},
+        {TwinkleParkTunnelToTwinkleParkLobby, {857, 426}},
+        {TwinkleParkTunnelToSewers, {820, 362}},
+        // Twinkle Park Lobby
+        {TwinkleParkLobbyToTwinkleParkTunnel, {914, 433}},
+        {TwinkleParkLobbyToTwinklePark, {955, 436}},
+        {TwinkleParkLobbyToTwinkleCircuit, {937, 417}},
+        // MRMain
+        {MrMainToSsMain, {297, 335}},
+        {MrMainToEcOutside, {286, 352}},
+        {MrMainToBridge, {286, 352}},
+        {MrMainToAngelIsland, {225, 297}},
+        {MrMainToWindyValley, {346, 213}},
+        {MrMainToJungle, {268, 216}},
+        {MrMainToChaos4, {299, 237}},
+        {MrMainToEggHornet, {371, 303}},
+        {MrMainToMrChaoGarden, {443, 219}},
+        {MrMainToSkyChase1, {428, 305}},
+        // Angel Island
+        {AngelIslandToMrMain, {285, 419}},
+        {AngelIslandToIceCave, {249, 412}},
+        {AngelIslandToRedMountain, {143, 420}},
+        {AngelIslandToPastAltar, {206, 530}},
+        // Ice Cave
+        {IceCaveToAngelIsland, {249, 412}},
+        {IceCaveToIceCap, {208, 387}},
+        // Past Altar
+        {PastAltarToAngelIsland, {85, 388}},
+        {PastAltarToPastMain, {72, 260}},
+        // Past Main
+        {PastMainToPastAltar, {107, 222}},
+        {PastMainToJungle, {85, 130}},
+        // Jungle
+        {JungleToMrMain, {247, 146}},
+        {JungleToLostWorld, {272, 92}},
+        {JungleToLostWorldAlternative, {272, 74}},
+        {JungleToFinalEggTower, {295, 60}},
+        {JungleToSandHill, {243, 126}},
+        {JungleToPastMain, {263, 83}},
+        // Final Egg Tower
+        {FinalEggTowerToJungle, {478, 92}},
+        {FinalEggTowerToFinalEgg, {502, 119}},
+        {FinalEggTowerToFinalEggAlternative, {525, 95}},
+        {FinalEggTowerToBetaEggViper, {502, 95}},
+        {FinalEggTowerToEcInside, {518, 111}},
+        // Egg Carrier Outside (Untransformed)
+        {EcOutsideToSsMain, {464, 648}},
+        {EcOutsideToMrMain, {464, 648}},
+        {EcOutsideToSkyChase2, {426, 590}},
+        {EcOutsideToChaos6ZeroBeta, {427, 647}},
+        {EcOutsideToEcInsideMonorail, {453, 670}},
+        {EcOutsideToEcInsideEggLift, {427, 783}},
+        {EcOutsideToCaptainRoom, {427, 729}},
+        {EcOutsideToPool, {427, 797}},
+        // Bridge (Transformed) 
+        {BridgeToSsMain, {464, 648}},
+        {BridgeToMrMain, {464, 648}},
+        {BridgeToSkyDeck, {427, 690}},
+        {BridgeToSkyChase2, {426, 590}},
+        {BridgeToChaos6ZeroBeta, {427, 647}},
+        {BridgeToEcInsideMonorail, {453, 670}},
+        // Deck (Transformed) 
+        {DeckToPool, {427, 797}},
+        {DeckToCaptainRoom, {427, 729}},
+        {DeckToPrivateRoom, {443, 720}},
+        {DeckToPrivateRoomAlternative, {414, 722}},
+        {DeckToEcInsideEggLift, {427, 783}},
+        // Captain Room
+        {CaptainRoomToEcOutside, {219, 748}},
+        {CaptainRoomToDeck, {219, 748}},
+        {CaptainRoomToPrivateRoom, {220, 715}},
+        // Private Room
+        {PrivateRoomToCaptainRoom, {318, 678}},
+        {PrivateRoomToDeck, {332, 687}},
+        {PrivateRoomToDeckAlternative, {298, 736}},
+        // Pool
+        {PoolToEcOutside, {430, 871}},
+        {PoolToDeck, {430, 871}},
+        {PoolToSkyDeck, {430, 887}},
+        // Arsenal
+        {ArsenalToEcInside, {615, 719}},
+        // Egg Carrier Inside
+        {EcInsideToEcOutsideEggLift, {702, 795}},
+        {EcInsideToEcOutsideMonorail, {688, 708}},
+        {EcInsideToDeckEggLift, {702, 795}},
+        {EcInsideToBridgeMonorail, {688, 708}},
+        {EcInsideToHotShelter, {702, 665}},
+        {EcInsideToHedgehogHammer, {716, 671}},
+        {EcInsideToFinalEggTower, {686, 671}},
+        {EcInsideToWarpHall, {703, 853}},
+        {EcInsideToArsenal, {652, 718}},
+        {EcInsideToWaterTank, {750, 783}},
+        // Hedgehog Hammer
+        {HedgehogHammerToEcInside, {774, 654}},
+        {HedgehogHammerToPrisonHall, {813, 615}},
+        // Prison Hall
+        {PrisonHallToHedgehogHammer, {860, 600}},
+        // Water Tank
+        {WaterTankToEcInside, {791, 788}},
+        // Warp Hall
+        {WarpHallToEcInside, {702, 885}},
+        {WarpHallToEcChaoGarden, {701, 901}},
+
+    };
 };
