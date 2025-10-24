@@ -372,14 +372,14 @@ void AdventureFieldEntranceManager::ShowNumberDynamicMap(int number, float x, fl
 
     if (number >= 100)
     {
-        showNumberMap(x - 10, y, hundreds);
+        showNumberMap(x + 10, y, hundreds);
         showNumberMap(x, y, tens);
-        showNumberMap(x + 10, y, ones);
+        showNumberMap(x - 10, y, ones);
     }
     else if (number >= 10)
     {
-        showNumberMap(x - 5, y, tens);
-        showNumberMap(x + 5, y, ones);
+        showNumberMap(x + 5, y, tens);
+        showNumberMap(x - 5, y, ones);
     }
     else
     {
@@ -554,14 +554,14 @@ void AdventureFieldEntranceManager::ShowMap()
        point2Col.col = color;
        njDrawTriangle2D(&point2Col, 1, 300, NJD_TRANSPARENT);*/
 
-
-    MakeConnection(109, 221, 70, 256);
-
-    MakeConnection(615, 717, 653, 717);
-    MakeConnection(717, 672, 773, 655);
-    MakeConnection(812, 616, 860, 600);
-    MakeConnection(750, 781, 789, 789);
-    MakeConnection(702, 850, 702, 884);
+    /*
+        MakeConnection(109, 221, 70, 256);
+    
+        MakeConnection(615, 717, 653, 717);
+        MakeConnection(717, 672, 773, 655);
+        MakeConnection(812, 616, 860, 600);
+        MakeConnection(750, 781, 789, 789);
+        MakeConnection(702, 850, 702, 884);*/
 
 
     // DrawEntrancePoint(0, 0);
