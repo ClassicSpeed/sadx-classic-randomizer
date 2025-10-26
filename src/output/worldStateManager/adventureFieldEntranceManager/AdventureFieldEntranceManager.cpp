@@ -539,9 +539,9 @@ void AdventureFieldEntranceManager::DrawConnectionsInMap(const AdventureFieldEnt
     auto entranceTo = entranceLocationInMap.find(entranceToId);
 
     if (entranceTo == entranceLocationInMap.end())
-        return;
-
-    MakeConnection(entranceFrom->second.x, entranceFrom->second.y, entranceTo->second.x, entranceTo->second.y);
+        DrawEntrancePoint(entranceFrom->second.x, entranceFrom->second.y);
+    else
+        MakeConnection(entranceFrom->second.x, entranceFrom->second.y, entranceTo->second.x, entranceTo->second.y);
 }
 
 void AdventureFieldEntranceManager::ShowMap()
