@@ -434,7 +434,7 @@ void AdventureFieldEntranceManager::DrawEntrancePoint(float x, float y)
                    _nj_screen_.cy - actualY - halfSize,
                    _nj_screen_.cx - actualX + halfSize,
                    _nj_screen_.cy - actualY + halfSize,
-                   62041.496f,
+                   22250,
                    0xFFFFFFFF,
                    QueuedModelFlagsB_EnableZWrite);
 }
@@ -462,12 +462,12 @@ void AdventureFieldEntranceManager::DrawLine(float x1, float y1, float x2, float
     linep2.num = 4;
 
 
-    linep2.col[0].color = 0xFFFFFFFF;
-    linep2.col[1].color = 0xFFFFFFFF;
-    linep2.col[2].color = 0xFFFFFFFF;
-    linep2.col[3].color = 0xFFFFFFFF;
+    linep2.col[0].color = 0x66F1EB9C;
+    linep2.col[1].color = 0x66F1EB9C;
+    linep2.col[2].color = 0x66F1EB9C;
+    linep2.col[3].color = 0x66F1EB9C;
 
-    Draw2DLinesMaybe_Queue(&linep2, 4, 62041.496f, NJD_FILL, QueuedModelFlagsB_SomeTextureThing);
+    Draw2DLinesMaybe_Queue(&linep2, 4, 62041.496f, NJD_FILL | NJD_TRANSPARENT, QueuedModelFlagsB_SomeTextureThing);
 }
 
 
@@ -519,8 +519,29 @@ void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventu
         return;
 
     int doorCost = entranceValue->second;
-
     DrawEmblemNumberInMap(adventureFieldEntrance, doorCost);
+}
+
+void AdventureFieldEntranceManager::DrawConnectionsInMap(const AdventureFieldEntrance& adventureFieldEntrance)
+{
+    //If both entrance and connection are on the map, draw line
+
+
+    auto entranceFrom = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
+
+    if (entranceFrom == entranceLocationInMap.end())
+        return;
+
+
+    auto entranceToId = _instance->_adventureFieldEntranceMap.GetReplacementConnection(
+        adventureFieldEntrance.entranceId,
+        _isEggCarrierTransformed);
+    auto entranceTo = entranceLocationInMap.find(entranceToId);
+
+    if (entranceTo == entranceLocationInMap.end())
+        return;
+
+    MakeConnection(entranceFrom->second.x, entranceFrom->second.y, entranceTo->second.x, entranceTo->second.y);
 }
 
 void AdventureFieldEntranceManager::ShowMap()
@@ -533,6 +554,11 @@ void AdventureFieldEntranceManager::ShowMap()
     njPopMatrix(1u);
 
     for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetEntrances())
+    {
+        DrawConnectionsInMap(adventureFieldEntrance);
+        DrawMapEmblem(adventureFieldEntrance);
+    }
+    for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetStaticEntrances())
     {
         DrawMapEmblem(adventureFieldEntrance);
     }

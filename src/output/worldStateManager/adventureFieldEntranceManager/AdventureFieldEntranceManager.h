@@ -25,6 +25,7 @@ public:
     void MakeConnection(float x1, float y1, float x2, float y2);
     void DrawEmblemNumberInMap(AdventureFieldEntrance adventureFieldEntrance, int doorCost);
     void DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance);
+    void DrawConnectionsInMap(const AdventureFieldEntrance& adventureFieldEntrance);
     void ShowMap();
     void ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance);
     void ShowLevelEntranceArrows();
@@ -346,7 +347,7 @@ private:
         {FinalEggTowerToEcInside, {518, 111}},
         // Egg Carrier Outside (Untransformed)
         {EcOutsideToSsMain, {464, 648}},
-        {EcOutsideToMrMain, {464, 648}},
+        {EcOutsideToMrMain, {394, 648}},
         {EcOutsideToSkyChase2, {426, 590}},
         {EcOutsideToChaos6ZeroBeta, {427, 647}},
         {EcOutsideToEcInsideMonorail, {453, 670}},
@@ -355,7 +356,7 @@ private:
         {EcOutsideToPool, {427, 797}},
         // Bridge (Transformed) 
         {BridgeToSsMain, {464, 648}},
-        {BridgeToMrMain, {464, 648}},
+        {BridgeToMrMain, {394, 648}},
         {BridgeToSkyDeck, {427, 690}},
         {BridgeToSkyChase2, {426, 590}},
         {BridgeToChaos6ZeroBeta, {427, 647}},
