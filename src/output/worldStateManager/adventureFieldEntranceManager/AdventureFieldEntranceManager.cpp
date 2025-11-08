@@ -446,11 +446,26 @@ void AdventureFieldEntranceManager::DrawLine(float x1, float y1, float x2, float
     const float actualX2 = 450 - (900.0 * x2 / 1024.0);
     const float actualY2 = 450 - (900.0 * y2 / 1024.0);
 
+    // Calculate direction vector
+    float dx = actualX2 - actualX1;
+    float dy = actualY2 - actualY1;
+    float length = sqrtf(dx * dx + dy * dy);
+
+    // Perpendicular vector (normalized)
+    float px = -dy / length;
+    float py = dx / length;
+
+    float halfThickness = 1.0f;
+
+    // Offset points perpendicular to the line
+    float ox = px * halfThickness;
+    float oy = py * halfThickness;
+
     NJS_POINT2 points[] = {
-        {_nj_screen_.cx - actualX1 - 1, _nj_screen_.cy - actualY1 - 1},
-        {_nj_screen_.cx - actualX1 + 1, _nj_screen_.cy - actualY1 + 1},
-        {_nj_screen_.cx - actualX2 - 1, _nj_screen_.cy - actualY2 - 1},
-        {_nj_screen_.cx - actualX2 + 1, _nj_screen_.cy - actualY2 + 1},
+        {_nj_screen_.cx - (actualX1 + ox), _nj_screen_.cy - (actualY1 + oy)},
+        {_nj_screen_.cx - (actualX1 - ox), _nj_screen_.cy - (actualY1 - oy)},
+        {_nj_screen_.cx - (actualX2 - ox), _nj_screen_.cy - (actualY2 - oy)},
+        {_nj_screen_.cx - (actualX2 + ox), _nj_screen_.cy - (actualY2 + oy)},
     };
 
     NJS_COLOR linecol[4];
@@ -461,11 +476,14 @@ void AdventureFieldEntranceManager::DrawLine(float x1, float y1, float x2, float
     linep2.tex = NULL;
     linep2.num = 4;
 
-
-    linep2.col[0].color = 0x66F1EB9C;
-    linep2.col[1].color = 0x66F1EB9C;
-    linep2.col[2].color = 0x66F1EB9C;
-    linep2.col[3].color = 0x66F1EB9C;
+    // linep2.col[0].color = 0x66F1EB9C;
+    // linep2.col[1].color = 0x66F1EB9C;
+    // linep2.col[2].color = 0x66F1EB9C;
+    // linep2.col[3].color = 0x66F1EB9C;
+    linep2.col[0].color = 0xFFFFFFFF;
+    linep2.col[1].color = 0xFFFFFFFF;
+    linep2.col[2].color = 0xFFFFFFFF;
+    linep2.col[3].color = 0xFFFFFFFF;
 
     Draw2DLinesMaybe_Queue(&linep2, 4, 62041.496f, NJD_FILL | NJD_TRANSPARENT, QueuedModelFlagsB_SomeTextureThing);
 }
@@ -525,8 +543,6 @@ void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventu
 void AdventureFieldEntranceManager::DrawConnectionsInMap(const AdventureFieldEntrance& adventureFieldEntrance)
 {
     //If both entrance and connection are on the map, draw line
-
-
     auto entranceFrom = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
 
     if (entranceFrom == entranceLocationInMap.end())
