@@ -47,6 +47,7 @@ private:
     bool ShowDisableDoorIndicator(EntranceId entranceId);
 
     inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActCutsceneModeHook{0x4145D0};
+    static LevelAndActIDs calculateCorrectAct(LevelAndActIDs levelAndActIDs);
     static void OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act);
 
     inline static FunctionHook<void, taskwk*> _getEntranceSs{0x62F6D0};

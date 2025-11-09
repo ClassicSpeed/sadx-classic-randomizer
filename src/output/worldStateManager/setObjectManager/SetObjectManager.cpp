@@ -427,11 +427,9 @@ void SetObjectManager::HandleWarp()
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggWalker, 0);
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Sonic)
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Sonic
+        || CurrentCharacter == Characters_Gamma)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggViper, 0);
-
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Gamma)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_E101, 0);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && EntityData1Ptrs[0]->Position.y < 100)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos4, 0);
@@ -443,19 +441,9 @@ void SetObjectManager::HandleWarp()
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && EntityData1Ptrs[0]->Position.y > 150)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_SkyChase1, 0);
 
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Gamma)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_E101R, 0);
-
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside && CurrentCharacter == Characters_Amy)
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_Zero, 0);
-
     else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z > -500
-        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Big))
-
+        && (CurrentCharacter != Characters_Tails))
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 0);
-
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside && (CurrentCharacter == Characters_Knuckles))
-        SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 1);
 
     else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z < -500
         && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
@@ -468,27 +456,16 @@ void SetObjectManager::HandleWarp()
         SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 1);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
-    {
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Past, 0);
-    }
-
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past1)
-    {
         SetNextLevelAndAct_CutsceneMode(LevelIDs_MysticRuins, 2);
-    }
-
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_ECGarden)
-    {
-        PrintDebug("----------Debug: Warp from EC Garden to EC Inside Cutscene\n");
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggCarrierInside, 5);
-    }
+
     else
-    {
-        PrintDebug("-----------Debug: Warp to EC Garden\n");
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
-    }
 }
 
 // Allow Knuckles to fight Chaos 2
