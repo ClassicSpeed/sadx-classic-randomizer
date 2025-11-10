@@ -242,6 +242,7 @@ public:
 
     AdventureFieldEntrance* GetNewConnection(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation,
                                              bool isEggCarrierTransformed);
+    AdventureFieldEntrance* GetCurrentEntrance(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
     const std::vector<AdventureFieldEntrance>& GetEntrances() const;
     const std::vector<AdventureFieldEntrance>& GetStaticEntrances() const;
     EntranceId GetReplacementConnection(EntranceId fromEntranceId, bool isEggCarrierTransformed);
@@ -276,6 +277,7 @@ private:
         {SsMainToEcOutside, EcOutsideToSsMain},
         {SsMainToSpeedHighway, SpeedHighwayToSsMain},
         {HotelPoolToEmeraldCoast, EmeraldCoastToHotelPool},
+
         {HotelToSsChaoGarden, SsChaoGardenToHotel},
         {HotelToChaos2, Chaos2ToHotel},
         {TwinkleParkLobbyToTwinklePark, TwinkleParkToTwinkleParkLobby},

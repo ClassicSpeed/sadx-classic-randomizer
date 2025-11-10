@@ -251,43 +251,67 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Speed Highway
         {SpeedHighwayToSsMain, LevelAndActIDs_SpeedHighway1, 0, SsMainToSpeedHighway, 0, {0, 0, 0}},
+        {SpeedHighwayToSsMain, LevelAndActIDs_SpeedHighway3, 0, SsMainToSpeedHighway, 0, {0, 0, 0}},
+        {SpeedHighwayToCityHall, LevelAndActIDs_SpeedHighway1, 0, CityHallToSpeedHighway, 0, {0, 0, 0}},
         {SpeedHighwayToCityHall, LevelAndActIDs_SpeedHighway3, 0, CityHallToSpeedHighway, 0, {0, 0, 0}},
 
         // Emerald Coast
         {EmeraldCoastToHotelPool, LevelAndActIDs_EmeraldCoast1, 0, HotelPoolToEmeraldCoast, 0, {0, 0, 0}},
+        {EmeraldCoastToHotelPool, LevelAndActIDs_EmeraldCoast2, 0, HotelPoolToEmeraldCoast, 0, {0, 0, 0}},
+        {EmeraldCoastToHotelPool, LevelAndActIDs_EmeraldCoast3, 0, HotelPoolToEmeraldCoast, 0, {0, 0, 0}},
 
         // Casinopolis
         {CasinopolisToCasino, LevelAndActIDs_Casinopolis1, 0, CasinoToCasinopolis, 0, {0, 0, 0}},
+        {CasinopolisToCasino, LevelAndActIDs_Casinopolis2, 0, CasinoToCasinopolis, 0, {0, 0, 0}},
 
         // Twinkle Park
         {TwinkleParkToTwinkleParkLobby, LevelAndActIDs_TwinklePark1, 0, TwinkleParkLobbyToTwinklePark, 0, {0, 0, 0}},
+        {TwinkleParkToTwinkleParkLobby, LevelAndActIDs_TwinklePark3, 0, TwinkleParkLobbyToTwinklePark, 0, {0, 0, 0}},
 
         // Windy Valley
         {WindyValleyToMrMain, LevelAndActIDs_WindyValley1, 0, MrMainToWindyValley, 0, {0, 0, 0}},
+        {WindyValleyToMrMain, LevelAndActIDs_WindyValley3, 0, MrMainToWindyValley, 0, {0, 0, 0}},
 
         // Ice Cap
         {IceCapToIceCave, LevelAndActIDs_IceCap1, 0, IceCaveToIceCap, 0, {0, 0, 0}},
+        {IceCapToIceCave, LevelAndActIDs_IceCap3, 0, IceCaveToIceCap, 0, {0, 0, 0}},
+        {IceCapToIceCave, LevelAndActIDs_IceCap4, 0, IceCaveToIceCap, 0, {0, 0, 0}},
 
         // Red Mountain
         {RedMountainToAngelIsland, LevelAndActIDs_RedMountain1, 0, AngelIslandToRedMountain, 0, {0, 0, 0}},
+        {RedMountainToAngelIsland, LevelAndActIDs_RedMountain2, 0, AngelIslandToRedMountain, 0, {0, 0, 0}},
+        {RedMountainToAngelIsland, LevelAndActIDs_RedMountain3, 0, AngelIslandToRedMountain, 0, {0, 0, 0}},
 
         // Lost World
         {LostWorldToJungle, LevelAndActIDs_LostWorld1, 0, JungleToLostWorld, 0, {0, 0, 0}},
+        {LostWorldToJungle, LevelAndActIDs_LostWorld2, 0, JungleToLostWorld, 0, {0, 0, 0}},
+        {LostWorldToJungle, LevelAndActIDs_LostWorld3, 0, JungleToLostWorld, 0, {0, 0, 0}},
+        {LostWorldToJungleAlternative, LevelAndActIDs_LostWorld1, 0, JungleToLostWorldAlternative, 0, {0, 0, 0}},
         {LostWorldToJungleAlternative, LevelAndActIDs_LostWorld2, 0, JungleToLostWorldAlternative, 0, {0, 0, 0}},
+        {LostWorldToJungleAlternative, LevelAndActIDs_LostWorld3, 0, JungleToLostWorldAlternative, 0, {0, 0, 0}},
 
         // Final Egg
         {
             FinalEggToFinalEggTowerAlternative, LevelAndActIDs_FinalEgg3, 0, FinalEggTowerToFinalEggAlternative, 0,
             {0, 0, 0}
         },
+        {
+            FinalEggToFinalEggTowerAlternative, LevelAndActIDs_FinalEgg1, 0, FinalEggTowerToFinalEggAlternative, 0,
+            {0, 0, 0}
+        },
+        {FinalEggToFinalEggTower, LevelAndActIDs_FinalEgg3, 0, FinalEggTowerToFinalEgg, 0, {0, 0, 0}},
         {FinalEggToFinalEggTower, LevelAndActIDs_FinalEgg1, 0, FinalEggTowerToFinalEgg, 0, {0, 0, 0}},
 
         // Hot Shelter
         {HotShelterToEcInside, LevelAndActIDs_HotShelter1, 0, EcInsideToHotShelter, 0.0f, {0, 0, 0}},
+        {HotShelterToEcInside, LevelAndActIDs_HotShelter2, 0, EcInsideToHotShelter, 0.0f, {0, 0, 0}},
+        {HotShelterToEcInside, LevelAndActIDs_HotShelter3, 0, EcInsideToHotShelter, 0.0f, {0, 0, 0}},
 
         // Sky Deck
         {SkyDeckToBridge, LevelAndActIDs_SkyDeck1, 0, BridgeToSkyDeck, 0.0f, {0, 0, 0}},
         {SkyDeckToPool, LevelAndActIDs_SkyDeck1, 0, PoolToSkyDeck, 0.0f, {0, 0, 0}},
+        {SkyDeckToBridge, LevelAndActIDs_SkyDeck3, 0, BridgeToSkyDeck, 0.0f, {0, 0, 0}},
+        {SkyDeckToPool, LevelAndActIDs_SkyDeck3, 0, PoolToSkyDeck, 0.0f, {0, 0, 0}},
 
         // Chaos 0
         {Chaos0ToCityHall, LevelAndActIDs_Chaos0, 1, CityHallToChaos0, 0, {0, 0, 0}},
@@ -300,12 +324,19 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap()
 
         // Chaos 6
         {Chaos6ZeroBetaToEcOutside, LevelAndActIDs_Chaos6Sonic, 0, EcOutsideToChaos6ZeroBeta, 0, {0, 0, 0}},
+        {Chaos6ZeroBetaToEcOutside, LevelAndActIDs_Chaos6Knuckles, 0, EcOutsideToChaos6ZeroBeta, 0, {0, 0, 0}},
+        {Chaos6ZeroBetaToEcOutside, LevelAndActIDs_Zero, 0, EcOutsideToChaos6ZeroBeta, 0, {0, 0, 0}},
+        {Chaos6ZeroBetaToEcOutside, LevelAndActIDs_E101R, 0, EcOutsideToChaos6ZeroBeta, 0, {0, 0, 0}},
         {Chaos6ZeroBetaToBridge, LevelAndActIDs_Chaos6Sonic, 0, BridgeToChaos6ZeroBeta, 0, {0, 0, 0}},
+        {Chaos6ZeroBetaToBridge, LevelAndActIDs_Chaos6Knuckles, 0, BridgeToChaos6ZeroBeta, 0, {0, 0, 0}},
+        {Chaos6ZeroBetaToBridge, LevelAndActIDs_Zero, 0, BridgeToChaos6ZeroBeta, 0, {0, 0, 0}},
+        {Chaos6ZeroBetaToBridge, LevelAndActIDs_E101R, 0, BridgeToChaos6ZeroBeta, 0, {0, 0, 0}},
 
         // Egg Hornet
         {EggHornetToMrMain, LevelAndActIDs_EggHornet, 0, MrMainToEggHornet, 0, {0, 0, 0}},
         // Egg Viper
         {BetaEggViperToFinalEggTower, LevelAndActIDs_EggViper, 0, FinalEggTowerToBetaEggViper, 0, {0, 0, 0}},
+        {BetaEggViperToFinalEggTower, LevelAndActIDs_E101, 0, FinalEggTowerToBetaEggViper, 0, {0, 0, 0}},
 
         // Twinkle Circuit
         {
@@ -394,6 +425,16 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
     PrintDebug("------AdventureFieldEntranceMap: Found entrance by ID %d, %d\n",
                GET_LEVEL(newEntrance->levelAndActId), GET_ACT(newEntrance->levelAndActId));
     return newEntrance;
+}
+
+AdventureFieldEntrance* AdventureFieldEntranceMap::GetCurrentEntrance(const LevelAndActIDs sourceLocation,
+                                                                      const LevelAndActIDs destinationLocation)
+
+{
+    const EntranceId sourceEntranceId = FindEntranceByLocation(sourceLocation, destinationLocation);
+    if (sourceEntranceId == static_cast<EntranceId>(-1))
+        return nullptr;
+    return FindEntranceById(sourceEntranceId);
 }
 
 

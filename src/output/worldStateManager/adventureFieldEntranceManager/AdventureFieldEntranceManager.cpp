@@ -116,7 +116,7 @@ bool AdventureFieldEntranceManager::ShowDisableDoorIndicator(const EntranceId en
 }
 
 
-LevelAndActIDs AdventureFieldEntranceManager::calculateCorrectAct(LevelAndActIDs levelAndActId)
+LevelAndActIDs AdventureFieldEntranceManager::CalculateCorrectAct(LevelAndActIDs levelAndActId)
 {
     if (GET_LEVEL(levelAndActId) == LevelIDs_EmeraldCoast)
     {
@@ -301,6 +301,24 @@ LevelAndActIDs AdventureFieldEntranceManager::calculateCorrectAct(LevelAndActIDs
         else
             return LevelAndActIDs_HedgehogHammer;
     }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_TwinkleCircuit)
+    {
+        if (!_instance->_options.multipleTwinkleCircuitChecks)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 0);
+
+        else if (CurrentCharacter == Characters_Sonic)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 2);
+        else if (CurrentCharacter == Characters_Tails)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 1);
+        else if (CurrentCharacter == Characters_Knuckles)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 5);
+        else if (CurrentCharacter == Characters_Amy)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 0);
+        else if (CurrentCharacter == Characters_Gamma)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 4);
+        else if (CurrentCharacter == Characters_Big)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 3);
+    }
 
 
     return levelAndActId;
@@ -332,16 +350,28 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
 
     if (newEntrance != nullptr)
     {
-        if ((GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_EmeraldCoast
-                && GET_LEVEL(newEntrance->levelAndActId) <= LevelIDs_E101R)
-            || (GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_TwinkleCircuit
-                && GET_LEVEL(newEntrance->levelAndActId) <= LevelIDs_SandHill))
-            newEntrance = calculateCorrectAct(newEntrance);
+        auto levelActAndId = newEntrance->levelAndActId;
+        if ((GET_LEVEL(levelActAndId) >= LevelIDs_EmeraldCoast
+                && GET_LEVEL(levelActAndId) <= LevelIDs_E101R)
+            || (GET_LEVEL(levelActAndId) >= LevelIDs_TwinkleCircuit
+                && GET_LEVEL(levelActAndId) <= LevelIDs_SandHill))
+            levelActAndId = CalculateCorrectAct(levelActAndId);
 
-        //TODO: Handle case where newEntrance is null after calculateCorrectAct
-        _setNextLevelAndActCutsceneModeHook.Original(
-            GET_LEVEL(newEntrance->levelAndActId), GET_ACT(newEntrance->levelAndActId));
-        SetEntranceNumber(newEntrance->entranceNumber);
+        if (levelActAndId == LevelAndActIDs_HedgehogHammer)
+        {
+            AdventureFieldEntrance* currentEntrance = _instance->_adventureFieldEntranceMap.GetCurrentEntrance(
+                currentLevelAndAct, GET_LEVEL_ACT(level, act));
+            _setNextLevelAndActCutsceneModeHook.Original(
+                GET_LEVEL(currentEntrance->levelAndActId), GET_ACT(currentEntrance->levelAndActId));
+            SetEntranceNumber(currentEntrance->entranceNumber);
+        }
+        else
+        {
+            _setNextLevelAndActCutsceneModeHook.Original(
+                GET_LEVEL(levelActAndId), GET_ACT(levelActAndId));
+            SetEntranceNumber(newEntrance->entranceNumber);
+        }
+
         return;
     }
     _setNextLevelAndActCutsceneModeHook.Original(level, act);

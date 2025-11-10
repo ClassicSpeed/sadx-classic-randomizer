@@ -22,7 +22,6 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _opti
     _missionSetLoadHook.Hook(OnMissionSetLoad);
     _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
     _bigHudDrawWeightAndLifeHook.Hook(OnBigHudDrawWeightAndLife);
-    _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
     _isFinalEggTowerActiveHook.Hook(OnIsFinalEggTowerActive);
     _isFinalEggDoorActiveHook.Hook(OnIsFinalEggDoorActive);
     lostWorldEntranceCollisionHook.Hook(OnLostWorldEntranceCollision);
@@ -761,51 +760,6 @@ void SetObjectManager::OnBigHudDrawWeightAndLife()
     GameMode = bufferGameMode;
 }
 
-void SetObjectManager::OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act)
-{
-    if (level == LevelIDs_TwinkleCircuit)
-    {
-        if (!_instance->_options.multipleTwinkleCircuitChecks)
-        {
-            _setNextLevelAndActCutsceneModeHook.Original(level, 0);
-        }
-        else
-        {
-            switch (CurrentCharacter)
-            {
-            case Characters_Sonic:
-                // Samba GP Track
-                _setNextLevelAndActCutsceneModeHook.Original(level, 2);
-                break;
-            case Characters_Tails:
-                //Similar to original but with more stuff
-                _setNextLevelAndActCutsceneModeHook.Original(level, 1);
-                break;
-            case Characters_Knuckles:
-                //Harder Track with many sharp curves
-                _setNextLevelAndActCutsceneModeHook.Original(level, 5);
-                break;
-            case Characters_Amy:
-                //Original Track
-                _setNextLevelAndActCutsceneModeHook.Original(level, 0);
-                break;
-            case Characters_Gamma:
-                //Easier, round Track
-                _setNextLevelAndActCutsceneModeHook.Original(level, 4);
-                break;
-            case Characters_Big:
-                //Track with large walls
-                _setNextLevelAndActCutsceneModeHook.Original(level, 3);
-                break;
-            default:
-                _setNextLevelAndActCutsceneModeHook.Original(level, 0);
-                break;
-            }
-        }
-        return;
-    }
-    _setNextLevelAndActCutsceneModeHook.Original(level, act);
-}
 
 // Handles the Twinkle Circuit door
 int SetObjectManager::OnTwinkleCircuitDoor(const char character)

@@ -103,9 +103,6 @@ private:
     inline static FunctionHook<void> _bigHudDrawWeightAndLifeHook{0x46FB00};
     static void OnBigHudDrawWeightAndLife();
 
-    inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActCutsceneModeHook{0x4145D0};
-    static void OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act);
-
     inline static FunctionHook<BOOL> _isFinalEggTowerActiveHook{0x538550};
     static BOOL OnIsFinalEggTowerActive();
 
