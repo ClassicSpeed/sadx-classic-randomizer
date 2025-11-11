@@ -3,7 +3,7 @@
 //TODO: enable controls after entering the EC
 
 //TODO: Improve performance by using a map or unordered_map for faster lookups
-AdventureFieldEntranceMap::AdventureFieldEntranceMap()
+AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _options(options)
 {
     _entranceList = {
         //TODO: MR garden - MRMain
@@ -584,4 +584,214 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const Entran
     }
 
     return nullptr;
+}
+
+
+LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs levelAndActId)
+{
+    if (GET_LEVEL(levelAndActId) == LevelIDs_EmeraldCoast)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma)
+            levelAndActId = LevelAndActIDs_EmeraldCoast1;
+        else if (CurrentCharacter == Characters_Big)
+            levelAndActId = LevelAndActIDs_EmeraldCoast3;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_WindyValley)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma)
+            levelAndActId = LevelAndActIDs_WindyValley1;
+        else if (CurrentCharacter == Characters_Tails)
+            levelAndActId = LevelAndActIDs_WindyValley3;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    if (GET_LEVEL(levelAndActId) == LevelIDs_TwinklePark)
+    {
+        if (CurrentCharacter == Characters_Sonic)
+            levelAndActId = LevelAndActIDs_TwinklePark1;
+        else if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
+            levelAndActId = LevelAndActIDs_TwinklePark2;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_SpeedHighway)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+            levelAndActId = LevelAndActIDs_SpeedHighway1;
+        else if (CurrentCharacter == Characters_Knuckles)
+            levelAndActId = LevelAndActIDs_SpeedHighway3;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_RedMountain)
+    {
+        if (CurrentCharacter == Characters_Sonic)
+            levelAndActId = LevelAndActIDs_RedMountain1;
+        else if (CurrentCharacter == Characters_Knuckles)
+            levelAndActId = LevelAndActIDs_RedMountain3;
+        else if (CurrentCharacter == Characters_Gamma)
+            levelAndActId = LevelAndActIDs_RedMountain2;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_SkyDeck)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+            levelAndActId = LevelAndActIDs_SkyDeck1;
+        else if (CurrentCharacter == Characters_Knuckles)
+            levelAndActId = LevelAndActIDs_SkyDeck3;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_LostWorld)
+    {
+        if (CurrentCharacter == Characters_Sonic)
+            levelAndActId = LevelAndActIDs_LostWorld1;
+        else if (CurrentCharacter == Characters_Knuckles)
+            levelAndActId = LevelAndActIDs_LostWorld2;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_IceCap)
+    {
+        if (CurrentCharacter == Characters_Sonic)
+            levelAndActId = LevelAndActIDs_IceCap1;
+        else if (CurrentCharacter == Characters_Tails)
+            levelAndActId = LevelAndActIDs_IceCap3;
+        else if (CurrentCharacter == Characters_Big)
+            levelAndActId = LevelAndActIDs_IceCap4;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_Casinopolis)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Knuckles)
+            levelAndActId = LevelAndActIDs_Casinopolis1;
+        else if (CurrentCharacter == Characters_Tails)
+            levelAndActId = LevelAndActIDs_Casinopolis2;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_FinalEgg)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
+            levelAndActId = LevelAndActIDs_FinalEgg1;
+        else if (CurrentCharacter == Characters_Gamma)
+            levelAndActId = LevelAndActIDs_FinalEgg3;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_HotShelter)
+    {
+        if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
+            levelAndActId = LevelAndActIDs_HotShelter1;
+        else if (CurrentCharacter == Characters_Gamma)
+            levelAndActId = LevelAndActIDs_HotShelter3;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_Chaos0)
+    {
+        if (CurrentCharacter == Characters_Sonic)
+            levelAndActId = LevelAndActIDs_Chaos0;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_Chaos2)
+    {
+        if (CurrentCharacter == Characters_Knuckles)
+            levelAndActId = LevelAndActIDs_Chaos2;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_Chaos4)
+    {
+        if (CurrentCharacter == Characters_Sonic
+            || CurrentCharacter == Characters_Tails
+            || CurrentCharacter == Characters_Knuckles)
+            levelAndActId = LevelAndActIDs_Chaos4;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_Chaos6)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Big)
+            levelAndActId = LevelAndActIDs_Chaos6Sonic;
+        else if (CurrentCharacter == Characters_Knuckles)
+            levelAndActId = LevelAndActIDs_Chaos6Knuckles;
+        else if (CurrentCharacter == Characters_Amy)
+            levelAndActId = LevelAndActIDs_Zero;
+        else if (CurrentCharacter == Characters_Gamma)
+            levelAndActId = LevelAndActIDs_E101R;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_EggHornet)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+            levelAndActId = LevelAndActIDs_EggHornet;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_EggWalker)
+    {
+        if (CurrentCharacter == Characters_Tails)
+            levelAndActId = LevelAndActIDs_EggWalker;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_EggViper)
+    {
+        if (CurrentCharacter == Characters_Sonic)
+            levelAndActId = LevelAndActIDs_EggViper;
+        else if (CurrentCharacter == Characters_Gamma)
+            levelAndActId = LevelAndActIDs_E101;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_SandHill)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+            levelAndActId = LevelAndActIDs_SandHill;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_SkyChase1)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+            levelAndActId = LevelAndActIDs_SkyChase1;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_SkyChase2)
+    {
+        if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
+            levelAndActId = LevelAndActIDs_SkyChase2;
+        else
+            return LevelAndActIDs_HedgehogHammer;
+    }
+    else if (GET_LEVEL(levelAndActId) == LevelIDs_TwinkleCircuit)
+    {
+        /*  if (!_instance->_options.multipleTwinkleCircuitChecks)
+              levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 0);
+  
+          else */
+        if (CurrentCharacter == Characters_Sonic)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 2);
+        else if (CurrentCharacter == Characters_Tails)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 1);
+        else if (CurrentCharacter == Characters_Knuckles)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 5);
+        else if (CurrentCharacter == Characters_Amy)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 0);
+        else if (CurrentCharacter == Characters_Gamma)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 4);
+        else if (CurrentCharacter == Characters_Big)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 3);
+    }
+
+
+    return levelAndActId;
 }
