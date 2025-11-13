@@ -25,6 +25,8 @@ public:
     void MakeConnection(float x1, float y1, float x2, float y2);
     void DrawEmblemNumberInMap(AdventureFieldEntrance adventureFieldEntrance, int doorCost);
     void DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance);
+    NJS_TEXANIM* getInitialsFromEntrance(AdventureFieldEntrance* entranceTo);
+    void DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Float entranceX, Float entranceY);
     void DrawConnectionsInMap(const AdventureFieldEntrance& adventureFieldEntrance);
     void ShowMap();
     void ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance);

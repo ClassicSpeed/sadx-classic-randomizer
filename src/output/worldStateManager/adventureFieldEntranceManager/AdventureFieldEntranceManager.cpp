@@ -234,6 +234,34 @@ inline NJS_TEXANIM number_7_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 10, NJ
 inline NJS_TEXANIM number_8_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 11, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM number_9_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 12, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM base_map[] = {{18, 18, 9, 9, 255, 255, 0, 0, 13, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM emerald_coast_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 14, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM windy_valley_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 15, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM casinopolis_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 16, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM ice_cap_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 17, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM speed_highway_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 18, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM twinkle_park_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 19, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM red_mountain_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 20, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM sky_deck_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 21, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM lost_world_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 22, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM final_egg_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 23, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM hot_shelter_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 24, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM chaos_0_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 25, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM chaos_2_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 26, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM chaos_4_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 27, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM chaos_6_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 28, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM egg_hornet_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 29, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM egg_walker_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 30, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM egg_viper_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 31, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM beta_1_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 32, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM beta_2_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 33, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM zero_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 34, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM twinkle_circuit_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 35, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM sky_chase_1_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 36, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM sky_chase_2_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 37, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM sand_hill_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 38, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM ss_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 39, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM mr_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 40, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM ec_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 41, NJD_SPRITE_COLOR}};
 
 // Helper to get the correct number anim
 inline NJS_TEXANIM* GetNumberAnim(int num)
@@ -557,24 +585,114 @@ void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventu
     DrawEmblemNumberInMap(adventureFieldEntrance, doorCost);
 }
 
+NJS_TEXANIM* AdventureFieldEntranceManager::getInitialsFromEntrance(AdventureFieldEntrance* entranceTo)
+{
+    LevelAndActIDs levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(entranceTo->levelAndActId);
+    LevelIDs level = static_cast<LevelIDs>(GET_LEVEL(levelActAndId));
+    switch (level)
+    {
+    case LevelIDs_EmeraldCoast:
+        return emerald_coast_map_anim;
+    case LevelIDs_WindyValley:
+        return windy_valley_map_anim;
+    case LevelIDs_TwinklePark:
+        return twinkle_park_map_anim;
+    case LevelIDs_SpeedHighway:
+        return speed_highway_map_anim;
+    case LevelIDs_RedMountain:
+        return red_mountain_map_anim;
+    case LevelIDs_SkyDeck:
+        return sky_deck_map_anim;
+    case LevelIDs_LostWorld:
+        return lost_world_map_anim;
+    case LevelIDs_IceCap:
+        return ice_cap_map_anim;
+    case LevelIDs_Casinopolis:
+        return casinopolis_map_anim;
+    case LevelIDs_FinalEgg:
+        return final_egg_map_anim;
+    case LevelIDs_HotShelter:
+        return hot_shelter_map_anim;
+    case LevelIDs_Chaos0:
+        return chaos_0_map_anim;
+    case LevelIDs_Chaos2:
+        return chaos_2_map_anim;
+    case LevelIDs_Chaos4:
+        return chaos_4_map_anim;
+    case LevelIDs_Chaos6:
+        return chaos_6_map_anim;
+    case LevelIDs_EggHornet:
+        return egg_hornet_map_anim;
+    case LevelIDs_EggWalker:
+        return egg_walker_map_anim;
+    case LevelIDs_EggViper:
+        return egg_viper_map_anim;
+    case LevelIDs_Zero:
+        return zero_map_anim;
+    case LevelIDs_E101:
+        return beta_1_map_anim;
+    case LevelIDs_E101R:
+        return beta_2_map_anim;
+    case LevelIDs_TwinkleCircuit:
+        return twinkle_circuit_map_anim;
+    case LevelIDs_SkyChase1:
+        return sky_chase_1_map_anim;
+    case LevelIDs_SkyChase2:
+        return sky_chase_2_map_anim;
+    case LevelIDs_SandHill:
+        return sand_hill_map_anim;
+    case LevelIDs_SSGarden:
+        return ss_garden_map_anim;
+    case LevelIDs_ECGarden:
+        return ec_garden_map_anim;
+    case LevelIDs_MRGarden:
+        return mr_garden_map_anim;
+    default:
+        return line_lock_anim;
+    }
+}
+
+void AdventureFieldEntranceManager::DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Float entranceX,
+                                                           Float entranceY)
+{
+    const float x = 450 - (900.0 * entranceX / 1024.0);
+    const float y = 450 - (900.0 * entranceY / 1024.0);
+
+    njPushMatrix(0);
+    njSetTexture(&entranceTextList);
+
+    NJS_TEXANIM* texanim = getInitialsFromEntrance(entranceTo);
+    NJS_SPRITE myTestEmblem = {
+        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, texanim
+    };
+    njRotateX(0, 0x8000);
+    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+}
+
 void AdventureFieldEntranceManager::DrawConnectionsInMap(const AdventureFieldEntrance& adventureFieldEntrance)
 {
     //If both entrance and connection are on the map, draw line
-    auto entranceFrom = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
+    auto entranceLocationFrom = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
 
-    if (entranceFrom == entranceLocationInMap.end())
+    if (entranceLocationFrom == entranceLocationInMap.end())
         return;
 
 
     auto entranceToId = _instance->_adventureFieldEntranceMap.GetReplacementConnection(
         adventureFieldEntrance.entranceId,
         _isEggCarrierTransformed);
-    auto entranceTo = entranceLocationInMap.find(entranceToId);
+    auto entranceLocationTo = entranceLocationInMap.find(entranceToId);
 
-    if (entranceTo == entranceLocationInMap.end())
-        DrawEntrancePoint(entranceFrom->second.x, entranceFrom->second.y);
+    if (entranceLocationTo == entranceLocationInMap.end())
+    {
+        DrawEntrancePoint(entranceLocationFrom->second.x, entranceLocationFrom->second.y);
+        auto entranceTo = _instance->_adventureFieldEntranceMap.FindEntranceById(entranceToId);
+        DrawLevelInitialsInMap(entranceTo, entranceLocationFrom->second.x, entranceLocationFrom->second.y);
+    }
     else
-        MakeConnection(entranceFrom->second.x, entranceFrom->second.y, entranceTo->second.x, entranceTo->second.y);
+        MakeConnection(entranceLocationFrom->second.x, entranceLocationFrom->second.y, entranceLocationTo->second.x,
+                       entranceLocationTo->second.y);
 }
 
 void AdventureFieldEntranceManager::ShowMap()
