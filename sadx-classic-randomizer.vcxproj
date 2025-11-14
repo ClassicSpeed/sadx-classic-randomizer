@@ -73,7 +73,7 @@
             <Command>call ./scripts/release-clean.bat</Command>
         </PreBuildEvent>
         <PostBuildEvent>
-            <Command>call ./scripts/debug_install.bat</Command>
+            <Command>call ./scripts/debug_install.bat &amp;&amp; call ./scripts/debug_zip.bat</Command>
         </PostBuildEvent>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
