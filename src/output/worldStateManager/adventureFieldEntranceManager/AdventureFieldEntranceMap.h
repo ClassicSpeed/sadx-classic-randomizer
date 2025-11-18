@@ -122,17 +122,4 @@ private:
         {EcInsideToArsenal, ArsenalToEcInside},
         {EcInsideToWaterTank, WaterTankToEcInside},
     };
-
-    static EntranceId GetOpposite(EntranceId id)
-    {
-        switch (id)
-        {
-        case StationToSsMain: return SsMainToStation;
-        case SsMainToStation: return StationToSsMain;
-        case CityHallToSsMain: return SsMainToCityHall;
-        case SsMainToCityHall: return CityHallToSsMain;
-        // ... add all other pairs here ...
-        default: return InvalidEntranceId;
-        }
-    }
 };
