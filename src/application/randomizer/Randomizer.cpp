@@ -66,7 +66,13 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     else if (item.type == ItemCharacter || item.type == ItemKey)
         _saveFileManager.SetEventFlags(item.eventFlags);
     else if (item.type == ItemEmblem)
+    {
+        PrintDebug(" --- Emblem received, total before: %d\n", _itemRepository.GetEmblemCount());
+        PrintDebug(" --- Emblem received, total before: %d\n", _gameStatus.unlock.currentEmblems);
         _itemRepository.AddEmblem();
+        PrintDebug(" --- Emblem received, total now: %d\n", _itemRepository.GetEmblemCount());
+        PrintDebug(" --- Emblem received, total now: %d\n", _gameStatus.unlock.currentEmblems);
+    }
     else if (item.type == ItemFiller)
     {
         _characterManager.GiveFillerItem(item.fillerType, false);

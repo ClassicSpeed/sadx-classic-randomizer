@@ -152,19 +152,17 @@ std::map<int64_t, ItemData> ItemRepository::GetItems()
 
 int ItemRepository::GetEmblemCount()
 {
-    return _emblemCount;
+    return _gameStatus.unlock.currentEmblems;
 }
 
 int ItemRepository::AddEmblem()
 {
-    _emblemCount++;
-    return _emblemCount;
+    _gameStatus.unlock.currentEmblems++;
+    return _gameStatus.unlock.currentEmblems;
 }
 
 void ItemRepository::UpdateUnlockStatus()
 {
-    _gameStatus.unlock.currentEmblems = _emblemCount;
-
     _gameStatus.unlock.whiteEmerald = _itemData[92].obtained;
     _gameStatus.unlock.redEmerald = _itemData[93].obtained;
     _gameStatus.unlock.cyanEmerald = _itemData[94].obtained;
@@ -224,7 +222,7 @@ void ItemRepository::UpdateUnlockStatus()
 
 void ItemRepository::ResetItems()
 {
-    _emblemCount = 0;
+    _gameStatus.unlock.currentEmblems = 0;
     _itemsReceived = 0;
     for (auto& item : _itemData)
     {
