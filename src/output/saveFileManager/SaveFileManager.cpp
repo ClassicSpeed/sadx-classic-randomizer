@@ -146,14 +146,6 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_MONKEYCAGEA_BOMB));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_CLEAR_MOUNTAIN));
 
-    //Jungle Cart
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_TRUCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_TRUCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_TRUCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_TRUCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_TRUCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_TRUCK));
-
     //Lost World
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_REDCUBE));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_BLUECUBE));
