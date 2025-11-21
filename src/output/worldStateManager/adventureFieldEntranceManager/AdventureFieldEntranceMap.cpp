@@ -409,6 +409,8 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
     const LevelAndActIDs sourceLocation, const LevelAndActIDs destinationLocation, const bool isEggCarrierTransformed)
 
 {
+    PrintDebug("------AdventureFieldEntranceMap: Getting new connection for source location %d, destination: %d\n",
+               sourceLocation, destinationLocation);
     const EntranceId sourceEntranceId = FindEntranceByLocation(sourceLocation, destinationLocation);
     if (sourceEntranceId == static_cast<EntranceId>(-1))
         return nullptr;
@@ -460,10 +462,13 @@ EntranceId AdventureFieldEntranceMap::FindEntranceByLocation(
     if (possibleEntrances.empty())
         return static_cast<EntranceId>(-1);
 
+    //TODO: Save lastone used to use the reverse
+    if (possibleEntrances.size() == 1 || Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
+        return possibleEntrances[0]->entranceId;
+
     const NJS_POINT3& playerPos = EntityData1Ptrs[0]->Position;
     float minDist = FLT_MAX;
     auto closestId = static_cast<EntranceId>(-1);
-
     for (const auto* entrance : possibleEntrances)
     {
         const NJS_POINT3& pos = entrance->indicatorPosition;
@@ -476,7 +481,6 @@ EntranceId AdventureFieldEntranceMap::FindEntranceByLocation(
             closestId = entrance->entranceId;
         }
     }
-
     return closestId;
 }
 

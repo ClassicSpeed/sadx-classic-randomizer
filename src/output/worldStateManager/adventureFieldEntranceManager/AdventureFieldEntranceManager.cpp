@@ -124,17 +124,13 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
     PrintDebug("------AdventureFieldEntranceManager: Setting next level and act to %d, %d \n", level, act);
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
-    {
         currentLevelAndAct = LevelAndActIDs_ECGarden;
-    }
+
     else if (CurrentChaoStage == SADXChaoStage_StationSquare)
-    {
         currentLevelAndAct = LevelAndActIDs_SSGarden;
-    }
+
     else if (CurrentChaoStage == SADXChaoStage_MysticRuins)
-    {
         currentLevelAndAct = LevelAndActIDs_MRGarden;
-    }
 
     AdventureFieldEntrance* newEntrance = _instance->_adventureFieldEntranceMap.GetNewConnection(
         currentLevelAndAct, GET_LEVEL_ACT(level, act), _instance->_isEggCarrierTransformed);
