@@ -123,7 +123,7 @@ enum EntranceId
     TwinkleParkLobbyToTwinkleCircuit,
 
     // MRMain
-    MrMainToSsMain,
+    MrMainToStation,
     MrMainToEcOutside,
     MrMainToBridge,
     MrMainToAngelIsland,

@@ -84,7 +84,7 @@ public:
                 || CurrentCharacter == Characters_Big;
         case TwinkleParkLobbyToTwinkleCircuit:
             return true;
-        case MrMainToSsMain:
+        case MrMainToStation:
             return _gameStatus.unlock.keyTrain;
         case MrMainToEcOutside:
             return _gameStatus.unlock.keyRaft;

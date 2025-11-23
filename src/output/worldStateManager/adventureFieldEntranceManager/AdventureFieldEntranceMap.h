@@ -56,7 +56,7 @@ private:
         {CityHallToSpeedHighway, SpeedHighwayToCityHall},
         {CityHallToChaos0, Chaos0ToCityHall},
         {StationToSsMain, SsMainToStation},
-        {StationToMrMain, MrMainToSsMain},
+        {StationToMrMain, MrMainToStation},
         {CasinoToCasinopolis, CasinopolisToCasino},
         {CasinoToHotel, HotelToCasino},
         {CasinoToEggWalker, EggWalkerToCasino},

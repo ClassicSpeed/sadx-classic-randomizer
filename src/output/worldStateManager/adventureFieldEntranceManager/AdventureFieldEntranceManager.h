@@ -310,7 +310,7 @@ private:
         {TwinkleParkLobbyToTwinklePark, {955, 436}},
         {TwinkleParkLobbyToTwinkleCircuit, {937, 417}},
         // MRMain
-        {MrMainToSsMain, {297, 335}},
+        {MrMainToStation, {297, 335}},
         {MrMainToEcOutside, {286, 352}},
         {MrMainToBridge, {286, 352}},
         {MrMainToAngelIsland, {225, 297}},

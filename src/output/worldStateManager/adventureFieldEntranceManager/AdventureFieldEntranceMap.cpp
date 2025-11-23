@@ -21,12 +21,12 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
         {StationToSsMain, LevelAndActIDs_StationSquare2, 0, SsMainToStation, 26, {59, 79, 1452}},
         {CasinoToCasinopolis, LevelAndActIDs_StationSquare2, 1, CasinopolisToCasino, 225, {-620, 12.5, 905}},
         {CasinoToHotel, LevelAndActIDs_StationSquare2, 2, HotelToCasino, 0.0f, {-445, 13, 1515}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-236.8f, 153, 1237}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-164, 153, 1204}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-115, 153, 1179}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {-43, 153, 1142}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {4.6f, 153, 1116.4f}},
-        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToSsMain, 206, {76.5f, 153, 1080.7f}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {-236.8f, 153, 1237}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {-164, 153, 1204}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {-115, 153, 1179}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {-43, 153, 1142}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {4.6f, 153, 1116.4f}},
+        {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {76.5f, 153, 1080.7f}},
         {CasinoToEggWalker, LevelAndActIDs_StationSquare2, 1, EggWalkerToCasino, 0, {-400, 13, 955}},
 
         // Sewers
@@ -70,7 +70,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
 
 
         // MRMain
-        {MrMainToSsMain, LevelAndActIDs_MysticRuins1, 0, StationToMrMain, 56.25f, {0, 228, 1207}},
+        {MrMainToStation, LevelAndActIDs_MysticRuins1, 0, StationToMrMain, 56.25f, {0, 228, 1207}},
         {MrMainToChaos4, LevelAndActIDs_MysticRuins1, 0, Chaos4ToMrMain, 180, {80, 87, 180}},
         {MrMainToEggHornet, LevelAndActIDs_MysticRuins1, 0, EggHornetToMrMain, 0, {950, 142, 950}},
         {MrMainToSkyChase1, LevelAndActIDs_MysticRuins1, 0, SkyChase1ToMrMain, 90, {1561, 206, 900}},

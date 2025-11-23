@@ -1142,7 +1142,7 @@ BOOL AdventureFieldEntranceManager::OnIsTrainInService()
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2)
         return _instance->IsDoorOpen(StationToMrMain);
 
-    return _instance->IsDoorOpen(MrMainToSsMain);
+    return _instance->IsDoorOpen(MrMainToStation);
 }
 
 
