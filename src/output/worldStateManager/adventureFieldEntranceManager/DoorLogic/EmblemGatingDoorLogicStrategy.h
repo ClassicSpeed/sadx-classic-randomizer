@@ -21,8 +21,9 @@ public:
 
         //Check if door leads to level for the player
         auto entrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntrance);
+        //Static entrance
         if (entrance == nullptr)
-            return true;
+            return _gameStatus.unlock.currentEmblems >= entranceValue->second;
         if (_adventureFieldEntranceMap.CalculateCorrectAct(entrance->levelAndActId) == LevelAndActIDs_HedgehogHammer)
             return false;
 
