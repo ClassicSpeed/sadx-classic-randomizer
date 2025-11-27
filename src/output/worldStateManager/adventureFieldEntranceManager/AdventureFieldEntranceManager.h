@@ -4,6 +4,7 @@
 #include "../../../configuration/options/Options.h"
 #include "../doorIndicatorManager/DoorIndicatorManager.h"
 #include "DoorLogic/IDoorLogicStrategy.h"
+#include <bitset>
 #include "DoorLogic/KeyItemDoorLogicStrategy.h"
 #include "DoorLogic/EmblemGatingDoorLogicStrategy.h"
 
@@ -24,6 +25,7 @@ public:
     void DrawLine(float x1, float y1, float x2, float y2);
     void MakeConnection(float x1, float y1, float x2, float y2);
     void DrawEmblemNumberInMap(AdventureFieldEntrance adventureFieldEntrance, int doorCost);
+    void DrawNewInMap(AdventureFieldEntrance adventureFieldEntrance);
     void DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance);
     NJS_TEXANIM* getInitialsFromEntrance(AdventureFieldEntrance* entranceTo);
     void DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Float entranceX, Float entranceY);
@@ -44,6 +46,20 @@ private:
     DoorIndicatorManager& _doorIndicatorManager;
     bool _isEggCarrierTransformed = false;
     std::unique_ptr<IDoorLogicStrategy> _doorLogicStrategy;
+    static constexpr size_t EntranceCount = InvalidEntranceId;
+    std::bitset<EntranceCount> entranceVisited{};
+
+    void SetEntranceVisited(EntranceId id, bool visited)
+    {
+        const size_t idx = static_cast<size_t>(id);
+        if (idx < EntranceCount) entranceVisited.set(idx, visited);
+    }
+
+    bool IsEntranceVisited(EntranceId id) const
+    {
+        const size_t idx = static_cast<size_t>(id);
+        return (idx < EntranceCount) ? entranceVisited.test(idx) : false;
+    }
 
     bool IsDoorOpen(EntranceId entranceId);
     bool ShowDisableDoorIndicator(EntranceId entranceId);

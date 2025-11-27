@@ -159,7 +159,8 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
                 GET_LEVEL(levelActAndId), GET_ACT(levelActAndId));
             SetEntranceNumber(newEntrance->entranceNumber);
         }
-
+        _instance->SetEntranceVisited(newEntrance->entranceId, true);
+        _instance->SetEntranceVisited(newEntrance->connectsTo, true);
         return;
     }
     _setNextLevelAndActCutsceneModeHook.Original(level, act);
@@ -258,6 +259,7 @@ inline NJS_TEXANIM sand_hill_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 38, NJ
 inline NJS_TEXANIM ss_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 39, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM mr_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 40, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM ec_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 41, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM new_logo_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 42, NJD_SPRITE_COLOR}};
 
 // Helper to get the correct number anim
 inline NJS_TEXANIM* GetNumberAnim(int num)
@@ -560,6 +562,28 @@ void AdventureFieldEntranceManager::DrawEmblemNumberInMap(AdventureFieldEntrance
     ShowNumberDynamicMap(doorCost, x, y);
 }
 
+void AdventureFieldEntranceManager::DrawNewInMap(AdventureFieldEntrance adventureFieldEntrance)
+{
+    auto entranceValue = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
+
+    if (entranceValue == entranceLocationInMap.end())
+        return;
+
+
+    const float x = 450 - (900.0 * entranceValue->second.x / 1024.0);
+    const float y = 450 - (900.0 * entranceValue->second.y / 1024.0);
+
+
+    njPushMatrix(0);
+    njSetTexture(&entranceTextList);
+    NJS_SPRITE myTestEmblem = {
+        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, new_logo_map_anim
+    };
+    njRotateX(0, 0x8000);
+    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+}
+
 void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance)
 {
     auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
@@ -570,12 +594,14 @@ void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventu
             adventureFieldEntrance.entranceId, false);
         entranceValue = _options.entranceEmblemValueMap.find(oppositeEntrance);
     }
-    if (entranceValue == _options.entranceEmblemValueMap.end())
-        return;
 
-
-    if (_gameStatus.unlock.currentEmblems >= entranceValue->second)
+    if (entranceValue == _options.entranceEmblemValueMap.end() || _gameStatus.unlock.currentEmblems >= entranceValue->
+        second)
+    {
+        if (!_instance->IsEntranceVisited(adventureFieldEntrance.entranceId))
+            DrawNewInMap(adventureFieldEntrance);
         return;
+    }
 
     int doorCost = entranceValue->second;
     DrawEmblemNumberInMap(adventureFieldEntrance, doorCost);
