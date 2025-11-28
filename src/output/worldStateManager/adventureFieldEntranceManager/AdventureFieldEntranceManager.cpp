@@ -721,6 +721,7 @@ void AdventureFieldEntranceManager::ShowMap()
 {
     njPushMatrix(0);
     njSetTexture(&entranceTextList);
+    SetMaterial(255, 255, 255, 255);
     NJS_SPRITE mySprite = {{_nj_screen_.cx, _nj_screen_.cy, 1}, -50, -50, 0, &entranceTextList, base_map};
     njRotateX(0, 0x8000);
     njDrawSprite2D_ForcePriority(&mySprite, 0, 200, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
