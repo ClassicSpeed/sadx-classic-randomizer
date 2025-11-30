@@ -251,8 +251,10 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
 
         // Speed Highway
         {SpeedHighwayToSsMain, LevelAndActIDs_SpeedHighway1, 0, SsMainToSpeedHighway, 0, {0, 0, 0}},
+        {SpeedHighwayToSsMain, LevelAndActIDs_SpeedHighway2, 0, SsMainToSpeedHighway, 0, {0, 0, 0}},
         {SpeedHighwayToSsMain, LevelAndActIDs_SpeedHighway3, 0, SsMainToSpeedHighway, 0, {0, 0, 0}},
         {SpeedHighwayToCityHall, LevelAndActIDs_SpeedHighway1, 0, CityHallToSpeedHighway, 0, {0, 0, 0}},
+        {SpeedHighwayToCityHall, LevelAndActIDs_SpeedHighway2, 0, CityHallToSpeedHighway, 0, {0, 0, 0}},
         {SpeedHighwayToCityHall, LevelAndActIDs_SpeedHighway3, 0, CityHallToSpeedHighway, 0, {0, 0, 0}},
 
         // Emerald Coast
@@ -263,17 +265,22 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
         // Casinopolis
         {CasinopolisToCasino, LevelAndActIDs_Casinopolis1, 0, CasinoToCasinopolis, 0, {0, 0, 0}},
         {CasinopolisToCasino, LevelAndActIDs_Casinopolis2, 0, CasinoToCasinopolis, 0, {0, 0, 0}},
+        {CasinopolisToCasino, LevelAndActIDs_Casinopolis3, 0, CasinoToCasinopolis, 0, {0, 0, 0}},
+        {CasinopolisToCasino, LevelAndActIDs_Casinopolis4, 0, CasinoToCasinopolis, 0, {0, 0, 0}},
 
         // Twinkle Park
         {TwinkleParkToTwinkleParkLobby, LevelAndActIDs_TwinklePark1, 0, TwinkleParkLobbyToTwinklePark, 0, {0, 0, 0}},
+        {TwinkleParkToTwinkleParkLobby, LevelAndActIDs_TwinklePark2, 0, TwinkleParkLobbyToTwinklePark, 0, {0, 0, 0}},
         {TwinkleParkToTwinkleParkLobby, LevelAndActIDs_TwinklePark3, 0, TwinkleParkLobbyToTwinklePark, 0, {0, 0, 0}},
 
         // Windy Valley
         {WindyValleyToMrMain, LevelAndActIDs_WindyValley1, 0, MrMainToWindyValley, 0, {0, 0, 0}},
+        {WindyValleyToMrMain, LevelAndActIDs_WindyValley2, 0, MrMainToWindyValley, 0, {0, 0, 0}},
         {WindyValleyToMrMain, LevelAndActIDs_WindyValley3, 0, MrMainToWindyValley, 0, {0, 0, 0}},
 
         // Ice Cap
         {IceCapToIceCave, LevelAndActIDs_IceCap1, 0, IceCaveToIceCap, 0, {0, 0, 0}},
+        {IceCapToIceCave, LevelAndActIDs_IceCap2, 0, IceCaveToIceCap, 0, {0, 0, 0}},
         {IceCapToIceCave, LevelAndActIDs_IceCap3, 0, IceCaveToIceCap, 0, {0, 0, 0}},
         {IceCapToIceCave, LevelAndActIDs_IceCap4, 0, IceCaveToIceCap, 0, {0, 0, 0}},
 
@@ -292,25 +299,33 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
 
         // Final Egg
         {
-            FinalEggToFinalEggTowerAlternative, LevelAndActIDs_FinalEgg3, 0, FinalEggTowerToFinalEggAlternative, 0,
-            {0, 0, 0}
-        },
-        {
             FinalEggToFinalEggTowerAlternative, LevelAndActIDs_FinalEgg1, 0, FinalEggTowerToFinalEggAlternative, 0,
             {0, 0, 0}
         },
-        {FinalEggToFinalEggTower, LevelAndActIDs_FinalEgg3, 0, FinalEggTowerToFinalEgg, 0, {0, 0, 0}},
+        {
+            FinalEggToFinalEggTowerAlternative, LevelAndActIDs_FinalEgg2, 0, FinalEggTowerToFinalEggAlternative, 0,
+            {0, 0, 0}
+        },
+        {
+            FinalEggToFinalEggTowerAlternative, LevelAndActIDs_FinalEgg3, 0, FinalEggTowerToFinalEggAlternative, 0,
+            {0, 0, 0}
+        },
         {FinalEggToFinalEggTower, LevelAndActIDs_FinalEgg1, 0, FinalEggTowerToFinalEgg, 0, {0, 0, 0}},
+        {FinalEggToFinalEggTower, LevelAndActIDs_FinalEgg2, 0, FinalEggTowerToFinalEgg, 0, {0, 0, 0}},
+        {FinalEggToFinalEggTower, LevelAndActIDs_FinalEgg3, 0, FinalEggTowerToFinalEgg, 0, {0, 0, 0}},
 
         // Hot Shelter
         {HotShelterToEcInside, LevelAndActIDs_HotShelter1, 0, EcInsideToHotShelter, 0.0f, {0, 0, 0}},
         {HotShelterToEcInside, LevelAndActIDs_HotShelter2, 0, EcInsideToHotShelter, 0.0f, {0, 0, 0}},
         {HotShelterToEcInside, LevelAndActIDs_HotShelter3, 0, EcInsideToHotShelter, 0.0f, {0, 0, 0}},
+        {HotShelterToEcInside, LevelAndActIDs_HotShelter4, 0, EcInsideToHotShelter, 0.0f, {0, 0, 0}},
 
         // Sky Deck
         {SkyDeckToBridge, LevelAndActIDs_SkyDeck1, 0, BridgeToSkyDeck, 0.0f, {0, 0, 0}},
-        {SkyDeckToPool, LevelAndActIDs_SkyDeck1, 0, PoolToSkyDeck, 0.0f, {0, 0, 0}},
+        {SkyDeckToBridge, LevelAndActIDs_SkyDeck2, 0, BridgeToSkyDeck, 0.0f, {0, 0, 0}},
         {SkyDeckToBridge, LevelAndActIDs_SkyDeck3, 0, BridgeToSkyDeck, 0.0f, {0, 0, 0}},
+        {SkyDeckToPool, LevelAndActIDs_SkyDeck1, 0, PoolToSkyDeck, 0.0f, {0, 0, 0}},
+        {SkyDeckToPool, LevelAndActIDs_SkyDeck2, 0, PoolToSkyDeck, 0.0f, {0, 0, 0}},
         {SkyDeckToPool, LevelAndActIDs_SkyDeck3, 0, PoolToSkyDeck, 0.0f, {0, 0, 0}},
 
         // Chaos 0
