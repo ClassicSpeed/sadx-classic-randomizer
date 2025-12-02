@@ -585,7 +585,7 @@ void AdventureFieldEntranceManager::DrawNewInMap(AdventureFieldEntrance adventur
     njPopMatrix(1u);
 }
 
-void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance)
+void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bool isStatic)
 {
     auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
 
@@ -599,7 +599,7 @@ void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventu
     if (entranceValue == _options.entranceEmblemValueMap.end() || _gameStatus.unlock.currentEmblems >= entranceValue->
         second)
     {
-        if (!_instance->IsEntranceVisited(adventureFieldEntrance.entranceId))
+        if (!_instance->IsEntranceVisited(adventureFieldEntrance.entranceId) && !isStatic)
             DrawNewInMap(adventureFieldEntrance);
         return;
     }
@@ -731,11 +731,11 @@ void AdventureFieldEntranceManager::ShowMap()
     for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetEntrances())
     {
         DrawConnectionsInMap(adventureFieldEntrance);
-        DrawMapEmblem(adventureFieldEntrance);
+        DrawMapEmblem(adventureFieldEntrance, false);
     }
     for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetStaticEntrances())
     {
-        DrawMapEmblem(adventureFieldEntrance);
+        DrawMapEmblem(adventureFieldEntrance, true);
     }
 }
 
