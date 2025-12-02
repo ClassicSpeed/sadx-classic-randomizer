@@ -261,6 +261,7 @@ inline NJS_TEXANIM ss_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 39, NJ
 inline NJS_TEXANIM mr_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 40, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM ec_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 41, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM new_logo_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 42, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM location_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 43, NJD_SPRITE_COLOR}};
 
 // Helper to get the correct number anim
 inline NJS_TEXANIM* GetNumberAnim(int num)
@@ -585,6 +586,81 @@ void AdventureFieldEntranceManager::DrawNewInMap(AdventureFieldEntrance adventur
     njPopMatrix(1u);
 }
 
+
+void AdventureFieldEntranceManager::DrawPlayerLocation()
+{
+    NJS_POINT2 locationInMap;
+    if (CurrentStageAndAct == LevelAndActIDs_StationSquare1)
+        locationInMap = {769, 139};
+    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare2)
+        locationInMap = {621, 272};
+    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare3)
+        locationInMap = {929, 161};
+    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
+        locationInMap = {764, 374};
+    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare5)
+        locationInMap = {599, 446};
+    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare6)
+        locationInMap = {930, 442};
+    else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins1)
+        locationInMap = {300, 276};
+    else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins2)
+        locationInMap = {223, 484};
+    else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins3)
+        locationInMap = {327, 104};
+    else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins4)
+        locationInMap = {561, 63};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside1)
+        locationInMap = {586, 720};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside2)
+        locationInMap = {702, 743};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside3)
+        locationInMap = {792, 634};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside4)
+        locationInMap = {882, 567};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside5)
+        locationInMap = {814, 788};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside6)
+        locationInMap = {714, 900};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside1)
+        locationInMap = {446, 622};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside2)
+        locationInMap = {304, 585};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside3)
+        locationInMap = {306, 910};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside4)
+        locationInMap = {292, 758};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside5)
+        locationInMap = {201, 776};
+    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside6)
+        locationInMap = {448, 932};
+    else if (CurrentStageAndAct == LevelAndActIDs_Past1)
+        locationInMap = {110, 129};
+    else if (CurrentStageAndAct == LevelAndActIDs_Past2)
+        locationInMap = {83, 424};
+    else
+        return;
+
+
+    const float x = 450 - (900.0 * locationInMap.x / 1024.0);
+    float y = 450 - (900.0 * locationInMap.y / 1024.0);
+
+    std::clock_t now = std::clock();
+    double ms = double(now) * 1000.0 / CLOCKS_PER_SEC;
+    int phase = static_cast<int>(ms / 250.0) & 1; // 0 or 1
+    y += (phase == 0) ? 10.0f : 0.0f;
+
+
+    njPushMatrix(0);
+    njSetTexture(&entranceTextList);
+    NJS_SPRITE myTestEmblem = {
+        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, location_map_anim
+    };
+    njRotateX(0, 0x8000);
+    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+}
+
 void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bool isStatic)
 {
     auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
@@ -737,6 +813,7 @@ void AdventureFieldEntranceManager::ShowMap()
     {
         DrawMapEmblem(adventureFieldEntrance, true);
     }
+    DrawPlayerLocation();
 }
 
 
