@@ -109,6 +109,9 @@ private:
     inline static FunctionHook<void, task*> _ssBoxLoadHook{0x636B30};
     static void OnSsBoxLoad(task* tp);
 
+    inline static FunctionHook<BOOL> _isSpeedHighwayElevatorOpen{0x638CC0};
+    static BOOL OnIsSpeedHighwayElevatorOpen();
+
     inline static FunctionHook<void, task*> _elevatorInHook{0x63DB70};
     static void OnElevatorIn(task* tp);
 

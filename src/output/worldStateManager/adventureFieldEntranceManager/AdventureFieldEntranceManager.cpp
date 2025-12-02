@@ -30,6 +30,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _twinkleParkLobbyDoorFromStationHook.Hook(OnTwinkleParkLobbyDoorFromStation);
     _twinkleParkLobbyDoorToStationHook.Hook(OnTwinkleParkLobbyDoorToStation);
     _ssBoxLoadHook.Hook(OnSsBoxLoad);
+    _isSpeedHighwayElevatorOpen.Hook(OnIsSpeedHighwayElevatorOpen);
     _elevatorInHook.Hook(OnElevatorIn);
     _elevatorOutHook.Hook(OnElevatorOut);
     _elevatorInSceneChangeHook.Hook(OnElevatorInSceneChange);
@@ -900,6 +901,12 @@ void AdventureFieldEntranceManager::OnSsBoxLoad(task* tp)
     WriteData<1>((void*)0x636B83, 0x09);
 
     return _ssBoxLoadHook.Original(tp);
+}
+
+
+BOOL AdventureFieldEntranceManager::OnIsSpeedHighwayElevatorOpen()
+{
+    return true;
 }
 
 void AdventureFieldEntranceManager::OnElevatorOut(task* tp)
