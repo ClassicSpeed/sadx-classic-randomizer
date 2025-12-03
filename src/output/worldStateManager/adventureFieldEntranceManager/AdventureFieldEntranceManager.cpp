@@ -84,7 +84,6 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _isOutsideEggLiftEnabledHook.Hook(OnIsOutsideEggLiftEnabled);
     _isInsideEggLiftEnabledHook.Hook(OnIsInsideEggLiftEnabled);
     _loadPoolDoorHook.Hook(OnLoadPoolDoor);
-    _isEggCarrierSunkHook.Hook(IsEggCarrierSunk);
     _isEcBoatEnabledHook.Hook(IsEcBoatEnabled);
     _isEcRaftEnabledHook.Hook(IsEcRaftEnabled);
     _hiddenGateMainHook.Hook(OnHiddenGateMain);
@@ -357,6 +356,17 @@ void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
             continue;
 
         ShowDoorEmblemRequirement(adventureFieldEntrance);
+    }
+
+    if (CurrentStageAndAct != LevelAndActIDs_EggCarrierOutside4)
+    {
+        bool isTransformed = EventFlagArray[EventFlags_Sonic_EggCarrierTransformed];
+        if (isTransformed != _isEggCarrierTransformed)
+        {
+            _isEggCarrierTransformed = isTransformed;
+            PrintDebug("------AdventureFieldEntranceManager: Egg Carrier transformation state changed to %d \n",
+                       _isEggCarrierTransformed);
+        }
     }
 
 
@@ -2090,13 +2100,6 @@ void AdventureFieldEntranceManager::OnLoadPoolDoor(task* tp)
     if (!_instance->IsDoorOpen(PoolToSkyDeck))
         return _loadPoolDoorHook.Original(tp);
     FreeTask(tp);
-}
-
-BOOL AdventureFieldEntranceManager::IsEggCarrierSunk()
-{
-    if (!_instance->_options.emblemGating)
-        return _isEggCarrierSunkHook.Original();
-    return true;
 }
 
 BOOL AdventureFieldEntranceManager::IsEcBoatEnabled()
