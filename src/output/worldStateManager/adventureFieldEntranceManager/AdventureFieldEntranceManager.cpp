@@ -15,6 +15,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _doorIndicatorManager(DoorIndicatorManager::Init())
 {
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
+    _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
     _getEntranceSs.Hook(OnGetEntranceSs);
     _getEntranceEc.Hook(OnGetEntranceEc);
 
@@ -165,6 +166,15 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
     }
     _setNextLevelAndActCutsceneModeHook.Original(level, act);
 }
+
+//When leaving a level, check if we quiting the adventure game
+Sint32 AdventureFieldEntranceManager::OnFinishedLevelMaybe()
+{
+    if (GameState == MD_GAME_ABORT)
+        _instance->_isEggCarrierTransformed = false;
+    return _finishedLevelMaybeHook.Original();
+}
+
 
 void AdventureFieldEntranceManager::OnGetEntranceSs(taskwk* twp)
 {
@@ -357,16 +367,24 @@ void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
 
         ShowDoorEmblemRequirement(adventureFieldEntrance);
     }
-
     if (CurrentStageAndAct != LevelAndActIDs_EggCarrierOutside4)
     {
-        bool isTransformed = EventFlagArray[EventFlags_Sonic_EggCarrierTransformed];
+        bool isTransformed = false;
+        if (CurrentCharacter == Characters_Sonic)
+            isTransformed = EventFlagArray[FLAG_SONIC_EC_TRANSFORM];
+        else if (CurrentCharacter == Characters_Tails)
+            isTransformed = EventFlagArray[FLAG_MILES_EC_TRANSFORM];
+        else if (CurrentCharacter == Characters_Knuckles)
+            isTransformed = EventFlagArray[FLAG_KNUCKLES_EC_TRANSFORM];
+        else if (CurrentCharacter == Characters_Amy)
+            isTransformed = EventFlagArray[FLAG_AMY_EC_TRANSFORM];
+        else if (CurrentCharacter == Characters_Gamma)
+            isTransformed = EventFlagArray[FLAG_E102_EC_TRANSFORM];
+        else if (CurrentCharacter == Characters_Big)
+            isTransformed = EventFlagArray[FLAG_BIG_EC_TRANSFORM];
+
         if (isTransformed != _isEggCarrierTransformed)
-        {
             _isEggCarrierTransformed = isTransformed;
-            PrintDebug("------AdventureFieldEntranceManager: Egg Carrier transformation state changed to %d \n",
-                       _isEggCarrierTransformed);
-        }
     }
 
 
