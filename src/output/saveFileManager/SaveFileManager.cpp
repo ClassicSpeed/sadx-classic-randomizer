@@ -75,6 +75,42 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_RED));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_SILVER));
 
+    //Casino Door
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_CASINO));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ENTRANCE_CASINO));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO));
+
+    //Speed Highway
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_CARD));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_HIGHWAY));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ENTRANCE_HIGHWAY));
+
+    //Windy Valley
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_WINDY));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_WINDYSTONE));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_WINDY));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_WINDYSTONE));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_WINDY));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_WINDYSTONE));
+
+    //Red Mountain
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_MOUNTAIN));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_MOUNTAIN));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_ENTRANCE_MOUNTAIN));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_MONKEYDOOR_ENTER));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_MONKEYCAGEA_BOMB));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_CLEAR_MOUNTAIN));
+
+    //Lost World
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_REDCUBE));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_BLUECUBE));
+
+    //Sand Hill
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_SANDBOARD));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_SANDBOARD));
+
+    //FinalEgg
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_FINALEGG));
 
     //Chao Garden
     ClearEventFlag(static_cast<EventFlags>(FLAG_GET_GOLDEGG));
