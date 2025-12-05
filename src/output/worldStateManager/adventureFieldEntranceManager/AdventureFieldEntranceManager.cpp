@@ -12,7 +12,8 @@ UsercallFunc(int, skyDeckDoorHook, (taskwk* twp), (twp), 0x51DEB0, rEAX, rESI);
 AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus) :
     _options(options), _gameStatus(gameStatus),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init(options)),
-    _doorIndicatorManager(DoorIndicatorManager::Init())
+    _doorIndicatorManager(DoorIndicatorManager::Init()),
+    _mapManager(MapManager::Init(options, gameStatus, _adventureFieldEntranceMap))
 {
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
     _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
@@ -160,8 +161,8 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
                 GET_LEVEL(levelActAndId), GET_ACT(levelActAndId));
             SetEntranceNumber(newEntrance->entranceNumber);
         }
-        _instance->SetEntranceVisited(newEntrance->entranceId, true);
-        _instance->SetEntranceVisited(newEntrance->connectsTo, true);
+        _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
+        _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
         return;
     }
     _setNextLevelAndActCutsceneModeHook.Original(level, act);
@@ -228,59 +229,6 @@ void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)
     _getEntranceEc.Original(twp);
 }
 
-inline NJS_TEXANIM emblem_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 1, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM line_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 2, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM number_0_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 3, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM number_1_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 4, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM number_2_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 5, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM number_3_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 6, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM number_4_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 7, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM number_5_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 8, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM number_6_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 9, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM number_7_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 10, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM number_8_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 11, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM number_9_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 12, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM base_map[] = {{18, 18, 9, 9, 255, 255, 0, 0, 13, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM emerald_coast_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 14, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM windy_valley_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 15, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM casinopolis_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 16, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM ice_cap_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 17, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM speed_highway_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 18, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM twinkle_park_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 19, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM red_mountain_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 20, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM sky_deck_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 21, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM lost_world_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 22, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM final_egg_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 23, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM hot_shelter_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 24, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM chaos_0_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 25, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM chaos_2_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 26, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM chaos_4_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 27, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM chaos_6_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 28, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM egg_hornet_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 29, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM egg_walker_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 30, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM egg_viper_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 31, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM beta_1_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 32, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM beta_2_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 33, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM zero_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 34, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM twinkle_circuit_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 35, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM sky_chase_1_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 36, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM sky_chase_2_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 37, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM sand_hill_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 38, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM ss_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 39, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM mr_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 40, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM ec_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 41, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM new_logo_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 42, NJD_SPRITE_COLOR}};
-inline NJS_TEXANIM location_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 43, NJD_SPRITE_COLOR}};
-
-// Helper to get the correct number anim
-inline NJS_TEXANIM* GetNumberAnim(int num)
-{
-    static NJS_TEXANIM* number_anims[] = {
-        number_0_lock_anim, number_1_lock_anim, number_2_lock_anim, number_3_lock_anim, number_4_lock_anim,
-        number_5_lock_anim, number_6_lock_anim, number_7_lock_anim, number_8_lock_anim, number_9_lock_anim
-    };
-    return (num >= 0 && num <= 9) ? number_anims[num] : number_0_lock_anim;
-}
 
 void AdventureFieldEntranceManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance)
 {
@@ -333,6 +281,7 @@ void AdventureFieldEntranceManager::ShowDoorEmblemRequirement(AdventureFieldEntr
 
 void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
 {
+    _mapManager.OnFrame();
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
     {
@@ -386,11 +335,6 @@ void AdventureFieldEntranceManager::ShowLevelEntranceArrows()
         if (isTransformed != _isEggCarrierTransformed)
             _isEggCarrierTransformed = isTransformed;
     }
-
-
-    for (const auto& button : HeldButtons)
-        if (button & WhistleButtons && Current_CharObj2 != nullptr)
-            this->ShowMap();
 }
 
 void AdventureFieldEntranceManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x,
@@ -434,32 +378,6 @@ void AdventureFieldEntranceManager::ShowNumberDynamic(const AdventureFieldEntran
     }
 }
 
-
-void AdventureFieldEntranceManager::ShowNumberDynamicMap(int number, float x, float y)
-{
-    if (number < 0 || number > 999) return;
-
-    int hundreds = number / 100;
-    int tens = (number / 10) % 10;
-    int ones = number % 10;
-
-    if (number >= 100)
-    {
-        showNumberMap(x + 10, y, hundreds);
-        showNumberMap(x, y, tens);
-        showNumberMap(x - 10, y, ones);
-    }
-    else if (number >= 10)
-    {
-        showNumberMap(x + 5, y, tens);
-        showNumberMap(x - 5, y, ones);
-    }
-    else
-    {
-        showNumberMap(x, y, ones);
-    }
-}
-
 void AdventureFieldEntranceManager::showNumber(const AdventureFieldEntrance& adventureFieldEntrance, const float posX,
                                                const float posY, const int number, const float zOffset)
 {
@@ -481,367 +399,6 @@ void AdventureFieldEntranceManager::showNumber(const AdventureFieldEntrance& adv
     NJS_SPRITE numRight = {{0}, 1, 1, 0, &entranceTextList, GetNumberAnim(number)};
     njDrawSprite3D(&numRight, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
-}
-
-
-void AdventureFieldEntranceManager::showNumberMap(const float posX, const float posY, const int number)
-{
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-    NJS_SPRITE numberSprite = {
-        {_nj_screen_.cx - posX, _nj_screen_.cy - posY, 1}, -3, -3, 0, &entranceTextList, GetNumberAnim(number)
-    };
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&numberSprite, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
-}
-
-void AdventureFieldEntranceManager::DrawEntrancePoint(float x, float y)
-{
-    const float actualX = 450 - (900.0 * x / 1024.0);
-    const float actualY = 450 - (900.0 * y / 1024.0);
-
-    const float squareSize = 6.0f;
-    float halfSize = squareSize / 2.0f;
-    DrawRect_Queue(_nj_screen_.cx - actualX - halfSize,
-                   _nj_screen_.cy - actualY - halfSize,
-                   _nj_screen_.cx - actualX + halfSize,
-                   _nj_screen_.cy - actualY + halfSize,
-                   22250,
-                   0xFFFFFFFF,
-                   QueuedModelFlagsB_EnableZWrite);
-}
-
-void AdventureFieldEntranceManager::DrawLine(float x1, float y1, float x2, float y2)
-{
-    const float actualX1 = 450 - (900.0 * x1 / 1024.0);
-    const float actualY1 = 450 - (900.0 * y1 / 1024.0);
-    const float actualX2 = 450 - (900.0 * x2 / 1024.0);
-    const float actualY2 = 450 - (900.0 * y2 / 1024.0);
-
-    // Calculate direction vector
-    float dx = actualX2 - actualX1;
-    float dy = actualY2 - actualY1;
-    float length = sqrtf(dx * dx + dy * dy);
-
-    // Perpendicular vector (normalized)
-    float px = -dy / length;
-    float py = dx / length;
-
-    float halfThickness = 1.0f;
-
-    // Offset points perpendicular to the line
-    float ox = px * halfThickness;
-    float oy = py * halfThickness;
-
-    NJS_POINT2 points[] = {
-        {_nj_screen_.cx - (actualX1 + ox), _nj_screen_.cy - (actualY1 + oy)},
-        {_nj_screen_.cx - (actualX1 - ox), _nj_screen_.cy - (actualY1 - oy)},
-        {_nj_screen_.cx - (actualX2 - ox), _nj_screen_.cy - (actualY2 - oy)},
-        {_nj_screen_.cx - (actualX2 + ox), _nj_screen_.cy - (actualY2 + oy)},
-    };
-
-    NJS_COLOR linecol[4];
-    NJS_POINT2COL linep2;
-
-    linep2.p = points;
-    linep2.col = linecol;
-    linep2.tex = NULL;
-    linep2.num = 4;
-
-    // linep2.col[0].color = 0x66F1EB9C;
-    // linep2.col[1].color = 0x66F1EB9C;
-    // linep2.col[2].color = 0x66F1EB9C;
-    // linep2.col[3].color = 0x66F1EB9C;
-    linep2.col[0].color = 0xFFFFFFFF;
-    linep2.col[1].color = 0xFFFFFFFF;
-    linep2.col[2].color = 0xFFFFFFFF;
-    linep2.col[3].color = 0xFFFFFFFF;
-
-    Draw2DLinesMaybe_Queue(&linep2, 4, 62041.496f, NJD_FILL | NJD_TRANSPARENT, QueuedModelFlagsB_SomeTextureThing);
-}
-
-
-void AdventureFieldEntranceManager::MakeConnection(float x1, float y1, float x2, float y2)
-{
-    DrawEntrancePoint(x1, y1);
-    DrawEntrancePoint(x2, y2);
-    DrawLine(x1, y1, x2, y2);
-}
-
-void AdventureFieldEntranceManager::DrawEmblemNumberInMap(AdventureFieldEntrance adventureFieldEntrance, int doorCost)
-{
-    auto entranceValue = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
-
-    if (entranceValue == entranceLocationInMap.end())
-        return;
-
-
-    const float x = 450 - (900.0 * entranceValue->second.x / 1024.0);
-    const float y = 450 - (900.0 * entranceValue->second.y / 1024.0);
-
-
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-    NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, emblem_lock_anim
-    };
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
-    ShowNumberDynamicMap(doorCost, x, y);
-}
-
-void AdventureFieldEntranceManager::DrawNewInMap(AdventureFieldEntrance adventureFieldEntrance)
-{
-    auto entranceValue = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
-
-    if (entranceValue == entranceLocationInMap.end())
-        return;
-
-
-    const float x = 450 - (900.0 * entranceValue->second.x / 1024.0);
-    const float y = 450 - (900.0 * entranceValue->second.y / 1024.0);
-
-
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-    NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, new_logo_map_anim
-    };
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
-}
-
-
-void AdventureFieldEntranceManager::DrawPlayerLocation()
-{
-    NJS_POINT2 locationInMap;
-    if (CurrentStageAndAct == LevelAndActIDs_StationSquare1)
-        locationInMap = {769, 139};
-    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare2)
-        locationInMap = {621, 272};
-    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare3)
-        locationInMap = {929, 161};
-    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
-        locationInMap = {764, 374};
-    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare5)
-        locationInMap = {599, 446};
-    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare6)
-        locationInMap = {930, 442};
-    else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins1)
-        locationInMap = {300, 276};
-    else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins2)
-        locationInMap = {223, 484};
-    else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins3)
-        locationInMap = {327, 104};
-    else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins4)
-        locationInMap = {561, 63};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside1)
-        locationInMap = {586, 720};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside2)
-        locationInMap = {702, 743};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside3)
-        locationInMap = {792, 634};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside4)
-        locationInMap = {882, 567};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside5)
-        locationInMap = {814, 788};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside6)
-        locationInMap = {714, 900};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside1)
-        locationInMap = {446, 622};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside2)
-        locationInMap = {304, 585};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside3)
-        locationInMap = {306, 910};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside4)
-        locationInMap = {292, 758};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside5)
-        locationInMap = {201, 776};
-    else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside6)
-        locationInMap = {448, 932};
-    else if (CurrentStageAndAct == LevelAndActIDs_Past1)
-        locationInMap = {110, 129};
-    else if (CurrentStageAndAct == LevelAndActIDs_Past2)
-        locationInMap = {83, 424};
-    else
-        return;
-
-
-    const float x = 450 - (900.0 * locationInMap.x / 1024.0);
-    float y = 450 - (900.0 * locationInMap.y / 1024.0);
-
-    std::clock_t now = std::clock();
-    double ms = double(now) * 1000.0 / CLOCKS_PER_SEC;
-    int phase = static_cast<int>(ms / 250.0) & 1; // 0 or 1
-    y += (phase == 0) ? 10.0f : 0.0f;
-
-
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-    NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, location_map_anim
-    };
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
-}
-
-void AdventureFieldEntranceManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bool isStatic)
-{
-    auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
-
-    if (entranceValue == _options.entranceEmblemValueMap.end())
-    {
-        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(
-            adventureFieldEntrance.entranceId, false);
-        entranceValue = _options.entranceEmblemValueMap.find(oppositeEntrance);
-    }
-
-    if (entranceValue == _options.entranceEmblemValueMap.end() || _gameStatus.unlock.currentEmblems >= entranceValue->
-        second)
-    {
-        if (!_instance->IsEntranceVisited(adventureFieldEntrance.entranceId) && !isStatic)
-            DrawNewInMap(adventureFieldEntrance);
-        return;
-    }
-
-    int doorCost = entranceValue->second;
-    DrawEmblemNumberInMap(adventureFieldEntrance, doorCost);
-}
-
-NJS_TEXANIM* AdventureFieldEntranceManager::getInitialsFromEntrance(AdventureFieldEntrance* entranceTo)
-{
-    LevelAndActIDs levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(entranceTo->levelAndActId);
-    LevelIDs level = static_cast<LevelIDs>(GET_LEVEL(levelActAndId));
-    switch (level)
-    {
-    case LevelIDs_EmeraldCoast:
-        return emerald_coast_map_anim;
-    case LevelIDs_WindyValley:
-        return windy_valley_map_anim;
-    case LevelIDs_TwinklePark:
-        return twinkle_park_map_anim;
-    case LevelIDs_SpeedHighway:
-        return speed_highway_map_anim;
-    case LevelIDs_RedMountain:
-        return red_mountain_map_anim;
-    case LevelIDs_SkyDeck:
-        return sky_deck_map_anim;
-    case LevelIDs_LostWorld:
-        return lost_world_map_anim;
-    case LevelIDs_IceCap:
-        return ice_cap_map_anim;
-    case LevelIDs_Casinopolis:
-        return casinopolis_map_anim;
-    case LevelIDs_FinalEgg:
-        return final_egg_map_anim;
-    case LevelIDs_HotShelter:
-        return hot_shelter_map_anim;
-    case LevelIDs_Chaos0:
-        return chaos_0_map_anim;
-    case LevelIDs_Chaos2:
-        return chaos_2_map_anim;
-    case LevelIDs_Chaos4:
-        return chaos_4_map_anim;
-    case LevelIDs_Chaos6:
-        return chaos_6_map_anim;
-    case LevelIDs_EggHornet:
-        return egg_hornet_map_anim;
-    case LevelIDs_EggWalker:
-        return egg_walker_map_anim;
-    case LevelIDs_EggViper:
-        return egg_viper_map_anim;
-    case LevelIDs_Zero:
-        return zero_map_anim;
-    case LevelIDs_E101:
-        return beta_1_map_anim;
-    case LevelIDs_E101R:
-        return beta_2_map_anim;
-    case LevelIDs_TwinkleCircuit:
-        return twinkle_circuit_map_anim;
-    case LevelIDs_SkyChase1:
-        return sky_chase_1_map_anim;
-    case LevelIDs_SkyChase2:
-        return sky_chase_2_map_anim;
-    case LevelIDs_SandHill:
-        return sand_hill_map_anim;
-    case LevelIDs_SSGarden:
-        return ss_garden_map_anim;
-    case LevelIDs_ECGarden:
-        return ec_garden_map_anim;
-    case LevelIDs_MRGarden:
-        return mr_garden_map_anim;
-    default:
-        return line_lock_anim;
-    }
-}
-
-void AdventureFieldEntranceManager::DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Float entranceX,
-                                                           Float entranceY)
-{
-    const float x = 450 - (900.0 * entranceX / 1024.0);
-    const float y = 450 - (900.0 * entranceY / 1024.0);
-
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-
-    NJS_TEXANIM* texanim = getInitialsFromEntrance(entranceTo);
-    NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, texanim
-    };
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
-}
-
-void AdventureFieldEntranceManager::DrawConnectionsInMap(const AdventureFieldEntrance& adventureFieldEntrance)
-{
-    //If both entrance and connection are on the map, draw line
-    auto entranceLocationFrom = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
-
-    if (entranceLocationFrom == entranceLocationInMap.end())
-        return;
-
-
-    auto entranceToId = _instance->_adventureFieldEntranceMap.GetReplacementConnection(
-        adventureFieldEntrance.entranceId,
-        _isEggCarrierTransformed);
-    auto entranceLocationTo = entranceLocationInMap.find(entranceToId);
-
-    if (entranceLocationTo == entranceLocationInMap.end())
-    {
-        DrawEntrancePoint(entranceLocationFrom->second.x, entranceLocationFrom->second.y);
-        auto entranceTo = _instance->_adventureFieldEntranceMap.FindEntranceById(entranceToId);
-        DrawLevelInitialsInMap(entranceTo, entranceLocationFrom->second.x, entranceLocationFrom->second.y);
-    }
-    else
-        MakeConnection(entranceLocationFrom->second.x, entranceLocationFrom->second.y, entranceLocationTo->second.x,
-                       entranceLocationTo->second.y);
-}
-
-void AdventureFieldEntranceManager::ShowMap()
-{
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-    SetMaterial(255, 255, 255, 255);
-    NJS_SPRITE mySprite = {{_nj_screen_.cx, _nj_screen_.cy, 1}, -50, -50, 0, &entranceTextList, base_map};
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&mySprite, 0, 200, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
-
-    for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetEntrances())
-    {
-        DrawConnectionsInMap(adventureFieldEntrance);
-        DrawMapEmblem(adventureFieldEntrance, false);
-    }
-    for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetStaticEntrances())
-    {
-        DrawMapEmblem(adventureFieldEntrance, true);
-    }
-    DrawPlayerLocation();
 }
 
 

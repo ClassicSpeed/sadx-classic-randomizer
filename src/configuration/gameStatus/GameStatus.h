@@ -6,6 +6,7 @@
 #include "status/ChaoStatus.h"
 #include "status/MissionStatus.h"
 #include "status/VisitedLevels.h"
+#include "status/MapStatus.h"
 #include "sanity/FishSanity.h"
 #include "sanity/EnemySanity.h"
 #include "sanity/CapsuleSanity.h"
@@ -26,6 +27,7 @@ public:
     UnlockStatus unlock;
     ChaoStatus chao;
     MissionStatus missions;
+    MapStatus map;
     VisitedLevels visitedLevels;
     FishSanity fishSanity;
     EnemySanity enemySanity;

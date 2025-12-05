@@ -4,7 +4,6 @@
 WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus) : _options(options),
     _settings(settings), _gameStatus(gameStatus),
     _setObjectManager(SetObjectManager::Init(options, settings)),
-    // _levelEntranceManager(LevelEntranceManager::Init(options, settings, gameStatus))
     _adventureFieldEntranceManager(AdventureFieldEntranceManager::Init(options, gameStatus))
 {
     _twinkleCircuitResultsMaybeHook.Hook(OnTwinkleCircuitResultsMaybe);
