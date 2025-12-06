@@ -182,6 +182,7 @@ inline NJS_TEXANIM mr_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 40, NJ
 inline NJS_TEXANIM ec_garden_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 41, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM new_logo_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 42, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM location_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 43, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM blocked_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 44, NJD_SPRITE_COLOR}};
 
 
 // Helper to get the correct number anim

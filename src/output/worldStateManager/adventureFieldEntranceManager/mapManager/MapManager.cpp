@@ -245,13 +245,43 @@ void MapManager::DrawPlayerLocation()
 
 void MapManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bool isStatic)
 {
+    const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
+        adventureFieldEntrance.entranceId, false);
+
+    const auto oppositeEntrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntranceId);
+
+    if (oppositeEntrance == nullptr)
+        return;
+
+    if (_adventureFieldEntranceMap.CalculateCorrectAct(oppositeEntrance->levelAndActId) ==
+        LevelAndActIDs_HedgehogHammer)
+    {
+        auto entranceValue = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
+
+        if (entranceValue == entranceLocationInMap.end())
+            return;
+
+
+        const float x = 450 - (900.0 * entranceValue->second.x / 1024.0);
+        const float y = 450 - (900.0 * entranceValue->second.y / 1024.0);
+        njPushMatrix(0);
+        njSetTexture(&entranceTextList);
+        NJS_SPRITE myTestEmblem = {
+            {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, blocked_anim
+        };
+        njRotateX(0, 0x8000);
+        njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+        njPopMatrix(1u);
+        return;
+    }
+
+
+    //Searches for emblem requirement
     auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
 
     if (entranceValue == _options.entranceEmblemValueMap.end())
     {
-        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(
-            adventureFieldEntrance.entranceId, false);
-        entranceValue = _options.entranceEmblemValueMap.find(oppositeEntrance);
+        entranceValue = _options.entranceEmblemValueMap.find(oppositeEntranceId);
     }
 
     if (entranceValue == _options.entranceEmblemValueMap.end() || _gameStatus.unlock.currentEmblems >= entranceValue->
