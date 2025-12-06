@@ -26,7 +26,7 @@ void WorldStateManager::OnFrame()
         return;
 
     _setObjectManager.OnFrame();
-    _adventureFieldEntranceManager.ShowLevelEntranceArrows();
+    _adventureFieldEntranceManager.OnFrame();
 }
 
 void WorldStateManager::SetLevelEntrances()

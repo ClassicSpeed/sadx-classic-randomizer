@@ -18,12 +18,7 @@ public:
         return *_instance;
     }
 
-    void showNumber(const AdventureFieldEntrance& adventureFieldEntrance, float posX, float posY, int number,
-                    float zOffset);
-    void ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance);
-    void ShowLevelEntranceArrows();
-    void ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x, float y, float zBase,
-                           float xStep, bool leftJustify);
+    void OnFrame();
 
 private:
     explicit AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus);
@@ -36,9 +31,7 @@ private:
     bool _isEggCarrierTransformed = false;
     std::unique_ptr<IDoorLogicStrategy> _doorLogicStrategy;
 
-
     bool IsDoorOpen(EntranceId entranceId);
-    bool ShowDisableDoorIndicator(EntranceId entranceId);
 
     inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActCutsceneModeHook{0x4145D0};
     static void OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act);

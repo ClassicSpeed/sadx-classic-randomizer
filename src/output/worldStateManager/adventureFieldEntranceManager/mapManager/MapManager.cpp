@@ -11,6 +11,46 @@ void MapManager::OnFrame()
     for (const auto& button : HeldButtons)
         if (button & WhistleButtons && Current_CharObj2 != nullptr)
             this->ShowMap();
+
+    LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
+    if (CurrentChaoStage == SADXChaoStage_EggCarrier)
+    {
+        currentLevelAndAct = LevelAndActIDs_ECGarden;
+    }
+    else if (CurrentChaoStage == SADXChaoStage_StationSquare)
+    {
+        currentLevelAndAct = LevelAndActIDs_SSGarden;
+    }
+    else if (CurrentChaoStage == SADXChaoStage_MysticRuins)
+    {
+        currentLevelAndAct = LevelAndActIDs_MRGarden;
+    }
+
+    for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetEntrances())
+    {
+        if (currentLevelAndAct != adventureFieldEntrance.levelAndActId)
+            continue;
+
+        if (!ShowDisableDoorIndicator(adventureFieldEntrance.entranceId))
+            continue;
+
+        ShowDoorEmblemRequirement(adventureFieldEntrance);
+    }
+    for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetStaticEntrances())
+    {
+        if (currentLevelAndAct != adventureFieldEntrance.levelAndActId)
+            continue;
+
+        if (!ShowDisableDoorIndicator(adventureFieldEntrance.entranceId))
+            continue;
+
+        ShowDoorEmblemRequirement(adventureFieldEntrance);
+    }
+}
+
+void MapManager::SetDoorLogicStrategy(IDoorLogicStrategy* doorLogicStrategy)
+{
+    this->_doorLogicStrategy = doorLogicStrategy;
 }
 
 void MapManager::ShowMap()
@@ -399,5 +439,126 @@ void MapManager::showNumberMap(const float posX, const float posY, const int num
     };
     njRotateX(0, 0x8000);
     njDrawSprite2D_ForcePriority(&numberSprite, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+}
+
+
+bool MapManager::ShowDisableDoorIndicator(const EntranceId entranceId)
+{
+    return _doorLogicStrategy->ShowDisableDoorIndicator(entranceId);
+}
+
+
+void MapManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance)
+{
+    njSetTexture(&entranceTextList);
+    njPushMatrix(0);
+    float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
+    float offsetX = 0.02f * sinf(angleRad);
+    float offsetZ = 0.02f * cosf(angleRad);
+
+    njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
+                adventureFieldEntrance.indicatorPosition.z + offsetZ);
+    njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+    SetMaterial(255, 255, 255, 255);
+    NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, emblem_lock_anim};
+    njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+
+
+    njSetTexture(&entranceTextList);
+    njPushMatrix(0);
+    offsetX = 0.01f * sinf(angleRad);
+    offsetZ = 0.01f * cosf(angleRad);
+
+    njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
+                adventureFieldEntrance.indicatorPosition.z + offsetZ);
+    njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+    SetMaterial(255, 255, 255, 255);
+    NJS_SPRITE mySprite2 = {{0}, 1, 1, 0, &entranceTextList, line_lock_anim};
+    njDrawSprite3D(&mySprite2, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+
+    auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
+
+    if (entranceValue == _options.entranceEmblemValueMap.end())
+    {
+        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(
+            adventureFieldEntrance.entranceId, false);
+        entranceValue = _options.entranceEmblemValueMap.find(oppositeEntrance);
+    }
+    if (entranceValue != _options.entranceEmblemValueMap.end())
+    {
+        ShowNumberDynamic(adventureFieldEntrance, _gameStatus.unlock.currentEmblems, -10, 2, -0.01f, 4, false);
+        ShowNumberDynamic(adventureFieldEntrance, entranceValue->second, 2, -2, -0.04f, 4, true);
+    }
+}
+
+
+void MapManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x,
+                                   float y, float zBase, float xStep, bool leftJustify)
+{
+    if (number < 0 || number > 999) return;
+
+    int hundreds = number / 100;
+    int tens = (number / 10) % 10;
+    int ones = number % 10;
+
+    if (number >= 100)
+    {
+        showNumber(entrance, x, y, hundreds, zBase);
+        showNumber(entrance, x + xStep, y, tens, zBase - 0.01f);
+        showNumber(entrance, x + 2 * xStep, y, ones, zBase - 0.02f);
+    }
+    else if (number >= 10)
+    {
+        if (leftJustify)
+        {
+            showNumber(entrance, x, y, tens, zBase - 0.01f);
+            showNumber(entrance, x + xStep, y, ones, zBase - 0.02f);
+        }
+        else
+        {
+            showNumber(entrance, x + xStep, y, tens, zBase - 0.01f);
+            showNumber(entrance, x + 2 * xStep, y, ones, zBase - 0.02f);
+        }
+    }
+    else
+    {
+        if (leftJustify)
+        {
+            showNumber(entrance, x, y, ones, zBase - 0.02f);
+        }
+        else
+        {
+            showNumber(entrance, x + 2 * xStep, y, ones, zBase - 0.02f);
+        }
+    }
+}
+
+void MapManager::showNumber(const AdventureFieldEntrance& adventureFieldEntrance, const float posX,
+                            const float posY, const int number, const float zOffset)
+{
+    const float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
+    const float offsetX = posX * cosf(angleRad);
+    const float offsetZ = -posX * sinf(angleRad);
+
+    const float clipOffsetX = zOffset * sinf(angleRad);
+    const float clipOffsetZ = zOffset * cosf(angleRad);
+
+    njSetTexture(&entranceTextList);
+    njPushMatrix(0);
+    njTranslate(0,
+                adventureFieldEntrance.indicatorPosition.x - offsetX + clipOffsetX,
+                adventureFieldEntrance.indicatorPosition.y + posY,
+                adventureFieldEntrance.indicatorPosition.z - offsetZ + clipOffsetZ);
+    njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+    SetMaterial(255, 255, 255, 255);
+    NJS_SPRITE numRight = {{0}, 1, 1, 0, &entranceTextList, GetNumberAnim(number)};
+    njDrawSprite3D(&numRight, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
 }

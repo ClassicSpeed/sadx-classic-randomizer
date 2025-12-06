@@ -1,8 +1,8 @@
 #pragma once
 #include "../../../../pch.h"
-#include "../../adventureFieldEntranceManager/AdventureFieldEntranceMap.h"
 #include "../../../../configuration/options/Options.h"
 #include "../../../../configuration/gameStatus/GameStatus.h"
+#include "../DoorLogic/IDoorLogicStrategy.h"
 
 
 class MapManager : public IOnFrame
@@ -17,10 +17,19 @@ public:
     }
 
     void OnFrame() override;
+    void SetDoorLogicStrategy(IDoorLogicStrategy* doorLogicStrategy);
 
 private:
+    IDoorLogicStrategy* _doorLogicStrategy;
     void ShowMap();
     void showNumberMap(float posX, float posY, int number);
+    bool ShowDisableDoorIndicator(EntranceId entranceId);
+    void ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance);
+    void ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x, float y, float zBase,
+                           float xStep,
+                           bool leftJustify);
+    void showNumber(const AdventureFieldEntrance& adventureFieldEntrance, float posX, float posY, int number,
+                    float zOffset);
     void DrawEntrancePoint(float x, float y);
     void DrawLine(float x1, float y1, float x2, float y2);
     void MakeConnection(float x1, float y1, float x2, float y2);
