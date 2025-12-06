@@ -481,6 +481,35 @@ bool MapManager::ShowDisableDoorIndicator(const EntranceId entranceId)
 
 void MapManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance)
 {
+    const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
+        adventureFieldEntrance.entranceId, false);
+
+    const auto oppositeEntrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntranceId);
+
+    if (oppositeEntrance == nullptr)
+        return;
+
+    if (_adventureFieldEntranceMap.CalculateCorrectAct(oppositeEntrance->levelAndActId) ==
+        LevelAndActIDs_HedgehogHammer)
+    {
+        njSetTexture(&entranceTextList);
+        njPushMatrix(0);
+        float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
+        float offsetX = 0.02f * sinf(angleRad);
+        float offsetZ = 0.02f * cosf(angleRad);
+
+        njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
+                    adventureFieldEntrance.indicatorPosition.z + offsetZ);
+        njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+        njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+        njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+        SetMaterial(255, 255, 255, 255);
+        NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, blocked_anim};
+        njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+        njPopMatrix(1u);
+        return;
+    }
+
     njSetTexture(&entranceTextList);
     njPushMatrix(0);
     float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
