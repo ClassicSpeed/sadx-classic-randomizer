@@ -71,11 +71,11 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
 
         // MRMain
         {MrMainToStation, LevelAndActIDs_MysticRuins1, 0, StationToMrMain, 56.25f, {0, 228, 1207}},
-        {MrMainToChaos4, LevelAndActIDs_MysticRuins1, 0, Chaos4ToMrMain, 180, {80, 87, 180}},
-        {MrMainToEggHornet, LevelAndActIDs_MysticRuins1, 0, EggHornetToMrMain, 0, {950, 142, 950}},
-        {MrMainToSkyChase1, LevelAndActIDs_MysticRuins1, 0, SkyChase1ToMrMain, 90, {1561, 206, 900}},
-        {MrMainToEcOutside, LevelAndActIDs_MysticRuins1, 0, EcOutsideToMrMain, 147.5f, {-70, -385, 1264}},
-        {MrMainToBridge, LevelAndActIDs_MysticRuins1, 0, BridgeToMrMain, 147.5f, {-70, -385, 1264}},
+        {MrMainToChaos4, LevelAndActIDs_MysticRuins1, 5, Chaos4ToMrMain, 180, {80, 87, 180}},
+        {MrMainToEggHornet, LevelAndActIDs_MysticRuins1, 8, EggHornetToMrMain, 0, {950, 142, 950}},
+        {MrMainToSkyChase1, LevelAndActIDs_MysticRuins1, 9, SkyChase1ToMrMain, 90, {1561, 206, 900}},
+        {MrMainToEcOutside, LevelAndActIDs_MysticRuins1, 7, EcOutsideToMrMain, 147.5f, {-70, -385, 1264}},
+        {MrMainToBridge, LevelAndActIDs_MysticRuins1, 7, BridgeToMrMain, 147.5f, {-70, -385, 1264}},
         {MrMainToJungle, LevelAndActIDs_MysticRuins1, 2, JungleToMrMain, 211, {-200.86f, 81.5, -69.51f}},
         {MrMainToMrChaoGarden, LevelAndActIDs_MysticRuins1, 4, MrChaoGardenToMrMain, 111, {1696, 17.5, -86}},
         {MrMainToAngelIsland, LevelAndActIDs_MysticRuins1, 1, AngelIslandToMrMain, 270, {-347, 120, 869}},

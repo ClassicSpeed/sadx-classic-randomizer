@@ -18,6 +18,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
     _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
     _getEntranceSs.Hook(OnGetEntranceSs);
+    _getEntranceMr.Hook(OnGetEntranceMr);
     _getEntranceEc.Hook(OnGetEntranceEc);
 
     _isBarricadeGoneHook.Hook(OnIsBarricadeGone);
@@ -207,6 +208,29 @@ void AdventureFieldEntranceManager::OnGetEntranceSs(taskwk* twp)
         }
     }
     _getEntranceSs.Original(twp);
+}
+
+void AdventureFieldEntranceManager::OnGetEntranceMr(taskwk* twp)
+{
+    if (!_instance->_options.emblemGating)
+        return _getEntranceMr.Original(twp);
+
+    if (CurrentStageAndAct == LevelAndActIDs_MysticRuins1)
+    {
+        if (GetLevelEntranceID() == 8)
+        {
+            twp->pos = {845, 140, 980};
+            twp->ang = {0, 0x9000, 0};
+            return;
+        }
+        if (GetLevelEntranceID() == 9)
+        {
+            twp->pos = {1413, 209, 814};
+            twp->ang = {0, 0xD14D, 0};
+            return;
+        }
+    }
+    _getEntranceMr.Original(twp);
 }
 
 void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)
