@@ -707,43 +707,35 @@ Sint32 SetObjectManager::OnFinishedLevelMaybe()
     if (CurrentLevel == LevelIDs_Chaos0)
     {
         SetNextLevelAndAct(LevelIDs_StationSquare, 0);
-        SetEntranceNumber(0);
     }
     else if (CurrentLevel == LevelIDs_Chaos2)
     {
         SetNextLevelAndAct(LevelIDs_StationSquare, 4);
-        SetEntranceNumber(5);
     }
     else if (CurrentLevel == LevelIDs_Chaos4)
     {
         SetNextLevelAndAct(LevelIDs_MysticRuins, 0);
-        SetEntranceNumber(5);
     }
     else if (CurrentLevel == LevelIDs_Chaos6 || CurrentLevel == LevelIDs_Zero
         || CurrentLevel == LevelIDs_E101R || CurrentLevel == LevelIDs_SkyChase2)
     {
-        SetEntranceNumber(0);
         SetNextLevelAndAct(LevelIDs_EggCarrierOutside, LastAct);
     }
     else if (CurrentLevel == LevelIDs_EggHornet || CurrentLevel == LevelIDs_SkyChase1)
     {
         SetNextLevelAndAct(LevelIDs_MysticRuins, 0);
-        SetEntranceNumber(0);
     }
     else if (CurrentLevel == LevelIDs_EggWalker)
     {
         SetNextLevelAndAct(LevelIDs_StationSquare, 1);
-        SetEntranceNumber(1);
     }
     else if (CurrentLevel == LevelIDs_EggViper || CurrentLevel == LevelIDs_E101)
     {
         SetNextLevelAndAct(LevelIDs_MysticRuins, 3);
-        SetEntranceNumber(3);
     }
     else if (CurrentLevel == LevelIDs_TwinkleCircuit)
     {
         SetNextLevelAndAct(LevelIDs_StationSquare, 5);
-        SetEntranceNumber(2);
     }
     return response;
 }

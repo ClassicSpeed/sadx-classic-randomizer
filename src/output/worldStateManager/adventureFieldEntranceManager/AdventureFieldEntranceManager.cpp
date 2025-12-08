@@ -18,7 +18,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
     _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
     _getEntranceSs.Hook(OnGetEntranceSs);
-    _getEntranceMr.Hook(OnGetEntranceMr);
+    _movePlayerToStartPointHook.Hook(OnMovePlayerToStartPoint);
     _getEntranceEc.Hook(OnGetEntranceEc);
 
     _isBarricadeGoneHook.Hook(OnIsBarricadeGone);
@@ -210,27 +210,28 @@ void AdventureFieldEntranceManager::OnGetEntranceSs(taskwk* twp)
     _getEntranceSs.Original(twp);
 }
 
-void AdventureFieldEntranceManager::OnGetEntranceMr(taskwk* twp)
+void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
 {
     if (!_instance->_options.emblemGating)
-        return _getEntranceMr.Original(twp);
+        return _movePlayerToStartPointHook.Original(twp);
+    _movePlayerToStartPointHook.Original(twp);
 
-    if (CurrentStageAndAct == LevelAndActIDs_MysticRuins1)
+    if (CurrentLevel == LevelIDs_MysticRuins && CurrentAct == 0)
     {
+        PrintDebug("+++++++++++Getting MR entrance\n");
         if (GetLevelEntranceID() == 8)
         {
-            twp->pos = {845, 140, 980};
-            twp->ang = {0, 0x9000, 0};
-            return;
+            PrintDebug("+++++++++++Getting MR entrance ID 8\n");
+            twp->pos = {950, 127, 921};
+            twp->ang = {0, 0x8278, 0};
         }
         if (GetLevelEntranceID() == 9)
         {
+            PrintDebug("++++++++Getting MR entrance ID 9\n");
             twp->pos = {1413, 209, 814};
             twp->ang = {0, 0xD14D, 0};
-            return;
         }
     }
-    _getEntranceMr.Original(twp);
 }
 
 void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)

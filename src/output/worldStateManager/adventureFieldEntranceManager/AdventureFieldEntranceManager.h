@@ -43,8 +43,8 @@ private:
     inline static FunctionHook<void, taskwk*> _getEntranceSs{0x62F6D0};
     static void OnGetEntranceSs(taskwk* twp);
 
-    inline static FunctionHook<void, taskwk*> _getEntranceMr{0x530790};
-    static void OnGetEntranceMr(taskwk* twp);
+    inline static FunctionHook<void, taskwk*> _movePlayerToStartPointHook{0x414810};
+    static void OnMovePlayerToStartPoint(taskwk* twp);
 
     inline static FunctionHook<void, taskwk*> _getEntranceEc{0x52D820};
     static void OnGetEntranceEc(taskwk* twp);
