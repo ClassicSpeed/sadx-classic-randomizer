@@ -16,6 +16,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _mapManager(MapManager::Init(options, gameStatus, _adventureFieldEntranceMap))
 {
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
+    _setNextLevelAndActHook.Hook(OnSetNextLevelAndAct);
     _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
     _getEntranceSs.Hook(OnGetEntranceSs);
     _movePlayerToStartPointHook.Hook(OnMovePlayerToStartPoint);
@@ -115,6 +116,56 @@ bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
     return _doorLogicStrategy->IsDoorOpen(entranceId);
 }
 
+
+void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, const Uint8 act)
+{
+    // if (!_instance->_options.emblemGating)
+    //     return _setNextLevelAndActCutsceneModeHook.Original(level, act);
+
+    PrintDebug("------AdventureFieldEntranceManager: Setting next level and act to %d, %d \n", level, act);
+    LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
+    if (CurrentChaoStage == SADXChaoStage_EggCarrier)
+        currentLevelAndAct = LevelAndActIDs_ECGarden;
+
+    else if (CurrentChaoStage == SADXChaoStage_StationSquare)
+        currentLevelAndAct = LevelAndActIDs_SSGarden;
+
+    else if (CurrentChaoStage == SADXChaoStage_MysticRuins)
+        currentLevelAndAct = LevelAndActIDs_MRGarden;
+
+    AdventureFieldEntrance* newEntrance = _instance->_adventureFieldEntranceMap.GetNewConnection(
+        currentLevelAndAct, GET_LEVEL_ACT(level, act), _instance->_isEggCarrierTransformed);
+
+
+    if (newEntrance != nullptr)
+    {
+        auto levelActAndId = newEntrance->levelAndActId;
+        if ((GET_LEVEL(levelActAndId) >= LevelIDs_EmeraldCoast
+                && GET_LEVEL(levelActAndId) <= LevelIDs_E101R)
+            || (GET_LEVEL(levelActAndId) >= LevelIDs_TwinkleCircuit
+                && GET_LEVEL(levelActAndId) <= LevelIDs_SandHill))
+            levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(levelActAndId);
+
+        if (levelActAndId == LevelAndActIDs_HedgehogHammer)
+        {
+            AdventureFieldEntrance* currentEntrance = _instance->_adventureFieldEntranceMap.GetCurrentEntrance(
+                currentLevelAndAct, GET_LEVEL_ACT(level, act));
+            _setNextLevelAndActHook.Original(
+                GET_LEVEL(currentEntrance->levelAndActId), GET_ACT(currentEntrance->levelAndActId));
+            SetEntranceNumber(currentEntrance->entranceNumber);
+        }
+        else
+        {
+            _setNextLevelAndActHook.Original(
+                GET_LEVEL(levelActAndId), GET_ACT(levelActAndId));
+            SetEntranceNumber(newEntrance->entranceNumber);
+        }
+        _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
+        _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
+        return;
+    }
+    _setNextLevelAndActHook.Original(level, act);
+}
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, const Uint8 act)
 {

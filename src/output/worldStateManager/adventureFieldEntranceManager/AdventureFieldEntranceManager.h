@@ -34,7 +34,9 @@ private:
     bool IsDoorOpen(EntranceId entranceId);
 
     inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActCutsceneModeHook{0x4145D0};
+    inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActHook{0x4145B0};
     static void OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act);
+    static void OnSetNextLevelAndAct(Uint8 level, Uint8 act);
 
 
     inline static FunctionHook<Sint32> _finishedLevelMaybeHook{0x414090};
