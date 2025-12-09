@@ -12,7 +12,6 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _opti
     _collisionCubeHook.Hook(OnCollisionCube);
     _collisionCylinderHook.Hook(OnCollisionCylinder);
     _isChaos2DoorOpenHook.Hook(OnIsChaos2DoorOpen);
-    _getEntranceMRuinsHook.Hook(OnGetEntranceMRuins);
     _getEntranceEggCarrierHook.Hook(OnGetEntranceEggCarrier);
     _getEntrancePastHook.Hook(OnGetEntrancePast);
     _setTimeOfDayHook.Hook(OnSetTimeOfDay);
@@ -475,27 +474,6 @@ BOOL SetObjectManager::OnIsChaos2DoorOpen()
     return CurrentCharacter == Characters_Knuckles;
 }
 
-//TODO: Register it?
-//TODO: Create a spawn point for Sky Deck/Egg Hornet
-// We create a custom spawn point after exiting sand hill
-void SetObjectManager::OnGetEntranceMRuins(taskwk* twp)
-{
-    _getEntranceMRuinsHook.Original(twp);
-
-    if (CurrentStageAndAct == LevelAndActIDs_MysticRuins3)
-    {
-        if (GetLevelEntranceID() == 3)
-        {
-            twp->pos = {-1500, 50, -70};
-            twp->ang = {0, 0x4000, 0};
-        }
-        else if (GetLevelEntranceID() == 5)
-        {
-            twp->pos = {-667, 90.5f, -1150};
-            twp->ang = {0, 0x4000, 0};
-        }
-    }
-}
 
 // We spawn in the middle on the runway for the transformed Egg Carrier
 void SetObjectManager::OnGetEntranceEggCarrier(EntityData1* a1)

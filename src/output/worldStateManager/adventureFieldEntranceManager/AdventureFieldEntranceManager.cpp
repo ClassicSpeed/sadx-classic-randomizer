@@ -284,6 +284,19 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
             twp->ang = {0, 0xD14D, 0};
         }
     }
+    if (CurrentLevel == LevelIDs_MysticRuins && CurrentAct == 2)
+    {
+        if (GetLevelEntranceID() == 3)
+        {
+            twp->pos = {-1500, 50, -70};
+            twp->ang = {0, 0x4000, 0};
+        }
+        else if (GetLevelEntranceID() == 5)
+        {
+            twp->pos = {-667, 90.5f, -1150};
+            twp->ang = {0, 0x4000, 0};
+        }
+    }
 }
 
 void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)

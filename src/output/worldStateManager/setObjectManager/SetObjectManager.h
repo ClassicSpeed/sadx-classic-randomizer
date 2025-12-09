@@ -73,9 +73,6 @@ private:
     inline static FunctionHook<BOOL> _isChaos2DoorOpenHook{0x638D50};
     static BOOL OnIsChaos2DoorOpen();
 
-    inline static FunctionHook<void, taskwk*> _getEntranceMRuinsHook{0x530790};
-    static void OnGetEntranceMRuins(taskwk* twp);
-
     inline static FunctionHook<void, EntityData1*> _getEntranceEggCarrierHook{0x52D820};
     static void OnGetEntranceEggCarrier(EntityData1* a1);
 
