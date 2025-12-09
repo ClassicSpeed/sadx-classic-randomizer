@@ -12,8 +12,6 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _opti
     _collisionCubeHook.Hook(OnCollisionCube);
     _collisionCylinderHook.Hook(OnCollisionCylinder);
     _isChaos2DoorOpenHook.Hook(OnIsChaos2DoorOpen);
-    _getEntranceEggCarrierHook.Hook(OnGetEntranceEggCarrier);
-    _getEntrancePastHook.Hook(OnGetEntrancePast);
     _setTimeOfDayHook.Hook(OnSetTimeOfDay);
     _adventureSetLevelAndActHook.Hook(OnAdventureSetLevelAndAct);
     _prepareLevelHook.Hook(OnPrepareLevel);
@@ -474,47 +472,6 @@ BOOL SetObjectManager::OnIsChaos2DoorOpen()
     return CurrentCharacter == Characters_Knuckles;
 }
 
-
-// We spawn in the middle on the runway for the transformed Egg Carrier
-void SetObjectManager::OnGetEntranceEggCarrier(EntityData1* a1)
-{
-    _getEntranceEggCarrierHook.Original(a1);
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2 && LevelEntrance == 0)
-    {
-        a1->Position.x = 0;
-        a1->Position.y = 650;
-        a1->Position.z = -1000;
-        a1->Rotation.x = 0;
-        a1->Rotation.y = 0x4000;
-        a1->Rotation.z = 0;
-    }
-}
-
-//TODO: check if this is needed
-// We spawn in front of the Master Emerald Shrine in the past when time traveling
-void SetObjectManager::OnGetEntrancePast(taskwk* twp)
-{
-    _getEntrancePastHook.Original(twp);
-
-    if (CurrentStageAndAct == LevelAndActIDs_Past2 || levelact(NextLevel, NextAct) == LevelAndActIDs_Past2)
-    {
-        if (GetLevelEntranceID() == 1)
-        {
-            twp->pos = {0, 10, 300};
-            twp->ang = {0, 0x4000, 0};
-            return;
-        }
-    }
-    if (CurrentStageAndAct == LevelAndActIDs_Past1 || levelact(NextLevel, NextAct) == LevelAndActIDs_Past1)
-    {
-        if (GetLevelEntranceID() == 2)
-        {
-            twp->pos = {-151.5f, 300, 30};
-            twp->ang = {0, 0x4000, 0};
-            return;
-        }
-    }
-}
 
 // Set starting location when we get a game over
 void SetObjectManager::OnSetTimeOfDay(Sint8 time)

@@ -73,12 +73,6 @@ private:
     inline static FunctionHook<BOOL> _isChaos2DoorOpenHook{0x638D50};
     static BOOL OnIsChaos2DoorOpen();
 
-    inline static FunctionHook<void, EntityData1*> _getEntranceEggCarrierHook{0x52D820};
-    static void OnGetEntranceEggCarrier(EntityData1* a1);
-
-    inline static FunctionHook<void, taskwk*> _getEntrancePastHook{0x542180};
-    static void OnGetEntrancePast(taskwk* twp);
-
     inline static FunctionHook<void, Sint8> _setTimeOfDayHook{0x412C00};
     static void OnSetTimeOfDay(Sint8 time);
 

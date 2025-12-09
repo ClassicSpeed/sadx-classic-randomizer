@@ -18,7 +18,6 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
     _setNextLevelAndActHook.Hook(OnSetNextLevelAndAct);
     _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
-    _getEntranceSs.Hook(OnGetEntranceSs);
     _movePlayerToStartPointHook.Hook(OnMovePlayerToStartPoint);
     _getEntranceEc.Hook(OnGetEntranceEc);
     _setStartPos_ReturnToFieldHook.Hook(OnSetStartPosReturnToField);
@@ -226,65 +225,61 @@ Sint32 AdventureFieldEntranceManager::OnFinishedLevelMaybe()
     return _finishedLevelMaybeHook.Original();
 }
 
-
-void AdventureFieldEntranceManager::OnGetEntranceSs(taskwk* twp)
-{
-    if (!_instance->_options.emblemGating)
-        return _getEntranceSs.Original(twp);
-
-    if (CurrentStageAndAct == LevelAndActIDs_StationSquare3)
-    {
-        if (GetLevelEntranceID() == 1)
-        {
-            twp->pos = {395, -120, 1200};
-            twp->ang = {0, 0xC000, 0};
-            return;
-        }
-    }
-    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare6)
-    {
-        if (GetLevelEntranceID() == 0)
-        {
-            twp->pos = {688.13f, 50, 1771.5f};
-            twp->ang = {0, 0, 0};
-            return;
-        }
-    }
-    else if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
-    {
-        if (GetLevelEntranceID() == 4)
-        {
-            twp->pos = {566.5, 50, 1771.5};
-            twp->ang = {0, 0x8000, 0};
-            return;
-        }
-    }
-    _getEntranceSs.Original(twp);
-}
-
 void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
 {
     if (!_instance->_options.emblemGating)
         return _movePlayerToStartPointHook.Original(twp);
     _movePlayerToStartPointHook.Original(twp);
 
-    if (CurrentLevel == LevelIDs_MysticRuins && CurrentAct == 0)
+    LevelAndActIDs levelAndAct = GET_LEVEL_ACT(CurrentLevel, CurrentAct);
+
+
+    if (levelAndAct == LevelAndActIDs_StationSquare3)
     {
-        PrintDebug("+++++++++++Getting MR entrance\n");
+        if (GetLevelEntranceID() == 1)
+        {
+            twp->pos = {395, -120, 1200};
+            twp->ang = {0, 0xC000, 0};
+        }
+    }
+    else if (levelAndAct == LevelAndActIDs_StationSquare6)
+    {
+        if (GetLevelEntranceID() == 0)
+        {
+            twp->pos = {688.13f, 50, 1771.5f};
+            twp->ang = {0, 0, 0};
+        }
+    }
+    else if (levelAndAct == LevelAndActIDs_StationSquare4)
+    {
+        if (GetLevelEntranceID() == 4)
+        {
+            twp->pos = {566.5, 50, 1771.5};
+            twp->ang = {0, 0x8000, 0};
+        }
+    }
+    else if (levelAndAct == LevelAndActIDs_MysticRuins1)
+    {
         if (GetLevelEntranceID() == 8)
         {
-            PrintDebug("+++++++++++Getting MR entrance ID 8\n");
             twp->pos = {950, 127, 921};
             twp->ang = {0, 0x8278, 0};
         }
         if (GetLevelEntranceID() == 9)
         {
-            PrintDebug("++++++++Getting MR entrance ID 9\n");
             twp->pos = {1413, 209, 814};
             twp->ang = {0, 0xD14D, 0};
         }
     }
-    if (CurrentLevel == LevelIDs_MysticRuins && CurrentAct == 2)
+    else if (levelAndAct == LevelAndActIDs_MysticRuins2)
+    {
+        if (GetLevelEntranceID() == 3)
+        {
+            twp->pos = {-2.5, -240, 2454};
+            twp->ang = {0, 0x4000, 0};
+        }
+    }
+    else if (levelAndAct == LevelAndActIDs_MysticRuins3)
     {
         if (GetLevelEntranceID() == 3)
         {
@@ -294,6 +289,30 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
         else if (GetLevelEntranceID() == 5)
         {
             twp->pos = {-667, 90.5f, -1150};
+            twp->ang = {0, 0x4000, 0};
+        }
+    }
+    else if (levelAndAct == LevelAndActIDs_Past2)
+    {
+        if (GetLevelEntranceID() == 1)
+        {
+            twp->pos = {0, 10, 300};
+            twp->ang = {0, 0x4000, 0};
+        }
+    }
+    else if (levelAndAct == LevelAndActIDs_Past1)
+    {
+        if (GetLevelEntranceID() == 2)
+        {
+            twp->pos = {-151.5f, 300, 30};
+            twp->ang = {0, 0x4000, 0};
+        }
+    }
+    else if (levelAndAct == LevelAndActIDs_EggCarrierOutside2)
+    {
+        if (GetLevelEntranceID() == 0)
+        {
+            twp->pos = {0, 650, -1000};
             twp->ang = {0, 0x4000, 0};
         }
     }

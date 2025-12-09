@@ -39,12 +39,8 @@ private:
     inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActHook{0x4145B0};
     static void OnSetNextLevelAndAct(Uint8 level, Uint8 act);
 
-
     inline static FunctionHook<Sint32> _finishedLevelMaybeHook{0x414090};
     static Sint32 OnFinishedLevelMaybe();
-
-    inline static FunctionHook<void, taskwk*> _getEntranceSs{0x62F6D0};
-    static void OnGetEntranceSs(taskwk* twp);
 
     inline static FunctionHook<void, taskwk*> _movePlayerToStartPointHook{0x414810};
     static void OnMovePlayerToStartPoint(taskwk* twp);
