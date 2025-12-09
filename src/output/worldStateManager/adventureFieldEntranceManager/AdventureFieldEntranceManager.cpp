@@ -21,6 +21,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _getEntranceSs.Hook(OnGetEntranceSs);
     _movePlayerToStartPointHook.Hook(OnMovePlayerToStartPoint);
     _getEntranceEc.Hook(OnGetEntranceEc);
+    _setStartPos_ReturnToFieldHook.Hook(OnSetStartPosReturnToField);
 
     _isBarricadeGoneHook.Hook(OnIsBarricadeGone);
     _wallMainHook.Hook(OnWallMain);
@@ -300,6 +301,13 @@ void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)
         }
     }
     _getEntranceEc.Original(twp);
+}
+
+void AdventureFieldEntranceManager::OnSetStartPosReturnToField()
+{
+    NextAct = LastAct;
+    NextLevel = LastLevel;
+    return;
 }
 
 

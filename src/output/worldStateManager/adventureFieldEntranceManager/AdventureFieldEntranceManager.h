@@ -34,8 +34,9 @@ private:
     bool IsDoorOpen(EntranceId entranceId);
 
     inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActCutsceneModeHook{0x4145D0};
-    inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActHook{0x4145B0};
     static void OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act);
+
+    inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActHook{0x4145B0};
     static void OnSetNextLevelAndAct(Uint8 level, Uint8 act);
 
 
@@ -50,6 +51,9 @@ private:
 
     inline static FunctionHook<void, taskwk*> _getEntranceEc{0x52D820};
     static void OnGetEntranceEc(taskwk* twp);
+
+    inline static FunctionHook<void> _setStartPos_ReturnToFieldHook{0x414500};
+    static void OnSetStartPosReturnToField();
 
     inline static FunctionHook<BOOL> _isBarricadeGoneHook{0x6389F0};
     static BOOL OnIsBarricadeGone();
