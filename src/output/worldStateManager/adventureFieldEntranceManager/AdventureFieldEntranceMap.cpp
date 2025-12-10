@@ -124,37 +124,37 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
             {0, 750, 970}
         },
         {
-            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 0, EcInsideToEcOutsideMonorail, 270,
+            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 5, EcInsideToEcOutsideMonorail, 270,
             {311.5f, 595.7f, -342.7f}
         },
         {
-            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 0, EcInsideToEcOutsideMonorail, 270,
+            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 5, EcInsideToEcOutsideMonorail, 270,
             {311.5f, 595.7f, -422}
         },
-        {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 0, SsMainToEcOutside, 90, {326, 584.4f, -723}},
-        {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 0, MrMainToEcOutside, 270, {-326, 584.4f, -723}},
+        {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 7, SsMainToEcOutside, 90, {326, 584.4f, -723}},
+        {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 6, MrMainToEcOutside, 270, {-326, 584.4f, -723}},
         {EcOutsideToSkyChase2, LevelAndActIDs_EggCarrierOutside1, 0, SkyChase2ToEcOutside, 180, {0, 715, -1100}},
         {EcOutsideToPool, LevelAndActIDs_EggCarrierOutside1, 1, PoolToEcOutside, 0.0f, {0, 759.5f, 1074.2f}},
         {
-            EcOutsideToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside1, 0, Chaos6ZeroBetaToEcOutside, 0,
+            EcOutsideToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside1, 9, Chaos6ZeroBetaToEcOutside, 0,
             {0, 765.5f, -385.69f}
         },
         {EcOutsideToCaptainRoom, LevelAndActIDs_EggCarrierOutside1, 2, CaptainRoomToEcOutside, 180, {0, 755, 438}},
 
         // Bridge (Transformed)
         {
-            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 0, EcInsideToBridgeMonorail, 270,
+            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 2, EcInsideToBridgeMonorail, 270,
             {311.5f, 595.7f, -342.7f}
         },
         {
-            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 0, EcInsideToBridgeMonorail, 270,
+            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 2, EcInsideToBridgeMonorail, 270,
             {311.5f, 595.7f, -422}
         },
-        {BridgeToSsMain, LevelAndActIDs_EggCarrierOutside2, 0, SsMainToBridge, 90, {326, 584.4f, -723}},
-        {BridgeToMrMain, LevelAndActIDs_EggCarrierOutside2, 0, MrMainToBridge, 270, {-326, 584.4f, -723}},
+        {BridgeToSsMain, LevelAndActIDs_EggCarrierOutside2, 7, SsMainToBridge, 90, {326, 584.4f, -723}},
+        {BridgeToMrMain, LevelAndActIDs_EggCarrierOutside2, 6, MrMainToBridge, 270, {-326, 584.4f, -723}},
         {BridgeToSkyChase2, LevelAndActIDs_EggCarrierOutside2, 0, SkyChase2ToBridge, 180, {0, 665, -1100}},
         {
-            BridgeToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside2, 0, Chaos6ZeroBetaToBridge, 0,
+            BridgeToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside2, 9, Chaos6ZeroBetaToBridge, 0,
             {0, 765.5f, -385.69f}
         },
         {BridgeToSkyDeck, LevelAndActIDs_EggCarrierOutside2, 1, SkyDeckToBridge, 0, {0, 767, 391}},

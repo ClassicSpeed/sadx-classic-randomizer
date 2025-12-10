@@ -284,7 +284,7 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
         if (GetLevelEntranceID() == 3)
         {
             twp->pos = {-1500, 50, -70};
-            twp->ang = {0, 0x4000, 0};
+            twp->ang = {0, 0x0000, 0};
         }
         else if (GetLevelEntranceID() == 5)
         {
@@ -308,11 +308,34 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
             twp->ang = {0, 0x4000, 0};
         }
     }
+    else if (levelAndAct == LevelAndActIDs_EggCarrierOutside1)
+    {
+        if (GetLevelEntranceID() == 9)
+        {
+            twp->pos = {0, 753, -335};
+            twp->ang = {0, 0x4000, 0};
+        }
+    }
     else if (levelAndAct == LevelAndActIDs_EggCarrierOutside2)
     {
         if (GetLevelEntranceID() == 0)
         {
             twp->pos = {0, 650, -1000};
+            twp->ang = {0, 0x4000, 0};
+        }
+        if (GetLevelEntranceID() == 6)
+        {
+            twp->pos = {-306, 570, -722};
+            twp->ang = {0, 0x0000, 0};
+        }
+        if (GetLevelEntranceID() == 7)
+        {
+            twp->pos = {306, 570, -722};
+            twp->ang = {0, 0x8000, 0};
+        }
+        if (GetLevelEntranceID() == 9)
+        {
+            twp->pos = {0, 753, -335};
             twp->ang = {0, 0x4000, 0};
         }
     }
