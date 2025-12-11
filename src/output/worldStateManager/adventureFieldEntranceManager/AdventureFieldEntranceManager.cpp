@@ -369,7 +369,7 @@ void AdventureFieldEntranceManager::OnSetStartPosReturnToField()
 void AdventureFieldEntranceManager::OnFrame()
 {
     _mapManager.OnFrame();
-    if (CurrentStageAndAct != LevelAndActIDs_EggCarrierOutside4)
+    if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside4)
     {
         bool isTransformed = false;
         if (CurrentCharacter == Characters_Sonic)

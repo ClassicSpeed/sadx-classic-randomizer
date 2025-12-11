@@ -135,6 +135,14 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_SS));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_MR));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_EC));
+
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_TRANSFORM));
+
     WriteSaveFile();
 }
 
