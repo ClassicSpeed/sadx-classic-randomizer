@@ -195,10 +195,10 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
 
         // Egg Carrier Inside
         {
-            EcInsideToEcOutsideEggLift, LevelAndActIDs_EggCarrierInside2, 0, EcOutsideToEcInsideEggLift, 180,
+            EcInsideToEcOutsideEggLift, LevelAndActIDs_EggCarrierInside2, 7, EcOutsideToEcInsideEggLift, 180,
             {0, 65, -330.25f}
         },
-        {EcInsideToDeckEggLift, LevelAndActIDs_EggCarrierInside2, 0, DeckToEcInsideEggLift, 180, {0, 65, -330.25f}},
+        {EcInsideToDeckEggLift, LevelAndActIDs_EggCarrierInside2, 7, DeckToEcInsideEggLift, 180, {0, 65, -330.25f}},
         {
             EcInsideToEcOutsideMonorail, LevelAndActIDs_EggCarrierInside2, 0, EcOutsideToEcInsideMonorail, 90,
             {60, 22, 0}
