@@ -482,7 +482,13 @@ void DisplayManager::DisplayItemsUnlocked()
     if (!_connected)
         return;
 
-    if (_settings.displayInGameTracker == DisplayTrackerWhenPaused)
+    bool showMap = false;
+
+    for (const auto& button : HeldButtons)
+        if (button & WhistleButtons && Current_CharObj2 != nullptr)
+            showMap = true;
+
+    if (!showMap && _settings.displayInGameTracker == DisplayTrackerWhenPaused)
     {
         //Show Items Unlock on Pause menu or Character select screen
         if (!(GameState == MD_GAME_PAUSE || (GameMode == GameModes_Menu && this->_inCharacterSelectScreen)))
