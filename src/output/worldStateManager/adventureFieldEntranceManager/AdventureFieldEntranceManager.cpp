@@ -380,7 +380,7 @@ void AdventureFieldEntranceManager::OnSetStartPosReturnToField()
 {
     NextAct = LastAct;
     NextLevel = LastLevel;
-    return;
+    SetNextLevelAndAct(NextLevel, NextAct);
 }
 
 
