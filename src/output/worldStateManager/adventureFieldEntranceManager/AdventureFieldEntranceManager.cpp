@@ -233,8 +233,16 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
 
     LevelAndActIDs levelAndAct = GET_LEVEL_ACT(CurrentLevel, CurrentAct);
 
+    if (levelAndAct == LevelAndActIDs_StationSquare1)
+    {
+        if (GetLevelEntranceID() == 3)
+        {
+            twp->pos = {270, 0, 480};
+            twp->ang = {0, 0x4000, 0};
+        }
+    }
 
-    if (levelAndAct == LevelAndActIDs_StationSquare3)
+    else if (levelAndAct == LevelAndActIDs_StationSquare3)
     {
         if (GetLevelEntranceID() == 1)
         {

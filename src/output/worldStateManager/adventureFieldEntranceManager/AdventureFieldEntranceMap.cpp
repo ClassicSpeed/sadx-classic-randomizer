@@ -13,7 +13,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
 
         //City Hall
         {CityHallToSsMain, LevelAndActIDs_StationSquare1, 1, SsMainToCityHall, 50.0f, {550.79f, 14.5, 856.22f}},
-        {CityHallToChaos0, LevelAndActIDs_StationSquare1, 0, Chaos0ToCityHall, 180, {270, 16, 450}},
+        {CityHallToChaos0, LevelAndActIDs_StationSquare1, 3, Chaos0ToCityHall, 180, {270, 16, 450}},
         {CityHallToSewers, LevelAndActIDs_StationSquare1, 2, SewersToCityHall, 0, {361, 10, 941.5}},
         {CityHallToSpeedHighway, LevelAndActIDs_StationSquare1, 0, SpeedHighwayToCityHall, 180, {270, 20, 255}},
 
