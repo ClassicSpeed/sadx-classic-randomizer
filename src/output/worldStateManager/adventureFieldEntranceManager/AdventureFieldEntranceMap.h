@@ -47,7 +47,7 @@ private:
     EntranceId FindEntranceByLocation(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
 
     std::vector<AdventureFieldEntrance> _entranceList = {};
-    std::vector<AdventureFieldEntrance> _staticConnectionList = {};
+    std::vector<AdventureFieldEntrance> _staticEntranceList = {};
 
     std::map<EntranceId, EntranceId> _entranceNewConnections = {
         {CityHallToSsMain, SsMainToCityHall},
@@ -121,5 +121,11 @@ private:
         {WarpHallToEcChaoGarden, EcChaoGardenToWarpHall},
         {EcInsideToArsenal, ArsenalToEcInside},
         {EcInsideToWaterTank, WaterTankToEcInside},
+
+
+        {HotelToHotelPool, HotelPoolToHotel},
+        {SsMainToTwinkleParkTunnel, TwinkleParkTunnelToSsMain},
+        {StationToCasino, CasinoToStation},
+        {AngelIslandToIceCave, IceCaveToAngelIsland},
     };
 };

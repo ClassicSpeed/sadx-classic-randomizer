@@ -389,7 +389,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
         {SandHillToJungle, LevelAndActIDs_SandHill, 0, JungleToSandHill, 0, {0, 0, 0}},
 
     };
-    _staticConnectionList = {
+    _staticEntranceList = {
         {StationToCasino, LevelAndActIDs_StationSquare2, -1, CasinoToStation, 206, {-202, 82, 1319}},
         {CasinoToStation, LevelAndActIDs_StationSquare2, -1, StationToCasino, 26, {-206, 82, 1310}},
 
@@ -417,7 +417,7 @@ const std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetEntranc
 
 const std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetStaticEntrances() const
 {
-    return _staticConnectionList;
+    return _staticEntranceList;
 }
 
 AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
@@ -597,6 +597,12 @@ EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId 
 AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const EntranceId entranceId)
 {
     for (auto& entrance : _entranceList)
+    {
+        if (entrance.entranceId == entranceId)
+            return &entrance;
+    }
+
+    for (auto& entrance : _staticEntranceList)
     {
         if (entrance.entranceId == entranceId)
             return &entrance;
