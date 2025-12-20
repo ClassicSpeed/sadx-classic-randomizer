@@ -128,7 +128,7 @@ private:
         // Final Egg Tower
         {FinalEggTowerToJungle, {524, 86}},
         {FinalEggTowerToFinalEgg, {559, 123}},
-        {FinalEggTowerToFinalEggAlternative, {524, 86}},
+        {FinalEggTowerToFinalEggAlternative, {593, 91}},
         {FinalEggTowerToBetaEggViper, {558, 86}},
         {FinalEggTowerToEcInside, {589, 111}},
         // Egg Carrier Outside (Untransformed)
