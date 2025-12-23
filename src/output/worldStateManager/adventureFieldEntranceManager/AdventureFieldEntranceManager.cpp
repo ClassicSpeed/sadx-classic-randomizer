@@ -9,8 +9,9 @@ UsercallFunc(int, eggCarrierInsideEggDoorHook, (const taskwk* twp), (twp), 0x52B
 UsercallFunc(int, eggCarrierOutsideEggDoorHook, (const taskwk* twp), (twp), 0x524070, rEAX, rESI);
 UsercallFunc(int, skyDeckDoorHook, (taskwk* twp), (twp), 0x51DEB0, rEAX, rESI);
 
-AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus) :
-    _options(options), _gameStatus(gameStatus),
+AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus,
+                                                             ArchipelagoMessenger& archipelagoMessenger) :
+    _options(options), _gameStatus(gameStatus), _archipelagoMessenger(archipelagoMessenger),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init(options)),
     _doorIndicatorManager(DoorIndicatorManager::Init()),
     _mapManager(MapManager::Init(options, gameStatus, _adventureFieldEntranceMap))
@@ -162,6 +163,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
         }
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
+        _instance->_archipelagoMessenger.SetMapStatus();
         return;
     }
     _setNextLevelAndActHook.Original(level, act);
@@ -212,6 +214,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
         }
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
+        _instance->_archipelagoMessenger.SetMapStatus();
         return;
     }
     _setNextLevelAndActCutsceneModeHook.Original(level, act);

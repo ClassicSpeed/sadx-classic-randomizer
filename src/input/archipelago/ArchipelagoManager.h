@@ -21,15 +21,17 @@ enum ConnectionStatus
     BadSaveFile,
 };
 
-class ArchipelagoManager: public IOnFrame
+class ArchipelagoManager : public IOnFrame
 {
 public:
-    static ArchipelagoManager& Init(Options& options, Settings& settings, Randomizer& randomizer, Link& link)
+    static ArchipelagoManager& Init(Options& options, Settings& settings, GameStatus& gameStatus,
+                                    Randomizer& randomizer, Link& link)
     {
         if (_instance == nullptr)
-            _instance = new ArchipelagoManager(options, settings, randomizer, link);
+            _instance = new ArchipelagoManager(options, settings, gameStatus, randomizer, link);
         return *_instance;
     }
+
     void OnFrame() override;
 
     void Connect();
@@ -40,12 +42,15 @@ public:
     void CheckLocation(int64_t locationId);
     void HandleBouncedPacket(AP_Bounce bouncePacket);
     void CompareModVersion(int serverVersion);
+    inline static void SetReplyHandler(AP_SetReply reply);
 
 private:
-    explicit ArchipelagoManager(Options& options, Settings& settings, Randomizer& randomizer, Link& link);
+    explicit ArchipelagoManager(Options& options, Settings& settings, GameStatus& gameStatus, Randomizer& randomizer,
+                                Link& link);
     inline static ArchipelagoManager* _instance = nullptr;
     Options& _options;
     Settings& _settings;
+    GameStatus& _gameStatus;
     Randomizer& _randomizer;
     Link& _link;
 
@@ -61,4 +66,6 @@ private:
 
     const float _suggestChangingConfigWaitTime = 2.5f;
     std::clock_t _connectedAt = -1;
+
+    AP_GetServerDataRequest* map_status = new AP_GetServerDataRequest();
 };

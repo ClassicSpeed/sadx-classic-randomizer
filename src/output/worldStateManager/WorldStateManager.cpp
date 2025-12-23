@@ -1,10 +1,11 @@
 #include "WorldStateManager.h"
 
 
-WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus) : _options(options),
+WorldStateManager::WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus,
+                                     ArchipelagoMessenger& archipelagoMessenger) : _options(options),
     _settings(settings), _gameStatus(gameStatus),
     _setObjectManager(SetObjectManager::Init(options, settings)),
-    _adventureFieldEntranceManager(AdventureFieldEntranceManager::Init(options, gameStatus))
+    _adventureFieldEntranceManager(AdventureFieldEntranceManager::Init(options, gameStatus, archipelagoMessenger))
 {
     _twinkleCircuitResultsMaybeHook.Hook(OnTwinkleCircuitResultsMaybe);
 

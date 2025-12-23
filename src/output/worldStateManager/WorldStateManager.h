@@ -5,15 +5,17 @@
 #include "../../configuration/options/Options.h"
 #include "adventureFieldEntranceManager/AdventureFieldEntranceManager.h"
 #include "setObjectManager/SetObjectManager.h"
+#include "../archipelagoMessenger/ArchipelagoMessenger.h"
 
 
 class WorldStateManager : public IOnFrame
 {
 public:
-    static WorldStateManager& Init(Options& options, Settings& settings, GameStatus& gameStatus)
+    static WorldStateManager& Init(Options& options, Settings& settings, GameStatus& gameStatus,
+                                   ArchipelagoMessenger& archipelagoMessenger)
     {
         if (_instance == nullptr)
-            _instance = new WorldStateManager(options, settings, gameStatus);
+            _instance = new WorldStateManager(options, settings, gameStatus, archipelagoMessenger);
         return *_instance;
     }
 
@@ -22,7 +24,8 @@ public:
     void UpdateVisitedLevels(int visitedLevel);
 
 private:
-    explicit WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus);
+    explicit WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus,
+                               ArchipelagoMessenger& archipelagoMessenger);
     inline static WorldStateManager* _instance = nullptr;
     Options& _options;
     Settings& _settings;

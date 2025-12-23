@@ -197,7 +197,7 @@ void Randomizer::OnConnected()
 
     UpdateLevelEntrances();
 
-    _archipelagoMessenger.UpdateTags(_options);
+    _archipelagoMessenger.UpdateTags();
     _displayManager.SetConnected();
     _displayManager.QueueItemMessage("Connected to Archipelago");
 }

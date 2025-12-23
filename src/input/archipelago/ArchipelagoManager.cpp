@@ -1,8 +1,9 @@
 ﻿#include "ArchipelagoManager.h"
 
 
-ArchipelagoManager::ArchipelagoManager(Options& options, Settings& settings, Randomizer& randomizer, Link& link)
-    : _options(options), _settings(settings), _randomizer(randomizer), _link(link)
+ArchipelagoManager::ArchipelagoManager(Options& options, Settings& settings, GameStatus& gameStatus,
+                                       Randomizer& randomizer, Link& link)
+    : _options(options), _settings(settings), _gameStatus(gameStatus), _randomizer(randomizer), _link(link)
 {
     _loadTrialMenuHook.Hook(OnLoadTrialMenu);
 }
@@ -51,6 +52,29 @@ void ArchipelagoManager::OnFrame()
         _status = Connected;
         TldFlg = true;
         _randomizer.OnConnected();
+
+        PrintDebug(" --- Setting map status to the server 1...\n");
+
+        AP_SetServerDataRequest* map_status = new AP_SetServerDataRequest();
+        AP_DataStorageOperation operation = *new AP_DataStorageOperation();
+        int filler_value = 32;
+        operation.operation = "default";
+        operation.value = &filler_value;
+        map_status->key = AP_GetPrivateServerDataPrefix() + "MapStatus";
+        map_status->type = AP_DataType::Int;
+        map_status->want_reply = true;
+        map_status->operations.push_back(operation);
+
+        // AP_SetServerDataRequest map_status;
+        // map_status.key = AP_GetPrivateServerDataPrefix() + "MapStatus";
+        // map_status.type = AP_DataType::Int;
+        // int def_val = 43;
+        // map_status.operations = {{ "default", &def_val }};
+        // map_status.default_value = &def_val;
+        // map_status.want_reply = true;
+        PrintDebug(" --- Setting map status to the server 2...\n");
+        AP_SetServerData(map_status);
+        PrintDebug(" --- Setting map status to the server 3...\n");
         return;
     }
 
@@ -187,6 +211,15 @@ void ArchipelagoManager::CompareModVersion(const int serverVersion)
     }
 }
 
+void ArchipelagoManager::SetReplyHandler(AP_SetReply reply)
+{
+    if (reply.key == AP_GetPrivateServerDataPrefix() + "MapStatus")
+    {
+        // _instance->_gameStatus.map.DeserializeEntranceVisited(*static_cast<std::string*>(reply.value));
+        PrintDebug(" --- Map status updated from server with value: %d\n", (*(int*)(reply.value)));
+    }
+}
+
 void ArchipelagoManager::Connect()
 {
     AP_Init(_settings.serverIp.c_str(), "Sonic Adventure DX", _settings.playerName.c_str(),
@@ -311,6 +344,10 @@ void ArchipelagoManager::Connect()
     AP_REGISTER_INT_CALLBACK("TrapsOnAdventureFields", _options.SetTrapsOnAdventureFields);
     AP_REGISTER_INT_CALLBACK("TrapsOnBossFights", _options.SetTrapsOnBossFights);
     AP_REGISTER_INT_CALLBACK("TrapsOnPerfectChaosFight", _options.SetTrapsOnPerfectChaosFight);
+
+
+    AP_RegisterSetReplyCallback(this->SetReplyHandler);
+    AP_SetNotify(AP_GetPrivateServerDataPrefix() + "MapStatus", AP_DataType::Int);
 
 
     AP_Start();

@@ -27,10 +27,10 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     ReactionManager& reactionManager = ReactionManager::Init(settings, gameStatus);
     DisplayManager& displayManager = DisplayManager::Init(options, settings, gameStatus, path, helperFunctions);
     CharacterManager& characterManager = CharacterManager::Init(options, settings, gameStatus, reactionManager);
-    WorldStateManager& worldStateManager = WorldStateManager::Init(options, settings, gameStatus);
     ItemRepository& itemRepository = ItemRepository::Init(gameStatus);
     LocationRepository& locationRepository = LocationRepository::Init(options, gameStatus);
-    ArchipelagoMessenger& archipelagoMessenger = ArchipelagoMessenger::Init(options);
+    ArchipelagoMessenger& archipelagoMessenger = ArchipelagoMessenger::Init(options, gameStatus);
+    WorldStateManager& worldStateManager = WorldStateManager::Init(options, settings, gameStatus, archipelagoMessenger);
     SaveFileManager& saveFileManager = SaveFileManager::Init();
     MusicManager& musicManager = MusicManager::Init(options, settings, helperFunctions);
 
@@ -42,7 +42,7 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
 
     // Input Handlers
     CheatsManager& cheatsManager = CheatsManager::Init(settings);
-    ArchipelagoManager& archipelagoManager = ArchipelagoManager::Init(options, settings, randomizer, link);
+    ArchipelagoManager& archipelagoManager = ArchipelagoManager::Init(options, settings, gameStatus, randomizer, link);
     EventDetector& eventDetector = EventDetector::Init(options, settings, randomizer, link);
     CharacterLoadingDetector& characterLoadingDetector = CharacterLoadingDetector::Init(randomizer);
 
@@ -58,6 +58,17 @@ __declspec(dllexport) void __cdecl OnFrame()
 {
     for (const auto manager : onFrameObjects)
         manager->OnFrame();
+    for (const auto& button : PressedButtons)
+
+        if (button & WhistleButtons && Current_CharObj2 != nullptr)
+        {
+            // Insta win 
+            if (CurrentLevel < LevelIDs_StationSquare || CurrentLevel == LevelIDs_SandHill)
+            {
+                SetTailsRaceVictory();
+                LoadLevelResults();
+            }
+        }
 }
 
 // Required for Mod Loader to recognize the DLL

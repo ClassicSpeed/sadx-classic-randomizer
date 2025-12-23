@@ -3,6 +3,7 @@
 #include "../../../pch.h"
 #include "../../../configuration/options/Options.h"
 #include "../doorIndicatorManager/DoorIndicatorManager.h"
+#include "../../archipelagoMessenger/ArchipelagoMessenger.h"
 #include "DoorLogic/IDoorLogicStrategy.h"
 #include "DoorLogic/KeyItemDoorLogicStrategy.h"
 #include "DoorLogic/EmblemGatingDoorLogicStrategy.h"
@@ -11,20 +12,23 @@
 class AdventureFieldEntranceManager
 {
 public:
-    static AdventureFieldEntranceManager& Init(Options& options, GameStatus& gameStatus)
+    static AdventureFieldEntranceManager& Init(Options& options, GameStatus& gameStatus,
+                                               ArchipelagoMessenger& archipelagoMessenger)
     {
         if (_instance == nullptr)
-            _instance = new AdventureFieldEntranceManager(options, gameStatus);
+            _instance = new AdventureFieldEntranceManager(options, gameStatus, archipelagoMessenger);
         return *_instance;
     }
 
     void OnFrame();
 
 private:
-    explicit AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus);
+    explicit AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus,
+                                           ArchipelagoMessenger& archipelagoMessenger);
     inline static AdventureFieldEntranceManager* _instance = nullptr;
     Options& _options;
     GameStatus& _gameStatus;
+    ArchipelagoMessenger& _archipelagoMessenger;
     AdventureFieldEntranceMap& _adventureFieldEntranceMap;
     DoorIndicatorManager& _doorIndicatorManager;
     MapManager& _mapManager;

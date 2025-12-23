@@ -4,8 +4,23 @@
 struct MapStatus
 {
     bool isEggCarrierTransformed = false;
+    bool isEverythingVisited = false;
     static constexpr size_t EntranceCount = InvalidEntranceId;
     std::bitset<EntranceCount> entranceVisited{};
+
+
+    std::string SerializeEntranceVisited() const
+    {
+        return entranceVisited.to_string();
+    }
+
+    void DeserializeEntranceVisited(const std::string& data)
+    {
+        if (data.size() == EntranceCount)
+        {
+            entranceVisited = std::bitset<EntranceCount>(data);
+        }
+    }
 
     const std::unordered_map<EntranceId, EntranceId> entrancePairs = {
         {SsMainToEcOutside, SsMainToBridge},
@@ -28,6 +43,7 @@ struct MapStatus
 
     void SetEntranceVisited(EntranceId id, bool visited)
     {
+        isEverythingVisited = true;
         const size_t idx = static_cast<size_t>(id);
         if (idx < EntranceCount)
         {
@@ -66,7 +82,9 @@ struct MapStatus
 
     bool IsEntranceVisited(EntranceId id) const
     {
-        const size_t idx = static_cast<size_t>(id);
-        return (idx < EntranceCount) ? entranceVisited.test(idx) : false;
+        return isEverythingVisited;
+        // TODO: REMOVE
+        // const size_t idx = static_cast<size_t>(id);
+        // return (idx < EntranceCount) ? entranceVisited.test(idx) : false;
     }
 };
