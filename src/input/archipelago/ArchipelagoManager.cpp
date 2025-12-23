@@ -53,28 +53,22 @@ void ArchipelagoManager::OnFrame()
         TldFlg = true;
         _randomizer.OnConnected();
 
-        PrintDebug(" --- Setting map status to the server 1...\n");
+        for (int id = 0; id < InvalidEntranceId; ++id)
+        {
+            int filler_value = 0;
 
-        AP_SetServerDataRequest* map_status = new AP_SetServerDataRequest();
-        AP_DataStorageOperation operation = *new AP_DataStorageOperation();
-        int filler_value = 32;
-        operation.operation = "default";
-        operation.value = &filler_value;
-        map_status->key = AP_GetPrivateServerDataPrefix() + "MapStatus";
-        map_status->type = AP_DataType::Int;
-        map_status->want_reply = true;
-        map_status->operations.push_back(operation);
+            AP_SetServerDataRequest* map_status = new AP_SetServerDataRequest();
+            AP_DataStorageOperation operation;
+            operation.operation = "default";
+            operation.value = &filler_value;
 
-        // AP_SetServerDataRequest map_status;
-        // map_status.key = AP_GetPrivateServerDataPrefix() + "MapStatus";
-        // map_status.type = AP_DataType::Int;
-        // int def_val = 43;
-        // map_status.operations = {{ "default", &def_val }};
-        // map_status.default_value = &def_val;
-        // map_status.want_reply = true;
-        PrintDebug(" --- Setting map status to the server 2...\n");
-        AP_SetServerData(map_status);
-        PrintDebug(" --- Setting map status to the server 3...\n");
+            map_status->key = AP_GetPrivateServerDataPrefix() + "MapStatus" + std::to_string(id);
+            map_status->type = AP_DataType::Int;
+            map_status->want_reply = true;
+            map_status->operations.push_back(operation);
+
+            AP_SetServerData(map_status);
+        }
         return;
     }
 
@@ -213,10 +207,36 @@ void ArchipelagoManager::CompareModVersion(const int serverVersion)
 
 void ArchipelagoManager::SetReplyHandler(AP_SetReply reply)
 {
-    if (reply.key == AP_GetPrivateServerDataPrefix() + "MapStatus")
+    const std::string prefix = AP_GetPrivateServerDataPrefix() + "MapStatus";
+    // Only react to keys that start with the MapStatus prefix
+    if (reply.key.size() >= prefix.size() && reply.key.compare(0, prefix.size(), prefix) == 0)
     {
-        // _instance->_gameStatus.map.DeserializeEntranceVisited(*static_cast<std::string*>(reply.value));
-        PrintDebug(" --- Map status updated from server with value: %d\n", (*(int*)(reply.value)));
+        std::string suffix = reply.key.substr(prefix.size());
+        int index = -1;
+        if (!suffix.empty())
+        {
+            try
+            {
+                index = std::stoi(suffix);
+            }
+            catch (...)
+            {
+                // malformed suffix, ignore
+                return;
+            }
+        }
+        else
+        // no index - ignore
+            return;
+
+        if (index < 0 || index >= InvalidEntranceId)
+            return;
+
+        int value = 0;
+        if (reply.value)
+            value = *static_cast<int*>(reply.value);
+
+        _instance->_gameStatus.map.SetEntranceVisited(static_cast<EntranceId>(index), value != 0);
     }
 }
 
