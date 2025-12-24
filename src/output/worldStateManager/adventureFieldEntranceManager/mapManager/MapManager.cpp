@@ -1,5 +1,22 @@
 #include "MapManager.h"
 
+static NJS_POINT2 mapToScreen(Float x, Float y)
+{
+    constexpr float CENTER = 450.0f;
+    constexpr float SCALE = 900.0f / 1024.0f;
+    return {CENTER - (SCALE * x), CENTER - (SCALE * y)};
+}
+
+void drawSprite2D(NJS_TEXANIM* anim, float screenX, float screenY, int priority = 200)
+{
+    njPushMatrix(0);
+    njSetTexture(&entranceTextList);
+    SetMaterial(255, 255, 255, 255);
+    NJS_SPRITE s = {{_nj_screen_.cx - screenX, _nj_screen_.cy - screenY, 1}, -50, -50, 0, &entranceTextList, anim};
+    njRotateX(0, 0x8000);
+    njDrawSprite2D_ForcePriority(&s, 0, priority, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+}
 
 MapManager::MapManager(Options& options, GameStatus& gameStatus, AdventureFieldEntranceMap& adventureFieldEntranceMap) :
     _options(options), _gameStatus(gameStatus), _adventureFieldEntranceMap(adventureFieldEntranceMap)
@@ -26,25 +43,25 @@ void MapManager::OnFrame()
         currentLevelAndAct = LevelAndActIDs_MRGarden;
     }
 
-    for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetEntrances())
+    for (const auto& entrance : _adventureFieldEntranceMap.GetEntrances())
     {
-        if (currentLevelAndAct != adventureFieldEntrance.levelAndActId)
+        if (currentLevelAndAct != entrance.levelAndActId)
             continue;
 
-        if (!ShowDisableDoorIndicator(adventureFieldEntrance.entranceId))
+        if (!ShowDisableDoorIndicator(entrance.entranceId))
             continue;
 
-        ShowDoorEmblemRequirement(adventureFieldEntrance);
+        ShowDoorEmblemRequirement(entrance);
     }
-    for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetStaticEntrances())
+    for (const auto& entrance : _adventureFieldEntranceMap.GetStaticEntrances())
     {
-        if (currentLevelAndAct != adventureFieldEntrance.levelAndActId)
+        if (currentLevelAndAct != entrance.levelAndActId)
             continue;
 
-        if (!ShowDisableDoorIndicator(adventureFieldEntrance.entranceId))
+        if (!ShowDisableDoorIndicator(entrance.entranceId))
             continue;
 
-        ShowDoorEmblemRequirement(adventureFieldEntrance);
+        ShowDoorEmblemRequirement(entrance);
     }
 }
 
@@ -63,14 +80,14 @@ void MapManager::ShowMap()
     njDrawSprite2D_ForcePriority(&mySprite, 0, 200, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
 
-    for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetEntrances())
+    for (const auto& entrance : _adventureFieldEntranceMap.GetEntrances())
     {
-        DrawConnectionsInMap(adventureFieldEntrance);
-        DrawMapEmblem(adventureFieldEntrance, false);
+        DrawConnectionsInMap(entrance);
+        DrawMapEmblem(entrance, false);
     }
-    for (AdventureFieldEntrance adventureFieldEntrance : _adventureFieldEntranceMap.GetStaticEntrances())
+    for (const auto& entrance : _adventureFieldEntranceMap.GetStaticEntrances())
     {
-        DrawMapEmblem(adventureFieldEntrance, true);
+        DrawMapEmblem(entrance, true);
     }
     DrawPlayerLocation();
 }
@@ -223,19 +240,18 @@ void MapManager::DrawPlayerLocation()
         return;
 
 
-    const float x = 450 - (900.0 * locationInMap.x / 1024.0);
-    float y = 450 - (900.0 * locationInMap.y / 1024.0);
+    auto point = mapToScreen(locationInMap.x, locationInMap.y);
 
     std::clock_t now = std::clock();
     double ms = double(now) * 1000.0 / CLOCKS_PER_SEC;
     int phase = static_cast<int>(ms / 250.0) & 1; // 0 or 1
-    y += (phase == 0) ? 10.0f : 0.0f;
+    point.y += (phase == 0) ? 10.0f : 0.0f;
 
 
     njPushMatrix(0);
     njSetTexture(&entranceTextList);
     NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, location_map_anim
+        {_nj_screen_.cx - point.x, _nj_screen_.cy - point.y, 1}, -1.5, -1.5, 0, &entranceTextList, location_map_anim
     };
     njRotateX(0, 0x8000);
     njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
@@ -262,12 +278,11 @@ void MapManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bo
             return;
 
 
-        const float x = 450 - (900.0 * entranceValue->second.x / 1024.0);
-        const float y = 450 - (900.0 * entranceValue->second.y / 1024.0);
+        auto point = mapToScreen(entranceValue->second.x, entranceValue->second.y);
         njPushMatrix(0);
         njSetTexture(&entranceTextList);
         NJS_SPRITE myTestEmblem = {
-            {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, blocked_anim
+            {_nj_screen_.cx - point.x, _nj_screen_.cy - point.y, 1}, -1.5, -1.5, 0, &entranceTextList, blocked_anim
         };
         njRotateX(0, 0x8000);
         njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
@@ -299,15 +314,14 @@ void MapManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bo
 void MapManager::DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Float entranceX,
                                         Float entranceY)
 {
-    const float x = 450 - (900.0 * entranceX / 1024.0);
-    const float y = 450 - (900.0 * entranceY / 1024.0);
+    auto point = mapToScreen(entranceX, entranceY);
 
     njPushMatrix(0);
     njSetTexture(&entranceTextList);
 
     NJS_TEXANIM* texanim = getInitialsFromEntrance(entranceTo);
     NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, texanim
+        {_nj_screen_.cx - point.x, _nj_screen_.cy - point.y, 1}, -1.5, -1.5, 0, &entranceTextList, texanim
     };
     njRotateX(0, 0x8000);
     njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
@@ -322,15 +336,12 @@ void MapManager::DrawNewInMap(AdventureFieldEntrance adventureFieldEntrance)
     if (entranceValue == entranceLocationInMap.end())
         return;
 
-
-    const float x = 450 - (900.0 * entranceValue->second.x / 1024.0);
-    const float y = 450 - (900.0 * entranceValue->second.y / 1024.0);
-
+    auto point = mapToScreen(entranceValue->second.x, entranceValue->second.y);
 
     njPushMatrix(0);
     njSetTexture(&entranceTextList);
     NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, new_logo_map_anim
+        {_nj_screen_.cx - point.x, _nj_screen_.cy - point.y, 1}, -1.5, -1.5, 0, &entranceTextList, new_logo_map_anim
     };
     njRotateX(0, 0x8000);
     njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
@@ -345,20 +356,17 @@ void MapManager::DrawEmblemNumberInMap(AdventureFieldEntrance adventureFieldEntr
     if (entranceValue == entranceLocationInMap.end())
         return;
 
-
-    const float x = 450 - (900.0 * entranceValue->second.x / 1024.0);
-    const float y = 450 - (900.0 * entranceValue->second.y / 1024.0);
-
+    auto point = mapToScreen(entranceValue->second.x, entranceValue->second.y);
 
     njPushMatrix(0);
     njSetTexture(&entranceTextList);
     NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - x, _nj_screen_.cy - y, 1}, -1.5, -1.5, 0, &entranceTextList, emblem_lock_anim
+        {_nj_screen_.cx - point.x, _nj_screen_.cy - point.y, 1}, -1.5, -1.5, 0, &entranceTextList, emblem_lock_anim
     };
     njRotateX(0, 0x8000);
     njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
-    ShowNumberDynamicMap(doorCost, x, y);
+    ShowNumberDynamicMap(doorCost, point.x, point.y);
 }
 
 void MapManager::ShowNumberDynamicMap(int number, float x, float y)
@@ -396,14 +404,12 @@ void MapManager::MakeConnection(float x1, float y1, float x2, float y2)
 
 void MapManager::DrawLine(float x1, float y1, float x2, float y2)
 {
-    const float actualX1 = 450 - (900.0 * x1 / 1024.0);
-    const float actualY1 = 450 - (900.0 * y1 / 1024.0);
-    const float actualX2 = 450 - (900.0 * x2 / 1024.0);
-    const float actualY2 = 450 - (900.0 * y2 / 1024.0);
+    const auto p1 = mapToScreen(x1, y1);
+    const auto p2 = mapToScreen(x2, y2);
 
     // Calculate direction vector
-    float dx = actualX2 - actualX1;
-    float dy = actualY2 - actualY1;
+    float dx = p2.x - p1.x;
+    float dy = p2.y - p1.y;
     float length = sqrtf(dx * dx + dy * dy);
 
     // Perpendicular vector (normalized)
@@ -417,10 +423,10 @@ void MapManager::DrawLine(float x1, float y1, float x2, float y2)
     float oy = py * halfThickness;
 
     NJS_POINT2 points[] = {
-        {_nj_screen_.cx - (actualX1 + ox), _nj_screen_.cy - (actualY1 + oy)},
-        {_nj_screen_.cx - (actualX1 - ox), _nj_screen_.cy - (actualY1 - oy)},
-        {_nj_screen_.cx - (actualX2 - ox), _nj_screen_.cy - (actualY2 - oy)},
-        {_nj_screen_.cx - (actualX2 + ox), _nj_screen_.cy - (actualY2 + oy)},
+        {_nj_screen_.cx - (p1.x + ox), _nj_screen_.cy - (p1.y + oy)},
+        {_nj_screen_.cx - (p1.x - ox), _nj_screen_.cy - (p1.y - oy)},
+        {_nj_screen_.cx - (p2.x - ox), _nj_screen_.cy - (p2.y - oy)},
+        {_nj_screen_.cx - (p2.x + ox), _nj_screen_.cy - (p2.y + oy)},
     };
 
     NJS_COLOR linecol[4];
@@ -445,15 +451,14 @@ void MapManager::DrawLine(float x1, float y1, float x2, float y2)
 
 void MapManager::DrawEntrancePoint(float x, float y)
 {
-    const float actualX = 450 - (900.0 * x / 1024.0);
-    const float actualY = 450 - (900.0 * y / 1024.0);
+    auto point = mapToScreen(x, y);
 
     const float squareSize = 6.0f;
     float halfSize = squareSize / 2.0f;
-    DrawRect_Queue(_nj_screen_.cx - actualX - halfSize,
-                   _nj_screen_.cy - actualY - halfSize,
-                   _nj_screen_.cx - actualX + halfSize,
-                   _nj_screen_.cy - actualY + halfSize,
+    DrawRect_Queue(_nj_screen_.cx - point.x - halfSize,
+                   _nj_screen_.cy - point.y - halfSize,
+                   _nj_screen_.cx - point.x + halfSize,
+                   _nj_screen_.cy - point.y + halfSize,
                    22250,
                    0xFFFFFFFF,
                    QueuedModelFlagsB_EnableZWrite);
