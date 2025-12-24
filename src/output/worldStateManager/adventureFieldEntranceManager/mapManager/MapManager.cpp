@@ -2,13 +2,17 @@
 
 static NJS_POINT2 mapToScreen(Float x, Float y)
 {
-    constexpr float CENTER = 450.0f;
-    constexpr float SCALE = 900.0f / 1024.0f;
-    return {CENTER - (SCALE * x), CENTER - (SCALE * y)};
+    float valueX = -(x - 512) / 512 * _nj_screen_.h / 2;
+    float valueY = _nj_screen_.cy - y / 1024 * _nj_screen_.h;
+
+    return {valueX * 0.8301f, valueY * 0.8301f};
 }
+
 
 void drawSprite2D(NJS_TEXANIM* anim, float screenX, float screenY, int priority = 300, float scale = 1.5f)
 {
+    scale = scale * _nj_screen_.h / 1080;
+
     njPushMatrix(0);
     njSetTexture(&entranceTextList);
     SetMaterial(255, 255, 255, 255);
