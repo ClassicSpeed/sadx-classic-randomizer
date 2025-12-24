@@ -7,12 +7,14 @@ static NJS_POINT2 mapToScreen(Float x, Float y)
     return {CENTER - (SCALE * x), CENTER - (SCALE * y)};
 }
 
-void drawSprite2D(NJS_TEXANIM* anim, float screenX, float screenY, int priority = 200)
+void drawSprite2D(NJS_TEXANIM* anim, float screenX, float screenY, int priority = 300, float scale = 1.5f)
 {
     njPushMatrix(0);
     njSetTexture(&entranceTextList);
     SetMaterial(255, 255, 255, 255);
-    NJS_SPRITE s = {{_nj_screen_.cx - screenX, _nj_screen_.cy - screenY, 1}, -50, -50, 0, &entranceTextList, anim};
+    NJS_SPRITE s = {
+        {_nj_screen_.cx - screenX, _nj_screen_.cy - screenY, 1}, -scale, -scale, 0, &entranceTextList, anim
+    };
     njRotateX(0, 0x8000);
     njDrawSprite2D_ForcePriority(&s, 0, priority, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
@@ -72,13 +74,7 @@ void MapManager::SetDoorLogicStrategy(IDoorLogicStrategy* doorLogicStrategy)
 
 void MapManager::ShowMap()
 {
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-    SetMaterial(255, 255, 255, 255);
-    NJS_SPRITE mySprite = {{_nj_screen_.cx, _nj_screen_.cy, 1}, -50, -50, 0, &entranceTextList, base_map};
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&mySprite, 0, 200, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
+    drawSprite2D(base_map, 0, 0, 300, 50);
 
     for (const auto& entrance : _adventureFieldEntranceMap.GetEntrances())
     {
@@ -247,15 +243,7 @@ void MapManager::DrawPlayerLocation()
     int phase = static_cast<int>(ms / 250.0) & 1; // 0 or 1
     point.y += (phase == 0) ? 10.0f : 0.0f;
 
-
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-    NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - point.x, _nj_screen_.cy - point.y, 1}, -1.5, -1.5, 0, &entranceTextList, location_map_anim
-    };
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
+    drawSprite2D(location_map_anim, point.x, point.y);
 }
 
 
@@ -277,16 +265,8 @@ void MapManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bo
         if (entranceValue == entranceLocationInMap.end())
             return;
 
-
         auto point = mapToScreen(entranceValue->second.x, entranceValue->second.y);
-        njPushMatrix(0);
-        njSetTexture(&entranceTextList);
-        NJS_SPRITE myTestEmblem = {
-            {_nj_screen_.cx - point.x, _nj_screen_.cy - point.y, 1}, -1.5, -1.5, 0, &entranceTextList, blocked_anim
-        };
-        njRotateX(0, 0x8000);
-        njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-        njPopMatrix(1u);
+        drawSprite2D(blocked_anim, point.x, point.y);
         return;
     }
 
@@ -315,17 +295,8 @@ void MapManager::DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Floa
                                         Float entranceY)
 {
     auto point = mapToScreen(entranceX, entranceY);
-
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-
     NJS_TEXANIM* texanim = getInitialsFromEntrance(entranceTo);
-    NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - point.x, _nj_screen_.cy - point.y, 1}, -1.5, -1.5, 0, &entranceTextList, texanim
-    };
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
+    drawSprite2D(texanim, point.x, point.y);
 }
 
 
@@ -337,15 +308,7 @@ void MapManager::DrawNewInMap(AdventureFieldEntrance adventureFieldEntrance)
         return;
 
     auto point = mapToScreen(entranceValue->second.x, entranceValue->second.y);
-
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-    NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - point.x, _nj_screen_.cy - point.y, 1}, -1.5, -1.5, 0, &entranceTextList, new_logo_map_anim
-    };
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
+    drawSprite2D(new_logo_map_anim, point.x, point.y);
 }
 
 
@@ -357,15 +320,7 @@ void MapManager::DrawEmblemNumberInMap(AdventureFieldEntrance adventureFieldEntr
         return;
 
     auto point = mapToScreen(entranceValue->second.x, entranceValue->second.y);
-
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-    NJS_SPRITE myTestEmblem = {
-        {_nj_screen_.cx - point.x, _nj_screen_.cy - point.y, 1}, -1.5, -1.5, 0, &entranceTextList, emblem_lock_anim
-    };
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&myTestEmblem, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
+    drawSprite2D(emblem_lock_anim, point.x, point.y);
     ShowNumberDynamicMap(doorCost, point.x, point.y);
 }
 
@@ -467,14 +422,7 @@ void MapManager::DrawEntrancePoint(float x, float y)
 
 void MapManager::showNumberMap(const float posX, const float posY, const int number)
 {
-    njPushMatrix(0);
-    njSetTexture(&entranceTextList);
-    NJS_SPRITE numberSprite = {
-        {_nj_screen_.cx - posX, _nj_screen_.cy - posY, 1}, -3, -3, 0, &entranceTextList, GetNumberAnim(number)
-    };
-    njRotateX(0, 0x8000);
-    njDrawSprite2D_ForcePriority(&numberSprite, 0, 300, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
+    drawSprite2D(GetNumberAnim(number), posX, posY, 300, 3);
 }
 
 
