@@ -47,26 +47,7 @@ void CharacterLoadingDetector::OnFrame()
     if (_loadCharacterNextFrame == 1)
     {
         _randomizer.OnCharacterLoaded();
-
-
-        //Windy Valley
-        ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_WINDY));
-        ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_WINDYSTONE));
-        ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_WINDY));
-        ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_WINDYSTONE));
-        ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_WINDY));
-        ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_WINDYSTONE));
-
-
         WriteSaveFile();
-        //Windy Valley
-        ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_WINDY));
-        ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_WINDYSTONE));
-        ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_WINDY));
-        ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_WINDYSTONE));
-        ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_WINDY));
-        ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_WINDYSTONE));
-
         _loadCharacterNextFrame = 0;
     }
 }

@@ -1011,13 +1011,6 @@ void AdventureFieldEntranceManager::OnMysticRuinsKey(task* tp)
         return _mysticRuinsKeyHook.Original(tp);
     }
 
-
-    // We prevent the wind stone from spawning if the player cannot access the Windy Valley entrance
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1
-        && !_instance->IsDoorOpen(MrMainToWindyValley))
-        if (IsNearPosition(tp->twp->pos, 1392.5, 191.5, 863.5))
-            return;
-
     const int bufferCharacter = CurrentCharacter;
     CurrentCharacter = Characters_Sonic;
     _mysticRuinsKeyHook.Original(tp);
@@ -1040,7 +1033,7 @@ BOOL AdventureFieldEntranceManager::OnIsWindyValleyOpen()
     if (!_instance->_options.emblemGating)
         return _isWindyValleyOpenHook.Original();
 
-    return EventFlagArray[FLAG_SONIC_MR_WINDYSTONE];
+    return _instance->IsDoorOpen(MrMainToWindyValley);
 }
 
 BOOL AdventureFieldEntranceManager::OnPreventMrStoneSpawn()

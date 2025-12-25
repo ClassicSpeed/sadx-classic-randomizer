@@ -85,14 +85,6 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_HIGHWAY));
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ENTRANCE_HIGHWAY));
 
-    //Windy Valley
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_WINDY));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_WINDYSTONE));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_WINDY));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_WINDYSTONE));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_WINDY));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_WINDYSTONE));
-
     //Red Mountain
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_MOUNTAIN));
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_MOUNTAIN));
