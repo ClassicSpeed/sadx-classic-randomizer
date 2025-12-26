@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0] - 2026-01-??
+
+### Added
+
+- Added option for emblem gating or key item gating.
+- Emblem gating will add emblems requirements to any door in the Adventure Field.
+    - Emblems will be enabled automatically if emblem gating is selected.
+- Map of the Adventure Field, accesible anywhere while pressing the whistle button.
+
+### Changed
+
+- Several logic changes to accomodate emblem gating.
+- Multiple areas have been separated into different locations (Like City Hall, TP Tunnel, Sewers, etc).
+
+### Removed
+
+- Ice Stone and Wind Stone no longer require the player to move them to the door.
+    - They will appear and open the door as soon as the player gets the item.
+- Emplyee card no longer requires the player to move them to the Speed Highway entrance.
+- The Monkey Killer Switch is no longer required to enter Red Mountain as Knuckles.
+- Logic for Red Mountain and Ice Cap has been adjusted accordingly.
+
 ## [v1.1.3] - 2025-09-16
 
 ### Changed
