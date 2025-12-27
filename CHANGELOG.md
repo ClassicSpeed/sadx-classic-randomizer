@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Several logic changes to accomodate emblem gating.
+- Several logic changes to accomodate emblem gating. 
 - Multiple areas have been separated into different locations (Like City Hall, TP Tunnel, Sewers, etc).
 - Chaos 4 is no longer unified by default.
 
