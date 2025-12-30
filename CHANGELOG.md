@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Multiple areas have been separated into different locations (Like City Hall, TP Tunnel, Sewers, etc).
 - Some clips that require multiple doors to be open are no longer in logic (but they are noted in the logic sheet).
 - Chaos 4 is no longer unified by default.
+- Fixed City Hall's Emblemb sticking out of the ground for Tails (You can still get the emblem as Cream).
 
 ### Removed
 

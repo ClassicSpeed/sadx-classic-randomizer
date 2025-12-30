@@ -584,7 +584,7 @@ void SetObjectManager::OnEmblemMain(task* tp)
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && CurrentCharacter == Characters_Tails)
         if (IsNearPosition(tp->twp->pos, 388, -5.5, 490.5))
         {
-            tp->twp->pos.y = -4;
+            tp->twp->pos.y = -4.7f;
         }
 
     _emblemMainHook.Original(tp);
