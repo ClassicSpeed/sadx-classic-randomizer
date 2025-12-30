@@ -58,6 +58,9 @@ enum StartingArea
     PrisonHall,
     WaterTank,
     WarpHall,
+    SSChaoGarden,
+    MRChaoGarden,
+    ECChaoGarden,
     NoStatingArea
 };
 

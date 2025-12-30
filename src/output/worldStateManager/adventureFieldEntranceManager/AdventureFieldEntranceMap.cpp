@@ -27,7 +27,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {-43, 153, 1142}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {4.6f, 153, 1116.4f}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {76.5f, 153, 1080.7f}},
-        {CasinoToEggWalker, LevelAndActIDs_StationSquare2, 1, EggWalkerToCasino, 0, {-400, 13, 955}},
+        {CasinoToEggWalker, LevelAndActIDs_StationSquare2, 4, EggWalkerToCasino, 0, {-400, 13, 955}},
 
         // Sewers
         {SewersToTwinkleParkTunnel, LevelAndActIDs_StationSquare3, 1, TwinkleParkTunnelToSewers, 0, {395, -87, 1323}},
@@ -83,8 +83,8 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
 
         // Angel Island
         {AngelIslandToMrMain, LevelAndActIDs_MysticRuins2, 0, MrMainToAngelIsland, 90, {0, 15, 0}},
-        {IceCaveToIceCap, LevelAndActIDs_MysticRuins2, 1, IceCapToIceCave, 280, {-1425, 53, 353}},
-        {AngelIslandToRedMountain, LevelAndActIDs_MysticRuins2, 2, RedMountainToAngelIsland, 268, {-1955, -335, 1652}},
+        {IceCaveToIceCap, LevelAndActIDs_MysticRuins2, 2, IceCapToIceCave, 280, {-1425, 53, 353}},
+        {AngelIslandToRedMountain, LevelAndActIDs_MysticRuins2, 1, RedMountainToAngelIsland, 268, {-1955, -335, 1652}},
         {AngelIslandToPastAltar, LevelAndActIDs_MysticRuins2, 3, PastAltarToAngelIsland, 90, {-2.5f, -225, 2397.5f}},
 
         //Past Altar

@@ -497,22 +497,30 @@ void SetObjectManager::SetStartingArea()
     case CityHall:
         SetLevelAndAct(LevelIDs_StationSquare, 0);
         break;
-    case SSMain:
-        SetLevelAndAct(LevelIDs_StationSquare, 3);
-        break;
     case Station:
         SetLevelAndAct(LevelIDs_StationSquare, 1);
         SetEntranceNumber(0);
         break;
+    case Casino:
+        SetLevelAndAct(LevelIDs_StationSquare, 1);
+        SetEntranceNumber(1);
+        break;
+    case Sewers:
+        SetLevelAndAct(LevelIDs_StationSquare, 2);
+        break;
+    case SSMain:
+        SetLevelAndAct(LevelIDs_StationSquare, 3);
+        break;
+    case TPTunnel:
+        SetLevelAndAct(LevelIDs_StationSquare, 3);
+        SetEntranceNumber(4);
+        break;
     case Hotel:
-        SetLevelAndAct(LevelIDs_StationSquare, 0);
+        SetLevelAndAct(LevelIDs_StationSquare, 4);
+        SetEntranceNumber(1);
         break;
     case HotelPool:
         SetLevelAndAct(LevelIDs_StationSquare, 4);
-        break;
-    case Casino:
-        SetLevelAndAct(LevelIDs_StationSquare, 1);
-        SetEntranceNumber(2);
         break;
     case TPLobby:
         SetLevelAndAct(LevelIDs_StationSquare, 5);
@@ -524,11 +532,9 @@ void SetObjectManager::SetStartingArea()
         SetLevelAndAct(LevelIDs_MysticRuins, 1);
         SetEntranceNumber(1);
         break;
-    case Jungle:
-        SetLevelAndAct(LevelIDs_MysticRuins, 2);
-        break;
-    case FinalEggTower:
-        SetLevelAndAct(LevelIDs_MysticRuins, 3);
+    case IceCave:
+        SetLevelAndAct(LevelIDs_MysticRuins, 1);
+        SetEntranceNumber(2);
         break;
     case PastMain:
         SetLevelAndAct(LevelIDs_Past, 0);
@@ -536,20 +542,47 @@ void SetObjectManager::SetStartingArea()
     case PastAltar:
         SetLevelAndAct(LevelIDs_Past, 1);
         break;
+    case Jungle:
+        SetLevelAndAct(LevelIDs_MysticRuins, 2);
+        break;
+    case FinalEggTower:
+        SetLevelAndAct(LevelIDs_MysticRuins, 3);
+        break;
     case ECOutside:
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
+        break;
+    case CaptainRoom:
+        SetLevelAndAct(LevelIDs_EggCarrierOutside, 3);
         break;
     case ECPool:
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 5);
         break;
-    case ECInside:
-        SetLevelAndAct(LevelIDs_EggCarrierInside, 1);
-        break;
     case Arsenal:
         SetLevelAndAct(LevelIDs_EggCarrierInside, 0);
         break;
+    case ECInside:
+        SetLevelAndAct(LevelIDs_EggCarrierInside, 1);
+        break;
+    case HedgehogHammer:
+        SetLevelAndAct(LevelIDs_EggCarrierInside, 2);
+        break;
+    case PrisonHall:
+        SetLevelAndAct(LevelIDs_EggCarrierInside, 3);
+        break;
     case WaterTank:
         SetLevelAndAct(LevelIDs_EggCarrierInside, 4);
+        break;
+    case WarpHall:
+        SetLevelAndAct(LevelIDs_EggCarrierInside, 5);
+        break;
+    case SSChaoGarden:
+        SetLevelAndAct(LevelIDs_SSGarden, 0);
+        break;
+    case MRChaoGarden:
+        SetLevelAndAct(LevelIDs_MRGarden, 0);
+        break;
+    case ECChaoGarden:
+        SetLevelAndAct(LevelIDs_ECGarden, 0);
         break;
     default:
         SetLevelAndAct(LevelIDs_StationSquare, 3);

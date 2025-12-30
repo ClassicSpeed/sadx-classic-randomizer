@@ -244,6 +244,15 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
             twp->ang = {0, 0x4000, 0};
         }
     }
+    if (levelAndAct == LevelAndActIDs_StationSquare2)
+    {
+        if (GetLevelEntranceID() == 4)
+        {
+            twp->pos = {-400, -3, 990};
+            twp->ang = {0, 0x4000, 0};
+        }
+    }
+
 
     else if (levelAndAct == LevelAndActIDs_StationSquare3)
     {
