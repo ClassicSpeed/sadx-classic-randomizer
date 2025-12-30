@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Added manifest file for compatibility with the new Archipelago Version.
 - Added option for emblem gating or key item gating.
 - Emblem gating will add emblems requirements to any door in the Adventure Field.
     - Emblems will be enabled automatically if emblem gating is selected.
