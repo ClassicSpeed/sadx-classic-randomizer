@@ -29,6 +29,7 @@ All notable changes to this project will be documented in this file.
 - Emplyee card no longer requires the player to move them to the Speed Highway entrance.
 - The Monkey Killer Switch is no longer required to enter Red Mountain as Knuckles.
 - Logic for Red Mountain and Ice Cap has been adjusted accordingly.
+- Removed guaranteed starting checks option.
 
 ## [v1.1.3] - 2025-09-16
 
