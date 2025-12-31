@@ -32,6 +32,13 @@ All notable changes to this project will be documented in this file.
 - Logic for Red Mountain and Ice Cap has been adjusted accordingly.
 - Removed guaranteed starting checks option.
 
+### YAML changes:
+
+- starting_location is now a choice option with SSMain, Random, or Random per character.
+    - random_starting_location_per_character no longer exists.
+- All randomized_X_upgrades changed to just randomized_upgrades.
+- Added gating_mode for emblems or key_items.
+
 ## [v1.1.3] - 2025-09-16
 
 ### Changed
