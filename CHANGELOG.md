@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - The starting location option has been simplified to SSMain, Random or Random per character.
 - Chaos 4 is no longer unified by default.
 - Fixed City Hall's Emblemb sticking out of the ground for Tails (You can still get the emblem as Cream).
+- Randomized upgrades option are now just one toggle for all characters.
 
 ### Removed
 
