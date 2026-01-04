@@ -28,6 +28,46 @@ enum RingLoss
     OneHitKnockOutNoShields
 };
 
+
+enum EnemySanityCategory
+{
+    SonicEnemySanity = 0,
+    TailsEnemySanity,
+    KnucklesEnemySanity,
+    AmyEnemySanity,
+    BigEnemySanity,
+    GammaEnemySanity
+};
+
+enum CapsuleSanityCategory
+{
+    SonicLife = 0,
+    SonicShield,
+    SonicPowerUp,
+    SonicRing,
+    TailsLife,
+    TailsShield,
+    TailsPowerUp,
+    TailsRing,
+    KnucklesLife,
+    KnucklesShield,
+    KnucklesPowerUp,
+    KnucklesRing,
+    AmyLife,
+    AmyShield,
+    AmyPowerUp,
+    AmyRing,
+    BigLife,
+    BigShield,
+    BigPowerUp,
+    BigRing,
+    GammaLife,
+    GammaShield,
+    GammaPowerUp,
+    GammaRing,
+};
+
+
 enum StartingArea
 {
     CityHall = 0,
@@ -318,13 +358,12 @@ public:
     void MissionBlackList(const std::map<int, int>& newMissionBlacklist);
     void AutoStartMissions(int newAutoStartMissions);
     void EnemySanity(int newEnemySanity);
-    void SetCharacterEnemySanity(Characters character, bool characterEnemySanity);
+    void EnemySanityList(const std::map<int, int>& newEnemySanityList);
+    void MissableEnemies(int newMissableEnemies);
     void CapsuleSanity(int newCapsuleSanity);
+    void CapsuleSanityList(const std::map<int, int>& newCapsuleSanityList);
+    void MissableCapsules(int newMissableCapsules);
     void PinballCapsules(int newIncludePinballCapsules);
-    void LifeCapsuleSanity(int newLifeCapsuleSanity);
-    void ShieldCapsuleSanity(int newShieldCapsuleSanity);
-    void PowerUpCapsuleSanity(int newPowerUpCapsuleSanity);
-    void RingCapsuleSanity(int newRingCapsuleSanity);
     void FishSanity(int newFishSanity);
     void LazyFishing(int newLazyFishing);
     void ProgressionItems(const std::map<int, int>& newProgressionItems);
@@ -366,9 +405,7 @@ public:
 
     void SetActionStageMissions(Characters character, int missions);
     bool GetCharacterEnemySanity(Characters character) const;
-    void SetCharacterCapsuleSanity(Characters character, bool characterCapsuleSanity);
-    bool GetCharacterCapsuleSanity(Characters character) const;
-    bool GetSpecificCapsuleSanity(CapsuleType capsuleType) const;
+    bool GetCapsuleSanityByType(Characters character, CapsuleType capsuleType) const;
     void SetCharacterStatingArea(Characters character, int startingArea);
     StartingArea GetCharacterStartingArea(Characters character) const;
     void SetPlayableCharacter(Characters character, bool playable);
@@ -411,31 +448,16 @@ public:
     StartingArea gammaStartingArea = NoStatingArea;
 
     bool enemySanity = false;
-
-    bool sonicEnemySanity = true;
-    bool tailsEnemySanity = true;
-    bool knucklesEnemySanity = true;
-    bool amyEnemySanity = true;
-    bool bigEnemySanity = true;
-    bool gammaEnemySanity = true;
+    std::vector<EnemySanityCategory> enemySanityList = {};
+    bool missableEnemies = true;
 
     bool capsuleSanity = false;
+    std::vector<CapsuleSanityCategory> capsuleSanityList = {};
+    bool missableCapsules = true;
     bool includePinballCapsules = false;
 
     bool fishSanity = false;
     bool lazyFishing = false;
-
-    bool sonicCapsuleSanity = true;
-    bool tailsCapsuleSanity = true;
-    bool knucklesCapsuleSanity = true;
-    bool amyCapsuleSanity = true;
-    bool bigCapsuleSanity = true;
-    bool gammaCapsuleSanity = true;
-
-    bool lifeCapsuleSanity = true;
-    bool shieldCapsuleSanity = true;
-    bool powerUpCapsuleSanity = true;
-    bool ringCapsuleSanity = true;
 
     std::vector<int64_t> progressionItems = {};
     int startingCharacterIndex = 1;

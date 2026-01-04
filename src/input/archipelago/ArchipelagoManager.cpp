@@ -270,29 +270,13 @@ void ArchipelagoManager::Connect()
     AP_REGISTER_INT_CALLBACK("AutoStartMissions", _options.AutoStartMissions);
 
     AP_REGISTER_INT_CALLBACK("EnemySanity", _options.EnemySanity);
-
-    AP_REGISTER_INT_CALLBACK_CHARACTER("SonicEnemySanity", _options.SetCharacterEnemySanity, Characters_Sonic);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("TailsEnemySanity", _options.SetCharacterEnemySanity, Characters_Tails);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("KnucklesEnemySanity", _options.SetCharacterEnemySanity, Characters_Knuckles);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("AmyEnemySanity", _options.SetCharacterEnemySanity, Characters_Amy);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("GammaEnemySanity", _options.SetCharacterEnemySanity, Characters_Gamma);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("BigEnemySanity", _options.SetCharacterEnemySanity, Characters_Big);
+    AP_REGISTER_MAP_CALLBACK("EnemySanityList", _options.EnemySanityList);
+    AP_REGISTER_INT_CALLBACK("MissableCapsules", _options.MissableCapsules);
 
     AP_REGISTER_INT_CALLBACK("CapsuleSanity", _options.CapsuleSanity);
+    AP_REGISTER_MAP_CALLBACK("CapsuleSanityList", _options.CapsuleSanityList);
+    AP_REGISTER_INT_CALLBACK("MissableCapsules", _options.MissableCapsules);
     AP_REGISTER_INT_CALLBACK("PinballCapsules", _options.PinballCapsules);
-
-    AP_REGISTER_INT_CALLBACK_CHARACTER("SonicCapsuleSanity", _options.SetCharacterCapsuleSanity, Characters_Sonic);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("TailsCapsuleSanity", _options.SetCharacterCapsuleSanity, Characters_Tails);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("KnucklesCapsuleSanity", _options.SetCharacterCapsuleSanity,
-                                       Characters_Knuckles);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("AmyCapsuleSanity", _options.SetCharacterCapsuleSanity, Characters_Amy);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("GammaCapsuleSanity", _options.SetCharacterCapsuleSanity, Characters_Gamma);
-    AP_REGISTER_INT_CALLBACK_CHARACTER("BigCapsuleSanity", _options.SetCharacterCapsuleSanity, Characters_Big);
-
-    AP_REGISTER_INT_CALLBACK("LifeCapsuleSanity", _options.LifeCapsuleSanity);
-    AP_REGISTER_INT_CALLBACK("ShieldCapsuleSanity", _options.ShieldCapsuleSanity);
-    AP_REGISTER_INT_CALLBACK("PowerUpCapsuleSanity", _options.PowerUpCapsuleSanity);
-    AP_REGISTER_INT_CALLBACK("RingCapsuleSanity", _options.RingCapsuleSanity);
 
     AP_REGISTER_INT_CALLBACK("FishSanity", _options.FishSanity);
     AP_REGISTER_INT_CALLBACK("LazyFishing", _options.LazyFishing);

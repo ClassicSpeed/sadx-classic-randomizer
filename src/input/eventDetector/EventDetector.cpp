@@ -285,11 +285,8 @@ bool EventDetector::IsTargetableCheck(const LocationData& location) const
     {
         if (!_instance->_options.capsuleSanity)
             return false;
-        if (!_instance->_options.GetCharacterCapsuleSanity(
-            static_cast<Characters>(CurrentCharacter)))
-            return false;
-        if (!_instance->_options.GetSpecificCapsuleSanity(
-            static_cast<CapsuleType>(location.capsuleType)))
+        if (!_instance->_options.GetCapsuleSanityByType(
+            static_cast<Characters>(CurrentCharacter), static_cast<CapsuleType>(location.capsuleType)))
             return false;
         if (!_instance->_options.includePinballCapsules && location.level ==
             LevelAndActIDs_Casinopolis3)
@@ -747,16 +744,14 @@ int EventDetector::GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
     return -1;
 }
 
-void EventDetector::CheckCapsule(const EntityData1* entity, const bool specificCapsule)
+void EventDetector::CheckCapsule(const EntityData1* entity, const CapsuleType capsuleType)
 {
     if (DemoPlaying > 0)
         return;
     if (!_instance->_options.capsuleSanity)
         return;
-    if (!_instance->_options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), capsuleType))
         return;
-    // if (!specificCapsule)
-    //     return;
     if (!_instance->_options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
@@ -772,56 +767,56 @@ void EventDetector::CheckCapsule(const EntityData1* entity, const bool specificC
 void EventDetector::OnSpeedUpCapsuleBroken(EntityData1* entity)
 {
     _onSpeedUpCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->_options.powerUpCapsuleSanity);
+    _instance->CheckCapsule(entity, SpeedUpCapsule);
 }
 
 void EventDetector::OnInvincibilityCapsuleBroken(EntityData1* entity)
 {
     _onInvincibilityCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->_options.powerUpCapsuleSanity);
+    _instance->CheckCapsule(entity, InvincibilityCapsule);
 }
 
 void EventDetector::OnFiveRingsCapsuleBroken(EntityData1* entity)
 {
     _onFiveRingsCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->_options.ringCapsuleSanity);
+    _instance->CheckCapsule(entity, FiveRingsCapsule);
 }
 
 void EventDetector::OnTenRingsCapsule(EntityData1* entity)
 {
     _onTenRingsCapsuleHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->_options.ringCapsuleSanity);
+    _instance->CheckCapsule(entity, TenRingsCapsule);
 }
 
 void EventDetector::OnRandomRingsCapsuleBroken(EntityData1* entity)
 {
     _onRandomRingsCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->_options.ringCapsuleSanity);
+    _instance->CheckCapsule(entity, RandomRingsCapsule);
 }
 
 void EventDetector::OnShieldCapsuleBroken(EntityData1* entity)
 {
     _onShieldCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->_options.shieldCapsuleSanity);
+    _instance->CheckCapsule(entity, ShieldCapsule);
 }
 
 void EventDetector::OnExtraLifeCapsuleBroken(EntityData1* entity)
 {
     _onExtraLifeCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->_options.lifeCapsuleSanity);
+    _instance->CheckCapsule(entity, ExtraLifeCapsule);
     _instance->ShuffleSong();
 }
 
 void EventDetector::OnBombCapsuleBroken(EntityData1* entity)
 {
     _onBombCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->_options.powerUpCapsuleSanity);
+    _instance->CheckCapsule(entity, BombCapsule);
 }
 
 void EventDetector::OnElectricShieldCapsuleBroken(EntityData1* entity)
 {
     _onElectricShieldCapsuleBrokenHook.Original(entity);
-    _instance->CheckCapsule(entity, _instance->_options.shieldCapsuleSanity);
+    _instance->CheckCapsule(entity, MagneticShieldCapsule);
 }
 
 //Make Sonic's capsule count as Tails'
@@ -1084,24 +1079,30 @@ void EventDetector::DrawIndicator(const task* tp, const bool tallElement, const 
     njDrawTriangle3D(&point3Col, 3, 0x0);
 }
 
-bool EventDetector::GetCapsuleTypeOption(const Float type)
+CapsuleType EventDetector::GetCapsuleTypeOption(const Float type)
 {
     switch (static_cast<int>(std::floor(type)))
     {
     case 6:
-        return _instance->_options.lifeCapsuleSanity;
+        return ExtraLifeCapsule;
     case 5:
+        return ShieldCapsule;
     case 8:
-        return _instance->_options.shieldCapsuleSanity;
+        return MagneticShieldCapsule;
     case 2:
+        return SpeedUpCapsule;
     case 3:
+        return InvincibilityCapsule;
     case 4:
-        return _instance->_options.ringCapsuleSanity;
+        return BombCapsule;
+
     case 1:
+        return FiveRingsCapsule;
     case 7:
+        return TenRingsCapsule;
     case 0:
     default:
-        return _instance->_options.powerUpCapsuleSanity;
+        return RandomRingsCapsule;
     }
 }
 
@@ -1110,9 +1111,8 @@ void EventDetector::OnItemBoxMain(task* tp)
     _onItemBoxMainHook.Original(tp);
     if (!_instance->_options.capsuleSanity)
         return;
-    if (!_instance->_options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
-        return;
-    if (!_instance->GetCapsuleTypeOption(tp->twp->scl.x))
+    if (!_instance->_options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter),
+                                                    _instance->GetCapsuleTypeOption(tp->twp->scl.x)))
         return;
     if (!_instance->_options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
@@ -1134,9 +1134,8 @@ void EventDetector::OnAirItemBoxMain(task* tp)
     _onAirItemBoxMainHook.Original(tp);
     if (!_instance->_options.capsuleSanity)
         return;
-    if (!_instance->_options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
-        return;
-    if (!_instance->GetCapsuleTypeOption(tp->twp->scl.x))
+    if (!_instance->_options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter),
+                                                    _instance->GetCapsuleTypeOption(tp->twp->scl.x)))
         return;
     if (!_instance->_options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)

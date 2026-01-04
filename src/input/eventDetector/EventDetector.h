@@ -87,11 +87,11 @@ private:
     Randomizer& _randomizer;
     Link& _link;
 
-    void CheckCapsule(const EntityData1* entity, bool specificCapsule);
+    void CheckCapsule(const EntityData1* entity, CapsuleType capsuleType);
     void CheckEnemy(task* tp);
     int GetEnemyFromPosition(const NJS_VECTOR& position);
     void DrawIndicator(const task* tp, bool tallElement, bool checked, IndicatorType indicatorType, int locationId);
-    bool GetCapsuleTypeOption(Float type);
+    CapsuleType GetCapsuleTypeOption(Float type);
     int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position);
     void CheckDestroyedEnemy(task* tp);
 

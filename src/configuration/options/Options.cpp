@@ -91,69 +91,55 @@ void Options::AutoStartMissions(const int newAutoStartMissions)
     this->autoStartMissions = newAutoStartMissions > 0;
 }
 
+
 void Options::EnemySanity(const int newEnemySanity)
 {
     this->enemySanity = newEnemySanity;
 }
 
-
-void Options::SetCharacterEnemySanity(const Characters character, const bool characterEnemySanity)
+void Options::EnemySanityList(const std::map<int, int>& newEnemySanityList)
 {
-    switch (character)
-    {
-    case Characters_Sonic:
-        this->sonicEnemySanity = characterEnemySanity;
-        break;
-    case Characters_Tails:
-        this->tailsEnemySanity = characterEnemySanity;
-        break;
-    case Characters_Knuckles:
-        this->knucklesEnemySanity = characterEnemySanity;
-        break;
-    case Characters_Amy:
-        this->amyEnemySanity = characterEnemySanity;
-        break;
-    case Characters_Big:
-        this->bigEnemySanity = characterEnemySanity;
-        break;
-    case Characters_Gamma:
-        this->gammaEnemySanity = characterEnemySanity;
-        break;
-    case Characters_Eggman:
-    case Characters_Tikal:
-    case Characters_MetalSonic:
-        break;
-    }
+    if (newEnemySanityList.empty())
+        return;
+    std::vector<EnemySanityCategory> enemySanityCategories;
+
+    for (const auto& enemySanityCategory : newEnemySanityList)
+        enemySanityCategories.push_back(static_cast<EnemySanityCategory>(enemySanityCategory.first));
+
+    this->enemySanityList = enemySanityCategories;
 }
+
+void Options::MissableEnemies(const int newMissableEnemies)
+{
+    this->missableEnemies = newMissableEnemies;
+}
+
 
 void Options::CapsuleSanity(const int newCapsuleSanity)
 {
     this->capsuleSanity = newCapsuleSanity;
 }
 
+void Options::CapsuleSanityList(const std::map<int, int>& newCapsuleSanityList)
+{
+    if (newCapsuleSanityList.empty())
+        return;
+    std::vector<CapsuleSanityCategory> capsuleSanityCategories;
+
+    for (const auto& enemySanityCategory : newCapsuleSanityList)
+        capsuleSanityCategories.push_back(static_cast<CapsuleSanityCategory>(enemySanityCategory.first));
+
+    this->capsuleSanityList = capsuleSanityCategories;
+}
+
+void Options::MissableCapsules(const int newMissableCapsules)
+{
+    this->missableCapsules = newMissableCapsules;
+}
+
 void Options::PinballCapsules(const int newIncludePinballCapsules)
 {
     this->includePinballCapsules = newIncludePinballCapsules;
-}
-
-void Options::LifeCapsuleSanity(const int newLifeCapsuleSanity)
-{
-    this->lifeCapsuleSanity = newLifeCapsuleSanity;
-}
-
-void Options::ShieldCapsuleSanity(const int newShieldCapsuleSanity)
-{
-    this->shieldCapsuleSanity = newShieldCapsuleSanity;
-}
-
-void Options::PowerUpCapsuleSanity(const int newPowerUpCapsuleSanity)
-{
-    this->powerUpCapsuleSanity = newPowerUpCapsuleSanity;
-}
-
-void Options::RingCapsuleSanity(const int newRingCapsuleSanity)
-{
-    this->ringCapsuleSanity = newRingCapsuleSanity;
 }
 
 void Options::FishSanity(const int newFishSanity)
@@ -438,17 +424,17 @@ bool Options::GetCharacterEnemySanity(const Characters character) const
     switch (character)
     {
     case Characters_Sonic:
-        return this->sonicEnemySanity;
+        return std::find(enemySanityList.begin(), enemySanityList.end(), SonicEnemySanity) != enemySanityList.end();
     case Characters_Tails:
-        return this->tailsEnemySanity;
+        return std::find(enemySanityList.begin(), enemySanityList.end(), TailsEnemySanity) != enemySanityList.end();
     case Characters_Knuckles:
-        return this->knucklesEnemySanity;
+        return std::find(enemySanityList.begin(), enemySanityList.end(), KnucklesEnemySanity) != enemySanityList.end();
     case Characters_Amy:
-        return this->amyEnemySanity;
+        return std::find(enemySanityList.begin(), enemySanityList.end(), AmyEnemySanity) != enemySanityList.end();
     case Characters_Big:
-        return this->bigEnemySanity;
+        return std::find(enemySanityList.begin(), enemySanityList.end(), BigEnemySanity) != enemySanityList.end();
     case Characters_Gamma:
-        return this->gammaEnemySanity;
+        return std::find(enemySanityList.begin(), enemySanityList.end(), GammaEnemySanity) != enemySanityList.end();
     case Characters_Eggman:
     case Characters_Tikal:
     case Characters_MetalSonic:
@@ -457,76 +443,109 @@ bool Options::GetCharacterEnemySanity(const Characters character) const
     return false;
 }
 
-void Options::SetCharacterCapsuleSanity(const Characters character, const bool characterCapsuleSanity)
-{
-    switch (character)
-    {
-    case Characters_Sonic:
-        this->sonicCapsuleSanity = characterCapsuleSanity;
-        break;
-    case Characters_Tails:
-        this->tailsCapsuleSanity = characterCapsuleSanity;
-        break;
-    case Characters_Knuckles:
-        this->knucklesCapsuleSanity = characterCapsuleSanity;
-        break;
-    case Characters_Amy:
-        this->amyCapsuleSanity = characterCapsuleSanity;
-        break;
-    case Characters_Big:
-        this->bigCapsuleSanity = characterCapsuleSanity;
-        break;
-    case Characters_Gamma:
-        this->gammaCapsuleSanity = characterCapsuleSanity;
-        break;
-    case Characters_Eggman:
-    case Characters_Tikal:
-    case Characters_MetalSonic:
-        break;
-    }
-}
-
-bool Options::GetCharacterCapsuleSanity(const Characters character) const
-{
-    switch (character)
-    {
-    case Characters_Sonic:
-        return this->sonicCapsuleSanity;
-    case Characters_Tails:
-        return this->tailsCapsuleSanity;
-    case Characters_Knuckles:
-        return this->knucklesCapsuleSanity;
-    case Characters_Amy:
-        return this->amyCapsuleSanity;
-    case Characters_Big:
-        return this->bigCapsuleSanity;
-    case Characters_Gamma:
-        return this->gammaCapsuleSanity;
-    case Characters_Eggman:
-    case Characters_Tikal:
-    case Characters_MetalSonic:
-        break;
-    }
-    return false;
-}
-
-bool Options::GetSpecificCapsuleSanity(const CapsuleType capsuleType) const
+bool Options::GetCapsuleSanityByType(const Characters character, const CapsuleType capsuleType) const
 {
     switch (capsuleType)
     {
     case ExtraLifeCapsule:
-        return this->lifeCapsuleSanity;
+        switch (character)
+        {
+        case Characters_Sonic:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), SonicLife) != capsuleSanityList.end();
+        case Characters_Tails:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), TailsLife) != capsuleSanityList.end();
+        case Characters_Knuckles:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), KnucklesLife) != capsuleSanityList.
+                end();
+        case Characters_Amy:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), AmyLife) != capsuleSanityList.end();
+        case Characters_Big:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), BigLife) != capsuleSanityList.end();
+        case Characters_Gamma:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), GammaLife) != capsuleSanityList.end();
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+        return false;
     case ShieldCapsule:
     case MagneticShieldCapsule:
-        return this->shieldCapsuleSanity;
+        switch (character)
+        {
+        case Characters_Sonic:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), SonicShield) != capsuleSanityList.
+                end();
+        case Characters_Tails:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), TailsShield) != capsuleSanityList.
+                end();
+        case Characters_Knuckles:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), KnucklesShield) != capsuleSanityList.
+                end();
+        case Characters_Amy:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), AmyShield) != capsuleSanityList.end();
+        case Characters_Big:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), BigShield) != capsuleSanityList.end();
+        case Characters_Gamma:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), GammaShield) != capsuleSanityList.
+                end();
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+        return false;
     case SpeedUpCapsule:
     case InvincibilityCapsule:
     case BombCapsule:
-        return this->powerUpCapsuleSanity;
+        switch (character)
+        {
+        case Characters_Sonic:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), SonicPowerUp) != capsuleSanityList.
+                end();
+        case Characters_Tails:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), TailsPowerUp) != capsuleSanityList.
+                end();
+        case Characters_Knuckles:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), KnucklesPowerUp) != capsuleSanityList.
+                end();
+        case Characters_Amy:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), AmyPowerUp) != capsuleSanityList.end();
+        case Characters_Big:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), BigPowerUp) != capsuleSanityList.end();
+        case Characters_Gamma:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), GammaPowerUp) != capsuleSanityList.
+                end();
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+        return false;
     case FiveRingsCapsule:
     case TenRingsCapsule:
     case RandomRingsCapsule:
-        return this->ringCapsuleSanity;
+        switch (character)
+        {
+        case Characters_Sonic:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), SonicRing) != capsuleSanityList.end();
+        case Characters_Tails:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), TailsRing) != capsuleSanityList.end();
+        case Characters_Knuckles:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), KnucklesRing) != capsuleSanityList.
+                end();
+        case Characters_Amy:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), AmyRing) != capsuleSanityList.end();
+        case Characters_Big:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), BigRing) != capsuleSanityList.end();
+        case Characters_Gamma:
+            return std::find(capsuleSanityList.begin(), capsuleSanityList.end(), GammaRing) != capsuleSanityList.end();
+        case Characters_Eggman:
+        case Characters_Tikal:
+        case Characters_MetalSonic:
+            break;
+        }
+        return false;
     }
     return false;
 }

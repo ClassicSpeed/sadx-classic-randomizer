@@ -713,8 +713,13 @@ void DisplayManager::DisplayItemsUnlocked()
             }
         }
 
-
-        if (_options.capsuleSanity && _options.GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+        //TODO: improve
+        if (_options.capsuleSanity && (
+            _options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), ExtraLifeCapsule) ||
+            _options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), ShieldCapsule) ||
+            _options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), SpeedUpCapsule) ||
+            _options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), FiveRingsCapsule)
+        ))
         {
             buffer.clear();
             buffer.append("Capsules: ");
