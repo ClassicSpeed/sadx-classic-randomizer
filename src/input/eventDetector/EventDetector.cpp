@@ -984,6 +984,19 @@ void EventDetector::DrawIndicator(const task* tp, const bool tallElement, const 
     if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
         return;
 
+    if (!_instance->_options.missableCapsules)
+        if ((locationId >= 12501 && locationId <= 12546) ||
+            (locationId >= 21501 && locationId <= 21541) ||
+            (locationId >= 14501 && locationId <= 14518) ||
+            (locationId >= 15524 && locationId <= 15531) ||
+            (locationId >= 18512 && locationId <= 18513))
+            return;
+
+    if (!_instance->_options.missableEnemies)
+        if ((locationId >= 12001 && locationId <= 12009)
+            || (locationId >= 21001 && locationId <= 21002)
+            || (locationId >= 14001 && locationId <= 14007))
+            return;
 
     if (!checked)
     {

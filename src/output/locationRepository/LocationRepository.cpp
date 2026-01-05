@@ -2420,6 +2420,15 @@ void LocationRepository::UpdateEnemySanity()
     {
         if (location.type == LocationEnemy)
         {
+            if (!_instance->_options.GetCharacterEnemySanity(static_cast<Characters>(location.character)))
+                continue;
+
+            if (!_instance->_options.missableEnemies)
+                if ((id >= 12001 && id <= 12009)
+                    || (id >= 21001 && id <= 21002)
+                    || (id >= 14001 && id <= 14007))
+                    continue;
+
             _gameStatus.enemySanity[GET_LEVEL(location.level)][location.character].total++;
             if (location.checked)
                 _gameStatus.enemySanity[GET_LEVEL(location.level)][location.character].current++;
@@ -2444,6 +2453,18 @@ void LocationRepository::UpdateCapsuleSanity()
     {
         if (location.type == LocationCapsule)
         {
+            if (!_instance->_options.GetCapsuleSanityByType(static_cast<Characters>(location.character),
+                                                            static_cast<CapsuleType>(location.capsuleType)))
+                continue;
+
+            if (!_instance->_options.missableCapsules)
+                if ((id >= 12501 && id <= 12546) ||
+                    (id >= 21501 && id <= 21541) ||
+                    (id >= 14501 && id <= 14518) ||
+                    (id >= 15524 && id <= 15531) ||
+                    (id >= 18512 && id <= 18513))
+                    continue;
+
             _gameStatus.capsuleSanity[GET_LEVEL(location.level)][location.character].total++;
             if (location.checked)
                 _gameStatus.capsuleSanity[GET_LEVEL(location.level)][location.character].current++;

@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 - Emblem gating will add emblems requirements to any door in the Adventure Field.
     - Emblems will be enabled automatically if emblem gating is selected.
 - Map of the Adventure Field, accesible anywhere while pressing the whistle button.
-- Enemy sanity and Capsule sanity are now just a list of categories (i.e. SonicPowerUp, TailsRing, etc).
+- Enemy sanity and Capsule sanity are now just a list of categories (i.e. Sonic-PowerUp, Tails-Ring, etc).
     - You can now enable/disable categories separately for each character.
 - Added a missable capsules/enemies toggle, to dissable checks in missable locations.
     - This includes Casinopolis' sewers, TP's karting section, the Goin' down act of SH and the boulder section in LW.

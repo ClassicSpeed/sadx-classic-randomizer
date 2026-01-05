@@ -13,7 +13,6 @@ public:
     bool IsDoorOpen(const EntranceId entranceId) override
     {
         auto entranceValue = _options.entranceEmblemValueMap.find(entranceId);
-        //TODO: Check EC transformation
         const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
 
         if (entranceValue == _options.entranceEmblemValueMap.end())

@@ -713,7 +713,6 @@ void DisplayManager::DisplayItemsUnlocked()
             }
         }
 
-        //TODO: improve
         if (_options.capsuleSanity && (
             _options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), ExtraLifeCapsule) ||
             _options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), ShieldCapsule) ||
