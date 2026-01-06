@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Several logic changes to accomodate emblem gating. 
+- Several logic changes to accomodate emblem gating.
 - Multiple areas have been separated into different locations (Like City Hall, TP Tunnel, Sewers, etc).
 - Some clips that require multiple doors to be open are no longer in logic (but they are noted in the logic sheet).
 - New starting locations have been added (Pool, multiple Egg Carrier rooms, etc).
@@ -39,6 +39,7 @@ All notable changes to this project will be documented in this file.
 - The Monkey Killer Switch is no longer required to enter Red Mountain as Knuckles.
 - Logic for Red Mountain and Ice Cap has been adjusted accordingly.
 - Removed guaranteed starting checks option.
+- Chao egg checks are not avaialable in emblem gating mode for now.
 
 ### YAML changes:
 
