@@ -718,7 +718,7 @@ void SetObjectManager::OnBigHudDrawWeightAndLife()
 // Handles the Twinkle Circuit door
 int SetObjectManager::OnTwinkleCircuitDoor(const char character)
 {
-    return _instance->_options.twinkleCircuitCheck;
+    return _instance->_options.twinkleCircuitChecks;
 }
 
 void SetObjectManager::OnFinalEggDoorCheckA(const int a1)

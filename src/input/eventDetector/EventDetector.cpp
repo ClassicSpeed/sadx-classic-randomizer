@@ -1474,10 +1474,10 @@ void EventDetector::HandleOnBoaBoaPartDestroyed(task* tp)
 
 void EventDetector::OnTwinkleCircuitCompleted(const int character)
 {
-    if (!_instance->_options.twinkleCircuitCheck)
+    if (!_instance->_options.twinkleCircuitChecks)
         return;
 
-    if (_instance->_options.multipleTwinkleCircuitChecks)
+    if (_instance->_options.twinkleCircuitChecks == 2)
     {
         switch (character)
         {

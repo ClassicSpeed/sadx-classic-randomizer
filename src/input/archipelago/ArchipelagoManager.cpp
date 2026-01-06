@@ -306,10 +306,8 @@ void ArchipelagoManager::Connect()
 
     AP_REGISTER_INT_CALLBACK("TrapLink", _options.SetTrapLink);
 
-    AP_REGISTER_INT_CALLBACK("TwinkleCircuitCheck", _options.TwinkleCircuitCheck);
-    AP_REGISTER_INT_CALLBACK("MultipleTwinkleCircuitChecks", _options.MultipleTwinkleCircuitChecks);
+    AP_REGISTER_INT_CALLBACK("TwinkleCircuitChecks", _options.TwinkleCircuitCheck);
     AP_REGISTER_INT_CALLBACK("SkyChaseChecks", _options.SkyChaseChecks);
-    AP_REGISTER_INT_CALLBACK("SkyChaseChecksHard", _options.SkyChaseChecksHard);
 
     AP_REGISTER_INT_CALLBACK("BossChecks", _options.BossChecks);
     AP_REGISTER_INT_CALLBACK("UnifyChaos4", _options.UnifyChaos4);

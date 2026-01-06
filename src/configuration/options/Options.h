@@ -511,11 +511,8 @@ public:
     LifeCapsulesChangeSongs lifeCapsulesChangeSongs = LifeCapsulesChangeSongsNone;
     int musicShuffleSeed = -1;
 
-    bool twinkleCircuitCheck = true;
-    bool multipleTwinkleCircuitChecks = true;
-
-    bool skyChaseChecks = false;
-    bool skyChaseChecksHard = false;
+    int twinkleCircuitChecks = 1;
+    int skyChaseChecks = 1;
     std::vector<int> missionBlacklist = {};
     bool expertMode = false;
 

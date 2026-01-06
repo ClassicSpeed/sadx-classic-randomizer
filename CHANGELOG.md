@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - Chaos 4 is no longer unified by default.
 - Fixed City Hall's Emblemb sticking out of the ground for Tails (You can still get the emblem as Cream).
 - Randomized upgrades option are now just one toggle for all characters.
+- Simplified Ring Link, Sky Chase, Sand Hill and Twinkle Circuit options to just one option each.
 
 ### Fixed
 
@@ -47,6 +48,10 @@ All notable changes to this project will be documented in this file.
     - random_starting_location_per_character no longer exists.
 - All randomized_X_upgrades changed to just randomized_upgrades.
 - Added gating_mode for emblems or key_items.
+- Ring link, Sky Chase, Sand Hill and Twinkle Circuit options have been simplified to just one Choice each.
+    - In all cases, true and false will workd as enabled/disable.
+- Option twinkle_circuit_check renamed to twinkle_circuit_checks
+- Option sand_hill_check renamed to sand_hill_checks
 
 ## [v1.1.3] - 2025-09-16
 

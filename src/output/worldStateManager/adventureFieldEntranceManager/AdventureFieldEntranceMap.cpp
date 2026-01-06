@@ -799,11 +799,9 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
     }
     else if (GET_LEVEL(levelAndActId) == LevelIDs_TwinkleCircuit)
     {
-        /*  if (!_instance->_options.multipleTwinkleCircuitChecks)
-              levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 0);
-  
-          else */
-        if (CurrentCharacter == Characters_Sonic)
+        if (_instance->_options.twinkleCircuitChecks == 1)
+            levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 0);
+        else if (CurrentCharacter == Characters_Sonic)
             levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 2);
         else if (CurrentCharacter == Characters_Tails)
             levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 1);

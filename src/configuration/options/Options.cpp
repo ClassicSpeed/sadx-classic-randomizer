@@ -259,22 +259,12 @@ void Options::SetRingLoss(const int newRingLoss)
 
 void Options::TwinkleCircuitCheck(const int newTwinkleCircuitCheck)
 {
-    this->twinkleCircuitCheck = newTwinkleCircuitCheck;
-}
-
-void Options::MultipleTwinkleCircuitChecks(const int newMultipleTwinkleCircuitChecks)
-{
-    this->multipleTwinkleCircuitChecks = newMultipleTwinkleCircuitChecks;
+    this->twinkleCircuitChecks = newTwinkleCircuitCheck;
 }
 
 void Options::SkyChaseChecks(const int newSkyChaseChecks)
 {
     this->skyChaseChecks = newSkyChaseChecks;
-}
-
-void Options::SkyChaseChecksHard(const int newSkyChaseChecksHard)
-{
-    this->skyChaseChecksHard = newSkyChaseChecksHard;
 }
 
 void Options::BossChecks(const int newBossChecks)
