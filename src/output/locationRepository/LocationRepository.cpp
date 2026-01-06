@@ -1280,7 +1280,7 @@ LocationRepository::LocationRepository(Options& options, GameStatus& gameStatus)
         {5686.74f, -10755.00f, -792.74f, LevelAndActIDs_WindyValley3, Characters_Tails, RandomRingsCapsule, 20510},
 
         {635.30f, -61.00f, 247.38f, LevelAndActIDs_WindyValley1, Characters_Gamma, ExtraLifeCapsule, 52501},
-        {803.36f, -310.50f, -72.85f, LevelAndActIDs_WindyValley1, Characters_Gamma, SpeedUpCapsule, 52502}, //DC
+        {803.36f, -310.50f, -72.85f, LevelAndActIDs_WindyValley1, Characters_Gamma, SpeedUpCapsule, 52502}, //DC 
         {803.36f, -311.00f, -72.85f, LevelAndActIDs_WindyValley1, Characters_Gamma, SpeedUpCapsule, 52502}, //DX
         {979.54f, -177.81f, -160.69f, LevelAndActIDs_WindyValley1, Characters_Gamma, TenRingsCapsule, 52503}, //DC
         {979.54f, -178.31f, -160.69f, LevelAndActIDs_WindyValley1, Characters_Gamma, TenRingsCapsule, 52503}, //DX
@@ -1960,7 +1960,7 @@ LocationRepository::LocationRepository(Options& options, GameStatus& gameStatus)
         {-14.14f, 50.78f, -437.43f, LevelAndActIDs_HotShelter2, Characters_Amy, InvincibilityCapsule, 41512},
         {-29.18f, 50.78f, -437.51f, LevelAndActIDs_HotShelter2, Characters_Amy, ExtraLifeCapsule, 41513},
         {-20.66f, 250.00f, -140.47f, LevelAndActIDs_HotShelter2, Characters_Amy, ShieldCapsule, 41514},
-        {-7.56f, -210.02f, -310.00f, LevelAndActIDs_HotShelter2, Characters_Amy, SpeedUpCapsule, 41515},
+        {-7.56f, -210.02f, -310.00f, LevelAndActIDs_HotShelter2, Characters_Amy, MagneticShieldCapsule, 41515},
         {-20.54f, -210.02f, -309.41f, LevelAndActIDs_HotShelter2, Characters_Amy, TenRingsCapsule, 41516},
         {-33.25f, -210.02f, -308.73f, LevelAndActIDs_HotShelter2, Characters_Amy, SpeedUpCapsule, 41517},
         {-320.14f, 250.00f, -248.29f, LevelAndActIDs_HotShelter2, Characters_Amy, ExtraLifeCapsule, 41518}, //DC
@@ -1988,7 +1988,7 @@ LocationRepository::LocationRepository(Options& options, GameStatus& gameStatus)
 
         {160.82f, 261.58f, -218.85f, LevelAndActIDs_HotShelter3, Characters_Gamma, RandomRingsCapsule, 54501},
         {-28.29f, 50.78f, -433.41f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54502},
-        {-13.45f, 50.78f, -433.88f, LevelAndActIDs_HotShelter3, Characters_Gamma, SpeedUpCapsule, 54503},
+        {-13.45f, 50.78f, -433.88f, LevelAndActIDs_HotShelter3, Characters_Gamma, MagneticShieldCapsule, 54503},
         {-34.67f, -210.00f, -307.87f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54504},
         {-19.68f, -210.00f, -308.24f, LevelAndActIDs_HotShelter3, Characters_Gamma, ShieldCapsule, 54505},
         {-3.68f, -210.00f, -308.62f, LevelAndActIDs_HotShelter3, Characters_Gamma, TenRingsCapsule, 54506},
@@ -2001,14 +2001,14 @@ LocationRepository::LocationRepository(Options& options, GameStatus& gameStatus)
         {-1237.13f, 170.00f, -1783.91f, LevelAndActIDs_HotShelter3, Characters_Gamma, FiveRingsCapsule, 54513},
         {-1197.13f, 170.00f, -1835.91f, LevelAndActIDs_HotShelter3, Characters_Gamma, RandomRingsCapsule, 54514},
         {-1237.13f, 170.00f, -1835.91f, LevelAndActIDs_HotShelter3, Characters_Gamma, RandomRingsCapsule, 54515},
-        {-750.62f, 343.99f, -2116.79f, LevelAndActIDs_HotShelter3, Characters_Gamma, SpeedUpCapsule, 54516},
+        {-750.62f, 343.99f, -2116.79f, LevelAndActIDs_HotShelter3, Characters_Gamma, MagneticShieldCapsule, 54516},
         {-808.61f, 343.99f, -2115.52f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54517},
         {-664.08f, 474.02f, -3583.48f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54518}, //DC
         {-664.08f, 474.15f, -3583.48f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54518}, //DX
-        {-706.70f, 471.16f, -3612.63f, LevelAndActIDs_HotShelter3, Characters_Gamma, SpeedUpCapsule, 54519}, //DC
-        {-706.70f, 471.87f, -3612.63f, LevelAndActIDs_HotShelter3, Characters_Gamma, SpeedUpCapsule, 54519}, //DX
+        {-706.70f, 471.16f, -3612.63f, LevelAndActIDs_HotShelter3, Characters_Gamma, MagneticShieldCapsule, 54519}, //DC
+        {-706.70f, 471.87f, -3612.63f, LevelAndActIDs_HotShelter3, Characters_Gamma, MagneticShieldCapsule, 54519}, //DX
         {-666.77f, 473.84f, -3643.03f, LevelAndActIDs_HotShelter3, Characters_Gamma, InvincibilityCapsule, 54520}, //DC
-        {-666.77f, 473.63f, -3643.03f, LevelAndActIDs_HotShelter3, Characters_Gamma, InvincibilityCapsule, 54520}, //DX
+        {-666.77f, 473.63f, -3643.03f, LevelAndActIDs_HotShelter3, Characters_Gamma, InvincibilityCapsule, 54520}, //DX 
         {-848.50f, 825.00f, -3620.10f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54521}, //DC
         {-848.50f, 820.00f, -3620.10f, LevelAndActIDs_HotShelter3, Characters_Gamma, ExtraLifeCapsule, 54521}, //DX
         {-1028.33f, 180.00f, -3595.32f, LevelAndActIDs_HotShelter3, Characters_Gamma, FiveRingsCapsule, 54522},

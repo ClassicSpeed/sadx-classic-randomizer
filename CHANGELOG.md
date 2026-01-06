@@ -27,6 +27,10 @@ All notable changes to this project will be documented in this file.
 - Fixed City Hall's Emblemb sticking out of the ground for Tails (You can still get the emblem as Cream).
 - Randomized upgrades option are now just one toggle for all characters.
 
+### Fixed
+
+- Fixed Hot Shelter capsules wrongly being marked as speed shooes for Amy and Gamma.
+
 ### Removed
 
 - Ice Stone and Wind Stone no longer require the player to move them to the door.
