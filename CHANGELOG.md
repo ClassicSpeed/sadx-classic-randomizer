@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Added manifest file for compatibility with the new Archipelago Version.
-- Added option for emblem gating or key item gating.
+- Added option for emblem gating or key item gating. Emblem gating is the new default.
 - Emblem gating will add emblems requirements to any door in the Adventure Field.
     - Emblems will be enabled automatically if emblem gating is selected.
 - Map of the Adventure Field, accesible anywhere while pressing the whistle button.
@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Several logic changes to accomodate emblem gating.
+- Progression balancing is no loger overriden by SADX.
 - Multiple areas have been separated into different locations (Like City Hall, TP Tunnel, Sewers, etc).
 - Some clips that require multiple doors to be open are no longer in logic (but they are noted in the logic sheet).
 - New starting locations have been added (Pool, multiple Egg Carrier rooms, etc).
