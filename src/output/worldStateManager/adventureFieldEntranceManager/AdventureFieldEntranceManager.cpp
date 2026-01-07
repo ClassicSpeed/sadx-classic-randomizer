@@ -92,8 +92,6 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     _isEcBoatEnabledHook.Hook(IsEcBoatEnabled);
     _isEcRaftEnabledHook.Hook(IsEcRaftEnabled);
     _hiddenGateMainHook.Hook(OnHiddenGateMain);
-    _chaoWarpMainHook.Hook(OnChaoWarpMain);
-    _chaoGardenChanceSceneHook.Hook(OnChaoGardenChanceScene);
 
 
     //Allows players to return to the adventure field when quitting boss fights
@@ -1735,38 +1733,4 @@ void AdventureFieldEntranceManager::OnHiddenGateMain(task* tp)
     if (IsNearPosition(tp->twp->pos, -0.02f, 20.34f, -191.17f))
         return FreeTask(tp);
     return _hiddenGateMainHook.Original(tp);
-}
-
-void AdventureFieldEntranceManager::OnChaoWarpMain(task* tp)
-{
-    if (!_instance->_options.emblemGating)
-        return _chaoWarpMainHook.Original(tp);
-
-    if (CurrentChaoStage == SADXChaoStage_EggCarrier)
-    {
-        if (IsNearPosition(tp->twp->pos, -288.75f, 5, -99.12f))
-        {
-            if (!_instance->IsDoorOpen(EcChaoGardenToWarpHall))
-                tp->twp->wtimer = 0;
-        }
-    }
-    _chaoWarpMainHook.Original(tp);
-}
-
-task* AdventureFieldEntranceManager::OnChaoGardenChanceScene(int a1, int a2)
-{
-    if (!_instance->_options.emblemGating)
-        return _chaoGardenChanceSceneHook.Original(a1, a2);
-    if (CurrentChaoStage == SADXChaoStage_StationSquare)
-    {
-        if (!_instance->IsDoorOpen(SsChaoGardenToHotel))
-            return nullptr;
-    }
-    //TODO: This won't work for DC, need to change in the future
-    else if (CurrentChaoStage == SADXChaoStage_MysticRuins)
-    {
-        if (!_instance->IsDoorOpen(MrChaoGardenToMrMain))
-            return nullptr;
-    }
-    return _chaoGardenChanceSceneHook.Original(a1, a2);
 }

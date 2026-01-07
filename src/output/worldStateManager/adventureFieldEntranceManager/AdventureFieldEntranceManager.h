@@ -257,10 +257,4 @@ private:
 
     inline static FunctionHook<void, task*> _hiddenGateMainHook{0x53C3E0};
     static void OnHiddenGateMain(task* tp);
-
-    inline static FunctionHook<void, task*> _chaoWarpMainHook{0x7293E0};
-    static void OnChaoWarpMain(task* tp);
-
-    inline static FunctionHook<task*, int, int> _chaoGardenChanceSceneHook{0x715730};
-    static task* OnChaoGardenChanceScene(int a1, int a2);
 };
