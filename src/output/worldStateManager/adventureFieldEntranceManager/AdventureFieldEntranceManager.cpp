@@ -829,7 +829,7 @@ void AdventureFieldEntranceManager::OnElevatorMain(task* tp)
 
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
         && IsNearPosition(tp->twp->pos, -399.99f, 0, 1665)
-        && !_instance->IsDoorOpen(HotelToSsChaoGarden))
+        && !_instance->IsDoorOpen(HotelToChaos2))
         tp->twp->mode = 8;
 
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_SSGarden
