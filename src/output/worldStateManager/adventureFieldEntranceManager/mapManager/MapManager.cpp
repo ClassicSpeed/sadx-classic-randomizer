@@ -297,7 +297,8 @@ void MapManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bo
             drawSprite2D(blocked_anim, point.x, point.y);
         }
         else if (!_gameStatus.map.IsEntranceVisited(adventureFieldEntrance.entranceId) && !isStatic)
-            DrawNewInMap(adventureFieldEntrance);
+            if (entranceValue->second > 0)
+                DrawNewInMap(adventureFieldEntrance);
 
         return;
     }
