@@ -9,9 +9,10 @@ UsercallFunc(int, eggCarrierInsideEggDoorHook, (const taskwk* twp), (twp), 0x52B
 UsercallFunc(int, eggCarrierOutsideEggDoorHook, (const taskwk* twp), (twp), 0x524070, rEAX, rESI);
 UsercallFunc(int, skyDeckDoorHook, (taskwk* twp), (twp), 0x51DEB0, rEAX, rESI);
 
-AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus,
+AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, Settings& settings,
+                                                             GameStatus& gameStatus,
                                                              ArchipelagoMessenger& archipelagoMessenger) :
-    _options(options), _gameStatus(gameStatus), _archipelagoMessenger(archipelagoMessenger),
+    _options(options), _settings(settings), _gameStatus(gameStatus), _archipelagoMessenger(archipelagoMessenger),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init(options)),
     _doorIndicatorManager(DoorIndicatorManager::Init()),
     _mapManager(MapManager::Init(options, gameStatus, _adventureFieldEntranceMap))
@@ -103,10 +104,30 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, G
     // Change the jump from jz (0x74) to jnz (0x75)
     WriteData<1>((void*)0x638C00, 0x75);
 
-    // this->_doorLogicStrategy = std::make_unique<DefaultDoorLogicStrategy>(options, gameStatus);
-    this->_doorLogicStrategy = std::make_unique<EmblemGatingDoorLogicStrategy>(
-        options, gameStatus, _adventureFieldEntranceMap);
-
+    if (_settings.adventureFieldDoorOverride == AdventureFieldDoorOverrideDisabled)
+    {
+        if (_options.gatingMode == EmblemGating)
+        {
+            this->_doorLogicStrategy = std::make_unique<EmblemGatingDoorLogicStrategy>(
+                options, gameStatus, _adventureFieldEntranceMap);
+        }
+        else if (_options.gatingMode == KeyItemGating)
+        {
+            this->_doorLogicStrategy = std::make_unique<KeyItemDoorLogicStrategy>(options, gameStatus);
+        }
+        else
+        {
+            this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>();
+        }
+    }
+    else if (_settings.adventureFieldDoorOverride == AdventureFieldDoorOverrideAllOpened)
+    {
+        this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>();
+    }
+    else
+    {
+        this->_doorLogicStrategy = std::make_unique<EverythingClosedDoorLogicStrategy>();
+    }
     _mapManager.SetDoorLogicStrategy(this->_doorLogicStrategy.get());
 }
 

@@ -7,26 +7,29 @@
 #include "DoorLogic/IDoorLogicStrategy.h"
 #include "DoorLogic/KeyItemDoorLogicStrategy.h"
 #include "DoorLogic/EmblemGatingDoorLogicStrategy.h"
+#include "DoorLogic/EverythingOpenedDoorLogicStrategy.h"
+#include "DoorLogic/EverythingClosedDoorLogicStrategy.h"
 #include "mapManager/MapManager.h"
 
 class AdventureFieldEntranceManager
 {
 public:
-    static AdventureFieldEntranceManager& Init(Options& options, GameStatus& gameStatus,
+    static AdventureFieldEntranceManager& Init(Options& options, Settings& settings, GameStatus& gameStatus,
                                                ArchipelagoMessenger& archipelagoMessenger)
     {
         if (_instance == nullptr)
-            _instance = new AdventureFieldEntranceManager(options, gameStatus, archipelagoMessenger);
+            _instance = new AdventureFieldEntranceManager(options, settings, gameStatus, archipelagoMessenger);
         return *_instance;
     }
 
     void OnFrame();
 
 private:
-    explicit AdventureFieldEntranceManager(Options& options, GameStatus& gameStatus,
+    explicit AdventureFieldEntranceManager(Options& options, Settings& settings, GameStatus& gameStatus,
                                            ArchipelagoMessenger& archipelagoMessenger);
     inline static AdventureFieldEntranceManager* _instance = nullptr;
     Options& _options;
+    Settings& _settings;
     GameStatus& _gameStatus;
     ArchipelagoMessenger& _archipelagoMessenger;
     AdventureFieldEntranceMap& _adventureFieldEntranceMap;

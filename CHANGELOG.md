@@ -15,6 +15,8 @@ All notable changes to this project will be documented in this file.
     - You can now enable/disable categories separately for each character.
 - Added a missable capsules/enemies toggle, to dissable checks in missable locations.
     - This includes Casinopolis' sewers, TP's karting section, the Goin' down act of SH and the boulder section in LW.
+- Added debug setting in the mod settings to close or open all doors in the Adventure Field.
+    - Useful for testing or getting video footage of clips.
 
 ### Changed
 

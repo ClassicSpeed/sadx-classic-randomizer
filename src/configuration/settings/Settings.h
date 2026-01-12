@@ -101,12 +101,12 @@ enum HomingAttackIndicator
     HomingAttackIndicatorEnabledNoSound = 2,
 };
 
-enum AdventureFieldRandomization
+
+enum AdventureFieldDoorOverride
 {
-    AdventureFieldRandomizationDisabled = 0,
-    AdventureFieldRandomizationLevels = 1,
-    AdventureFieldRandomizationLevelsExtra = 2,
-    AdventureFieldRandomizationFull = 2,
+    AdventureFieldDoorOverrideDisabled = 0,
+    AdventureFieldDoorOverrideAllOpened = 1,
+    AdventureFieldDoorOverrideAllClosed = 2,
 };
 
 static std::string LeftTrim(std::string s)
@@ -257,6 +257,7 @@ public:
     };
 
 
+    AdventureFieldDoorOverride adventureFieldDoorOverride = AdventureFieldDoorOverrideDisabled;
     bool _superSonicModRunning = false;
 
 private:

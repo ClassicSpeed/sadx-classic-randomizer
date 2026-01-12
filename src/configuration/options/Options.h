@@ -323,6 +323,14 @@ enum EntranceId
     InvalidEntranceId
 };
 
+enum AdventureFieldRandomization
+{
+    AdventureFieldRandomizationDisabled = 0,
+    AdventureFieldRandomizationLevels = 1,
+    AdventureFieldRandomizationLevelsExtra = 2,
+    AdventureFieldRandomizationFull = 2,
+};
+
 
 static int Clamp(const int value, const int min, const int max)
 {

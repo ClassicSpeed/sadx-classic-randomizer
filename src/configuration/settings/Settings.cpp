@@ -189,6 +189,9 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
     this->progressionItemIndicatorColor[1].color = progressionIndicatorColor;
     this->progressionItemIndicatorColor[2].color = progressionIndicatorColor;
 
+    this->adventureFieldDoorOverride = static_cast<AdventureFieldDoorOverride>(settingsIni->getInt(
+        "Debug", "AdventureFieldDoorOverride", 0));
+
 
     if (helperFunctions.Mods->find_by_name("Super Sonic"))
         _superSonicModRunning = false;
