@@ -22,6 +22,7 @@ public:
     void OnFrame() override;
     void SetLevelEntrances();
     void UpdateVisitedLevels(int visitedLevel);
+    void UpdateGatingMethod();
 
 private:
     explicit WorldStateManager(Options& options, Settings& settings, GameStatus& gameStatus,

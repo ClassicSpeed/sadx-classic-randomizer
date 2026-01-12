@@ -1092,14 +1092,14 @@ void DisplayManager::DisplayItemsUnlocked()
         displayOffset++;
         buffer.clear();
         buffer.append("      ");
-        buffer.append(_gameStatus.unlock.keyHotelKey ? "Hotel " : "      ");
+        buffer.append(_gameStatus.unlock.keyHotelKey ? "  Hotel " : "        ");
         buffer.append(_gameStatus.unlock.keyPoolKey ? "Pool " : "     ");
         buffer.append(_gameStatus.unlock.keyCasinoKey ? "Casino" : "      ");
         SetDebugFontColor(_keyItemColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
         buffer.clear();
         buffer.append("      ");
-        buffer.append(!_gameStatus.unlock.keyHotelKey ? "Hotel|" : "     |");
+        buffer.append(!_gameStatus.unlock.keyHotelKey ? "  Hotel|" : "       |");
         buffer.append(!_gameStatus.unlock.keyPoolKey ? "Pool|" : "    |");
         buffer.append(!_gameStatus.unlock.keyCasinoKey ? "Casino" : "      ");
         SetDebugFontColor(disabledKeyItemColor);

@@ -190,12 +190,14 @@ void Randomizer::OnConnected()
     _saveFileManager.MarkBlacklistedMissionsAsCompleted(_options.missionBlacklist);
     _musicManager.RandomizeMusic();
 
-    //Starting Character
+    // Starting Character
     _characterManager.SetStartingCharacter(_options.startingCharacterIndex);
 
     // Update Level Entrances
-
     UpdateLevelEntrances();
+
+    // Update Map Gating method
+    _worldStateManager.UpdateGatingMethod();
 
     _archipelagoMessenger.UpdateTags();
     _displayManager.SetConnected();

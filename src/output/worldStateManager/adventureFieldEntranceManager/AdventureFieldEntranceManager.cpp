@@ -103,20 +103,27 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     WriteData<1>((void*)0x638BF6, 0x09);
     // Change the jump from jz (0x74) to jnz (0x75)
     WriteData<1>((void*)0x638C00, 0x75);
+}
 
+
+void AdventureFieldEntranceManager::UpdateGatingMethod()
+{
     if (_settings.adventureFieldDoorOverride == AdventureFieldDoorOverrideDisabled)
     {
         if (_options.gatingMode == EmblemGating)
         {
+            PrintDebug("-----++-----AdventureFieldEntranceManager: Using Emblem Gating Door Logic Strategy\n");
             this->_doorLogicStrategy = std::make_unique<EmblemGatingDoorLogicStrategy>(
-                options, gameStatus, _adventureFieldEntranceMap);
+                _options, _gameStatus, _adventureFieldEntranceMap);
         }
         else if (_options.gatingMode == KeyItemGating)
         {
-            this->_doorLogicStrategy = std::make_unique<KeyItemDoorLogicStrategy>(options, gameStatus);
+            PrintDebug("-----++-----AdventureFieldEntranceManager: Using Key Item Door Logic Strategy\n");
+            this->_doorLogicStrategy = std::make_unique<KeyItemDoorLogicStrategy>(_options, _gameStatus);
         }
         else
         {
+            PrintDebug("-----++-----AdventureFieldEntranceManager: Using Everything Opened Door Logic Strategy\n");
             this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>();
         }
     }
@@ -130,6 +137,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     }
     _mapManager.SetDoorLogicStrategy(this->_doorLogicStrategy.get());
 }
+
 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {

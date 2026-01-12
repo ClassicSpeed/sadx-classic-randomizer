@@ -41,6 +41,11 @@ void WorldStateManager::UpdateVisitedLevels(const int visitedLevel)
     // _levelEntranceManager.UpdateVisitedLevels(visitedLevel);
 }
 
+void WorldStateManager::UpdateGatingMethod()
+{
+    _adventureFieldEntranceManager.UpdateGatingMethod();
+}
+
 void WorldStateManager::OnTwinkleCircuitResultsMaybe(task* tp)
 {
     if (CurrentLevel == LevelIDs_TwinkleCircuit && _showExitMenuTwinkleCircuit == 1)

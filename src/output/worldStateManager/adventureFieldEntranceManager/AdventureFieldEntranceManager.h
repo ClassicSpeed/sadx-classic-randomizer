@@ -23,6 +23,7 @@ public:
     }
 
     void OnFrame();
+    void UpdateGatingMethod();
 
 private:
     explicit AdventureFieldEntranceManager(Options& options, Settings& settings, GameStatus& gameStatus,

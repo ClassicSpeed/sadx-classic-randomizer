@@ -40,7 +40,7 @@ public:
         case SewersToCityHall:
             return true;
         case SewersToTwinkleParkTunnel:
-            return CurrentCharacter == Characters_Big;
+            return true;
         case SsMainToHotel:
             return _gameStatus.unlock.keyHotelKey;
         case SsMainToStation:
@@ -76,7 +76,7 @@ public:
         case TwinkleParkTunnelToTwinkleParkLobby:
             return true;
         case TwinkleParkTunnelToSewers:
-            return CurrentCharacter == Characters_Big;
+            return true;
         case TwinkleParkLobbyToTwinkleParkTunnel:
             return true;
         case TwinkleParkLobbyToTwinklePark:
