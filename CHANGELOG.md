@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
     - This includes Casinopolis' sewers, TP's karting section, the Goin' down act of SH and the boulder section in LW.
 - Added debug setting in the mod settings to close or open all doors in the Adventure Field.
     - Useful for testing or getting video footage of clips.
+- Added new Key items: Pool Key, Police Pass and Time Machine
 
 ### Changed
 
@@ -30,6 +31,8 @@ All notable changes to this project will be documented in this file.
 - Fixed City Hall's Emblemb sticking out of the ground for Tails (You can still get the emblem as Cream).
 - Randomized upgrades option are now just one toggle for all characters.
 - Simplified Ring Link, Sky Chase, Sand Hill and Twinkle Circuit options to just one option each.
+- Hotel Front Key and Hotel Back Key renamed to Hotel Key and Casino Key
+- Station Front Key and Station Back Key renamed to Station Key and Shutter Key
 
 ### Fixed
 
