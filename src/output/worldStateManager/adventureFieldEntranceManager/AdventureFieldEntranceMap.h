@@ -44,6 +44,7 @@ private:
     explicit AdventureFieldEntranceMap(Options& options);
     inline static AdventureFieldEntranceMap* _instance = nullptr;
     Options& _options;
+    EntranceId _lastEntranceIdUsed;
 
     EntranceId FindEntranceByLocation(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
 
@@ -67,8 +68,8 @@ private:
         {TwinkleParkTunnelToTwinkleParkLobby, TwinkleParkLobbyToTwinkleParkTunnel},
 
         {SsMainToEcOutside, EcOutsideToSsMain},
-        {SsMainToSpeedHighway, SpeedHighwayToSsMain},
-        {HotelPoolToEmeraldCoast, EmeraldCoastToHotelPool},
+        {SsMainToSpeedHighway, EmeraldCoastToHotelPool},
+        {HotelPoolToEmeraldCoast, SpeedHighwayToSsMain},
 
         {HotelToSsChaoGarden, SsChaoGardenToHotel},
         {HotelToChaos2, Chaos2ToHotel},

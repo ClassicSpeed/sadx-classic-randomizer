@@ -211,7 +211,6 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
     AdventureFieldEntrance* newEntrance = _instance->_adventureFieldEntranceMap.GetNewConnection(
         currentLevelAndAct, GET_LEVEL_ACT(level, act), _instance->_isEggCarrierTransformed);
 
-
     if (newEntrance != nullptr)
     {
         auto levelActAndId = newEntrance->levelAndActId;
@@ -421,9 +420,7 @@ void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)
 
 void AdventureFieldEntranceManager::OnSetStartPosReturnToField()
 {
-    NextAct = LastAct;
-    NextLevel = LastLevel;
-    SetNextLevelAndAct(NextLevel, NextAct);
+    SetNextLevelAndAct(LastLevel, LastAct);
 }
 
 

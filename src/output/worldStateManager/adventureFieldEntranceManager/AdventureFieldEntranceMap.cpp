@@ -423,11 +423,27 @@ const std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetStaticE
 AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
     const LevelAndActIDs sourceLocation, const LevelAndActIDs destinationLocation, const bool isEggCarrierTransformed)
 {
+    //We use the save entranceId when trasitioning in and out of levels
+    if ((GET_LEVEL(sourceLocation) >= LevelIDs_EmeraldCoast && GET_LEVEL(sourceLocation) <= LevelIDs_E101R)
+        || (GET_LEVEL(sourceLocation) >= LevelIDs_TwinkleCircuit && GET_LEVEL(sourceLocation) <= LevelIDs_SandHill))
+    {
+        return FindEntranceById(_lastEntranceIdUsed);
+    }
+
+
     const EntranceId sourceEntranceId = FindEntranceByLocation(sourceLocation, destinationLocation);
     if (sourceEntranceId == static_cast<EntranceId>(-1))
         return nullptr;
     const EntranceId destinationEntranceId = GetReplacementConnection(sourceEntranceId, isEggCarrierTransformed);
     AdventureFieldEntrance* newEntrance = FindEntranceById(destinationEntranceId);
+
+    if ((GET_LEVEL(destinationLocation) >= LevelIDs_EmeraldCoast && GET_LEVEL(destinationLocation) <= LevelIDs_E101R)
+        || (GET_LEVEL(destinationLocation) >= LevelIDs_TwinkleCircuit && GET_LEVEL(destinationLocation) <=
+            LevelIDs_SandHill))
+    {
+        _lastEntranceIdUsed = sourceEntranceId;
+    }
+
     return newEntrance;
 }
 
