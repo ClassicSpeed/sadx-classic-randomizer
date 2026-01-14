@@ -105,7 +105,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     // Change the jump from jz (0x74) to jnz (0x75)
     WriteData<1>((void*)0x638C00, 0x75);
 
-    this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>();
+    this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>(_adventureFieldEntranceMap);
     _mapManager.SetDoorLogicStrategy(this->_doorLogicStrategy.get());
 }
 
@@ -125,12 +125,12 @@ void AdventureFieldEntranceManager::UpdateGatingMethod()
         }
         else
         {
-            this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>();
+            this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>(_adventureFieldEntranceMap);
         }
     }
     else if (_settings.adventureFieldDoorOverride == AdventureFieldDoorOverrideAllOpened)
     {
-        this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>();
+        this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>(_adventureFieldEntranceMap);
     }
     else
     {

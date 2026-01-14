@@ -3,12 +3,18 @@
 class EverythingOpenedDoorLogicStrategy : public IDoorLogicStrategy
 {
 public:
-    EverythingOpenedDoorLogicStrategy()
+    EverythingOpenedDoorLogicStrategy(AdventureFieldEntranceMap& adventureFieldEntranceMap) :
+        _adventureFieldEntranceMap(adventureFieldEntranceMap)
     {
     }
 
     bool IsDoorOpen(const EntranceId entranceId) override
     {
+        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
+
+        auto entrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntrance);
+        if (_adventureFieldEntranceMap.CalculateCorrectAct(entrance->levelAndActId) == LevelAndActIDs_HedgehogHammer)
+            return false;
         return true;
     }
 
@@ -16,4 +22,7 @@ public:
     {
         return !IsDoorOpen(entranceId);
     }
+
+private:
+    AdventureFieldEntranceMap& _adventureFieldEntranceMap;
 };

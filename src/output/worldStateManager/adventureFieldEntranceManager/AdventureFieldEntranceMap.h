@@ -68,8 +68,8 @@ private:
         {TwinkleParkTunnelToTwinkleParkLobby, TwinkleParkLobbyToTwinkleParkTunnel},
 
         {SsMainToEcOutside, EcOutsideToSsMain},
-        {SsMainToSpeedHighway, EmeraldCoastToHotelPool},
-        {HotelPoolToEmeraldCoast, SpeedHighwayToSsMain},
+        {SsMainToSpeedHighway, SpeedHighwayToSsMain},
+        {HotelPoolToEmeraldCoast, EmeraldCoastToHotelPool},
 
         {HotelToSsChaoGarden, SsChaoGardenToHotel},
         {HotelToChaos2, Chaos2ToHotel},
