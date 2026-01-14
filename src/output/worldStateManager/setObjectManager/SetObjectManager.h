@@ -70,9 +70,6 @@ private:
     inline static FunctionHook<void, task*> _collisionCylinderHook{0x4D4770};
     static void OnCollisionCylinder(task* tp);
 
-    inline static FunctionHook<BOOL> _isChaos2DoorOpenHook{0x638D50};
-    static BOOL OnIsChaos2DoorOpen();
-
     inline static FunctionHook<void, Sint8> _setTimeOfDayHook{0x412C00};
     static void OnSetTimeOfDay(Sint8 time);
 

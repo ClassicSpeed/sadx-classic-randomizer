@@ -22,6 +22,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Several logic changes to accomodate emblem gating.
+- The adventure field has been unified for every character. 
+  - That means, for example, that every character can go into the sewers to enter the TP tunnel.
 - Progression balancing is no loger overriden by SADX.
 - Multiple areas have been separated into different locations (Like City Hall, TP Tunnel, Sewers, etc).
 - Some clips that require multiple doors to be open are no longer in logic (but they are noted in the logic sheet).
@@ -47,6 +49,7 @@ All notable changes to this project will be documented in this file.
 - Logic for Red Mountain and Ice Cap has been adjusted accordingly.
 - Removed guaranteed starting checks option.
 - Chao egg checks are not avaialable in emblem gating mode for now.
+- Level entrance plando.
 
 ### YAML changes:
 
@@ -58,6 +61,7 @@ All notable changes to this project will be documented in this file.
     - In all cases, true and false will workd as enabled/disable.
 - Option twinkle_circuit_check renamed to twinkle_circuit_checks
 - Option sand_hill_check renamed to sand_hill_checks
+- Removed level_entrance_plando
 
 ## [v1.1.3] - 2025-09-16
 

@@ -68,7 +68,7 @@ enum CapsuleSanityCategory
 };
 
 
-enum StartingArea
+enum Area
 {
     CityHall = 0,
     Station,
@@ -101,7 +101,29 @@ enum StartingArea
     SSChaoGarden,
     MRChaoGarden,
     ECChaoGarden,
-    NoStatingArea
+    EmeraldCoast,
+    WindyValley,
+    Casinopolis,
+    IceCap,
+    TwinklePark,
+    SpeedHighway,
+    RedMountain,
+    SkyDeck,
+    LostWorld,
+    FinalEgg,
+    HotShelter,
+    Chaos0,
+    EggWalker,
+    Chaos2,
+    TwinkleCircuit,
+    Chaos4,
+    EggHornet,
+    SkyChase1,
+    SandHill,
+    BetaEggViper,
+    SkyChase2,
+    Chaos6ZeroBeta,
+    InvalidArea
 };
 
 enum GatingMode
@@ -415,7 +437,7 @@ public:
     bool GetCharacterEnemySanity(Characters character) const;
     bool GetCapsuleSanityByType(Characters character, CapsuleType capsuleType) const;
     void SetCharacterStatingArea(Characters character, int startingArea);
-    StartingArea GetCharacterStartingArea(Characters character) const;
+    Area GetCharacterStartingArea(Characters character) const;
     void SetPlayableCharacter(Characters character, bool playable);
     bool GetPlayableCharacter(Characters character) const;
     bool LocationHasProgressiveItem(int locationId);
@@ -446,14 +468,15 @@ public:
 
     bool missionModeEnabled = false;
     bool autoStartMissions = false;
-    bool entranceRandomizer = false;
+    int entranceRandomizer = 0;
 
-    StartingArea sonicStartingArea = NoStatingArea;
-    StartingArea tailsStartingArea = NoStatingArea;
-    StartingArea knucklesStartingArea = NoStatingArea;
-    StartingArea amyStartingArea = NoStatingArea;
-    StartingArea bigStartingArea = NoStatingArea;
-    StartingArea gammaStartingArea = NoStatingArea;
+
+    Area sonicStartingArea = InvalidArea;
+    Area tailsStartingArea = InvalidArea;
+    Area knucklesStartingArea = InvalidArea;
+    Area amyStartingArea = InvalidArea;
+    Area bigStartingArea = InvalidArea;
+    Area gammaStartingArea = InvalidArea;
 
     bool enemySanity = false;
     std::vector<EnemySanityCategory> enemySanityList = {};
@@ -533,9 +556,6 @@ public:
     GatingMode gatingMode = EmblemGating;
     std::map<int, int> entranceEmblemValueMap = {
     };
-
-    AdventureFieldRandomization entranceRandomization = AdventureFieldRandomizationDisabled;
-    std::map<EntranceId, EntranceId> entranceRandomizationMap;
 
 private:
     explicit Options(Settings& settings);

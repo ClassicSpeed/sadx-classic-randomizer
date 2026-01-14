@@ -38,6 +38,7 @@ public:
     EntranceId GetReplacementConnection(EntranceId fromEntranceId, bool isEggCarrierTransformed);
     AdventureFieldEntrance* FindEntranceById(EntranceId entranceId);
     LevelAndActIDs CalculateCorrectAct(LevelAndActIDs levelAndActId);
+    void UpdateRandomEntrances();
 
 private:
     explicit AdventureFieldEntranceMap(Options& options);
@@ -49,9 +50,8 @@ private:
     std::vector<AdventureFieldEntrance> _entranceList = {};
     std::vector<AdventureFieldEntrance> _staticEntranceList = {};
 
-    std::map<EntranceId, EntranceId> _entranceNewConnections = {
+    std::map<EntranceId, EntranceId> _entranceOriginalConnections = {
         {CityHallToSsMain, SsMainToCityHall},
-
         {CityHallToSewers, SewersToCityHall},
         {CityHallToSpeedHighway, SpeedHighwayToCityHall},
         {CityHallToChaos0, Chaos0ToCityHall},
@@ -71,7 +71,7 @@ private:
         {HotelPoolToEmeraldCoast, EmeraldCoastToHotelPool},
 
         {HotelToSsChaoGarden, SsChaoGardenToHotel},
-        {HotelToChaos2, Chaos2ToHotel},
+        {HotelToChaos2, EggHornetToMrMain},
         {TwinkleParkLobbyToTwinklePark, TwinkleParkToTwinkleParkLobby},
         {TwinkleParkLobbyToTwinkleCircuit, TwinkleCircuitToTwinkleParkLobby},
         {MrMainToEcOutside, EcOutsideToMrMain},
@@ -79,7 +79,7 @@ private:
         {MrMainToWindyValley, WindyValleyToMrMain,},
         {MrMainToJungle, JungleToMrMain},
         {MrMainToChaos4, Chaos4ToMrMain},
-        {MrMainToEggHornet, EggHornetToMrMain},
+        {MrMainToEggHornet, Chaos2ToHotel},
         {MrMainToMrChaoGarden, MrChaoGardenToMrMain},
         {MrMainToSkyChase1, SkyChase1ToMrMain},
         {IceCaveToIceCap, IceCapToIceCave},

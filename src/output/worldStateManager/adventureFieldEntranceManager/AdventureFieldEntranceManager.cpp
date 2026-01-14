@@ -37,6 +37,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _twinkleParkLobbyDoorToStationHook.Hook(OnTwinkleParkLobbyDoorToStation);
     _ssBoxLoadHook.Hook(OnSsBoxLoad);
     _isSpeedHighwayElevatorOpen.Hook(OnIsSpeedHighwayElevatorOpen);
+    _isChaos2ElevatorOpen.Hook(OnIsChaos2ElevatorOpen);
     _elevatorInHook.Hook(OnElevatorIn);
     _elevatorOutHook.Hook(OnElevatorOut);
     _elevatorInSceneChangeHook.Hook(OnElevatorInSceneChange);
@@ -112,18 +113,15 @@ void AdventureFieldEntranceManager::UpdateGatingMethod()
     {
         if (_options.gatingMode == EmblemGating)
         {
-            PrintDebug("-----++-----AdventureFieldEntranceManager: Using Emblem Gating Door Logic Strategy\n");
             this->_doorLogicStrategy = std::make_unique<EmblemGatingDoorLogicStrategy>(
                 _options, _gameStatus, _adventureFieldEntranceMap);
         }
         else if (_options.gatingMode == KeyItemGating)
         {
-            PrintDebug("-----++-----AdventureFieldEntranceManager: Using Key Item Door Logic Strategy\n");
             this->_doorLogicStrategy = std::make_unique<KeyItemDoorLogicStrategy>(_options, _gameStatus);
         }
         else
         {
-            PrintDebug("-----++-----AdventureFieldEntranceManager: Using Everything Opened Door Logic Strategy\n");
             this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>();
         }
     }
@@ -138,6 +136,11 @@ void AdventureFieldEntranceManager::UpdateGatingMethod()
     _mapManager.SetDoorLogicStrategy(this->_doorLogicStrategy.get());
 }
 
+void AdventureFieldEntranceManager::UpdateRandomEntrances()
+{
+    _adventureFieldEntranceMap.UpdateRandomEntrances();
+}
+
 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
@@ -147,17 +150,11 @@ bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, const Uint8 act)
 {
-    // if (!_instance->_options.emblemGating)
-    //     return _setNextLevelAndActCutsceneModeHook.Original(level, act);
-
-    PrintDebug("------AdventureFieldEntranceManager: Setting next level and act to %d, %d \n", level, act);
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
         currentLevelAndAct = LevelAndActIDs_ECGarden;
-
     else if (CurrentChaoStage == SADXChaoStage_StationSquare)
         currentLevelAndAct = LevelAndActIDs_SSGarden;
-
     else if (CurrentChaoStage == SADXChaoStage_MysticRuins)
         currentLevelAndAct = LevelAndActIDs_MRGarden;
 
@@ -198,10 +195,6 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, const Uint8 act)
 {
-    // if (!_instance->_options.emblemGating)
-    //     return _setNextLevelAndActCutsceneModeHook.Original(level, act);
-
-    PrintDebug("------AdventureFieldEntranceManager: Setting next level and act to %d, %d \n", level, act);
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
         currentLevelAndAct = LevelAndActIDs_ECGarden;
@@ -625,6 +618,11 @@ BOOL AdventureFieldEntranceManager::OnIsSpeedHighwayElevatorOpen()
     return true;
 }
 
+BOOL AdventureFieldEntranceManager::OnIsChaos2ElevatorOpen()
+{
+    return true;
+}
+
 void AdventureFieldEntranceManager::OnElevatorOut(task* tp)
 {
     if (!_instance->_options.emblemGating)
@@ -849,7 +847,6 @@ void AdventureFieldEntranceManager::OnElevatorMain(task* tp)
 {
     if (!_instance->_options.emblemGating)
         return _elevatorMainHook.Original(tp);
-
 
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
         && IsNearPosition(tp->twp->pos, -399.99f, 0, 1700)

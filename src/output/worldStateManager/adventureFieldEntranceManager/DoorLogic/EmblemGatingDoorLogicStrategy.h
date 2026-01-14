@@ -28,9 +28,8 @@ public:
         if (_adventureFieldEntranceMap.CalculateCorrectAct(entrance->levelAndActId) == LevelAndActIDs_HedgehogHammer)
             return false;
 
-        //TODO: only false in full rando
         // We prevent characters from using wrong entrances
-        if (true)
+        if (_options.entranceRandomizer == 0)
         {
             if (entranceId == SsMainToSpeedHighway)
                 if (CurrentCharacter == Characters_Knuckles)

@@ -422,25 +422,12 @@ const std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetStaticE
 
 AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
     const LevelAndActIDs sourceLocation, const LevelAndActIDs destinationLocation, const bool isEggCarrierTransformed)
-
 {
-    PrintDebug("------AdventureFieldEntranceMap: Getting new connection for source location %d, destination: %d\n",
-               sourceLocation, destinationLocation);
     const EntranceId sourceEntranceId = FindEntranceByLocation(sourceLocation, destinationLocation);
     if (sourceEntranceId == static_cast<EntranceId>(-1))
         return nullptr;
-    PrintDebug("------AdventureFieldEntranceMap: Found entrance %d for source location %d, %d\n",
-               sourceEntranceId, GET_LEVEL(sourceLocation), GET_ACT(sourceLocation));
-
     const EntranceId destinationEntranceId = GetReplacementConnection(sourceEntranceId, isEggCarrierTransformed);
-
-    PrintDebug("------AdventureFieldEntranceMap: Found replacement connection %d for entrance %d\n",
-               destinationEntranceId, sourceEntranceId);
-
-
     AdventureFieldEntrance* newEntrance = FindEntranceById(destinationEntranceId);
-    PrintDebug("------AdventureFieldEntranceMap: Found entrance by ID %d, %d\n",
-               GET_LEVEL(newEntrance->levelAndActId), GET_ACT(newEntrance->levelAndActId));
     return newEntrance;
 }
 
@@ -503,7 +490,7 @@ EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId 
                                                                const bool isEggCarrierTransformed)
 {
     EntranceId toEntranceId = InvalidEntranceId;
-    for (const auto& [entranceA, entranceB] : _entranceNewConnections)
+    for (const auto& [entranceA, entranceB] : _entranceOriginalConnections)
     {
         if (entranceA == fromEntranceId)
             toEntranceId = entranceB;
@@ -614,7 +601,8 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const Entran
 
 LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs levelAndActId)
 {
-    if (GET_LEVEL(levelAndActId) == LevelIDs_EmeraldCoast)
+    LevelIDs actualLevel = static_cast<LevelIDs>(GET_LEVEL(levelAndActId));
+    if (actualLevel == LevelIDs_EmeraldCoast)
     {
         if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma)
             levelAndActId = LevelAndActIDs_EmeraldCoast1;
@@ -623,7 +611,7 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_WindyValley)
+    else if (actualLevel == LevelIDs_WindyValley)
     {
         if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma)
             levelAndActId = LevelAndActIDs_WindyValley1;
@@ -632,7 +620,7 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    if (GET_LEVEL(levelAndActId) == LevelIDs_TwinklePark)
+    if (actualLevel == LevelIDs_TwinklePark)
     {
         if (CurrentCharacter == Characters_Sonic)
             levelAndActId = LevelAndActIDs_TwinklePark1;
@@ -641,7 +629,7 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_SpeedHighway)
+    else if (actualLevel == LevelIDs_SpeedHighway)
     {
         if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
             levelAndActId = LevelAndActIDs_SpeedHighway1;
@@ -650,7 +638,7 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_RedMountain)
+    else if (actualLevel == LevelIDs_RedMountain)
     {
         if (CurrentCharacter == Characters_Sonic)
             levelAndActId = LevelAndActIDs_RedMountain1;
@@ -661,7 +649,7 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_SkyDeck)
+    else if (actualLevel == LevelIDs_SkyDeck)
     {
         if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
             levelAndActId = LevelAndActIDs_SkyDeck1;
@@ -670,7 +658,7 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_LostWorld)
+    else if (actualLevel == LevelIDs_LostWorld)
     {
         if (CurrentCharacter == Characters_Sonic)
             levelAndActId = LevelAndActIDs_LostWorld1;
@@ -679,7 +667,7 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_IceCap)
+    else if (actualLevel == LevelIDs_IceCap)
     {
         if (CurrentCharacter == Characters_Sonic)
             levelAndActId = LevelAndActIDs_IceCap1;
@@ -690,7 +678,7 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_Casinopolis)
+    else if (actualLevel == LevelIDs_Casinopolis)
     {
         if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Knuckles)
             levelAndActId = LevelAndActIDs_Casinopolis1;
@@ -699,7 +687,7 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_FinalEgg)
+    else if (actualLevel == LevelIDs_FinalEgg)
     {
         if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy)
             levelAndActId = LevelAndActIDs_FinalEgg1;
@@ -708,7 +696,7 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_HotShelter)
+    else if (actualLevel == LevelIDs_HotShelter)
     {
         if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
             levelAndActId = LevelAndActIDs_HotShelter1;
@@ -717,21 +705,21 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_Chaos0)
+    else if (actualLevel == LevelIDs_Chaos0)
     {
         if (CurrentCharacter == Characters_Sonic)
             levelAndActId = LevelAndActIDs_Chaos0;
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_Chaos2)
+    else if (actualLevel == LevelIDs_Chaos2)
     {
         if (CurrentCharacter == Characters_Knuckles)
             levelAndActId = LevelAndActIDs_Chaos2;
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_Chaos4)
+    else if (actualLevel == LevelIDs_Chaos4)
     {
         if (CurrentCharacter == Characters_Sonic
             || CurrentCharacter == Characters_Tails
@@ -740,7 +728,7 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_Chaos6)
+    else if (actualLevel == LevelIDs_Chaos6)
     {
         if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Big)
             levelAndActId = LevelAndActIDs_Chaos6Sonic;
@@ -753,21 +741,21 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_EggHornet)
+    else if (actualLevel == LevelIDs_EggHornet)
     {
         if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
             levelAndActId = LevelAndActIDs_EggHornet;
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_EggWalker)
+    else if (actualLevel == LevelIDs_EggWalker)
     {
         if (CurrentCharacter == Characters_Tails)
             levelAndActId = LevelAndActIDs_EggWalker;
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_EggViper)
+    else if (actualLevel == LevelIDs_EggViper)
     {
         if (CurrentCharacter == Characters_Sonic)
             levelAndActId = LevelAndActIDs_EggViper;
@@ -776,28 +764,28 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_SandHill)
+    else if (actualLevel == LevelIDs_SandHill)
     {
         if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
             levelAndActId = LevelAndActIDs_SandHill;
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_SkyChase1)
+    else if (actualLevel == LevelIDs_SkyChase1)
     {
         if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
             levelAndActId = LevelAndActIDs_SkyChase1;
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_SkyChase2)
+    else if (actualLevel == LevelIDs_SkyChase2)
     {
         if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
             levelAndActId = LevelAndActIDs_SkyChase2;
         else
             return LevelAndActIDs_HedgehogHammer;
     }
-    else if (GET_LEVEL(levelAndActId) == LevelIDs_TwinkleCircuit)
+    else if (actualLevel == LevelIDs_TwinkleCircuit)
     {
         if (_instance->_options.twinkleCircuitChecks == 1)
             levelAndActId = GET_LEVEL_ACT(LevelIDs_TwinkleCircuit, 0);
@@ -817,4 +805,24 @@ LevelAndActIDs AdventureFieldEntranceMap::CalculateCorrectAct(LevelAndActIDs lev
 
 
     return levelAndActId;
+}
+
+void AdventureFieldEntranceMap::UpdateRandomEntrances()
+{
+    // keep a backup of original values to avoid chaining updates
+    auto backup = _entranceOriginalConnections;
+
+    for (const auto& pair : _options.levelEntrancesMap)
+    {
+        const EntranceId targetKey = static_cast<EntranceId>(pair.first);
+        const EntranceId sourceKey = static_cast<EntranceId>(pair.second);
+
+        auto itTarget = _entranceOriginalConnections.find(targetKey);
+        if (itTarget == _entranceOriginalConnections.end()) continue;
+
+        auto itSource = backup.find(sourceKey);
+        if (itSource == backup.end()) continue;
+
+        itTarget->second = itSource->second;
+    }
 }

@@ -11,7 +11,6 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _opti
     _countSetItemsMaybeHook.Hook(OnCountSetItemsMaybe);
     _collisionCubeHook.Hook(OnCollisionCube);
     _collisionCylinderHook.Hook(OnCollisionCylinder);
-    _isChaos2DoorOpenHook.Hook(OnIsChaos2DoorOpen);
     _setTimeOfDayHook.Hook(OnSetTimeOfDay);
     _adventureSetLevelAndActHook.Hook(OnAdventureSetLevelAndAct);
     _prepareLevelHook.Hook(OnPrepareLevel);
@@ -462,14 +461,6 @@ void SetObjectManager::HandleWarp()
 
     else
         SetNextLevelAndAct_CutsceneMode(LevelIDs_ECGarden, 0);
-}
-
-// Allow Knuckles to fight Chaos 2
-BOOL SetObjectManager::OnIsChaos2DoorOpen()
-{
-    if (_instance->_options.emblemGating)
-        return _isChaos2DoorOpenHook.Original();
-    return CurrentCharacter == Characters_Knuckles;
 }
 
 

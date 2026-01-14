@@ -545,22 +545,22 @@ void Options::SetCharacterStatingArea(const Characters character, const int star
     switch (character)
     {
     case Characters_Sonic:
-        this->sonicStartingArea = static_cast<StartingArea>(startingArea);
+        this->sonicStartingArea = static_cast<Area>(startingArea);
         break;
     case Characters_Tails:
-        this->tailsStartingArea = static_cast<StartingArea>(startingArea);
+        this->tailsStartingArea = static_cast<Area>(startingArea);
         break;
     case Characters_Knuckles:
-        this->knucklesStartingArea = static_cast<StartingArea>(startingArea);
+        this->knucklesStartingArea = static_cast<Area>(startingArea);
         break;
     case Characters_Amy:
-        this->amyStartingArea = static_cast<StartingArea>(startingArea);
+        this->amyStartingArea = static_cast<Area>(startingArea);
         break;
     case Characters_Big:
-        this->bigStartingArea = static_cast<StartingArea>(startingArea);
+        this->bigStartingArea = static_cast<Area>(startingArea);
         break;
     case Characters_Gamma:
-        this->gammaStartingArea = static_cast<StartingArea>(startingArea);
+        this->gammaStartingArea = static_cast<Area>(startingArea);
         break;
     case Characters_Eggman:
     case Characters_Tikal:
@@ -569,7 +569,7 @@ void Options::SetCharacterStatingArea(const Characters character, const int star
     }
 }
 
-StartingArea Options::GetCharacterStartingArea(const Characters character) const
+Area Options::GetCharacterStartingArea(const Characters character) const
 {
     switch (character)
     {

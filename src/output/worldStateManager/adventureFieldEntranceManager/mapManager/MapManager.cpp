@@ -324,6 +324,10 @@ void MapManager::DrawNewInMap(AdventureFieldEntrance adventureFieldEntrance)
         return;
 
     auto point = mapToScreen(entranceValue->second.x, entranceValue->second.y);
+    std::clock_t now = std::clock();
+    double ms = double(now) * 1000.0 / CLOCKS_PER_SEC;
+    int phase = static_cast<int>(ms / 500.0) & 1; // 0 or 1
+    point.y += (phase == 0) ? 2.0f : -2.0f;
     drawSprite2D(new_logo_map_anim, point.x, point.y);
 }
 

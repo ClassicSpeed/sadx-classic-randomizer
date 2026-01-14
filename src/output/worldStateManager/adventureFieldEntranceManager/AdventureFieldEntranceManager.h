@@ -24,6 +24,7 @@ public:
 
     void OnFrame();
     void UpdateGatingMethod();
+    void UpdateRandomEntrances();
 
 private:
     explicit AdventureFieldEntranceManager(Options& options, Settings& settings, GameStatus& gameStatus,
@@ -97,6 +98,9 @@ private:
 
     inline static FunctionHook<BOOL> _isSpeedHighwayElevatorOpen{0x638CC0};
     static BOOL OnIsSpeedHighwayElevatorOpen();
+
+    inline static FunctionHook<BOOL> _isChaos2ElevatorOpen{0x638CC0};
+    static BOOL OnIsChaos2ElevatorOpen();
 
     inline static FunctionHook<void, task*> _elevatorInHook{0x63DB70};
     static void OnElevatorIn(task* tp);

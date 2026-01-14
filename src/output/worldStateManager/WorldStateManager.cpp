@@ -33,7 +33,7 @@ void WorldStateManager::OnFrame()
 
 void WorldStateManager::SetLevelEntrances()
 {
-    // _levelEntranceManager.SetLevelEntrances();
+    _adventureFieldEntranceManager.UpdateRandomEntrances();
 }
 
 void WorldStateManager::UpdateVisitedLevels(const int visitedLevel)
