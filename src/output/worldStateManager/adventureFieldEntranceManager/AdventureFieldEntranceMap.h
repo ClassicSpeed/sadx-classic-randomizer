@@ -71,7 +71,7 @@ private:
         {HotelPoolToEmeraldCoast, EmeraldCoastToHotelPool},
 
         {HotelToSsChaoGarden, SsChaoGardenToHotel},
-        {HotelToChaos2, EggHornetToMrMain},
+        {HotelToChaos2, Chaos2ToHotel},
         {TwinkleParkLobbyToTwinklePark, TwinkleParkToTwinkleParkLobby},
         {TwinkleParkLobbyToTwinkleCircuit, TwinkleCircuitToTwinkleParkLobby},
         {MrMainToEcOutside, EcOutsideToMrMain},
@@ -79,7 +79,7 @@ private:
         {MrMainToWindyValley, WindyValleyToMrMain,},
         {MrMainToJungle, JungleToMrMain},
         {MrMainToChaos4, Chaos4ToMrMain},
-        {MrMainToEggHornet, Chaos2ToHotel},
+        {MrMainToEggHornet, EggHornetToMrMain},
         {MrMainToMrChaoGarden, MrChaoGardenToMrMain},
         {MrMainToSkyChase1, SkyChase1ToMrMain},
         {IceCaveToIceCap, IceCapToIceCave},

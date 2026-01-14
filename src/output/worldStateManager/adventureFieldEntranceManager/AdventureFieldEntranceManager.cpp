@@ -104,6 +104,9 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     WriteData<1>((void*)0x638BF6, 0x09);
     // Change the jump from jz (0x74) to jnz (0x75)
     WriteData<1>((void*)0x638C00, 0x75);
+
+    this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>();
+    _mapManager.SetDoorLogicStrategy(this->_doorLogicStrategy.get());
 }
 
 
