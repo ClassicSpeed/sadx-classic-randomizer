@@ -95,13 +95,8 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _isEcBoatEnabledHook.Hook(IsEcBoatEnabled);
     _isEcRaftEnabledHook.Hook(IsEcRaftEnabled);
     _hiddenGateMainHook.Hook(OnHiddenGateMain);
-
-
     //Allows players to return to the adventure field when quitting boss fights
-    WriteData<1>((void*)0x415F46, 0x19);
-
-
-    // Change the comparison value from 3 to 9
+    WriteData<1>((void*)0x415F46, 0x19); // Change the comparison value from 3 to 9
     WriteData<1>((void*)0x638BF6, 0x09);
     // Change the jump from jz (0x74) to jnz (0x75)
     WriteData<1>((void*)0x638C00, 0x75);
@@ -109,7 +104,6 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     this->_doorLogicStrategy = std::make_unique<EverythingOpenedDoorLogicStrategy>(_adventureFieldEntranceMap);
     _mapManager.SetDoorLogicStrategy(this->_doorLogicStrategy.get());
 }
-
 
 void AdventureFieldEntranceManager::UpdateGatingMethod()
 {
@@ -145,12 +139,10 @@ void AdventureFieldEntranceManager::UpdateRandomEntrances()
     _adventureFieldEntranceMap.UpdateRandomEntrances();
 }
 
-
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
     return _doorLogicStrategy->IsDoorOpen(entranceId);
 }
-
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, const Uint8 act)
 {
@@ -164,8 +156,6 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
 
     AdventureFieldEntrance* newEntrance = _instance->_adventureFieldEntranceMap.GetNewConnection(
         currentLevelAndAct, GET_LEVEL_ACT(level, act), _instance->_isEggCarrierTransformed);
-
-
     if (newEntrance != nullptr)
     {
         auto levelActAndId = newEntrance->levelAndActId;
@@ -253,8 +243,6 @@ Sint32 AdventureFieldEntranceManager::OnFinishedLevelMaybe()
 
 void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
 {
-    if (!_instance->_options.emblemGating)
-        return _movePlayerToStartPointHook.Original(twp);
     _movePlayerToStartPointHook.Original(twp);
 
     LevelAndActIDs levelAndAct = GET_LEVEL_ACT(CurrentLevel, CurrentAct);
@@ -275,8 +263,6 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
             twp->ang = {0, 0x4000, 0};
         }
     }
-
-
     else if (levelAndAct == LevelAndActIDs_StationSquare3)
     {
         if (GetLevelEntranceID() == 1)
@@ -404,9 +390,6 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
 
 void AdventureFieldEntranceManager::OnGetEntranceEc(taskwk* twp)
 {
-    if (!_instance->_options.emblemGating)
-        return _getEntranceEc.Original(twp);
-
     if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside2)
     {
         if (GetLevelEntranceID() == 2)
@@ -423,7 +406,6 @@ void AdventureFieldEntranceManager::OnSetStartPosReturnToField()
 {
     SetNextLevelAndAct(LastLevel, LastAct);
 }
-
 
 void AdventureFieldEntranceManager::OnFrame()
 {
@@ -447,28 +429,18 @@ void AdventureFieldEntranceManager::OnFrame()
         if (isTransformed != _isEggCarrierTransformed)
             _isEggCarrierTransformed = isTransformed;
     }
-}
-
-
-// -------- Function hooks for gating the world --------
+} // -------- Function hooks for gating the world --------
 
 BOOL AdventureFieldEntranceManager::OnIsBarricadeGone()
 {
-    if (!_instance->_options.emblemGating)
-        return _isBarricadeGoneHook.Original();
-
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
         return _instance->IsDoorOpen(SsMainToCityHall);
 
     return _instance->IsDoorOpen(CityHallToSsMain);
 }
 
-
 void AdventureFieldEntranceManager::OnWallMain(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _wallMainHook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
     {
         //We find the city hall to ssmain wall and delete it
@@ -486,9 +458,6 @@ void AdventureFieldEntranceManager::OnWallMain(task* tp)
 
 void AdventureFieldEntranceManager::OnSsCarMain(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _ssCarMainHook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1 && !_instance->IsDoorOpen(CityHallToSsMain))
         return FreeTask(tp);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4 && !_instance->IsDoorOpen(SsMainToCityHall))
@@ -499,27 +468,19 @@ void AdventureFieldEntranceManager::OnSsCarMain(task* tp)
 
 int AdventureFieldEntranceManager::OnIsStationDoorOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isStationDoorOpenHook.Original();
-
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
         return _instance->IsDoorOpen(SsMainToStation);
 
     return _instance->IsDoorOpen(StationToSsMain);
 }
 
-
 BOOL AdventureFieldEntranceManager::OnIsCasinoStationDoorOpen()
 {
     return _instance->IsDoorOpen(StationToCasino);
 }
 
-
 BOOL AdventureFieldEntranceManager::OnIsHotelFrontDoorOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isHotelFrontDoorOpenHook.Original();
-
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
         return _instance->IsDoorOpen(SsMainToHotel);
 
@@ -528,9 +489,6 @@ BOOL AdventureFieldEntranceManager::OnIsHotelFrontDoorOpen()
 
 BOOL AdventureFieldEntranceManager::OnIsHotelBackDoorOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isHotelBackDoorOpenHook.Original();
-
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare2)
         return _instance->IsDoorOpen(CasinoToHotel);
 
@@ -539,17 +497,11 @@ BOOL AdventureFieldEntranceManager::OnIsHotelBackDoorOpen()
 
 BOOL AdventureFieldEntranceManager::OnIsHotelPoolDoorOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isHotelPoolDoorOpenHook.Original();
-
     return _instance->IsDoorOpen(HotelToHotelPool);
 }
 
 BOOL AdventureFieldEntranceManager::OnIsTwinkleParkElevatorOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isTwinkleParkElevatorOpenHook.Original();
-
     return _instance->IsDoorOpen(SsMainToTwinkleParkTunnel);
 }
 
@@ -557,17 +509,12 @@ TaskFunc(SomethingAboutTPDoorA, 0x63E670);
 
 void AdventureFieldEntranceManager::OnTwinkleParkLobbyDoorFromStation(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _twinkleParkLobbyDoorFromStationHook.Original(tp);
-
     //We disable the distance check, and we manually check if the entrance is accessible
     WriteData<1>((void*)0x63E737, 0xEB);
 
     const bool isDoorOpen = _instance->IsDoorOpen(TwinkleParkTunnelToTwinkleParkLobby);
     if (!isDoorOpen)
         return _twinkleParkLobbyDoorFromStationHook.Original(tp);
-
-
     if (IsPlayerInsideSphere(&tp->twp->pos, 30.0))
     {
         tp->exec = SomethingAboutTPDoorA;
@@ -580,17 +527,11 @@ TaskFunc(SomethingAboutTPDoorB, 0x63E3B0);
 
 void AdventureFieldEntranceManager::OnTwinkleParkLobbyDoorToStation(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _twinkleParkLobbyDoorToStationHook.Original(tp);
-
-
     //We disable the distance check, and we manually check if the entrance is accessible
     WriteData<1>((void*)0x63E477, 0xEB);
     const bool isDoorOpen = _instance->IsDoorOpen(TwinkleParkLobbyToTwinkleParkTunnel);
     if (!isDoorOpen)
         return _twinkleParkLobbyDoorToStationHook.Original(tp);
-
-
     if (IsPlayerInsideSphere(&tp->twp->pos, 20.0))
     {
         tp->exec = SomethingAboutTPDoorB;
@@ -602,9 +543,6 @@ void AdventureFieldEntranceManager::OnTwinkleParkLobbyDoorToStation(task* tp)
 //We make the box behave like it does for Big
 void AdventureFieldEntranceManager::OnSsBoxLoad(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _ssBoxLoadHook.Original(tp);
-
     // Change jnz to jz
     WriteData<1>((void*)0x636B84, 0x74);
     // Change cmp eax, 7 to cmp eax, 9
@@ -612,7 +550,6 @@ void AdventureFieldEntranceManager::OnSsBoxLoad(task* tp)
 
     return _ssBoxLoadHook.Original(tp);
 }
-
 
 BOOL AdventureFieldEntranceManager::OnIsSpeedHighwayElevatorOpen()
 {
@@ -631,9 +568,6 @@ void AdventureFieldEntranceManager::OnSpeedHighwayElevator(ObjectMaster* tp)
 
 void AdventureFieldEntranceManager::OnElevatorOut(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _elevatorOutHook.Original(tp);
-
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare4 && !_instance->IsDoorOpen(
         TwinkleParkTunnelToSewers))
         return _elevatorOutHook.Original(tp);
@@ -643,9 +577,6 @@ void AdventureFieldEntranceManager::OnElevatorOut(task* tp)
 
 void AdventureFieldEntranceManager::OnElevatorIn(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _elevatorInHook.Original(tp);
-
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare3 && !_instance->IsDoorOpen(
         SewersToTwinkleParkTunnel))
         return _elevatorOutHook.Original(tp);
@@ -653,12 +584,8 @@ void AdventureFieldEntranceManager::OnElevatorIn(task* tp)
     _elevatorInHook.Original(tp);
 }
 
-
 int AdventureFieldEntranceManager::OnElevatorInSceneChange(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _elevatorInSceneChangeHook.Original(tp);
-
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare3)
     {
         // From Sewers to SSMain
@@ -686,14 +613,10 @@ int AdventureFieldEntranceManager::OnElevatorInSceneChange(task* tp)
     return _elevatorInSceneChangeHook.Original(tp);
 }
 
-
 TaskFunc(DrawCar, 0x639790);
 
 void AdventureFieldEntranceManager::OnSewerCarHandlePickUp(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _sewerCarHandlePickUpHook.Original(tp);
-
     if (_instance->IsDoorOpen(CityHallToSewers))
         return _sewerCarHandlePickUpHook.Original(tp);
 
@@ -703,21 +626,14 @@ void AdventureFieldEntranceManager::OnSewerCarHandlePickUp(task* tp)
 
 BOOL AdventureFieldEntranceManager::OnSpawnSewerCar()
 {
-    if (!_instance->_options.emblemGating)
-        return _spawnSewerCarHook.Original();
-
     if (CurrentCharacter == Characters_Big)
         return false;
 
     return _instance->IsDoorOpen(CityHallToSewers);
 }
 
-
 void AdventureFieldEntranceManager::OnCollisionCube(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _collisionCubeHook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3)
     {
         //We find the cube collision that prevent Big from going up the sewers and delete it
@@ -736,9 +652,6 @@ void AdventureFieldEntranceManager::OnCollisionCube(task* tp)
 
 void AdventureFieldEntranceManager::OnCollisionSphere(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _collisionSphereHook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
     {
         //We find the sphere collision that prevent Gamma from entering the sewers and delete it
@@ -751,9 +664,6 @@ void AdventureFieldEntranceManager::OnCollisionSphere(task* tp)
 
 void AdventureFieldEntranceManager::OnSceneChangeMainStationSquare(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _sceneChangeMainStationSquareHook.Original(tp);
-
     // Sewers-toy shop door
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3
         && IsNearPosition(tp->twp->pos, 401, -2, 632, 3))
@@ -768,16 +678,11 @@ void AdventureFieldEntranceManager::OnSceneChangeMainStationSquare(task* tp)
             return;
         }
     }
-
-
     _sceneChangeMainStationSquareHook.Original(tp);
 }
 
 void AdventureFieldEntranceManager::OnCharacterUpgradeMain(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _characterUpgradeMainHook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare3 && CurrentCharacter == Characters_Big)
         return FreeTask(tp);
     return _characterUpgradeMainHook.Original(tp);
@@ -785,28 +690,18 @@ void AdventureFieldEntranceManager::OnCharacterUpgradeMain(task* tp)
 
 void AdventureFieldEntranceManager::OnSsBoatMain(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _ssBoatMainHook.Original(tp);
-
     if (!_instance->IsDoorOpen(SsMainToEcOutside))
         return FreeTask(tp);
     return _ssBoatMainHook.Original(tp);
-}
-
-
-// Speed Highway
+} // Speed Highway
 //TODO: Check/move the unlock part to the main manager
 BOOL AdventureFieldEntranceManager::OnIsSpeedHighwayShutterOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isSpeedHighwayShutterOpenHook.Original();
     return _instance->IsDoorOpen(SsMainToSpeedHighway);
 }
 
 void AdventureFieldEntranceManager::OnLoadSpeedHighwayShutter(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        _loadSpeedHighwayShutterHook.Original(tp);
     //TODO: Animate instead of removing the task
     if (_instance->IsDoorOpen(SsMainToSpeedHighway))
         return FreeTask(tp);
@@ -816,8 +711,6 @@ void AdventureFieldEntranceManager::OnLoadSpeedHighwayShutter(task* tp)
 
 void AdventureFieldEntranceManager::OnLoadSpeedHighwayShutter2(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _loadSpeedHighwayShutter2Hook.Original(tp);
     //TODO: Animate instead of removing the task
     if (_instance->IsDoorOpen(SsMainToSpeedHighway))
         return FreeTask(tp);
@@ -827,9 +720,6 @@ void AdventureFieldEntranceManager::OnLoadSpeedHighwayShutter2(task* tp)
 
 BOOL AdventureFieldEntranceManager::OnIsEmeraldCoastOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isEmeraldCoastOpenHook.Original();
-
     if (CurrentCharacter == Characters_Gamma)
         return false;
 
@@ -838,9 +728,6 @@ BOOL AdventureFieldEntranceManager::OnIsEmeraldCoastOpen()
 
 void AdventureFieldEntranceManager::OnLoadEmeraldCoastGateTargets(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _loadEmeraldCoastGateTargetsHook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
         && !_instance->IsDoorOpen(HotelPoolToEmeraldCoast))
         FreeTask(tp);
@@ -848,12 +735,8 @@ void AdventureFieldEntranceManager::OnLoadEmeraldCoastGateTargets(task* tp)
         _loadEmeraldCoastGateTargetsHook.Original(tp);
 }
 
-
 void AdventureFieldEntranceManager::OnElevatorMain(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _elevatorMainHook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare5
         && IsNearPosition(tp->twp->pos, -399.99f, 0, 1700)
         && !_instance->IsDoorOpen(HotelToSsChaoGarden))
@@ -870,12 +753,8 @@ void AdventureFieldEntranceManager::OnElevatorMain(task* tp)
     _elevatorMainHook.Original(tp);
 }
 
-
 BOOL AdventureFieldEntranceManager::OnIsCasinoOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isCasinoOpenHook.Original();
-
     if (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
         return _isCasinoOpenHook.Original() && _instance->IsDoorOpen(CasinoToCasinopolis);
 
@@ -886,18 +765,13 @@ BOOL AdventureFieldEntranceManager::OnIsCasinoOpen()
     return _instance->IsDoorOpen(CasinoToCasinopolis);
 }
 
-
 BOOL AdventureFieldEntranceManager::OnIsTrainInService()
 {
-    if (!_instance->_options.emblemGating)
-        return _isTrainInServiceHook.Original();
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2)
         return _instance->IsDoorOpen(StationToMrMain);
 
     return _instance->IsDoorOpen(MrMainToStation);
 }
-
 
 EntranceId GetBossEntrance()
 {
@@ -942,9 +816,6 @@ EntranceId GetBossEntrance()
 
 void AdventureFieldEntranceManager::OnEcWarpMain(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _ecWarpMainHook.Original(tp);
-
     if (_instance->IsDoorOpen(GetBossEntrance()))
         return _ecWarpMainHook.Original(tp);
 
@@ -952,35 +823,24 @@ void AdventureFieldEntranceManager::OnEcWarpMain(task* tp)
     _ecWarpMainHook.Original(tp);
 }
 
-
 TaskFunc(ClosedToyShopDoorMain, 0x63E9A0);
 
 void AdventureFieldEntranceManager::OnOpenToyShopDoorMain(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _openToyShopDoorMainHook.Original(tp);
-
     if (_instance->IsDoorOpen(SewersToCityHall))
         return _openToyShopDoorMainHook.Original(tp);
 
     ClosedToyShopDoorMain(tp);
 }
 
-
 BOOL AdventureFieldEntranceManager::OnIsCityHallDoorOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isCityHallDoorOpenHook.Original();
-
     return _instance->IsDoorOpen(CityHallToSpeedHighway);
 }
 
 //We don't create Knuckles barricade if he doesn't have access to the level
 void AdventureFieldEntranceManager::OnLoadKnucklesBarricade(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _loadKnucklesBarricadeHook.Original(tp);
-
     if (CurrentCharacter == Characters_Knuckles && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare1)
         if (!_instance->IsDoorOpen(CityHallToSpeedHighway))
             return FreeTask(tp);
@@ -990,25 +850,16 @@ void AdventureFieldEntranceManager::OnLoadKnucklesBarricade(task* tp)
 
 int AdventureFieldEntranceManager::OnTwinkleCircuitDoor(const char character)
 {
-    if (!_instance->_options.emblemGating)
-        return twinkleCircuitDoorHook.Original(character);
-
     return _instance->IsDoorOpen(TwinkleParkLobbyToTwinkleCircuit);
 }
 
 int AdventureFieldEntranceManager::OnTwinkleParkDoor(const char character)
 {
-    if (!_instance->_options.emblemGating)
-        return twinkleParkDoorHook.Original(character);
-
     return _instance->IsDoorOpen(TwinkleParkLobbyToTwinklePark);
 }
 
 void AdventureFieldEntranceManager::OnMrRaftMain(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _mrRaftMainHook.Original(tp);
-
     if (!_instance->IsDoorOpen(MrMainToEcOutside))
         return FreeTask(tp);
     return _mrRaftMainHook.Original(tp);
@@ -1016,9 +867,6 @@ void AdventureFieldEntranceManager::OnMrRaftMain(task* tp)
 
 int AdventureFieldEntranceManager::OnMrCartMain(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return mrCartHook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
         return _instance->IsDoorOpen(JungleToMrMain);
     if (tp->twp->scl.x > 0)
@@ -1026,21 +874,13 @@ int AdventureFieldEntranceManager::OnMrCartMain(task* tp)
     return _instance->IsDoorOpen(MrMainToJungle);
 }
 
-
 BOOL AdventureFieldEntranceManager::OnIsAngelIslandOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isAngelIslandOpenHook.Original();
     return _instance->IsDoorOpen(MrMainToAngelIsland);
 }
 
-
 void AdventureFieldEntranceManager::OnMysticRuinsKey(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _mysticRuinsKeyHook.Original(tp);
-
-
     // We don't spawn the golden/silver keys for knuckles if he can't enter LostWorld
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
     {
@@ -1058,28 +898,19 @@ void AdventureFieldEntranceManager::OnMysticRuinsKey(task* tp)
 
 void AdventureFieldEntranceManager::OnMysticRuinsLock(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _mysticRuinsLockHook.Original(tp);
     const int bufferCharacter = CurrentCharacter;
     CurrentCharacter = Characters_Sonic;
     _mysticRuinsLockHook.Original(tp);
     CurrentCharacter = bufferCharacter;
 }
 
-
 BOOL AdventureFieldEntranceManager::OnIsWindyValleyOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isWindyValleyOpenHook.Original();
-
     return _instance->IsDoorOpen(MrMainToWindyValley);
 }
 
 BOOL AdventureFieldEntranceManager::OnPreventMrStoneSpawn()
 {
-    if (!_instance->_options.emblemGating)
-        return _preventMrStoneSpawnHook.Original();
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
         return _instance->IsDoorOpen(AngelIslandToIceCave);
     return false;
@@ -1087,16 +918,11 @@ BOOL AdventureFieldEntranceManager::OnPreventMrStoneSpawn()
 
 int AdventureFieldEntranceManager::OnGetCharacterId(char index)
 {
-    if (!_instance->_options.emblemGating)
-        return _getCharacterIdHook.Original(index);
     return CurrentCharacter;
 }
 
 void AdventureFieldEntranceManager::OnPastSceneChange(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _pastSceneChangeHook.Original(tp);
-
     // Past Main
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past1
         && IsNearPosition(tp->twp->pos, 1.907, 13, 1512.719))
@@ -1110,34 +936,24 @@ void AdventureFieldEntranceManager::OnPastSceneChange(task* tp)
         if (!_instance->IsDoorOpen(PastAltarToPastMain))
             return FreeTask(tp);
     }
-
     _pastSceneChangeHook.Original(tp);
 }
 
-
 BOOL AdventureFieldEntranceManager::OnIsFinalEggEggmanDoorOpen(EntityData1* entity)
 {
-    if (!_instance->_options.emblemGating)
-        return _isFinalEggEggmanDoorOpenHook.Original(entity);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
         return _instance->IsDoorOpen(JungleToFinalEggTower);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && IsNearPosition(
         entity->Position, 0, 109, 175))
         return _instance->IsDoorOpen(FinalEggTowerToJungle);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && IsNearPosition(
         entity->Position, 0, 109, -175))
         return _instance->IsDoorOpen(FinalEggTowerToFinalEggAlternative);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && IsNearPosition(
         entity->Position, 0, 0, -185.69f, 7.071068f))
         return _instance->IsDoorOpen(FinalEggTowerToEcInside);
-
-
     return _isFinalEggEggmanDoorOpenHook.Original(entity);
 }
-
 
 //Prevents the monkey from blocking the entrance to Red Mountain for knuckles
 BOOL AdventureFieldEntranceManager::OnIsMonkeyDoorOpen(int a1)
@@ -1168,9 +984,6 @@ void AdventureFieldEntranceManager::OnLoadMonkeyCage(task* tp)
 
 void AdventureFieldEntranceManager::OnChangeSceneCave2(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _changeSceneCave2Hook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2
         && IsNearPosition(tp->twp->pos, 56, -100, -13))
     {
@@ -1183,25 +996,16 @@ void AdventureFieldEntranceManager::OnChangeSceneCave2(task* tp)
 
 BOOL AdventureFieldEntranceManager::OnIsLostWorldFrontEntranceOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isLostWorldFrontEntranceOpenHook.Original();
-
     return _instance->IsDoorOpen(JungleToLostWorld);
 }
 
 BOOL AdventureFieldEntranceManager::OnIsSandHillOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isSandHillOpenHook.Original();
-
     return _instance->IsDoorOpen(JungleToSandHill);
 }
 
 void AdventureFieldEntranceManager::OnLoadSceneChangeMr(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _loadSceneChangeMrHook.Original(tp);
-
     // Final Egg
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && tp->twp->ang.x == 3)
     {
@@ -1212,16 +1016,9 @@ void AdventureFieldEntranceManager::OnLoadSceneChangeMr(task* tp)
     }
 
     _loadSceneChangeMrHook.Original(tp);
-}
-
-
-// MysticRuins
+} // MysticRuins
 void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
 {
-    if (!_instance->_options.emblemGating)
-        sceneChangeMrHook.Original(newScene);
-
-
     // Ice Cap
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
@@ -1292,15 +1089,9 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
     }
 
     sceneChangeMrHook.Original(newScene);
-}
-
-
-//Makes knuckles able to enter the lost world using the keys and everyone without them
+} //Makes knuckles able to enter the lost world using the keys and everyone without them
 BOOL AdventureFieldEntranceManager::OnIsLostWorldBackEntranceOpen()
 {
-    if (!_instance->_options.emblemGating)
-        return _isLostWorldBackEntranceOpenHook.Original();
-
     if (!_instance->IsDoorOpen(JungleToLostWorldAlternative))
         return false;
 
@@ -1310,13 +1101,9 @@ BOOL AdventureFieldEntranceManager::OnIsLostWorldBackEntranceOpen()
     return EventFlagArray[FLAG_KNUCKLES_MR_REDCUBE] && EventFlagArray[FLAG_KNUCKLES_MR_BLUECUBE];
 }
 
-
 // Removed the ladder on Ice Cap
 void AdventureFieldEntranceManager::OnLoadLongLadderMr(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _loadLongLadderMrHook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
         if (!_instance->IsDoorOpen(IceCaveToIceCap))
@@ -1327,17 +1114,11 @@ void AdventureFieldEntranceManager::OnLoadLongLadderMr(task* tp)
     _loadLongLadderMrHook.Original(tp);
 }
 
-
 // HotShelter
 void AdventureFieldEntranceManager::OnSceneChangeEcInside(int a1, int a2)
 {
-    if (!_instance->_options.emblemGating)
-        return sceneChangeECInsideHook.Original(a1, a2);
-
-
     if (levelact(CurrentLevel, CurrentAct) != LevelAndActIDs_EggCarrierInside2)
         return sceneChangeECInsideHook.Original(a1, a2);
-
 
     taskwk* twp = (taskwk*)a1;
     if (IsNearPosition(twp->pos, 0, 0, 287))
@@ -1355,7 +1136,6 @@ void AdventureFieldEntranceManager::OnSceneChangeEcInside(int a1, int a2)
     return sceneChangeECInsideHook.Original(a1, a2);
 }
 
-
 bool AdventureFieldEntranceManager::IsPlayerNearDoor(const taskwk* twp)
 {
     const EntityData1* player = EntityData1Ptrs[0];
@@ -1368,8 +1148,6 @@ bool AdventureFieldEntranceManager::IsPlayerNearDoor(const taskwk* twp)
 
 int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
 {
-    if (!_instance->_options.emblemGating)
-        return eggCarrierInsideEggDoorHook.Original(twp);
     // Arsenal
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside1)
     {
@@ -1513,12 +1291,8 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
     return eggCarrierInsideEggDoorHook.Original(twp);
 }
 
-
 int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
 {
-    if (!_instance->_options.emblemGating)
-        return eggCarrierOutsideEggDoorHook.Original(twp);
-
     // EC outside 
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
     {
@@ -1634,12 +1408,8 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
     return eggCarrierOutsideEggDoorHook.Original(twp);
 }
 
-
 int AdventureFieldEntranceManager::OnSkyDeckDoor(taskwk* twp)
 {
-    if (!_instance->_options.emblemGating)
-        return skyDeckDoorHook.Original(twp);
-
     //Bridge
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2)
     {
@@ -1657,9 +1427,6 @@ int AdventureFieldEntranceManager::OnSkyDeckDoor(taskwk* twp)
 
 void AdventureFieldEntranceManager::OnEggCap(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _eggCapHook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
     {
         if (_instance->IsDoorOpen(CaptainRoomToPrivateRoom))
@@ -1673,12 +1440,8 @@ void AdventureFieldEntranceManager::OnEggCap(task* tp)
     return _eggCapHook.Original(tp);
 }
 
-
 void AdventureFieldEntranceManager::OnSpringMain(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _springMainHook.Original(tp);
-
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside5)
     {
         if (!_instance->IsDoorOpen(PrivateRoomToCaptainRoom) && IsNearPosition(tp->twp->pos, -83.42f, 0, 0.54f))
@@ -1687,11 +1450,8 @@ void AdventureFieldEntranceManager::OnSpringMain(task* tp)
     return _springMainHook.Original(tp);
 }
 
-
 BOOL AdventureFieldEntranceManager::OnIsMonorailEnabled()
 {
-    if (!_instance->_options.emblemGating)
-        return _isMonorailEnabledHook.Original();
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
         return _instance->IsDoorOpen(EcOutsideToEcInsideMonorail);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2)
@@ -1702,26 +1462,18 @@ BOOL AdventureFieldEntranceManager::OnIsMonorailEnabled()
 
 BOOL AdventureFieldEntranceManager::OnIsOutsideEggLiftEnabled()
 {
-    if (!_instance->_options.emblemGating)
-        return _isOutsideEggLiftEnabledHook.Original();
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
         return _instance->IsDoorOpen(EcOutsideToEcInsideEggLift);
     return _instance->IsDoorOpen(DeckToEcInsideEggLift);
 }
 
-
 BOOL AdventureFieldEntranceManager::OnIsInsideEggLiftEnabled()
 {
-    if (!_instance->_options.emblemGating)
-        return _isInsideEggLiftEnabledHook.Original();
     return _instance->IsDoorOpen(EcInsideToEcOutsideEggLift);
 }
 
 void AdventureFieldEntranceManager::OnLoadPoolDoor(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _loadPoolDoorHook.Original(tp);
-
     if (!_instance->IsDoorOpen(PoolToSkyDeck))
         return _loadPoolDoorHook.Original(tp);
     FreeTask(tp);
@@ -1729,8 +1481,6 @@ void AdventureFieldEntranceManager::OnLoadPoolDoor(task* tp)
 
 BOOL AdventureFieldEntranceManager::IsEcBoatEnabled()
 {
-    if (!_instance->_options.emblemGating)
-        return _isEcBoatEnabledHook.Original();
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1 && _instance->IsDoorOpen(
         EcOutsideToSsMain))
         return true;
@@ -1742,11 +1492,8 @@ BOOL AdventureFieldEntranceManager::IsEcBoatEnabled()
     return false;
 }
 
-
 BOOL AdventureFieldEntranceManager::IsEcRaftEnabled()
 {
-    if (!_instance->_options.emblemGating)
-        return _isEcRaftEnabledHook.Original();
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1 && _instance->IsDoorOpen(
         EcOutsideToMrMain))
         return true;
@@ -1760,8 +1507,6 @@ BOOL AdventureFieldEntranceManager::IsEcRaftEnabled()
 
 void AdventureFieldEntranceManager::OnHiddenGateMain(task* tp)
 {
-    if (!_instance->_options.emblemGating)
-        return _hiddenGateMainHook.Original(tp);
     if (IsNearPosition(tp->twp->pos, -0.02f, 20.34f, -191.17f))
         return FreeTask(tp);
     return _hiddenGateMainHook.Original(tp);
