@@ -18,12 +18,15 @@ All notable changes to this project will be documented in this file.
 - Added debug setting in the mod settings to close or open all doors in the Adventure Field.
     - Useful for testing or getting video footage of clips.
 - Added new Key items: Pool Key, Police Pass and Time Machine
+- Added extra option to Random Level Entrancem, to add bosses, sublevels and chao gardens into it.
+    - Bosses and Sublevels entrances will exist even with them disabled to accommodate random entrances.
 
 ### Changed
 
 - Several logic changes to accomodate emblem gating.
-- The adventure field has been unified for every character. 
-  - That means, for example, that every character can go into the sewers to enter the TP tunnel.
+- The adventure field has been unified for every character.
+    - That means, for example, that every character can go into the sewers to enter the TP tunnel.
+    - Also the entrances for bosses will exist for every character even if they can't access them.
 - Progression balancing is no loger overriden by SADX.
 - Multiple areas have been separated into different locations (Like City Hall, TP Tunnel, Sewers, etc).
 - Some clips that require multiple doors to be open are no longer in logic (but they are noted in the logic sheet).

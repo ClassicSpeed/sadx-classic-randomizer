@@ -36,11 +36,6 @@ void WorldStateManager::SetLevelEntrances()
     _adventureFieldEntranceManager.UpdateRandomEntrances();
 }
 
-void WorldStateManager::UpdateVisitedLevels(const int visitedLevel)
-{
-    // _levelEntranceManager.UpdateVisitedLevels(visitedLevel);
-}
-
 void WorldStateManager::UpdateGatingMethod()
 {
     _adventureFieldEntranceManager.UpdateGatingMethod();

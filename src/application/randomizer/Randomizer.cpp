@@ -111,13 +111,6 @@ void Randomizer::UpdateLevelEntrances()
         return;
 
     _worldStateManager.SetLevelEntrances();
-
-    for (const auto& location : _locationRepository.GetLocations())
-    {
-        if (location.second.type == LocationLevel && location.second.checked && location.second.level >=
-            LevelIDs_EmeraldCoast && location.second.level <= LevelIDs_HotShelter)
-            _worldStateManager.UpdateVisitedLevels(location.second.level);
-    }
 }
 
 
@@ -134,8 +127,6 @@ void Randomizer::OnCharacterLoaded() const
         else
             _characterManager.RemoveUpgrade(item.second.upgrade);
     }
-    if (CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
-        _worldStateManager.UpdateVisitedLevels(CurrentLevel);
 }
 
 

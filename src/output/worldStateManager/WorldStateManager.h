@@ -21,7 +21,6 @@ public:
 
     void OnFrame() override;
     void SetLevelEntrances();
-    void UpdateVisitedLevels(int visitedLevel);
     void UpdateGatingMethod();
 
 private:
