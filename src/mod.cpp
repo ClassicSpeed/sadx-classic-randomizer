@@ -58,17 +58,6 @@ __declspec(dllexport) void __cdecl OnFrame()
 {
     for (const auto manager : onFrameObjects)
         manager->OnFrame();
-    for (const auto& button : PressedButtons)
-
-        if (button & WhistleButtons && Current_CharObj2 != nullptr)
-        {
-            // Insta win 
-            if (CurrentLevel < LevelIDs_StationSquare || CurrentLevel == LevelIDs_SandHill)
-            {
-                SetTailsRaceVictory();
-                LoadLevelResults();
-            }
-        }
 }
 
 // Required for Mod Loader to recognize the DLL
