@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
 - The adventure field has been unified for every character.
     - That means, for example, that every character can go into the sewers to enter the TP tunnel.
     - Also the entrances for bosses will exist for every character even if they can't access them.
+- The Egg Carrier is now connected to the Final Egg Tower with the door to the left of Hot Shelter entrance.
 - Progression balancing is no loger overriden by SADX.
 - Multiple areas have been separated into different locations (Like City Hall, TP Tunnel, Sewers, etc).
 - Some clips that require multiple doors to be open are no longer in logic (but they are noted in the logic sheet).
