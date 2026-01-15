@@ -19,9 +19,9 @@ public:
         case CityHallToSewers:
             return true;
         case CityHallToSpeedHighway:
-            return CurrentCharacter == Characters_Knuckles;
+            return true;
         case CityHallToChaos0:
-            return CurrentCharacter == Characters_Sonic;
+            return true;
         case StationToSsMain:
             return _gameStatus.unlock.keyStationKey;
         case StationToMrMain:
@@ -31,12 +31,11 @@ public:
         case CasinoToStation:
             return _gameStatus.unlock.keyShutterKey;
         case CasinoToCasinopolis:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
-                || CurrentCharacter == Characters_Knuckles;
+            return true;
         case CasinoToHotel:
             return _gameStatus.unlock.keyCasinoKey;
         case CasinoToEggWalker:
-            return CurrentCharacter == Characters_Tails;
+            return true;
         case SewersToCityHall:
             return true;
         case SewersToTwinkleParkTunnel:
@@ -54,8 +53,7 @@ public:
         case SsMainToBridge:
             return _gameStatus.unlock.keyBoat;
         case SsMainToSpeedHighway:
-            return (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails)
-                && _gameStatus.unlock.keyEmployeeCard;
+            return _gameStatus.unlock.keyEmployeeCard;
         case HotelToSsMain:
             return _gameStatus.unlock.keyHotelKey;
         case HotelToCasino:
@@ -63,14 +61,13 @@ public:
         case HotelToSsChaoGarden:
             return true;
         case HotelToChaos2:
-            return CurrentCharacter == Characters_Knuckles;
+            return true;
         case HotelToHotelPool:
             return _gameStatus.unlock.keyPoolKey;
         case HotelPoolToHotel:
             return _gameStatus.unlock.keyPoolKey;
         case HotelPoolToEmeraldCoast:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma
-                || CurrentCharacter == Characters_Big;
+            return true;
         case TwinkleParkTunnelToSsMain:
             return _gameStatus.unlock.keyTwinkleParkTicket;
         case TwinkleParkTunnelToTwinkleParkLobby:
@@ -80,8 +77,7 @@ public:
         case TwinkleParkLobbyToTwinkleParkTunnel:
             return true;
         case TwinkleParkLobbyToTwinklePark:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy
-                || CurrentCharacter == Characters_Big;
+            return true;
         case TwinkleParkLobbyToTwinkleCircuit:
             return true;
         case MrMainToStation:
@@ -97,28 +93,25 @@ public:
         case MrMainToJungle:
             return _gameStatus.unlock.keyJungleCart;
         case MrMainToChaos4:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails
-                || CurrentCharacter == Characters_Knuckles;
+            return true;
         case MrMainToEggHornet:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails;
+            return true;
         case MrMainToMrChaoGarden:
             return true;
         case MrMainToSkyChase1:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails;
+            return true;
         case AngelIslandToMrMain:
             return _gameStatus.unlock.keyDynamite;
         case AngelIslandToIceCave:
             return _gameStatus.unlock.keyIceStone;
         case AngelIslandToRedMountain:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma
-                || CurrentCharacter == Characters_Knuckles;
+            return true;
         case AngelIslandToPastAltar:
             return _gameStatus.unlock.keyTimeMachine;
         case IceCaveToAngelIsland:
             return _gameStatus.unlock.keyIceStone;
         case IceCaveToIceCap:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails || CurrentCharacter ==
-                Characters_Big;
+            return true;
         case PastAltarToAngelIsland:
             return _gameStatus.unlock.keyTimeMachine;
         case PastAltarToPastMain:
@@ -130,23 +123,23 @@ public:
         case JungleToMrMain:
             return _gameStatus.unlock.keyJungleCart;
         case JungleToLostWorld:
-            return CurrentCharacter == Characters_Sonic;
+            return true;
         case JungleToLostWorldAlternative:
-            return CurrentCharacter == Characters_Knuckles;
+            return true;
         case JungleToFinalEggTower:
             return true;
         case JungleToSandHill:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails;
+            return true;
         case JungleToPastMain:
             return _gameStatus.unlock.keyTimeMachine;
         case FinalEggTowerToJungle:
             return true;
         case FinalEggTowerToFinalEgg:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Amy;
+            return true;
         case FinalEggTowerToFinalEggAlternative:
-            return CurrentCharacter == Characters_Gamma;
+            return true;
         case FinalEggTowerToBetaEggViper:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Gamma;
+            return true;
         case FinalEggTowerToEcInside:
             return _options.connectFinalEggToEggCarrier;
         case EcOutsideToSsMain:
@@ -154,13 +147,9 @@ public:
         case EcOutsideToMrMain:
             return _gameStatus.unlock.keyRaft;
         case EcOutsideToSkyChase2:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails;
+            return true;
         case EcOutsideToChaos6ZeroBeta:
-            return CurrentCharacter == Characters_Sonic
-                || CurrentCharacter == Characters_Knuckles
-                || CurrentCharacter == Characters_Amy
-                || CurrentCharacter == Characters_Gamma
-                || CurrentCharacter == Characters_Big;
+            return true;
         case EcOutsideToEcInsideMonorail:
             return _gameStatus.unlock.keyMonorail;
         case EcOutsideToEcInsideEggLift:
@@ -174,15 +163,11 @@ public:
         case BridgeToMrMain:
             return _gameStatus.unlock.keyRaft;
         case BridgeToSkyDeck:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails;
+            return true;
         case BridgeToSkyChase2:
-            return CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails;
+            return true;
         case BridgeToChaos6ZeroBeta:
-            return CurrentCharacter == Characters_Sonic
-                || CurrentCharacter == Characters_Knuckles
-                || CurrentCharacter == Characters_Amy
-                || CurrentCharacter == Characters_Gamma
-                || CurrentCharacter == Characters_Big;
+            return true;
         case BridgeToEcInsideMonorail:
             return _gameStatus.unlock.keyMonorail;
         case DeckToPool:
@@ -212,7 +197,7 @@ public:
         case PoolToDeck:
             return true;
         case PoolToSkyDeck:
-            return CurrentCharacter == Characters_Knuckles;
+            return true;
         case ArsenalToEcInside:
             return true;
         case EcInsideToEcOutsideEggLift:
@@ -224,11 +209,9 @@ public:
         case EcInsideToBridgeMonorail:
             return _gameStatus.unlock.keyMonorail;
         case EcInsideToHotShelter:
-            return CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Gamma
-                || CurrentCharacter == Characters_Big;
+            return true;
         case EcInsideToHedgehogHammer:
-            return CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Gamma
-                || CurrentCharacter == Characters_Big;
+            return true;
         case EcInsideToFinalEggTower:
             return _options.connectFinalEggToEggCarrier;
         case EcInsideToWarpHall:
