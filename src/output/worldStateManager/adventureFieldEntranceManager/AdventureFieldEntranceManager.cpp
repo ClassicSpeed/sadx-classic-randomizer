@@ -38,6 +38,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _ssBoxLoadHook.Hook(OnSsBoxLoad);
     _isSpeedHighwayElevatorOpen.Hook(OnIsSpeedHighwayElevatorOpen);
     _isChaos2ElevatorOpen.Hook(OnIsChaos2ElevatorOpen);
+    _speedHighwayElevatorHook.Hook(OnSpeedHighwayElevator);
     _elevatorInHook.Hook(OnElevatorIn);
     _elevatorOutHook.Hook(OnElevatorOut);
     _elevatorInSceneChangeHook.Hook(OnElevatorInSceneChange);
@@ -621,6 +622,11 @@ BOOL AdventureFieldEntranceManager::OnIsSpeedHighwayElevatorOpen()
 BOOL AdventureFieldEntranceManager::OnIsChaos2ElevatorOpen()
 {
     return true;
+}
+
+void AdventureFieldEntranceManager::OnSpeedHighwayElevator(ObjectMaster* tp)
+{
+    OEleboxIn(tp);
 }
 
 void AdventureFieldEntranceManager::OnElevatorOut(task* tp)

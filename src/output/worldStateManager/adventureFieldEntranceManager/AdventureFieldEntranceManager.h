@@ -102,6 +102,9 @@ private:
     inline static FunctionHook<BOOL> _isChaos2ElevatorOpen{0x638D50};
     static BOOL OnIsChaos2ElevatorOpen();
 
+    inline static FunctionHook<void, ObjectMaster*> _speedHighwayElevatorHook{0x6393F0};
+    static void OnSpeedHighwayElevator(ObjectMaster* tp);
+
     inline static FunctionHook<void, task*> _elevatorInHook{0x63DB70};
     static void OnElevatorIn(task* tp);
 
