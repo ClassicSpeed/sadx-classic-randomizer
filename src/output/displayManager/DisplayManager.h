@@ -3,53 +3,62 @@
 #include <string>
 #include "../../application/structs/ItemData.h"
 #include "../../application/structs/Message.h"
-#include "../../application/structs/UnlockStatus.h"
-#include "../../application/structs/LevelStatus.h"
-#include "../../application/structs/MissionStatus.h"
-#include "../../application/structs/BossesStatus.h"
-#include "../../application/structs/ChaoStatus.h"
-#include "../../application/structs/VisitedLevels.h"
-#include "../../application/structs/Options.h"
+#include "../../configuration/options/Options.h"
+#include "../../configuration/gameStatus/GameStatus.h"
 #include "../../application/structs/LocationData.h"
 
+#define ReplacePNG_Common(a) do { \
+_snprintf_s(pathbuf, LengthOfArray(pathbuf), "%s\\textures\\pvr_common\\index.txt", path); \
+helperFunctions.ReplaceFile("system\\" a ".PVR", pathbuf); \
+} while (0)
 
-struct LocationData;
 
-
-enum DisplayInGameTracker
-{
-    DisplayTrackerWhenPaused = 0,
-    DisplayTrackerAlwaysOn = 1,
-    DisplayTrackerAlwaysOff = 2,
-};
-
-class DisplayManager
+class DisplayManager : public IOnFrame
 {
 public:
-    DisplayManager();
+    static DisplayManager& Init(Options& options, Settings& settings, GameStatus& gameStatus, const char* path,
+                                const HelperFunctions& helperFunctions)
+    {
+        if (_instance == nullptr)
+            _instance = new DisplayManager(options, settings, gameStatus, path, helperFunctions);
+        return *_instance;
+    }
+
+    void OnFrame() override;
 
     void QueueItemMessage(const std::string& message);
     void QueueChatMessage(const std::string& message);
     void ShowSongName(const std::string& songName);
-    void UpdateUnlockStatus(UnlockStatus unlockStatus);
-    void UpdateLevelStatus(LevelStatus levelStatus);
-    void UpdateMissionStatus(MissionStatus missionStatus);
-    void UpdateBossesStatus(BossesStatus bossesStatus);
-    void UpdateChaoStatus(ChaoStatus chaoStatus);
-    void UpdateVisitedLevels(VisitedLevels visitedLevels);
-    void UpdateOptions(Options options);
-    void OnFrame();
     void ShowStatusInformation(std::string information);
     void ShowGoalStatus();
-    void OnEnterCharacterSelectScreen();
-    void OnExitCharacterSelectScreen();
-    void UpdateChecks(const std::map<int, LocationData>& checkData);
-    void SetMessageConfiguration(float messageDisplayDuration, int messageFontSize,
-                                 DisplayInGameTracker displayInGameTracker, int itemMessageColor, int chatMessageColor);
-    void UpdateVoiceMenuCharacter(int characterVoiceIndex);
     void SetConnected();
 
 private:
+    explicit DisplayManager(Options& options, Settings& settings, GameStatus& gameStatus, const char* path,
+                            const HelperFunctions& helperFunctions);
+    inline static DisplayManager* _instance = nullptr;
+    Options& _options;
+    Settings& _settings;
+    GameStatus& _gameStatus;
+
+    inline static FunctionHook<void, AdvaModeEnum> _charSelAdvaModeProcedureHook{0x505E60};
+    static void OnCharSelAdvaModeProcedure(AdvaModeEnum adventureMode);
+
+    inline static FunctionHook<void, AdvaModeEnum> _cmnAdvaModeProcedureHook{0x505B40};
+    static void OnCmnAdvaModeProcedure(AdvaModeEnum adventureMode);
+
+    inline static FunctionHook<Sint32> _finishedLevelMaybeHook{0x414090};
+    static Sint32 OnFinishedLevelMaybe();
+
+    inline static FunctionHook<SEQ_SECTIONTBL*, int> _storySelectedHook{0x44EAF0};
+    static SEQ_SECTIONTBL* OnStorySelected(int playerNumber);
+
+    inline static FunctionHook<BOOL> _loadMissionMenu{0x506410};
+    inline static FunctionHook<BOOL> _loadTrialMenu{0x506780};
+
+
+    void OnEnterCharacterSelectScreen();
+    void OnExitCharacterSelectScreen();
     void RemoveExpiredMessages();
     void AddNewMessages();
     void DisplayItemMessages() const;
@@ -61,24 +70,18 @@ private:
     std::string GetMissionSTarget(bool showTarget, bool expertMode);
     void DisplayItemsUnlocked();
 
-    int _voiceMenuCharacter = 0;
 
     int _startLine = 2;
     size_t _displayCount = 5;
-    int _displayMessageColor = 0xFF33FF33; //Green
     int _displayStatusColor = 0xFF00FFFF; //Cyan
     int _displayEmblemColor = 0xFFF2C600; //Orange
 
     bool _inCharacterSelectScreen;
     bool _connected = false;
 
-    float _displayDuration = 6.0f;
-    unsigned __int16 _debugFontSize = 21;
-    DisplayInGameTracker _displayInGameTracker = DisplayTrackerWhenPaused;
     std::queue<std::string> _itemMessagesQueue;
     std::deque<Message> _currentMessages;
 
-    int _chatMessageColor = 0xFFFFFFFF;
     int _chatDisplayCount = 5;
     std::vector<std::string> _chatMessagesQueue;
     std::clock_t _lastMessageTime = -1;
@@ -90,14 +93,6 @@ private:
 
     std::clock_t _unlockStatusTimer;
     float _unlockStatusDelay = 0.3f;
-
-    UnlockStatus _unlockStatus;
-    LevelStatus _levelStatus;
-    MissionStatus _missionStatus;
-    BossesStatus _bossesStatus;
-    ChaoStatus _chaoStatus;
-    VisitedLevels _visitedLevels;
-    Options _options;
 
 
     int _keyItemColor = 0xFFF2C600;
@@ -117,7 +112,4 @@ private:
     int _greenEmeraldColor = 0xDD00FF00;
     int _yellowEmeraldColor = 0xDDFFFF00;
     int _blueEmeraldColor = 0xDD0000FF;
-
-
-    mutable std::map<int, LocationData> _checkData;
 };

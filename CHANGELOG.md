@@ -2,6 +2,73 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0 pre-release 1] - 2026-01-16
+
+### Added
+
+- Added new option to select between emblem gating or key item gating. Emblem gating is the new default.
+- Emblem gating will add emblem requirements to any door in the Adventure Field.
+    - Emblems will be enabled automatically if emblem gating is selected.
+- Added new key items: Pool Key, Police Pass, and Time Machine.
+- Added Map of the Adventure Field, accessible anywhere by pressing the whistle button.
+    - It will show the doors and their requirements, and it replaces the random level entrance tracker.
+- Added extra option to Random Level Entrance to add bosses, sublevels, and Chao Gardens into it.
+    - Boss and sublevel entrances will exist even with them disabled to accommodate random entrances.
+- Enemy sanity and Capsule sanity are now just a list of categories (i.e. Sonic-PowerUp, Tails-Ring, etc).
+    - You can now enable/disable categories separately for each character.
+- Added a missable capsules/enemies toggle to disable checks in missable locations.
+    - This includes Casinopolis' sewers, TP's karting section, the Goin' Down act of SH, and the boulder section in LW.
+- Added debug setting in the mod settings to close or open all doors in the Adventure Field.
+    - Useful for testing or getting video footage of clips.
+- Added manifest file for compatibility with the newest Archipelago version.
+
+### Changed
+
+- Several logic changes to accommodate emblem gating.
+- Multiple areas have been separated into different locations (like City Hall, TP Tunnel, Sewers, etc).
+- New starting locations have been added (Pool, multiple Egg Carrier rooms, etc).
+- The starting location option has been simplified to SSMain, Random, or Random per character.
+- The Adventure Field has been unified for every character.
+    - That means, for example, that every character can go into the sewers to enter the TP tunnel.
+- The Egg Carrier is now connected to the Final Egg Tower with the door to the left of the Hot Shelter entrance.
+- Progression balancing is no longer overridden by SADX.
+- Some clips that require multiple doors to be open are no longer in logic (but they are noted in the logic sheet).
+- Chaos 4 is no longer unified by default.
+- Fixed City Hall's emblem sticking out of the ground for Tails (you can still get the emblem as Cream).
+- Randomized upgrades option is now just one toggle for all characters.
+- Simplified Ring Link, Sky Chase, Sand Hill, and Twinkle Circuit options to just one choice option each.
+- Hotel Front Key and Hotel Back Key renamed to Hotel Key and Casino Key.
+- Station Front Key and Station Back Key renamed to Station Key and Shutter Key.
+- Entering a level that is not for your character will send you back to the Adventure Field.
+
+### Fixed
+
+- Fixed Hot Shelter capsules wrongly being marked as speed shoes for Amy and Gamma.
+
+### Removed
+
+- Ice Stone and Wind Stone no longer require the player to move them to the door.
+    - They will appear and open the door as soon as the player gets the Archipelago item.
+- Employee Card no longer requires the player to physically move it to the Speed Highway entrance.
+- The Monkey Killer Switch is no longer required to enter Red Mountain as Knuckles.
+- Logic for Red Mountain and Ice Cap has been adjusted accordingly.
+- Removed guaranteed starting checks option.
+- Chao egg checks are not available in emblem gating mode or when playing with extended random level entrances.
+- Removed level entrance plando.
+
+### YAML changes
+
+- starting_location is now a choice option with SSMain, Random, or Random per character.
+    - random_starting_location_per_character no longer exists.
+- All randomized_X_upgrades changed to just randomized_upgrades.
+- Added gating_mode for emblems or key_items.
+- Ring Link, Sky Chase, Sand Hill, and Twinkle Circuit options have been simplified to just one Choice each.
+    - In all cases, true and false will work as enabled/disabled.
+- Option twinkle_circuit_check renamed to twinkle_circuit_checks.
+- Option sand_hill_check renamed to sand_hill_checks.
+- Removed level_entrance_plando.
+
+
 ## [v1.1.3] - 2025-09-16
 
 ### Changed

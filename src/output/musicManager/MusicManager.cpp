@@ -3,14 +3,17 @@
 #include "json/json.h"
 
 
-MusicManager::MusicManager()
+MusicManager::MusicManager(Options& options, Settings& settings, const HelperFunctions& helperFunctions): _options(options), _settings(settings)
 {
+    this->ProcessSongsFile(helperFunctions, _settings.songsPath);
+    
 }
 
 const SongData* MusicManager::FindSongById(const int songId)
 {
     return _songMap.FindById(songId);
 }
+
 
 
 void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath)
@@ -74,17 +77,17 @@ void MusicManager::ProcessSongsFile(const HelperFunctions& helperFunctions, cons
     }
 
     //SA2B
-    ParseSongCategory(helperFunctions, root["sa2b"], _options.sa2BAdxPath, SA2BSource);
+    ParseSongCategory(helperFunctions, root["sa2b"], _settings.sa2BAdxPath, SA2BSource);
 
     //Custom    
-    ParseSongCategory(helperFunctions, root["custom"], _options.customAdxPath, CustomSource);
+    ParseSongCategory(helperFunctions, root["custom"], _settings.customAdxPath, CustomSource);
     ParseExtraFiles(helperFunctions);
 }
 
 void MusicManager::ParseExtraFiles(const HelperFunctions& helperFunctions)
 {
     namespace fs = std::filesystem;
-    std::string directoryPath = "./" + _options.customAdxPath;
+    std::string directoryPath = "./" + _settings.customAdxPath;
     if (!fs::exists(directoryPath) || !fs::is_directory(directoryPath))
         return;
 
@@ -97,7 +100,7 @@ void MusicManager::ParseExtraFiles(const HelperFunctions& helperFunctions)
             if (_songMap.FindByCodename(codename) != nullptr)
                 continue;
 
-            std::string fullPath = _options.customAdxPath + codename;
+            std::string fullPath = _settings.customAdxPath + codename;
 
             // Allocate memory for the file path
             fullPath = "../../../" + fullPath;
@@ -130,7 +133,7 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
 
         if (const std::ifstream fin("./" + fullPath + ".adx"); !fin)
         {
-            if (_options.showWarningForMissingFiles && missingFiles.size() < 3)
+            if (_settings.showWarningForMissingFiles && missingFiles.size() < 3)
             {
                 missingFiles.push_back(fullPath + ".adx");
             }
@@ -150,11 +153,11 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
         }
     }
 
-    if (!missingFiles.empty() && _options.showWarningForMissingFiles)
+    if (!missingFiles.empty() && _settings.showWarningForMissingFiles)
     {
         std::string errorMessage = "Warning: Missing song files!\n\n";
         for (const auto& file : missingFiles)
-    {
+        {
             errorMessage += "File name: " + file + "\n";
         }
         if (missingFiles.size() == 3)
@@ -164,7 +167,7 @@ void MusicManager::ParseSongCategory(const HelperFunctions& helperFunctions, Jso
         errorMessage += "\n\nPlease check the file names and try again.";
         MessageBox(WindowHandle, std::wstring(errorMessage.begin(), errorMessage.end()).c_str(),
                    L"SADX Archipelago Warning: Missing music files", MB_OK | MB_ICONERROR);
-}
+    }
 }
 
 
@@ -188,11 +191,6 @@ SongType MusicManager::GetSongTypeFromString(const std::string& typeStr)
     }
 
     return SongType::SongTypeLevel;
-}
-
-void MusicManager::UpdateOptions(const Options newOptions)
-{
-    this->_options = newOptions;
 }
 
 void MusicManager::RandomizeMusic()
@@ -250,7 +248,7 @@ std::vector<int> MusicManager::GetPossibleSongIds(int const id, std::mt19937& ge
     else if (_options.musicShuffle == MusicShuffleFull)
         allPossibleIds = _songMap.GetAllSongs(songInfo->type == SongTypeJingle);
 
-    if (allPossibleIds.empty() || _options.includeVanillaSongs)
+    if (allPossibleIds.empty() || _settings.includeVanillaSongs)
     {
         // If no songs are found, return the original id
         allPossibleIds.push_back(id);
@@ -298,7 +296,7 @@ int MusicManager::GetSongForId(int const songId)
     return _songRandomizationMap[songId][dis(gen)];
 }
 
-int MusicManager::GetSongNewForId(int const songId, int const currentSongId)
+int MusicManager::GetNewSongForId(int const songId, int const currentSongId)
 {
     if (_songRandomizationMap[songId].empty())
         return songId;

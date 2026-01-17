@@ -309,6 +309,12 @@
                 <HelpText>Blue value of the color for the progression item indicator.</HelpText>
             </Property>
         </Group>
+        <Group name="Debug" display="Debug Settings">
+            <Property name="AdventureFieldDoorOverride" type="AdventureFieldDoorIndex" defaultvalue="0"
+                      display="Adventure Field Door Override">
+                <HelpText>You can force every adventure field door to be open/closed.</HelpText>
+            </Property>
+        </Group>
     </Groups>
     <Enums>
         <Enum name="DeathLinkIndex">
@@ -389,6 +395,11 @@
             <EnumMember name="-1" display="Default"/>
             <EnumMember name="0" display="Force Disabled"/>
             <EnumMember name="1" display="Force Enabled"/>
+        </Enum>
+        <Enum name="AdventureFieldDoorIndex">
+            <EnumMember name="0" display="Default"/>
+            <EnumMember name="1" display="Force All Opened"/>
+            <EnumMember name="2" display="Force All Closed"/>
         </Enum>
     </Enums>
 </ConfigSchema>

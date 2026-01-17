@@ -1,7 +1,7 @@
 ﻿#include "ItemRepository.h"
 
 
-ItemRepository::ItemRepository()
+ItemRepository::ItemRepository(GameStatus& gameStatus) : _gameStatus(gameStatus)
 {
     _itemData = {
         {1, ItemData::CharacterItem(FLAG_SONIC_PLAYABLE, "Playable Sonic")},
@@ -125,6 +125,8 @@ bool ItemRepository::SetObtained(const int64_t itemId)
 {
     _itemsReceived++;
     _itemData[itemId].obtained = true;
+    UpdateUnlockStatus();
+
     //We save in the save file the number of items received
     if (_itemsReceived > this->GetSavedItemReceived())
         this->UpdateItemsReceived(_itemsReceived);
@@ -150,84 +152,83 @@ std::map<int64_t, ItemData> ItemRepository::GetItems()
 
 int ItemRepository::GetEmblemCount()
 {
-    return _emblemCount;
+    return _gameStatus.unlock.currentEmblems;
 }
 
 int ItemRepository::AddEmblem()
 {
-    _emblemCount++;
-    return _emblemCount;
+    _gameStatus.unlock.currentEmblems++;
+    return _gameStatus.unlock.currentEmblems;
 }
 
-
-UnlockStatus ItemRepository::GetUnlockStatus()
+void ItemRepository::UpdateUnlockStatus()
 {
-    auto unlockStatus = UnlockStatus();
+    _gameStatus.unlock.whiteEmerald = _itemData[92].obtained;
+    _gameStatus.unlock.redEmerald = _itemData[93].obtained;
+    _gameStatus.unlock.cyanEmerald = _itemData[94].obtained;
+    _gameStatus.unlock.purpleEmerald = _itemData[95].obtained;
+    _gameStatus.unlock.greenEmerald = _itemData[96].obtained;
+    _gameStatus.unlock.yellowEmerald = _itemData[97].obtained;
+    _gameStatus.unlock.blueEmerald = _itemData[98].obtained;
 
-    unlockStatus.currentEmblems = _emblemCount;
+    _gameStatus.unlock.sonicUnlocked = _itemData[1].obtained;
+    _gameStatus.unlock.sonicLightShoesUnlocked = _itemData[10].obtained;
+    _gameStatus.unlock.sonicCrystalRingUnlocked = _itemData[11].obtained;
+    _gameStatus.unlock.sonicAncientLightUnlocked = _itemData[12].obtained;
 
-    unlockStatus.whiteEmerald = _itemData[92].obtained;
-    unlockStatus.redEmerald = _itemData[93].obtained;
-    unlockStatus.cyanEmerald = _itemData[94].obtained;
-    unlockStatus.purpleEmerald = _itemData[95].obtained;
-    unlockStatus.greenEmerald = _itemData[96].obtained;
-    unlockStatus.yellowEmerald = _itemData[97].obtained;
-    unlockStatus.blueEmerald = _itemData[98].obtained;
+    _gameStatus.unlock.tailsUnlocked = _itemData[2].obtained;
+    _gameStatus.unlock.tailsJetAnkletUnlocked = _itemData[20].obtained;
+    _gameStatus.unlock.tailsRhythmBadgeUnlocked = _itemData[21].obtained;
 
-    unlockStatus.sonicUnlocked = _itemData[1].obtained;
-    unlockStatus.sonicLightShoesUnlocked = _itemData[10].obtained;
-    unlockStatus.sonicCrystalRingUnlocked = _itemData[11].obtained;
-    unlockStatus.sonicAncientLightUnlocked = _itemData[12].obtained;
+    _gameStatus.unlock.knucklesUnlocked = _itemData[3].obtained;
+    _gameStatus.unlock.knucklesShovelClawUnlocked = _itemData[30].obtained;
+    _gameStatus.unlock.knucklesFightingGlovesUnlocked = _itemData[31].obtained;
 
-    unlockStatus.tailsUnlocked = _itemData[2].obtained;
-    unlockStatus.tailsJetAnkletUnlocked = _itemData[20].obtained;
-    unlockStatus.tailsRhythmBadgeUnlocked = _itemData[21].obtained;
+    _gameStatus.unlock.amyUnlocked = _itemData[4].obtained;
+    _gameStatus.unlock.amyWarriorFeatherUnlocked = _itemData[40].obtained;
+    _gameStatus.unlock.amyLongHammerUnlocked = _itemData[41].obtained;
 
-    unlockStatus.knucklesUnlocked = _itemData[3].obtained;
-    unlockStatus.knucklesShovelClawUnlocked = _itemData[30].obtained;
-    unlockStatus.knucklesFightingGlovesUnlocked = _itemData[31].obtained;
+    _gameStatus.unlock.gammaUnlocked = _itemData[5].obtained;
+    _gameStatus.unlock.gammaJetBoosterUnlocked = _itemData[50].obtained;
+    _gameStatus.unlock.gammaLaserBlasterUnlocked = _itemData[51].obtained;
 
-    unlockStatus.amyUnlocked = _itemData[4].obtained;
-    unlockStatus.amyWarriorFeatherUnlocked = _itemData[40].obtained;
-    unlockStatus.amyLongHammerUnlocked = _itemData[41].obtained;
-
-    unlockStatus.gammaUnlocked = _itemData[5].obtained;
-    unlockStatus.gammaJetBoosterUnlocked = _itemData[50].obtained;
-    unlockStatus.gammaLaserBlasterUnlocked = _itemData[51].obtained;
-
-    unlockStatus.bigUnlocked = _itemData[6].obtained;
-    unlockStatus.bigLifeBeltUnlocked = _itemData[60].obtained;
-    unlockStatus.bigPowerRodUnlocked = _itemData[61].obtained;
-    unlockStatus.bigLureQuantity = _itemData[62].obtained + _itemData[63].obtained + _itemData[64].obtained + _itemData[
-        65].obtained;
+    _gameStatus.unlock.bigUnlocked = _itemData[6].obtained;
+    _gameStatus.unlock.bigLifeBeltUnlocked = _itemData[60].obtained;
+    _gameStatus.unlock.bigPowerRodUnlocked = _itemData[61].obtained;
+    _gameStatus.unlock.bigLureQuantity = _itemData[62].obtained + _itemData[63].obtained + _itemData[64].obtained +
+        _itemData[
+            65].obtained;
 
 
-    unlockStatus.keyTrain = _itemData[80].obtained;
-    unlockStatus.keyBoat = _itemData[81].obtained;
-    unlockStatus.keyRaft = _itemData[82].obtained;
-    unlockStatus.keyHotelFrontKey = _itemData[83].obtained;
-    unlockStatus.keyHotelBackKey = _itemData[84].obtained;
-    unlockStatus.keyTwinkleParkTicket = _itemData[85].obtained;
-    unlockStatus.keyEmployeeCard = _itemData[86].obtained;
-    unlockStatus.keyIceStone = _itemData[87].obtained;
-    unlockStatus.keyWindStone = _itemData[120].obtained;
-    unlockStatus.keyDynamite = _itemData[88].obtained;
-    unlockStatus.keyJungleCart = _itemData[89].obtained;
-    unlockStatus.keyStationFrontKey = _itemData[121].obtained;
-    unlockStatus.keyStationBackKey = _itemData[122].obtained;
-    unlockStatus.keyEgglift = _itemData[123].obtained;
-    unlockStatus.keyMonorail = _itemData[124].obtained;
-    return unlockStatus;
+    _gameStatus.unlock.keyTrain = _itemData[80].obtained;
+    _gameStatus.unlock.keyBoat = _itemData[81].obtained;
+    _gameStatus.unlock.keyRaft = _itemData[82].obtained;
+    _gameStatus.unlock.keyHotelKey = _itemData[83].obtained;
+    _gameStatus.unlock.keyCasinoKey = _itemData[84].obtained;
+    _gameStatus.unlock.keyTwinkleParkTicket = _itemData[85].obtained;
+    _gameStatus.unlock.keyEmployeeCard = _itemData[86].obtained;
+    _gameStatus.unlock.keyIceStone = _itemData[87].obtained;
+    _gameStatus.unlock.keyWindStone = _itemData[120].obtained;
+    _gameStatus.unlock.keyDynamite = _itemData[88].obtained;
+    _gameStatus.unlock.keyJungleCart = _itemData[89].obtained;
+    _gameStatus.unlock.keyStationKey = _itemData[121].obtained;
+    _gameStatus.unlock.keyShutterKey = _itemData[122].obtained;
+    _gameStatus.unlock.keyEgglift = _itemData[123].obtained;
+    _gameStatus.unlock.keyMonorail = _itemData[124].obtained;
+    _gameStatus.unlock.keyPoolKey = _itemData[125].obtained;
+    _gameStatus.unlock.keyPolicePass = _itemData[126].obtained;
+    _gameStatus.unlock.keyTimeMachine = _itemData[127].obtained;
 }
 
 void ItemRepository::ResetItems()
 {
-    _emblemCount = 0;
+    _gameStatus.unlock.currentEmblems = 0;
     _itemsReceived = 0;
     for (auto& item : _itemData)
     {
         item.second.obtained = false;
     }
+    UpdateUnlockStatus();
 }
 
 std::map<std::string, FillerType> itemNameToFillerId = {
@@ -259,7 +260,6 @@ FillerType ItemRepository::GetFillerFromName(const std::string& trapName)
         return NoFiller;
 
     return itemNameToFillerId[trapName];
-
 }
 
 //We use the metal sonic emblems space

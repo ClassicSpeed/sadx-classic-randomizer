@@ -1,31 +1,24 @@
 #include "EventDetector.h"
 #include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
-EventDetector* eventDetectorPtr;
 
 UsercallFuncVoid(PlayCharacterDeathSound_t, (task * tp, int pid), (tp, pid), 0x446AF0, rEAX, stack4);
-static void __cdecl HandlePlayCharacterDeathSound(task* tp, int pid);
 
 
 UsercallFunc(bool, CheckMissionRequirements_t, (int mission, int character, int level), (mission, character, level),
              0x426AA0, rAL, rEAX, rEDX, rECX);
-static bool __cdecl HandleCheckMissionRequirements(int mission, int character, int level);
 
 
 UsercallFunc(bool, CheckMissionRequirementsSubgame_t, (int level, int character, int mission),
              (level, character, mission),
              0x4282D0, rEAX, rEAX, rECX, rEDX);
-static bool __cdecl HandleCheckMissionRequirementsSubgame(int level, int character, int mission);
 
 
 UsercallFuncVoid(OnBoaBoaPartDestroyed_t, (task * tp), (tp), 0x79F8F0, rEAX);
-static void __cdecl HandleOnBoaBoaPartDestroyed(task* tp);
 
 
 UsercallFuncVoid(OnCapsuleBreak_t, (task * tp), (tp), 0x4D6670, rEAX);
-static void __cdecl HandleCapsuleBreak(task* tp);
 
 UsercallFuncVoid(OnCapsuleBreakAir_t, (task * tp), (tp), 0x4C0610, rEDI);
-static void __cdecl HandleCapsuleBreakAir(task* tp);
 
 float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
 {
@@ -35,8 +28,71 @@ float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
     return result;
 }
 
-EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
+EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& randomizer, Link& link) :
+    _options(options),
+    _settings(settings), _randomizer(randomizer), _link(link)
 {
+    _onLevelEmblemCollectedHook.Hook(OnLevelEmblemCollected);
+    _onGenericEmblemCollectedHook.Hook(OnGenericEmblemCollected);
+    _onSonicMainHook.Hook(OnSonicMain);
+    _seqGetSectionListHook.Hook(OnSeqGetSectionList);
+    _startLevelCutsceneHook.Hook(OnStartLevelCutscene);
+    _onMissionMenuRenderHook.Hook(OnMissionMenuRender);
+    _onSpeedUpCapsuleBrokenHook.Hook(OnSpeedUpCapsuleBroken);
+    _onInvincibilityCapsuleBrokenHook.Hook(OnInvincibilityCapsuleBroken);
+    _onFiveRingsCapsuleBrokenHook.Hook(OnFiveRingsCapsuleBroken);
+    _onTenRingsCapsuleHook.Hook(OnTenRingsCapsule);
+    _onRandomRingsCapsuleBrokenHook.Hook(OnRandomRingsCapsuleBroken);
+    _onShieldCapsuleBrokenHook.Hook(OnShieldCapsuleBroken);
+    _onExtraLifeCapsuleBrokenHook.Hook(OnExtraLifeCapsuleBroken);
+    _onBombCapsuleBrokenHook.Hook(OnBombCapsuleBroken);
+    _onElectricShieldCapsuleBrokenHook.Hook(OnElectricShieldCapsuleBroken);
+    _onKillHimPHook.Hook(OnKillHimP);
+    _onKillHimByFallingDownPHook.Hook(OnKillHimByFallingDownP);
+    _onScoreDisplayMainHook.Hook(OnScoreDisplayMain);
+    _onLoadLevelResultsHook.Hook(OnLoadLevelResults);
+    _onClearMissionHook.Hook(OnClearMission);
+    _onItemBoxMainHook.Hook(OnItemBoxMain);
+    _onAirItemBoxMainHook.Hook(OnAirItemBoxMain);
+    _onRhinotankLoadHook.Hook(OnRhinotankLoad);
+    _onKikiLoadHook.Hook(OnKikiLoad);
+    _onKikiMainHook.Hook(OnKikiMain);
+    _onWaterSpiderLoadHook.Hook(OnWaterSpiderLoad);
+    _onWaterSpiderMainHook.Hook(OnWaterSpiderMain);
+    _onBuyonMainHook.Hook(OnBuyonMain);
+    _onBoaBoaHeadLoadHook.Hook(OnBoaBoaHeadLoad);
+    _onLeonLoadHook.Hook(OnLeonLoad);
+    _onLeonMainHook.Hook(OnLeonMain);
+    _onSpinnerAMainHook.Hook(OnSpinnerAMain);
+    _onSpinnerBMainHook.Hook(OnSpinnerBMain);
+    _onSpinnerCMainHook.Hook(OnSpinnerCMain);
+    _onPoliceLoadHook.Hook(OnPoliceLoad);
+    _onPoliceMainHook.Hook(OnPoliceMain);
+    _onSpikeBallSpinnerALoadHook.Hook(OnSpikeBallSpinnerALoad);
+    _onSpikeBallSpinnerAMainHook.Hook(OnSpikeBallSpinnerAMain);
+    _onSpikeBallSpinnerBLoadHook.Hook(OnSpikeBallSpinnerBLoad);
+    _onSpikeBallSpinnerBMainHook.Hook(OnSpikeBallSpinnerBMain);
+    _onSpikeBallSpinnerCLoadHook.Hook(OnSpikeBallSpinnerCLoad);
+    _onSpikeBallSpinnerCMainHook.Hook(OnSpikeBallSpinnerCMain);
+    _onIceBallLoadHook.Hook(OnIceBallLoad);
+    _onIceBallMainAHook.Hook(OnIceBallMainA);
+    _onIceBallMainBHook.Hook(OnIceBallMainB);
+    _onEggKeeperLoadHook.Hook(OnEggKeeperLoad);
+    _onEggKeeperMainHook.Hook(OnEggKeeperMain);
+    _onDeadOutHook.Hook(OnDeadOut);
+    _onBuyonDestroyChildrenHook.Hook(OnBuyonDestroyChildren);
+    _onSaveTwinkleCircuitRecordHook.Hook(OnSaveTwinkleCircuitRecord);
+    _onFishMainHook.Hook(OnFishMain);
+    _onFishCaughtHook.Hook(OnFishCaught);
+    _onCheckEggHoldHook.Hook(OnCheckEggHold);
+    _onMissionStatueDeleteHook.Hook(OnMissionStatueDelete);
+    _onPlayMusicHook.Hook(OnPlayMusic);
+    _onPlayMusic2Hook.Hook(OnPlayMusic2);
+    _onPlayJingleHook.Hook(OnPlayJingle);
+
+    _addSecondsHook.Hook(OnAddSeconds);
+
+
     PlayCharacterDeathSound_t.Hook(HandlePlayCharacterDeathSound);
     CheckMissionRequirements_t.Hook(HandleCheckMissionRequirements);
     CheckMissionRequirementsSubgame_t.Hook(HandleCheckMissionRequirementsSubgame);
@@ -46,7 +102,6 @@ EventDetector::EventDetector(Randomizer& randomizer) : randomizer(randomizer)
     checkData = randomizer.GetCheckData();
     capsules = randomizer.GetCapsules();
     enemies = randomizer.GetEnemies();
-    eventDetectorPtr = this;
 
     // Fix badniks not spawning
     WriteCall((void*)0x0049EFE7, GetShadowPos_r); // Egg Keeper
@@ -142,74 +197,70 @@ bool ManualSubLevelMissionACheck(const int level)
 }
 
 
-bool HandleCheckMissionRequirements(const int mission, const int character, const int level)
+bool EventDetector::HandleCheckMissionRequirements(const int mission, const int character, const int level)
 {
     //We check all other missions that were completed
     if (level <= LevelIDs_HotShelter)
     {
         //level - mission B
-        if (mission == MISSION_C && eventDetectorPtr->completeMultipleLevelMissions)
+        if (mission == MISSION_C && _instance->_settings.completeMultipleLevelMissions)
         {
             if (ManualMissionBCheck(character))
             {
                 SetLevelEmblemCollected(&SaveFile, character, level, MISSION_B);
-                eventDetectorPtr->OnLevelEmblem(character, level, MISSION_B);
+                _instance->OnLevelEmblem(character, level, MISSION_B);
             }
         }
 
         //level - mission A
-        if ((mission == MISSION_C || mission == MISSION_B) && eventDetectorPtr->completeMultipleLevelMissions)
+        if ((mission == MISSION_C || mission == MISSION_B) && _instance->_settings.completeMultipleLevelMissions)
         {
             if (ManualMissionACheck(character, level))
             {
                 SetLevelEmblemCollected(&SaveFile, character, level, MISSION_A);
-                eventDetectorPtr->OnLevelEmblem(character, level, MISSION_A);
+                _instance->OnLevelEmblem(character, level, MISSION_A);
             }
         }
 
-        if (ManualMissionSCheck(character, level, eventDetectorPtr->randomizer.GetOptions().expertMode))
+        if (ManualMissionSCheck(character, level, _instance->_options.expertMode))
         {
-            eventDetectorPtr->OnLevelEmblem(character, level, MISSION_S);
+            _instance->OnLevelEmblem(character, level, MISSION_S);
         }
     }
     return CheckMissionRequirements_t.Original(mission, character, level);
 }
 
-bool HandleCheckMissionRequirementsSubgame(const int level, const int character, const int mission)
+bool EventDetector::HandleCheckMissionRequirementsSubgame(const int level, const int character, const int mission)
 {
     if (level >= LevelIDs_SkyChase1 && level <= LevelIDs_SandHill)
     {
-        eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_B);
+        _instance->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_B);
 
         if (ManualSubLevelMissionACheck(level))
         {
             SetLevelEmblemCollected(&SaveFile, character, level, SUB_LEVEL_MISSION_A);
-            eventDetectorPtr->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
+            _instance->OnLevelEmblem(character, level, SUB_LEVEL_MISSION_A);
         }
     }
     return CheckMissionRequirementsSubgame_t.Original(level, character, mission);
 }
 
-FunctionHook<void, SaveFileData*, int, signed int, int> onLevelEmblemCollected(
-    0x4B4640, [](SaveFileData* saveFile, const int character, const signed int level, const int mission)-> void
-    {
-        onLevelEmblemCollected.Original(saveFile, character, level, mission);
-        if (DemoPlaying > 0)
-            return;
-        eventDetectorPtr->OnLevelEmblem(character, level, mission);
-    });
+void EventDetector::OnLevelEmblemCollected(SaveFileData* saveFile, const int character, const signed int level,
+                                           const int mission)
+{
+    _onLevelEmblemCollectedHook.Original(saveFile, character, level, mission);
+    if (DemoPlaying > 0)
+        return;
+    _instance->OnLevelEmblem(character, level, mission);
+}
 
-
-//FunctionPointer(void, SetEmblemCollected, (SaveFileData *savefile, signed int index), 0x4B3F30);
-FunctionHook<void, SaveFileData*, signed int> OnGenericEmblemCollected(
-    0x4B3F30, [](SaveFileData* savefile, signed int index)-> void
-    {
-        OnGenericEmblemCollected.Original(savefile, index);
-        if (DemoPlaying > 0)
-            return;
-        eventDetectorPtr->OnGenericEmblem(index);
-    });
-
+void EventDetector::OnGenericEmblemCollected(SaveFileData* savefile, signed int index)
+{
+    _onGenericEmblemCollectedHook.Original(savefile, index);
+    if (DemoPlaying > 0)
+        return;
+    _instance->OnGenericEmblem(index);
+}
 
 bool EventDetector::IsTargetableCheck(const LocationData& location) const
 {
@@ -222,25 +273,22 @@ bool EventDetector::IsTargetableCheck(const LocationData& location) const
 
     if (location.type == LocationEnemy)
     {
-        if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+        if (!_instance->_options.enemySanity)
             return false;
 
-        if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(
+        if (!_instance->_options.GetCharacterEnemySanity(
             static_cast<Characters>(CurrentCharacter)))
             return false;
         return true;
     }
     if (location.type == LocationCapsule)
     {
-        if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+        if (!_instance->_options.capsuleSanity)
             return false;
-        if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(
-            static_cast<Characters>(CurrentCharacter)))
+        if (!_instance->_options.GetCapsuleSanityByType(
+            static_cast<Characters>(CurrentCharacter), static_cast<CapsuleType>(location.capsuleType)))
             return false;
-        if (!eventDetectorPtr->randomizer.GetOptions().GetSpecificCapsuleSanity(
-            static_cast<CapsuleType>(location.capsuleType)))
-            return false;
-        if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && location.level ==
+        if (!_instance->_options.includePinballCapsules && location.level ==
             LevelAndActIDs_Casinopolis3)
             return false;
         return true;
@@ -286,12 +334,13 @@ NJS_VECTOR CalculateArrowPosition(const NJS_VECTOR& playerPosition, const Rotati
 }
 
 EntityData1* lastClosestEnemy = nullptr; // ebp
-FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
+
+void EventDetector::OnSonicMain(task* tp)
 {
-    onSonicMain.Original(tp);
+    _onSonicMainHook.Original(tp);
     if (CurrentCharacter != Characters_Sonic)
         return;
-    if (eventDetectorPtr->homingAttackIndicator == HomingAttackIndicatorDisabled)
+    if (_instance->_settings.homingAttackIndicator == HomingAttackIndicatorDisabled)
         return;
 
     if (playerpwp[0]->free.sw[2] > 1 || !HomingAttackTarget_Sonic[0].entity)
@@ -349,7 +398,7 @@ FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
     if (lastClosestEnemy != closestEnemy)
     {
         lastClosestEnemy = closestEnemy;
-        if (eventDetectorPtr->homingAttackIndicator == HomingAttackIndicatorEnabled)
+        if (_instance->_settings.homingAttackIndicator == HomingAttackIndicatorEnabled)
             PlaySound(1, 0, 0, 0);
     }
 
@@ -372,11 +421,14 @@ FunctionHook<void, task*> onSonicMain(0x49A9B0, [](task* tp)-> void
     njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
     njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
     ClampGlobalColorThing_Thing();
-});
+}
 
 
-void EventDetector::OnPlayingFrame() const
+void EventDetector::OnFrame()
 {
+    if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
+        return;
+
     if (DemoPlaying > 0)
         return;
 
@@ -391,21 +443,21 @@ void EventDetector::OnPlayingFrame() const
         if ((check.second.type == LocationUpgrade || check.second.type == LocationChaoEgg) && !check.second.checked
             && GetEventFlag(static_cast<EventFlags>(check.second.eventFlag)))
         {
-            randomizer.OnCheckFound(check.first);
+            _randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        checkData = randomizer.GetCheckData();
+        checkData = _randomizer.GetCheckData();
 
     if (CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_HotShelter)
     {
-        if (trackerArrowToggleable)
+        if (_settings.trackerArrowToggleable)
             for (const auto& button : PressedButtons)
                 if (button & WhistleButtons && Current_CharObj2 != nullptr)
-                    trackerArrow = !trackerArrow;
+                    _settings.trackerArrow = !_settings.trackerArrow;
 
-        if (!trackerArrow)
+        if (!_settings.trackerArrow)
             return;
 
         if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
@@ -479,7 +531,7 @@ void EventDetector::OnPlayingFrame() const
             // Width of the base of the triangle
             float baseWidth = ARROW_BASE_WIDTH + EXTRA_BASE_WIDTH;
             float extraPercentage;
-            if (trackerArrowShowDistance)
+            if (_settings.trackerArrowShowDistance)
             {
                 const double dz = arrowPosition.z - closestLocation->z;
                 const double dy = arrowPosition.y - closestLocation->y;
@@ -569,27 +621,27 @@ void EventDetector::OnPlayingFrame() const
 
             NJS_POINT3COL point3Col;
             point3Col.p = point;
-            if (trackerArrowOverrideColor)
+            if (_settings.trackerArrowOverrideColor)
                 if (closestLocation->type == LocationEnemy)
                     for (int i = 0; i < 6; ++i)
-                        eventDetectorPtr->arrowColor[i] = enemyIndicatorColor[0];
+                        _instance->_settings.arrowColor[i] = _settings.enemyIndicatorColor[0];
                 else if (closestLocation->type == LocationCapsule)
                     for (int i = 0; i < 6; ++i)
-                        eventDetectorPtr->arrowColor[i] = capsuleIndicatorColor[0];
+                        _instance->_settings.arrowColor[i] = _settings.capsuleIndicatorColor[0];
                 else
                     for (int i = 0; i < 6; ++i)
-                        eventDetectorPtr->arrowColor[i] = fishIndicatorColor[0];
+                        _instance->_settings.arrowColor[i] = _settings.fishIndicatorColor[0];
 
-            if (trackerArrowShowDistance)
+            if (_settings.trackerArrowShowDistance)
             {
                 uint8_t newAlpha = static_cast<uint8_t>(0xFF - (0xFF - 0x66) * extraPercentage);
 
                 for (int i = 0; i < 6; ++i)
                 {
-                    eventDetectorPtr->arrowColor[i].argb.a = newAlpha;
+                    _instance->_settings.arrowColor[i].argb.a = newAlpha;
                 }
             }
-            point3Col.col = eventDetectorPtr->arrowColor;
+            point3Col.col = _instance->_settings.arrowColor;
             njDrawTriangle3D(&point3Col, 6, NJD_TRANSPARENT);
         }
     }
@@ -605,19 +657,19 @@ void EventDetector::OnLevelEmblem(const int character, const int level, const in
             && check.second.level == level
             && check.second.levelMission == mission)
         {
-            randomizer.OnCheckFound(check.first);
+            _randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
         if (check.second.type == LocationSubLevel && !check.second.checked
             && check.second.level == level
             && check.second.levelMission == mission)
         {
-            randomizer.OnCheckFound(check.first);
+            _randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        checkData = randomizer.GetCheckData();
+        checkData = _randomizer.GetCheckData();
 }
 
 void EventDetector::OnGenericEmblem(const signed int index)
@@ -628,104 +680,52 @@ void EventDetector::OnGenericEmblem(const signed int index)
         if ((check.second.type == LocationFieldEmblem || check.second.type == LocationChaoRace) && !check.second.checked
             && check.second.emblemId == index)
         {
-            randomizer.OnCheckFound(check.first);
+            _randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        checkData = randomizer.GetCheckData();
+        checkData = _randomizer.GetCheckData();
 }
 
-void EventDetector::SetMultipleMissions(const bool completeMultipleMissions)
+SEQ_SECTIONTBL* EventDetector::OnSeqGetSectionList(int playerno)
 {
-    this->completeMultipleLevelMissions = completeMultipleMissions;
-}
-
-void EventDetector::SetSanitySettings(const bool trackerArrow, const int trackerArrowColor,
-                                      const bool trackerArrowToggleable,
-                                      const bool trackerArrowShowDistance, const bool trackerArrowOverrideColor,
-                                      const bool enemyIndicator, const int enemyIndicatorColor,
-                                      const bool capsuleIndicator, const int capsuleIndicatorColor,
-                                      const bool fishIndicator, const int fishIndicatorColor,
-                                      const bool progressionIndicator, const int progressionIndicatorColor)
-{
-    this->trackerArrow = trackerArrow;
-    this->trackerArrowToggleable = trackerArrowToggleable;
-    this->trackerArrowShowDistance = trackerArrowShowDistance;
-    this->trackerArrowOverrideColor = trackerArrowOverrideColor;
-    this->arrowColor[0].color = trackerArrowColor;
-    this->arrowColor[1].color = trackerArrowColor;
-    this->arrowColor[2].color = trackerArrowColor;
-    this->arrowColor[3].color = trackerArrowColor;
-    this->arrowColor[4].color = trackerArrowColor;
-    this->arrowColor[5].color = trackerArrowColor;
-
-    this->enemyIndicator = enemyIndicator;
-    this->enemyIndicatorColor[0].color = enemyIndicatorColor;
-    this->enemyIndicatorColor[1].color = enemyIndicatorColor;
-    this->enemyIndicatorColor[2].color = enemyIndicatorColor;
-
-    this->capsuleIndicator = capsuleIndicator;
-    this->capsuleIndicatorColor[0].color = capsuleIndicatorColor;
-    this->capsuleIndicatorColor[1].color = capsuleIndicatorColor;
-    this->capsuleIndicatorColor[2].color = capsuleIndicatorColor;
-
-    this->fishIndicator = fishIndicator;
-    this->fishIndicatorColor[0].color = fishIndicatorColor;
-    this->fishIndicatorColor[1].color = fishIndicatorColor;
-    this->fishIndicatorColor[2].color = fishIndicatorColor;
-
-    this->progressionIndicator = progressionIndicator;
-    this->progressionItemIndicatorColor[0].color = progressionIndicatorColor;
-    this->progressionItemIndicatorColor[1].color = progressionIndicatorColor;
-    this->progressionItemIndicatorColor[2].color = progressionIndicatorColor;
-}
-
-void EventDetector::setHomingAttackIndicator(const HomingAttackIndicator homingAttackIndicator)
-{
-    this->homingAttackIndicator = homingAttackIndicator;
-}
-
-
-FunctionHook<SEQ_SECTIONTBL*, int> seqGetSectionListHook(0x44EAF0, [](int playerno)-> SEQ_SECTIONTBL*
-{
-    SEQ_SECTIONTBL* ptr = seqGetSectionListHook.Original(playerno);
-    if (LastStoryFlag == 1 && eventDetectorPtr->lastStoryState == LastStoryNotStarted)
+    SEQ_SECTIONTBL* ptr = _seqGetSectionListHook.Original(playerno);
+    if (LastStoryFlag == 1 && _instance->lastStoryState == LastStoryNotStarted)
     {
         //Start Perfect Chaos fight as soon as we load the story
         ptr->stg = LevelIDs_PerfectChaos;
         ptr->act = 0;
-        eventDetectorPtr->lastStoryState = LastStoryStarted;
+        _instance->lastStoryState = LastStoryStarted;
     }
     return ptr;
-});
+}
 
-
-FunctionHook<void, short> startLevelCutsceneHook(0x413C90, [](const short scene) -> void
+void EventDetector::OnStartLevelCutscene(short scene)
 {
-    if (LastStoryFlag == 1 && eventDetectorPtr->lastStoryState == LastStoryStarted && scene == 1)
+    if (LastStoryFlag == 1 && _instance->lastStoryState == LastStoryStarted && scene == 1)
     {
         //We start the credits as soon as the fight is won
         EventFlagArray[EventFlags_SuperSonicAdventureComplete] = 1;
         WriteSaveFile();
         GameState = MD_GAME_FADEOUT_STAFFROLL;
-        eventDetectorPtr->lastStoryState = LastStoryCompleted;
-        eventDetectorPtr->randomizer.OnGameCompleted();
+        _instance->lastStoryState = LastStoryCompleted;
+        _instance->_randomizer.OnGameCompleted();
         return;
     }
-    startLevelCutsceneHook.Original(scene);
-});
+    _startLevelCutsceneHook.Original(scene);
+}
 
-FunctionHook<BOOL> onMissionMenuRenderHook(0x506410, []()-> BOOL
+BOOL EventDetector::OnMissionMenuRender()
 {
-    eventDetectorPtr->lastStoryState = LastStoryNotStarted;
-    return onMissionMenuRenderHook.Original();
-});
+    _instance->lastStoryState = LastStoryNotStarted;
+    return _onMissionMenuRenderHook.Original();
+}
 
 
-int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
+int EventDetector::GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
 {
-    for (const auto& capsule : eventDetectorPtr->capsules)
+    for (const auto& capsule : _instance->capsules)
     {
         if (capsule.character != CurrentCharacter)
             continue;
@@ -744,77 +744,83 @@ int GetCapsuleCapsuleFromPosition(const NJS_VECTOR& position)
     return -1;
 }
 
-void CheckCapsule(const EntityData1* entity, const bool specificCapsule)
+void EventDetector::CheckCapsule(const EntityData1* entity, const CapsuleType capsuleType)
 {
     if (DemoPlaying > 0)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+    if (!_instance->_options.capsuleSanity)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), capsuleType))
         return;
-    // if (!specificCapsule)
-    //     return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
+    if (!_instance->_options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
     const int locationId = GetCapsuleCapsuleFromPosition(entity->Position);
     if (locationId > 0)
     {
-        eventDetectorPtr->randomizer.OnCheckFound(locationId);
-        eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
+        _instance->_randomizer.OnCheckFound(locationId);
+        _instance->checkData = _instance->_randomizer.GetCheckData();
     }
 }
 
-FunctionHook<void, EntityData1*> onSpeedUpCapsuleBroken(0x4D6BF0, [](EntityData1* entity)-> void
+void EventDetector::OnSpeedUpCapsuleBroken(EntityData1* entity)
 {
-    onSpeedUpCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onInvincibilityCapsuleBroken(0x4D6D80, [](EntityData1* entity)-> void
+    _onSpeedUpCapsuleBrokenHook.Original(entity);
+    _instance->CheckCapsule(entity, SpeedUpCapsule);
+}
+
+void EventDetector::OnInvincibilityCapsuleBroken(EntityData1* entity)
 {
-    onInvincibilityCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onFiveRingsCapsuleBroken(0x4D6C50, [](EntityData1* entity)-> void
+    _onInvincibilityCapsuleBrokenHook.Original(entity);
+    _instance->CheckCapsule(entity, InvincibilityCapsule);
+}
+
+void EventDetector::OnFiveRingsCapsuleBroken(EntityData1* entity)
 {
-    onFiveRingsCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onTenRingsCapsule(0x4D6C90, [](EntityData1* entity)-> void
+    _onFiveRingsCapsuleBrokenHook.Original(entity);
+    _instance->CheckCapsule(entity, FiveRingsCapsule);
+}
+
+void EventDetector::OnTenRingsCapsule(EntityData1* entity)
 {
-    onTenRingsCapsule.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onRandomRingsCapsuleBroken(0x4D6CD0, [](EntityData1* entity)-> void
+    _onTenRingsCapsuleHook.Original(entity);
+    _instance->CheckCapsule(entity, TenRingsCapsule);
+}
+
+void EventDetector::OnRandomRingsCapsuleBroken(EntityData1* entity)
 {
-    onRandomRingsCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onShieldCapsuleBroken(0x4D6DC0, [](EntityData1* entity)-> void
+    _onRandomRingsCapsuleBrokenHook.Original(entity);
+    _instance->CheckCapsule(entity, RandomRingsCapsule);
+}
+
+void EventDetector::OnShieldCapsuleBroken(EntityData1* entity)
 {
-    onShieldCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onExtraLifeCapsuleBroken(0x4D6D40, [](EntityData1* entity)-> void
+    _onShieldCapsuleBrokenHook.Original(entity);
+    _instance->CheckCapsule(entity, ShieldCapsule);
+}
+
+void EventDetector::OnExtraLifeCapsuleBroken(EntityData1* entity)
 {
-    onExtraLifeCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().lifeCapsuleSanity);
-    eventDetectorPtr->ShuffleSong();
-});
-FunctionHook<void, EntityData1*> onBombCapsuleBroken(0x4D6E00, [](EntityData1* entity)-> void
+    _onExtraLifeCapsuleBrokenHook.Original(entity);
+    _instance->CheckCapsule(entity, ExtraLifeCapsule);
+    _instance->ShuffleSong();
+}
+
+void EventDetector::OnBombCapsuleBroken(EntityData1* entity)
 {
-    onBombCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity);
-});
-FunctionHook<void, EntityData1*> onElectricShieldCapsuleBroken(0x4D6E40, [](EntityData1* entity)-> void
+    _onBombCapsuleBrokenHook.Original(entity);
+    _instance->CheckCapsule(entity, BombCapsule);
+}
+
+void EventDetector::OnElectricShieldCapsuleBroken(EntityData1* entity)
 {
-    onElectricShieldCapsuleBroken.Original(entity);
-    CheckCapsule(entity, eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity);
-});
+    _onElectricShieldCapsuleBrokenHook.Original(entity);
+    _instance->CheckCapsule(entity, MagneticShieldCapsule);
+}
 
 //Make Sonic's capsule count as Tails'
-void HandleCapsuleBreak(task* tp)
+void EventDetector::HandleCapsuleBreak(task* tp)
 {
     if (CurrentCharacter == Characters_Tails)
     {
@@ -827,7 +833,7 @@ void HandleCapsuleBreak(task* tp)
     OnCapsuleBreak_t.Original(tp);
 }
 
-void HandleCapsuleBreakAir(task* tp)
+void EventDetector::HandleCapsuleBreakAir(task* tp)
 {
     if (CurrentCharacter == Characters_Tails)
     {
@@ -840,119 +846,116 @@ void HandleCapsuleBreakAir(task* tp)
     OnCapsuleBreakAir_t.Original(tp);
 }
 
-
-FunctionHook<void, unsigned short> onKillHimP(0x440CD0, [](const unsigned short a1)-> void
+void EventDetector::OnKillHimP(unsigned short a1)
 {
-    onKillHimP.Original(a1);
-    eventDetectorPtr->randomizer.OnDeath();
-});
+    _onKillHimPHook.Original(a1);
+    _instance->_link.OnDeath();
+}
 
-FunctionHook<void> onKillHimByFallingDownP(0x446AD0, []()-> void
+void EventDetector::OnKillHimByFallingDownP()
 {
-    onKillHimByFallingDownP.Original();
-    eventDetectorPtr->randomizer.OnDeath();
-});
+    _onKillHimByFallingDownPHook.Original();
+    _instance->_link.OnDeath();
+}
 
-void HandlePlayCharacterDeathSound(task* tp, const int pid)
+void EventDetector::HandlePlayCharacterDeathSound(task* tp, const int pid)
 {
     PlayCharacterDeathSound_t.Original(tp, pid);
-    const double timePassed = (std::clock() - eventDetectorPtr->deathCooldownTimer) / static_cast<double>(
+    const double timePassed = (std::clock() - _instance->deathCooldownTimer) / static_cast<double>(
         CLOCKS_PER_SEC);
-    if (timePassed > eventDetectorPtr->deathDetectionCooldown)
+    if (timePassed > _instance->deathDetectionCooldown)
     {
-        eventDetectorPtr->deathCooldownTimer = std::clock();
-        eventDetectorPtr->randomizer.OnDeath();
+        _instance->deathCooldownTimer = std::clock();
+        _instance->_link.OnDeath();
     }
 }
 
 
-// We detect if tails just lost
-FunctionHook<void, task*> onScoreDisplayMain(0x42BCC0, [](task* tp)-> void
+void EventDetector::OnScoreDisplayMain(task* tp)
 {
     //If Tails just lost, we send a death link
     if (CurrentCharacter == Characters_Tails && RaceWinnerPlayer == 2)
-        eventDetectorPtr->randomizer.OnDeath();
+        _instance->_link.OnDeath();
 
-    return onScoreDisplayMain.Original(tp);
-});
+    return _onScoreDisplayMainHook.Original(tp);
+}
 
-
-FunctionHook<void> onLoadLevelResults(0x415540, []()-> void
+void EventDetector::OnLoadLevelResults()
 {
-    onLoadLevelResults.Original();
+    _onLoadLevelResultsHook.Original();
     if (DemoPlaying > 0)
         return;
     if (CurrentLevel < LevelIDs_Chaos0 || CurrentLevel > LevelIDs_E101R)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().bossChecks)
+    if (!_instance->_options.bossChecks)
         return;
 
     bool checksFound = false;
-    for (const auto& check : eventDetectorPtr->checkData)
+    for (const auto& check : _instance->checkData)
     {
         if (check.second.type != LocationBossFight)
             continue;
 
-        if (eventDetectorPtr->randomizer.GetOptions().unifyEggHornet && CurrentLevel == LevelIDs_EggHornet)
+        if (_instance->_options.unifyEggHornet && CurrentLevel == LevelIDs_EggHornet)
         {
             if (check.second.character == -1 && check.second.level == LevelIDs_EggHornet && !check.second.checked)
             {
-                eventDetectorPtr->randomizer.OnCheckFound(check.first);
+                _instance->_randomizer.OnCheckFound(check.first);
                 checksFound = true;
             }
         }
-        else if (eventDetectorPtr->randomizer.GetOptions().unifyChaos4 && CurrentLevel == LevelIDs_Chaos4)
+        else if (_instance->_options.unifyChaos4 && CurrentLevel == LevelIDs_Chaos4)
         {
             if (check.second.character == -1 && check.second.level == LevelIDs_Chaos4 && !check.second.checked)
             {
-                eventDetectorPtr->randomizer.OnCheckFound(check.first);
+                _instance->_randomizer.OnCheckFound(check.first);
                 checksFound = true;
             }
         }
-        else if (eventDetectorPtr->randomizer.GetOptions().unifyChaos6 && CurrentLevel == LevelIDs_Chaos6)
+        else if (_instance->_options.unifyChaos6 && CurrentLevel == LevelIDs_Chaos6)
         {
             if (check.second.character == -1 && check.second.level == LevelIDs_Chaos6 && !check.second.checked)
             {
-                eventDetectorPtr->randomizer.OnCheckFound(check.first);
+                _instance->_randomizer.OnCheckFound(check.first);
                 checksFound = true;
             }
         }
         else if (check.second.character == CurrentCharacter && check.second.level == CurrentLevel && !check.second.
             checked)
         {
-            eventDetectorPtr->randomizer.OnCheckFound(check.first);
+            _instance->_randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
-});
+        _instance->checkData = _instance->_randomizer.GetCheckData();
+}
 
-FunctionHook<void, ObjectMaster*> onClearMission(0x5923C0, [](ObjectMaster* obj)-> void
+void EventDetector::OnClearMission(ObjectMaster* obj)
 {
-    onClearMission.Original(obj);
+    _onClearMissionHook.Original(obj);
 
     const int missionNumber = 1 + **reinterpret_cast<Sint8**>(&obj->SETData.SETData[1].LoadCount);
 
     bool checksFound = false;
-    for (const auto& check : eventDetectorPtr->checkData)
+    for (const auto& check : _instance->checkData)
     {
         if (check.second.type != LocationMission)
             continue;
         if (check.second.missionNumber == missionNumber && !check.second.checked)
         {
-            eventDetectorPtr->randomizer.OnCheckFound(check.first);
+            _instance->_randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
-});
+        _instance->checkData = _instance->_randomizer.GetCheckData();
+}
 
 
-int GetEnemyFromPosition(const NJS_VECTOR& position)
+int EventDetector::GetEnemyFromPosition(const NJS_VECTOR& position)
 {
-    for (const auto& enemy : eventDetectorPtr->enemies)
+    for (const auto& enemy : _instance->enemies)
     {
         if (enemy.character != CurrentCharacter)
             continue;
@@ -971,8 +974,9 @@ int GetEnemyFromPosition(const NJS_VECTOR& position)
     return ENEMY_INVALID_ID;
 }
 
-void DrawIndicator(const task* tp, const bool tallElement, const bool checked, const IndicatorType indicatorType,
-                   const int locationId)
+void EventDetector::DrawIndicator(const task* tp, const bool tallElement, const bool checked,
+                                  const IndicatorType indicatorType,
+                                  const int locationId)
 {
     if (!cameraready)
         return;
@@ -980,6 +984,19 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
         return;
 
+    if (!_instance->_options.missableCapsules)
+        if ((locationId >= 12501 && locationId <= 12546) ||
+            (locationId >= 21501 && locationId <= 21541) ||
+            (locationId >= 14501 && locationId <= 14518) ||
+            (locationId >= 15524 && locationId <= 15531) ||
+            (locationId >= 18512 && locationId <= 18513))
+            return;
+
+    if (!_instance->_options.missableEnemies)
+        if ((locationId >= 12001 && locationId <= 12009)
+            || (locationId >= 21001 && locationId <= 21002)
+            || (locationId >= 14001 && locationId <= 14007))
+            return;
 
     if (!checked)
     {
@@ -990,15 +1007,15 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
             locationType = LocationCapsule;
         else
             locationType = LocationFish;
-        eventDetectorPtr->possibleChecks.push_back({tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z, locationType});
+        _instance->possibleChecks.push_back({tp->twp->pos.x, tp->twp->pos.y, tp->twp->pos.z, locationType});
     }
 
 
-    if (indicatorType == EnemyIndicator && !eventDetectorPtr->enemyIndicator)
+    if (indicatorType == EnemyIndicator && !_instance->_settings.enemyIndicator)
         return;
-    if (indicatorType == CapsuleIndicator && !eventDetectorPtr->capsuleIndicator)
+    if (indicatorType == CapsuleIndicator && !_instance->_settings.capsuleIndicator)
         return;
-    if (indicatorType == FishIndicator && !eventDetectorPtr->capsuleIndicator)
+    if (indicatorType == FishIndicator && !_instance->_settings.capsuleIndicator)
         return;
 
     const EntityData1* player = EntityData1Ptrs[0];
@@ -1060,86 +1077,90 @@ void DrawIndicator(const task* tp, const bool tallElement, const bool checked, c
     NJS_POINT3COL point3Col;
     point3Col.p = point;
     if (!checked)
-        if (eventDetectorPtr->progressionIndicator && eventDetectorPtr->randomizer.GetOptions().
-                                                                        LocationHasProgressiveItem(locationId))
-            point3Col.col = eventDetectorPtr->progressionItemIndicatorColor;
+        if (_instance->_settings.progressionIndicator && _instance->_options.
+                                                                    LocationHasProgressiveItem(locationId))
+            point3Col.col = _instance->_settings.progressionItemIndicatorColor;
         else if (indicatorType == EnemyIndicator)
-            point3Col.col = eventDetectorPtr->enemyIndicatorColor;
+            point3Col.col = _instance->_settings.enemyIndicatorColor;
         else if (indicatorType == CapsuleIndicator)
-            point3Col.col = eventDetectorPtr->capsuleIndicatorColor;
+            point3Col.col = _instance->_settings.capsuleIndicatorColor;
         else
-            point3Col.col = eventDetectorPtr->fishIndicatorColor;
+            point3Col.col = _instance->_settings.fishIndicatorColor;
     else
-        point3Col.col = eventDetectorPtr->disabledIndicatorColor;
+        point3Col.col = _instance->_settings.disabledIndicatorColor;
 
     njDrawTriangle3D(&point3Col, 3, 0x0);
 }
 
-bool GetCapsuleTypeOption(const Float type)
+CapsuleType EventDetector::GetCapsuleTypeOption(const Float type)
 {
     switch (static_cast<int>(std::floor(type)))
     {
     case 6:
-        return eventDetectorPtr->randomizer.GetOptions().lifeCapsuleSanity;
+        return ExtraLifeCapsule;
     case 5:
+        return ShieldCapsule;
     case 8:
-        return eventDetectorPtr->randomizer.GetOptions().shieldCapsuleSanity;
+        return MagneticShieldCapsule;
     case 2:
+        return SpeedUpCapsule;
     case 3:
+        return InvincibilityCapsule;
     case 4:
-        return eventDetectorPtr->randomizer.GetOptions().ringCapsuleSanity;
+        return BombCapsule;
+
     case 1:
+        return FiveRingsCapsule;
     case 7:
+        return TenRingsCapsule;
     case 0:
     default:
-        return eventDetectorPtr->randomizer.GetOptions().powerUpCapsuleSanity;
+        return RandomRingsCapsule;
     }
 }
 
-FunctionHook<void, task*> OnItemBoxMain(0x4D6F10, [](task* tp)-> void
+void EventDetector::OnItemBoxMain(task* tp)
 {
-    OnItemBoxMain.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+    _onItemBoxMainHook.Original(tp);
+    if (!_instance->_options.capsuleSanity)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter),
+                                                    _instance->GetCapsuleTypeOption(tp->twp->scl.x)))
         return;
-    if (!GetCapsuleTypeOption(tp->twp->scl.x))
-        return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
+    if (!_instance->_options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
-    const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
+    const int locationId = _instance->GetCapsuleCapsuleFromPosition(tp->twp->pos);
     if (locationId > 0)
     {
         if (tp->twp->mode == 4)
             return;
 
-        const auto test = eventDetectorPtr->checkData.find(locationId);
-        DrawIndicator(tp, false, test->second.checked, CapsuleIndicator, test->first);
+        const auto test = _instance->checkData.find(locationId);
+        _instance->DrawIndicator(tp, false, test->second.checked, CapsuleIndicator, test->first);
     }
-});
+}
 
-FunctionHook<void, task*> OnAirItemBoxMain(0x4C07D0, [](task* tp)-> void
+void EventDetector::OnAirItemBoxMain(task* tp)
 {
-    OnAirItemBoxMain.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().capsuleSanity)
+    _onAirItemBoxMainHook.Original(tp);
+    if (!_instance->_options.capsuleSanity)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterCapsuleSanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter),
+                                                    _instance->GetCapsuleTypeOption(tp->twp->scl.x)))
         return;
-    if (!GetCapsuleTypeOption(tp->twp->scl.x))
-        return;
-    if (!eventDetectorPtr->randomizer.GetOptions().includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
+    if (!_instance->_options.includePinballCapsules && levelact(CurrentLevel, CurrentAct) ==
         LevelAndActIDs_Casinopolis3)
         return;
 
-    const int locationId = GetCapsuleCapsuleFromPosition(tp->twp->pos);
+    const int locationId = _instance->GetCapsuleCapsuleFromPosition(tp->twp->pos);
     if (locationId > 0)
     {
-        const auto test = eventDetectorPtr->checkData.find(locationId);
-        DrawIndicator(tp, true, test->second.checked, CapsuleIndicator, test->first);
+        const auto test = _instance->checkData.find(locationId);
+        _instance->DrawIndicator(tp, true, test->second.checked, CapsuleIndicator, test->first);
     }
-});
+}
 
 void __cdecl EmptyTrackerFunction(task* obj)
 {
@@ -1162,19 +1183,19 @@ int FindEnemyTrackerId(task* tp)
     return enemyId;
 }
 
-void CheckEnemy(task* tp)
+void EventDetector::CheckEnemy(task* tp)
 {
-    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+    if (!_instance->_options.enemySanity)
         return;
 
-    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
     int enemyId = FindEnemyTrackerId(tp);
 
     if (enemyId > ENEMY_STARTING_ID)
     {
-        const auto check = eventDetectorPtr->checkData.find(enemyId);
+        const auto check = _instance->checkData.find(enemyId);
         const bool isTallEnemy = check->second.enemyType == Buyon;
         DrawIndicator(tp, isTallEnemy, check->second.checked, EnemyIndicator, check->first);
     }
@@ -1186,9 +1207,9 @@ void CheckEnemy(task* tp)
     }
 }
 
-FunctionHook<void, task*> onRhinotankLoad(0x7A1380, [](task* tp)-> void
+void EventDetector::OnRhinotankLoad(task* tp)
 {
-    CheckEnemy(tp);
+    _instance->CheckEnemy(tp);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_WindyValley3
         && tp->twp->pos.x > 1347 && tp->twp->pos.x < 1349
         && tp->twp->pos.y > -2662 && tp->twp->pos.y < -2660
@@ -1196,21 +1217,22 @@ FunctionHook<void, task*> onRhinotankLoad(0x7A1380, [](task* tp)-> void
     {
         tp->twp->pos.y = -2650.1;
     }
-    onRhinotankLoad.Original(tp);
-});
+    _onRhinotankLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onKikiLoad(0x4AD140, [](task* tp)-> void
+void EventDetector::OnKikiLoad(task* tp)
 {
-    CheckEnemy(tp);
-    onKikiLoad.Original(tp);
-});
+    _instance->CheckEnemy(tp);
+    _onKikiLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onKikiMain(0x4ACF80, [](task* tp)-> void
+void EventDetector::OnKikiMain(task* tp)
 {
-    CheckEnemy(tp);
-    onKikiMain.Original(tp);
-});
-FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
+    _instance->CheckEnemy(tp);
+    _onKikiMainHook.Original(tp);
+}
+
+void EventDetector::OnWaterSpiderLoad(task* tp)
 {
     //We change the spider location for sadx
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_TwinklePark2
@@ -1229,114 +1251,129 @@ FunctionHook<void, task*> onWaterSpiderLoad(0x7AA960, [](task* tp)-> void
     {
         tp->twp->pos.z = -869.65f;
     }
-    CheckEnemy(tp);
-    onWaterSpiderLoad.Original(tp);
-});
+    _instance->CheckEnemy(tp);
+    _onWaterSpiderLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onWaterSpiderMain(0x7AA870, [](task* tp)-> void
+void EventDetector::OnWaterSpiderMain(task* tp)
 {
-    CheckEnemy(tp);
-    onWaterSpiderMain.Original(tp);
-});
+    _instance->CheckEnemy(tp);
+    _onWaterSpiderMainHook.Original(tp);
+}
 
-FunctionHook<void, task*> onBuyonMain(0x7B2E00, [](task* tp)-> void
+void EventDetector::OnBuyonMain(task* tp)
 {
-    CheckEnemy(tp);
-    onBuyonMain.Original(tp);
-});
+    //We delete the enemy when transitioning between levels
+    if (CutsceneMode == 3)
+        return FreeTask(tp);
 
-FunctionHook<void, task*> onBoaBoaHeadLoad(0x7A00F0, [](task* tp)-> void
+    _instance->CheckEnemy(tp);
+    _onBuyonMainHook.Original(tp);
+}
+
+void EventDetector::OnBoaBoaHeadLoad(task* tp)
 {
-    onBoaBoaHeadLoad.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+    _onBoaBoaHeadLoadHook.Original(tp);
+    if (!_instance->_options.enemySanity)
         return;
-    if (!eventDetectorPtr->randomizer.GetOptions().
-                           GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
     int enemyId = FindEnemyTrackerId(tp);
 
     if (enemyId > ENEMY_STARTING_ID)
     {
-        const auto check = eventDetectorPtr->checkData.find(enemyId);
-        DrawIndicator(tp, false, check->second.checked, EnemyIndicator, check->first);
+        const auto check = _instance->checkData.find(enemyId);
+        _instance->DrawIndicator(tp, false, check->second.checked, EnemyIndicator, check->first);
     }
     else if (enemyId != ENEMY_INVALID_ID)
     {
         const task* childTask = CreateChildTask(LoadObj_UnknownB, EmptyTrackerFunction, tp);
-        enemyId = GetEnemyFromPosition(tp->ptp->twp->pos);
+        enemyId = _instance->GetEnemyFromPosition(tp->ptp->twp->pos);
         childTask->awp->work.sl[0] = enemyId;
     }
-});
+}
 
-FunctionHook<void, task*> onLeonLoad(0x4A85C0, [](task* tp)-> void
+void EventDetector::OnLeonLoad(task* tp)
 {
-    CheckEnemy(tp);
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_WindyValley3 and CurrentCharacter == Characters_Tails
+    _instance->CheckEnemy(tp);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_WindyValley3 && CurrentCharacter == Characters_Tails
         && tp->twp->pos.x > 408 && tp->twp->pos.x < 410
         && tp->twp->pos.y > -406 && tp->twp->pos.y < -403
         && tp->twp->pos.z > -1370 && tp->twp->pos.z < -1368)
     {
         tp->twp->pos.y = -401;
     }
-    onLeonLoad.Original(tp);
-});
-FunctionHook<void, task*> onLeonMain(0x4A83D0, [](task* tp)-> void
-{
-    CheckEnemy(tp);
-    onLeonMain.Original(tp);
-});
+    _onLeonLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onSpinnerAMain(0x4B0DF0, [](task* tp)-> void
+void EventDetector::OnLeonMain(task* tp)
 {
-    CheckEnemy(tp);
-    onSpinnerAMain.Original(tp);
-});
-FunctionHook<void, task*> onSpinnerBMain(0x4B0F40, [](task* tp)-> void
+    _instance->CheckEnemy(tp);
+    _onLeonMainHook.Original(tp);
+}
+
+void EventDetector::OnSpinnerAMain(task* tp)
 {
-    CheckEnemy(tp);
-    onSpinnerBMain.Original(tp);
-});
-//Electric Spinner
-FunctionHook<void, task*> onSpinnerCMain(0x4B1090, [](task* tp)-> void
+    _instance->CheckEnemy(tp);
+    _onSpinnerAMainHook.Original(tp);
+}
+
+void EventDetector::OnSpinnerBMain(task* tp)
 {
-    CheckEnemy(tp);
-    onSpinnerCMain.Original(tp);
-});
-FunctionHook<void, task*> onPoliceLoad(0x4B3210, [](task* tp)-> void
+    _instance->CheckEnemy(tp);
+    _onSpinnerBMainHook.Original(tp);
+}
+
+void EventDetector::OnSpinnerCMain(task* tp)
 {
-    CheckEnemy(tp);
-    onPoliceLoad.Original(tp);
-});
-FunctionHook<void, task*> onPoliceMain(0x4B30E0, [](task* tp)-> void
+    _instance->CheckEnemy(tp);
+    _onSpinnerCMainHook.Original(tp);
+}
+
+void EventDetector::OnPoliceLoad(task* tp)
 {
-    CheckEnemy(tp);
-    onPoliceMain.Original(tp);
-});
-FunctionHook<void, task*> onSpikeBallSpinnerALoad(0x4AF190, [](task* tp)-> void
+    _instance->CheckEnemy(tp);
+    _onPoliceLoadHook.Original(tp);
+}
+
+void EventDetector::OnPoliceMain(task* tp)
 {
-    CheckEnemy(tp);
-    onSpikeBallSpinnerALoad.Original(tp);
-});
-FunctionHook<void, task*> onSpikeBallSpinnerAMain(0x4AF030, [](task* tp)-> void
+    //We delete the enemy when transitioning between levels
+    if (CutsceneMode == 3)
+        return FreeTask(tp);
+
+    _instance->CheckEnemy(tp);
+    _onPoliceMainHook.Original(tp);
+}
+
+void EventDetector::OnSpikeBallSpinnerALoad(task* tp)
 {
-    CheckEnemy(tp);
-    onSpikeBallSpinnerAMain.Original(tp);
-});
-FunctionHook<void, task*> onSpikeBallSpinnerBLoad(0x4AF500, [](task* tp)-> void
+    _instance->CheckEnemy(tp);
+    _onSpikeBallSpinnerALoadHook.Original(tp);
+}
+
+void EventDetector::OnSpikeBallSpinnerAMain(task* tp)
 {
-    CheckEnemy(tp);
-    onSpikeBallSpinnerBLoad.Original(tp);
-});
-FunctionHook<void, task*> onSpikeBallSpinnerBMain(0x4AF3D0, [](task* tp)-> void
+    _instance->CheckEnemy(tp);
+    _onSpikeBallSpinnerAMainHook.Original(tp);
+}
+
+void EventDetector::OnSpikeBallSpinnerBLoad(task* tp)
 {
-    CheckEnemy(tp);
-    onSpikeBallSpinnerBMain.Original(tp);
-});
-//Gola (Fire)
-FunctionHook<void, task*> onSpikeBallSpinnerCLoad(0x4AF860, [](task* tp)-> void
+    _instance->CheckEnemy(tp);
+    _onSpikeBallSpinnerBLoadHook.Original(tp);
+}
+
+void EventDetector::OnSpikeBallSpinnerBMain(task* tp)
 {
-    CheckEnemy(tp);
+    _instance->CheckEnemy(tp);
+    _onSpikeBallSpinnerBMainHook.Original(tp);
+}
+
+void EventDetector::OnSpikeBallSpinnerCLoad(task* tp)
+{
+    _instance->CheckEnemy(tp);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_RedMountain1
         && tp->twp->pos.x > -3874 && tp->twp->pos.x < -3872
         && tp->twp->pos.y > 593 && tp->twp->pos.y < 595
@@ -1346,18 +1383,18 @@ FunctionHook<void, task*> onSpikeBallSpinnerCLoad(0x4AF860, [](task* tp)-> void
         tp->twp->pos.y = 581.37f;
         tp->twp->pos.z = -1831.20f;
     }
-    onSpikeBallSpinnerCLoad.Original(tp);
-});
+    _onSpikeBallSpinnerCLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onSpikeBallSpinnerCMain(0x4AF770, [](task* tp)-> void
+void EventDetector::OnSpikeBallSpinnerCMain(task* tp)
 {
-    CheckEnemy(tp);
-    onSpikeBallSpinnerCMain.Original(tp);
-});
+    _instance->CheckEnemy(tp);
+    _onSpikeBallSpinnerCMainHook.Original(tp);
+}
 
-FunctionHook<void, task*> onIceBallLoad(0x4C8FB0, [](task* tp)-> void
+void EventDetector::OnIceBallLoad(task* tp)
 {
-    CheckEnemy(tp);
+    _instance->CheckEnemy(tp);
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_IceCap1
         && tp->twp->pos.x > 509 && tp->twp->pos.x < 510
         && tp->twp->pos.y > 32 && tp->twp->pos.y < 34
@@ -1365,99 +1402,102 @@ FunctionHook<void, task*> onIceBallLoad(0x4C8FB0, [](task* tp)-> void
     {
         tp->twp->pos.y = 42.28f;
     }
-    onIceBallLoad.Original(tp);
-});
-FunctionHook<void, task*> onIceBallMainA(0x4C8AC0, [](task* tp)-> void
-{
-    CheckEnemy(tp);
-    onIceBallMainA.Original(tp);
-});
-FunctionHook<void, task*> onIceBallMainB(0x4C8DD0, [](task* tp)-> void
-{
-    CheckEnemy(tp);
-    onIceBallMainB.Original(tp);
-});
+    _onIceBallLoadHook.Original(tp);
+}
 
-FunctionHook<void, task*> onEggKeeperLoad(0x4A6700, [](task* tp)-> void
+void EventDetector::OnIceBallMainA(task* tp)
 {
-    CheckEnemy(tp);
-    onEggKeeperLoad.Original(tp);
-});
-FunctionHook<void, task*> onEggKeeperMain(0x4A6420, [](task* tp)-> void
+    _instance->CheckEnemy(tp);
+    _onIceBallMainAHook.Original(tp);
+}
+
+void EventDetector::OnIceBallMainB(task* tp)
 {
-    CheckEnemy(tp);
-    onEggKeeperMain.Original(tp);
-});
+    _instance->CheckEnemy(tp);
+    _onIceBallMainBHook.Original(tp);
+}
+
+void EventDetector::OnEggKeeperLoad(task* tp)
+{
+    _instance->CheckEnemy(tp);
+    _onEggKeeperLoadHook.Original(tp);
+}
+
+void EventDetector::OnEggKeeperMain(task* tp)
+{
+    _instance->CheckEnemy(tp);
+    _onEggKeeperMainHook.Original(tp);
+}
 
 
-void CheckDestroyedEnemy(task* tp)
+void EventDetector::CheckDestroyedEnemy(task* tp)
 {
-    if (!eventDetectorPtr->randomizer.GetOptions().enemySanity)
+    if (!_instance->_options.enemySanity)
         return;
 
-    if (!eventDetectorPtr->randomizer.GetOptions().GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
+    if (!_instance->_options.GetCharacterEnemySanity(static_cast<Characters>(CurrentCharacter)))
         return;
 
     const int enemyId = FindEnemyTrackerId(tp);
 
     if (enemyId > ENEMY_STARTING_ID)
     {
-        const auto test = eventDetectorPtr->checkData.find(enemyId);
+        const auto test = _instance->checkData.find(enemyId);
         if (!test->second.checked)
         {
-            eventDetectorPtr->randomizer.OnCheckFound(enemyId);
-            eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
+            _instance->_randomizer.OnCheckFound(enemyId);
+            _instance->checkData = _instance->_randomizer.GetCheckData();
         }
     }
 }
 
-FunctionHook<void, task*> onDeadOut(0x46C150, [](task* tp)-> void
+void EventDetector::OnDeadOut(task* tp)
 {
-    CheckDestroyedEnemy(tp);
-    onDeadOut.Original(tp);
-});
+    _instance->CheckDestroyedEnemy(tp);
+    _onDeadOutHook.Original(tp);
+}
 
-FunctionHook<void, task*> onBuyonDestroyChildren(0x7B1500, [](task* tp)-> void
+void EventDetector::OnBuyonDestroyChildren(task* tp)
 {
     //We check the player actually destroyed the enemy, and it wasn't destroyed by a restart
     if (tp->twp->mode == 6)
-        CheckDestroyedEnemy(tp);
-    onBuyonDestroyChildren.Original(tp);
-});
+        _instance->CheckDestroyedEnemy(tp);
+    _onBuyonDestroyChildrenHook.Original(tp);
+}
 
-void HandleOnBoaBoaPartDestroyed(task* tp)
+void EventDetector::HandleOnBoaBoaPartDestroyed(task* tp)
 {
     OnBoaBoaPartDestroyed_t.Original(tp);
-    CheckDestroyedEnemy(tp);
+    _instance->CheckDestroyedEnemy(tp);
 }
 
 
 void EventDetector::OnTwinkleCircuitCompleted(const int character)
 {
-    if (!eventDetectorPtr->randomizer.GetOptions().twinkleCircuitCheck)
+    if (!_instance->_options.twinkleCircuitChecks)
         return;
 
-    if (eventDetectorPtr->randomizer.GetOptions().multipleTwinkleCircuitChecks)
+    if (_instance->_options.twinkleCircuitChecks == 2)
     {
         switch (character)
         {
         case Characters_Sonic:
-            eventDetectorPtr->randomizer.OnCheckFound(40);
+            _instance->_randomizer.OnCheckFound(40);
             break;
         case Characters_Tails:
-            eventDetectorPtr->randomizer.OnCheckFound(41);
+            _instance->_randomizer.OnCheckFound(41);
             break;
         case Characters_Knuckles:
-            eventDetectorPtr->randomizer.OnCheckFound(42);
+            _instance->_randomizer.OnCheckFound(42);
             break;
         case Characters_Amy:
-            eventDetectorPtr->randomizer.OnCheckFound(43);
+            _instance->_randomizer.OnCheckFound(43);
             break;
         case Characters_Big:
-            eventDetectorPtr->randomizer.OnCheckFound(44);
+            _instance->_randomizer.OnCheckFound(44);
             break;
         case Characters_Gamma:
-            eventDetectorPtr->randomizer.OnCheckFound(45);
+            _instance->_randomizer.OnCheckFound(45);
             break;
 
         default:
@@ -1466,28 +1506,27 @@ void EventDetector::OnTwinkleCircuitCompleted(const int character)
     }
     else
     {
-        eventDetectorPtr->randomizer.OnCheckFound(15);
+        _instance->_randomizer.OnCheckFound(15);
     }
 }
 
-FunctionHook<signed int> onSaveTwinkleCircuitRecord(0x4B5BC0, []()-> signed int
+signed int EventDetector::OnSaveTwinkleCircuitRecord()
 {
-    eventDetectorPtr->OnTwinkleCircuitCompleted(CurrentCharacter);
-    return onSaveTwinkleCircuitRecord.Original();
-});
+    _instance->OnTwinkleCircuitCompleted(CurrentCharacter);
+    return _onSaveTwinkleCircuitRecordHook.Original();
+}
 
-FunctionHook<void, task*> onFishMain(0x597010, [](task* tp)-> void
+void EventDetector::OnFishMain(task* tp)
 {
-    onFishMain.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().fishSanity)
+    _onFishMainHook.Original(tp);
+    if (!_instance->_options.fishSanity)
         return;
     if (CurrentCharacter != Characters_Big)
         return;
 
-
     const int fishType = tp->twp->value.w[1];
 
-    for (const auto& check : eventDetectorPtr->checkData)
+    for (const auto& check : _instance->checkData)
     {
         if (check.second.type != LocationFish)
             continue;
@@ -1497,24 +1536,23 @@ FunctionHook<void, task*> onFishMain(0x597010, [](task* tp)-> void
 
         if (check.second.fishType == fishType)
         {
-            DrawIndicator(tp, false, check.second.checked, FishIndicator, check.first);
+            _instance->DrawIndicator(tp, false, check.second.checked, FishIndicator, check.first);
             break;
         }
     }
-});
+}
 
-
-FunctionHook<void, task*> onFishCaught(0x470160, [](task* tp)-> void
+void EventDetector::OnFishCaught(task* tp)
 {
-    onFishCaught.Original(tp);
-    if (!eventDetectorPtr->randomizer.GetOptions().fishSanity)
+    _onFishCaughtHook.Original(tp);
+    if (!_instance->_options.fishSanity)
         return;
 
     const auto* v1 = reinterpret_cast<int*>(tp->twp);
     const int fishType = v1[2];
 
     bool checksFound = false;
-    for (const auto& check : eventDetectorPtr->checkData)
+    for (const auto& check : _instance->checkData)
     {
         if (check.second.type != LocationFish)
             continue;
@@ -1524,87 +1562,93 @@ FunctionHook<void, task*> onFishCaught(0x470160, [](task* tp)-> void
 
         if (check.second.fishType == fishType && !check.second.checked)
         {
-            eventDetectorPtr->randomizer.OnCheckFound(check.first);
+            _instance->_randomizer.OnCheckFound(check.first);
             checksFound = true;
         }
     }
     if (checksFound)
-        eventDetectorPtr->checkData = eventDetectorPtr->randomizer.GetCheckData();
-});
+        _instance->checkData = _instance->_randomizer.GetCheckData();
+}
 
-
-FunctionHook<void> onCheckEggHold(0x7151A0, []()-> void
+void EventDetector::OnCheckEggHold()
 {
     const int holdingItem = GetHoldingItemIDP(0);
     if (holdingItem == 5)
         //Gold Egg
-        eventDetectorPtr->randomizer.OnCheckFound(900);
+        _instance->_randomizer.OnCheckFound(900);
     else if (holdingItem == 10)
         //Silver Egg
-        eventDetectorPtr->randomizer.OnCheckFound(901);
+        _instance->_randomizer.OnCheckFound(901);
     else if (holdingItem == 11)
         //Black Egg
-        eventDetectorPtr->randomizer.OnCheckFound(902);
+        _instance->_randomizer.OnCheckFound(902);
 
-    onCheckEggHold.Original();
-});
+    _onCheckEggHoldHook.Original();
+}
 
-//Burger Man delete function, should prevent the crash.
-FunctionHook<void, task*> onMissionStatueDelete(0x5934C0, [](task* tp)-> void
+void EventDetector::OnMissionStatueDelete(task* tp)
 {
     FreeTask(tp);
-});
+}
 
-FunctionHook<void, int> onPlayMusic(0x425690, [](const int songId)-> void
+void EventDetector::OnPlayMusic(int songId)
 {
     int shuffledSongId;
-    if (songId == eventDetectorPtr->lastRealSongId)
-        shuffledSongId = eventDetectorPtr->lastShuffledSongId;
+    if (songId == _instance->lastRealSongId)
+        shuffledSongId = _instance->lastShuffledSongId;
     else
-        shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
+        shuffledSongId = _instance->_randomizer.GetSongForId(songId);
 
-    onPlayMusic.Original(shuffledSongId);
-    eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
-    eventDetectorPtr->lastRealSongId = songId;
-    eventDetectorPtr->lastShuffledSongId = shuffledSongId;
-});
+    _onPlayMusicHook.Original(shuffledSongId);
+    _instance->_randomizer.DisplaySongName(shuffledSongId);
+    _instance->lastRealSongId = songId;
+    _instance->lastShuffledSongId = shuffledSongId;
+}
 
-FunctionHook<void, int> onPlayMusic2(0x425800, [](const int songId)-> void
+void EventDetector::OnPlayMusic2(int songId)
 {
     int shuffledSongId;
-    if (songId == eventDetectorPtr->lastRealSongId)
-        shuffledSongId = eventDetectorPtr->lastShuffledSongId;
+    if (songId == _instance->lastRealSongId)
+        shuffledSongId = _instance->lastShuffledSongId;
     else
-        shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
+        shuffledSongId = _instance->_randomizer.GetSongForId(songId);
 
-    onPlayMusic2.Original(shuffledSongId);
-    eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
-    eventDetectorPtr->lastRealSongId = songId;
-    eventDetectorPtr->lastShuffledSongId = shuffledSongId;
-});
+    _onPlayMusic2Hook.Original(shuffledSongId);
+    _instance->_randomizer.DisplaySongName(shuffledSongId);
+    _instance->lastRealSongId = songId;
+    _instance->lastShuffledSongId = shuffledSongId;
+}
 
-FunctionHook<void, int> onPlayJingle(0x425860, [](const int songId)-> void
+void EventDetector::OnPlayJingle(int songId)
 {
-    const int shuffledSongId = eventDetectorPtr->randomizer.GetSongForId(songId);
-    onPlayJingle.Original(shuffledSongId);
-    if (eventDetectorPtr->randomizer.GetOptions().showSongNameForType == ShowSongNameForTypeEverything)
-        eventDetectorPtr->randomizer.DisplaySongName(shuffledSongId);
-});
+    const int shuffledSongId = _instance->_randomizer.GetSongForId(songId);
+    _onPlayJingleHook.Original(shuffledSongId);
+    if (_instance->_settings.showSongNameForType == ShowSongNameForTypeEverything)
+        _instance->_randomizer.DisplaySongName(shuffledSongId);
+}
 
 void EventDetector::ShuffleSong()
 {
-    if (randomizer.GetOptions().musicShuffle == MusicShuffleNone
-        || randomizer.GetOptions().musicShuffle == MusicShuffleDisabled
-        || randomizer.GetOptions().musicShuffle == MusicShuffleSingularity)
+    if (this->_options.musicShuffle == MusicShuffleNone
+        || this->_options.musicShuffle == MusicShuffleDisabled
+        || this->_options.musicShuffle == MusicShuffleSingularity)
         return;
 
-    if (randomizer.GetOptions().musicShuffleConsistency != MusicShuffleConsistencyPerPlay)
+    if (this->_options.musicShuffleConsistency != MusicShuffleConsistencyPerPlay)
         return;
 
-    if (randomizer.GetOptions().lifeCapsulesChangeSongs != LifeCapsulesChangeSongsEnabled)
+    if (this->_options.lifeCapsulesChangeSongs != LifeCapsulesChangeSongsEnabled)
         return;
 
-    const int shuffledSongId = randomizer.GetSongForId(eventDetectorPtr->lastRealSongId);
-    onPlayMusic.Original(shuffledSongId);
-    randomizer.DisplaySongName(shuffledSongId);
+    const int shuffledSongId = _randomizer.GetSongForId(_instance->lastRealSongId);
+    _onPlayMusicHook.Original(shuffledSongId);
+    _randomizer.DisplaySongName(shuffledSongId);
+}
+
+// Prevents adding extra 10 seconds for Sonic and Tails
+void EventDetector::OnAddSeconds(int seconds)
+{
+    if (seconds == 10 && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
+        return;
+    return _addSecondsHook.Original(seconds);
 }

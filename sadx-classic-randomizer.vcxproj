@@ -21,7 +21,7 @@
     </PropertyGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
     <PropertyGroup>
-        <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+        <PreferredToolArchitecture>x86</PreferredToolArchitecture>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
         <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -45,7 +45,6 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
         <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
         <LinkIncremental>true</LinkIncremental>
-        <LibraryPath>$(LibraryPath)</LibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -61,15 +60,20 @@
             <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
             <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
             <AdditionalIncludeDirectories>lib;lib/json/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+            <LanguageStandard>stdcpp17</LanguageStandard>
+            <MultiProcessorCompilation>true</MultiProcessorCompilation>
         </ClCompile>
         <Link>
             <SubSystem>Windows</SubSystem>
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <EnableUAC>false</EnableUAC>
-            <AdditionalDependencies>lib/APCpp/ixwebsocket.lib;lib/APCpp/mbedcrypto.lib;lib/APCpp/mbedtls.lib;lib/APCpp/mbedx509.lib;Ws2_32.lib;Crypt32.lib;%(AdditionalDependencies);</AdditionalDependencies>
+            <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies);</AdditionalDependencies>
         </Link>
+        <PreBuildEvent>
+            <Command>call ./scripts/release-clean.bat</Command>
+        </PreBuildEvent>
         <PostBuildEvent>
-            <Command>call ./scripts/debug_install.bat</Command>
+            <Command>call ./scripts/debug_install.bat &amp;&amp; call ./scripts/debug_zip.bat</Command>
         </PostBuildEvent>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -84,6 +88,7 @@
             <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
             <AdditionalIncludeDirectories>lib;lib/json/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
             <LanguageStandard>stdcpp17</LanguageStandard>
+            <MultiProcessorCompilation>true</MultiProcessorCompilation>
         </ClCompile>
         <Link>
             <SubSystem>Windows</SubSystem>
@@ -91,9 +96,8 @@
             <OptimizeReferences>true</OptimizeReferences>
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <EnableUAC>false</EnableUAC>
-            <AdditionalDependencies>lib/APCpp/ixwebsocket.lib;lib/APCpp/mbedcrypto.lib;lib/APCpp/mbedtls.lib;lib/APCpp/mbedx509.lib;Ws2_32.lib;Crypt32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
+            <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies);</AdditionalDependencies>
         </Link>
-
         <PreBuildEvent>
             <Command>call ./scripts/release-clean.bat</Command>
         </PreBuildEvent>
@@ -103,6 +107,7 @@
     </ItemDefinitionGroup>
     <ItemGroup>
         <ClCompile Include="lib\APCpp\Archipelago.cpp"/>
+        <ClCompile Include="lib\APCpp\ixwebsocket\*.cpp" />
         <ClCompile Include="lib\json\src\lib_json\*.cpp"/>
         <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.cpp"/>
         <ClCompile Include="src\**\*.cpp" />
@@ -111,7 +116,6 @@
         <ClInclude Include="lib\APCpp\Archipelago.h"/>
         <ClInclude Include="lib\APCpp\ixwebsocket\*.h" />
         <ClInclude Include="lib\json\include\json\*.h"/>
-        <ClInclude Include="lib\json\src\lib_json\json_valueiterator.inl"/>
         <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.hpp"/>
         <ClInclude Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.h"/>
         <ClInclude Include="lib\sadx-mod-loader\SADXModLoader\include\*.h"/>

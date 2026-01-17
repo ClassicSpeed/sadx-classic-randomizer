@@ -1,12 +1,20 @@
 #include "SaveFileManager.h"
 
-#include "../../pch.h"
+
+SaveFileManager::SaveFileManager()
+{
+    _howManyGameGearGamesHook.Hook(OnHowManyGameGearGames);
+    _isGameGearMenuEnabledHook.Hook(OnIsGameGearMenuEnabled);
+    _showRecapHook.Hook(OnShowRecap);
+}
+
 
 void SaveFileManager::OnSaveFileLoaded()
 {
     if (LevelClearCounts[0] == 0)
-        OnSaveFileCreated();
+        _instance->OnSaveFileCreated();
 }
+
 
 void SaveFileManager::OnFrame()
 {
@@ -67,68 +75,15 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_RED));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_SILVER));
 
-    //Train
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_TRAIN));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_TRAIN));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_TRAIN));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_TRAIN));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_TRAIN));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_TRAIN));
-
-    //Boat
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_BOAT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_BOAT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_BOAT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_BOAT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_BOAT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_BOAT));
-
-    //Raft
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_RAFT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_RAFT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_RAFT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_RAFT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_RAFT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RAFT));
-
-
     //Casino Door
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_CASINO));
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ENTRANCE_CASINO));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO));
 
-    //Twinkle Park Elevator
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_TPARK_ELEVATOR));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_TPARK_ELEVATOR));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_TPARK_ELEVATOR));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_SS_TPARK_ELEVATOR));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_SS_TPARK_ELEVATOR));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_SS_TPARK_ELEVATOR));
-
     //Speed Highway
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_CARD));
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_HIGHWAY));
     ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ENTRANCE_HIGHWAY));
-
-    //Windy Valley
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_WINDY));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_WINDYSTONE));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_WINDY));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_WINDYSTONE));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_WINDY));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_WINDYSTONE));
-
-    //Ice Cap Stone
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ICESTONE));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ICESTONE));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_SS_ICESTONE));
-    //Ice Entrance
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ICESTONE));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_ICECAP));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ICESTONE));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_ICECAP));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_ICESTONE));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_ENTRANCE_ICECAP));
 
     //Red Mountain
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_MOUNTAIN));
@@ -137,14 +92,6 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_MONKEYDOOR_ENTER));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_MONKEYCAGEA_BOMB));
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_CLEAR_MOUNTAIN));
-
-    //Jungle Cart
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_TRUCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_TRUCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_TRUCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_TRUCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_TRUCK));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_TRUCK));
 
     //Lost World
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_REDCUBE));
@@ -156,26 +103,6 @@ void SaveFileManager::OnSaveFileCreated()
 
     //FinalEgg
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_FINALEGG));
-
-    //EggCarrier
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_EGGLIFT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_EGGLIFT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_EGGLIFT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_EGGLIFT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_EGGLIFT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_EGGLIFT));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_MONORAIL));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_MONORAIL));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_MONORAIL));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_MONORAIL));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_MONORAIL));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_MONORAIL));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_TRANSFORM));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_TRANSFORM));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_TRANSFORM));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_TRANSFORM));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_TRANSFORM));
 
     //Chao Garden
     ClearEventFlag(static_cast<EventFlags>(FLAG_GET_GOLDEGG));
@@ -200,9 +127,16 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_SS));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_MR));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_EC));
+
+    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));
+    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_TRANSFORM));
+
     WriteSaveFile();
 }
-
 
 void SaveFileManager::StartAllMissions()
 {
@@ -223,4 +157,47 @@ void SaveFileManager::SetMissionCompleted(const int mission)
     MissionFlags[mission - 1] &= ~MissionFlags_Started;
     MissionFlags[mission - 1] |= MissionFlags_Complete;
     WriteSaveFile();
+}
+
+void SaveFileManager::SetEventFlags(std::vector<StoryFlags> storyFlags)
+{
+    for (StoryFlags storyFlag : storyFlags)
+    {
+        SetEventFlag(static_cast<EventFlags>(storyFlag));
+    }
+    WriteSaveFile();
+}
+
+void SaveFileManager::UnlockSuperSonic()
+{
+    SetEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_PLAYABLE));
+    WriteSaveFile();
+}
+
+void SaveFileManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist)
+{
+    for (const int mission : missionBlacklist)
+    {
+        MissionFlags[mission - 1] |= MissionFlags_Found;
+        MissionFlags[mission - 1] &= ~MissionFlags_Started;
+        MissionFlags[mission - 1] |= MissionFlags_Complete;
+    }
+    WriteSaveFile();
+}
+
+// Enable all GameGear Games
+int SaveFileManager::OnHowManyGameGearGames()
+{
+    return 12;
+}
+
+bool SaveFileManager::OnIsGameGearMenuEnabled()
+{
+    return true;
+}
+
+// Prevents the recap screen from showing on the last story
+int SaveFileManager::OnShowRecap(int _)
+{
+    return -1;
 }

@@ -1,18 +1,37 @@
 #pragma once
 
-#include "../../application/Randomizer.h"
+#include "../../pch.h"
+#include "../../application/randomizer/Randomizer.h"
 
 
-class CharacterLoadingDetector
+class CharacterLoadingDetector : public IOnFrame
 {
 public:
-    explicit CharacterLoadingDetector(Randomizer& randomizer);
+    static CharacterLoadingDetector& Init(Randomizer& randomizer, Settings& settings)
+    {
+        if (_instance == nullptr)
+            _instance = new CharacterLoadingDetector(randomizer, settings);
+        return *_instance;
+    }
+
+    void OnFrame() override;
 
     void OnCharacterSelectScreenLoaded() const;
     void OnCharacterLoaded();
-    void OnPlayingFrame();
 
 private:
+    explicit CharacterLoadingDetector(Randomizer& randomizer, Settings& settings);
+    inline static CharacterLoadingDetector* _instance = nullptr;
     Randomizer& _randomizer;
+    Settings& _settings;
+
+
+    inline static FunctionHook<void> _loadCharacterHook{0x4157C0};
+    static void OnLoadCharacter();
+
+    inline static FunctionHook<void> _loadCharacterSelectScreenHook{0x512BC0};
+    static void OnLoadCharacterSelectScreen();
+
+
     int _loadCharacterNextFrame = 0;
 };

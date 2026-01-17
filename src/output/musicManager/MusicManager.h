@@ -6,7 +6,8 @@
 #include <unordered_map>
 #include <vector>
 #include <filesystem>
-#include "../../application/structs/Options.h"
+#include "../../configuration/options/Options.h"
+#include "../../configuration/settings/Settings.h"
 
 
 enum SongType
@@ -196,22 +197,32 @@ private:
 class MusicManager
 {
 public:
-    MusicManager();
+    static MusicManager& Init(Options& options, Settings& settings, const HelperFunctions& helperFunctions)
+    {
+        if (_instance == nullptr)
+            _instance = new MusicManager(options, settings, helperFunctions);
+        return *_instance;
+    }
+
     const SongData* FindSongById(int songId);
-    void ParseExtraFiles(const HelperFunctions& helperFunctions);
-    void ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath);
-    void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot, std::string categoryPath,
-                           SongSource songSource);
-    SongType GetSongTypeFromString(const std::string& typeStr);
-    void UpdateOptions(Options newOptions);
     void RandomizeMusic();
-    std::vector<int> GetPossibleSongIds(int id, std::mt19937& gen);
-    int GetSingularitySong();
     int GetSongForId(int songId);
-    int GetSongNewForId(int songId, int currentSongId);
+    int GetNewSongForId(int songId, int currentSongId);
 
 private:
-    Options _options;
+    MusicManager(Options& options, Settings& settings, const HelperFunctions& helperFunctions);
+    inline static MusicManager* _instance = nullptr;
+    Options& _options;
+    Settings& _settings;
+
+    void ProcessSongsFile(const HelperFunctions& helperFunctions, const std::string& songsPath);
+
+    std::vector<int> GetPossibleSongIds(int id, std::mt19937& gen);
+    int GetSingularitySong();
+    SongType GetSongTypeFromString(const std::string& typeStr);
+    void ParseExtraFiles(const HelperFunctions& helperFunctions);
+    void ParseSongCategory(const HelperFunctions& helperFunctions, Json::Value categoryRoot,
+                           std::string categoryPath, SongSource songSource);
     SongMap _songMap;
     std::unordered_map<int, std::vector<int>> _songRandomizationMap;
 };
