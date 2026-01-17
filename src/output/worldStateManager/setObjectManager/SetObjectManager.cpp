@@ -389,8 +389,8 @@ void SetObjectManager::HandleWarp()
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggWalker, 0);
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && CurrentCharacter == Characters_Sonic
-        || CurrentCharacter == Characters_Gamma)
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && (CurrentCharacter == Characters_Sonic
+        || CurrentCharacter == Characters_Gamma))
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggViper, 0);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && EntityData1Ptrs[0]->Position.y < 100)
