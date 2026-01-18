@@ -2208,6 +2208,22 @@ void LocationRepository::UpdateLevelStatus()
 
 void LocationRepository::UpdateMissionStatus()
 {
+    _gameStatus.missions.sonicMissionsTotal = 0;
+    _gameStatus.missions.tailsMissionsTotal = 0;
+    _gameStatus.missions.knucklesMissionsTotal = 0;
+    _gameStatus.missions.amyMissionsTotal = 0;
+    _gameStatus.missions.bigMissionsTotal = 0;
+    _gameStatus.missions.gammaMissionsTotal = 0;
+
+    _gameStatus.missions.sonicMissionsCompleted = 0;
+    _gameStatus.missions.tailsMissionsCompleted = 0;
+    _gameStatus.missions.knucklesMissionsCompleted = 0;
+    _gameStatus.missions.amyMissionsCompleted = 0;
+    _gameStatus.missions.bigMissionsCompleted = 0;
+    _gameStatus.missions.gammaMissionsCompleted = 0;
+
+    _gameStatus.missions.missionsCompleted = 0;
+
     auto vector = _options.missionBlacklist;
     for (int index = 801; index <= 860; index++)
     {
@@ -2258,6 +2274,14 @@ void LocationRepository::UpdateMissionStatus()
 
 void LocationRepository::UpdateBossesStatus()
 {
+    _gameStatus.bosses.sonicBossesCompleted = 0;
+    _gameStatus.bosses.tailsBossesCompleted = 0;
+    _gameStatus.bosses.knucklesBossesCompleted = 0;
+    _gameStatus.bosses.amyBossesCompleted = 0;
+    _gameStatus.bosses.bigBossesCompleted = 0;
+    _gameStatus.bosses.gammaBossesCompleted = 0;
+    _gameStatus.bosses.bossesCompleted = 0;
+
     //Chaos 0
     if (_checkData[700].checked)
     {
@@ -2390,6 +2414,7 @@ void LocationRepository::UpdateBossesStatus()
 
 void LocationRepository::UpdateChaoStatus()
 {
+    _gameStatus.chao.racesCompleted = 0;
     if (_checkData[905].checked)
         _gameStatus.chao.racesCompleted++;
     if (_checkData[906].checked)

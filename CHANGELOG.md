@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## [v1.2.0 pre-release 2] - 2026-01-??
+
+### Fixed:
+- Fixed missions and bosses counters not updating correctly in the in-game tracker.
+
 ## [v1.2.0 pre-release 1] - 2026-01-16
 
 ### Added
