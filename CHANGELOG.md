@@ -2,11 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-
 ## [v1.2.0 pre-release 2] - 2026-01-??
 
 ### Fixed:
+
 - Fixed missions and bosses counters not updating correctly in the in-game tracker.
+- Fixed Sky Chase entrance, Egg Viper entrance and Chaos 6 entrance, not working correctly with random level entrances.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 
@@ -73,7 +74,6 @@ All notable changes to this project will be documented in this file.
 - Option twinkle_circuit_check renamed to twinkle_circuit_checks.
 - Option sand_hill_check renamed to sand_hill_checks.
 - Removed level_entrance_plando.
-
 
 ## [v1.1.3] - 2025-09-16
 

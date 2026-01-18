@@ -389,8 +389,7 @@ void SetObjectManager::HandleWarp()
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare2)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggWalker, 0);
 
-    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4 && (CurrentCharacter == Characters_Sonic
-        || CurrentCharacter == Characters_Gamma))
+    else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_EggViper, 0);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && EntityData1Ptrs[0]->Position.y < 100)
@@ -403,12 +402,10 @@ void SetObjectManager::HandleWarp()
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins1 && EntityData1Ptrs[0]->Position.y > 150)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_SkyChase1, 0);
 
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z > -500
-        && (CurrentCharacter != Characters_Tails))
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z > -500)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_Chaos6, 0);
 
-    else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z < -500
-        && (CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails))
+    else if (CurrentLevel == LevelIDs_EggCarrierOutside && EntityData1Ptrs[0]->Position.z < -500)
         SetNextLevelAndAct_CutsceneMode(LevelIDs_SkyChase2, 0);
 
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
