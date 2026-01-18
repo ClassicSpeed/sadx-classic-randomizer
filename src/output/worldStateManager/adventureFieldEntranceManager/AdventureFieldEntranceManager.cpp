@@ -356,6 +356,11 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
             twp->pos = {0, 650, -1000};
             twp->ang = {0, 0x4000, 0};
         }
+        if (GetLevelEntranceID() == 1)
+        {
+            twp->pos = {0, 728, 345};
+            twp->ang = {0, 0xC000, 0};
+        }
         if (GetLevelEntranceID() == 2)
         {
             twp->pos = {356, 569, -422};
