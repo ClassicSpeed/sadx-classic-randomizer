@@ -1025,12 +1025,15 @@ void AdventureFieldEntranceManager::OnLoadSceneChangeMr(task* tp)
     }
 
     _loadSceneChangeMrHook.Original(tp);
-} // MysticRuins
+}
+
+// MysticRuins
 void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
 {
-    // Ice Cap
+    //Angel Island
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
+        // Ice Cap
         if (newScene == 1)
         {
             if (_instance->IsDoorOpen(IceCaveToIceCap))
@@ -1039,6 +1042,13 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
                     GET_LEVEL(LevelAndActIDs_IceCap1), GET_ACT(LevelAndActIDs_IceCap1));
             }
             return;
+        }
+
+        // Ice Cap
+        if (newScene == 0)
+        {
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_RedMountain1), GET_ACT(LevelAndActIDs_RedMountain1));
         }
     }
 
