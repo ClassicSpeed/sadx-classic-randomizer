@@ -100,6 +100,11 @@ void ArchipelagoMessenger::SendTrapLink(std::string trapName, std::string player
     AP_SendBounce(b);
 }
 
+void ArchipelagoMessenger::StartSetMapStatusAsyncDetached()
+{
+    std::thread(&ArchipelagoMessenger::SetMapStatus, this).detach();
+}
+
 void ArchipelagoMessenger::SetMapStatus()
 {
     for (int id = 0; id < InvalidEntranceId; ++id)

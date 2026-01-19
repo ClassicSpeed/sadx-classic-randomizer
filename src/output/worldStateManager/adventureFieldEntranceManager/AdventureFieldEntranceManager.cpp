@@ -185,7 +185,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
         }
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
-        _instance->_archipelagoMessenger.SetMapStatus();
+        _instance->_archipelagoMessenger.StartSetMapStatusAsyncDetached();
         return;
     }
     _setNextLevelAndActHook.Original(level, act);
@@ -231,7 +231,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
         }
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
-        _instance->_archipelagoMessenger.SetMapStatus();
+        _instance->_archipelagoMessenger.StartSetMapStatusAsyncDetached();
         return;
     }
     _setNextLevelAndActCutsceneModeHook.Original(level, act);

@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Fixed missable enemies/capsules not excluding some locations.
 - Fixed in-game tracker ignoring the missable enemies option.
 - Fixed in-game tracker ignoring the pinbal capsules option.
+- Saving entrances used to data storage is now made asynchronously, and no loger increases loading times.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 
