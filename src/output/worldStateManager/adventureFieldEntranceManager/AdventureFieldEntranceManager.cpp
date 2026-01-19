@@ -5,9 +5,11 @@ UsercallFunc(int, twinkleParkDoorHook, (char tpChar), (tpChar), 0x63EA90, rEAX, 
 UsercallFunc(signed int, mrCartHook, (task* tp), (tp), 0x53DC60, rEAX, rESI);
 UsercallFuncVoid(sceneChangeMrHook, (int a1), (a1), 0x539220, rEBX);
 UsercallFuncVoid(sceneChangeECInsideHook, (int a1, int a2), (a1,a2), 0x52D690, rEAX, rECX);
+UsercallFuncVoid(sceneChangeLogicECOusideHook, (int a1), (a1), 0x524FE0, rEAX);
 UsercallFunc(int, eggCarrierInsideEggDoorHook, (const taskwk* twp), (twp), 0x52B420, rEAX, rESI);
 UsercallFunc(int, eggCarrierOutsideEggDoorHook, (const taskwk* twp), (twp), 0x524070, rEAX, rESI);
 UsercallFunc(int, skyDeckDoorHook, (taskwk* twp), (twp), 0x51DEB0, rEAX, rESI);
+
 
 AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, Settings& settings,
                                                              GameStatus& gameStatus,
@@ -84,6 +86,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _isLostWorldBackEntranceOpenHook.Hook(OnIsLostWorldBackEntranceOpen);
     _loadLongLadderMrHook.Hook(OnLoadLongLadderMr);
     sceneChangeECInsideHook.Hook(OnSceneChangeEcInside);
+    sceneChangeLogicECOusideHook.Hook(OnSceneChangeLogicECOuside);
     eggCarrierInsideEggDoorHook.Hook(OnEggCarrierInsideEggDoor);
     eggCarrierOutsideEggDoorHook.Hook(OnEggCarrierOutsideEggDoor);
     skyDeckDoorHook.Hook(OnSkyDeckDoor);
@@ -1178,6 +1181,29 @@ void AdventureFieldEntranceManager::OnSceneChangeEcInside(int a1, int a2)
             GET_LEVEL(LevelAndActIDs_MysticRuins4), GET_ACT(LevelAndActIDs_MysticRuins4));
     }
     return sceneChangeECInsideHook.Original(a1, a2);
+}
+
+void AdventureFieldEntranceManager::OnSceneChangeLogicECOuside(int a1)
+{
+    unsigned int v1 = *(_DWORD*)(a1 + 20); // ebx
+    Uint8 act = 0; // [esp+0h] [ebp-2h]
+    Uint8 level = 0; // [esp+1h] [ebp-1h]
+    SetLevelEntrance(*(BYTE*)(a1 + 28) & 0xF);
+    if (v1 > 5)
+    {
+        if (v1 == 256)
+        {
+            act = 2;
+            level = 6;
+        }
+    }
+    else
+    {
+        level = 29;
+        act = v1 & 0xF;
+    }
+    camerahax_adventurefields();
+    j_SetNextLevelAndAct_CutsceneMode(level, act);
 }
 
 bool AdventureFieldEntranceManager::IsPlayerNearDoor(const taskwk* twp)

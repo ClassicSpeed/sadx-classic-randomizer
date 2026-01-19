@@ -236,6 +236,8 @@ private:
 
     static void __cdecl OnSceneChangeEcInside(int a1, int a2);
 
+    static void __cdecl OnSceneChangeLogicECOuside(int a1);
+
     static int __cdecl OnEggCarrierInsideEggDoor(const taskwk* twp);
 
     static int __cdecl OnEggCarrierOutsideEggDoor(const taskwk* twp);
