@@ -1149,6 +1149,15 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
             }
             return;
         }
+        if (newScene == 8)
+        {
+            if (_instance->IsDoorOpen(JungleToSandHill))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_SandHill), GET_ACT(LevelAndActIDs_SandHill));
+            }
+            return;
+        }
     }
 
     sceneChangeMrHook.Original(newScene);
