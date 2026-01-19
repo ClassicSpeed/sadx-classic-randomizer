@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Bridge's Sky Deck entrance sending the player back to the level after exiting Sky Deck.
 - Fixed Red Mountain loading zone not working for Knuckles, Tails or Big.
 - Fixed Knuckles' Lost World Entrance not working correctly.
+- Removed Wind Stone ghost.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 
