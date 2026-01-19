@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
 - Removed Wind Stone ghost.
 - Fixed logic issues with access rules for Egg Carrier Bridge (that affected Sonic's Sky Deck Entrance).
 - Updated Entrance Randomizer description to include info about bosses, sublevels and chao gardens.
+- Fixed missable enemies/capsules not excluding some locations.
+- Fixed in-game tracker ignoring the missable enemies option.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 

@@ -2449,9 +2449,9 @@ void LocationRepository::UpdateEnemySanity()
                 continue;
 
             if (!_instance->_options.missableEnemies)
-                if ((id >= 12001 && id <= 12009)
-                    || (id >= 21001 && id <= 21002)
-                    || (id >= 14001 && id <= 14007))
+                if ((id >= 12001 && id <= 12010)
+                    || (id >= 21001 && id <= 21003)
+                    || (id >= 14001 && id <= 14008))
                     continue;
 
             _gameStatus.enemySanity[GET_LEVEL(location.level)][location.character].total++;
@@ -2483,12 +2483,16 @@ void LocationRepository::UpdateCapsuleSanity()
                 continue;
 
             if (!_instance->_options.missableCapsules)
-                if ((id >= 12501 && id <= 12546) ||
-                    (id >= 21501 && id <= 21541) ||
-                    (id >= 14501 && id <= 14518) ||
-                    (id >= 15524 && id <= 15531) ||
-                    (id >= 18512 && id <= 18513))
+                if ((id >= 12501 && id <= 12547) ||
+                    (id >= 21501 && id <= 21542) ||
+                    (id >= 14501 && id <= 14519) ||
+                    (id >= 15524 && id <= 15532) ||
+                    (id >= 18512 && id <= 18514))
                     continue;
+            if (!_instance->_options.includePinballCapsules)
+                if (id >= 12548 && id <= 12552)
+                    return;
+
 
             _gameStatus.capsuleSanity[GET_LEVEL(location.level)][location.character].total++;
             if (location.checked)

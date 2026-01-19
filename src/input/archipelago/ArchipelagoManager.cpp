@@ -271,7 +271,7 @@ void ArchipelagoManager::Connect()
 
     AP_REGISTER_INT_CALLBACK("EnemySanity", _options.EnemySanity);
     AP_REGISTER_MAP_CALLBACK("EnemySanityList", _options.EnemySanityList);
-    AP_REGISTER_INT_CALLBACK("MissableCapsules", _options.MissableCapsules);
+    AP_REGISTER_INT_CALLBACK("MissableEnemies", _options.MissableEnemies);
 
     AP_REGISTER_INT_CALLBACK("CapsuleSanity", _options.CapsuleSanity);
     AP_REGISTER_MAP_CALLBACK("CapsuleSanityList", _options.CapsuleSanityList);

@@ -495,6 +495,24 @@ void EventDetector::OnFrame()
         {
             for (auto& check : checkData)
             {
+                if (!_instance->_options.missableCapsules)
+                    if ((check.first >= 12501 && check.first <= 12547) ||
+                        (check.first >= 21501 && check.first <= 21542) ||
+                        (check.first >= 14501 && check.first <= 14519) ||
+                        (check.first >= 15524 && check.first <= 15532) ||
+                        (check.first >= 18512 && check.first <= 18514))
+                        return;
+
+                if (!_instance->_options.missableEnemies)
+                    if ((check.first >= 12001 && check.first <= 12010)
+                        || (check.first >= 21001 && check.first <= 21003)
+                        || (check.first >= 14001 && check.first <= 14008))
+                        return;
+
+                if (!_instance->_options.includePinballCapsules)
+                    if (check.first >= 12548 && check.first <= 12552)
+                        return;
+
                 const LocationData& location = check.second;
                 if (IsTargetableCheck(location))
                 {
@@ -985,18 +1003,23 @@ void EventDetector::DrawIndicator(const task* tp, const bool tallElement, const 
         return;
 
     if (!_instance->_options.missableCapsules)
-        if ((locationId >= 12501 && locationId <= 12546) ||
-            (locationId >= 21501 && locationId <= 21541) ||
-            (locationId >= 14501 && locationId <= 14518) ||
-            (locationId >= 15524 && locationId <= 15531) ||
-            (locationId >= 18512 && locationId <= 18513))
+        if ((locationId >= 12501 && locationId <= 12547) ||
+            (locationId >= 21501 && locationId <= 21542) ||
+            (locationId >= 14501 && locationId <= 14519) ||
+            (locationId >= 15524 && locationId <= 15532) ||
+            (locationId >= 18512 && locationId <= 18514))
             return;
 
     if (!_instance->_options.missableEnemies)
-        if ((locationId >= 12001 && locationId <= 12009)
-            || (locationId >= 21001 && locationId <= 21002)
-            || (locationId >= 14001 && locationId <= 14007))
+        if ((locationId >= 12001 && locationId <= 12010)
+            || (locationId >= 21001 && locationId <= 21003)
+            || (locationId >= 14001 && locationId <= 14008))
             return;
+
+    if (!_instance->_options.includePinballCapsules)
+        if (locationId >= 12548 && locationId <= 12552)
+            return;
+
 
     if (!checked)
     {

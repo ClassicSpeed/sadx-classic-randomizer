@@ -60,16 +60,6 @@ void CharacterLoadingDetector::OnFrame()
             for (int i = 0; i < 512; i++)
                 EventFlagArray[i] = 1;
 
-            //Playable Characters
-            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_PLAYABLE));
-            ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_PLAYABLE));
-            ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_PLAYABLE));
-            ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_PLAYABLE));
-            ClearEventFlag(static_cast<EventFlags>(FLAG_E102_PLAYABLE));
-            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_PLAYABLE));
-            ClearEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_PLAYABLE));
-            ClearEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
-
             //Upgrades
             ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_LIGHTSHOOSE));
             ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_CRYSTALRING));
