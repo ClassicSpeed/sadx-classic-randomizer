@@ -114,7 +114,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
             {0, 124, -155}
         },
         {FinalEggTowerToFinalEgg, LevelAndActIDs_MysticRuins4, 2, FinalEggToFinalEggTower, 115, {175, 135, -25.75}},
-        {FinalEggTowerToBetaEggViper, LevelAndActIDs_MysticRuins4, 3, BetaEggViperToFinalEggTower, 225, {0, 16, 0}},
+        {FinalEggTowerToBetaEggViper, LevelAndActIDs_MysticRuins4, 4, BetaEggViperToFinalEggTower, 225, {0, 16, 0}},
         {FinalEggTowerToEcInside, LevelAndActIDs_MysticRuins4, 3, EcInsideToFinalEggTower, 180, {0, 15, -175}},
 
 
@@ -427,6 +427,8 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
     if ((GET_LEVEL(sourceLocation) >= LevelIDs_EmeraldCoast && GET_LEVEL(sourceLocation) <= LevelIDs_E101R)
         || (GET_LEVEL(sourceLocation) >= LevelIDs_TwinkleCircuit && GET_LEVEL(sourceLocation) <= LevelIDs_SandHill))
     {
+        PrintDebug("Using saved entrance ID: %d, since source location is %d\n", _lastEntranceIdUsed,
+                   GET_LEVEL(sourceLocation));
         return FindEntranceById(_lastEntranceIdUsed);
     }
 
@@ -437,10 +439,13 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
     const EntranceId destinationEntranceId = GetReplacementConnection(sourceEntranceId, isEggCarrierTransformed);
     AdventureFieldEntrance* newEntrance = FindEntranceById(destinationEntranceId);
 
-    if ((GET_LEVEL(destinationLocation) >= LevelIDs_EmeraldCoast && GET_LEVEL(destinationLocation) <= LevelIDs_E101R)
-        || (GET_LEVEL(destinationLocation) >= LevelIDs_TwinkleCircuit && GET_LEVEL(destinationLocation) <=
+    if ((GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_EmeraldCoast && GET_LEVEL(newEntrance->levelAndActId) <=
+            LevelIDs_E101R)
+        || (GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_TwinkleCircuit && GET_LEVEL(newEntrance->levelAndActId) <=
             LevelIDs_SandHill))
     {
+        PrintDebug("Saving entrance ID: %d, since destination location is %d\n", sourceEntranceId,
+                   GET_LEVEL(newEntrance->levelAndActId));
         _lastEntranceIdUsed = sourceEntranceId;
     }
 

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.2.0 pre-release 2] - 2026-01-??
 
+### Added:
+
+- Added new returning location for the Egg Viper/Beta Mk1 entrance.
+
 ### Fixed:
 
 - Fixed missions and bosses counters not updating correctly in the in-game tracker.
@@ -17,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Fixed in-game tracker ignoring the missable enemies option.
 - Fixed in-game tracker ignoring the pinbal capsules option.
 - Saving entrances used to data storage is now made asynchronously, and no loger increases loading times.
+- Fixed incorrect returning location with random level entrances.
 
 - Fixed logic issues with access rules for Egg Carrier Bridge (that affected Sonic's Sky Deck Entrance).
 - Fixed incorrect regions for Main platorm emblem and Spinning platform emblem.

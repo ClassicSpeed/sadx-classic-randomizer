@@ -150,6 +150,7 @@ bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, const Uint8 act)
 {
+    PrintDebug("---------OnSetNextLevelAndAct called with level %d act %d\n", level, act);
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
         currentLevelAndAct = LevelAndActIDs_ECGarden;
@@ -179,9 +180,12 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
         }
         else
         {
+            PrintDebug("+++++++Transitioning to new level and act: %d, %d\n", GET_LEVEL(levelActAndId),
+                       GET_ACT(levelActAndId));
             _setNextLevelAndActHook.Original(
                 GET_LEVEL(levelActAndId), GET_ACT(levelActAndId));
             SetEntranceNumber(newEntrance->entranceNumber);
+            PrintDebug("----------Set entrance number to %d\n", newEntrance->entranceNumber);
         }
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
@@ -193,6 +197,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, const Uint8 act)
 {
+    PrintDebug("---------OnSetNextLevelAndActCutsceneMode called with level %d act %d\n", level, act);
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
         currentLevelAndAct = LevelAndActIDs_ECGarden;
@@ -322,6 +327,14 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
         else if (GetLevelEntranceID() == 5)
         {
             twp->pos = {-667, 90.5f, -1150};
+            twp->ang = {0, 0x4000, 0};
+        }
+    }
+    else if (levelAndAct == LevelAndActIDs_MysticRuins4)
+    {
+        if (GetLevelEntranceID() == 4)
+        {
+            twp->pos = {1.22f, 8, 36.75};
             twp->ang = {0, 0x4000, 0};
         }
     }
