@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 
 - Fixed logic issues with access rules for Egg Carrier Bridge (that affected Sonic's Sky Deck Entrance).
 - Fixed incorrect regions for Main platorm emblem and Spinning platform emblem.
+- Mission 1 temporaly removed (forced into blacklist) because of logic issues.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 
