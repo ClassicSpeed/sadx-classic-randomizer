@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Red Mountain loading zone not working for Knuckles, Tails or Big.
 - Fixed Knuckles' Lost World Entrance not working correctly.
 - Removed Wind Stone ghost.
+- Fixed logic issues with access rules for Egg Carrier Bridge (that affected Sonic's Sky Deck Entrance).
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 
