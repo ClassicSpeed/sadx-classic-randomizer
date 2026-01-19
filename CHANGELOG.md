@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Knuckles' Lost World Entrance not working correctly.
 - Removed Wind Stone ghost.
 - Fixed logic issues with access rules for Egg Carrier Bridge (that affected Sonic's Sky Deck Entrance).
+- Updated Entrance Randomizer description to include info about bosses, sublevels and chao gardens.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 
