@@ -427,8 +427,6 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
     if ((GET_LEVEL(sourceLocation) >= LevelIDs_EmeraldCoast && GET_LEVEL(sourceLocation) <= LevelIDs_E101R)
         || (GET_LEVEL(sourceLocation) >= LevelIDs_TwinkleCircuit && GET_LEVEL(sourceLocation) <= LevelIDs_SandHill))
     {
-        PrintDebug("Using saved entrance ID: %d, since source location is %d\n", _lastEntranceIdUsed,
-                   GET_LEVEL(sourceLocation));
         return FindEntranceById(_lastEntranceIdUsed);
     }
 
@@ -439,13 +437,11 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
     const EntranceId destinationEntranceId = GetReplacementConnection(sourceEntranceId, isEggCarrierTransformed);
     AdventureFieldEntrance* newEntrance = FindEntranceById(destinationEntranceId);
 
-    if ((GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_EmeraldCoast && GET_LEVEL(newEntrance->levelAndActId) <=
-            LevelIDs_E101R)
-        || (GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_TwinkleCircuit && GET_LEVEL(newEntrance->levelAndActId) <=
-            LevelIDs_SandHill))
+    if ((GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_EmeraldCoast
+            && GET_LEVEL(newEntrance->levelAndActId) <= LevelIDs_E101R)
+        || (GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_TwinkleCircuit
+            && GET_LEVEL(newEntrance->levelAndActId) <= LevelIDs_SandHill))
     {
-        PrintDebug("Saving entrance ID: %d, since destination location is %d\n", sourceEntranceId,
-                   GET_LEVEL(newEntrance->levelAndActId));
         _lastEntranceIdUsed = sourceEntranceId;
     }
 

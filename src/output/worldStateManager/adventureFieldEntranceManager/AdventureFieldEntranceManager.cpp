@@ -150,7 +150,6 @@ bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, const Uint8 act)
 {
-    PrintDebug("---------OnSetNextLevelAndAct called with level %d act %d\n", level, act);
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
         currentLevelAndAct = LevelAndActIDs_ECGarden;
@@ -180,16 +179,13 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
         }
         else
         {
-            PrintDebug("+++++++Transitioning to new level and act: %d, %d\n", GET_LEVEL(levelActAndId),
-                       GET_ACT(levelActAndId));
             _setNextLevelAndActHook.Original(
                 GET_LEVEL(levelActAndId), GET_ACT(levelActAndId));
             SetEntranceNumber(newEntrance->entranceNumber);
-            PrintDebug("----------Set entrance number to %d\n", newEntrance->entranceNumber);
         }
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
-        _instance->_archipelagoMessenger.StartSetMapStatusAsyncDetached();
+        _instance->_archipelagoMessenger.SetMapStatus();
         return;
     }
     _setNextLevelAndActHook.Original(level, act);
@@ -197,7 +193,6 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, const Uint8 act)
 {
-    PrintDebug("---------OnSetNextLevelAndActCutsceneMode called with level %d act %d\n", level, act);
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
         currentLevelAndAct = LevelAndActIDs_ECGarden;
@@ -236,7 +231,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
         }
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
-        _instance->_archipelagoMessenger.StartSetMapStatusAsyncDetached();
+        _instance->_archipelagoMessenger.SetMapStatus();
         return;
     }
     _setNextLevelAndActCutsceneModeHook.Original(level, act);

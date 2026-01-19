@@ -22,7 +22,7 @@ public:
     void SendRingUpdate(int ringDifference);
     void SendHardRingUpdate(int ringDifference);
     void SendTrapLink(std::string trapName, std::string playerName);
-    void StartSetMapStatusAsyncDetached();
+    void SetMapStatus();
 
 private:
     explicit ArchipelagoMessenger(Options& options, GameStatus& gameStatus);
@@ -30,5 +30,4 @@ private:
     Options& _options;
     GameStatus& _gameStatus;
     void SendRingPacket(int ringDifference, const std::string& tagName);
-    void SetMapStatus();
 };
