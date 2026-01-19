@@ -1099,6 +1099,15 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
             }
             return;
         }
+        if (newScene == 4)
+        {
+            if (_instance->IsDoorOpen(FinalEggTowerToJungle))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_MysticRuins3), GET_ACT(LevelAndActIDs_MysticRuins3));
+            }
+            return;
+        }
         if (newScene == 5)
         {
             if (_instance->IsDoorOpen(FinalEggTowerToEcInside))
@@ -1110,9 +1119,18 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
         }
     }
 
-    // Lost world
+    // Jungle
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
     {
+        if (newScene == 5)
+        {
+            if (_instance->IsDoorOpen(JungleToFinalEggTower))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_MysticRuins4), GET_ACT(LevelAndActIDs_MysticRuins4));
+            }
+            return;
+        }
         if (newScene == 6)
         {
             if (_instance->IsDoorOpen(JungleToLostWorld))

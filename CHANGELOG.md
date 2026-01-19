@@ -22,7 +22,8 @@ All notable changes to this project will be documented in this file.
 - Fixed in-game tracker ignoring the pinbal capsules option.
 - Fixed incorrect returning location with random level entrances.
 - Fixed chao gardens returning to incorrect location with random level entrances.
-- Fixed loading zone for both sky decks not working for Amy, Big and Gamma.
+- Fixed loading zones for both sky decks not working for Amy, Big and Gamma.
+- Fixed loading zones for tunnel between Jungle and Final Egg Tower.
 
 - Fixed logic issues with access rules for Egg Carrier Bridge (that affected Sonic's Sky Deck Entrance).
 - Fixed incorrect regions for Main platorm emblem and Spinning platform emblem.
