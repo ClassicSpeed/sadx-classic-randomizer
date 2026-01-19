@@ -907,6 +907,13 @@ void AdventureFieldEntranceManager::OnMysticRuinsKey(task* tp)
 
 void AdventureFieldEntranceManager::OnMysticRuinsLock(task* tp)
 {
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
+    {
+        if (!_instance->IsDoorOpen(JungleToLostWorldAlternative))
+            return;
+
+        return _mysticRuinsLockHook.Original(tp);
+    }
     const int bufferCharacter = CurrentCharacter;
     CurrentCharacter = Characters_Sonic;
     _mysticRuinsLockHook.Original(tp);
@@ -920,6 +927,9 @@ BOOL AdventureFieldEntranceManager::OnIsWindyValleyOpen()
 
 BOOL AdventureFieldEntranceManager::OnPreventMrStoneSpawn()
 {
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
+        return false;
+
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
         return _instance->IsDoorOpen(AngelIslandToIceCave);
     return false;
@@ -1108,7 +1118,9 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
     }
 
     sceneChangeMrHook.Original(newScene);
-} //Makes knuckles able to enter the lost world using the keys and everyone without them
+}
+
+//Makes knuckles able to enter the lost world using the keys and everyone without them
 BOOL AdventureFieldEntranceManager::OnIsLostWorldBackEntranceOpen()
 {
     if (!_instance->IsDoorOpen(JungleToLostWorldAlternative))

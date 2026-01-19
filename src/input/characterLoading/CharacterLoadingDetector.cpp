@@ -57,16 +57,99 @@ void CharacterLoadingDetector::OnFrame()
             for (int i = 0; i < 512; i++)
                 CutsceneFlagArray[i] = 1;
 
-            for (int i = SSVAR_EGG_ON; i < 512; i++)
-                if (i != FLAG_SONIC_SS_LIGHTSHOOSE && i != FLAG_SONIC_SS_CRYSTALRING && i != FLAG_SONIC_MR_ANCIENT_LIGHT
-                    && i != FLAG_MILES_SS_JETANKLET && i != FLAG_MILES_MR_RHYTHMBROOCH
-                    && i != FLAG_KNUCKLES_MR_SHOVELCLAW && i != FLAG_KNUCKLES_MR_FIGHTINGGROVE
-                    && i != FLAG_AMY_MR_FIGHTERSFEATHER && i != FLAG_AMY_EC_LONGHAMMER
-                    && i != FLAG_E102_EC_BOOSTER && i != FLAG_E102_EC_TYPE3LASER
-                    && i != FLAG_BIG_MR_LIFEBELT && i != FLAG_BIG_MR_POWERROD
-                    && i != FLAG_BIG_RUAR_NORMAL && i != FLAG_BIG_RUAR_RED
-                    && i != FLAG_BIG_RUAR_GOLD && i != FLAG_BIG_RUAR_BLUE)
-                    EventFlagArray[i] = 1;
+            for (int i = 0; i < 512; i++)
+                EventFlagArray[i] = 1;
+
+            //Playable Characters
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_PLAYABLE));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_PLAYABLE));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_PLAYABLE));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_PLAYABLE));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_E102_PLAYABLE));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_PLAYABLE));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_PLAYABLE));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SUPERSONIC_COMPLETE));
+
+            //Upgrades
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_LIGHTSHOOSE));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_CRYSTALRING));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ANCIENT_LIGHT));
+
+            ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_JETANKLET));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_RHYTHMBROOCH));
+
+            ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_SHOVELCLAW));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_FIGHTINGGROVE));
+
+            ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_MR_FIGHTERSFEATHER));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_LONGHAMMER));
+
+            ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_BOOSTER));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TYPE3LASER));
+
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_LIFEBELT));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_MR_POWERROD));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_BLUE));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_GOLD));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_NORMAL));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_RED));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_RUAR_SILVER));
+
+            //Casino Door
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_CASINO));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ENTRANCE_CASINO));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_SS_ENTRANCE_CASINO));
+
+            //Speed Highway
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_CARD));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_SS_ENTRANCE_HIGHWAY));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_SS_ENTRANCE_HIGHWAY));
+
+            //Red Mountain
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_MOUNTAIN));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_MOUNTAIN));
+
+            //Lost World
+            ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_REDCUBE));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_BLUECUBE));
+
+            //Sand Hill
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_SANDBOARD));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_MR_ENTRANCE_SANDBOARD));
+
+            //FinalEgg
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_FINALEGG));
+
+            //Chao Garden
+            ClearEventFlag(static_cast<EventFlags>(FLAG_GET_GOLDEGG));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_GET_SILVEREGG));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_GET_BLACKEGG));
+
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_SS));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_MR));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_ARRIVE_IN_EC));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_ARRIVE_IN_SS));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_ARRIVE_IN_MR));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_ARRIVE_IN_EC));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_ARRIVE_IN_SS));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_ARRIVE_IN_MR));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_ARRIVE_IN_EC));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_ARRIVE_IN_SS));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_ARRIVE_IN_MR));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_ARRIVE_IN_EC));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_E102_ARRIVE_IN_SS));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_E102_ARRIVE_IN_MR));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_E102_ARRIVE_IN_EC));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_SS));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_MR));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_EC));
+
+            ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_TRANSFORM));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_TRANSFORM));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_TRANSFORM));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_TRANSFORM));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));
+            ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_TRANSFORM));
         }
 
 

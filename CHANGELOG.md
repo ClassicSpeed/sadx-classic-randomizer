@@ -9,7 +9,8 @@ All notable changes to this project will be documented in this file.
 - Fixed missions and bosses counters not updating correctly in the in-game tracker.
 - Fixed Sky Chase entrance, Egg Viper entrance and Chaos 6 entrance, not working correctly with random level entrances.
 - Fixed Bridge's Sky Deck entrance sending the player back to the level after exiting Sky Deck.
-- Fixed Red Mountain loading zone not working for Knuckles, Tails or Big
+- Fixed Red Mountain loading zone not working for Knuckles, Tails or Big.
+- Fixed Knuckles' Lost World Entrance not working correctly.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 
