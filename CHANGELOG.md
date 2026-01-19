@@ -12,12 +12,14 @@ All notable changes to this project will be documented in this file.
 - Fixed Red Mountain loading zone not working for Knuckles, Tails or Big.
 - Fixed Knuckles' Lost World Entrance not working correctly.
 - Removed Wind Stone ghost.
-- Fixed logic issues with access rules for Egg Carrier Bridge (that affected Sonic's Sky Deck Entrance).
 - Updated Entrance Randomizer description to include info about bosses, sublevels and chao gardens.
 - Fixed missable enemies/capsules not excluding some locations.
 - Fixed in-game tracker ignoring the missable enemies option.
 - Fixed in-game tracker ignoring the pinbal capsules option.
 - Saving entrances used to data storage is now made asynchronously, and no loger increases loading times.
+
+- Fixed logic issues with access rules for Egg Carrier Bridge (that affected Sonic's Sky Deck Entrance).
+- Fixed incorrect regions for Main platorm emblem and Spinning platform emblem.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 
