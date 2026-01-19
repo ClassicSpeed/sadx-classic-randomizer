@@ -19,6 +19,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
 {
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
     _setNextLevelAndActHook.Hook(OnSetNextLevelAndAct);
+    _setNextLevelAndActChaoGardenHook.Hook(OnSetNextLevelAndActChaoGarden);
     _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
     _movePlayerToStartPointHook.Hook(OnMovePlayerToStartPoint);
     _getEntranceEc.Hook(OnGetEntranceEc);
@@ -189,6 +190,12 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
         return;
     }
     _setNextLevelAndActHook.Original(level, act);
+}
+
+task* AdventureFieldEntranceManager::OnSetNextLevelAndActChaoGarden(Uint8 level, Uint8 act)
+{
+    _instance->OnSetNextLevelAndActCutsceneMode(level, act);
+    return nullptr;
 }
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, const Uint8 act)

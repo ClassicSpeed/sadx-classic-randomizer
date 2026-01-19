@@ -437,10 +437,10 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
     const EntranceId destinationEntranceId = GetReplacementConnection(sourceEntranceId, isEggCarrierTransformed);
     AdventureFieldEntrance* newEntrance = FindEntranceById(destinationEntranceId);
 
-    if ((GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_EmeraldCoast
-            && GET_LEVEL(newEntrance->levelAndActId) <= LevelIDs_E101R)
-        || (GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_TwinkleCircuit
-            && GET_LEVEL(newEntrance->levelAndActId) <= LevelIDs_SandHill))
+    if ((GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_EmeraldCoast && GET_LEVEL(newEntrance->levelAndActId) <=
+            LevelIDs_E101R)
+        || (GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_TwinkleCircuit && GET_LEVEL(newEntrance->levelAndActId) <=
+            LevelIDs_SandHill))
     {
         _lastEntranceIdUsed = sourceEntranceId;
     }
