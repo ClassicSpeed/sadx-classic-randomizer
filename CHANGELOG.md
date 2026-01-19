@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Updated Entrance Randomizer description to include info about bosses, sublevels and chao gardens.
 - Fixed missable enemies/capsules not excluding some locations.
 - Fixed in-game tracker ignoring the missable enemies option.
+- Fixed in-game tracker ignoring the pinbal capsules option.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 

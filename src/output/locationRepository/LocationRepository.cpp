@@ -2491,7 +2491,7 @@ void LocationRepository::UpdateCapsuleSanity()
                     continue;
             if (!_instance->_options.includePinballCapsules)
                 if (id >= 12548 && id <= 12552)
-                    return;
+                    continue;
 
 
             _gameStatus.capsuleSanity[GET_LEVEL(location.level)][location.character].total++;
