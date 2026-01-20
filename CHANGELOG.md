@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
 
 - Fixed Twinkle Circuit logic not working correctly with random level entrances.
+- Fixed entrance hint info not working for bosses and sublevels.
 
 ## [v1.2.0 pre-release 2] - 2026-01-19
 
