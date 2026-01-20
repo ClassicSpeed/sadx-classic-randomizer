@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0 pre-release 3] - 2026-01-??
+
+### Fixed:
+
+- Fixed Twinkle Circuit logic not working correctly with random level entrances.
+
 ## [v1.2.0 pre-release 2] - 2026-01-19
 
 ### Added:
@@ -18,7 +24,7 @@ All notable changes to this project will be documented in this file.
 - Updated Entrance Randomizer description to include info about bosses, sublevels and chao gardens.
 - Fixed missable enemies/capsules not excluding some locations.
 - Fixed in-game tracker ignoring the missable enemies option.
-- Fixed in-game tracker ignoring the pinball  capsules option.
+- Fixed in-game tracker ignoring the pinball capsules option.
 - Fixed incorrect returning location with random level entrances.
 - Fixed chao gardens returning to incorrect location with random level entrances.
 - Fixed loading zones for both sky decks not working for Amy, Big and Gamma.
@@ -28,8 +34,8 @@ All notable changes to this project will be documented in this file.
 - Fixed Knuckles' Lost World Entrance not working correctly.
 
 - Fixed logic issues with access rules for Egg Carrier Bridge (that affected Sonic's Sky Deck Entrance).
-- Fixed incorrect regions for Main platform  emblem and Spinning platform emblem.
-- Mission 1 temporally  removed (forced into blacklist) because of logic issues.
+- Fixed incorrect regions for Main platform emblem and Spinning platform emblem.
+- Mission 1 temporally removed (forced into blacklist) because of logic issues.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 
