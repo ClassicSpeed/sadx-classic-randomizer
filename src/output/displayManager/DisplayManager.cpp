@@ -512,7 +512,7 @@ void DisplayManager::DisplayItemsUnlocked()
     const int rows = VerticalResolution / _settings.debugFontSize;
     const int columns = HorizontalResolution / _settings.debugFontSize;
     const std::string modVersionString = "v" + std::to_string(SADX_AP_VERSION_MAJOR) + "." +
-        std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH) + " Beta 1";
+        std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH) + " Beta 2";
     DisplayDebugString(NJM_LOCATION(columns-14, rows-2), modVersionString.c_str());
 
     SetDebugFontColor(this->_displayEmblemColor);
@@ -713,12 +713,7 @@ void DisplayManager::DisplayItemsUnlocked()
             }
         }
 
-        if (_options.capsuleSanity && (
-            _options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), ExtraLifeCapsule) ||
-            _options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), ShieldCapsule) ||
-            _options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), SpeedUpCapsule) ||
-            _options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter), FiveRingsCapsule)
-        ))
+        if (_options.capsuleSanity)
         {
             buffer.clear();
             buffer.append("Capsules: ");

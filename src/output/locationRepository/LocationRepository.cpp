@@ -2208,6 +2208,22 @@ void LocationRepository::UpdateLevelStatus()
 
 void LocationRepository::UpdateMissionStatus()
 {
+    _gameStatus.missions.sonicMissionsTotal = 0;
+    _gameStatus.missions.tailsMissionsTotal = 0;
+    _gameStatus.missions.knucklesMissionsTotal = 0;
+    _gameStatus.missions.amyMissionsTotal = 0;
+    _gameStatus.missions.bigMissionsTotal = 0;
+    _gameStatus.missions.gammaMissionsTotal = 0;
+
+    _gameStatus.missions.sonicMissionsCompleted = 0;
+    _gameStatus.missions.tailsMissionsCompleted = 0;
+    _gameStatus.missions.knucklesMissionsCompleted = 0;
+    _gameStatus.missions.amyMissionsCompleted = 0;
+    _gameStatus.missions.bigMissionsCompleted = 0;
+    _gameStatus.missions.gammaMissionsCompleted = 0;
+
+    _gameStatus.missions.missionsCompleted = 0;
+
     auto vector = _options.missionBlacklist;
     for (int index = 801; index <= 860; index++)
     {
@@ -2258,6 +2274,14 @@ void LocationRepository::UpdateMissionStatus()
 
 void LocationRepository::UpdateBossesStatus()
 {
+    _gameStatus.bosses.sonicBossesCompleted = 0;
+    _gameStatus.bosses.tailsBossesCompleted = 0;
+    _gameStatus.bosses.knucklesBossesCompleted = 0;
+    _gameStatus.bosses.amyBossesCompleted = 0;
+    _gameStatus.bosses.bigBossesCompleted = 0;
+    _gameStatus.bosses.gammaBossesCompleted = 0;
+    _gameStatus.bosses.bossesCompleted = 0;
+
     //Chaos 0
     if (_checkData[700].checked)
     {
@@ -2390,6 +2414,7 @@ void LocationRepository::UpdateBossesStatus()
 
 void LocationRepository::UpdateChaoStatus()
 {
+    _gameStatus.chao.racesCompleted = 0;
     if (_checkData[905].checked)
         _gameStatus.chao.racesCompleted++;
     if (_checkData[906].checked)
@@ -2424,9 +2449,9 @@ void LocationRepository::UpdateEnemySanity()
                 continue;
 
             if (!_instance->_options.missableEnemies)
-                if ((id >= 12001 && id <= 12009)
-                    || (id >= 21001 && id <= 21002)
-                    || (id >= 14001 && id <= 14007))
+                if ((id >= 12001 && id <= 12010)
+                    || (id >= 21001 && id <= 21003)
+                    || (id >= 14001 && id <= 14008))
                     continue;
 
             _gameStatus.enemySanity[GET_LEVEL(location.level)][location.character].total++;
@@ -2458,12 +2483,16 @@ void LocationRepository::UpdateCapsuleSanity()
                 continue;
 
             if (!_instance->_options.missableCapsules)
-                if ((id >= 12501 && id <= 12546) ||
-                    (id >= 21501 && id <= 21541) ||
-                    (id >= 14501 && id <= 14518) ||
-                    (id >= 15524 && id <= 15531) ||
-                    (id >= 18512 && id <= 18513))
+                if ((id >= 12501 && id <= 12547) ||
+                    (id >= 21501 && id <= 21542) ||
+                    (id >= 14501 && id <= 14519) ||
+                    (id >= 15524 && id <= 15532) ||
+                    (id >= 18512 && id <= 18514))
                     continue;
+            if (!_instance->_options.includePinballCapsules)
+                if (id >= 12548 && id <= 12552)
+                    continue;
+
 
             _gameStatus.capsuleSanity[GET_LEVEL(location.level)][location.character].total++;
             if (location.checked)

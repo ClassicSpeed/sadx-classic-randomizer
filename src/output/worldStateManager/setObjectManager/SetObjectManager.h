@@ -12,7 +12,6 @@ constexpr int WARP_PAST = 10;
 constexpr int COLLISION_CUBE_MYSTIC_RUINS = 42;
 constexpr int WALL_THAT_PUSHES_YOU_MYSTIC_RUINS = 43;
 constexpr int SCENE_CHANGE_MYSTIC_RUINS = 33;
-constexpr int RED_MOUNTAIN_DOOR_MYSTIC_RUINS = 15;
 constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
 constexpr int CAVE_WIND_CHANGE_SCENE_MYSTIC_RUINS = 31;
 constexpr int EMBLEM_MYSTIC_RUINS = 65;
@@ -133,9 +132,6 @@ const SETEntry SEWERS_SPRING_BIG = CreateSetEntry(2, {505, -89, 635},
 const SETEntry EXTRA_SEWERS_SPRING = CreateSetEntry(2, {350, -115, 860},
                                                     {0, 0, 0xE000}, {0, 0, 0});
 
-const SETEntry RED_MOUNTAIN_SCENE_CHANGE_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {-2100, -304, 1650},
-                                                             {0, 0, 0}, {40, 50, 0});
-
 const SETEntry ICE_CAP_SCENE_CHANGE_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {-1450, 95, 360},
                                                         {1, 0, 0}, {20, 5, 0});
 const SETEntry ICE_CAP_LADDER_MR = CreateSetEntry(LONG_LADDER_MYSTIC_RUINS, {-1450, 40, 360},
@@ -145,9 +141,6 @@ const SETEntry CAVE_WIND_CHANGE_SCENE_MR = CreateSetEntry(CAVE_WIND_CHANGE_SCENE
 
 const SETEntry WIND_STONE_MR = CreateSetEntry(WIND_STONE_MYSTIC_RUINS, {1392.39f, 191, 863.86f},
                                               {0xFF57, 0x8220, 0xF920}, {1, 0, 0});
-
-const SETEntry RED_MOUNTAIN_DOOR_MR = CreateSetEntry(RED_MOUNTAIN_DOOR_MYSTIC_RUINS, {-1960.7f, -350.19f, 1652.01f},
-                                                     {0x1, 0xBEFB, 0xFF6E}, {0.3f, 0, 0});
 
 const SETEntry ICE_CAP_SPRING = CreateSetEntry(1, {-1070, -35, 236},
                                                {0, 0, 0}, {0.3f, -1.25f, 1});

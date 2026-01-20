@@ -5,9 +5,11 @@ UsercallFunc(int, twinkleParkDoorHook, (char tpChar), (tpChar), 0x63EA90, rEAX, 
 UsercallFunc(signed int, mrCartHook, (task* tp), (tp), 0x53DC60, rEAX, rESI);
 UsercallFuncVoid(sceneChangeMrHook, (int a1), (a1), 0x539220, rEBX);
 UsercallFuncVoid(sceneChangeECInsideHook, (int a1, int a2), (a1,a2), 0x52D690, rEAX, rECX);
+UsercallFuncVoid(sceneChangeLogicECOusideHook, (int a1), (a1), 0x524FE0, rEAX);
 UsercallFunc(int, eggCarrierInsideEggDoorHook, (const taskwk* twp), (twp), 0x52B420, rEAX, rESI);
 UsercallFunc(int, eggCarrierOutsideEggDoorHook, (const taskwk* twp), (twp), 0x524070, rEAX, rESI);
 UsercallFunc(int, skyDeckDoorHook, (taskwk* twp), (twp), 0x51DEB0, rEAX, rESI);
+
 
 AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, Settings& settings,
                                                              GameStatus& gameStatus,
@@ -19,6 +21,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
 {
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
     _setNextLevelAndActHook.Hook(OnSetNextLevelAndAct);
+    _setNextLevelAndActChaoGardenHook.Hook(OnSetNextLevelAndActChaoGarden);
     _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
     _movePlayerToStartPointHook.Hook(OnMovePlayerToStartPoint);
     _getEntranceEc.Hook(OnGetEntranceEc);
@@ -83,6 +86,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _isLostWorldBackEntranceOpenHook.Hook(OnIsLostWorldBackEntranceOpen);
     _loadLongLadderMrHook.Hook(OnLoadLongLadderMr);
     sceneChangeECInsideHook.Hook(OnSceneChangeEcInside);
+    sceneChangeLogicECOusideHook.Hook(OnSceneChangeLogicECOuside);
     eggCarrierInsideEggDoorHook.Hook(OnEggCarrierInsideEggDoor);
     eggCarrierOutsideEggDoorHook.Hook(OnEggCarrierOutsideEggDoor);
     skyDeckDoorHook.Hook(OnSkyDeckDoor);
@@ -189,6 +193,12 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
         return;
     }
     _setNextLevelAndActHook.Original(level, act);
+}
+
+task* AdventureFieldEntranceManager::OnSetNextLevelAndActChaoGarden(Uint8 level, Uint8 act)
+{
+    _instance->OnSetNextLevelAndActCutsceneMode(level, act);
+    return nullptr;
 }
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, const Uint8 act)
@@ -325,6 +335,14 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
             twp->ang = {0, 0x4000, 0};
         }
     }
+    else if (levelAndAct == LevelAndActIDs_MysticRuins4)
+    {
+        if (GetLevelEntranceID() == 4)
+        {
+            twp->pos = {1.22f, 8, 36.75};
+            twp->ang = {0, 0x4000, 0};
+        }
+    }
     else if (levelAndAct == LevelAndActIDs_Past2)
     {
         if (GetLevelEntranceID() == 1)
@@ -355,6 +373,11 @@ void AdventureFieldEntranceManager::OnMovePlayerToStartPoint(taskwk* twp)
         {
             twp->pos = {0, 650, -1000};
             twp->ang = {0, 0x4000, 0};
+        }
+        if (GetLevelEntranceID() == 1)
+        {
+            twp->pos = {0, 728, 345};
+            twp->ang = {0, 0xC000, 0};
         }
         if (GetLevelEntranceID() == 2)
         {
@@ -902,6 +925,13 @@ void AdventureFieldEntranceManager::OnMysticRuinsKey(task* tp)
 
 void AdventureFieldEntranceManager::OnMysticRuinsLock(task* tp)
 {
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
+    {
+        if (!_instance->IsDoorOpen(JungleToLostWorldAlternative))
+            return;
+
+        return _mysticRuinsLockHook.Original(tp);
+    }
     const int bufferCharacter = CurrentCharacter;
     CurrentCharacter = Characters_Sonic;
     _mysticRuinsLockHook.Original(tp);
@@ -915,9 +945,10 @@ BOOL AdventureFieldEntranceManager::OnIsWindyValleyOpen()
 
 BOOL AdventureFieldEntranceManager::OnPreventMrStoneSpawn()
 {
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
-        return _instance->IsDoorOpen(AngelIslandToIceCave);
-    return false;
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
+        return false;
+
+    return true;
 }
 
 int AdventureFieldEntranceManager::OnGetCharacterId(char index)
@@ -1020,12 +1051,15 @@ void AdventureFieldEntranceManager::OnLoadSceneChangeMr(task* tp)
     }
 
     _loadSceneChangeMrHook.Original(tp);
-} // MysticRuins
+}
+
+// MysticRuins
 void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
 {
-    // Ice Cap
+    //Angel Island
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
     {
+        // Ice Cap
         if (newScene == 1)
         {
             if (_instance->IsDoorOpen(IceCaveToIceCap))
@@ -1034,6 +1068,13 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
                     GET_LEVEL(LevelAndActIDs_IceCap1), GET_ACT(LevelAndActIDs_IceCap1));
             }
             return;
+        }
+
+        // Red Mountain
+        if (newScene == 0)
+        {
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_RedMountain1), GET_ACT(LevelAndActIDs_RedMountain1));
         }
     }
 
@@ -1058,6 +1099,15 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
             }
             return;
         }
+        if (newScene == 4)
+        {
+            if (_instance->IsDoorOpen(FinalEggTowerToJungle))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_MysticRuins3), GET_ACT(LevelAndActIDs_MysticRuins3));
+            }
+            return;
+        }
         if (newScene == 5)
         {
             if (_instance->IsDoorOpen(FinalEggTowerToEcInside))
@@ -1069,9 +1119,18 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
         }
     }
 
-    // Lost world
+    // Jungle
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3)
     {
+        if (newScene == 5)
+        {
+            if (_instance->IsDoorOpen(JungleToFinalEggTower))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_MysticRuins4), GET_ACT(LevelAndActIDs_MysticRuins4));
+            }
+            return;
+        }
         if (newScene == 6)
         {
             if (_instance->IsDoorOpen(JungleToLostWorld))
@@ -1090,10 +1149,21 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
             }
             return;
         }
+        if (newScene == 8)
+        {
+            if (_instance->IsDoorOpen(JungleToSandHill))
+            {
+                return SetNextLevelAndAct_CutsceneMode(
+                    GET_LEVEL(LevelAndActIDs_SandHill), GET_ACT(LevelAndActIDs_SandHill));
+            }
+            return;
+        }
     }
 
     sceneChangeMrHook.Original(newScene);
-} //Makes knuckles able to enter the lost world using the keys and everyone without them
+}
+
+//Makes knuckles able to enter the lost world using the keys and everyone without them
 BOOL AdventureFieldEntranceManager::OnIsLostWorldBackEntranceOpen()
 {
     if (!_instance->IsDoorOpen(JungleToLostWorldAlternative))
@@ -1138,6 +1208,29 @@ void AdventureFieldEntranceManager::OnSceneChangeEcInside(int a1, int a2)
             GET_LEVEL(LevelAndActIDs_MysticRuins4), GET_ACT(LevelAndActIDs_MysticRuins4));
     }
     return sceneChangeECInsideHook.Original(a1, a2);
+}
+
+void AdventureFieldEntranceManager::OnSceneChangeLogicECOuside(int a1)
+{
+    unsigned int v1 = *(_DWORD*)(a1 + 20); // ebx
+    Uint8 act = 0; // [esp+0h] [ebp-2h]
+    Uint8 level = 0; // [esp+1h] [ebp-1h]
+    SetLevelEntrance(*(BYTE*)(a1 + 28) & 0xF);
+    if (v1 > 5)
+    {
+        if (v1 == 256)
+        {
+            act = 2;
+            level = 6;
+        }
+    }
+    else
+    {
+        level = 29;
+        act = v1 & 0xF;
+    }
+    camerahax_adventurefields();
+    j_SetNextLevelAndAct_CutsceneMode(level, act);
 }
 
 bool AdventureFieldEntranceManager::IsPlayerNearDoor(const taskwk* twp)

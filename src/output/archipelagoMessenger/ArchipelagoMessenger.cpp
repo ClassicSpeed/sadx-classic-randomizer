@@ -105,16 +105,16 @@ void ArchipelagoMessenger::SetMapStatus()
     for (int id = 0; id < InvalidEntranceId; ++id)
     {
         EntranceId entranceId = static_cast<EntranceId>(id);
-        int filler_value = _gameStatus.map.IsEntranceVisited(entranceId) ? 1 : 0;
+        int* filler_value = new int(_gameStatus.map.IsEntranceVisited(entranceId) ? 1 : 0);
 
         AP_SetServerDataRequest* map_status = new AP_SetServerDataRequest();
         AP_DataStorageOperation operation;
         operation.operation = "replace";
-        operation.value = &filler_value;
+        operation.value = filler_value;
 
         map_status->key = AP_GetPrivateServerDataPrefix() + "MapStatus" + std::to_string(id);
         map_status->type = AP_DataType::Int;
-        map_status->want_reply = true;
+        map_status->want_reply = false;
         map_status->operations.push_back(operation);
 
         AP_SetServerData(map_status);

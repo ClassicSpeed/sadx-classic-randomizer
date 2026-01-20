@@ -45,6 +45,7 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
         <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
         <LinkIncremental>true</LinkIncremental>
+        <LibraryPath>$(LibraryPath)</LibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -67,7 +68,7 @@
             <SubSystem>Windows</SubSystem>
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <EnableUAC>false</EnableUAC>
-            <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies);</AdditionalDependencies>
+            <AdditionalDependencies>lib/APCpp/ixwebsocket.lib;lib/APCpp/mbedcrypto.lib;lib/APCpp/mbedtls.lib;lib/APCpp/mbedx509.lib;Ws2_32.lib;Crypt32.lib;%(AdditionalDependencies);</AdditionalDependencies>
         </Link>
         <PreBuildEvent>
             <Command>call ./scripts/release-clean.bat</Command>
@@ -96,7 +97,7 @@
             <OptimizeReferences>true</OptimizeReferences>
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <EnableUAC>false</EnableUAC>
-            <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies);</AdditionalDependencies>
+            <AdditionalDependencies>lib/APCpp/ixwebsocket.lib;lib/APCpp/mbedcrypto.lib;lib/APCpp/mbedtls.lib;lib/APCpp/mbedx509.lib;Ws2_32.lib;Crypt32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
         </Link>
         <PreBuildEvent>
             <Command>call ./scripts/release-clean.bat</Command>
@@ -107,7 +108,6 @@
     </ItemDefinitionGroup>
     <ItemGroup>
         <ClCompile Include="lib\APCpp\Archipelago.cpp"/>
-        <ClCompile Include="lib\APCpp\ixwebsocket\*.cpp" />
         <ClCompile Include="lib\json\src\lib_json\*.cpp"/>
         <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.cpp"/>
         <ClCompile Include="src\**\*.cpp" />

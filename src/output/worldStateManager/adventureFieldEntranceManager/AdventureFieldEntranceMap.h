@@ -77,7 +77,7 @@ private:
         {TwinkleParkLobbyToTwinkleCircuit, TwinkleCircuitToTwinkleParkLobby},
         {MrMainToEcOutside, EcOutsideToMrMain},
         {MrMainToAngelIsland, AngelIslandToMrMain},
-        {MrMainToWindyValley, WindyValleyToMrMain,},
+        {MrMainToWindyValley, WindyValleyToMrMain},
         {MrMainToJungle, JungleToMrMain},
         {MrMainToChaos4, Chaos4ToMrMain},
         {MrMainToEggHornet, EggHornetToMrMain},

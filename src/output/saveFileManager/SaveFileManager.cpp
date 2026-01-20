@@ -88,10 +88,6 @@ void SaveFileManager::OnSaveFileCreated()
     //Red Mountain
     ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_MR_ENTRANCE_MOUNTAIN));
     ClearEventFlag(static_cast<EventFlags>(FLAG_E102_MR_ENTRANCE_MOUNTAIN));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_ENTRANCE_MOUNTAIN));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_MONKEYDOOR_ENTER));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_MONKEYCAGEA_BOMB));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_CLEAR_MOUNTAIN));
 
     //Lost World
     ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_MR_REDCUBE));

@@ -1,4 +1,6 @@
 #pragma once
+
+#include <thread>
 #include "../../pch.h"
 #include "../../configuration/options/Options.h"
 #include "../../configuration/gameStatus/GameStatus.h"

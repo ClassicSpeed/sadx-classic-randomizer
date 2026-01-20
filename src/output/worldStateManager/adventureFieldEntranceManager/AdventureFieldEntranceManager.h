@@ -48,6 +48,9 @@ private:
     inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActHook{0x4145B0};
     static void OnSetNextLevelAndAct(Uint8 level, Uint8 act);
 
+    inline static FunctionHook<task*, Uint8, Uint8> _setNextLevelAndActChaoGardenHook{0x715730};
+    static task* OnSetNextLevelAndActChaoGarden(Uint8 level, Uint8 act);
+
     inline static FunctionHook<Sint32> _finishedLevelMaybeHook{0x414090};
     static Sint32 OnFinishedLevelMaybe();
 
@@ -232,6 +235,8 @@ private:
     static void OnLoadLongLadderMr(task* tp);
 
     static void __cdecl OnSceneChangeEcInside(int a1, int a2);
+
+    static void __cdecl OnSceneChangeLogicECOuside(int a1);
 
     static int __cdecl OnEggCarrierInsideEggDoor(const taskwk* twp);
 
