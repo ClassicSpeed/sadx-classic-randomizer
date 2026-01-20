@@ -1070,7 +1070,7 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
             return;
         }
 
-        // Ice Cap
+        // Red Mountain
         if (newScene == 0)
         {
             return SetNextLevelAndAct_CutsceneMode(

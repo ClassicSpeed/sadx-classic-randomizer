@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.0 pre-release 2] - 2026-01-??
+## [v1.2.0 pre-release 2] - 2026-01-19
 
 ### Added:
 
@@ -10,25 +10,26 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed:
 
+- Fixed the map breaking the game's textures in vanilla SADX
 - Fixed missions and bosses counters not updating correctly in the in-game tracker.
 - Fixed Sky Chase entrance, Egg Viper entrance and Chaos 6 entrance, not working correctly with random level entrances.
 - Fixed Bridge's Sky Deck entrance sending the player back to the level after exiting Sky Deck.
-- Fixed Red Mountain loading zone not working for Knuckles, Tails or Big.
-- Fixed Knuckles' Lost World Entrance not working correctly.
 - Removed Wind Stone ghost.
 - Updated Entrance Randomizer description to include info about bosses, sublevels and chao gardens.
 - Fixed missable enemies/capsules not excluding some locations.
 - Fixed in-game tracker ignoring the missable enemies option.
-- Fixed in-game tracker ignoring the pinbal capsules option.
+- Fixed in-game tracker ignoring the pinball  capsules option.
 - Fixed incorrect returning location with random level entrances.
 - Fixed chao gardens returning to incorrect location with random level entrances.
 - Fixed loading zones for both sky decks not working for Amy, Big and Gamma.
 - Fixed loading zones for tunnel between Jungle and Final Egg Tower for multiple characters.
 - Fixed loading zones for Sand Hill for multiple characters.
+- Fixed Red Mountain loading zone not working for Knuckles, Tails or Big.
+- Fixed Knuckles' Lost World Entrance not working correctly.
 
 - Fixed logic issues with access rules for Egg Carrier Bridge (that affected Sonic's Sky Deck Entrance).
-- Fixed incorrect regions for Main platorm emblem and Spinning platform emblem.
-- Mission 1 temporaly removed (forced into blacklist) because of logic issues.
+- Fixed incorrect regions for Main platform  emblem and Spinning platform emblem.
+- Mission 1 temporally  removed (forced into blacklist) because of logic issues.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 
