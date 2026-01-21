@@ -141,7 +141,7 @@ public:
         case FinalEggTowerToBetaEggViper:
             return true;
         case FinalEggTowerToEcInside:
-            return _options.connectFinalEggToEggCarrier;
+            return true;
         case EcOutsideToSsMain:
             return _gameStatus.unlock.keyBoat;
         case EcOutsideToMrMain:
@@ -213,7 +213,7 @@ public:
         case EcInsideToHedgehogHammer:
             return true;
         case EcInsideToFinalEggTower:
-            return _options.connectFinalEggToEggCarrier;
+            return true;
         case EcInsideToWarpHall:
             return true;
         case EcInsideToArsenal:

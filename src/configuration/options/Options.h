@@ -547,11 +547,8 @@ public:
     std::vector<int> missionBlacklist = {};
     bool expertMode = false;
 
-    bool connectFinalEggToEggCarrier;
-
     GatingMode gatingMode = EmblemGating;
-    std::map<int, int> entranceEmblemValueMap = {
-    };
+    std::map<int, int> entranceEmblemValueMap = {};
 
 private:
     explicit Options(Settings& settings);
