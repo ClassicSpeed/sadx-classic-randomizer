@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Fixed Twinkle Circuit logic not working correctly with random level entrances.
 - Fixed entrance hint info not working for bosses and sublevels.
 - Fixed connection between Egg Carrier and Final Egg Tower not working correctly with key item gating.
+- Fixed arrow for capsule/enemy sanity not working for enemies/capsules far away.
 
 ## [v1.2.0 pre-release 2] - 2026-01-19
 

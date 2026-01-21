@@ -501,17 +501,17 @@ void EventDetector::OnFrame()
                         (check.first >= 14501 && check.first <= 14519) ||
                         (check.first >= 15524 && check.first <= 15532) ||
                         (check.first >= 18512 && check.first <= 18514))
-                        return;
+                        continue;
 
                 if (!_instance->_options.missableEnemies)
                     if ((check.first >= 12001 && check.first <= 12010)
                         || (check.first >= 21001 && check.first <= 21003)
                         || (check.first >= 14001 && check.first <= 14008))
-                        return;
+                        continue;
 
                 if (!_instance->_options.includePinballCapsules)
                     if (check.first >= 12548 && check.first <= 12552)
-                        return;
+                        continue;
 
                 const LocationData& location = check.second;
                 if (IsTargetableCheck(location))
