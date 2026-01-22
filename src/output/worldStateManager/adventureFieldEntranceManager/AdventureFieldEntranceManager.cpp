@@ -124,7 +124,8 @@ void AdventureFieldEntranceManager::UpdateGatingMethod()
         }
         else if (_options.gatingMode == KeyItemGating)
         {
-            this->_doorLogicStrategy = std::make_unique<KeyItemDoorLogicStrategy>(_options, _gameStatus);
+            this->_doorLogicStrategy = std::make_unique<KeyItemDoorLogicStrategy>(
+                _options, _gameStatus, _adventureFieldEntranceMap);
         }
         else
         {

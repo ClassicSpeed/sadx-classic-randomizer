@@ -4,14 +4,23 @@
 class KeyItemDoorLogicStrategy : public IDoorLogicStrategy
 {
 public:
-    KeyItemDoorLogicStrategy(Options& options, GameStatus& gameStatus)
+    KeyItemDoorLogicStrategy(Options& options, GameStatus& gameStatus,
+                             AdventureFieldEntranceMap& adventureFieldEntranceMap)
         : _options(options),
-          _gameStatus(gameStatus)
+          _gameStatus(gameStatus), _adventureFieldEntranceMap(adventureFieldEntranceMap)
     {
     }
 
     bool IsDoorOpen(const EntranceId entranceId) override
     {
+        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
+
+        //Check if door leads to level for the player
+        auto entrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntrance);
+        if (_adventureFieldEntranceMap.CalculateCorrectAct(entrance->levelAndActId) == LevelAndActIDs_HedgehogHammer)
+            return false;
+
+
         switch (entranceId)
         {
         case CityHallToSsMain:
@@ -281,4 +290,5 @@ public:
 private:
     Options& _options;
     GameStatus& _gameStatus;
+    AdventureFieldEntranceMap& _adventureFieldEntranceMap;
 };
