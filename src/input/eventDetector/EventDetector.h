@@ -99,8 +99,6 @@ private:
     static bool HandleCheckMissionRequirementsSubgame(int level, int character, int mission);
     static void HandlePlayCharacterDeathSound(task* tp, int pid);
     static void HandleOnBoaBoaPartDestroyed(task* tp);
-    static void HandleCapsuleBreak(task* tp);
-    static void HandleCapsuleBreakAir(task* tp);
 
     inline static FunctionHook<void, SaveFileData*, int, signed int, int> _onLevelEmblemCollectedHook{0x4B4640};
     static void OnLevelEmblemCollected(SaveFileData* saveFile, const int character, const signed int level,
