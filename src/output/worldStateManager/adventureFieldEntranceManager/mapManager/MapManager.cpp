@@ -348,20 +348,22 @@ void MapManager::ShowNumberDynamicMap(int number, float x, float y)
 {
     if (number < 0 || number > 999) return;
 
+    float distanceBetweenDigits = 12.0f * (_nj_screen_.h / 1080);
+
     int hundreds = number / 100;
     int tens = (number / 10) % 10;
     int ones = number % 10;
 
     if (number >= 100)
     {
-        showNumberMap(x + 10, y, hundreds);
+        showNumberMap(x + distanceBetweenDigits, y, hundreds);
         showNumberMap(x, y, tens);
-        showNumberMap(x - 10, y, ones);
+        showNumberMap(x - distanceBetweenDigits, y, ones);
     }
-    else if (number >= 10)
+    else if (number >= distanceBetweenDigits)
     {
-        showNumberMap(x + 5, y, tens);
-        showNumberMap(x - 5, y, ones);
+        showNumberMap(x + distanceBetweenDigits / 2, y, tens);
+        showNumberMap(x - distanceBetweenDigits / 2, y, ones);
     }
     else
     {

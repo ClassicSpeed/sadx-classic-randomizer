@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Fixed teleport platforms working incorrectly with random level entrances in key item gating mode.
 - Fixed spelling mistake in the entrance randomizer option.
 - Fixed spelling mistake in Amy's main theme in songs.json.
+- The spaces between the numbers for emblem requirements in the map now scale properly with the resolution.
 
 ## [v1.2.0 pre-release 2] - 2026-01-19
 
