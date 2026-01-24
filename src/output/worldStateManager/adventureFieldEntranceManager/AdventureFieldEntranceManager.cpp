@@ -150,6 +150,8 @@ void AdventureFieldEntranceManager::UpdateRandomEntrances()
 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
+    if (entranceId == InvalidEntranceId)
+        return false;
     return _doorLogicStrategy->IsDoorOpen(entranceId);
 }
 
