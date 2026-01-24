@@ -543,7 +543,7 @@ Sint32 SetObjectManager::OnPrepareLevel()
 {
     Sint32 result;
     if ((CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Big) &&
-        levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+        CurrentLevel == LevelIDs_MysticRuins)
     {
         const char* originalCharId = CharIDStrings[CurrentCharacter];
         CharIDStrings[CurrentCharacter] = "S";
