@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
   -  Traps no longer affect Sonic or Tails for the first 4 seconds of the level.
 - Fixed Sky Chase 2 A mission check not sending checks correctlly.
 - Fixed Ring Link option not applying correctly.
+- Fixed Ice Cave door being open when it shouldn't.
 
 ## [v1.2.0 pre-release 2] - 2026-01-19
 

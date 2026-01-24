@@ -949,6 +949,9 @@ BOOL AdventureFieldEntranceManager::OnPreventMrStoneSpawn()
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
         return false;
 
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+        return _instance->IsDoorOpen(AngelIslandToIceCave);
+
     return true;
 }
 
