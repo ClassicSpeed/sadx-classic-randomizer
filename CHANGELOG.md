@@ -18,6 +18,8 @@ All notable changes to this project will be documented in this file.
 - The spaces between the numbers for emblem requirements in the map now scale properly with the resolution.
 - Capsules broken as Sonic no longer count as broken for Tails when playing as Tails.
     - This was causing issues in-game and you can avoid this problem in Casinopolis by disabling missable capsules.
+- You can no longer fall out of the Sky Deck cannon at the if you move or jump while inside.
+  -  Traps no longer affect Sonic or Tails for the first 4 seconds of the level.
 
 ## [v1.2.0 pre-release 2] - 2026-01-19
 

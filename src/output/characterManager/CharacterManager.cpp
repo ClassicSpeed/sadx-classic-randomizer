@@ -47,14 +47,6 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     WriteCall((void*)0x592057, (void*)EmptyCall);
     WriteCall((void*)0x592131, (void*)EmptyCall);
     WriteCall((void*)0x59219E, (void*)EmptyCall);
-
-
-    //Re-enable control inside of Sky Deck Cannon
-    WriteCall((void*)0x5FC81B, (void*)EnablePause);
-    WriteCall((void*)0x5FC8B0, (void*)EnablePause);
-    WriteCall((void*)0x5FC8FE, (void*)EnablePause);
-    WriteCall((void*)0x5FC9A2, (void*)EnablePause);
-    WriteCall((void*)0x5FCA36, (void*)EnablePause);
 }
 
 
@@ -269,6 +261,11 @@ void CharacterManager::OnFrame()
         return;
 
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
+        return;
+
+    //Prevents traps from happening during Sky Deck cannon section
+    if ((CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails) && CurrentLevel ==
+        LevelIDs_SkyDeck && TimeSeconds < 4)
         return;
 
     if (PauseEnabled == 0)
