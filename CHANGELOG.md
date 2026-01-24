@@ -2,28 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.0 pre-release 3] - 2026-01-??
+## [v1.2.0 pre-release 3] - 2026-01-24
+
+### Changed
+
+- Several logic changes, specially for Expert DX.
 
 ### Fixed:
 
-- Fixed Sand Hill level not returning player to the correct location with random level entrances.
-- Fixed City Hall's Speed Highway entrance not working correctly for Tails, Gamma and Amy.
+- Fixed Sand Hill level not returning the player to the correct location with random level entrances.
+- Fixed City Hall's Speed Highway entrance not working correctly for Tails, Gamma, and Amy.
 - Fixed Twinkle Circuit logic not working correctly with random level entrances.
 - Fixed entrance hint info not working for bosses and sublevels.
-- Fixed connection between Egg Carrier and Final Egg Tower not working correctly with key item gating.
-- Fixed arrow for capsule/enemy sanity not working for enemies/capsules far away.
+- Fixed the connection between Egg Carrier and Final Egg Tower not working correctly with key item gating.
+- Fixed the arrow for capsule/enemy sanity not working for enemies/capsules that are far away.
 - Fixed teleport platforms working incorrectly with random level entrances in key item gating mode.
-- Fixed spelling mistake in the entrance randomizer option.
-- Fixed spelling mistake in Amy's main theme in songs.json.
-- The spaces between the numbers for emblem requirements in the map now scale properly with the resolution.
+- Fixed a spelling mistake in the entrance randomizer option.
+- Fixed a spelling mistake in Amy's main theme in songs.json.
+- The spacing between the numbers for emblem requirements in the map now scales properly with the resolution.
 - Capsules broken as Sonic no longer count as broken for Tails when playing as Tails.
-    - This was causing issues in-game and you can avoid this problem in Casinopolis by disabling missable capsules.
-- You can no longer fall out of the Sky Deck cannon at the if you move or jump while inside.
+    - This was causing issues in-game, and you can avoid this problem in Casinopolis by disabling missable capsules.
+- You can no longer fall out of the Sky Deck cannon if you move or jump while inside.
     - Traps no longer affect Sonic or Tails for the first 4 seconds of the level.
-- Fixed Sky Chase 2 A mission check not sending checks correctlly.
-- Fixed Ring Link option not applying correctly.
-- Fixed Ice Cave door being open when it shouldn't.
-- Fixed objects (Red Mountain entrance, emblem, etc) not loading for Tails and Big in Angel Island.
+- Fixed Sky Chase 2 A mission check not sending checks correctly.
+- Fixed the Ring Link option not applying correctly.
+- Fixed the Ice Cave door being open when it shouldn't be.
+- Fixed objects (Red Mountain entrance, emblem, etc.) not loading for Tails and Big in Angel Island.
 
 ## [v1.2.0 pre-release 2] - 2026-01-19
 
