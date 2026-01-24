@@ -208,29 +208,10 @@ void Options::ReceiveDeathLinkChance(const int newReceiveDeathLinkChance)
 
 void Options::SetRingLink(const int newRingLinkActive)
 {
-    if (_settings.ringLinkOverride == RingLinkForceEnabled
-        || _settings.ringLinkOverride == RingLinkForceEnabledHard)
-        this->ringLinkActive = true;
-    else if (_settings.ringLinkOverride == RingLinkForceDisabled)
-        this->ringLinkActive = false;
+    if (_settings.ringLinkOverride == RingLinkDefault)
+        this->ringLink = static_cast<RingLink>(newRingLinkActive);
     else
-        this->ringLinkActive = newRingLinkActive;
-}
-
-void Options::SetCasinopolisRingLink(const int newCasinopolisRingLink)
-{
-    this->casinopolisRingLink = newCasinopolisRingLink;
-}
-
-void Options::SetHardRingLink(const int newHardRingLinkActive)
-{
-    if (_settings.ringLinkOverride == RingLinkForceEnabledHard)
-        this->hardRingLinkActive = true;
-    else if (_settings.ringLinkOverride == RingLinkForceDisabled
-        || _settings.ringLinkOverride == RingLinkForceEnabled)
-        this->hardRingLinkActive = false;
-    else
-        this->hardRingLinkActive = newHardRingLinkActive;
+        this->ringLink = static_cast<RingLink>(_settings.ringLinkOverride - 1);
 }
 
 void Options::SetTrapLink(const int newTrapLinkActive)

@@ -134,7 +134,7 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
         }
         if (!strcmp(tag.c_str(), "RingLink"))
         {
-            if (!_options.ringLinkActive)
+            if (_options.ringLink == RingLinkDisabled)
                 return;
 
             //Ignore our own ring link    
@@ -148,7 +148,7 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
         }
         if (!strcmp(tag.c_str(), "HardRingLink"))
         {
-            if (!_options.ringLinkActive || !_options.hardRingLinkActive)
+            if (_options.ringLink != RingLinkHard)
                 return;
 
             //Ignore our own ring link    
@@ -300,8 +300,6 @@ void ArchipelagoManager::Connect()
     AP_REGISTER_INT_CALLBACK("ReceiveDeathLinkChance", _options.ReceiveDeathLinkChance);
 
     AP_REGISTER_INT_CALLBACK("RingLink", _options.SetRingLink);
-    AP_REGISTER_INT_CALLBACK("CasinopolisRingLink", _options.SetCasinopolisRingLink);
-    AP_REGISTER_INT_CALLBACK("HardRingLink", _options.SetHardRingLink);
     AP_REGISTER_INT_CALLBACK("RingLoss", _options.SetRingLoss);
 
     AP_REGISTER_INT_CALLBACK("TrapLink", _options.SetTrapLink);

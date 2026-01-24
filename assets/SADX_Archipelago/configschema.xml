@@ -324,9 +324,10 @@
         </Enum>
         <Enum name="RingLinkIndex">
             <EnumMember name="0" display="Default"/>
-            <EnumMember name="1" display="Force Enabled"/>
-            <EnumMember name="2" display="Force Enabled (Hard)"/>
-            <EnumMember name="3" display="Force Disabled"/>
+            <EnumMember name="1" display="Force Disabled"/>
+            <EnumMember name="2" display="Force Enabled"/>
+            <EnumMember name="3" display="Force Enabled (+ Casinopolis)"/>
+            <EnumMember name="4" display="Force Enabled (Hard)"/>
         </Enum>
         <Enum name="RingLossIndex">
             <EnumMember name="0" display="Default"/>

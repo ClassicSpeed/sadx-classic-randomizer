@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - You can no longer fall out of the Sky Deck cannon at the if you move or jump while inside.
   -  Traps no longer affect Sonic or Tails for the first 4 seconds of the level.
 - Fixed Sky Chase 2 A mission check not sending checks correctlly.
+- Fixed Ring Link option not applying correctly.
 
 ## [v1.2.0 pre-release 2] - 2026-01-19
 

@@ -13,9 +13,10 @@ enum DeathLinkOverride
 enum RingLinkOverride
 {
     RingLinkDefault = 0,
-    RingLinkForceEnabled = 1,
-    RingLinkForceEnabledHard = 2,
-    RingLinkForceDisabled = 3,
+    RingLinkForceDisabled,
+    RingLinkForceEnabled,
+    RingLinkForceEnabledCasinopolis,
+    RingLinkForceEnabledHard,
 };
 
 enum RingLossOverride

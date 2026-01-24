@@ -150,9 +150,10 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 {
     if (GameMode != GameModes_Mission && GameMode != GameModes_Adventure_Field)
         return;
-    if (CurrentLevel == LevelIDs_PerfectChaos && !_options.hardRingLinkActive)
+    if (CurrentLevel == LevelIDs_PerfectChaos && _options.ringLink != RingLinkHard)
         return;
-    if (!_options.casinopolisRingLink && CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic)
+    if (CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic &&
+        _options.ringLink != RingLinkHard && _options.ringLink != RingLinkCasinopolis)
         return;
     if (GameState != MD_GAME_MAIN)
         return;
@@ -188,7 +189,7 @@ RingDifference CharacterManager::GetRingDifference()
 
     if (CurrentLevel == LevelIDs_PerfectChaos)
     {
-        if (!_options.hardRingLinkActive)
+        if (_options.ringLink != RingLinkHard)
             return {0, 0};
         ringDifference.hardRingDifference = Rings - _lastRingAmount;
         _lastRingAmount = Rings;
@@ -198,7 +199,7 @@ RingDifference CharacterManager::GetRingDifference()
     if (GameMode == GameModes_Mission && TimerEnabled == 0
         && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_E101R)
     {
-        if (!_options.hardRingLinkActive)
+        if (_options.ringLink != RingLinkHard)
         {
             _lastRingAmount = Rings;
             return {0, 0};
@@ -208,7 +209,8 @@ RingDifference CharacterManager::GetRingDifference()
         return ringDifference;
     }
 
-    if (!_options.casinopolisRingLink && CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic)
+    if (CurrentLevel == LevelIDs_Casinopolis && CurrentCharacter == Characters_Sonic
+        && _options.ringLink != RingLinkHard && _options.ringLink != RingLinkCasinopolis)
         return {0, 0};
 
 
