@@ -4,14 +4,23 @@
 class KeyItemDoorLogicStrategy : public IDoorLogicStrategy
 {
 public:
-    KeyItemDoorLogicStrategy(Options& options, GameStatus& gameStatus)
+    KeyItemDoorLogicStrategy(Options& options, GameStatus& gameStatus,
+                             AdventureFieldEntranceMap& adventureFieldEntranceMap)
         : _options(options),
-          _gameStatus(gameStatus)
+          _gameStatus(gameStatus), _adventureFieldEntranceMap(adventureFieldEntranceMap)
     {
     }
 
     bool IsDoorOpen(const EntranceId entranceId) override
     {
+        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
+
+        //Check if door leads to level for the player
+        auto entrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntrance);
+        if (_adventureFieldEntranceMap.CalculateCorrectAct(entrance->levelAndActId) == LevelAndActIDs_HedgehogHammer)
+            return false;
+
+
         switch (entranceId)
         {
         case CityHallToSsMain:
@@ -141,7 +150,7 @@ public:
         case FinalEggTowerToBetaEggViper:
             return true;
         case FinalEggTowerToEcInside:
-            return _options.connectFinalEggToEggCarrier;
+            return true;
         case EcOutsideToSsMain:
             return _gameStatus.unlock.keyBoat;
         case EcOutsideToMrMain:
@@ -213,7 +222,7 @@ public:
         case EcInsideToHedgehogHammer:
             return true;
         case EcInsideToFinalEggTower:
-            return _options.connectFinalEggToEggCarrier;
+            return true;
         case EcInsideToWarpHall:
             return true;
         case EcInsideToArsenal:
@@ -281,4 +290,5 @@ public:
 private:
     Options& _options;
     GameStatus& _gameStatus;
+    AdventureFieldEntranceMap& _adventureFieldEntranceMap;
 };

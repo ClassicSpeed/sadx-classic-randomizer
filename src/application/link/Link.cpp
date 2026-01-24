@@ -83,7 +83,7 @@ void Link::OnDeath()
 void Link::OnSync()
 {
     _syncTimer = SYNC_RATE;
-    if (!_options.ringLinkActive)
+    if (_options.ringLink == RingLinkDisabled)
         return;
     const RingDifference ringDifference = _characterManager.GetRingDifference();
 

@@ -124,7 +124,8 @@ void AdventureFieldEntranceManager::UpdateGatingMethod()
         }
         else if (_options.gatingMode == KeyItemGating)
         {
-            this->_doorLogicStrategy = std::make_unique<KeyItemDoorLogicStrategy>(_options, _gameStatus);
+            this->_doorLogicStrategy = std::make_unique<KeyItemDoorLogicStrategy>(
+                _options, _gameStatus, _adventureFieldEntranceMap);
         }
         else
         {
@@ -947,6 +948,9 @@ BOOL AdventureFieldEntranceManager::OnPreventMrStoneSpawn()
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 && CurrentCharacter == Characters_Knuckles)
         return false;
+
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+        return _instance->IsDoorOpen(AngelIslandToIceCave);
 
     return true;
 }

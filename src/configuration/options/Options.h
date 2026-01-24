@@ -20,6 +20,14 @@ enum Goal
     None
 };
 
+enum RingLink
+{
+    RingLinkDisabled = 0,
+    RingLinkEnabled,
+    RingLinkCasinopolis,
+    RingLinkHard
+};
+
 enum RingLoss
 {
     Classic,
@@ -404,14 +412,10 @@ public:
     void SendDeathLinkChance(int newSendDeathLinkChance);
     void ReceiveDeathLinkChance(int newReceiveDeathLinkChance);
     void SetRingLink(int newRingLinkActive);
-    void SetCasinopolisRingLink(int newCasinopolisRingLink);
-    void SetHardRingLink(int newHardRingLinkActive);
     void SetTrapLink(int newTrapLinkActive);
     void SetRingLoss(int newRingLoss);
     void TwinkleCircuitCheck(int newTwinkleCircuitCheck);
-    void MultipleTwinkleCircuitChecks(int newMultipleTwinkleCircuitChecks);
     void SkyChaseChecks(int newSkyChaseChecks);
-    void SkyChaseChecksHard(int newSkyChaseChecksHard);
     void BossChecks(int newBossChecks);
     void UnifyChaos4(int newUnifyChaos4);
     void UnifyChaos6(int newUnifyChaos6);
@@ -497,9 +501,7 @@ public:
     bool deathLinkActive = false;
     int sendDeathLinkChance = 100;
     int receiveDeathLinkChance = 100;
-    bool ringLinkActive = false;
-    bool casinopolisRingLink = false;
-    bool hardRingLinkActive = false;
+    RingLink ringLink = RingLinkDisabled;
     bool trapLinkActive = false;
     RingLoss ringLoss = Classic;
 
@@ -547,11 +549,8 @@ public:
     std::vector<int> missionBlacklist = {};
     bool expertMode = false;
 
-    bool connectFinalEggToEggCarrier;
-
     GatingMode gatingMode = EmblemGating;
-    std::map<int, int> entranceEmblemValueMap = {
-    };
+    std::map<int, int> entranceEmblemValueMap = {};
 
 private:
     explicit Options(Settings& settings);

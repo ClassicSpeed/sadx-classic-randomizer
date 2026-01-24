@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0 pre-release 3] - 2026-01-24
+
+### Changed
+
+- Several logic changes, specially for Expert DX.
+
+### Fixed:
+
+- Fixed Sand Hill level not returning the player to the correct location with random level entrances.
+- Fixed City Hall's Speed Highway entrance not working correctly for Tails, Gamma, and Amy.
+- Fixed Twinkle Circuit logic not working correctly with random level entrances.
+- Fixed entrance hint info not working for bosses and sublevels.
+- Fixed the connection between Egg Carrier and Final Egg Tower not working correctly with key item gating.
+- Fixed the arrow for capsule/enemy sanity not working for enemies/capsules that are far away.
+- Fixed teleport platforms working incorrectly with random level entrances in key item gating mode.
+- Fixed a spelling mistake in the entrance randomizer option.
+- Fixed a spelling mistake in Amy's main theme in songs.json.
+- The spacing between the numbers for emblem requirements in the map now scales properly with the resolution.
+- Capsules broken as Sonic no longer count as broken for Tails when playing as Tails.
+    - This was causing issues in-game, and you can avoid this problem in Casinopolis by disabling missable capsules.
+- You can no longer fall out of the Sky Deck cannon if you move or jump while inside.
+    - Traps no longer affect Sonic or Tails for the first 4 seconds of the level.
+- Fixed Sky Chase 2 A mission check not sending checks correctly.
+- Fixed the Ring Link option not applying correctly.
+- Fixed the Ice Cave door being open when it shouldn't be.
+- Fixed objects (Red Mountain entrance, emblem, etc.) not loading for Tails and Big in Angel Island.
+
 ## [v1.2.0 pre-release 2] - 2026-01-19
 
 ### Added:
@@ -10,6 +37,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed:
 
+- Fixed the map breaking the game's textures in vanilla SADX
 - Fixed missions and bosses counters not updating correctly in the in-game tracker.
 - Fixed Sky Chase entrance, Egg Viper entrance and Chaos 6 entrance, not working correctly with random level entrances.
 - Fixed Bridge's Sky Deck entrance sending the player back to the level after exiting Sky Deck.
@@ -17,7 +45,7 @@ All notable changes to this project will be documented in this file.
 - Updated Entrance Randomizer description to include info about bosses, sublevels and chao gardens.
 - Fixed missable enemies/capsules not excluding some locations.
 - Fixed in-game tracker ignoring the missable enemies option.
-- Fixed in-game tracker ignoring the pinbal capsules option.
+- Fixed in-game tracker ignoring the pinball capsules option.
 - Fixed incorrect returning location with random level entrances.
 - Fixed chao gardens returning to incorrect location with random level entrances.
 - Fixed loading zones for both sky decks not working for Amy, Big and Gamma.
@@ -27,8 +55,8 @@ All notable changes to this project will be documented in this file.
 - Fixed Knuckles' Lost World Entrance not working correctly.
 
 - Fixed logic issues with access rules for Egg Carrier Bridge (that affected Sonic's Sky Deck Entrance).
-- Fixed incorrect regions for Main platorm emblem and Spinning platform emblem.
-- Mission 1 temporaly removed (forced into blacklist) because of logic issues.
+- Fixed incorrect regions for Main platform emblem and Spinning platform emblem.
+- Mission 1 temporally removed (forced into blacklist) because of logic issues.
 
 ## [v1.2.0 pre-release 1] - 2026-01-16
 

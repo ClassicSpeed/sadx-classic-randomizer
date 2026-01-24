@@ -60,7 +60,7 @@ void SetObjectManager::OnFrame()
             _eggCarrierSunk = true;
     }
 
-    if (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill)
+    if (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SkyChase2)
         GameMode = GameModes_Adventure_ActionStg;
     else if (GameMode == GameModes_Adventure_Field || GameMode == GameModes_Adventure_ActionStg)
         GameMode = GameModes_Mission;
@@ -123,15 +123,16 @@ void SetObjectManager::OnCountSetItemsMaybe()
 
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
-    AddSetToLevel(CITY_HALL_SEWERS_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Knuckles);
-    AddSetToLevel(CITY_HALL_SEWERS_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Amy);
-    AddSetToLevel(CITY_HALL_SEWERS_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Gamma);
-
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Tails);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Knuckles);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Amy);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Gamma);
     AddSetToLevel(SEWERS_SPRING_BIG, LevelAndActIDs_StationSquare3, Characters_Big);
+
+    AddSetToLevel(CITY_HALL_SEWERS_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Knuckles);
+    AddSetToLevel(CITY_HALL_SEWERS_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Amy);
+    AddSetToLevel(CITY_HALL_SEWERS_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Gamma);
+
     AddSetToLevel(EXTRA_SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Amy);
     AddSetToLevel(EXTRA_SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Big);
 
@@ -194,6 +195,8 @@ void SetObjectManager::OnCountSetItemsMaybe()
     AddSetToLevel(ICE_CAP_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Knuckles);
     AddSetToLevel(ICE_CAP_LADDER_MR, LevelAndActIDs_MysticRuins2, Characters_Gamma);
     AddSetToLevel(ICE_CAP_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Gamma);
+    AddSetToLevel(ICE_CAP_LADDER_MR, LevelAndActIDs_MysticRuins2, Characters_Amy);
+    AddSetToLevel(ICE_CAP_SCENE_CHANGE_MR, LevelAndActIDs_MysticRuins2, Characters_Amy);
 
     AddSetToLevel(CAVE_WIND_CHANGE_SCENE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
 
@@ -210,27 +213,55 @@ void SetObjectManager::OnCountSetItemsMaybe()
     AddSetToLevel(BEACH_GATE_SS, LevelAndActIDs_StationSquare5, Characters_Sonic);
 
     //Speed Highway (City Hall)
-    AddSetToLevel(CITY_HALL_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Big);
     AddSetToLevel(CITY_HALL_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Sonic);
+    AddSetToLevel(CITY_HALL_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Tails);
+    AddSetToLevel(CITY_HALL_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Amy);
+    AddSetToLevel(CITY_HALL_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Big);
+    AddSetToLevel(CITY_HALL_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Gamma);
 
     //Station Square Bosses
     AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Sonic);
+    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Tails);
+    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Knuckles);
+    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Amy);
+    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Gamma);
+    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Big);
+
     AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Tails);
+    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Sonic);
+    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Knuckles);
+    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Amy);
+    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Gamma);
+    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Big);
 
     //Mystic Ruins Bosses
     AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Sonic);
     AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Tails);
+    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
+    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Amy);
+    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Gamma);
+    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Big);
 
     AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Sonic);
     AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Tails);
     AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
+    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Amy);
+    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Gamma);
+    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Big);
 
     AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Sonic);
     AddSetToLevel(WARP_E101, LevelAndActIDs_MysticRuins4, Characters_Gamma);
+    AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Tails);
+    AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Knuckles);
+    AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Amy);
+    AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Big);
 
     //Egg Carrier Bosses
     AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside1, Characters_Sonic);
     AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside2, Characters_Sonic);
+
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
+    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
 
     AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside1, Characters_Knuckles);
     AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside2, Characters_Knuckles);
@@ -243,39 +274,6 @@ void SetObjectManager::OnCountSetItemsMaybe()
 
     AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside1, Characters_Gamma);
     AddSetToLevel(WARP_E101_MK2, LevelAndActIDs_EggCarrierOutside2, Characters_Gamma);
-
-
-    //Station Square Bosses
-    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Tails);
-    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Knuckles);
-    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Amy);
-    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Gamma);
-    AddSetToLevel(WARP_CHAOS0, LevelAndActIDs_StationSquare1, Characters_Big);
-
-    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Sonic);
-    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Knuckles);
-    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Amy);
-    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Gamma);
-    AddSetToLevel(WARP_EGG_WALKER, LevelAndActIDs_StationSquare2, Characters_Big);
-
-    //Mystic Ruins Bosses
-    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
-    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Amy);
-    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Gamma);
-    AddSetToLevel(WARP_EGG_HORNET, LevelAndActIDs_MysticRuins1, Characters_Big);
-
-    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Amy);
-    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Gamma);
-    AddSetToLevel(WARP_CHAOS4, LevelAndActIDs_MysticRuins1, Characters_Big);
-
-    AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Tails);
-    AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Knuckles);
-    AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Amy);
-    AddSetToLevel(WARP_EGG_VIPER, LevelAndActIDs_MysticRuins4, Characters_Big);
-
-    //Egg Carrier Bosses
-    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside1, Characters_Tails);
-    AddSetToLevel(WARP_CHAOS6, LevelAndActIDs_EggCarrierOutside2, Characters_Tails);
 
 
     AddSetToLevel(WARP_SKY_CHASE_1_WITHOUT_RUNWAY, LevelAndActIDs_MysticRuins1, Characters_Sonic);
@@ -545,7 +543,7 @@ Sint32 SetObjectManager::OnPrepareLevel()
 {
     Sint32 result;
     if ((CurrentCharacter == Characters_Tails || CurrentCharacter == Characters_Big) &&
-        levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2)
+        CurrentLevel == LevelIDs_MysticRuins)
     {
         const char* originalCharId = CharIDStrings[CurrentCharacter];
         CharIDStrings[CurrentCharacter] = "S";

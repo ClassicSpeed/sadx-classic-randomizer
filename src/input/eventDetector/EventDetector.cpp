@@ -16,10 +16,6 @@ UsercallFunc(bool, CheckMissionRequirementsSubgame_t, (int level, int character,
 UsercallFuncVoid(OnBoaBoaPartDestroyed_t, (task * tp), (tp), 0x79F8F0, rEAX);
 
 
-UsercallFuncVoid(OnCapsuleBreak_t, (task * tp), (tp), 0x4D6670, rEAX);
-
-UsercallFuncVoid(OnCapsuleBreakAir_t, (task * tp), (tp), 0x4C0610, rEDI);
-
 float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
 {
     float result = GetShadowPos(x, y, z, rotation);
@@ -97,8 +93,6 @@ EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& r
     CheckMissionRequirements_t.Hook(HandleCheckMissionRequirements);
     CheckMissionRequirementsSubgame_t.Hook(HandleCheckMissionRequirementsSubgame);
     OnBoaBoaPartDestroyed_t.Hook(HandleOnBoaBoaPartDestroyed);
-    OnCapsuleBreak_t.Hook(HandleCapsuleBreak);
-    OnCapsuleBreakAir_t.Hook(HandleCapsuleBreakAir);
     checkData = randomizer.GetCheckData();
     capsules = randomizer.GetCapsules();
     enemies = randomizer.GetEnemies();
@@ -190,7 +184,7 @@ bool ManualSubLevelMissionACheck(const int level)
     if (level == LevelIDs_SkyChase1)
         return Score >= 8000;
 
-    if (level == LevelIDs_SkyChase1)
+    if (level == LevelIDs_SkyChase2)
         return Score >= 20000;
 
     return false;
@@ -501,17 +495,17 @@ void EventDetector::OnFrame()
                         (check.first >= 14501 && check.first <= 14519) ||
                         (check.first >= 15524 && check.first <= 15532) ||
                         (check.first >= 18512 && check.first <= 18514))
-                        return;
+                        continue;
 
                 if (!_instance->_options.missableEnemies)
                     if ((check.first >= 12001 && check.first <= 12010)
                         || (check.first >= 21001 && check.first <= 21003)
                         || (check.first >= 14001 && check.first <= 14008))
-                        return;
+                        continue;
 
                 if (!_instance->_options.includePinballCapsules)
                     if (check.first >= 12548 && check.first <= 12552)
-                        return;
+                        continue;
 
                 const LocationData& location = check.second;
                 if (IsTargetableCheck(location))
@@ -835,33 +829,6 @@ void EventDetector::OnElectricShieldCapsuleBroken(EntityData1* entity)
 {
     _onElectricShieldCapsuleBrokenHook.Original(entity);
     _instance->CheckCapsule(entity, MagneticShieldCapsule);
-}
-
-//Make Sonic's capsule count as Tails'
-void EventDetector::HandleCapsuleBreak(task* tp)
-{
-    if (CurrentCharacter == Characters_Tails)
-    {
-        if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask ==
-            GetPlayerTaskPointer(1))
-        {
-            tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
-        }
-    }
-    OnCapsuleBreak_t.Original(tp);
-}
-
-void EventDetector::HandleCapsuleBreakAir(task* tp)
-{
-    if (CurrentCharacter == Characters_Tails)
-    {
-        if (tp && tp->twp && tp->twp->cwp && tp->twp->cwp->hit_cwp && tp->twp->cwp->hit_cwp->mytask ==
-            GetPlayerTaskPointer(1))
-        {
-            tp->twp->cwp->hit_cwp->mytask = GetPlayerTaskPointer(0);
-        }
-    }
-    OnCapsuleBreakAir_t.Original(tp);
 }
 
 void EventDetector::OnKillHimP(unsigned short a1)

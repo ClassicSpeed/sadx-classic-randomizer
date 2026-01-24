@@ -23,9 +23,9 @@ void ArchipelagoMessenger::UpdateTags()
     std::vector<std::string> tags;
     if (_options.deathLinkActive)
         tags.emplace_back("DeathLink");
-    if (_options.ringLinkActive)
+    if (_options.ringLink != RingLinkDisabled)
         tags.emplace_back("RingLink");
-    if (_options.hardRingLinkActive)
+    if (_options.ringLink == RingLinkHard)
         tags.emplace_back("HardRingLink");
     if (_options.trapLinkActive)
         tags.emplace_back("TrapLink");
