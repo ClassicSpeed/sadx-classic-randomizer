@@ -184,7 +184,7 @@ bool ManualSubLevelMissionACheck(const int level)
     if (level == LevelIDs_SkyChase1)
         return Score >= 8000;
 
-    if (level == LevelIDs_SkyChase1)
+    if (level == LevelIDs_SkyChase2)
         return Score >= 20000;
 
     return false;
