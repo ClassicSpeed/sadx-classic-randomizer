@@ -12,6 +12,8 @@ public:
 
     bool IsDoorOpen(const EntranceId entranceId) override
     {
+        if (entranceId == InvalidEntranceId)
+            return false;
         auto entranceValue = _options.entranceEmblemValueMap.find(entranceId);
         const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
 
@@ -65,6 +67,8 @@ public:
 
     bool ShowDisableDoorIndicator(EntranceId entranceId) override
     {
+        if (entranceId == InvalidEntranceId)
+            return true;
         return !IsDoorOpen(entranceId);
     }
 

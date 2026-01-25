@@ -13,6 +13,8 @@ public:
 
     bool IsDoorOpen(const EntranceId entranceId) override
     {
+        if (entranceId == InvalidEntranceId)
+            return false;
         const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
 
         //Check if door leads to level for the player
@@ -284,6 +286,8 @@ public:
 
     bool ShowDisableDoorIndicator(EntranceId entranceId) override
     {
+        if (entranceId == InvalidEntranceId)
+            return true;
         return !IsDoorOpen(entranceId);
     }
 
