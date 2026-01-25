@@ -190,7 +190,7 @@ public:
         case DeckToEcInsideEggLift:
             return _gameStatus.unlock.keyEgglift;
         case CaptainRoomToEcOutside:
-            break;
+            return true;
         case CaptainRoomToDeck:
             return true;
         case CaptainRoomToPrivateRoom:
@@ -279,7 +279,7 @@ public:
         case InvalidEntranceId:
             return false;
         }
-        return false;
+        return true;
     }
 
     bool ShowDisableDoorIndicator(EntranceId entranceId) override
