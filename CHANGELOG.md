@@ -31,6 +31,7 @@ All notable changes to this project will be documented in this file.
 - Fixed crash when entering the Egg Carrier's Pool.
 - Fixed Captain Room's door being closed in key item gating mode.
 - Fixed Life Belt upgrade not spawning for Big in the Ice cave.
+- Fixed crash when entering some levels with random level entrances enabled.
 
 ## [v1.2.0 pre-release 2] - 2026-01-19
 

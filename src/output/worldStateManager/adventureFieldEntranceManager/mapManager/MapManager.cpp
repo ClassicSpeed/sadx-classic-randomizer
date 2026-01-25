@@ -35,6 +35,10 @@ void MapManager::OnFrame()
         if (button & WhistleButtons && Current_CharObj2 != nullptr)
             this->ShowMap();
 
+    if ((CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_E101R) ||
+        (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill))
+        return;
+
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
     {
