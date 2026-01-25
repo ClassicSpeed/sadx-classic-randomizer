@@ -30,6 +30,7 @@ All notable changes to this project will be documented in this file.
 - Fixed objects (Red Mountain entrance, emblem, etc.) not loading for Tails and Big in Angel Island.
 - Fixed crash when entering the Egg Carrier's Pool.
 - Fixed Captain Room's door being closed in key item gating mode.
+- Fixed Life Belt upgrade not spawning for Big in the Ice cave.
 
 ## [v1.2.0 pre-release 2] - 2026-01-19
 
