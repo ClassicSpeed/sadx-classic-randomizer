@@ -19,6 +19,8 @@ public:
 
         //Check if door leads to level for the player
         auto entrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntrance);
+        if (entrance == nullptr)
+            return false;
         if (_adventureFieldEntranceMap.CalculateCorrectAct(entrance->levelAndActId) == LevelAndActIDs_HedgehogHammer)
             return false;
 

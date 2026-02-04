@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed:
 - Fixed entrances name with numbers not adding spaces correctly (e.g., "Sky Chase Act1" to "Sky Chase Act 1").
+- Fixed crash after coming back from Chaos 6 Fight
 
 ## [v1.2.0 pre-release 3] - 2026-01-24
 
