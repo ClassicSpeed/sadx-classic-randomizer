@@ -39,6 +39,9 @@ void MapManager::OnFrame()
         (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill))
         return;
 
+    if (GameMode == GameModes_Menu)
+        return;
+
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
     {
