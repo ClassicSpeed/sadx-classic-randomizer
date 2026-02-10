@@ -139,6 +139,7 @@ inline NJS_TEXNAME entranceTextNames[42]{};
 inline NJS_TEXLIST entranceTextList = {arrayptrandlength(entranceTextNames)};
 inline PVMEntry EntranceSign = {"entrances", &entranceTextList};
 
+inline NJS_TEXANIM question_mark_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 0, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM emblem_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 1, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM line_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 2, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM number_0_lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 3, NJD_SPRITE_COLOR}};

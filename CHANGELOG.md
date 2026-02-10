@@ -2,10 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-
 ## [v1.2.0 pre-release 4] - 2026-02-??
 
+### Added:
+
+- A question mark will be shown in the map for entrances that haven't been visited yet with entrance randomizer enabled.
+
 ### Fixed:
+
 - Fixed entrances name with numbers not adding spaces correctly (e.g., "Sky Chase Act1" to "Sky Chase Act 1").
 - Fixed crash after coming back from Chaos 6 Fight
 - Level entrances' sprites will no longe show up in the menu.
