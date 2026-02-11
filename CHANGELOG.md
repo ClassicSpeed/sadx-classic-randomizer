@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - A question mark will be shown in the map for entrances that haven't been visited yet with entrance randomizer enabled.
 
+### Updated:
+
+- Updated Trap Link list to include more supported traps.
+
 ### Fixed:
 
 - Fixed entrances name with numbers not adding spaces correctly (e.g., "Sky Chase Act1" to "Sky Chase Act 1").
