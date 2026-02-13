@@ -103,6 +103,9 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
 void Randomizer::ResetItems() const
 {
     _itemRepository.ResetItems();
+
+    _locationRepository.UpdateStatus();
+    _archipelagoMessenger.UpdateTags();
 }
 
 void Randomizer::UpdateLevelEntrances()
