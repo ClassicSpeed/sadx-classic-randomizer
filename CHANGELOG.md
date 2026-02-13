@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Fixed crash after coming back from Chaos 6 Fight
 - Level entrances' sprites will no longe show up in the menu.
 - Link tags are reaplied when reconnecting.
+- Fixed capsules and enemies not showing up in Universal Tracker.
 
 ## [v1.2.0 pre-release 3] - 2026-01-24
 
