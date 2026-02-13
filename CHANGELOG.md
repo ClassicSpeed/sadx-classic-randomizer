@@ -2,9 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0 pre-release 4] - 2026-02-13
+
+### Added:
+
+- A question mark will be shown on the map for entrances that haven't been visited yet when Entrance Randomizer is
+  enabled.
+
+### Changed:
+
+- Several logic changes, especially for Expert DX.
+- Updated the Trap Link list to include additional supported traps.
+
+### Fixed:
+
+- Fixed entrance names with numbers not adding spaces correctly (e.g., `Sky Chase Act 1`).
+- Fixed a crash that occurred after returning from the Chaos 6 fight.
+- Level entrance sprites will no longer appear in the menu.
+- Fixed link tags not being reapplied when reconnecting.
+- Fixed capsules and enemies not appearing in Universal Tracker.
+
 ## [v1.2.0 pre-release 3] - 2026-01-24
 
-### Changed
+### Changed:
 
 - Several logic changes, specially for Expert DX.
 
@@ -28,6 +48,10 @@ All notable changes to this project will be documented in this file.
 - Fixed the Ring Link option not applying correctly.
 - Fixed the Ice Cave door being open when it shouldn't be.
 - Fixed objects (Red Mountain entrance, emblem, etc.) not loading for Tails and Big in Angel Island.
+- Fixed crash when entering the Egg Carrier's Pool.
+- Fixed Captain Room's door being closed in key item gating mode.
+- Fixed Life Belt upgrade not spawning for Big in the Ice cave.
+- Fixed crash when entering some levels with random level entrances enabled.
 
 ## [v1.2.0 pre-release 2] - 2026-01-19
 

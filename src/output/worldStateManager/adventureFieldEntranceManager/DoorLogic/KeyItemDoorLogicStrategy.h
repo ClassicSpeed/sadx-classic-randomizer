@@ -13,10 +13,14 @@ public:
 
     bool IsDoorOpen(const EntranceId entranceId) override
     {
+        if (entranceId == InvalidEntranceId)
+            return false;
         const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
 
         //Check if door leads to level for the player
         auto entrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntrance);
+        if (entrance == nullptr)
+            return false;
         if (_adventureFieldEntranceMap.CalculateCorrectAct(entrance->levelAndActId) == LevelAndActIDs_HedgehogHammer)
             return false;
 
@@ -190,7 +194,7 @@ public:
         case DeckToEcInsideEggLift:
             return _gameStatus.unlock.keyEgglift;
         case CaptainRoomToEcOutside:
-            break;
+            return true;
         case CaptainRoomToDeck:
             return true;
         case CaptainRoomToPrivateRoom:
@@ -279,11 +283,13 @@ public:
         case InvalidEntranceId:
             return false;
         }
-        return false;
+        return true;
     }
 
     bool ShowDisableDoorIndicator(EntranceId entranceId) override
     {
+        if (entranceId == InvalidEntranceId)
+            return true;
         return !IsDoorOpen(entranceId);
     }
 

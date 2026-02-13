@@ -35,6 +35,13 @@ void MapManager::OnFrame()
         if (button & WhistleButtons && Current_CharObj2 != nullptr)
             this->ShowMap();
 
+    if ((CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_E101R) ||
+        (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill))
+        return;
+
+    if (GameMode == GameModes_Menu)
+        return;
+
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
     {
@@ -119,6 +126,9 @@ void MapManager::DrawConnectionsInMap(const AdventureFieldEntrance& adventureFie
 
 NJS_TEXANIM* MapManager::getInitialsFromEntrance(AdventureFieldEntrance* entranceTo)
 {
+    if (!_gameStatus.map.IsEntranceVisited(entranceTo->entranceId) && _options.entranceRandomizer != 0)
+        return question_mark_anim;
+
     LevelAndActIDs levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(entranceTo->levelAndActId);
     LevelIDs level = static_cast<LevelIDs>(GET_LEVEL(levelActAndId));
     switch (level)

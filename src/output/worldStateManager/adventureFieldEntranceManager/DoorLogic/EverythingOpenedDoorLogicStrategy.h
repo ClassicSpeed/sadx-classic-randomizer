@@ -13,6 +13,8 @@ public:
         const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
 
         auto entrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntrance);
+        if (entrance == nullptr)
+            return false;
         if (_adventureFieldEntranceMap.CalculateCorrectAct(entrance->levelAndActId) == LevelAndActIDs_HedgehogHammer)
             return false;
         return true;
