@@ -2,27 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.0 pre-release 4] - 2026-02-??
+## [v1.2.0 pre-release 4] - 2026-02-13
 
 ### Added:
 
-- A question mark will be shown in the map for entrances that haven't been visited yet with entrance randomizer enabled.
+- A question mark will be shown on the map for entrances that haven't been visited yet when Entrance Randomizer is
+  enabled.
 
-### Updated:
+### Changed:
 
-- Updated Trap Link list to include more supported traps.
+- Several logic changes, especially for Expert DX.
+- Updated the Trap Link list to include additional supported traps.
 
 ### Fixed:
 
-- Fixed entrances name with numbers not adding spaces correctly (e.g., "Sky Chase Act1" to "Sky Chase Act 1").
-- Fixed crash after coming back from Chaos 6 Fight
-- Level entrances' sprites will no longe show up in the menu.
-- Link tags are reaplied when reconnecting.
-- Fixed capsules and enemies not showing up in Universal Tracker.
+- Fixed entrance names with numbers not adding spaces correctly (e.g., `Sky Chase Act 1`).
+- Fixed a crash that occurred after returning from the Chaos 6 fight.
+- Level entrance sprites will no longer appear in the menu.
+- Fixed link tags not being reapplied when reconnecting.
+- Fixed capsules and enemies not appearing in Universal Tracker.
 
 ## [v1.2.0 pre-release 3] - 2026-01-24
 
-### Changed
+### Changed:
 
 - Several logic changes, specially for Expert DX.
 
