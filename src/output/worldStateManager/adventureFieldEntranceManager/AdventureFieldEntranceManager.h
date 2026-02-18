@@ -2,7 +2,6 @@
 #include "AdventureFieldEntranceMap.h"
 #include "../../../pch.h"
 #include "../../../configuration/options/Options.h"
-#include "../doorIndicatorManager/DoorIndicatorManager.h"
 #include "../../archipelagoMessenger/ArchipelagoMessenger.h"
 #include "DoorLogic/IDoorLogicStrategy.h"
 #include "DoorLogic/KeyItemDoorLogicStrategy.h"
@@ -35,7 +34,6 @@ private:
     GameStatus& _gameStatus;
     ArchipelagoMessenger& _archipelagoMessenger;
     AdventureFieldEntranceMap& _adventureFieldEntranceMap;
-    DoorIndicatorManager& _doorIndicatorManager;
     MapManager& _mapManager;
     bool _isEggCarrierTransformed = false;
     std::unique_ptr<IDoorLogicStrategy> _doorLogicStrategy;
