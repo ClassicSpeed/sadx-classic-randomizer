@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.2.0] - 2026-02-20
 
+### Added:
+
+- Chaos' Peace will now be sent when defeating Perfect Chaos.
+
 ### Fixed:
 
 - Fixed crash when getting the Life Belt as Big.

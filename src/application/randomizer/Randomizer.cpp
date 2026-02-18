@@ -197,6 +197,7 @@ void Randomizer::OnConnected()
 void Randomizer::OnGameCompleted()
 {
     _displayManager.QueueItemMessage("Victory!");
+    _archipelagoMessenger.CheckLocation(LocationRepository::ChaosPeaceId);
     _archipelagoMessenger.GameCompleted();
 }
 

@@ -15,6 +15,8 @@ public:
         return *_instance;
     }
 
+    static constexpr int ChaosPeaceId = 9;
+
     LocationData SetLocationChecked(int checkId);
     LocationData GetLocation(int checkId);
     void UpdateStatus();
