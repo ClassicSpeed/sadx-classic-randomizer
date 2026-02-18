@@ -301,8 +301,6 @@ void SetObjectManager::OnCountSetItemsMaybe()
     AddSetToLevel(WIND_STONE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
     AddSetToLevel(WIND_STONE_MR, LevelAndActIDs_MysticRuins1, Characters_Big);
 
-    AddSetToLevel(BIG_UPGRADE_MR, LevelAndActIDs_MysticRuins2, Characters_Big);
-
     //Time Travel 
     AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Sonic);
     AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Tails);

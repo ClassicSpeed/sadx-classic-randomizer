@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0] - 2026-02-20
+
+### Fixed:
+
+- Fixed crash when getting the Life Belt as Big.
+
 ## [v1.2.0 pre-release 4] - 2026-02-13
 
 ### Added:
