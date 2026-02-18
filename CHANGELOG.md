@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
 
 - Fixed crash when getting the Life Belt as Big.
+- Fixed spelling mistake in Show Player Connections mod setting.
 
 ## [v1.2.0 pre-release 4] - 2026-02-13
 
