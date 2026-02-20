@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0] - 2026-02-20
+
+### Added:
+
+- Chaos' Peace will now be sent when defeating Perfect Chaos.
+
+### Changed:
+
+- Added logic skip in Expert DC for Sonic from the Pool to Sky Deck and EC outside.
+- Added logic skip in Expert DC for Sonic from City Hall to SSMain.
+
+### Fixed:
+
+- Fixed a crash when getting the Life Belt as Big.
+- Fixed a spelling mistake in the `Show Player Connections` mod setting.
+- Fixed the Employee Card requirement for Knuckles' entrance with Entrance Randomizer enabled.
+- Fixed the map not showing 10 or 11 emblems correctly.
+- Fixed the map revealing some entrances early.
+
 ## [v1.2.0 pre-release 4] - 2026-02-13
 
 ### Added:

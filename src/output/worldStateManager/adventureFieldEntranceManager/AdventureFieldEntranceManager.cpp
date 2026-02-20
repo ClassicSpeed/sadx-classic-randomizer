@@ -16,7 +16,6 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
                                                              ArchipelagoMessenger& archipelagoMessenger) :
     _options(options), _settings(settings), _gameStatus(gameStatus), _archipelagoMessenger(archipelagoMessenger),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init(options)),
-    _doorIndicatorManager(DoorIndicatorManager::Init()),
     _mapManager(MapManager::Init(options, gameStatus, _adventureFieldEntranceMap))
 {
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
@@ -188,6 +187,11 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
                 GET_LEVEL(levelActAndId), GET_ACT(levelActAndId));
             SetEntranceNumber(newEntrance->entranceNumber);
         }
+
+        if (GET_LEVEL(currentLevelAndAct) >= LevelIDs_EmeraldCoast && GET_LEVEL(currentLevelAndAct) <= LevelIDs_E101R
+            || GET_LEVEL(currentLevelAndAct) >= LevelIDs_TwinkleCircuit && GET_LEVEL(currentLevelAndAct) <=
+            LevelIDs_SandHill)
+            return;
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
         _instance->_archipelagoMessenger.SetMapStatus();
@@ -240,6 +244,11 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
                 GET_LEVEL(levelActAndId), GET_ACT(levelActAndId));
             SetEntranceNumber(newEntrance->entranceNumber);
         }
+
+        if (GET_LEVEL(currentLevelAndAct) >= LevelIDs_EmeraldCoast && GET_LEVEL(currentLevelAndAct) <= LevelIDs_E101R
+            || GET_LEVEL(currentLevelAndAct) >= LevelIDs_TwinkleCircuit && GET_LEVEL(currentLevelAndAct) <=
+            LevelIDs_SandHill)
+            return;
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
         _instance->_archipelagoMessenger.SetMapStatus();

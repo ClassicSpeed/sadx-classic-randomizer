@@ -60,7 +60,7 @@
                 <HelpText>Display chat messages for the countdowns.</HelpText>
             </Property>
             <Property name="ShowPlayerConnections" type="bool" defaultvalue="False" display="Show Player Connections">
-                <HelpText>Display a chay message when players connect and disconnect.</HelpText>
+                <HelpText>Display a chat message when players connect and disconnect.</HelpText>
             </Property>
 
             <Property name="ChatMessageColorR" type="int" defaultvalue="255" minvalue="0" maxvalue="255"

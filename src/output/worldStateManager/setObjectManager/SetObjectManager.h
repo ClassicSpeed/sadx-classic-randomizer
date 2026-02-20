@@ -16,7 +16,6 @@ constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
 constexpr int CAVE_WIND_CHANGE_SCENE_MYSTIC_RUINS = 31;
 constexpr int EMBLEM_MYSTIC_RUINS = 65;
 constexpr int WIND_STONE_MYSTIC_RUINS = 21;
-constexpr int UPGRADE_MYSTIC_RUINS = 46;
 
 constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
 constexpr int BEACH_GATE_STATION_SQUARE = 67;
@@ -142,9 +141,6 @@ const SETEntry CAVE_WIND_CHANGE_SCENE_MR = CreateSetEntry(CAVE_WIND_CHANGE_SCENE
 
 const SETEntry WIND_STONE_MR = CreateSetEntry(WIND_STONE_MYSTIC_RUINS, {1392.39f, 191, 863.86f},
                                               {0xFF57, 0x8220, 0xF920}, {1, 0, 0});
-
-const SETEntry BIG_UPGRADE_MR = CreateSetEntry(UPGRADE_MYSTIC_RUINS, {-951, 28.5f, 255},
-                                               {0xFFD5, 0x7800, 0xFEC4}, {12, 0, 0});
 
 const SETEntry ICE_CAP_SPRING = CreateSetEntry(1, {-1070, -35, 236},
                                                {0, 0, 0}, {0.3f, -1.25f, 1});
