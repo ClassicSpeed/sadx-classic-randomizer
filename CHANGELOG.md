@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Fixed crash when getting the Life Belt as Big.
 - Fixed spelling mistake in Show Player Connections mod setting.
 - Fixed Employee Card requirement for Knuckle's entrance with Entrance Randomizer enabled.
+- Fixed the map not showing 10 or 11 emblems correctly.
 
 ## [v1.2.0 pre-release 4] - 2026-02-13
 

@@ -370,7 +370,7 @@ void MapManager::ShowNumberDynamicMap(int number, float x, float y)
         showNumberMap(x, y, tens);
         showNumberMap(x - distanceBetweenDigits, y, ones);
     }
-    else if (number >= distanceBetweenDigits)
+    else if (number >= 10)
     {
         showNumberMap(x + distanceBetweenDigits / 2, y, tens);
         showNumberMap(x - distanceBetweenDigits / 2, y, ones);
