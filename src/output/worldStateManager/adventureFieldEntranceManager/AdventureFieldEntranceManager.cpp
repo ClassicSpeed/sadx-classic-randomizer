@@ -187,6 +187,11 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
                 GET_LEVEL(levelActAndId), GET_ACT(levelActAndId));
             SetEntranceNumber(newEntrance->entranceNumber);
         }
+
+        if (GET_LEVEL(currentLevelAndAct) >= LevelIDs_EmeraldCoast && GET_LEVEL(currentLevelAndAct) <= LevelIDs_E101R
+            || GET_LEVEL(currentLevelAndAct) >= LevelIDs_TwinkleCircuit && GET_LEVEL(currentLevelAndAct) <=
+            LevelIDs_SandHill)
+            return;
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
         _instance->_archipelagoMessenger.SetMapStatus();
@@ -239,6 +244,11 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
                 GET_LEVEL(levelActAndId), GET_ACT(levelActAndId));
             SetEntranceNumber(newEntrance->entranceNumber);
         }
+
+        if (GET_LEVEL(currentLevelAndAct) >= LevelIDs_EmeraldCoast && GET_LEVEL(currentLevelAndAct) <= LevelIDs_E101R
+            || GET_LEVEL(currentLevelAndAct) >= LevelIDs_TwinkleCircuit && GET_LEVEL(currentLevelAndAct) <=
+            LevelIDs_SandHill)
+            return;
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
         _instance->_archipelagoMessenger.SetMapStatus();
