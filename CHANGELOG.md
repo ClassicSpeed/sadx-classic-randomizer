@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.1] - 2026-??-??
+
+- Fixed docstring in mission blacklist option.
+
 ## [v1.2.0] - 2026-02-20
 
 ### Added:
