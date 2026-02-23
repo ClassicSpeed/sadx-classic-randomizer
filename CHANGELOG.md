@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.2.1] - 2026-??-??
 
+### Fixed:
+
 - Fixed docstring in mission blacklist option.
+- Removed Big's upgrade in the Arsenal.
 
 ## [v1.2.0] - 2026-02-20
 

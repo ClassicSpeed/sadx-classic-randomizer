@@ -96,6 +96,8 @@ private:
     inline static FunctionHook<BOOL> _isFinalEggDoorActiveHook{0x53EDF0};
     static BOOL OnIsFinalEggDoorActive();
 
+    inline static FunctionHook<void, task*> _levelItemMainHook{0x4BF600};
+    static void OnLevelItemMain(task* tp);
 
     static int __cdecl OnTwinkleCircuitDoor(char character);
     static void __cdecl OnFinalEggDoorCheckA(int a1);

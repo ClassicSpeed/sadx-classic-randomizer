@@ -20,6 +20,7 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _opti
     _bigHudDrawWeightAndLifeHook.Hook(OnBigHudDrawWeightAndLife);
     _isFinalEggTowerActiveHook.Hook(OnIsFinalEggTowerActive);
     _isFinalEggDoorActiveHook.Hook(OnIsFinalEggDoorActive);
+    _levelItemMainHook.Hook(OnLevelItemMain);
     lostWorldEntranceCollisionHook.Hook(OnLostWorldEntranceCollision);
 
     twinkleCircuitDoorHook.Hook(OnTwinkleCircuitDoor);
@@ -662,6 +663,14 @@ void SetObjectManager::OnBigHudDrawWeightAndLife()
     GameMode = bufferGameMode;
 }
 
+
+void SetObjectManager::OnLevelItemMain(task* tp)
+{
+    if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside1 && CurrentCharacter == Characters_Big)
+        return FreeTask(tp);
+
+    _levelItemMainHook.Original(tp);
+}
 
 // Handles the Twinkle Circuit door
 int SetObjectManager::OnTwinkleCircuitDoor(const char character)
