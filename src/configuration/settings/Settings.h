@@ -156,6 +156,7 @@ public:
 
     DeathLinkOverride deathLinkOverride;
     RingLinkOverride ringLinkOverride;
+    bool ringLinkSounds = true;
     RingLossOverride ringLossOverride;
     TrapLinkOverride trapLinkOverride;
 

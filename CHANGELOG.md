@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.2.1] - 2026-??-??
 
+### Added:
+
+- Added mod settings to disable the Ring Link sounds.
+
 ### Fixed:
 
 - Fixed docstring in mission blacklist option.

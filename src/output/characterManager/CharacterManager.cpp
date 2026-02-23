@@ -165,7 +165,8 @@ void CharacterManager::ProcessRings(const Sint16 amount)
     if (amount < 0 && Rings > 0)
     {
         const Sint16 newRingAmount = max(Rings + amount, 0);
-        PlaySound(RING_LOSS_SOUND_ID, nullptr, 0, nullptr);
+        if (_settings.ringLinkSounds)
+            PlaySound(RING_LOSS_SOUND_ID, nullptr, 0, nullptr);
         Rings = newRingAmount;
     }
 
@@ -174,7 +175,8 @@ void CharacterManager::ProcessRings(const Sint16 amount)
     if (amount > 0 && Rings < maxRings)
     {
         AddRings(amount);
-        PlaySound(RING_GAIN_SOUND_ID, nullptr, 0, nullptr);
+        if (_settings.ringLinkSounds)
+            PlaySound(RING_GAIN_SOUND_ID, nullptr, 0, nullptr);
     }
 
     _lastRingAmount = Rings;

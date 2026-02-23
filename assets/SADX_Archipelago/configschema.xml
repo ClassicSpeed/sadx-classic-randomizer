@@ -18,6 +18,9 @@
             <Property name="RingLinkOverride" type="RingLinkIndex" defaultvalue="0" display="Ring Link Override">
                 <HelpText>You can override the Ring Link setting from the yaml.</HelpText>
             </Property>
+            <Property name="RingLinkSounds" type="bool" defaultvalue="True" display="Ring Link Sounds">
+                <HelpText>Enable sound effects for ring link.</HelpText>
+            </Property>
             <Property name="RingLossOverride" type="RingLossIndex" defaultvalue="0" display="Ring Loss Override">
                 <HelpText>You can override the Ring Loss setting from the yaml.</HelpText>
             </Property>

@@ -42,6 +42,7 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
 
     this->deathLinkOverride = static_cast<DeathLinkOverride>(settingsIni->getInt("AP", "DeathLinkOverride", 0));
     this->ringLinkOverride = static_cast<RingLinkOverride>(settingsIni->getInt("AP", "RingLinkOverride", 0));
+    this->ringLinkSounds = settingsIni->getBool("AP", "RingLinkSounds", true);
     this->ringLossOverride = static_cast<RingLossOverride>(settingsIni->getInt("AP", "RingLossOverride", 0));
     this->trapLinkOverride = static_cast<TrapLinkOverride>(settingsIni->getInt("AP", "TrapLinkOverride", 0));
 
