@@ -15,7 +15,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
                                                              GameStatus& gameStatus,
                                                              ArchipelagoMessenger& archipelagoMessenger) :
     _options(options), _settings(settings), _gameStatus(gameStatus), _archipelagoMessenger(archipelagoMessenger),
-    _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init(options)),
+    _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init(options, gameStatus)),
     _mapManager(MapManager::Init(options, gameStatus, _adventureFieldEntranceMap))
 {
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
@@ -163,7 +163,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, cons
         currentLevelAndAct = LevelAndActIDs_MRGarden;
 
     AdventureFieldEntrance* newEntrance = _instance->_adventureFieldEntranceMap.GetNewConnection(
-        currentLevelAndAct, GET_LEVEL_ACT(level, act), _instance->_isEggCarrierTransformed);
+        currentLevelAndAct, GET_LEVEL_ACT(level, act));
     if (newEntrance != nullptr)
     {
         auto levelActAndId = newEntrance->levelAndActId;
@@ -219,7 +219,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
         currentLevelAndAct = LevelAndActIDs_MRGarden;
 
     AdventureFieldEntrance* newEntrance = _instance->_adventureFieldEntranceMap.GetNewConnection(
-        currentLevelAndAct, GET_LEVEL_ACT(level, act), _instance->_isEggCarrierTransformed);
+        currentLevelAndAct, GET_LEVEL_ACT(level, act));
 
     if (newEntrance != nullptr)
     {
@@ -261,7 +261,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
 Sint32 AdventureFieldEntranceManager::OnFinishedLevelMaybe()
 {
     if (GameState == MD_GAME_ABORT)
-        _instance->_isEggCarrierTransformed = false;
+        _instance->_gameStatus.isEggCarrierTransformed = false;
     return _finishedLevelMaybeHook.Original();
 }
 
@@ -463,8 +463,8 @@ void AdventureFieldEntranceManager::OnFrame()
         else if (CurrentCharacter == Characters_Big)
             isTransformed = EventFlagArray[FLAG_BIG_EC_TRANSFORM];
 
-        if (isTransformed != _isEggCarrierTransformed)
-            _isEggCarrierTransformed = isTransformed;
+        if (isTransformed != _instance->_gameStatus.isEggCarrierTransformed)
+            _instance->_gameStatus.isEggCarrierTransformed = isTransformed;
     }
 } // -------- Function hooks for gating the world --------
 
@@ -727,10 +727,12 @@ void AdventureFieldEntranceManager::OnCharacterUpgradeMain(task* tp)
 
 void AdventureFieldEntranceManager::OnSsBoatMain(task* tp)
 {
-    if (!_instance->IsDoorOpen(SsMainToEcOutside))
+    if (!_instance->IsDoorOpen(SsMainToBridge))
         return FreeTask(tp);
     return _ssBoatMainHook.Original(tp);
-} // Speed Highway
+}
+
+// Speed Highway
 //TODO: Check/move the unlock part to the main manager
 BOOL AdventureFieldEntranceManager::OnIsSpeedHighwayShutterOpen()
 {
@@ -835,9 +837,6 @@ EntranceId GetBossEntrance()
     case LevelAndActIDs_MysticRuins4:
         return FinalEggTowerToBetaEggViper;
     case LevelAndActIDs_EggCarrierOutside1:
-        if (EntityData1Ptrs[0]->Position.z > -500)
-            return EcOutsideToChaos6ZeroBeta;
-        return EcOutsideToSkyChase2;
     case LevelAndActIDs_EggCarrierOutside2:
         if (EntityData1Ptrs[0]->Position.z > -500)
             return BridgeToChaos6ZeroBeta;
@@ -897,7 +896,7 @@ int AdventureFieldEntranceManager::OnTwinkleParkDoor(const char character)
 
 void AdventureFieldEntranceManager::OnMrRaftMain(task* tp)
 {
-    if (!_instance->IsDoorOpen(MrMainToEcOutside))
+    if (!_instance->IsDoorOpen(MrMainToBridge))
         return FreeTask(tp);
     return _mrRaftMainHook.Original(tp);
 }
@@ -1408,7 +1407,7 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
     {
         if (IsNearPosition(twp->pos, 0, 744.5, 1080.7))
         {
-            if (!_instance->IsDoorOpen(EcOutsideToPool))
+            if (!_instance->IsDoorOpen(DeckToPool))
                 return false;
 
             if (!IsPlayerNearDoor(twp))
@@ -1418,7 +1417,7 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
 
         if (IsNearPosition(twp->pos, 0, 740, 433))
         {
-            if (!_instance->IsDoorOpen(EcOutsideToCaptainRoom))
+            if (!_instance->IsDoorOpen(DeckToCaptainRoom))
                 return false;
 
             if (!IsPlayerNearDoor(twp))
@@ -1469,7 +1468,7 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
     // Captain's room
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
     {
-        if (!_instance->IsDoorOpen(CaptainRoomToEcOutside))
+        if (!_instance->IsDoorOpen(CaptainRoomToDeck))
             return false;
 
         if (!IsPlayerNearDoor(twp))
@@ -1507,7 +1506,7 @@ int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
     // Pool
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside6)
     {
-        if (!_instance->IsDoorOpen(PoolToEcOutside))
+        if (!_instance->IsDoorOpen(PoolToDeck))
             return false;
 
         if (!IsPlayerNearDoor(twp))
@@ -1562,24 +1561,19 @@ void AdventureFieldEntranceManager::OnSpringMain(task* tp)
 
 BOOL AdventureFieldEntranceManager::OnIsMonorailEnabled()
 {
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
-        return _instance->IsDoorOpen(EcOutsideToEcInsideMonorail);
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2)
-        return _instance->IsDoorOpen(BridgeToEcInsideMonorail);
-
-    return _instance->IsDoorOpen(EcInsideToEcOutsideMonorail);
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside2)
+        return _instance->IsDoorOpen(EcInsideToBridgeMonorail);
+    return _instance->IsDoorOpen(BridgeToEcInsideMonorail);
 }
 
 BOOL AdventureFieldEntranceManager::OnIsOutsideEggLiftEnabled()
 {
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
-        return _instance->IsDoorOpen(EcOutsideToEcInsideEggLift);
     return _instance->IsDoorOpen(DeckToEcInsideEggLift);
 }
 
 BOOL AdventureFieldEntranceManager::OnIsInsideEggLiftEnabled()
 {
-    return _instance->IsDoorOpen(EcInsideToEcOutsideEggLift);
+    return _instance->IsDoorOpen(EcInsideToDeckEggLift);
 }
 
 void AdventureFieldEntranceManager::OnLoadPoolDoor(task* tp)
@@ -1592,25 +1586,23 @@ void AdventureFieldEntranceManager::OnLoadPoolDoor(task* tp)
 BOOL AdventureFieldEntranceManager::IsEcBoatEnabled()
 {
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1 && _instance->IsDoorOpen(
-        EcOutsideToSsMain))
+        BridgeToSsMain))
         return true;
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2 && _instance->
         IsDoorOpen(BridgeToSsMain))
         return true;
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4 && _instance->IsDoorOpen(SsMainToEcOutside))
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4 && _instance->IsDoorOpen(SsMainToBridge))
         return true;
     return false;
 }
 
 BOOL AdventureFieldEntranceManager::IsEcRaftEnabled()
 {
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1 && _instance->IsDoorOpen(
-        EcOutsideToMrMain))
-        return true;
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside2 && _instance->
+    if ((CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside1 || CurrentStageAndAct ==
+            LevelAndActIDs_EggCarrierOutside2) && _instance->
         IsDoorOpen(BridgeToMrMain))
         return true;
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_StationSquare4 && _instance->IsDoorOpen(MrMainToEcOutside))
+    if (CurrentStageAndAct == LevelAndActIDs_StationSquare4 && _instance->IsDoorOpen(MrMainToBridge))
         return true;
     return false;
 }

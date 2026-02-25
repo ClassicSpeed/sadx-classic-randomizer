@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../pch.h"
 #include "../../../configuration/options/Options.h"
+#include "../../../configuration/gameStatus//GameStatus.h"
 
 
 struct AdventureFieldEntrance
@@ -23,32 +24,35 @@ struct AdventureFieldEntrance
 class AdventureFieldEntranceMap
 {
 public:
-    static AdventureFieldEntranceMap& Init(Options& options)
+    static AdventureFieldEntranceMap& Init(Options& options, GameStatus& gameStatus)
     {
         if (_instance == nullptr)
-            _instance = new AdventureFieldEntranceMap(options);
+            _instance = new AdventureFieldEntranceMap(options, gameStatus);
         return *_instance;
     }
 
-    AdventureFieldEntrance* GetNewConnection(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation,
-                                             bool isEggCarrierTransformed);
+    AdventureFieldEntrance* GetNewConnection(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
     AdventureFieldEntrance* GetCurrentEntrance(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
     const std::vector<AdventureFieldEntrance>& GetEntrances() const;
     const std::vector<AdventureFieldEntrance>& GetStaticEntrances() const;
-    EntranceId GetReplacementConnection(EntranceId fromEntranceId, bool isEggCarrierTransformed);
+    EntranceId GetReplacementConnection(EntranceId fromEntranceId);
     AdventureFieldEntrance* FindEntranceById(EntranceId entranceId);
     LevelAndActIDs CalculateCorrectAct(LevelAndActIDs levelAndActId);
     void UpdateRandomEntrances();
 
 private:
-    explicit AdventureFieldEntranceMap(Options& options);
+    explicit AdventureFieldEntranceMap(Options& options, GameStatus& gameStatus);
+    static void overrideEntranceAct(std::vector<AdventureFieldEntrance>& list,
+                                    std::initializer_list<AdventureFieldEntrance> overrides);
     inline static AdventureFieldEntranceMap* _instance = nullptr;
     Options& _options;
+    GameStatus& _gameStatus;
     EntranceId _lastEntranceIdUsed;
 
     EntranceId FindEntranceByLocation(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
 
     std::vector<AdventureFieldEntrance> _entranceList = {};
+    std::vector<AdventureFieldEntrance> _entranceListUntransformed = {};
     std::vector<AdventureFieldEntrance> _staticEntranceList = {};
 
     std::map<EntranceId, EntranceId> _entranceOriginalConnections = {
@@ -67,7 +71,7 @@ private:
 
         {TwinkleParkTunnelToTwinkleParkLobby, TwinkleParkLobbyToTwinkleParkTunnel},
 
-        {SsMainToEcOutside, EcOutsideToSsMain},
+        // {SsMainToEcOutside, BridgeToSsMain},
         {SsMainToSpeedHighway, SpeedHighwayToSsMain},
         {HotelPoolToEmeraldCoast, EmeraldCoastToHotelPool},
 
@@ -75,7 +79,7 @@ private:
         {HotelToChaos2, Chaos2ToHotel},
         {TwinkleParkLobbyToTwinklePark, TwinkleParkToTwinkleParkLobby},
         {TwinkleParkLobbyToTwinkleCircuit, TwinkleCircuitToTwinkleParkLobby},
-        {MrMainToEcOutside, EcOutsideToMrMain},
+        // {MrMainToEcOutside, EcOutsideToMrMain},
         {MrMainToAngelIsland, AngelIslandToMrMain},
         {MrMainToWindyValley, WindyValleyToMrMain},
         {MrMainToJungle, JungleToMrMain},
@@ -96,12 +100,12 @@ private:
         {FinalEggTowerToFinalEggAlternative, FinalEggToFinalEggTowerAlternative},
         {FinalEggTowerToBetaEggViper, BetaEggViperToFinalEggTower},
         {FinalEggTowerToEcInside, EcInsideToFinalEggTower},
-        {EcOutsideToSkyChase2, SkyChase2ToEcOutside},
-        {EcOutsideToChaos6ZeroBeta, Chaos6ZeroBetaToEcOutside},
-        {EcOutsideToEcInsideMonorail, EcInsideToEcOutsideMonorail},
-        {EcOutsideToEcInsideEggLift, EcInsideToEcOutsideEggLift},
-        {EcOutsideToCaptainRoom, CaptainRoomToEcOutside},
-        {EcOutsideToPool, PoolToEcOutside},
+        // {EcOutsideToSkyChase2, SkyChase2ToEcOutside},
+        // {EcOutsideToChaos6ZeroBeta, Chaos6ZeroBetaToEcOutside},
+        // {EcOutsideToEcInsideMonorail, EcInsideToEcOutsideMonorail},
+        // {EcOutsideToEcInsideEggLift, EcInsideToEcOutsideEggLift},
+        // {EcOutsideToCaptainRoom, CaptainRoomToEcOutside},
+        // {EcOutsideToPool, PoolToEcOutside},
         {BridgeToSsMain, SsMainToBridge},
         {BridgeToMrMain, MrMainToBridge},
         {BridgeToSkyDeck, SkyDeckToBridge},

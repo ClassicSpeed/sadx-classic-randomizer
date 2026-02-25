@@ -10,7 +10,7 @@ public:
 
     bool IsDoorOpen(const EntranceId entranceId) override
     {
-        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
+        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId);
 
         auto entrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntrance);
         if (entrance == nullptr)

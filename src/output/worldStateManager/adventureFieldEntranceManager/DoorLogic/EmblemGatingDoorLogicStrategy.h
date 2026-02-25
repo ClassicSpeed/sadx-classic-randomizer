@@ -15,7 +15,7 @@ public:
         if (entranceId == InvalidEntranceId)
             return false;
         auto entranceValue = _options.entranceEmblemValueMap.find(entranceId);
-        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
+        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId);
 
         if (entranceValue == _options.entranceEmblemValueMap.end())
             entranceValue = _options.entranceEmblemValueMap.find(oppositeEntrance);

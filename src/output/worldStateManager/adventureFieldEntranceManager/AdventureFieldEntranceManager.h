@@ -35,7 +35,6 @@ private:
     ArchipelagoMessenger& _archipelagoMessenger;
     AdventureFieldEntranceMap& _adventureFieldEntranceMap;
     MapManager& _mapManager;
-    bool _isEggCarrierTransformed = false;
     std::unique_ptr<IDoorLogicStrategy> _doorLogicStrategy;
 
     bool IsDoorOpen(EntranceId entranceId);

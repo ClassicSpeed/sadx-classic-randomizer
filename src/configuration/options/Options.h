@@ -170,7 +170,7 @@ enum EntranceId
     SsMainToStation,
     SsMainToCityHall,
     SsMainToTwinkleParkTunnel,
-    SsMainToEcOutside,
+    // SsMainToEcOutside,
     SsMainToBridge,
     SsMainToSpeedHighway,
 
@@ -197,7 +197,7 @@ enum EntranceId
 
     // MRMain
     MrMainToStation,
-    MrMainToEcOutside,
+    // MrMainToEcOutside,
     MrMainToBridge,
     MrMainToAngelIsland,
     MrMainToWindyValley,
@@ -241,15 +241,15 @@ enum EntranceId
     FinalEggTowerToEcInside,
 
 
-    // Egg Carrier Outside (Untransformed)
-    EcOutsideToSsMain,
-    EcOutsideToMrMain,
-    EcOutsideToSkyChase2,
-    EcOutsideToChaos6ZeroBeta,
-    EcOutsideToEcInsideMonorail,
-    EcOutsideToEcInsideEggLift,
-    EcOutsideToCaptainRoom,
-    EcOutsideToPool,
+    // // Egg Carrier Outside (Untransformed)
+    // EcOutsideToSsMain,
+    // EcOutsideToMrMain,
+    // EcOutsideToSkyChase2,
+    // EcOutsideToChaos6ZeroBeta,
+    // EcOutsideToEcInsideMonorail,
+    // EcOutsideToEcInsideEggLift,
+    // EcOutsideToCaptainRoom,
+    // EcOutsideToPool,
 
     // Bridge (Transformed) 
     BridgeToSsMain,
@@ -267,7 +267,7 @@ enum EntranceId
     DeckToEcInsideEggLift,
 
     // Captain Room
-    CaptainRoomToEcOutside,
+    // CaptainRoomToEcOutside,
     CaptainRoomToDeck,
     CaptainRoomToPrivateRoom,
 
@@ -277,7 +277,7 @@ enum EntranceId
     PrivateRoomToDeckAlternative,
 
     // Pool
-    PoolToEcOutside,
+    // PoolToEcOutside,
     PoolToDeck,
     PoolToSkyDeck,
 
@@ -285,8 +285,8 @@ enum EntranceId
     ArsenalToEcInside,
 
     // Egg Carrier Inside
-    EcInsideToEcOutsideEggLift,
-    EcInsideToEcOutsideMonorail,
+    // EcInsideToEcOutsideEggLift,
+    // EcInsideToEcOutsideMonorail,
     EcInsideToDeckEggLift,
     EcInsideToBridgeMonorail,
     EcInsideToHotShelter,
@@ -342,9 +342,9 @@ enum EntranceId
     FinalEggToFinalEggTower,
     FinalEggToFinalEggTowerAlternative,
     BetaEggViperToFinalEggTower,
-    SkyChase2ToEcOutside,
+    // SkyChase2ToEcOutside,
     SkyChase2ToBridge,
-    Chaos6ZeroBetaToEcOutside,
+    // Chaos6ZeroBetaToEcOutside,
     Chaos6ZeroBetaToBridge,
     SkyDeckToBridge,
     SkyDeckToPool,

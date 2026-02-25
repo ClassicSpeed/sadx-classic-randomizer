@@ -15,7 +15,7 @@ public:
     {
         if (entranceId == InvalidEntranceId)
             return false;
-        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
+        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId);
 
         //Check if door leads to level for the player
         auto entrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntrance);
@@ -61,8 +61,6 @@ public:
             return _gameStatus.unlock.keyPolicePass;
         case SsMainToTwinkleParkTunnel:
             return _gameStatus.unlock.keyTwinkleParkTicket;
-        case SsMainToEcOutside:
-            return _gameStatus.unlock.keyBoat;
         case SsMainToBridge:
             return _gameStatus.unlock.keyBoat;
         case SsMainToSpeedHighway:
@@ -95,8 +93,6 @@ public:
             return true;
         case MrMainToStation:
             return _gameStatus.unlock.keyTrain;
-        case MrMainToEcOutside:
-            return _gameStatus.unlock.keyRaft;
         case MrMainToBridge:
             return _gameStatus.unlock.keyRaft;
         case MrMainToAngelIsland:
@@ -155,22 +151,6 @@ public:
             return true;
         case FinalEggTowerToEcInside:
             return true;
-        case EcOutsideToSsMain:
-            return _gameStatus.unlock.keyBoat;
-        case EcOutsideToMrMain:
-            return _gameStatus.unlock.keyRaft;
-        case EcOutsideToSkyChase2:
-            return true;
-        case EcOutsideToChaos6ZeroBeta:
-            return true;
-        case EcOutsideToEcInsideMonorail:
-            return _gameStatus.unlock.keyMonorail;
-        case EcOutsideToEcInsideEggLift:
-            return _gameStatus.unlock.keyEgglift;
-        case EcOutsideToCaptainRoom:
-            return true;
-        case EcOutsideToPool:
-            return true;
         case BridgeToSsMain:
             return _gameStatus.unlock.keyBoat;
         case BridgeToMrMain:
@@ -193,8 +173,6 @@ public:
             return true;
         case DeckToEcInsideEggLift:
             return _gameStatus.unlock.keyEgglift;
-        case CaptainRoomToEcOutside:
-            return true;
         case CaptainRoomToDeck:
             return true;
         case CaptainRoomToPrivateRoom:
@@ -205,18 +183,12 @@ public:
             return true;
         case PrivateRoomToDeckAlternative:
             return true;
-        case PoolToEcOutside:
-            return true;
         case PoolToDeck:
             return true;
         case PoolToSkyDeck:
             return true;
         case ArsenalToEcInside:
             return true;
-        case EcInsideToEcOutsideEggLift:
-            return _gameStatus.unlock.keyEgglift;
-        case EcInsideToEcOutsideMonorail:
-            return _gameStatus.unlock.keyMonorail;
         case EcInsideToDeckEggLift:
             return _gameStatus.unlock.keyEgglift;
         case EcInsideToBridgeMonorail:
@@ -272,9 +244,7 @@ public:
         case FinalEggToFinalEggTower:
         case FinalEggToFinalEggTowerAlternative:
         case BetaEggViperToFinalEggTower:
-        case SkyChase2ToEcOutside:
         case SkyChase2ToBridge:
-        case Chaos6ZeroBetaToEcOutside:
         case Chaos6ZeroBetaToBridge:
         case SkyDeckToBridge:
         case SkyDeckToPool:

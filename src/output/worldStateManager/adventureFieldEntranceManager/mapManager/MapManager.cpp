@@ -110,7 +110,7 @@ void MapManager::DrawConnectionsInMap(const AdventureFieldEntrance& adventureFie
 
 
     auto entranceToId = _instance->_adventureFieldEntranceMap.GetReplacementConnection(
-        adventureFieldEntrance.entranceId, _gameStatus.map.isEggCarrierTransformed);
+        adventureFieldEntrance.entranceId);
     auto entranceLocationTo = entranceLocationInMap.find(entranceToId);
 
     if (entranceLocationTo == entranceLocationInMap.end())
@@ -231,17 +231,17 @@ void MapManager::DrawPlayerLocation()
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside6)
         locationInMap = {714, 900};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside1)
-        locationInMap = {446, 622};
+        locationInMap = {406, 628};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside2)
-        locationInMap = {304, 585};
+        locationInMap = {406, 628};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside3)
-        locationInMap = {306, 910};
+        locationInMap = {405, 772};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside4)
-        locationInMap = {292, 758};
+        locationInMap = {218, 827};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside5)
-        locationInMap = {201, 776};
+        locationInMap = {229, 663};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside6)
-        locationInMap = {448, 932};
+        locationInMap = {407, 937};
     else if (CurrentStageAndAct == LevelAndActIDs_Past1)
         locationInMap = {110, 129};
     else if (CurrentStageAndAct == LevelAndActIDs_Past2)
@@ -265,7 +265,7 @@ void MapManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bo
 {
     // We get the level on the other side of the door
     const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
-        adventureFieldEntrance.entranceId, false);
+        adventureFieldEntrance.entranceId);
 
     const auto oppositeEntrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntranceId);
 
@@ -468,7 +468,7 @@ void MapManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureField
 {
     // We get the level on the other side of the door
     const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
-        adventureFieldEntrance.entranceId, false);
+        adventureFieldEntrance.entranceId);
 
     const auto oppositeEntrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntranceId);
 
