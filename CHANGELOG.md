@@ -8,10 +8,15 @@ All notable changes to this project will be documented in this file.
 
 - Added mod settings to disable the Ring Link sounds.
 
+### Changed:
+
+- Map now shows the transformed state of the Egg Carrier.
+
 ### Fixed:
 
 - Fixed docstring in mission blacklist option.
 - Removed Big's upgrade in the Arsenal.
+- Lines and dots for the map now scale properly with the resolution.
 
 ## [v1.2.0] - 2026-02-20
 
