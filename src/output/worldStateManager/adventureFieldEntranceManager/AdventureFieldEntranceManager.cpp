@@ -98,6 +98,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _isEcBoatEnabledHook.Hook(IsEcBoatEnabled);
     _isEcRaftEnabledHook.Hook(IsEcRaftEnabled);
     _hiddenGateMainHook.Hook(OnHiddenGateMain);
+    _isEcTransformedHook.Hook(IsECTransformed);
     //Allows players to return to the adventure field when quitting boss fights
     WriteData<1>((void*)0x415F46, 0x19); // Change the comparison value from 3 to 9
     WriteData<1>((void*)0x638BF6, 0x09);
@@ -152,8 +153,12 @@ bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
     return _doorLogicStrategy->IsDoorOpen(entranceId);
 }
 
-void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, const Uint8 act)
+void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, Uint8 act)
 {
+    if (level == LevelIDs_EggCarrierOutside && act == 0 && (LevelEntrance == 6 || LevelEntrance == 7)
+        && _instance->_gameStatus.isEggCarrierTransformed)
+        act = 1;
+
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
         currentLevelAndAct = LevelAndActIDs_ECGarden;
@@ -206,8 +211,11 @@ task* AdventureFieldEntranceManager::OnSetNextLevelAndActChaoGarden(Uint8 level,
     return nullptr;
 }
 
-void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, const Uint8 act)
+void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, Uint8 act)
 {
+    if (level == LevelIDs_EggCarrierOutside && act == 0 && (LevelEntrance == 6 || LevelEntrance == 7)
+        && _instance->_gameStatus.isEggCarrierTransformed)
+        act = 1;
     LevelAndActIDs currentLevelAndAct = static_cast<LevelAndActIDs>(CurrentStageAndAct);
     if (CurrentChaoStage == SADXChaoStage_EggCarrier)
         currentLevelAndAct = LevelAndActIDs_ECGarden;
@@ -1612,4 +1620,9 @@ void AdventureFieldEntranceManager::OnHiddenGateMain(task* tp)
     if (IsNearPosition(tp->twp->pos, -0.02f, 20.34f, -191.17f))
         return FreeTask(tp);
     return _hiddenGateMainHook.Original(tp);
+}
+
+BOOL AdventureFieldEntranceManager::IsECTransformed()
+{
+    return _instance->_gameStatus.isEggCarrierTransformed;
 }
