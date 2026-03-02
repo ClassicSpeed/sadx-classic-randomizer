@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added:
 
 - Added mod settings to disable the Ring Link sounds.
+- Map button can now be changed or disabled in the mod settings.
 
 ### Changed:
 

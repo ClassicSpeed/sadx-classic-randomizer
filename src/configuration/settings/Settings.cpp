@@ -136,6 +136,8 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
     this->homingAttackIndicator = static_cast<HomingAttackIndicator>(settingsIni->getInt(
         "GameSettings", "HomingAttackIndicatorEnabled", 0));
 
+    this->mapButton = static_cast<MapButton>(settingsIni->getInt("GameSettings", "MapButton", 0));
+
 
     this->trackerArrow = settingsIni->getBool("Sanity", "TrackerArrow", true);
     this->trackerArrowToggleable = settingsIni->getBool("Sanity", "TrackerArrowToggleable", false);

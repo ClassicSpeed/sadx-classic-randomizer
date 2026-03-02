@@ -8,11 +8,11 @@
 class MapManager : public IOnFrame
 {
 public:
-    static MapManager& Init(Options& options, GameStatus& gameStatus,
+    static MapManager& Init(Options& options, Settings& settings, GameStatus& gameStatus,
                             AdventureFieldEntranceMap& _adventureFieldEntranceMap)
     {
         if (_instance == nullptr)
-            _instance = new MapManager(options, gameStatus, _adventureFieldEntranceMap);
+            _instance = new MapManager(options, settings, gameStatus, _adventureFieldEntranceMap);
         return *_instance;
     }
 
@@ -42,10 +42,11 @@ private:
     void DrawConnectionsInMap(const AdventureFieldEntrance& adventureFieldEntrance);
     void ShowNumberDynamicMap(int number, float x, float y);
 
-    explicit MapManager(Options& options, GameStatus& gameStatus,
+    explicit MapManager(Options& options, Settings& settings, GameStatus& gameStatus,
                         AdventureFieldEntranceMap& _adventureFieldEntranceMap);
     inline static MapManager* _instance = nullptr;
     Options& _options;
+    Settings& _settings;
     GameStatus& _gameStatus;
     AdventureFieldEntranceMap& _adventureFieldEntranceMap;
 

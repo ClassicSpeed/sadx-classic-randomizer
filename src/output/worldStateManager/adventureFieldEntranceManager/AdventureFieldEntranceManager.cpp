@@ -16,7 +16,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
                                                              ArchipelagoMessenger& archipelagoMessenger) :
     _options(options), _settings(settings), _gameStatus(gameStatus), _archipelagoMessenger(archipelagoMessenger),
     _adventureFieldEntranceMap(AdventureFieldEntranceMap::Init(options, gameStatus)),
-    _mapManager(MapManager::Init(options, gameStatus, _adventureFieldEntranceMap))
+    _mapManager(MapManager::Init(options, settings, gameStatus, _adventureFieldEntranceMap))
 {
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
     _setNextLevelAndActHook.Hook(OnSetNextLevelAndAct);

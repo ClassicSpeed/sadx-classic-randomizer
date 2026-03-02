@@ -24,16 +24,25 @@ void drawSprite2D(NJS_TEXANIM* anim, float screenX, float screenY, int priority 
     njPopMatrix(1u);
 }
 
-MapManager::MapManager(Options& options, GameStatus& gameStatus, AdventureFieldEntranceMap& adventureFieldEntranceMap) :
-    _options(options), _gameStatus(gameStatus), _adventureFieldEntranceMap(adventureFieldEntranceMap)
+MapManager::MapManager(Options& options, Settings& settings, GameStatus& gameStatus,
+                       AdventureFieldEntranceMap& adventureFieldEntranceMap) :
+    _options(options), _settings(settings), _gameStatus(gameStatus),
+    _adventureFieldEntranceMap(adventureFieldEntranceMap)
 {
 }
 
 void MapManager::OnFrame()
 {
-    for (const auto& button : HeldButtons)
-        if (button & WhistleButtons && Current_CharObj2 != nullptr)
-            this->ShowMap();
+    if (Current_CharObj2 == nullptr)
+        return;
+
+    if ((ControllerPointers[0]->HeldButtons & Buttons_Y && _settings.mapButton == MapButtonY) ||
+        (ControllerPointers[0]->HeldButtons & Buttons_D && _settings.mapButton == MapButtonSelect) ||
+        (ControllerPointers[0]->HeldButtons & Buttons_Z && _settings.mapButton == MapButtonRightBumper) ||
+        (ControllerPointers[0]->HeldButtons & Buttons_C && _settings.mapButton == MapButtonLeftBumper))
+    {
+        this->ShowMap();
+    }
 
     if ((CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_E101R) ||
         (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill))
