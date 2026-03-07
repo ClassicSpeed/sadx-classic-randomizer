@@ -15,7 +15,8 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed:
 
-- Fixed docstring in mission blacklist option.
+- Fixed typo in mission blacklist option.
+- Fixed typo in capsule sanity description.
 - Removed Big's upgrade in the Arsenal.
 - Lines and dots for the map now scale properly with the resolution.
 - Removed Angel Island to MRMain logic skips.
