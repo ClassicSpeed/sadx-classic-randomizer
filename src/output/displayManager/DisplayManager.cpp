@@ -730,7 +730,7 @@ void DisplayManager::DisplayItemsUnlocked()
             }
         }
 
-        if (_options.fishSanity)
+        if (_options.fishSanity && CurrentCharacter == Characters_Big)
         {
             buffer.clear();
             buffer.append("Fish:     ");
