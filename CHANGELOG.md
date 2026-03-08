@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Lines and dots for the map now scale properly with the resolution.
 - Removed Angel Island to MRMain logic skips.
 - Fish tracker will no longer be shown for Amy and Gamma.
+- Fixed mission 51 card not being in the correct position.
 
 ## [v1.2.0] - 2026-02-20
 
