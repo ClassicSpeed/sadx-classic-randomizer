@@ -600,7 +600,7 @@ void SetObjectManager::OnMissionSetLoad()
 
             //We move the mission card 51 in the jungle, so Gamma can get it even if the Snake door is open
             if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 &&
-                IsNearPosition(position, -512.5, 205, -1124))
+                IsNearPosition(position, -513.2, 205, -1127))
             {
                 objData->SETEntry->Position = {-515.9674, 70.18237, -989.24146};
             }
