@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file.
 ### Changed:
 
 - Map now shows the transformed state of the Egg Carrier.
+- Improved logic for the Egg Carrier transformation:
+    - You can now start the Egg Carrier transformed (new default) or untransformed.
 
 ### Fixed:
 
