@@ -189,6 +189,10 @@ void Randomizer::OnConnected()
     // Update Map Gating method
     _worldStateManager.UpdateGatingMethod();
 
+    // Set transformed state of Egg Carrier
+    _gameStatus.isEggCarrierTransformed = _options.eggCarrierStartsTransformed;
+    _saveFileManager.SetEggCarrierTransformed(_options.eggCarrierStartsTransformed);
+
     _archipelagoMessenger.UpdateTags();
     _displayManager.SetConnected();
     _displayManager.QueueItemMessage("Connected to Archipelago");

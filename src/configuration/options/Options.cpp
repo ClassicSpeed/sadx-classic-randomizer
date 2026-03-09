@@ -36,6 +36,11 @@ void Options::GoalRequiresChaoRaces(const int newGoalRequiresChaoRaces)
     this->goalRequiresChaoRaces = newGoalRequiresChaoRaces;
 }
 
+void Options::EggCarrierStartsTransformed(const int newEggCarrierStartsTransformed)
+{
+    this->eggCarrierStartsTransformed = newEggCarrierStartsTransformed;
+}
+
 void Options::LogicLevel(const int logicLevel)
 {
     if (logicLevel > 1)

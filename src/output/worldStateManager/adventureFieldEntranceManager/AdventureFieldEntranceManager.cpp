@@ -269,7 +269,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
 Sint32 AdventureFieldEntranceManager::OnFinishedLevelMaybe()
 {
     if (GameState == MD_GAME_ABORT)
-        _instance->_gameStatus.isEggCarrierTransformed = false;
+        _instance->_gameStatus.isEggCarrierTransformed = _instance->_options.eggCarrierStartsTransformed;
     return _finishedLevelMaybeHook.Original();
 }
 

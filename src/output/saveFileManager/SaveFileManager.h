@@ -2,6 +2,8 @@
 
 #include "../../pch.h"
 
+#include
+
 class SaveFileManager : public IOnFrame
 {
 public:
@@ -21,6 +23,7 @@ public:
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
     void MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist);
+    void SetEggCarrierTransformed(bool eggCarrierStartsTransformed);
 
 private:
     SaveFileManager();

@@ -386,6 +386,7 @@ public:
     void GoalRequiresMissions(int newGoalRequiresMissions);
     void GoalRequiresBosses(int newGoalRequiresBosses);
     void GoalRequiresChaoRaces(int newGoalRequiresChaoRaces);
+    void EggCarrierStartsTransformed(int newEggCarrierStartsTransformed);
     void LogicLevel(int logicLevel);
     void SetGatingMode(int gatingMode);
     void EmblemsForPerfectChaos(int newEmblemGoal);
@@ -551,6 +552,7 @@ public:
 
     GatingMode gatingMode = EmblemGating;
     std::map<int, int> entranceEmblemValueMap = {};
+    int eggCarrierStartsTransformed = false;
 
 private:
     explicit Options(Settings& settings);
