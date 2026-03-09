@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Map now shows the transformed state of the Egg Carrier.
 - Improved logic for the Egg Carrier transformation:
     - You can now start the Egg Carrier transformed (new default) or untransformed.
+- Improved contrast between icons and the map background.
 
 ### Fixed:
 
@@ -26,6 +27,7 @@ All notable changes to this project will be documented in this file.
 - Removed Angel Island to MRMain logic skips.
 - Fish tracker will no longer be shown for Amy and Gamma.
 - Fixed mission 51 card not being in the correct position.
+- Fixed "new" icon not showing up in the map.
 
 ## [v1.2.0] - 2026-02-20
 

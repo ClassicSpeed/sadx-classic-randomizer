@@ -313,7 +313,7 @@ void MapManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bo
                 return;
 
             auto point = mapToScreen(entranceLocation->second.x, entranceLocation->second.y);
-            drawSprite2D(lock_anim, point.x, point.y);
+            drawSprite2D(lock_anim, point.x, point.y, 1000000);
         }
         else if (!_gameStatus.map.IsEntranceVisited(adventureFieldEntrance.entranceId) && !isStatic)
             if (entranceValue->second > 0)
@@ -347,7 +347,7 @@ void MapManager::DrawNewInMap(AdventureFieldEntrance adventureFieldEntrance)
     double ms = double(now) * 1000.0 / CLOCKS_PER_SEC;
     int phase = static_cast<int>(ms / 500.0) & 1; // 0 or 1
     point.y += (phase == 0) ? 2.0f : -2.0f;
-    drawSprite2D(new_logo_map_anim, point.x, point.y);
+    drawSprite2D(new_logo_map_anim, point.x, point.y, 1000000);
 }
 
 
@@ -527,6 +527,7 @@ void MapManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureField
             njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
             SetMaterial(255, 255, 255, 255);
             NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, lock_anim};
+            njDrawSprite2D_ForcePriority(&mySprite, 0, 1000, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
             njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
             njPopMatrix(1u);
         }
