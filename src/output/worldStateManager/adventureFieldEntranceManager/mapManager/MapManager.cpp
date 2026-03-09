@@ -313,7 +313,7 @@ void MapManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bo
                 return;
 
             auto point = mapToScreen(entranceLocation->second.x, entranceLocation->second.y);
-            drawSprite2D(blocked_anim, point.x, point.y);
+            drawSprite2D(lock_anim, point.x, point.y);
         }
         else if (!_gameStatus.map.IsEntranceVisited(adventureFieldEntrance.entranceId) && !isStatic)
             if (entranceValue->second > 0)
@@ -526,7 +526,7 @@ void MapManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureField
             njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
             njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
             SetMaterial(255, 255, 255, 255);
-            NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, blocked_anim};
+            NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, lock_anim};
             njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
             njPopMatrix(1u);
         }
