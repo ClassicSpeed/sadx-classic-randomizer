@@ -169,6 +169,7 @@ public:
     bool ringLinkSounds = true;
     RingLossOverride ringLossOverride;
     TrapLinkOverride trapLinkOverride;
+    bool ignoreTrapsOnConnect = true;
 
 
     float displayDuration = 6.0f;

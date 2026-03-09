@@ -45,6 +45,7 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
     this->ringLinkSounds = settingsIni->getBool("AP", "RingLinkSounds", true);
     this->ringLossOverride = static_cast<RingLossOverride>(settingsIni->getInt("AP", "RingLossOverride", 0));
     this->trapLinkOverride = static_cast<TrapLinkOverride>(settingsIni->getInt("AP", "TrapLinkOverride", 0));
+    this->ignoreTrapsOnConnect = settingsIni->getBool("AP", "IgnoreTrapsOnConnect", true);
 
 
     this->displayDuration = settingsIni->getFloat("Messages", "MessageDisplayDuration", 5.0f);

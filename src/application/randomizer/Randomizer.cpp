@@ -52,7 +52,7 @@ void Randomizer::MarkCheckedLocation(const int64_t checkId) const
         _saveFileManager.SetMissionCompleted(locationData.missionNumber);
 }
 
-void Randomizer::OnItemReceived(const int64_t itemId) const
+void Randomizer::OnItemReceived(const int64_t itemId)
 {
     const bool alreadyProcessed = _itemRepository.SetObtained(itemId);
 
@@ -71,11 +71,21 @@ void Randomizer::OnItemReceived(const int64_t itemId) const
     }
     else if (item.type == ItemFiller)
     {
-        _characterManager.GiveFillerItem(item.fillerType, false);
-        if (_options.trapLinkActive && !IsJunkFiller(item.fillerType))
+        if (_settings.ignoreTrapsOnConnect && _ignoreTrapTimer > 0)
         {
-            _archipelagoMessenger.SendTrapLink(item.displayName, _settings.playerName);
-            _displayManager.QueueItemMessage("Linked " + item.displayName + " sent");
+            const double timePassed = (std::clock() - this->_ignoreTrapTimer) / static_cast<double>(CLOCKS_PER_SEC);
+
+            if (timePassed > _ignoreTrapDuration)
+                _ignoreTrapTimer = -1;
+        }
+        else
+        {
+            _characterManager.GiveFillerItem(item.fillerType, false);
+            if (_options.trapLinkActive && !IsJunkFiller(item.fillerType))
+            {
+                _archipelagoMessenger.SendTrapLink(item.displayName, _settings.playerName);
+                _displayManager.QueueItemMessage("Linked " + item.displayName + " sent");
+            }
         }
     }
 
@@ -166,6 +176,7 @@ std::vector<EnemyLocationData> Randomizer::GetEnemies()
 
 void Randomizer::OnConnected()
 {
+    _ignoreTrapTimer = std::clock();
     _locationRepository.UpdateStatus();
 
     //Missions
