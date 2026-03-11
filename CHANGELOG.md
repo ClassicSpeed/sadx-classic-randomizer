@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - You can also disable in-game tracker when looking at the map..
 - Setting to ignore traps and filler items when connecting, enabled by default.
 - In key item gating mode, the closed doors will have a lock icons instead of the "no entry" symbol.
+- Updated setup guide to include linux/steam deck information.
 
 ### Changed:
 
