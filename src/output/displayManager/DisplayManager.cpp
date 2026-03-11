@@ -86,12 +86,6 @@ void DisplayManager::ShowSongName(const std::string& songName)
 
 void DisplayManager::OnFrame()
 {
-    // for (const auto& button : PressedButtons)
-    //
-    //     if (button & WhistleButtons && Current_CharObj2 != nullptr)
-    //     {
-    //         _gameStatus.unlock.currentEmblems++;
-    //     }
     MenuVoice = _settings.voiceMenuCharacter;
     RemoveExpiredMessages();
 
@@ -484,9 +478,14 @@ void DisplayManager::DisplayItemsUnlocked()
 
     bool showMap = false;
 
-    for (const auto& button : HeldButtons)
-        if (button & WhistleButtons && Current_CharObj2 != nullptr)
-            showMap = true;
+    if (_settings.showTrackerWithMap &&
+        ((ControllerPointers[0]->HeldButtons & Buttons_Y && _settings.mapButton == MapButtonY) ||
+            (ControllerPointers[0]->HeldButtons & Buttons_D && _settings.mapButton == MapButtonSelect) ||
+            (ControllerPointers[0]->HeldButtons & Buttons_Z && _settings.mapButton == MapButtonRightBumper) ||
+            (ControllerPointers[0]->HeldButtons & Buttons_C && _settings.mapButton == MapButtonLeftBumper)))
+
+        showMap = true;
+
 
     if (!showMap && _settings.displayInGameTracker == DisplayTrackerWhenPaused)
     {

@@ -90,6 +90,9 @@
             <Property name="MapButton" type="MapButtonIndex" defaultvalue="0" display="Select Map Button">
                 <HelpText>Change the button used to open the adventure field map.</HelpText>
             </Property>
+            <Property name="ShowTrackerWithMap" type="bool" defaultvalue="True" display="Show Tracker With Map">
+                <HelpText>Show the tracker info when the map is open.</HelpText>
+            </Property>
             <Property name="CompleteMultipleLevelMissions" type="bool" defaultvalue="True"
                       display="Complete Multiple Level Missions at Once">
                 <HelpText>Collect every level mission check at once (if you beat their requirements).</HelpText>

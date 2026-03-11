@@ -235,6 +235,7 @@ public:
     bool progressionIndicator = true;
 
     MapButton mapButton = MapButtonY;
+    bool showTrackerWithMap = true;
 
     NJS_COLOR arrowColor[6] = {
         {0xFF00FF00},

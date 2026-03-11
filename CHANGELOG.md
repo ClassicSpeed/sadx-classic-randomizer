@@ -8,7 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - Added mod settings to disable the Ring Link sounds.
 - Map button can now be changed or disabled in the mod settings.
-- Option to ignore traps and filler items when connecting, enabled by default.
+- You can also disable in-game tracker when looking at the map..
+- Setting to ignore traps and filler items when connecting, enabled by default.
 - In key item gating mode, the closed doors will have a lock icons instead of the "no entry" symbol.
 
 ### Changed:
