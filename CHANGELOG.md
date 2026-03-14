@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added:
 
+- You can now start the Egg Carrier transformed (new default) or untransformed.
 - Added mod settings to disable the Ring Link sounds.
 - Map button can now be changed or disabled in the mod settings.
 - You can also disable in-game tracker when looking at the map..
@@ -16,9 +17,9 @@ All notable changes to this project will be documented in this file.
 ### Changed:
 
 - Map now shows the transformed state of the Egg Carrier.
-- Improved logic for the Egg Carrier transformation:
-    - You can now start the Egg Carrier transformed (new default) or untransformed.
+- Improved logic for the Egg Carrier transformation
 - Improved contrast between icons and the map background.
+- Changed chao garden icons to be more distinguishable from the level entrances.
 
 ### Fixed:
 
