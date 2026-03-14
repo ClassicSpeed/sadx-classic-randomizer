@@ -451,6 +451,7 @@ public:
     bool MusicSourceIncludeCustom() const;
     bool IsTrapEnabled(FillerType filler) const;
     void SetEntranceEmblemValueMap(const std::map<int, int>& map);
+    int GetEntranceEmblemValue(int entranceId, int oppositeEntranceId);
 
 
     //Constant values

@@ -150,7 +150,8 @@ void AdventureFieldEntranceManager::UpdateRandomEntrances()
 
 bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
 {
-    return _doorLogicStrategy->IsDoorOpen(entranceId);
+    const DoorState doorState = _doorLogicStrategy->GetDoorState(entranceId);
+    return doorState == DoorOpen || doorState == DoorUnlocked;
 }
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, Uint8 act)

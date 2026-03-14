@@ -7,13 +7,8 @@ public:
     {
     }
 
-    bool IsDoorOpen(const EntranceId entranceId) override
+    DoorState GetDoorState(const EntranceId entranceId) override
     {
-        return false;
-    }
-
-    bool ShowDisableDoorIndicator(EntranceId entranceId) override
-    {
-        return !IsDoorOpen(entranceId);
+        return DoorBlocked;
     }
 };

@@ -185,6 +185,16 @@ void Options::SetEntranceEmblemValueMap(const std::map<int, int>& entranceEmblem
     this->entranceEmblemValueMap = entranceEmblemValueMap;
 }
 
+int Options::GetEntranceEmblemValue(const int entranceId, const int oppositeEntranceId)
+{
+    auto entranceValue = this->entranceEmblemValueMap.find(entranceId);
+    if (entranceValue == this->entranceEmblemValueMap.end())
+        entranceValue = this->entranceEmblemValueMap.find(oppositeEntranceId);
+    if (entranceValue == this->entranceEmblemValueMap.end())
+        return 0;
+    return entranceValue->second;
+}
+
 
 void Options::SetEntranceRandomizer(const int enableEntranceRandomizer)
 {

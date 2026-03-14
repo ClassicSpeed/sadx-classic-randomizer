@@ -30,6 +30,7 @@ All notable changes to this project will be documented in this file.
 - Fish tracker will no longer be shown for Amy and Gamma.
 - Fixed mission 51 card not being in the correct position.
 - Fixed "new" icon not showing up in the map.
+- Alternatives entrances to stages are disabled without random level entrances.
 
 ## [v1.2.0] - 2026-02-20
 

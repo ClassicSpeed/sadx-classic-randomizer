@@ -8,21 +8,16 @@ public:
     {
     }
 
-    bool IsDoorOpen(const EntranceId entranceId) override
+    DoorState GetDoorState(const EntranceId entranceId) override
     {
         const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId);
 
         auto entrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntrance);
         if (entrance == nullptr)
-            return false;
+            return DoorLocked;
         if (_adventureFieldEntranceMap.CalculateCorrectAct(entrance->levelAndActId) == LevelAndActIDs_HedgehogHammer)
-            return false;
-        return true;
-    }
-
-    bool ShowDisableDoorIndicator(EntranceId entranceId) override
-    {
-        return !IsDoorOpen(entranceId);
+            return DoorBlocked;
+        return DoorOpen;
     }
 
 private:

@@ -23,8 +23,8 @@ private:
     IDoorLogicStrategy* _doorLogicStrategy;
     void ShowMap();
     void showNumberMap(float posX, float posY, int number);
-    bool ShowDisableDoorIndicator(EntranceId entranceId);
-    void ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance);
+    void ShowDoorRequirement(AdventureFieldEntrance adventureFieldEntrance);
+    void ShowBlockedDoor(AdventureFieldEntrance adventureFieldEntrance);
     void ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x, float y, float zBase,
                            float xStep,
                            bool leftJustify);
@@ -36,7 +36,7 @@ private:
     void DrawEmblemNumberInMap(AdventureFieldEntrance adventureFieldEntrance, int doorCost);
     void DrawNewInMap(AdventureFieldEntrance adventureFieldEntrance);
     void DrawPlayerLocation();
-    void DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bool isStatic);
+    void DrawEntrancesInMap(AdventureFieldEntrance adventureFieldEntrance, bool isStatic);
     NJS_TEXANIM* getInitialsFromEntrance(AdventureFieldEntrance* entranceTo);
     void DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Float entranceX, Float entranceY);
     void DrawConnectionsInMap(const AdventureFieldEntrance& adventureFieldEntrance);
