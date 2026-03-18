@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 
 - Map now shows the transformed state of the Egg Carrier.
 - Improved logic for the Egg Carrier transformation
+- Redrawn map to be more clear and consistent.
 - Improved contrast between icons and the map background.
 - Changed chao garden icons to be more distinguishable from the level entrances.
 
