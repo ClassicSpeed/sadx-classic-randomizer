@@ -403,7 +403,7 @@ void MapManager::DrawLine(float x1, float y1, float x2, float y2)
     float px = -dy / length;
     float py = dx / length;
 
-    float halfThickness = 1.0f * (_nj_screen_.h / 1080);
+    float halfThickness = 1.5f * (_nj_screen_.h / 1080);
 
     // Offset points perpendicular to the line
     float ox = px * halfThickness;
@@ -424,10 +424,12 @@ void MapManager::DrawLine(float x1, float y1, float x2, float y2)
     linep2.tex = NULL;
     linep2.num = 4;
 
-    linep2.col[0].color = 0x66ffe78c;
-    linep2.col[1].color = 0x66ffe78c;
-    linep2.col[2].color = 0x66ffe78c;
-    linep2.col[3].color = 0x66ffe78c;
+    const Uint32 color = 0x99ffe78c; // Light yellow color
+
+    linep2.col[0].color = color;
+    linep2.col[1].color = color;
+    linep2.col[2].color = color;
+    linep2.col[3].color = color;
 
     Draw2DLinesMaybe_Queue(&linep2, 4, 62041.496f, NJD_FILL | NJD_TRANSPARENT, QueuedModelFlagsB_SomeTextureThing);
 }
@@ -436,14 +438,25 @@ void MapManager::DrawEntrancePoint(float x, float y)
 {
     auto point = mapToScreen(x, y);
 
-    const float squareSize = 5.0f * (_nj_screen_.h / 1080);
+    float squareSize = 8.0f * (_nj_screen_.h / 1080);
     float halfSize = squareSize / 2.0f;
     DrawRect_Queue(_nj_screen_.cx - point.x - halfSize,
                    _nj_screen_.cy - point.y - halfSize,
                    _nj_screen_.cx - point.x + halfSize,
                    _nj_screen_.cy - point.y + halfSize,
                    22348,
-                   0xFFffe78c,
+                   0xFF555555,
+                   QueuedModelFlagsB_EnableZWrite);
+
+    squareSize = 4.0f * (_nj_screen_.h / 1080);
+    halfSize = squareSize / 2.0f;
+
+    DrawRect_Queue(_nj_screen_.cx - point.x - halfSize,
+                   _nj_screen_.cy - point.y - halfSize,
+                   _nj_screen_.cx - point.x + halfSize,
+                   _nj_screen_.cy - point.y + halfSize,
+                   22348,
+                   0xFFFFFFFF,
                    QueuedModelFlagsB_EnableZWrite);
 }
 
