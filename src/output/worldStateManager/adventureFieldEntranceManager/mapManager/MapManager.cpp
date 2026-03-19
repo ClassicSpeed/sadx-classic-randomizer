@@ -204,53 +204,53 @@ void MapManager::DrawPlayerLocation()
 {
     NJS_POINT2 locationInMap;
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare1)
-        locationInMap = {769, 139};
+        locationInMap = {774, 176};
     else if (CurrentStageAndAct == LevelAndActIDs_StationSquare2)
-        locationInMap = {621, 272};
+        locationInMap = {682, 238};
     else if (CurrentStageAndAct == LevelAndActIDs_StationSquare3)
-        locationInMap = {929, 161};
+        locationInMap = {970, 240};
     else if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
-        locationInMap = {764, 374};
+        locationInMap = {750, 405};
     else if (CurrentStageAndAct == LevelAndActIDs_StationSquare5)
-        locationInMap = {599, 446};
+        locationInMap = {571, 481};
     else if (CurrentStageAndAct == LevelAndActIDs_StationSquare6)
-        locationInMap = {930, 442};
+        locationInMap = {931, 420};
     else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins1)
-        locationInMap = {300, 276};
+        locationInMap = {290, 270};
     else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins2)
-        locationInMap = {223, 484};
+        locationInMap = {190, 545};
     else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins3)
-        locationInMap = {327, 104};
+        locationInMap = {350, 102};
     else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins4)
-        locationInMap = {561, 63};
+        locationInMap = {525, 34};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside1)
-        locationInMap = {586, 720};
+        locationInMap = {586, 702};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside2)
-        locationInMap = {702, 743};
+        locationInMap = {699, 717};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside3)
-        locationInMap = {792, 634};
+        locationInMap = {795, 585};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside4)
-        locationInMap = {882, 567};
+        locationInMap = {862, 504};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside5)
-        locationInMap = {814, 788};
+        locationInMap = {830, 773};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside6)
-        locationInMap = {714, 900};
+        locationInMap = {678, 903};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside1)
-        locationInMap = {406, 628};
+        locationInMap = {434, 660};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside2)
-        locationInMap = {406, 628};
+        locationInMap = {434, 660};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside3)
-        locationInMap = {405, 772};
+        locationInMap = {435, 727};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside4)
-        locationInMap = {218, 827};
+        locationInMap = {225, 844};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside5)
-        locationInMap = {229, 663};
+        locationInMap = {212, 688};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside6)
-        locationInMap = {407, 937};
+        locationInMap = {419, 934};
     else if (CurrentStageAndAct == LevelAndActIDs_Past1)
-        locationInMap = {110, 129};
+        locationInMap = {80, 105};
     else if (CurrentStageAndAct == LevelAndActIDs_Past2)
-        locationInMap = {83, 424};
+        locationInMap = {80, 260};
     else
         return;
 
@@ -260,7 +260,7 @@ void MapManager::DrawPlayerLocation()
     std::clock_t now = std::clock();
     double ms = double(now) * 1000.0 / CLOCKS_PER_SEC;
     int phase = static_cast<int>(ms / 250.0) & 1; // 0 or 1
-    point.y += (phase == 0) ? 10.0f : 0.0f;
+    point.y += (phase == 0) ? 3.0f : -3.0f;
 
     drawSprite2D(location_map_anim, point.x, point.y);
 }
