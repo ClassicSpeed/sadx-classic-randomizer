@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Redrawn map to be more clear and consistent.
 - Improved contrast between icons and the map background.
 - Changed chao garden icons to be more distinguishable from the level entrances.
+- Several logic updates to expert DC and Expert DX.
 
 ### Fixed:
 
