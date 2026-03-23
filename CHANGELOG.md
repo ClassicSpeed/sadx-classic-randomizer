@@ -35,6 +35,8 @@ All notable changes to this project will be documented in this file.
 - Fixed "new" icon not showing up in the map.
 - Alternatives entrances to stages are disabled without random level entrances.
 - Fixed disabled capsules still being tracked by the arrow.
+- Fixed missing Life Belt upgrade for Big in the Ice Cave.
+- Fixed double ladder for Amy in Ice Cave.
 
 ## [v1.2.0] - 2026-02-20
 
