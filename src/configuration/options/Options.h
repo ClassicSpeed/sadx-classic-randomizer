@@ -386,6 +386,7 @@ public:
     void GoalRequiresMissions(int newGoalRequiresMissions);
     void GoalRequiresBosses(int newGoalRequiresBosses);
     void GoalRequiresChaoRaces(int newGoalRequiresChaoRaces);
+    void EggCarrierStartsTransformed(int newEggCarrierStartsTransformed);
     void LogicLevel(int logicLevel);
     void SetGatingMode(int gatingMode);
     void EmblemsForPerfectChaos(int newEmblemGoal);
@@ -450,6 +451,7 @@ public:
     bool MusicSourceIncludeCustom() const;
     bool IsTrapEnabled(FillerType filler) const;
     void SetEntranceEmblemValueMap(const std::map<int, int>& map);
+    int GetEntranceEmblemValue(int entranceId, int oppositeEntranceId);
 
 
     //Constant values
@@ -551,6 +553,7 @@ public:
 
     GatingMode gatingMode = EmblemGating;
     std::map<int, int> entranceEmblemValueMap = {};
+    int eggCarrierStartsTransformed = false;
 
 private:
     explicit Options(Settings& settings);

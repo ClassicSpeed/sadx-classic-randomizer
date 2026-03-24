@@ -110,6 +110,16 @@ enum AdventureFieldDoorOverride
     AdventureFieldDoorOverrideAllClosed = 2,
 };
 
+
+enum MapButton
+{
+    MapButtonY = 0,
+    MapButtonSelect = 1,
+    MapButtonRightBumper = 2,
+    MapButtonLeftBumper = 3,
+    MapButtonDisabled = 3,
+};
+
 static std::string LeftTrim(std::string s)
 {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch)
@@ -156,8 +166,10 @@ public:
 
     DeathLinkOverride deathLinkOverride;
     RingLinkOverride ringLinkOverride;
+    bool ringLinkSounds = true;
     RingLossOverride ringLossOverride;
     TrapLinkOverride trapLinkOverride;
+    bool ignoreTrapsOnConnect = true;
 
 
     float displayDuration = 6.0f;
@@ -221,6 +233,9 @@ public:
     bool capsuleIndicator = true;
     bool fishIndicator = true;
     bool progressionIndicator = true;
+
+    MapButton mapButton = MapButtonY;
+    bool showTrackerWithMap = false;
 
     NJS_COLOR arrowColor[6] = {
         {0xFF00FF00},

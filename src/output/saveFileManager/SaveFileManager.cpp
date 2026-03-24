@@ -124,13 +124,6 @@ void SaveFileManager::OnSaveFileCreated()
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_MR));
     ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_ARRIVE_IN_EC));
 
-    ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_TRANSFORM));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_TRANSFORM));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_TRANSFORM));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_TRANSFORM));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));
-    ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_TRANSFORM));
-
     WriteSaveFile();
 }
 
@@ -177,6 +170,29 @@ void SaveFileManager::MarkBlacklistedMissionsAsCompleted(const std::vector<int>&
         MissionFlags[mission - 1] |= MissionFlags_Found;
         MissionFlags[mission - 1] &= ~MissionFlags_Started;
         MissionFlags[mission - 1] |= MissionFlags_Complete;
+    }
+    WriteSaveFile();
+}
+
+void SaveFileManager::SetEggCarrierTransformed(const bool eggCarrierStartsTransformed)
+{
+    if (eggCarrierStartsTransformed)
+    {
+        SetEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_TRANSFORM));
+        SetEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_TRANSFORM));
+        SetEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_TRANSFORM));
+        SetEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_TRANSFORM));
+        SetEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));
+        SetEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_TRANSFORM));
+    }
+    else
+    {
+        ClearEventFlag(static_cast<EventFlags>(FLAG_SONIC_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_MILES_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_KNUCKLES_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_AMY_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_E102_EC_TRANSFORM));
+        ClearEventFlag(static_cast<EventFlags>(FLAG_BIG_EC_TRANSFORM));
     }
     WriteSaveFile();
 }

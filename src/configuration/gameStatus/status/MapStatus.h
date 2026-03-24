@@ -7,63 +7,41 @@ struct MapStatus
     static constexpr size_t EntranceCount = InvalidEntranceId;
     std::bitset<EntranceCount> entranceVisited{};
 
+private:
+    static EntranceId GetPairedEntrance(EntranceId id)
+    {
+        static constexpr std::pair<EntranceId, EntranceId> pairs[] = {
+            {SpeedHighwayToCityHall, SpeedHighwayToSsMain},
+            {LostWorldToJungle, LostWorldToJungleAlternative},
+            {FinalEggToFinalEggTower, FinalEggToFinalEggTowerAlternative},
+            {SkyDeckToBridge, SkyDeckToPool}
+        };
 
-    const std::unordered_map<EntranceId, EntranceId> entrancePairs = {
-        {SsMainToEcOutside, SsMainToBridge},
-        {MrMainToEcOutside, MrMainToBridge},
-        {EcOutsideToSsMain, BridgeToSsMain},
-        {EcOutsideToMrMain, BridgeToMrMain},
-        {EcOutsideToSkyChase2, BridgeToSkyChase2},
-        {EcOutsideToChaos6ZeroBeta, BridgeToChaos6ZeroBeta},
-        {EcOutsideToEcInsideMonorail, BridgeToEcInsideMonorail},
-        {EcOutsideToEcInsideEggLift, DeckToEcInsideEggLift},
-        {EcOutsideToCaptainRoom, DeckToCaptainRoom},
-        {EcOutsideToPool, DeckToPool},
-        {CaptainRoomToEcOutside, CaptainRoomToDeck},
-        {PoolToEcOutside, PoolToDeck},
-        {EcInsideToEcOutsideEggLift, EcInsideToDeckEggLift},
-        {EcInsideToEcOutsideMonorail, EcInsideToBridgeMonorail},
-        {SkyChase2ToEcOutside, SkyChase2ToBridge},
-        {Chaos6ZeroBetaToEcOutside, Chaos6ZeroBetaToBridge}
-    };
+        for (const auto& p : pairs)
+        {
+            if (id == p.first) return p.second;
+            if (id == p.second) return p.first;
+        }
+        return InvalidEntranceId;
+    }
 
+public:
     void SetEntranceVisited(EntranceId id, bool visited)
     {
         const size_t idx = static_cast<size_t>(id);
         if (idx < EntranceCount)
         {
             entranceVisited.set(idx, visited);
+        }
 
-
-            EntranceId pairedEntrance = InvalidEntranceId;
-
-            auto it = entrancePairs.find(id);
-            if (it != entrancePairs.end())
-            {
-                pairedEntrance = it->second;
-            }
-            else
-            {
-                for (const auto& pair : entrancePairs)
-                {
-                    if (pair.second == id)
-                    {
-                        pairedEntrance = pair.first;
-                        break;
-                    }
-                }
-            }
-
-            if (pairedEntrance != InvalidEntranceId)
-            {
-                const size_t pairedIdx = static_cast<size_t>(pairedEntrance);
-                if (pairedIdx < EntranceCount)
-                {
-                    entranceVisited.set(pairedIdx, visited);
-                }
-            }
+        const EntranceId paired = GetPairedEntrance(id);
+        const size_t pidx = static_cast<size_t>(paired);
+        if (paired != InvalidEntranceId && pidx < EntranceCount)
+        {
+            entranceVisited.set(pidx, visited);
         }
     }
+
 
     bool IsEntranceVisited(EntranceId id) const
     {

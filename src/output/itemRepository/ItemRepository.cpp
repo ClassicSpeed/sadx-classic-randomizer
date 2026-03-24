@@ -43,46 +43,16 @@ ItemRepository::ItemRepository(GameStatus& gameStatus) : _gameStatus(gameStatus)
         {75, ItemData::FillerItem("Magnetic Shield", MagneticShield)},
         {76, ItemData::FillerItem("Extra Life", ExtraLife)},
 
-        {
-            80,
-            ItemData::KeyItem({
-                                  FLAG_SONIC_TRAIN, FLAG_MILES_TRAIN, FLAG_KNUCKLES_TRAIN,
-                                  FLAG_AMY_TRAIN, FLAG_E102_TRAIN, FLAG_BIG_TRAIN
-                              }, "Train")
-        },
-        {
-            81, ItemData::KeyItem({
-                                      FLAG_SONIC_BOAT, FLAG_MILES_BOAT, FLAG_KNUCKLES_BOAT,
-                                      FLAG_AMY_BOAT, FLAG_E102_BOAT, FLAG_BIG_BOAT
-                                  }, "Boat")
-        },
-        {
-            82, ItemData::KeyItem({
-                                      FLAG_SONIC_RAFT, FLAG_MILES_RAFT, FLAG_KNUCKLES_RAFT,
-                                      FLAG_AMY_RAFT, FLAG_E102_RAFT, FLAG_BIG_RAFT
-                                  }, "Raft")
-        },
+        {80, ItemData::KeyItem({}, "Train")},
+        {81, ItemData::KeyItem({}, "Boat")},
+        {82, ItemData::KeyItem({}, "Raft")},
         {83, ItemData::KeyItem({}, "Hotel Front Key")},
         {84, ItemData::KeyItem({}, "Hotel Back Key")},
-        {
-            85, ItemData::KeyItem({
-                                      FLAG_SONIC_SS_TPARK_ELEVATOR,
-                                      FLAG_MILES_SS_TPARK_ELEVATOR,
-                                      FLAG_KNUCKLES_SS_TPARK_ELEVATOR,
-                                      FLAG_AMY_SS_TPARK_ELEVATOR,
-                                      FLAG_E102_SS_TPARK_ELEVATOR,
-                                      FLAG_BIG_SS_TPARK_ELEVATOR
-                                  }, "Twinkle Park Ticket")
-        },
-        {86, ItemData::KeyItem({FLAG_SONIC_SS_CARD, FLAG_MILES_SS_ENTRANCE_HIGHWAY}, "Employee Card")},
-        {87, ItemData::KeyItem({FLAG_SONIC_SS_ICESTONE, FLAG_MILES_SS_ICESTONE, FLAG_BIG_SS_ICESTONE}, "Ice Stone")},
+        {85, ItemData::KeyItem({}, "Twinkle Park Ticket")},
+        {86, ItemData::KeyItem({}, "Employee Card")},
+        {87, ItemData::KeyItem({}, "Ice Stone")},
         {88, ItemData::KeyItem({}, "Dynamite")},
-        {
-            89, ItemData::KeyItem({
-                                      FLAG_SONIC_MR_TRUCK, FLAG_MILES_MR_TRUCK, FLAG_KNUCKLES_MR_TRUCK,
-                                      FLAG_AMY_MR_TRUCK, FLAG_E102_MR_TRUCK, FLAG_BIG_MR_TRUCK
-                                  }, "Jungle Cart")
-        },
+        {89, ItemData::KeyItem({}, "Jungle Cart")},
 
         {90, ItemData::EmblemItem("Emblem")},
 

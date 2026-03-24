@@ -489,6 +489,10 @@ void EventDetector::OnFrame()
         {
             for (auto& check : checkData)
             {
+                if (check.second.type == LocationCapsule)
+                    if (!_instance->_options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter),
+                                                                    static_cast<CapsuleType>(check.second.capsuleType)))
+                        continue;
                 if (!_instance->_options.missableCapsules)
                     if ((check.first >= 12501 && check.first <= 12547) ||
                         (check.first >= 21501 && check.first <= 21542) ||
@@ -968,6 +972,11 @@ void EventDetector::DrawIndicator(const task* tp, const bool tallElement, const 
 
     if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
         return;
+
+    if (indicatorType == CapsuleIndicator)
+        if (!_instance->_options.GetCapsuleSanityByType(static_cast<Characters>(CurrentCharacter),
+                                                        static_cast<CapsuleType>(tp->twp->scl.x)))
+            return;
 
     if (!_instance->_options.missableCapsules)
         if ((locationId >= 12501 && locationId <= 12547) ||

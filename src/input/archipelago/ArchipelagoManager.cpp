@@ -259,6 +259,7 @@ void ArchipelagoManager::Connect()
     AP_REGISTER_INT_CALLBACK("GoalRequiresBosses", _options.GoalRequiresBosses);
     AP_REGISTER_INT_CALLBACK("GoalRequiresChaoRaces", _options.GoalRequiresChaoRaces);
     AP_REGISTER_INT_CALLBACK("LogicLevel", _options.LogicLevel);
+    AP_REGISTER_INT_CALLBACK("EggCarrierStartsTransformed", _options.EggCarrierStartsTransformed);
     AP_REGISTER_INT_CALLBACK("GatingMode", _options.SetGatingMode);
     AP_REGISTER_INT_CALLBACK("EmblemsForPerfectChaos", _options.EmblemsForPerfectChaos);
     AP_REGISTER_INT_CALLBACK("LevelForPerfectChaos", _options.LevelForPerfectChaos);

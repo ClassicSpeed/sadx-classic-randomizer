@@ -35,7 +35,6 @@ private:
     ArchipelagoMessenger& _archipelagoMessenger;
     AdventureFieldEntranceMap& _adventureFieldEntranceMap;
     MapManager& _mapManager;
-    bool _isEggCarrierTransformed = false;
     std::unique_ptr<IDoorLogicStrategy> _doorLogicStrategy;
 
     bool IsDoorOpen(EntranceId entranceId);
@@ -271,4 +270,7 @@ private:
 
     inline static FunctionHook<void, task*> _hiddenGateMainHook{0x53C3E0};
     static void OnHiddenGateMain(task* tp);
+
+    inline static FunctionHook<BOOL> _isEcTransformedHook{0x5291D0};
+    static BOOL IsECTransformed();
 };

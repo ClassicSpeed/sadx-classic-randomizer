@@ -11,246 +11,249 @@ public:
     {
     }
 
-    bool IsDoorOpen(const EntranceId entranceId) override
+    DoorState GetDoorState(const EntranceId entranceId) override
     {
         if (entranceId == InvalidEntranceId)
-            return false;
-        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId, false);
+            return DoorBlocked;
+        const auto oppositeEntrance = _adventureFieldEntranceMap.GetReplacementConnection(entranceId);
 
         //Check if door leads to level for the player
         auto entrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntrance);
+        //Static entrance
         if (entrance == nullptr)
-            return false;
+            return DoorBlocked;
+        // Is level for character
         if (_adventureFieldEntranceMap.CalculateCorrectAct(entrance->levelAndActId) == LevelAndActIDs_HedgehogHammer)
-            return false;
+            return DoorBlocked;
+
+        // We prevent characters from using wrong entrances
+        if (_options.entranceRandomizer == 0)
+        {
+            if (entranceId == SsMainToSpeedHighway)
+                if (CurrentCharacter == Characters_Knuckles)
+                    return DoorBlocked;
+            if (entranceId == CityHallToSpeedHighway)
+                if (CurrentCharacter != Characters_Knuckles)
+                    return DoorBlocked;
+            if (entranceId == JungleToLostWorld)
+                if (CurrentCharacter == Characters_Knuckles)
+                    return DoorBlocked;
+            if (entranceId == JungleToLostWorldAlternative)
+                if (CurrentCharacter != Characters_Knuckles)
+                    return DoorBlocked;
+            if (entranceId == FinalEggTowerToFinalEgg)
+                if (CurrentCharacter == Characters_Gamma)
+                    return DoorBlocked;
+            if (entranceId == FinalEggTowerToFinalEggAlternative)
+                if (CurrentCharacter != Characters_Gamma)
+                    return DoorBlocked;
+            if (entranceId == BridgeToSkyDeck)
+                if (CurrentCharacter == Characters_Knuckles)
+                    return DoorBlocked;
+            if (entranceId == PoolToSkyDeck)
+                if (CurrentCharacter != Characters_Knuckles)
+                    return DoorBlocked;
+        }
 
 
         switch (entranceId)
         {
         case CityHallToSsMain:
-            return _gameStatus.unlock.keyPolicePass;
+            return _gameStatus.unlock.keyPolicePass ? DoorUnlocked : DoorLocked;
         case CityHallToSewers:
-            return true;
+            return DoorOpen;
         case CityHallToSpeedHighway:
-            return true;
+            return DoorOpen;
         case CityHallToChaos0:
-            return true;
+            return DoorOpen;
         case StationToSsMain:
-            return _gameStatus.unlock.keyStationKey;
+            return _gameStatus.unlock.keyStationKey ? DoorUnlocked : DoorLocked;
         case StationToMrMain:
-            return _gameStatus.unlock.keyTrain;
+            return _gameStatus.unlock.keyTrain ? DoorUnlocked : DoorLocked;
         case StationToCasino:
-            return _gameStatus.unlock.keyShutterKey;
+            return _gameStatus.unlock.keyShutterKey ? DoorUnlocked : DoorLocked;
         case CasinoToStation:
-            return _gameStatus.unlock.keyShutterKey;
+            return _gameStatus.unlock.keyShutterKey ? DoorUnlocked : DoorLocked;
         case CasinoToCasinopolis:
-            return true;
+            return DoorOpen;
         case CasinoToHotel:
-            return _gameStatus.unlock.keyCasinoKey;
+            return _gameStatus.unlock.keyCasinoKey ? DoorUnlocked : DoorLocked;
         case CasinoToEggWalker:
-            return true;
+            return DoorOpen;
         case SewersToCityHall:
-            return true;
+            return DoorOpen;
         case SewersToTwinkleParkTunnel:
-            return true;
+            return DoorOpen;
         case SsMainToHotel:
-            return _gameStatus.unlock.keyHotelKey;
+            return _gameStatus.unlock.keyHotelKey ? DoorUnlocked : DoorLocked;
         case SsMainToStation:
-            return _gameStatus.unlock.keyStationKey;
+            return _gameStatus.unlock.keyStationKey ? DoorUnlocked : DoorLocked;
         case SsMainToCityHall:
-            return _gameStatus.unlock.keyPolicePass;
+            return _gameStatus.unlock.keyPolicePass ? DoorUnlocked : DoorLocked;
         case SsMainToTwinkleParkTunnel:
-            return _gameStatus.unlock.keyTwinkleParkTicket;
-        case SsMainToEcOutside:
-            return _gameStatus.unlock.keyBoat;
+            return _gameStatus.unlock.keyTwinkleParkTicket ? DoorUnlocked : DoorLocked;
         case SsMainToBridge:
-            return _gameStatus.unlock.keyBoat;
+            return _gameStatus.unlock.keyBoat ? DoorUnlocked : DoorLocked;
         case SsMainToSpeedHighway:
-            return _gameStatus.unlock.keyEmployeeCard;
+            return _gameStatus.unlock.keyEmployeeCard ? DoorUnlocked : DoorLocked;
         case HotelToSsMain:
-            return _gameStatus.unlock.keyHotelKey;
+            return _gameStatus.unlock.keyHotelKey ? DoorUnlocked : DoorLocked;
         case HotelToCasino:
-            return _gameStatus.unlock.keyCasinoKey;
+            return _gameStatus.unlock.keyCasinoKey ? DoorUnlocked : DoorLocked;
         case HotelToSsChaoGarden:
-            return true;
+            return DoorOpen;
         case HotelToChaos2:
-            return true;
+            return DoorOpen;
         case HotelToHotelPool:
-            return _gameStatus.unlock.keyPoolKey;
+            return _gameStatus.unlock.keyPoolKey ? DoorUnlocked : DoorLocked;
         case HotelPoolToHotel:
-            return _gameStatus.unlock.keyPoolKey;
+            return _gameStatus.unlock.keyPoolKey ? DoorUnlocked : DoorLocked;
         case HotelPoolToEmeraldCoast:
-            return true;
+            return DoorOpen;
         case TwinkleParkTunnelToSsMain:
-            return _gameStatus.unlock.keyTwinkleParkTicket;
+            return _gameStatus.unlock.keyTwinkleParkTicket ? DoorUnlocked : DoorLocked;
         case TwinkleParkTunnelToTwinkleParkLobby:
-            return true;
+            return DoorOpen;
         case TwinkleParkTunnelToSewers:
-            return true;
+            return DoorOpen;
         case TwinkleParkLobbyToTwinkleParkTunnel:
-            return true;
+            return DoorOpen;
         case TwinkleParkLobbyToTwinklePark:
-            return true;
+            return DoorOpen;
         case TwinkleParkLobbyToTwinkleCircuit:
-            return true;
+            return DoorOpen;
         case MrMainToStation:
-            return _gameStatus.unlock.keyTrain;
-        case MrMainToEcOutside:
-            return _gameStatus.unlock.keyRaft;
+            return _gameStatus.unlock.keyTrain ? DoorUnlocked : DoorLocked;
         case MrMainToBridge:
-            return _gameStatus.unlock.keyRaft;
+            return _gameStatus.unlock.keyRaft ? DoorUnlocked : DoorLocked;
         case MrMainToAngelIsland:
-            return _gameStatus.unlock.keyDynamite;
+            return _gameStatus.unlock.keyDynamite ? DoorUnlocked : DoorLocked;
         case MrMainToWindyValley:
-            return _gameStatus.unlock.keyWindStone;
+            return _gameStatus.unlock.keyWindStone ? DoorUnlocked : DoorLocked;
         case MrMainToJungle:
-            return _gameStatus.unlock.keyJungleCart;
+            return _gameStatus.unlock.keyJungleCart ? DoorUnlocked : DoorLocked;
         case MrMainToChaos4:
-            return true;
+            return DoorOpen;
         case MrMainToEggHornet:
-            return true;
+            return DoorOpen;
         case MrMainToMrChaoGarden:
-            return true;
+            return DoorOpen;
         case MrMainToSkyChase1:
-            return true;
+            return DoorOpen;
         case AngelIslandToMrMain:
-            return _gameStatus.unlock.keyDynamite;
+            return _gameStatus.unlock.keyDynamite ? DoorUnlocked : DoorLocked;
         case AngelIslandToIceCave:
-            return _gameStatus.unlock.keyIceStone;
+            return _gameStatus.unlock.keyIceStone ? DoorUnlocked : DoorLocked;
         case AngelIslandToRedMountain:
-            return true;
+            return DoorOpen;
         case AngelIslandToPastAltar:
-            return _gameStatus.unlock.keyTimeMachine;
+            return _gameStatus.unlock.keyTimeMachine ? DoorUnlocked : DoorLocked;
         case IceCaveToAngelIsland:
-            return _gameStatus.unlock.keyIceStone;
+            return _gameStatus.unlock.keyIceStone ? DoorUnlocked : DoorLocked;
         case IceCaveToIceCap:
-            return true;
+            return DoorOpen;
         case PastAltarToAngelIsland:
-            return _gameStatus.unlock.keyTimeMachine;
+            return _gameStatus.unlock.keyTimeMachine ? DoorUnlocked : DoorLocked;
         case PastAltarToPastMain:
-            return true;
+            return DoorOpen;
         case PastMainToPastAltar:
-            return true;
+            return DoorOpen;
         case PastMainToJungle:
-            return _gameStatus.unlock.keyTimeMachine;
+            return _gameStatus.unlock.keyTimeMachine ? DoorUnlocked : DoorLocked;
         case JungleToMrMain:
-            return _gameStatus.unlock.keyJungleCart;
+            return _gameStatus.unlock.keyJungleCart ? DoorUnlocked : DoorLocked;
         case JungleToLostWorld:
-            return true;
+            return DoorOpen;
         case JungleToLostWorldAlternative:
-            return true;
+            return DoorOpen;
         case JungleToFinalEggTower:
-            return true;
+            return DoorOpen;
         case JungleToSandHill:
-            return true;
+            return DoorOpen;
         case JungleToPastMain:
-            return _gameStatus.unlock.keyTimeMachine;
+            return _gameStatus.unlock.keyTimeMachine ? DoorUnlocked : DoorLocked;
         case FinalEggTowerToJungle:
-            return true;
+            return DoorOpen;
         case FinalEggTowerToFinalEgg:
-            return true;
+            return DoorOpen;
         case FinalEggTowerToFinalEggAlternative:
-            return true;
+            return DoorOpen;
         case FinalEggTowerToBetaEggViper:
-            return true;
+            return DoorOpen;
         case FinalEggTowerToEcInside:
-            return true;
-        case EcOutsideToSsMain:
-            return _gameStatus.unlock.keyBoat;
-        case EcOutsideToMrMain:
-            return _gameStatus.unlock.keyRaft;
-        case EcOutsideToSkyChase2:
-            return true;
-        case EcOutsideToChaos6ZeroBeta:
-            return true;
-        case EcOutsideToEcInsideMonorail:
-            return _gameStatus.unlock.keyMonorail;
-        case EcOutsideToEcInsideEggLift:
-            return _gameStatus.unlock.keyEgglift;
-        case EcOutsideToCaptainRoom:
-            return true;
-        case EcOutsideToPool:
-            return true;
+            return DoorOpen;
         case BridgeToSsMain:
-            return _gameStatus.unlock.keyBoat;
+            return _gameStatus.unlock.keyBoat ? DoorUnlocked : DoorLocked;
         case BridgeToMrMain:
-            return _gameStatus.unlock.keyRaft;
+            return _gameStatus.unlock.keyRaft ? DoorUnlocked : DoorLocked;
         case BridgeToSkyDeck:
-            return true;
+            return DoorOpen;
         case BridgeToSkyChase2:
-            return true;
+            return DoorOpen;
         case BridgeToChaos6ZeroBeta:
-            return true;
+            return DoorOpen;
         case BridgeToEcInsideMonorail:
-            return _gameStatus.unlock.keyMonorail;
+            return _gameStatus.unlock.keyMonorail ? DoorUnlocked : DoorLocked;
         case DeckToPool:
-            return true;
+            return DoorOpen;
         case DeckToCaptainRoom:
-            return true;
+            return DoorOpen;
         case DeckToPrivateRoom:
-            return true;
+            return DoorOpen;
         case DeckToPrivateRoomAlternative:
-            return true;
+            return DoorOpen;
         case DeckToEcInsideEggLift:
-            return _gameStatus.unlock.keyEgglift;
-        case CaptainRoomToEcOutside:
-            return true;
+            return _gameStatus.unlock.keyEgglift ? DoorUnlocked : DoorLocked;
         case CaptainRoomToDeck:
-            return true;
+            return DoorOpen;
         case CaptainRoomToPrivateRoom:
-            return true;
+            return DoorOpen;
         case PrivateRoomToCaptainRoom:
-            return true;
+            return DoorOpen;
         case PrivateRoomToDeck:
-            return true;
+            return DoorOpen;
         case PrivateRoomToDeckAlternative:
-            return true;
-        case PoolToEcOutside:
-            return true;
+            return DoorOpen;
         case PoolToDeck:
-            return true;
+            return DoorOpen;
         case PoolToSkyDeck:
-            return true;
+            return DoorOpen;
         case ArsenalToEcInside:
-            return true;
-        case EcInsideToEcOutsideEggLift:
-            return _gameStatus.unlock.keyEgglift;
-        case EcInsideToEcOutsideMonorail:
-            return _gameStatus.unlock.keyMonorail;
+            return DoorOpen;
         case EcInsideToDeckEggLift:
-            return _gameStatus.unlock.keyEgglift;
+            return _gameStatus.unlock.keyEgglift ? DoorUnlocked : DoorLocked;
         case EcInsideToBridgeMonorail:
-            return _gameStatus.unlock.keyMonorail;
+            return _gameStatus.unlock.keyMonorail ? DoorUnlocked : DoorLocked;
         case EcInsideToHotShelter:
-            return true;
+            return DoorOpen;
         case EcInsideToHedgehogHammer:
-            return true;
+            return DoorOpen;
         case EcInsideToFinalEggTower:
-            return true;
+            return DoorOpen;
         case EcInsideToWarpHall:
-            return true;
+            return DoorOpen;
         case EcInsideToArsenal:
-            return true;
+            return DoorOpen;
         case EcInsideToWaterTank:
-            return true;
+            return DoorOpen;
         case HedgehogHammerToEcInside:
-            return true;
+            return DoorOpen;
         case HedgehogHammerToPrisonHall:
-            return true;
+            return DoorOpen;
         case PrisonHallToHedgehogHammer:
-            return true;
+            return DoorOpen;
         case WaterTankToEcInside:
-            return true;
+            return DoorOpen;
         case WarpHallToEcInside:
-            return true;
+            return DoorOpen;
         case WarpHallToEcChaoGarden:
-            return true;
+            return DoorOpen;
         case SsChaoGardenToHotel:
-            return true;
+            return DoorOpen;
         case MrChaoGardenToMrMain:
-            return true;
+            return DoorOpen;
         case EcChaoGardenToWarpHall:
-            return true;
+            return DoorOpen;
         case SpeedHighwayToCityHall:
         case Chaos0ToCityHall:
         case CasinopolisToCasino:
@@ -272,25 +275,17 @@ public:
         case FinalEggToFinalEggTower:
         case FinalEggToFinalEggTowerAlternative:
         case BetaEggViperToFinalEggTower:
-        case SkyChase2ToEcOutside:
         case SkyChase2ToBridge:
-        case Chaos6ZeroBetaToEcOutside:
         case Chaos6ZeroBetaToBridge:
         case SkyDeckToBridge:
         case SkyDeckToPool:
         case HotShelterToEcInside:
-            return true;
+            return DoorOpen;
         case InvalidEntranceId:
-            return false;
+            return DoorLocked;
+        default:
+            return DoorOpen;
         }
-        return true;
-    }
-
-    bool ShowDisableDoorIndicator(EntranceId entranceId) override
-    {
-        if (entranceId == InvalidEntranceId)
-            return true;
-        return !IsDoorOpen(entranceId);
     }
 
 private:

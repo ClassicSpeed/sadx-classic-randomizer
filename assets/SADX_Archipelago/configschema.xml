@@ -18,11 +18,17 @@
             <Property name="RingLinkOverride" type="RingLinkIndex" defaultvalue="0" display="Ring Link Override">
                 <HelpText>You can override the Ring Link setting from the yaml.</HelpText>
             </Property>
+            <Property name="RingLinkSounds" type="bool" defaultvalue="True" display="Ring Link Sounds">
+                <HelpText>Enable sound effects for ring link.</HelpText>
+            </Property>
             <Property name="RingLossOverride" type="RingLossIndex" defaultvalue="0" display="Ring Loss Override">
                 <HelpText>You can override the Ring Loss setting from the yaml.</HelpText>
             </Property>
             <Property name="TrapLinkOverride" type="DeathLinkIndex" defaultvalue="0" display="Trap Link Override">
                 <HelpText>You can override the Trap Link setting from the yaml.</HelpText>
+            </Property>
+            <Property name="IgnoreTrapsOnConnect" type="bool" defaultvalue="True" display="Ignore Traps on Connect">
+                <HelpText>Ignores any trap and filler item sent when connection.</HelpText>
             </Property>
         </Group>
         <Group name="Messages" display="Messages Settings">
@@ -80,6 +86,12 @@
         <Group name="GameSettings" display="Game Settings">
             <Property name="HomingAttackIndicatorEnabled" type="HomingAttackIndex" defaultvalue="0" display="Enable Homing Attack Indicator">
                 <HelpText>Adds an indicator for the homing attack, like in modern Sonic games.</HelpText>
+            </Property>
+            <Property name="MapButton" type="MapButtonIndex" defaultvalue="0" display="Select Map Button">
+                <HelpText>Change the button used to open the adventure field map.</HelpText>
+            </Property>
+            <Property name="ShowTrackerWithMap" type="bool" defaultvalue="False" display="Show Tracker With Map">
+                <HelpText>Show the tracker info when the map is open.</HelpText>
             </Property>
             <Property name="CompleteMultipleLevelMissions" type="bool" defaultvalue="True"
                       display="Complete Multiple Level Missions at Once">
@@ -340,6 +352,13 @@
             <EnumMember name="0" display="Disabled"/>
             <EnumMember name="1" display="Enabled"/>
             <EnumMember name="2" display="Enabled (No Sound)"/>
+        </Enum>
+        <Enum name="MapButtonIndex">
+            <EnumMember name="0" display="Y button"/>
+            <EnumMember name="1" display="Select button"/>
+            <EnumMember name="2" display="Right Bumper"/>
+            <EnumMember name="3" display="Left Bumper"/>
+            <EnumMember name="4" display="Disabled"/>
         </Enum>
         <Enum name="InGameTrackerIndex">
             <EnumMember name="0" display="When paused"/>

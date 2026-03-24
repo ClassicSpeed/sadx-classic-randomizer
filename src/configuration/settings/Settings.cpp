@@ -42,8 +42,10 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
 
     this->deathLinkOverride = static_cast<DeathLinkOverride>(settingsIni->getInt("AP", "DeathLinkOverride", 0));
     this->ringLinkOverride = static_cast<RingLinkOverride>(settingsIni->getInt("AP", "RingLinkOverride", 0));
+    this->ringLinkSounds = settingsIni->getBool("AP", "RingLinkSounds", true);
     this->ringLossOverride = static_cast<RingLossOverride>(settingsIni->getInt("AP", "RingLossOverride", 0));
     this->trapLinkOverride = static_cast<TrapLinkOverride>(settingsIni->getInt("AP", "TrapLinkOverride", 0));
+    this->ignoreTrapsOnConnect = settingsIni->getBool("AP", "IgnoreTrapsOnConnect", true);
 
 
     this->displayDuration = settingsIni->getFloat("Messages", "MessageDisplayDuration", 5.0f);
@@ -134,6 +136,9 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
     this->completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions", true);
     this->homingAttackIndicator = static_cast<HomingAttackIndicator>(settingsIni->getInt(
         "GameSettings", "HomingAttackIndicatorEnabled", 0));
+
+    this->mapButton = static_cast<MapButton>(settingsIni->getInt("GameSettings", "MapButton", 0));
+    this->showTrackerWithMap = settingsIni->getBool("GameSettings", "ShowTrackerWithMap", false);
 
 
     this->trackerArrow = settingsIni->getBool("Sanity", "TrackerArrow", true);

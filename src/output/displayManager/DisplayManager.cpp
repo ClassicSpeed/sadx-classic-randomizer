@@ -86,12 +86,6 @@ void DisplayManager::ShowSongName(const std::string& songName)
 
 void DisplayManager::OnFrame()
 {
-    // for (const auto& button : PressedButtons)
-    //
-    //     if (button & WhistleButtons && Current_CharObj2 != nullptr)
-    //     {
-    //         _gameStatus.unlock.currentEmblems++;
-    //     }
     MenuVoice = _settings.voiceMenuCharacter;
     RemoveExpiredMessages();
 
@@ -484,9 +478,14 @@ void DisplayManager::DisplayItemsUnlocked()
 
     bool showMap = false;
 
-    for (const auto& button : HeldButtons)
-        if (button & WhistleButtons && Current_CharObj2 != nullptr)
-            showMap = true;
+    if (_settings.showTrackerWithMap &&
+        ((ControllerPointers[0]->HeldButtons & Buttons_Y && _settings.mapButton == MapButtonY) ||
+            (ControllerPointers[0]->HeldButtons & Buttons_D && _settings.mapButton == MapButtonSelect) ||
+            (ControllerPointers[0]->HeldButtons & Buttons_Z && _settings.mapButton == MapButtonRightBumper) ||
+            (ControllerPointers[0]->HeldButtons & Buttons_C && _settings.mapButton == MapButtonLeftBumper)))
+
+        showMap = true;
+
 
     if (!showMap && _settings.displayInGameTracker == DisplayTrackerWhenPaused)
     {
@@ -512,8 +511,8 @@ void DisplayManager::DisplayItemsUnlocked()
     const int rows = VerticalResolution / _settings.debugFontSize;
     const int columns = HorizontalResolution / _settings.debugFontSize;
     const std::string modVersionString = "v" + std::to_string(SADX_AP_VERSION_MAJOR) + "." +
-        std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH);
-    DisplayDebugString(NJM_LOCATION(columns-7, rows-2), modVersionString.c_str());
+        std::to_string(SADX_AP_VERSION_MINOR) + "." + std::to_string(SADX_AP_VERSION_PATCH) + " Beta 1";
+    DisplayDebugString(NJM_LOCATION(columns-14, rows-2), modVersionString.c_str());
 
     SetDebugFontColor(this->_displayEmblemColor);
     std::string buffer;
@@ -730,7 +729,7 @@ void DisplayManager::DisplayItemsUnlocked()
             }
         }
 
-        if (_options.fishSanity)
+        if (_options.fishSanity && CurrentCharacter == Characters_Big)
         {
             buffer.clear();
             buffer.append("Fish:     ");

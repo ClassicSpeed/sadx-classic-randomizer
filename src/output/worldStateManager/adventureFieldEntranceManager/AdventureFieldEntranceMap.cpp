@@ -3,13 +3,10 @@
 //TODO: enable controls after entering the EC
 
 //TODO: Improve performance by using a map or unordered_map for faster lookups
-AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _options(options)
+AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatus& gameStatus) : _options(options),
+    _gameStatus(gameStatus)
 {
     _entranceList = {
-        //TODO: MR garden - MRMain
-        //Fix control disable when transitioning into the  same stage with vehicles
-        //Fix icecap door?
-
 
         //City Hall
         {CityHallToSsMain, LevelAndActIDs_StationSquare1, 1, SsMainToCityHall, 50.0f, {550.79f, 14.5, 856.22f}},
@@ -41,7 +38,6 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
             TwinkleParkTunnelToTwinkleParkLobby, LevelAndActIDs_StationSquare4, 4, TwinkleParkLobbyToTwinkleParkTunnel,
             90, {580, 65, 1772}
         },
-        {SsMainToEcOutside, LevelAndActIDs_StationSquare4, 6, EcOutsideToSsMain, 30, {174.09f, 6, 1897.51f}},
         {SsMainToBridge, LevelAndActIDs_StationSquare4, 6, BridgeToSsMain, 30, {174.09f, 6, 1897.51f}},
         {TwinkleParkTunnelToSewers, LevelAndActIDs_StationSquare4, 2, SewersToTwinkleParkTunnel, 180, {400, 58, 1450}},
         {SsMainToSpeedHighway, LevelAndActIDs_StationSquare4, 5, SpeedHighwayToSsMain, 90, {380, 20, 1370}},
@@ -74,7 +70,6 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
         {MrMainToChaos4, LevelAndActIDs_MysticRuins1, 5, Chaos4ToMrMain, 180, {80, 87, 180}},
         {MrMainToEggHornet, LevelAndActIDs_MysticRuins1, 8, EggHornetToMrMain, 0, {950, 142, 950}},
         {MrMainToSkyChase1, LevelAndActIDs_MysticRuins1, 9, SkyChase1ToMrMain, 90, {1561, 206, 900}},
-        {MrMainToEcOutside, LevelAndActIDs_MysticRuins1, 7, EcOutsideToMrMain, 147.5f, {-70, -385, 1264}},
         {MrMainToBridge, LevelAndActIDs_MysticRuins1, 7, BridgeToMrMain, 147.5f, {-70, -385, 1264}},
         {MrMainToJungle, LevelAndActIDs_MysticRuins1, 2, JungleToMrMain, 211, {-200.86f, 81.5, -69.51f}},
         {MrMainToMrChaoGarden, LevelAndActIDs_MysticRuins1, 4, MrChaoGardenToMrMain, 111, {1696, 17.5, -86}},
@@ -118,29 +113,6 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
         {FinalEggTowerToEcInside, LevelAndActIDs_MysticRuins4, 3, EcInsideToFinalEggTower, 180, {0, 15, -175}},
 
 
-        // Egg Carrier Outside (Untransformed)
-        {
-            EcOutsideToEcInsideEggLift, LevelAndActIDs_EggCarrierOutside1, 3, EcInsideToEcOutsideEggLift, 0.0f,
-            {0, 750, 970}
-        },
-        {
-            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 5, EcInsideToEcOutsideMonorail, 270,
-            {311.5f, 595.7f, -342.7f}
-        },
-        {
-            EcOutsideToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 5, EcInsideToEcOutsideMonorail, 270,
-            {311.5f, 595.7f, -422}
-        },
-        {EcOutsideToSsMain, LevelAndActIDs_EggCarrierOutside1, 7, SsMainToEcOutside, 90, {326, 584.4f, -723}},
-        {EcOutsideToMrMain, LevelAndActIDs_EggCarrierOutside1, 6, MrMainToEcOutside, 270, {-326, 584.4f, -723}},
-        {EcOutsideToSkyChase2, LevelAndActIDs_EggCarrierOutside1, 0, SkyChase2ToEcOutside, 180, {0, 715, -1100}},
-        {EcOutsideToPool, LevelAndActIDs_EggCarrierOutside1, 1, PoolToEcOutside, 0.0f, {0, 759.5f, 1074.2f}},
-        {
-            EcOutsideToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside1, 9, Chaos6ZeroBetaToEcOutside, 0,
-            {0, 765.5f, -385.69f}
-        },
-        {EcOutsideToCaptainRoom, LevelAndActIDs_EggCarrierOutside1, 2, CaptainRoomToEcOutside, 180, {0, 755, 438}},
-
         // Bridge (Transformed)
         {
             BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside2, 2, EcInsideToBridgeMonorail, 270,
@@ -171,7 +143,6 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
         },
 
         // Captain Room
-        {CaptainRoomToEcOutside, LevelAndActIDs_EggCarrierOutside4, 0, EcOutsideToCaptainRoom, 90, {34.5, 113, 0}},
         {CaptainRoomToDeck, LevelAndActIDs_EggCarrierOutside4, 0, DeckToCaptainRoom, 90, {0, 1725, 2923}},
         {CaptainRoomToPrivateRoom, LevelAndActIDs_EggCarrierOutside4, 0, PrivateRoomToCaptainRoom, 0, {-80, 113, 0}},
 
@@ -184,7 +155,6 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
         },
 
         // Pool
-        {PoolToEcOutside, LevelAndActIDs_EggCarrierOutside6, 0, EcOutsideToPool, 270, {4.5, 25, 25}},
         {PoolToDeck, LevelAndActIDs_EggCarrierOutside6, 0, DeckToPool, 270, {4.5, 25, 25}},
         {PoolToSkyDeck, LevelAndActIDs_EggCarrierOutside6, 1, SkyDeckToPool, 270, {67, -54.5f, 0}},
 
@@ -194,19 +164,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
 
 
         // Egg Carrier Inside
-        {
-            EcInsideToEcOutsideEggLift, LevelAndActIDs_EggCarrierInside2, 7, EcOutsideToEcInsideEggLift, 180,
-            {0, 65, -330.25f}
-        },
         {EcInsideToDeckEggLift, LevelAndActIDs_EggCarrierInside2, 7, DeckToEcInsideEggLift, 180, {0, 65, -330.25f}},
-        {
-            EcInsideToEcOutsideMonorail, LevelAndActIDs_EggCarrierInside2, 0, EcOutsideToEcInsideMonorail, 90,
-            {60, 22, 0}
-        },
-        {
-            EcInsideToEcOutsideMonorail, LevelAndActIDs_EggCarrierInside2, 0, EcOutsideToEcInsideMonorail, 90,
-            {60, 22, -80}
-        },
         {EcInsideToBridgeMonorail, LevelAndActIDs_EggCarrierInside2, 0, BridgeToEcInsideMonorail, 90, {60, 22, 0}},
         {EcInsideToBridgeMonorail, LevelAndActIDs_EggCarrierInside2, 0, BridgeToEcInsideMonorail, 90, {60, 22, -80}},
 
@@ -338,10 +296,6 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
         {Chaos4ToMrMain, LevelAndActIDs_Chaos4, 0, MrMainToChaos4, 0, {0, 0, 0}},
 
         // Chaos 6
-        {Chaos6ZeroBetaToEcOutside, LevelAndActIDs_Chaos6Sonic, 0, EcOutsideToChaos6ZeroBeta, 0, {0, 0, 0}},
-        {Chaos6ZeroBetaToEcOutside, LevelAndActIDs_Chaos6Knuckles, 0, EcOutsideToChaos6ZeroBeta, 0, {0, 0, 0}},
-        {Chaos6ZeroBetaToEcOutside, LevelAndActIDs_Zero, 0, EcOutsideToChaos6ZeroBeta, 0, {0, 0, 0}},
-        {Chaos6ZeroBetaToEcOutside, LevelAndActIDs_E101R, 0, EcOutsideToChaos6ZeroBeta, 0, {0, 0, 0}},
         {Chaos6ZeroBetaToBridge, LevelAndActIDs_Chaos6Sonic, 0, BridgeToChaos6ZeroBeta, 0, {0, 0, 0}},
         {Chaos6ZeroBetaToBridge, LevelAndActIDs_Chaos6Knuckles, 0, BridgeToChaos6ZeroBeta, 0, {0, 0, 0}},
         {Chaos6ZeroBetaToBridge, LevelAndActIDs_Zero, 0, BridgeToChaos6ZeroBeta, 0, {0, 0, 0}},
@@ -381,7 +335,6 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
         // Sky Chase 1
         {SkyChase1ToMrMain, LevelAndActIDs_SkyChase1, 0, MrMainToSkyChase1, 0, {0, 0, 0}},
         // Sky Chase 2
-        {SkyChase2ToEcOutside, LevelAndActIDs_SkyChase2, 0, EcOutsideToSkyChase2, 0, {0, 0, 0}},
         {SkyChase2ToBridge, LevelAndActIDs_SkyChase2, 0, BridgeToSkyChase2, 0, {0, 0, 0}},
 
 
@@ -389,6 +342,48 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
         {SandHillToJungle, LevelAndActIDs_SandHill, 0, JungleToSandHill, 0, {0, 0, 0}},
 
     };
+
+    _entranceListUntransformed = _entranceList;
+
+    std::initializer_list<AdventureFieldEntrance> overrideList = {
+        {SsMainToBridge, LevelAndActIDs_StationSquare4, 6, BridgeToSsMain, 30, {174.09f, 6, 1897.51f}},
+        {MrMainToBridge, LevelAndActIDs_MysticRuins1, 7, BridgeToMrMain, 147.5f, {-70, -385, 1264}},
+        {
+            DeckToEcInsideEggLift, LevelAndActIDs_EggCarrierOutside1, 3, EcInsideToDeckEggLift, 0.0f,
+            {0, 750, 970}
+        },
+        {
+            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 5, EcInsideToBridgeMonorail, 270,
+            {311.5f, 595.7f, -342.7f}
+        },
+        {
+            BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 5, EcInsideToBridgeMonorail, 270,
+            {311.5f, 595.7f, -422}
+        },
+        {BridgeToSsMain, LevelAndActIDs_EggCarrierOutside1, 7, SsMainToBridge, 90, {326, 584.4f, -723}},
+        {BridgeToMrMain, LevelAndActIDs_EggCarrierOutside1, 6, MrMainToBridge, 270, {-326, 584.4f, -723}},
+        {BridgeToSkyChase2, LevelAndActIDs_EggCarrierOutside1, 0, SkyChase2ToBridge, 180, {0, 715, -1100}},
+        {DeckToPool, LevelAndActIDs_EggCarrierOutside1, 1, PoolToDeck, 0.0f, {0, 759.5f, 1074.2f}},
+        {
+            BridgeToChaos6ZeroBeta, LevelAndActIDs_EggCarrierOutside1, 9, Chaos6ZeroBetaToBridge, 0,
+            {0, 765.5f, -385.69f}
+        },
+        {DeckToCaptainRoom, LevelAndActIDs_EggCarrierOutside1, 2, CaptainRoomToDeck, 180, {0, 755, 438}},
+        //TODO: Remove sky deck/private rooms
+
+        {CaptainRoomToDeck, LevelAndActIDs_EggCarrierOutside4, 0, DeckToCaptainRoom, 90, {34.5, 113, 0}},
+
+        {PoolToDeck, LevelAndActIDs_EggCarrierOutside6, 0, DeckToPool, 270, {4.5, 25, 25}},
+
+        {EcInsideToDeckEggLift, LevelAndActIDs_EggCarrierInside2, 7, DeckToEcInsideEggLift, 180, {0, 65, -330.25f}},
+        {EcInsideToBridgeMonorail, LevelAndActIDs_EggCarrierInside2, 0, BridgeToEcInsideMonorail, 90, {60, 22, 0}},
+        {EcInsideToBridgeMonorail, LevelAndActIDs_EggCarrierInside2, 0, BridgeToEcInsideMonorail, 90, {60, 22, -80}},
+
+    };
+
+
+    overrideEntranceAct(_entranceListUntransformed, overrideList);
+
     _staticEntranceList = {
         {StationToCasino, LevelAndActIDs_StationSquare2, -1, CasinoToStation, 206, {-202, 82, 1319}},
         {CasinoToStation, LevelAndActIDs_StationSquare2, -1, StationToCasino, 26, {-206, 82, 1310}},
@@ -410,18 +405,40 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options) : _option
     };
 }
 
+void AdventureFieldEntranceMap::overrideEntranceAct(std::vector<AdventureFieldEntrance>& list,
+                                                    const std::initializer_list<AdventureFieldEntrance> overrides)
+{
+    for (const auto& o : overrides)
+    {
+        for (auto& e : list)
+        {
+            if (e.entranceId == o.entranceId && e.connectsTo == o.connectsTo)
+            {
+                e.levelAndActId = o.levelAndActId;
+                e.entranceNumber = o.entranceNumber;
+                e.indicatorAngle = o.indicatorAngle;
+                e.indicatorPosition = o.indicatorPosition;
+                break;
+            }
+        }
+    }
+}
+
 const std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetEntrances() const
 {
-    return _entranceList;
+    if (_gameStatus.isEggCarrierTransformed)
+        return _entranceList;
+    return _entranceListUntransformed;
 }
+
 
 const std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetStaticEntrances() const
 {
     return _staticEntranceList;
 }
 
-AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
-    const LevelAndActIDs sourceLocation, const LevelAndActIDs destinationLocation, const bool isEggCarrierTransformed)
+AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(const LevelAndActIDs sourceLocation,
+                                                                    const LevelAndActIDs destinationLocation)
 {
     //We use the save entranceId when trasitioning in and out of levels
     if ((GET_LEVEL(sourceLocation) >= LevelIDs_EmeraldCoast && GET_LEVEL(sourceLocation) <= LevelIDs_E101R)
@@ -430,11 +447,10 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetNewConnection(
         return FindEntranceById(_lastEntranceIdUsed);
     }
 
-
     const EntranceId sourceEntranceId = FindEntranceByLocation(sourceLocation, destinationLocation);
     if (sourceEntranceId == static_cast<EntranceId>(-1))
         return nullptr;
-    const EntranceId destinationEntranceId = GetReplacementConnection(sourceEntranceId, isEggCarrierTransformed);
+    const EntranceId destinationEntranceId = GetReplacementConnection(sourceEntranceId);
     AdventureFieldEntrance* newEntrance = FindEntranceById(destinationEntranceId);
 
     if ((GET_LEVEL(newEntrance->levelAndActId) >= LevelIDs_EmeraldCoast && GET_LEVEL(newEntrance->levelAndActId) <=
@@ -463,11 +479,12 @@ EntranceId AdventureFieldEntranceMap::FindEntranceByLocation(
     const LevelAndActIDs sourceLocation, const LevelAndActIDs destinationLocation)
 {
     std::vector<AdventureFieldEntrance*> possibleEntrances;
-    for (auto& entrance : _entranceList)
+    std::vector<AdventureFieldEntrance> entranceList = GetEntrances();
+    for (auto& entrance : entranceList)
     {
         if (entrance.levelAndActId == sourceLocation)
         {
-            for (const auto& destEntrance : _entranceList)
+            for (const auto& destEntrance : entranceList)
             {
                 if (destEntrance.levelAndActId == destinationLocation &&
                     destEntrance.connectsTo == entrance.entranceId)
@@ -503,8 +520,7 @@ EntranceId AdventureFieldEntranceMap::FindEntranceByLocation(
     return closestId;
 }
 
-EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId fromEntranceId,
-                                                               const bool isEggCarrierTransformed)
+EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId fromEntranceId)
 {
     EntranceId toEntranceId = InvalidEntranceId;
     for (const auto& [entranceA, entranceB] : _entranceOriginalConnections)
@@ -514,93 +530,14 @@ EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId 
         if (entranceB == fromEntranceId)
             toEntranceId = entranceA;
     }
-
-
-    EntranceId actualEntranceId = toEntranceId;
-    if (isEggCarrierTransformed)
-    {
-        switch (toEntranceId)
-        {
-        case EcOutsideToPool:
-            actualEntranceId = DeckToPool;
-            break;
-        case PoolToEcOutside:
-            actualEntranceId = PoolToDeck;
-            break;
-        case CaptainRoomToEcOutside:
-            actualEntranceId = CaptainRoomToDeck;
-            break;
-        case EcOutsideToCaptainRoom:
-            actualEntranceId = DeckToCaptainRoom;
-            break;
-        case EcOutsideToEcInsideMonorail:
-            actualEntranceId = BridgeToEcInsideMonorail;
-            break;
-        case EcOutsideToEcInsideEggLift:
-            actualEntranceId = DeckToEcInsideEggLift;
-            break;
-        case EcInsideToEcOutsideMonorail:
-            actualEntranceId = EcInsideToBridgeMonorail;
-            break;
-        case EcInsideToEcOutsideEggLift:
-            actualEntranceId = EcInsideToDeckEggLift;
-            break;
-        case EcOutsideToSsMain:
-            actualEntranceId = BridgeToSsMain;
-            break;
-        case EcOutsideToMrMain:
-            actualEntranceId = BridgeToMrMain;
-            break;
-        default:
-            break;
-        }
-    }
-    else
-    {
-        switch (toEntranceId)
-        {
-        case DeckToPool:
-            actualEntranceId = EcOutsideToPool;
-            break;
-        case PoolToDeck:
-            actualEntranceId = PoolToEcOutside;
-            break;
-        case CaptainRoomToDeck:
-            actualEntranceId = CaptainRoomToEcOutside;
-            break;
-        case DeckToCaptainRoom:
-            actualEntranceId = EcOutsideToCaptainRoom;
-            break;
-        case BridgeToEcInsideMonorail:
-            actualEntranceId = EcOutsideToEcInsideMonorail;
-            break;
-        case DeckToEcInsideEggLift:
-            actualEntranceId = EcOutsideToEcInsideEggLift;
-            break;
-        case EcInsideToBridgeMonorail:
-            actualEntranceId = EcInsideToEcOutsideMonorail;
-            break;
-        case EcInsideToDeckEggLift:
-            actualEntranceId = EcInsideToEcOutsideEggLift;
-            break;
-        case BridgeToSsMain:
-            actualEntranceId = EcOutsideToSsMain;
-            break;
-        case BridgeToMrMain:
-            actualEntranceId = EcOutsideToMrMain;
-            break;
-        default:
-            break;
-        }
-    }
-
-    return actualEntranceId;
+    return toEntranceId;
 }
 
 
 AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const EntranceId entranceId)
 {
-    for (auto& entrance : _entranceList)
+    std::vector<AdventureFieldEntrance> entranceList = GetEntrances();
+    for (auto& entrance : entranceList)
     {
         if (entrance.entranceId == entranceId)
             return &entrance;

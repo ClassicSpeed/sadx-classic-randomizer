@@ -8,11 +8,11 @@
 class MapManager : public IOnFrame
 {
 public:
-    static MapManager& Init(Options& options, GameStatus& gameStatus,
+    static MapManager& Init(Options& options, Settings& settings, GameStatus& gameStatus,
                             AdventureFieldEntranceMap& _adventureFieldEntranceMap)
     {
         if (_instance == nullptr)
-            _instance = new MapManager(options, gameStatus, _adventureFieldEntranceMap);
+            _instance = new MapManager(options, settings, gameStatus, _adventureFieldEntranceMap);
         return *_instance;
     }
 
@@ -23,8 +23,9 @@ private:
     IDoorLogicStrategy* _doorLogicStrategy;
     void ShowMap();
     void showNumberMap(float posX, float posY, int number);
-    bool ShowDisableDoorIndicator(EntranceId entranceId);
-    void ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance);
+    void ShowDoorRequirement(AdventureFieldEntrance adventureFieldEntrance);
+    void ShowBlockedDoor(AdventureFieldEntrance adventureFieldEntrance);
+    void ShowDoorName(AdventureFieldEntrance adventureFieldEntrance);
     void ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x, float y, float zBase,
                            float xStep,
                            bool leftJustify);
@@ -36,158 +37,144 @@ private:
     void DrawEmblemNumberInMap(AdventureFieldEntrance adventureFieldEntrance, int doorCost);
     void DrawNewInMap(AdventureFieldEntrance adventureFieldEntrance);
     void DrawPlayerLocation();
-    void DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bool isStatic);
+    void DrawEntrancesInMap(AdventureFieldEntrance adventureFieldEntrance, bool isStatic);
     NJS_TEXANIM* getInitialsFromEntrance(AdventureFieldEntrance* entranceTo);
     void DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Float entranceX, Float entranceY);
     void DrawConnectionsInMap(const AdventureFieldEntrance& adventureFieldEntrance);
     void ShowNumberDynamicMap(int number, float x, float y);
 
-    explicit MapManager(Options& options, GameStatus& gameStatus,
+    explicit MapManager(Options& options, Settings& settings, GameStatus& gameStatus,
                         AdventureFieldEntranceMap& _adventureFieldEntranceMap);
     inline static MapManager* _instance = nullptr;
     Options& _options;
+    Settings& _settings;
     GameStatus& _gameStatus;
     AdventureFieldEntranceMap& _adventureFieldEntranceMap;
 
     std::map<int, NJS_POINT2> entranceLocationInMap = {
 
         // City Hall
-        {CityHallToSsMain, {848, 198}},
-        {CityHallToSewers, {820, 132}},
-        {CityHallToSpeedHighway, {768, 39}},
-        {CityHallToChaos0, {768, 82}},
+        {CityHallToSsMain, {860, 197}},
+        {CityHallToSewers, {824, 128}},
+        {CityHallToSpeedHighway, {775, 37}},
+        {CityHallToChaos0, {775, 81}},
         // Station
-        {StationToSsMain, {704, 321}},
-        {StationToMrMain, {681, 263}},
-        {StationToCasino, {642, 288}},
+        {StationToSsMain, {677, 294}},
+        {StationToMrMain, {647, 237}},
+        {StationToCasino, {603, 259}},
         //Casino
-        {CasinoToStation, {642, 288}},
-        {CasinoToCasinopolis, {559, 203}},
-        {CasinoToHotel, {603, 330}},
-        {CasinoToEggWalker, {616, 216}},
+        {CasinoToStation, {603, 259}},
+        {CasinoToCasinopolis, {530, 188}},
+        {CasinoToHotel, {572, 324}},
+        {CasinoToEggWalker, {584, 198}},
         // Sewers
-        {SewersToCityHall, {928, 91}},
-        {SewersToTwinkleParkTunnel, {927, 313}},
+        {SewersToCityHall, {928, 85}},
+        {SewersToTwinkleParkTunnel, {933, 323}},
         // SSMain
-        {SsMainToHotel, {687, 405}},
-        {SsMainToStation, {734, 331}},
-        {SsMainToCityHall, {853, 227}},
-        {SsMainToTwinkleParkTunnel, {814, 387}},
-        {SsMainToEcOutside, {765, 444}},
-        {SsMainToBridge, {765, 444}},
-        {SsMainToSpeedHighway, {839, 338}},
+        {SsMainToHotel, {675, 416}},
+        {SsMainToStation, {722, 334}},
+        {SsMainToCityHall, {860, 235}},
+        {SsMainToTwinkleParkTunnel, {824, 391}},
+        {SsMainToBridge, {762, 465}},
+        {SsMainToSpeedHighway, {838, 341}},
         // Hotel
-        {HotelToSsMain, {628, 396}},
-        {HotelToCasino, {591, 376}},
-        {HotelToSsChaoGarden, {578, 401}},
-        {HotelToChaos2, {578, 389}},
-        {HotelToHotelPool, {590, 420}},
+        {HotelToSsMain, {603, 398}},
+        {HotelToCasino, {572, 358}},
+        {HotelToSsChaoGarden, {552, 406}},
+        {HotelToChaos2, {552, 375}},
+        {HotelToHotelPool, {567, 432}},
         // Hotel Pool
-        {HotelPoolToHotel, {590, 420}},
-        {HotelPoolToEmeraldCoast, {530, 504}},
+        {HotelPoolToHotel, {567, 432}},
+        {HotelPoolToEmeraldCoast, {508, 528}},
         // Twinkle Park Tunnel
-        {TwinkleParkTunnelToSsMain, {814, 387}},
-        {TwinkleParkTunnelToTwinkleParkLobby, {857, 426}},
-        {TwinkleParkTunnelToSewers, {820, 362}},
+        {TwinkleParkTunnelToSsMain, {824, 391}},
+        {TwinkleParkTunnelToTwinkleParkLobby, {867, 433}},
+        {TwinkleParkTunnelToSewers, {826, 362}},
         // Twinkle Park Lobby
         {TwinkleParkLobbyToTwinkleParkTunnel, {914, 433}},
-        {TwinkleParkLobbyToTwinklePark, {955, 436}},
-        {TwinkleParkLobbyToTwinkleCircuit, {937, 417}},
+        {TwinkleParkLobbyToTwinklePark, {976, 433}},
+        {TwinkleParkLobbyToTwinkleCircuit, {953, 413}},
         // MRMain
-        {MrMainToStation, {297, 335}},
-        {MrMainToEcOutside, {286, 352}},
-        {MrMainToBridge, {286, 352}},
-        {MrMainToAngelIsland, {225, 297}},
-        {MrMainToWindyValley, {346, 213}},
-        {MrMainToJungle, {268, 216}},
-        {MrMainToChaos4, {299, 237}},
-        {MrMainToEggHornet, {371, 303}},
-        {MrMainToMrChaoGarden, {443, 219}},
-        {MrMainToSkyChase1, {428, 305}},
+        {MrMainToStation, {292, 342}},
+        {MrMainToBridge, {269, 351}},
+        {MrMainToAngelIsland, {229, 307}},
+        {MrMainToWindyValley, {348, 207}},
+        {MrMainToJungle, {256, 203}},
+        {MrMainToChaos4, {298, 228}},
+        {MrMainToEggHornet, {377, 300}},
+        {MrMainToMrChaoGarden, {464, 211}},
+        {MrMainToSkyChase1, {446, 319}},
         // Angel Island
-        {AngelIslandToMrMain, {285, 419}},
-        {AngelIslandToIceCave, {249, 412}},
-        {AngelIslandToRedMountain, {143, 420}},
-        {AngelIslandToPastAltar, {206, 530}},
+        {AngelIslandToMrMain, {254, 462}},
+        {AngelIslandToIceCave, {216, 451}},
+        {AngelIslandToRedMountain, {88, 445}},
+        {AngelIslandToPastAltar, {153, 560}},
         // Ice Cave
-        {IceCaveToAngelIsland, {249, 412}},
-        {IceCaveToIceCap, {208, 387}},
+        {IceCaveToAngelIsland, {216, 451}},
+        {IceCaveToIceCap, {174, 414}},
         // Past Altar
-        {PastAltarToAngelIsland, {85, 388}},
-        {PastAltarToPastMain, {72, 260}},
+        {PastAltarToAngelIsland, {113, 309}},
+        {PastAltarToPastMain, {109, 189}},
         // Past Main
-        {PastMainToPastAltar, {107, 222}},
-        {PastMainToJungle, {85, 130}},
+        {PastMainToPastAltar, {112, 146}},
+        {PastMainToJungle, {88, 71}},
         // Jungle
-        {JungleToMrMain, {254, 156}},
-        {JungleToLostWorld, {290, 76}},
-        {JungleToLostWorldAlternative, {291, 49}},
-        {JungleToFinalEggTower, {321, 29}},
-        {JungleToSandHill, {242, 126}},
-        {JungleToPastMain, {276, 63}},
+        {JungleToMrMain, {256, 157}},
+        {JungleToLostWorld, {285, 94}},
+        {JungleToLostWorldAlternative, {285, 48}},
+        {JungleToFinalEggTower, {318, 26}},
+        {JungleToSandHill, {241, 129}},
+        {JungleToPastMain, {263, 71}},
         // Final Egg Tower
-        {FinalEggTowerToJungle, {524, 86}},
-        {FinalEggTowerToFinalEgg, {559, 123}},
-        {FinalEggTowerToFinalEggAlternative, {593, 91}},
-        {FinalEggTowerToBetaEggViper, {558, 86}},
-        {FinalEggTowerToEcInside, {589, 111}},
-        // Egg Carrier Outside (Untransformed)
-        {EcOutsideToSsMain, {483, 626}},
-        {EcOutsideToMrMain, {409, 625}},
-        {EcOutsideToSkyChase2, {447, 592}},
-        {EcOutsideToChaos6ZeroBeta, {446, 648}},
-        {EcOutsideToEcInsideMonorail, {474, 675}},
-        {EcOutsideToEcInsideEggLift, {446, 779}},
-        {EcOutsideToCaptainRoom, {447, 731}},
-        {EcOutsideToPool, {447, 797}},
+        {FinalEggTowerToJungle, {485, 77}},
+        {FinalEggTowerToFinalEgg, {525, 118}},
+        {FinalEggTowerToFinalEggAlternative, {569, 77}},
+        {FinalEggTowerToBetaEggViper, {525, 77}},
+        {FinalEggTowerToEcInside, {555, 105}},
         // Bridge (Transformed) 
-        {BridgeToSsMain, {343, 586}},
-        {BridgeToMrMain, {274, 587}},
-        {BridgeToSkyDeck, {310, 680}},
-        {BridgeToSkyChase2, {307, 551}},
-        {BridgeToChaos6ZeroBeta, {307, 610}},
-        {BridgeToEcInsideMonorail, {336, 636}},
+        {BridgeToSsMain, {442, 600}},
+        {BridgeToMrMain, {366, 600}},
+        {BridgeToSkyDeck, {405, 701}},
+        {BridgeToSkyChase2, {403, 562}},
+        {BridgeToChaos6ZeroBeta, {404, 628}},
+        {BridgeToEcInsideMonorail, {437, 629}},
         // Deck (Transformed) 
-        {DeckToPool, {308, 938}},
-        {DeckToCaptainRoom, {304, 875}},
-        {DeckToPrivateRoom, {323, 868}},
-        {DeckToPrivateRoomAlternative, {289, 868}},
-        {DeckToEcInsideEggLift, {306, 923}},
+        {DeckToPool, {404, 810}},
+        {DeckToCaptainRoom, {404, 760}},
+        {DeckToPrivateRoom, {419, 753}},
+        {DeckToPrivateRoomAlternative, {389, 753}},
+        {DeckToEcInsideEggLift, {404, 791}},
         // Captain Room
-        {CaptainRoomToEcOutside, {310, 769}},
-        {CaptainRoomToDeck, {310, 769}},
-        {CaptainRoomToPrivateRoom, {309, 741}},
+        {CaptainRoomToDeck, {245, 885}},
+        {CaptainRoomToPrivateRoom, {186, 881}},
         // Private Room
-        {PrivateRoomToCaptainRoom, {176, 728}},
-        {PrivateRoomToDeck, {189, 749}},
-        {PrivateRoomToDeckAlternative, {156, 791}},
+        {PrivateRoomToCaptainRoom, {146, 734}},
+        {PrivateRoomToDeck, {171, 713}},
+        {PrivateRoomToDeckAlternative, {249, 768}},
         // Pool
-        {PoolToEcOutside, {450, 872}},
-        {PoolToDeck, {450, 872}},
-        {PoolToSkyDeck, {448, 904}},
+        {PoolToDeck, {404, 882}},
+        {PoolToSkyDeck, {404, 913}},
         // Arsenal
-        {ArsenalToEcInside, {615, 719}},
+        {ArsenalToEcInside, {614, 723}},
         // Egg Carrier Inside
-        {EcInsideToEcOutsideEggLift, {702, 795}},
-        {EcInsideToEcOutsideMonorail, {688, 708}},
-        {EcInsideToDeckEggLift, {702, 795}},
-        {EcInsideToBridgeMonorail, {688, 708}},
-        {EcInsideToHotShelter, {702, 665}},
-        {EcInsideToHedgehogHammer, {716, 671}},
-        {EcInsideToFinalEggTower, {686, 671}},
-        {EcInsideToWarpHall, {703, 853}},
-        {EcInsideToArsenal, {652, 718}},
-        {EcInsideToWaterTank, {750, 783}},
+        {EcInsideToDeckEggLift, {700, 807}},
+        {EcInsideToBridgeMonorail, {674, 699}},
+        {EcInsideToHotShelter, {700, 646}},
+        {EcInsideToHedgehogHammer, {722, 665}},
+        {EcInsideToFinalEggTower, {678, 665}},
+        {EcInsideToWarpHall, {701, 867}},
+        {EcInsideToArsenal, {650, 723}},
+        {EcInsideToWaterTank, {750, 793}},
         // Hedgehog Hammer
-        {HedgehogHammerToEcInside, {774, 654}},
-        {HedgehogHammerToPrisonHall, {813, 615}},
+        {HedgehogHammerToEcInside, {771, 620}},
+        {HedgehogHammerToPrisonHall, {814, 579}},
         // Prison Hall
-        {PrisonHallToHedgehogHammer, {860, 600}},
+        {PrisonHallToHedgehogHammer, {831, 553}},
         // Water Tank
-        {WaterTankToEcInside, {791, 788}},
+        {WaterTankToEcInside, {796, 793}},
         // Warp Hall
-        {WarpHallToEcInside, {702, 885}},
-        {WarpHallToEcChaoGarden, {701, 901}},
+        {WarpHallToEcInside, {701, 899}},
+        {WarpHallToEcChaoGarden, {701, 924}},
 
     };
 };

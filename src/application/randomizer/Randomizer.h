@@ -31,7 +31,7 @@ public:
 
 
     void OnCheckFound(int checkId) const;
-    void OnItemReceived(int64_t itemId) const;
+    void OnItemReceived(int64_t itemId);
     void MarkCheckedLocation(int64_t checkId) const;
     void OnCharacterLoaded() const;
     void OnCharacterSelectScreenLoaded() const;
@@ -71,4 +71,7 @@ private:
     SaveFileManager& _saveFileManager;
     MusicManager& _musicManager;
     ReactionManager& _reactionManager;
+
+    float _ignoreTrapDuration = 5.0f;
+    std::clock_t _ignoreTrapTimer = -1;
 };

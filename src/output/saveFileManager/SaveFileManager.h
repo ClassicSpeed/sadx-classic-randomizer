@@ -21,6 +21,7 @@ public:
     void SetEventFlags(std::vector<StoryFlags> storyFlags);
     void UnlockSuperSonic();
     void MarkBlacklistedMissionsAsCompleted(const std::vector<int>& missionBlacklist);
+    void SetEggCarrierTransformed(bool eggCarrierStartsTransformed);
 
 private:
     SaveFileManager();

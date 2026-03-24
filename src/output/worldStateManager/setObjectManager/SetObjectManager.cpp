@@ -20,6 +20,7 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _opti
     _bigHudDrawWeightAndLifeHook.Hook(OnBigHudDrawWeightAndLife);
     _isFinalEggTowerActiveHook.Hook(OnIsFinalEggTowerActive);
     _isFinalEggDoorActiveHook.Hook(OnIsFinalEggDoorActive);
+    _levelItemMainHook.Hook(OnLevelItemMain);
     lostWorldEntranceCollisionHook.Hook(OnLostWorldEntranceCollision);
 
     twinkleCircuitDoorHook.Hook(OnTwinkleCircuitDoor);
@@ -71,6 +72,22 @@ void SetObjectManager::AddSetToLevel(const SETEntry& newSetEntry, const LevelAnd
 {
     if (CurrentCharacter == character && levelact(CurrentLevel, CurrentAct) == levelAndAct)
     {
+        const float posEps = 1.0f;
+
+        for (int i = 0; i < SETTable_Count; ++i)
+        {
+            const SETEntry* existing = SETTable[i].SETEntry;
+            if (existing->ObjectType == newSetEntry.ObjectType)
+            {
+                if (fabsf(existing->Position.x - newSetEntry.Position.x) < posEps &&
+                    fabsf(existing->Position.y - newSetEntry.Position.y) < posEps &&
+                    fabsf(existing->Position.z - newSetEntry.Position.z) < posEps)
+                {
+                    return;
+                }
+            }
+        }
+
         SETObjData* setObjData = &SETTable[SETTable_Count];
         setObjData->Flags |= 0x8000u;
 
@@ -300,6 +317,8 @@ void SetObjectManager::OnCountSetItemsMaybe()
     AddSetToLevel(WIND_STONE_MR, LevelAndActIDs_MysticRuins1, Characters_Knuckles);
     AddSetToLevel(WIND_STONE_MR, LevelAndActIDs_MysticRuins1, Characters_Amy);
     AddSetToLevel(WIND_STONE_MR, LevelAndActIDs_MysticRuins1, Characters_Big);
+
+    AddSetToLevel(BIG_UPGRADE_MR, LevelAndActIDs_MysticRuins2, Characters_Big);
 
     //Time Travel 
     AddSetToLevel(WARP_TO_PAST, LevelAndActIDs_MysticRuins2, Characters_Sonic);
@@ -599,7 +618,7 @@ void SetObjectManager::OnMissionSetLoad()
 
             //We move the mission card 51 in the jungle, so Gamma can get it even if the Snake door is open
             if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins3 &&
-                IsNearPosition(position, -512.5, 205, -1124))
+                IsNearPosition(position, -513.2, 205, -1127))
             {
                 objData->SETEntry->Position = {-515.9674, 70.18237, -989.24146};
             }
@@ -662,6 +681,14 @@ void SetObjectManager::OnBigHudDrawWeightAndLife()
     GameMode = bufferGameMode;
 }
 
+
+void SetObjectManager::OnLevelItemMain(task* tp)
+{
+    if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside1 && CurrentCharacter == Characters_Big)
+        return FreeTask(tp);
+
+    _levelItemMainHook.Original(tp);
+}
 
 // Handles the Twinkle Circuit door
 int SetObjectManager::OnTwinkleCircuitDoor(const char character)

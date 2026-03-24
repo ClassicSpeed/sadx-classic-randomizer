@@ -24,16 +24,25 @@ void drawSprite2D(NJS_TEXANIM* anim, float screenX, float screenY, int priority 
     njPopMatrix(1u);
 }
 
-MapManager::MapManager(Options& options, GameStatus& gameStatus, AdventureFieldEntranceMap& adventureFieldEntranceMap) :
-    _options(options), _gameStatus(gameStatus), _adventureFieldEntranceMap(adventureFieldEntranceMap)
+MapManager::MapManager(Options& options, Settings& settings, GameStatus& gameStatus,
+                       AdventureFieldEntranceMap& adventureFieldEntranceMap) :
+    _options(options), _settings(settings), _gameStatus(gameStatus),
+    _adventureFieldEntranceMap(adventureFieldEntranceMap)
 {
 }
 
 void MapManager::OnFrame()
 {
-    for (const auto& button : HeldButtons)
-        if (button & WhistleButtons && Current_CharObj2 != nullptr)
-            this->ShowMap();
+    if (Current_CharObj2 == nullptr)
+        return;
+
+    if ((ControllerPointers[0]->HeldButtons & Buttons_Y && _settings.mapButton == MapButtonY) ||
+        (ControllerPointers[0]->HeldButtons & Buttons_D && _settings.mapButton == MapButtonSelect) ||
+        (ControllerPointers[0]->HeldButtons & Buttons_Z && _settings.mapButton == MapButtonRightBumper) ||
+        (ControllerPointers[0]->HeldButtons & Buttons_C && _settings.mapButton == MapButtonLeftBumper))
+    {
+        this->ShowMap();
+    }
 
     if ((CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_E101R) ||
         (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SandHill))
@@ -56,25 +65,23 @@ void MapManager::OnFrame()
         currentLevelAndAct = LevelAndActIDs_MRGarden;
     }
 
-    for (const auto& entrance : _adventureFieldEntranceMap.GetEntrances())
+    for (const auto& entranceList : {
+             _adventureFieldEntranceMap.GetEntrances(), _adventureFieldEntranceMap.GetStaticEntrances()
+         })
     {
-        if (currentLevelAndAct != entrance.levelAndActId)
-            continue;
+        for (const auto& entrance : entranceList)
+        {
+            if (currentLevelAndAct != entrance.levelAndActId)
+                continue;
 
-        if (!ShowDisableDoorIndicator(entrance.entranceId))
-            continue;
-
-        ShowDoorEmblemRequirement(entrance);
-    }
-    for (const auto& entrance : _adventureFieldEntranceMap.GetStaticEntrances())
-    {
-        if (currentLevelAndAct != entrance.levelAndActId)
-            continue;
-
-        if (!ShowDisableDoorIndicator(entrance.entranceId))
-            continue;
-
-        ShowDoorEmblemRequirement(entrance);
+            DoorState doorState = _doorLogicStrategy->GetDoorState(entrance.entranceId);
+            if (doorState == DoorLocked)
+                ShowDoorRequirement(entrance);
+            else if (doorState == DoorBlocked)
+                ShowBlockedDoor(entrance);
+            else
+                ShowDoorName(entrance);
+        }
     }
 }
 
@@ -90,11 +97,11 @@ void MapManager::ShowMap()
     for (const auto& entrance : _adventureFieldEntranceMap.GetEntrances())
     {
         DrawConnectionsInMap(entrance);
-        DrawMapEmblem(entrance, false);
+        DrawEntrancesInMap(entrance, false);
     }
     for (const auto& entrance : _adventureFieldEntranceMap.GetStaticEntrances())
     {
-        DrawMapEmblem(entrance, true);
+        DrawEntrancesInMap(entrance, true);
     }
     DrawPlayerLocation();
 }
@@ -110,7 +117,7 @@ void MapManager::DrawConnectionsInMap(const AdventureFieldEntrance& adventureFie
 
 
     auto entranceToId = _instance->_adventureFieldEntranceMap.GetReplacementConnection(
-        adventureFieldEntrance.entranceId, _gameStatus.map.isEggCarrierTransformed);
+        adventureFieldEntrance.entranceId);
     auto entranceLocationTo = entranceLocationInMap.find(entranceToId);
 
     if (entranceLocationTo == entranceLocationInMap.end())
@@ -199,53 +206,53 @@ void MapManager::DrawPlayerLocation()
 {
     NJS_POINT2 locationInMap;
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare1)
-        locationInMap = {769, 139};
+        locationInMap = {774, 176};
     else if (CurrentStageAndAct == LevelAndActIDs_StationSquare2)
-        locationInMap = {621, 272};
+        locationInMap = {682, 238};
     else if (CurrentStageAndAct == LevelAndActIDs_StationSquare3)
-        locationInMap = {929, 161};
+        locationInMap = {970, 240};
     else if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
-        locationInMap = {764, 374};
+        locationInMap = {750, 405};
     else if (CurrentStageAndAct == LevelAndActIDs_StationSquare5)
-        locationInMap = {599, 446};
+        locationInMap = {571, 481};
     else if (CurrentStageAndAct == LevelAndActIDs_StationSquare6)
-        locationInMap = {930, 442};
+        locationInMap = {931, 420};
     else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins1)
-        locationInMap = {300, 276};
+        locationInMap = {290, 270};
     else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins2)
-        locationInMap = {223, 484};
+        locationInMap = {190, 545};
     else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins3)
-        locationInMap = {327, 104};
+        locationInMap = {350, 102};
     else if (CurrentStageAndAct == LevelAndActIDs_MysticRuins4)
-        locationInMap = {561, 63};
+        locationInMap = {525, 34};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside1)
-        locationInMap = {586, 720};
+        locationInMap = {586, 702};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside2)
-        locationInMap = {702, 743};
+        locationInMap = {699, 717};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside3)
-        locationInMap = {792, 634};
+        locationInMap = {795, 585};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside4)
-        locationInMap = {882, 567};
+        locationInMap = {862, 504};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside5)
-        locationInMap = {814, 788};
+        locationInMap = {830, 773};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierInside6)
-        locationInMap = {714, 900};
+        locationInMap = {678, 903};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside1)
-        locationInMap = {446, 622};
+        locationInMap = {434, 660};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside2)
-        locationInMap = {304, 585};
+        locationInMap = {434, 660};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside3)
-        locationInMap = {306, 910};
+        locationInMap = {435, 727};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside4)
-        locationInMap = {292, 758};
+        locationInMap = {225, 844};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside5)
-        locationInMap = {201, 776};
+        locationInMap = {212, 688};
     else if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside6)
-        locationInMap = {448, 932};
+        locationInMap = {419, 934};
     else if (CurrentStageAndAct == LevelAndActIDs_Past1)
-        locationInMap = {110, 129};
+        locationInMap = {80, 105};
     else if (CurrentStageAndAct == LevelAndActIDs_Past2)
-        locationInMap = {83, 424};
+        locationInMap = {80, 260};
     else
         return;
 
@@ -255,66 +262,56 @@ void MapManager::DrawPlayerLocation()
     std::clock_t now = std::clock();
     double ms = double(now) * 1000.0 / CLOCKS_PER_SEC;
     int phase = static_cast<int>(ms / 250.0) & 1; // 0 or 1
-    point.y += (phase == 0) ? 10.0f : 0.0f;
+    point.y += (phase == 0) ? 3.0f : -3.0f;
 
     drawSprite2D(location_map_anim, point.x, point.y);
 }
 
 
-void MapManager::DrawMapEmblem(AdventureFieldEntrance adventureFieldEntrance, bool isStatic)
+void MapManager::DrawEntrancesInMap(AdventureFieldEntrance adventureFieldEntrance, bool isStatic)
 {
     // We get the level on the other side of the door
     const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
-        adventureFieldEntrance.entranceId, false);
+        adventureFieldEntrance.entranceId);
 
     const auto oppositeEntrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntranceId);
 
     if (oppositeEntrance == nullptr)
         return;
 
-    if (_adventureFieldEntranceMap.CalculateCorrectAct(oppositeEntrance->levelAndActId) ==
-        LevelAndActIDs_HedgehogHammer)
+    auto entranceLocation = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
+
+    if (entranceLocation == entranceLocationInMap.end())
+        return;
+
+    auto point = mapToScreen(entranceLocation->second.x, entranceLocation->second.y);
+
+    DoorState doorState = _doorLogicStrategy->GetDoorState(adventureFieldEntrance.entranceId);
+
+    if (doorState == DoorUnlocked)
     {
-        auto entranceLocation = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
-
-        if (entranceLocation == entranceLocationInMap.end())
-            return;
-
-        auto point = mapToScreen(entranceLocation->second.x, entranceLocation->second.y);
+        if (!_gameStatus.map.IsEntranceVisited(adventureFieldEntrance.entranceId) && !isStatic)
+            DrawNewInMap(adventureFieldEntrance);
+    }
+    else if (doorState == DoorBlocked)
+    {
         drawSprite2D(blocked_anim, point.x, point.y);
-        return;
     }
-
-
-    //We get the entrance value (either from this entrance or the opposite one)
-    auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
-    if (entranceValue == _options.entranceEmblemValueMap.end())
-        entranceValue = _options.entranceEmblemValueMap.find(oppositeEntranceId);
-
-
-    // No value found or enough emblems
-    if (entranceValue == _options.entranceEmblemValueMap.end() || _gameStatus.unlock.currentEmblems >= entranceValue->
-        second)
+    else if (doorState == DoorLocked)
     {
-        if (!_doorLogicStrategy->IsDoorOpen(adventureFieldEntrance.entranceId))
+        if (_options.gatingMode == EmblemGating)
         {
-            auto entranceLocation = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
-
-            if (entranceLocation == entranceLocationInMap.end())
+            const int entranceValue = _options.GetEntranceEmblemValue(adventureFieldEntrance.entranceId,
+                                                                      oppositeEntranceId);
+            if (entranceValue <= 0)
                 return;
-
-            auto point = mapToScreen(entranceLocation->second.x, entranceLocation->second.y);
-            drawSprite2D(blocked_anim, point.x, point.y);
+            DrawEmblemNumberInMap(adventureFieldEntrance, entranceValue);
         }
-        else if (!_gameStatus.map.IsEntranceVisited(adventureFieldEntrance.entranceId) && !isStatic)
-            if (entranceValue->second > 0)
-                DrawNewInMap(adventureFieldEntrance);
-
-        return;
+        else if (_options.gatingMode == KeyItemGating)
+        {
+            drawSprite2D(lock_anim, point.x, point.y, 1000000);
+        }
     }
-
-    int doorCost = entranceValue->second;
-    DrawEmblemNumberInMap(adventureFieldEntrance, doorCost);
 }
 
 void MapManager::DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Float entranceX,
@@ -328,29 +325,29 @@ void MapManager::DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Floa
 
 void MapManager::DrawNewInMap(AdventureFieldEntrance adventureFieldEntrance)
 {
-    auto entranceValue = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
+    auto entranceLocation = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
 
-    if (entranceValue == entranceLocationInMap.end())
+    if (entranceLocation == entranceLocationInMap.end())
         return;
 
-    auto point = mapToScreen(entranceValue->second.x, entranceValue->second.y);
+    auto point = mapToScreen(entranceLocation->second.x, entranceLocation->second.y);
     std::clock_t now = std::clock();
     double ms = double(now) * 1000.0 / CLOCKS_PER_SEC;
     int phase = static_cast<int>(ms / 500.0) & 1; // 0 or 1
     point.y += (phase == 0) ? 2.0f : -2.0f;
-    drawSprite2D(new_logo_map_anim, point.x, point.y);
+    drawSprite2D(new_logo_map_anim, point.x, point.y, 1000000);
 }
 
 
 void MapManager::DrawEmblemNumberInMap(AdventureFieldEntrance adventureFieldEntrance, int doorCost)
 {
-    auto entranceValue = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
+    auto entranceLocation = entranceLocationInMap.find(adventureFieldEntrance.entranceId);
 
-    if (entranceValue == entranceLocationInMap.end())
+    if (entranceLocation == entranceLocationInMap.end())
         return;
 
-    auto point = mapToScreen(entranceValue->second.x, entranceValue->second.y);
-    drawSprite2D(emblem_lock_anim, point.x, point.y);
+    auto point = mapToScreen(entranceLocation->second.x, entranceLocation->second.y);
+    drawSprite2D(emblem_lock_anim, point.x, point.y, 1000000);
     ShowNumberDynamicMap(doorCost, point.x, point.y);
 }
 
@@ -382,6 +379,11 @@ void MapManager::ShowNumberDynamicMap(int number, float x, float y)
 }
 
 
+void MapManager::showNumberMap(const float posX, const float posY, const int number)
+{
+    drawSprite2D(GetNumberAnim(number), posX, posY, 1100000, 3);
+}
+
 void MapManager::MakeConnection(float x1, float y1, float x2, float y2)
 {
     DrawEntrancePoint(x1, y1);
@@ -403,7 +405,7 @@ void MapManager::DrawLine(float x1, float y1, float x2, float y2)
     float px = -dy / length;
     float py = dx / length;
 
-    float halfThickness = 1.0f;
+    float halfThickness = 1.5f * (_nj_screen_.h / 1080);
 
     // Offset points perpendicular to the line
     float ox = px * halfThickness;
@@ -424,14 +426,12 @@ void MapManager::DrawLine(float x1, float y1, float x2, float y2)
     linep2.tex = NULL;
     linep2.num = 4;
 
-    // linep2.col[0].color = 0x66F1EB9C;
-    // linep2.col[1].color = 0x66F1EB9C;
-    // linep2.col[2].color = 0x66F1EB9C;
-    // linep2.col[3].color = 0x66F1EB9C;
-    linep2.col[0].color = 0xFFFFFFFF;
-    linep2.col[1].color = 0xFFFFFFFF;
-    linep2.col[2].color = 0xFFFFFFFF;
-    linep2.col[3].color = 0xFFFFFFFF;
+    const Uint32 color = 0x99ffe78c; // Light yellow color
+
+    linep2.col[0].color = color;
+    linep2.col[1].color = color;
+    linep2.col[2].color = color;
+    linep2.col[3].color = color;
 
     Draw2DLinesMaybe_Queue(&linep2, 4, 62041.496f, NJD_FILL | NJD_TRANSPARENT, QueuedModelFlagsB_SomeTextureThing);
 }
@@ -440,35 +440,34 @@ void MapManager::DrawEntrancePoint(float x, float y)
 {
     auto point = mapToScreen(x, y);
 
-    const float squareSize = 6.0f;
+    float squareSize = 8.0f * (_nj_screen_.h / 1080);
     float halfSize = squareSize / 2.0f;
     DrawRect_Queue(_nj_screen_.cx - point.x - halfSize,
                    _nj_screen_.cy - point.y - halfSize,
                    _nj_screen_.cx - point.x + halfSize,
                    _nj_screen_.cy - point.y + halfSize,
-                   22250,
+                   22348,
+                   0xFF555555,
+                   QueuedModelFlagsB_EnableZWrite);
+
+    squareSize = 4.0f * (_nj_screen_.h / 1080);
+    halfSize = squareSize / 2.0f;
+
+    DrawRect_Queue(_nj_screen_.cx - point.x - halfSize,
+                   _nj_screen_.cy - point.y - halfSize,
+                   _nj_screen_.cx - point.x + halfSize,
+                   _nj_screen_.cy - point.y + halfSize,
+                   22348,
                    0xFFFFFFFF,
                    QueuedModelFlagsB_EnableZWrite);
 }
 
 
-void MapManager::showNumberMap(const float posX, const float posY, const int number)
-{
-    drawSprite2D(GetNumberAnim(number), posX, posY, 300, 3);
-}
-
-
-bool MapManager::ShowDisableDoorIndicator(const EntranceId entranceId)
-{
-    return _doorLogicStrategy->ShowDisableDoorIndicator(entranceId);
-}
-
-
-void MapManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureFieldEntrance)
+void MapManager::ShowDoorRequirement(AdventureFieldEntrance adventureFieldEntrance)
 {
     // We get the level on the other side of the door
     const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
-        adventureFieldEntrance.entranceId, false);
+        adventureFieldEntrance.entranceId);
 
     const auto oppositeEntrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntranceId);
 
@@ -477,6 +476,51 @@ void MapManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureField
 
     if (_adventureFieldEntranceMap.CalculateCorrectAct(oppositeEntrance->levelAndActId) ==
         LevelAndActIDs_HedgehogHammer)
+        return;
+
+    if (_options.gatingMode == EmblemGating)
+    {
+        const int entranceValue = _options.
+            GetEntranceEmblemValue(adventureFieldEntrance.entranceId, oppositeEntranceId);
+        if (entranceValue <= 0)
+            return;
+        njSetTexture(&entranceTextList);
+        njPushMatrix(0);
+        float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
+        float offsetX = 0.02f * sinf(angleRad);
+        float offsetZ = 0.02f * cosf(angleRad);
+
+        njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX,
+                    adventureFieldEntrance.indicatorPosition.y,
+                    adventureFieldEntrance.indicatorPosition.z + offsetZ);
+        njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+        njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+        njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+        SetMaterial(255, 255, 255, 255);
+        NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, emblem_lock_anim};
+        njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+        njPopMatrix(1u);
+
+
+        njSetTexture(&entranceTextList);
+        njPushMatrix(0);
+        offsetX = 0.01f * sinf(angleRad);
+        offsetZ = 0.01f * cosf(angleRad);
+
+        njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX,
+                    adventureFieldEntrance.indicatorPosition.y,
+                    adventureFieldEntrance.indicatorPosition.z + offsetZ);
+        njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+        njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+        njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+        SetMaterial(255, 255, 255, 255);
+        NJS_SPRITE mySprite2 = {{0}, 1, 1, 0, &entranceTextList, line_lock_anim};
+        njDrawSprite3D(&mySprite2, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+        njPopMatrix(1u);
+        ShowNumberDynamic(adventureFieldEntrance, _gameStatus.unlock.currentEmblems, -10, 2, -0.01f, 4, false);
+        ShowNumberDynamic(adventureFieldEntrance, entranceValue, 2, -2, -0.04f, 4, true);
+    }
+    else if (_options.gatingMode == KeyItemGating)
     {
         njSetTexture(&entranceTextList);
         njPushMatrix(0);
@@ -484,50 +528,30 @@ void MapManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureField
         float offsetX = 0.02f * sinf(angleRad);
         float offsetZ = 0.02f * cosf(angleRad);
 
-        njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
+        njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX,
+                    adventureFieldEntrance.indicatorPosition.y,
                     adventureFieldEntrance.indicatorPosition.z + offsetZ);
         njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
         njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
         njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
         SetMaterial(255, 255, 255, 255);
-        NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, blocked_anim};
+        NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, lock_anim};
+        njDrawSprite2D_ForcePriority(&mySprite, 0, 1000, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
         njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
         njPopMatrix(1u);
-        return;
     }
+}
 
+void MapManager::ShowBlockedDoor(AdventureFieldEntrance adventureFieldEntrance)
+{
+    // We get the level on the other side of the door
+    const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
+        adventureFieldEntrance.entranceId);
 
-    //We get the entrance value (either from this entrance or the opposite one)
-    auto entranceValue = _options.entranceEmblemValueMap.find(adventureFieldEntrance.entranceId);
-    if (entranceValue == _options.entranceEmblemValueMap.end())
-        entranceValue = _options.entranceEmblemValueMap.find(oppositeEntranceId);
+    const auto oppositeEntrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntranceId);
 
-    // No value found or enough emblems
-    if (entranceValue == _options.entranceEmblemValueMap.end() || _gameStatus.unlock.currentEmblems >= entranceValue->
-        second)
-    {
-        if (!_doorLogicStrategy->IsDoorOpen(adventureFieldEntrance.entranceId))
-        {
-            njSetTexture(&entranceTextList);
-            njPushMatrix(0);
-            float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
-            float offsetX = 0.02f * sinf(angleRad);
-            float offsetZ = 0.02f * cosf(angleRad);
-
-            njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX,
-                        adventureFieldEntrance.indicatorPosition.y,
-                        adventureFieldEntrance.indicatorPosition.z + offsetZ);
-            njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
-            njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
-            njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
-            SetMaterial(255, 255, 255, 255);
-            NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, blocked_anim};
-            njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-            njPopMatrix(1u);
-        }
-
+    if (oppositeEntrance == nullptr)
         return;
-    }
 
     njSetTexture(&entranceTextList);
     njPushMatrix(0);
@@ -535,37 +559,51 @@ void MapManager::ShowDoorEmblemRequirement(AdventureFieldEntrance adventureField
     float offsetX = 0.02f * sinf(angleRad);
     float offsetZ = 0.02f * cosf(angleRad);
 
-    njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX,
-                adventureFieldEntrance.indicatorPosition.y,
+    njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
                 adventureFieldEntrance.indicatorPosition.z + offsetZ);
     njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
     njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
     njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
     SetMaterial(255, 255, 255, 255);
-    NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, emblem_lock_anim};
+    NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, blocked_anim};
     njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
+}
+
+void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
+{
+    if (_options.entranceRandomizer == 0)
+        return;
+
+    // We get the level on the other side of the door
+    const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
+        adventureFieldEntrance.entranceId);
+    const auto oppositeEntrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntranceId);
+    if (oppositeEntrance == nullptr)
+        return;
+
+    //If the connetion is not on the map, is a level and we show it.
+    auto entranceLocationTo = entranceLocationInMap.find(oppositeEntranceId);
+    if (entranceLocationTo != entranceLocationInMap.end())
+        return;
 
 
     njSetTexture(&entranceTextList);
     njPushMatrix(0);
-    offsetX = 0.01f * sinf(angleRad);
-    offsetZ = 0.01f * cosf(angleRad);
+    float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
+    float offsetX = 0.02f * sinf(angleRad);
+    float offsetZ = 0.02f * cosf(angleRad);
 
-    njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX,
-                adventureFieldEntrance.indicatorPosition.y,
+    njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
                 adventureFieldEntrance.indicatorPosition.z + offsetZ);
     njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
     njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
     njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
     SetMaterial(255, 255, 255, 255);
-    NJS_SPRITE mySprite2 = {{0}, 1, 1, 0, &entranceTextList, line_lock_anim};
-    njDrawSprite3D(&mySprite2, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, getInitialsFromEntrance(oppositeEntrance)};
+    njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
     njPopMatrix(1u);
-    ShowNumberDynamic(adventureFieldEntrance, _gameStatus.unlock.currentEmblems, -10, 2, -0.01f, 4, false);
-    ShowNumberDynamic(adventureFieldEntrance, entranceValue->second, 2, -2, -0.04f, 4, true);
 }
-
 
 void MapManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x,
                                    float y, float zBase, float xStep, bool leftJustify)

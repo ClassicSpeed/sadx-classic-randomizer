@@ -35,6 +35,7 @@ public:
 
     void CheckGoalRequirements();
     bool lastStoryRequirementsCompleted = false;
+    bool isEggCarrierTransformed = false;
 
 private:
     explicit GameStatus(Options& options);

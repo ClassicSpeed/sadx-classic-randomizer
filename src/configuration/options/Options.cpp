@@ -36,6 +36,11 @@ void Options::GoalRequiresChaoRaces(const int newGoalRequiresChaoRaces)
     this->goalRequiresChaoRaces = newGoalRequiresChaoRaces;
 }
 
+void Options::EggCarrierStartsTransformed(const int newEggCarrierStartsTransformed)
+{
+    this->eggCarrierStartsTransformed = newEggCarrierStartsTransformed;
+}
+
 void Options::LogicLevel(const int logicLevel)
 {
     if (logicLevel > 1)
@@ -178,6 +183,16 @@ void Options::LevelEntranceMap(const std::map<int, int>& levelEntrancesValues)
 void Options::SetEntranceEmblemValueMap(const std::map<int, int>& entranceEmblemValueMap)
 {
     this->entranceEmblemValueMap = entranceEmblemValueMap;
+}
+
+int Options::GetEntranceEmblemValue(const int entranceId, const int oppositeEntranceId)
+{
+    auto entranceValue = this->entranceEmblemValueMap.find(entranceId);
+    if (entranceValue == this->entranceEmblemValueMap.end())
+        entranceValue = this->entranceEmblemValueMap.find(oppositeEntranceId);
+    if (entranceValue == this->entranceEmblemValueMap.end())
+        return 0;
+    return entranceValue->second;
 }
 
 

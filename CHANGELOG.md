@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.1 pre-release 1] - 2026-03-24
+
+### Added:
+
+- You can now start with the Egg Carrier transformed (new default) or untransformed.
+- Added mod settings to disable the Ring Link sounds.
+- The map button can be reassigned or disabled in the mod settings.
+- You can also disable the in-game tracker while viewing the map (hidden by default).
+- Setting to ignore traps and filler items when connecting, enabled by default.
+- In key-item gating mode, closed doors will show a lock icon instead of the "no entry" symbol.
+- Updated setup guide to include Linux/Steam Deck information.
+- When entering a level with random level entrances, the alternative entrances to that level will be revealed on the map.
+  - This applies to Speed Highway, Lost World, Final Egg and Sky Deck.
+- When playing with Random Level Entrances, a question mark icon will be shown in-game as well.
+  - The icon will change to the level's initials after visiting the entrance for the first time.
+
+### Changed:
+
+- Map now shows the transformed state of the Egg Carrier.
+- Improved logic for the Egg Carrier transformation.
+- Redrawn map to be clearer and more consistent.
+- Improved contrast between icons and the map background.
+- Changed Chao Garden icons to be more distinguishable from level entrances.
+- Several logic updates to Expert DC and Expert DX.
+
+### Fixed:
+
+- Fixed typo in mission blacklist option.
+- Fixed typo in capsule sanity description.
+- Removed Big's upgrade from the Arsenal.
+- Lines and dots for the map now scale properly with the resolution.
+- Removed Angel Island to MRMain logic skips.
+- Fish tracker will no longer be shown for Amy and Gamma.
+- Fixed mission 51 card not being in the correct position.
+- Fixed "new" icon not showing up in the map.
+- Alternative entrances to stages are disabled when Random Level Entrances is off.
+- Fixed disabled capsules still being tracked by the arrow.
+- Fixed missing Life Belt upgrade for Big in the Ice Cave.
+- Fixed double ladder for Amy in Ice Cave.
+- Fixed Sky Chase 2 entrance transforming the Egg Carrier when exiting it.
+
 ## [v1.2.0] - 2026-02-20
 
 ### Added:
