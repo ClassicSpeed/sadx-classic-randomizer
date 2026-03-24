@@ -79,6 +79,8 @@ void MapManager::OnFrame()
                 ShowDoorRequirement(entrance);
             else if (doorState == DoorBlocked)
                 ShowBlockedDoor(entrance);
+            else
+                ShowDoorName(entrance);
         }
     }
 }
@@ -568,6 +570,40 @@ void MapManager::ShowBlockedDoor(AdventureFieldEntrance adventureFieldEntrance)
     njPopMatrix(1u);
 }
 
+void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
+{
+    if (_options.entranceRandomizer == 0)
+        return;
+
+    // We get the level on the other side of the door
+    const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
+        adventureFieldEntrance.entranceId);
+    const auto oppositeEntrance = _adventureFieldEntranceMap.FindEntranceById(oppositeEntranceId);
+    if (oppositeEntrance == nullptr)
+        return;
+
+    //If the connetion is not on the map, is a level and we show it.
+    auto entranceLocationTo = entranceLocationInMap.find(oppositeEntranceId);
+    if (entranceLocationTo != entranceLocationInMap.end())
+        return;
+
+
+    njSetTexture(&entranceTextList);
+    njPushMatrix(0);
+    float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
+    float offsetX = 0.02f * sinf(angleRad);
+    float offsetZ = 0.02f * cosf(angleRad);
+
+    njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
+                adventureFieldEntrance.indicatorPosition.z + offsetZ);
+    njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+    SetMaterial(255, 255, 255, 255);
+    NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, getInitialsFromEntrance(oppositeEntrance)};
+    njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    njPopMatrix(1u);
+}
 
 void MapManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x,
                                    float y, float zBase, float xStep, bool leftJustify)

@@ -15,6 +15,8 @@ All notable changes to this project will be documented in this file.
 - Updated setup guide to include linux/steam deck information.
 - When entering a level with ramdom level entrnace, the alternative entrances to that level will be revealed on the map.
   - This applies to Speed Highway, Lost World, Final Egg and Sky Deck.
+- When playing with random level entrances, a question mark icon will be shown in-game too.
+  - The icon will change into the level's initials after visiting the entrance for the first time.
 
 ### Changed:
 
