@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 - You can now start with the Egg Carrier transformed (new default) or untransformed.
 - Added mod settings to disable the Ring Link sounds.
 - The map button can be reassigned or disabled in the mod settings.
-- You can also disable the in-game tracker while viewing the map.
+- You can also disable the in-game tracker while viewing the map (hidden by default).
 - Setting to ignore traps and filler items when connecting, enabled by default.
 - In key-item gating mode, closed doors will show a lock icon instead of the "no entry" symbol.
 - Updated setup guide to include Linux/Steam Deck information.
