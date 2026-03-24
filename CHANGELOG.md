@@ -37,6 +37,7 @@ All notable changes to this project will be documented in this file.
 - Fixed disabled capsules still being tracked by the arrow.
 - Fixed missing Life Belt upgrade for Big in the Ice Cave.
 - Fixed double ladder for Amy in Ice Cave.
+- Fixed Sky Chase 2 entrance transforming the Egg Carrier when exiting.
 
 ## [v1.2.0] - 2026-02-20
 
