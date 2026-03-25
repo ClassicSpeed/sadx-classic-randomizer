@@ -208,8 +208,9 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, Uint
 
 task* AdventureFieldEntranceManager::OnSetNextLevelAndActChaoGarden(Uint8 level, Uint8 act)
 {
-    _instance->OnSetNextLevelAndActCutsceneMode(level, act);
-    return nullptr;
+    if (level < LevelIDs_Invalid)
+        OnSetNextLevelAndActCutsceneMode(level, act);
+    return _setNextLevelAndActChaoGardenHook.Original(level, act);
 }
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, Uint8 act)

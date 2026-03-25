@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.1 pre-release 2] - 2026-??-??
+
+## Fixed
+
+- Fixed exiting Chao Garden with the pause menu causing the game to crash.
+
 ## [v1.2.1 pre-release 1] - 2026-03-24
 
 ### Added:
@@ -13,10 +19,11 @@ All notable changes to this project will be documented in this file.
 - Setting to ignore traps and filler items when connecting, enabled by default.
 - In key-item gating mode, closed doors will show a lock icon instead of the "no entry" symbol.
 - Updated setup guide to include Linux/Steam Deck information.
-- When entering a level with random level entrances, the alternative entrances to that level will be revealed on the map.
-  - This applies to Speed Highway, Lost World, Final Egg and Sky Deck.
+- When entering a level with random level entrances, the alternative entrances to that level will be revealed on the
+  map.
+    - This applies to Speed Highway, Lost World, Final Egg and Sky Deck.
 - When playing with Random Level Entrances, a question mark icon will be shown in-game as well.
-  - The icon will change to the level's initials after visiting the entrance for the first time.
+    - The icon will change to the level's initials after visiting the entrance for the first time.
 
 ### Changed:
 
