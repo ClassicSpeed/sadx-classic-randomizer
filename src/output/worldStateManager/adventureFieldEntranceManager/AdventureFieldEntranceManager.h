@@ -194,9 +194,6 @@ private:
     inline static FunctionHook<BOOL> _preventMrStoneSpawnHook{0x53C630};
     static BOOL OnPreventMrStoneSpawn();
 
-    inline static FunctionHook<int, char> _getCharacterIdHook{0x441970};
-    static int OnGetCharacterId(char index);
-
     inline static FunctionHook<void, task*> _pastSceneChangeHook{0x545670};
     static void OnPastSceneChange(task* tp);
 

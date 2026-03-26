@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ## Fixed
 
 - Fixed exiting Chao Garden with the pause menu causing the game to crash.
+- Fixed crash when using Surge the Tenrec mod.
 
 ## [v1.2.1 pre-release 1] - 2026-03-24
 

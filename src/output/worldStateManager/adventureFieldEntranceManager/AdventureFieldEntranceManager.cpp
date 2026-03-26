@@ -72,7 +72,6 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _mysticRuinsLockHook.Hook(OnMysticRuinsLock);
     _isWindyValleyOpenHook.Hook(OnIsWindyValleyOpen);
     _preventMrStoneSpawnHook.Hook(OnPreventMrStoneSpawn);
-    _getCharacterIdHook.Hook(OnGetCharacterId);
     _pastSceneChangeHook.Hook(OnPastSceneChange);
     _isFinalEggEggmanDoorOpenHook.Hook(OnIsFinalEggEggmanDoorOpen);
     _isMonkeyDoorOpenHook.Hook(OnIsMonkeyDoorOpen);
@@ -971,11 +970,6 @@ BOOL AdventureFieldEntranceManager::OnPreventMrStoneSpawn()
         return _instance->IsDoorOpen(AngelIslandToIceCave);
 
     return true;
-}
-
-int AdventureFieldEntranceManager::OnGetCharacterId(char index)
-{
-    return CurrentCharacter;
 }
 
 void AdventureFieldEntranceManager::OnPastSceneChange(task* tp)
