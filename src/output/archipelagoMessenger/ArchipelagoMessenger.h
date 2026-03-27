@@ -1,9 +1,11 @@
 #pragma once
 
 #include <thread>
+#include <chrono>
 #include "../../pch.h"
 #include "../../configuration/options/Options.h"
 #include "../../configuration/gameStatus/GameStatus.h"
+
 
 class ArchipelagoMessenger
 {
@@ -22,7 +24,7 @@ public:
     void SendRingUpdate(int ringDifference);
     void SendHardRingUpdate(int ringDifference);
     void SendTrapLink(std::string trapName, std::string playerName);
-    void SetMapStatus();
+    void SetMapStatusAsync();
 
 private:
     explicit ArchipelagoMessenger(Options& options, GameStatus& gameStatus);
@@ -30,4 +32,5 @@ private:
     Options& _options;
     GameStatus& _gameStatus;
     void SendRingPacket(int ringDifference, const std::string& tagName);
+    void SetMapStatus();
 };
