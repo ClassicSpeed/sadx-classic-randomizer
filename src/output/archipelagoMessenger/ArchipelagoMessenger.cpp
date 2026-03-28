@@ -120,6 +120,7 @@ void ArchipelagoMessenger::SetMapStatus()
         map_status->want_reply = false;
         map_status->operations.push_back(operation);
 
-        AP_SetServerData(map_status);
+        AP_BulkSetServerData(map_status);
     }
+    AP_CommitServerData();
 }

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.2.1 pre-release 2] - 2026-??-??
 
+### Changed:
+
+- Updated APCpp to the latest version, which should improve connection speed and stability.
+
 ## Fixed
 
 - Fixed exiting Chao Garden with the pause menu causing the game to crash.
