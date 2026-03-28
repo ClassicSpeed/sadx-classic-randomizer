@@ -518,6 +518,12 @@ void SetObjectManager::SetStartingArea()
     case ECOutside:
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 0);
         break;
+    case ECBridge:
+        SetLevelAndAct(LevelIDs_EggCarrierOutside, 1);
+        break;
+    case ECDeck:
+        SetLevelAndAct(LevelIDs_EggCarrierOutside, 2);
+        break;
     case CaptainRoom:
         SetLevelAndAct(LevelIDs_EggCarrierOutside, 3);
         break;
