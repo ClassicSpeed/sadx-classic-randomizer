@@ -93,14 +93,9 @@ void ArchipelagoMessenger::SendTrapLink(std::string trapName, std::string player
     b.data = writer.write(v);
     b.games = nullptr;
     b.slots = nullptr;
-    std::vector<std::string> tags = {std::string("TrapLink")};
+    std::vector tags = {std::string("TrapLink")};
     b.tags = &tags;
     AP_SendBounce(b);
-}
-
-void ArchipelagoMessenger::SetMapStatusAsync()
-{
-    std::thread(&ArchipelagoMessenger::SetMapStatus, this).detach();
 }
 
 void ArchipelagoMessenger::SetMapStatus()

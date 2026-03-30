@@ -198,8 +198,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, Uint
             LevelIDs_SandHill)
             return;
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
-        _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
-        _instance->_archipelagoMessenger.SetMapStatusAsync();
+        _instance->_archipelagoMessenger.SetMapStatus();
         return;
     }
     _setNextLevelAndActHook.Original(level, act);
@@ -259,8 +258,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
             LevelIDs_SandHill)
             return;
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
-        _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
-        _instance->_archipelagoMessenger.SetMapStatusAsync();
+        _instance->_archipelagoMessenger.SetMapStatus();
         return;
     }
     _setNextLevelAndActCutsceneModeHook.Original(level, act);

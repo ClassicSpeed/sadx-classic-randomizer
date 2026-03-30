@@ -12,8 +12,9 @@ All notable changes to this project will be documented in this file.
 
 - Fixed exiting Chao Garden with the pause menu causing the game to crash.
 - Fixed crash when using Surge the Tenrec mod.
-- Saving entrances used to data storage is now made asynchronously, and no loger increases loading times.
+- Saving entrances used to data storage is now made in bulk, and no loger increases loading times.
 - Added EC Deck and EC Bridge as starting locations.
+- Fixed some entrances being revelaed early.
 
 ## [v1.2.1 pre-release 1] - 2026-03-24
 
