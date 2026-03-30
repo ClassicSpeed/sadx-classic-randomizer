@@ -108,6 +108,8 @@
     </ItemDefinitionGroup>
     <ItemGroup>
         <ClCompile Include="lib\APCpp\Archipelago.cpp"/>
+        <ClCompile Include="lib\APCpp\Archipelago_DataStorageSim.cpp"/>
+        <ClCompile Include="lib\APCpp\Archipelago_Gifting.cpp"/>
         <ClCompile Include="lib\json\src\lib_json\*.cpp"/>
         <ClCompile Include="lib\sadx-mod-loader\mod-loader-common\ModLoaderCommon\*.cpp"/>
         <ClCompile Include="src\**\*.cpp" />

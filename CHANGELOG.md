@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.1 pre-release 2] - 2026-03-29
+
+### Changed:
+
+- Updated APCpp to the latest version to improve connection speed and stability.
+- Entrances used are now written to data storage in bulk and no longer increase loading times.
+
+### Fixed:
+
+- Fixed crash when exiting the Chao Garden from the pause menu.
+- Fixed crash when using the Surge the Tenrec mod.
+- Added EC Deck and EC Bridge as starting locations.
+- Fixed some entrances being revealed early.
+- Fixed inconsistent emblem requirements between Deck and EC Inside.
+
+
 ## [v1.2.1 pre-release 1] - 2026-03-24
 
 ### Added:
@@ -13,10 +29,11 @@ All notable changes to this project will be documented in this file.
 - Setting to ignore traps and filler items when connecting, enabled by default.
 - In key-item gating mode, closed doors will show a lock icon instead of the "no entry" symbol.
 - Updated setup guide to include Linux/Steam Deck information.
-- When entering a level with random level entrances, the alternative entrances to that level will be revealed on the map.
-  - This applies to Speed Highway, Lost World, Final Egg and Sky Deck.
+- When entering a level with random level entrances, the alternative entrances to that level will be revealed on the
+  map.
+    - This applies to Speed Highway, Lost World, Final Egg and Sky Deck.
 - When playing with Random Level Entrances, a question mark icon will be shown in-game as well.
-  - The icon will change to the level's initials after visiting the entrance for the first time.
+    - The icon will change to the level's initials after visiting the entrance for the first time.
 
 ### Changed:
 

@@ -1,7 +1,5 @@
 #include "ArchipelagoMessenger.h"
 
-#include <chrono>
-
 
 ArchipelagoMessenger::ArchipelagoMessenger(Options& options, GameStatus& gameStatus) : _options(options),
     _gameStatus(gameStatus)
@@ -95,7 +93,7 @@ void ArchipelagoMessenger::SendTrapLink(std::string trapName, std::string player
     b.data = writer.write(v);
     b.games = nullptr;
     b.slots = nullptr;
-    std::vector<std::string> tags = {std::string("TrapLink")};
+    std::vector tags = {std::string("TrapLink")};
     b.tags = &tags;
     AP_SendBounce(b);
 }
@@ -117,6 +115,7 @@ void ArchipelagoMessenger::SetMapStatus()
         map_status->want_reply = false;
         map_status->operations.push_back(operation);
 
-        AP_SetServerData(map_status);
+        AP_BulkSetServerData(map_status);
     }
+    AP_CommitServerData();
 }

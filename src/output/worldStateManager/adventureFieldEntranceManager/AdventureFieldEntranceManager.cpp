@@ -72,7 +72,6 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _mysticRuinsLockHook.Hook(OnMysticRuinsLock);
     _isWindyValleyOpenHook.Hook(OnIsWindyValleyOpen);
     _preventMrStoneSpawnHook.Hook(OnPreventMrStoneSpawn);
-    _getCharacterIdHook.Hook(OnGetCharacterId);
     _pastSceneChangeHook.Hook(OnPastSceneChange);
     _isFinalEggEggmanDoorOpenHook.Hook(OnIsFinalEggEggmanDoorOpen);
     _isMonkeyDoorOpenHook.Hook(OnIsMonkeyDoorOpen);
@@ -199,7 +198,6 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, Uint
             LevelIDs_SandHill)
             return;
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
-        _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
         _instance->_archipelagoMessenger.SetMapStatus();
         return;
     }
@@ -208,8 +206,9 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, Uint
 
 task* AdventureFieldEntranceManager::OnSetNextLevelAndActChaoGarden(Uint8 level, Uint8 act)
 {
-    _instance->OnSetNextLevelAndActCutsceneMode(level, act);
-    return nullptr;
+    if (level < LevelIDs_Invalid)
+        OnSetNextLevelAndActCutsceneMode(level, act);
+    return _setNextLevelAndActChaoGardenHook.Original(level, act);
 }
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, Uint8 act)
@@ -259,7 +258,6 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
             LevelIDs_SandHill)
             return;
         _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
-        _instance->_gameStatus.map.SetEntranceVisited(newEntrance->connectsTo, true);
         _instance->_archipelagoMessenger.SetMapStatus();
         return;
     }
@@ -970,11 +968,6 @@ BOOL AdventureFieldEntranceManager::OnPreventMrStoneSpawn()
         return _instance->IsDoorOpen(AngelIslandToIceCave);
 
     return true;
-}
-
-int AdventureFieldEntranceManager::OnGetCharacterId(char index)
-{
-    return CurrentCharacter;
 }
 
 void AdventureFieldEntranceManager::OnPastSceneChange(task* tp)

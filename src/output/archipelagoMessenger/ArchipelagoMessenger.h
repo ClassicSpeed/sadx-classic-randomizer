@@ -1,9 +1,11 @@
 #pragma once
 
 #include <thread>
+#include <chrono>
 #include "../../pch.h"
 #include "../../configuration/options/Options.h"
 #include "../../configuration/gameStatus/GameStatus.h"
+
 
 class ArchipelagoMessenger
 {
