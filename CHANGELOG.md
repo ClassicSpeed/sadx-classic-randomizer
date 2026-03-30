@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - Saving entrances used to data storage is now made in bulk, and no loger increases loading times.
 - Added EC Deck and EC Bridge as starting locations.
 - Fixed some entrances being revelaed early.
+- Fixed Deck to EC Inside having different emblem requirements than EC inside to Deck.
 
 ## [v1.2.1 pre-release 1] - 2026-03-24
 
