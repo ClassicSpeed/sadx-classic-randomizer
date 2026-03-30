@@ -2,20 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.1 pre-release 2] - 2026-??-??
+## [v1.2.1 pre-release 2] - 2026-03-29
 
 ### Changed:
 
-- Updated APCpp to the latest version, which should improve connection speed and stability.
+- Updated APCpp to the latest version to improve connection speed and stability.
+- Entrances used are now written to data storage in bulk and no longer increase loading times.
 
-## Fixed
+### Fixed:
 
-- Fixed exiting Chao Garden with the pause menu causing the game to crash.
-- Fixed crash when using Surge the Tenrec mod.
-- Saving entrances used to data storage is now made in bulk, and no loger increases loading times.
+- Fixed crash when exiting the Chao Garden from the pause menu.
+- Fixed crash when using the Surge the Tenrec mod.
 - Added EC Deck and EC Bridge as starting locations.
-- Fixed some entrances being revelaed early.
-- Fixed Deck to EC Inside having different emblem requirements than EC inside to Deck.
+- Fixed some entrances being revealed early.
+- Fixed inconsistent emblem requirements between Deck and EC Inside.
+
 
 ## [v1.2.1 pre-release 1] - 2026-03-24
 
