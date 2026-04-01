@@ -720,7 +720,7 @@ void AdventureFieldEntranceManager::OnSceneChangeMainStationSquare(task* tp)
         }
         else
         {
-            return;
+            tp->twp->pos = {395, -2.12f, 632.59f};
         }
     }
     _sceneChangeMainStationSquareHook.Original(tp);

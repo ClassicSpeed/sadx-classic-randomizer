@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.2 pre-release 1] - 2026-??-??
+
+### Changed:
+
+- Added Sewers to City Hall loading zone, and adjusted the logic accordingly.
+
 ## [v1.2.1] - 2026-??-??
 
 ### Changed:
