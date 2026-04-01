@@ -94,6 +94,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _isOutsideEggLiftEnabledHook.Hook(OnIsOutsideEggLiftEnabled);
     _isInsideEggLiftEnabledHook.Hook(OnIsInsideEggLiftEnabled);
     _loadPoolDoorHook.Hook(OnLoadPoolDoor);
+    _loadReservoirWaterHook.Hook(OnLoadReservoirWater);
     _isEcBoatEnabledHook.Hook(IsEcBoatEnabled);
     _isEcRaftEnabledHook.Hook(IsEcRaftEnabled);
     _hiddenGateMainHook.Hook(OnHiddenGateMain);
@@ -1582,6 +1583,11 @@ void AdventureFieldEntranceManager::OnLoadPoolDoor(task* tp)
 {
     if (!_instance->IsDoorOpen(PoolToSkyDeck))
         return _loadPoolDoorHook.Original(tp);
+    FreeTask(tp);
+}
+
+void AdventureFieldEntranceManager::OnLoadReservoirWater(task* tp)
+{
     FreeTask(tp);
 }
 
