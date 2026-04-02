@@ -6,7 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed:
 
-- Added Sewers to City Hall loading zone, and adjusted the logic accordingly.
+- Some connections used to have their loading zone removed when closed. They were readed and the logic was adjusted:
+    - Sewers to City Hall.
+    - Past Main to Past Altar.
 
 ## [v1.2.1] - 2026-??-??
 

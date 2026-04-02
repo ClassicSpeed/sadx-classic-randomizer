@@ -975,13 +975,13 @@ void AdventureFieldEntranceManager::OnPastSceneChange(task* tp)
 {
     // Past Main
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past1
-        && IsNearPosition(tp->twp->pos, 1.907, 13, 1512.719))
+        && IsNearPosition(tp->twp->pos, 1.907F, 13, 1512.719F))
     {
         if (!_instance->IsDoorOpen(PastMainToPastAltar))
-            return FreeTask(tp);
+            tp->twp->pos = {1.907F, 13, 1625};
     }
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past2
-        && IsNearPosition(tp->twp->pos, 223.44, -2, 1836.12))
+        && IsNearPosition(tp->twp->pos, 223.44F, -2, 1836.12F))
     {
         if (!_instance->IsDoorOpen(PastAltarToPastMain))
             return FreeTask(tp);
