@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.1 pre-release 3] - 2026-04-04
+
+### Changed:
+
+- Water Tank is now always drained, ignoring the Egg Carrier transformation state.
+
+### Fixed:
+
+- Starting character option being ignored.
+- Fixed incorrect logic for emblem requiremets around the Egg Carrier.
+
 ## [v1.2.1 pre-release 2] - 2026-03-29
 
 ### Changed:
@@ -16,7 +27,6 @@ All notable changes to this project will be documented in this file.
 - Added EC Deck and EC Bridge as starting locations.
 - Fixed some entrances being revealed early.
 - Fixed inconsistent emblem requirements between Deck and EC Inside.
-
 
 ## [v1.2.1 pre-release 1] - 2026-03-24
 

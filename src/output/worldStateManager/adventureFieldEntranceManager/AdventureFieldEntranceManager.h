@@ -258,6 +258,8 @@ private:
     inline static FunctionHook<void, task*> _loadPoolDoorHook{0x51E320};
     static void OnLoadPoolDoor(task* tp);
 
+    inline static FunctionHook<void, task*> _loadReservoirWaterHook{0x525CD0};
+    static void OnLoadReservoirWater(task* tp);
 
     inline static FunctionHook<BOOL> _isEcBoatEnabledHook{0x51C7B0};
     static BOOL IsEcBoatEnabled();
