@@ -6,12 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ### Changed:
 
-- Water Tank is now always drained, ignoring the Egg Carrier transformation state.
+- Water Tank is now always drained regardless of the Egg Carrier's transformation state.
 
 ### Fixed:
 
-- Starting character option being ignored.
-- Fixed incorrect logic for emblem requiremets around the Egg Carrier.
+- Fixed starting character option being ignored.
+- Fixed incorrect logic for emblem requirements around the Egg Carrier.
+
 
 ## [v1.2.1 pre-release 2] - 2026-03-29
 
