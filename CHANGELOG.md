@@ -6,8 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed:
 
-- Added springs to get from the Egg Carrier Deck to the Captain Roon door.
-    - Those connections are now in logic for every character in every logic level.
+- Added springs to reach the Captain Room door from the Egg Carrier Deck.
+    - These connections are now in logic for all characters in every logic level.
+- Adjusted the positions of the two Private Room entrances on the Egg Carrier Deck map for clarity.
 
 ### Fixed:
 

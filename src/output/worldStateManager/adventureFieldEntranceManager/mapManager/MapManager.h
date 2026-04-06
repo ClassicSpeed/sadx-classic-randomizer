@@ -141,8 +141,8 @@ private:
         // Deck (Transformed) 
         {DeckToPool, {404, 810}},
         {DeckToCaptainRoom, {404, 760}},
-        {DeckToPrivateRoom, {419, 753}},
-        {DeckToPrivateRoomAlternative, {389, 753}},
+        {DeckToPrivateRoom, {419, 740}},
+        {DeckToPrivateRoomAlternative, {389, 740}},
         {DeckToEcInsideEggLift, {404, 791}},
         // Captain Room
         {CaptainRoomToDeck, {245, 885}},
