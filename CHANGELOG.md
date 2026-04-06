@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.1 pre-release 4] - 2026-04-06
+
+### Changed:
+
+- Added springs to get from the Egg Carrier Deck to the Captain Roon door.
+    - Those connections are now in logic for every character in every logic level.
+
+### Fixed:
+
+- Fixed logic issues when starting with the Egg Carrier untransformed.
+
 ## [v1.2.1 pre-release 3] - 2026-04-04
 
 ### Changed:
@@ -12,7 +23,6 @@ All notable changes to this project will be documented in this file.
 
 - Fixed starting character option being ignored.
 - Fixed incorrect logic for emblem requirements around the Egg Carrier.
-
 
 ## [v1.2.1 pre-release 2] - 2026-03-29
 

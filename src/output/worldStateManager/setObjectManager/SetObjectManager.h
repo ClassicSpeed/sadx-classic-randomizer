@@ -163,6 +163,22 @@ const SETEntry CITY_HALL_SEWERS_SCENE_CHANGE_SS = CreateSetEntry(SCENE_CHANGE_ST
 //Egg Carrier
 const SETEntry EGG_CARRIER_TRANSFORM_AREA_SPRING = CreateSetEntry(1, {-83.42f, 0, 0.54f});
 
+const SETEntry EGG_CARRIER_DECK_SPRING = CreateSetEntry(1, {-119, 1523, 3019});
+
+const SETEntry EGG_CARRIER_DECK_SPRING_2 = CreateSetEntry(1, {-20, 1640, 2987});
+
+const SETEntry EGG_CARRIER_DECK_SPRING_AMY = CreateSetEntry(1, {-119, 1523, 3019},
+                                                            {0, 0, 0}, {0.1f, 0.05f, 0});
+
+const SETEntry EGG_CARRIER_DECK_SPRING_AMY_2 = CreateSetEntry(1, {-20, 1640, 2987},
+                                                              {0, 0, 0}, {0.1f, 0.025f, 0});
+
+const SETEntry EGG_CARRIER_DECK_SPRING_BIG = CreateSetEntry(1, {-119, 1523, 3019},
+                                                            {0, 0, 0}, {0.1f, 5, 0});
+
+const SETEntry EGG_CARRIER_DECK_SPRING_GAMMA = CreateSetEntry(1, {-119, 1523, 3019},
+                                                              {0, 0, 0}, {0.1f, 2, 0});
+
 //Station Square Bosses
 const SETEntry WARP_CHAOS0 = CreateSetEntry(WARP_STATION_SQUARE, {270, 0, 450});
 

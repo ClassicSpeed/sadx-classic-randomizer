@@ -226,6 +226,19 @@ void SetObjectManager::OnCountSetItemsMaybe()
     AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Big);
     AddSetToLevel(EGG_CARRIER_TRANSFORM_AREA_SPRING, LevelAndActIDs_EggCarrierOutside5, Characters_Gamma);
 
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING, LevelAndActIDs_EggCarrierOutside3, Characters_Sonic);
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING, LevelAndActIDs_EggCarrierOutside3, Characters_Tails);
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING, LevelAndActIDs_EggCarrierOutside3, Characters_Knuckles);
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING_AMY, LevelAndActIDs_EggCarrierOutside3, Characters_Amy);
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING_BIG, LevelAndActIDs_EggCarrierOutside3, Characters_Big);
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING_GAMMA, LevelAndActIDs_EggCarrierOutside3, Characters_Gamma);
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING_2, LevelAndActIDs_EggCarrierOutside3, Characters_Sonic);
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING_2, LevelAndActIDs_EggCarrierOutside3, Characters_Tails);
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING_2, LevelAndActIDs_EggCarrierOutside3, Characters_Knuckles);
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING_AMY_2, LevelAndActIDs_EggCarrierOutside3, Characters_Amy);
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING_2, LevelAndActIDs_EggCarrierOutside3, Characters_Big);
+    AddSetToLevel(EGG_CARRIER_DECK_SPRING_2, LevelAndActIDs_EggCarrierOutside3, Characters_Gamma);
+
     //Emerald Coast
     AddSetToLevel(BEACH_GATE_SS, LevelAndActIDs_StationSquare5, Characters_Sonic);
 
