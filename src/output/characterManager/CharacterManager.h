@@ -2,7 +2,6 @@
 #include <queue>
 
 #include "../../pch.h"
-#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
 #include "../../configuration/options/Options.h"
 #include "../../application/structs/ItemData.h"
 #include "../../application/structs/WeightedRandomSelector.h"

@@ -28,12 +28,16 @@
 
 // Pre-compiled headers
 #include "framework.h"
-#include "../lib/sadx-mod-loader/SADXModLoader/include/SADXModLoader.h"
-#include "../lib/sadx-mod-loader/SADXModLoader/include/FunctionHook.h"
-#include "../lib/sadx-mod-loader/mod-loader-common/ModLoaderCommon/IniFile.hpp"
-#include "../lib/sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
-#include <APCpp/Archipelago.h>
-#include <json/json.h>
+#include <SADXModLoader.h>
+#include <FunctionHook.h>
+#include <UsercallFunctionHandler.h>
+#include <IniFile.hpp>
+// #include "../lib/sadx-mod-loader/SADXModLoader/include/SADXModLoader.h"
+// #include "../lib/sadx-mod-loader/SADXModLoader/include/FunctionHook.h"
+// #include "../lib/sadx-mod-loader/mod-loader-common/ModLoaderCommon/IniFile.hpp"
+// #include "../lib/sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
+#include <Archipelago.h>
+#include <json.h>
 
 
 #define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
