@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.1] - 2026-04-11
+
+### Fixed:
+
+- Fixed logic problem with requirements with multiple SADX players.
+
 ## [v1.2.1 pre-release 4] - 2026-04-06
 
 ### Changed:
