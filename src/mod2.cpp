@@ -1,7 +1,7 @@
 #include <pch.h>
-#include "Settings.h"
-#include "Options.h"
-#include "GameStatus.h"
+#include "settings/Settings.h"
+#include "options/Options.h"
+#include "gameStatus/GameStatus.h"
 
 extern "C" {
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)

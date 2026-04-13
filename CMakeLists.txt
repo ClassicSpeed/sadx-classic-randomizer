@@ -14,14 +14,17 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
 project(sadx-ap-randomizer LANGUAGES CXX)
 
+set(CONFIGURATION_DIR ${CMAKE_SOURCE_DIR}/src/configuration)
+file(GLOB_RECURSE CONFIGURATION_SOURCES CONFIGURE_DEPENDS
+        ${CONFIGURATION_DIR}/*.cpp
+        ${CONFIGURATION_DIR}/*.h)
+
 
 add_library(sadx-ap-randomizer SHARED
         src/mod2.cpp
-        src/configuration/settings/Settings.cpp
-        src/configuration/options/Options.cpp
-        src/configuration/gameStatus/GameStatus.cpp
         lib/sadx-mod-loader-linux-compatible/ModLoaderCommon/IniFile.cpp
         lib/sadx-mod-loader-linux-compatible/ModLoaderCommon/TextConv.cpp
+        ${CONFIGURATION_SOURCES}
 )
 
 
@@ -29,9 +32,7 @@ target_compile_features(sadx-ap-randomizer PRIVATE cxx_std_17)
 
 target_include_directories(sadx-ap-randomizer PRIVATE
         ${CMAKE_SOURCE_DIR}/src
-        ${CMAKE_SOURCE_DIR}/src/configuration/settings
-        ${CMAKE_SOURCE_DIR}/src/configuration/options
-        ${CMAKE_SOURCE_DIR}/src/configuration/gameStatus
+        ${CONFIGURATION_DIR}
         ${CMAKE_SOURCE_DIR}/lib/windows-header-fix
         ${CMAKE_SOURCE_DIR}/lib/json/include/json
         ${CMAKE_SOURCE_DIR}/lib/APCpp
