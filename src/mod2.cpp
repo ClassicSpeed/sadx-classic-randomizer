@@ -1,8 +1,14 @@
 #include "pch.h"
+#include "configuration/settings/Settings.h"
 
 extern "C" {
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
 {
+    
+    //Configuration
+    Settings& settings = Settings::Init(path, helperFunctions);
+    // Options& options = Options::Init(settings);
+    // GameStatus& gameStatus = GameStatus::Init(options);
 }
 
 // Simple OnFrame test
