@@ -54,6 +54,9 @@ target_compile_definitions(sadx-ap-randomizer-configuration PRIVATE ${COMMON_COM
 add_library(sadx-ap-randomizer-core OBJECT
         src/mod2.cpp
         src/output/reactionManager/ReactionManager.cpp
+        src/output/characterManager/CharacterManager.cpp
+        src/output/itemRepository/ItemRepository.cpp
+        src/output/locationRepository/LocationRepository.cpp
         src/output/displayManager/DisplayManager.cpp)
 add_dependencies(sadx-ap-randomizer-core sadx-ap-randomizer-configuration)
 target_compile_features(sadx-ap-randomizer-core PRIVATE cxx_std_17)

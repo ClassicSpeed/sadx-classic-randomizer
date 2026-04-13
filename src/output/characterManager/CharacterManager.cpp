@@ -164,7 +164,7 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 
     if (amount < 0 && Rings > 0)
     {
-        const Sint16 newRingAmount = max(Rings + amount, 0);
+        const Sint16 newRingAmount = std::max(Rings + amount, 0);
         if (_settings.ringLinkSounds)
             PlaySound(RING_LOSS_SOUND_ID, nullptr, 0, nullptr);
         Rings = newRingAmount;
