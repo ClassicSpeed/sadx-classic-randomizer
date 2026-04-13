@@ -18,6 +18,8 @@ project(sadx-ap-randomizer LANGUAGES CXX)
 add_library(sadx-ap-randomizer SHARED
         src/mod2.cpp
         src/configuration/settings/Settings.cpp
+        src/configuration/options/Options.cpp
+        src/configuration/gameStatus/GameStatus.cpp
         lib/sadx-mod-loader-linux-compatible/ModLoaderCommon/IniFile.cpp
         lib/sadx-mod-loader-linux-compatible/ModLoaderCommon/TextConv.cpp
 )
@@ -27,6 +29,9 @@ target_compile_features(sadx-ap-randomizer PRIVATE cxx_std_17)
 
 target_include_directories(sadx-ap-randomizer PRIVATE
         ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_SOURCE_DIR}/src/configuration/settings
+        ${CMAKE_SOURCE_DIR}/src/configuration/options
+        ${CMAKE_SOURCE_DIR}/src/configuration/gameStatus
         ${CMAKE_SOURCE_DIR}/lib/windows-header-fix
         ${CMAKE_SOURCE_DIR}/lib/json/include/json
         ${CMAKE_SOURCE_DIR}/lib/APCpp

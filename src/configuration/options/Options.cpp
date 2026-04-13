@@ -56,22 +56,22 @@ void Options::SetGatingMode(const int gatingMode)
 
 void Options::EmblemsForPerfectChaos(const int newEmblemGoal)
 {
-    this->emblemGoal = max(1, newEmblemGoal);
+    this->emblemGoal = std::max(1, newEmblemGoal);
 }
 
 void Options::LevelForPerfectChaos(const int newLevelGoal)
 {
-    this->levelGoal = max(1, newLevelGoal);
+    this->levelGoal = std::max(1, newLevelGoal);
 }
 
 void Options::MissionForPerfectChaos(const int newMissionGoal)
 {
-    this->missionGoal = max(1, newMissionGoal);
+    this->missionGoal = std::max(1, newMissionGoal);
 }
 
 void Options::BossesForPerfectChaos(const int newBossesGoal)
 {
-    this->bossesGoal = max(1, newBossesGoal);
+    this->bossesGoal = std::max(1, newBossesGoal);
 }
 
 void Options::MissionModeChecks(const int newMissionModeEnabled)
@@ -81,6 +81,7 @@ void Options::MissionModeChecks(const int newMissionModeEnabled)
 
 void Options::MissionBlackList(const std::map<int, int>& newMissionBlacklist)
 {
+
     if (newMissionBlacklist.empty())
         return;
     std::vector<int> blacklistedMissions;
