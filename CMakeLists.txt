@@ -51,7 +51,10 @@ target_compile_definitions(sadx-ap-randomizer-configuration PRIVATE ${COMMON_COM
 
 
 # SADX AP Randomizer Core
-add_library(sadx-ap-randomizer-core OBJECT src/mod2.cpp src/output/reactionManager/ReactionManager.cpp)
+add_library(sadx-ap-randomizer-core OBJECT
+        src/mod2.cpp
+        src/output/reactionManager/ReactionManager.cpp
+        src/output/displayManager/DisplayManager.cpp)
 add_dependencies(sadx-ap-randomizer-core sadx-ap-randomizer-configuration)
 target_compile_features(sadx-ap-randomizer-core PRIVATE cxx_std_17)
 target_include_directories(sadx-ap-randomizer-core PRIVATE ${COMMON_INCLUDE_DIRS})
@@ -65,7 +68,6 @@ add_library(sadx-ap-randomizer SHARED
 
 target_link_libraries(sadx-ap-randomizer PRIVATE mod-loader-common)
 
-#target_compile_options(sadx-ap-randomizer PRIVATE -fpermissive)
 target_link_options(sadx-ap-randomizer PRIVATE -static -static-libgcc -static-libstdc++)
 
 set_target_properties(sadx-ap-randomizer PROPERTIES PREFIX "" OUTPUT_NAME "sadx-classic-randomizer")

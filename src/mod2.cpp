@@ -3,6 +3,7 @@
 #include "options/Options.h"
 #include "gameStatus/GameStatus.h"
 #include "output/reactionManager/ReactionManager.h"
+#include "output/displayManager/DisplayManager.h"
 
 extern "C" {
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
@@ -17,7 +18,7 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
 
     // Output Managers
     ReactionManager& reactionManager = ReactionManager::Init(settings, gameStatus);
-    // DisplayManager& displayManager = DisplayManager::Init(options, settings, gameStatus, path, helperFunctions);
+    DisplayManager& displayManager = DisplayManager::Init(options, settings, gameStatus, path, helperFunctions);
     // CharacterManager& characterManager = CharacterManager::Init(options, settings, gameStatus, reactionManager);
     // ItemRepository& itemRepository = ItemRepository::Init(gameStatus);
     // LocationRepository& locationRepository = LocationRepository::Init(options, gameStatus);
