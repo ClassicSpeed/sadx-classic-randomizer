@@ -1371,6 +1371,8 @@ public: \
  \
 	void Hook(PointerType hookfunc) \
 	{ \
+		if (ishooked) \
+			throw "Attempted to hook already hooked function!"; \
 		memcpy(origdata, getptr(), 5); \
 		GenerateUsercallHook<PointerType>(hookfunc, RETURN_LOC, ADDRESS, __VA_ARGS__); \
 		ishooked = true; \
@@ -1426,6 +1428,8 @@ public: \
  \
 	void Hook(PointerType hookfunc) \
 	{ \
+		if (ishooked) \
+			throw "Attempted to hook already hooked function!"; \
 		memcpy(origdata, getptr(), 5); \
 		GenerateUsercallHook<PointerType>(hookfunc, noret, ADDRESS, __VA_ARGS__); \
 		ishooked = true; \
@@ -1480,6 +1484,8 @@ public: \
  \
 	void Hook(PointerType hookfunc) \
 	{ \
+		if (ishooked) \
+			throw "Attempted to hook already hooked function!"; \
 		memcpy(origdata, getptr(), 5); \
 		GenerateUserpurgeHook<PointerType>(hookfunc, RETURN_LOC, ADDRESS, __VA_ARGS__); \
 		ishooked = true; \
@@ -1535,6 +1541,8 @@ public: \
  \
 	void Hook(PointerType hookfunc) \
 	{ \
+		if (ishooked) \
+			throw "Attempted to hook already hooked function!"; \
 		memcpy(origdata, getptr(), 5); \
 		GenerateUserpurgeHook<PointerType>(hookfunc, noret, ADDRESS, __VA_ARGS__); \
 		ishooked = true; \
