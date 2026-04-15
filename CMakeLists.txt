@@ -70,7 +70,6 @@ set(COMMON_INCLUDE_DIRS
         ${CMAKE_SOURCE_DIR}/src
         ${CONFIGURATION_DIR}
         ${CMAKE_SOURCE_DIR}/lib/windows-header-fix
-        ${CMAKE_SOURCE_DIR}/lib/json/include/json
         ${CMAKE_SOURCE_DIR}/lib/APCpp
         ${CMAKE_SOURCE_DIR}/lib/APCpp/IXWebSocket
         ${CMAKE_SOURCE_DIR}/lib/APCpp/jsoncpp/include)

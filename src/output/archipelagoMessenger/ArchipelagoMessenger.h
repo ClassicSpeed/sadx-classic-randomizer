@@ -2,6 +2,7 @@
 
 #include <thread>
 #include <Archipelago.h>
+#include <json/json.h>
 #include <chrono>
 #include "../../pch.h"
 #include "../../configuration/options/Options.h"

@@ -34,20 +34,20 @@ void ArchipelagoMessenger::UpdateTags()
 
 void ArchipelagoMessenger::SendDeath(std::string playerName)
 {
-    // const std::string characterName = CHARACTERS_MAP.at(CurrentCharacter);
-    // Json::FastWriter writer;
-    // std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
-    // AP_Bounce b;
-    // Json::Value v;
-    // v["time"] = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
-    // v["source"] = playerName;
-    // v["cause"] = characterName + " died. (" + playerName + ")";
-    // b.data = writer.write(v);
-    // b.games = nullptr;
-    // b.slots = nullptr;
-    // std::vector<std::string> tags = {std::string("DeathLink")};
-    // b.tags = &tags;
-    // AP_SendBounce(b);
+    const std::string characterName = CHARACTERS_MAP.at(CurrentCharacter);
+    Json::FastWriter writer;
+    std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
+    AP_Bounce b;
+    Json::Value v;
+    v["time"] = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
+    v["source"] = playerName;
+    v["cause"] = characterName + " died. (" + playerName + ")";
+    b.data = writer.write(v);
+    b.games = nullptr;
+    b.slots = nullptr;
+    std::vector<std::string> tags = {std::string("DeathLink")};
+    b.tags = &tags;
+    AP_SendBounce(b);
 }
 
 
@@ -63,39 +63,39 @@ void ArchipelagoMessenger::SendHardRingUpdate(const int ringDifference)
 
 void ArchipelagoMessenger::SendRingPacket(const int ringDifference, const std::string& tagName)
 {
-    // if (ringDifference == 0)
-    //     return;
-    // Json::FastWriter writer;
-    // std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
-    // AP_Bounce b;
-    // Json::Value v;
-    // v["time"] = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
-    // v["source"] = _options.instanceId;
-    // v["amount"] = ringDifference;
-    // b.data = writer.write(v);
-    // b.slots = nullptr;
-    // b.games = nullptr;
-    // std::vector<std::string> tags = {tagName};
-    // b.tags = &tags;
-    // AP_SendBounce(b);
+    if (ringDifference == 0)
+        return;
+    Json::FastWriter writer;
+    std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
+    AP_Bounce b;
+    Json::Value v;
+    v["time"] = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
+    v["source"] = _options.instanceId;
+    v["amount"] = ringDifference;
+    b.data = writer.write(v);
+    b.slots = nullptr;
+    b.games = nullptr;
+    std::vector<std::string> tags = {tagName};
+    b.tags = &tags;
+    AP_SendBounce(b);
 }
 
 
 void ArchipelagoMessenger::SendTrapLink(std::string trapName, std::string playerName)
 {
-    // Json::FastWriter writer;
-    // std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
-    // AP_Bounce b;
-    // Json::Value v;
-    // v["time"] = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
-    // v["source"] = playerName;
-    // v["trap_name"] = trapName;
-    // b.data = writer.write(v);
-    // b.games = nullptr;
-    // b.slots = nullptr;
-    // std::vector tags = {std::string("TrapLink")};
-    // b.tags = &tags;
-    // AP_SendBounce(b);
+    Json::FastWriter writer;
+    std::chrono::time_point<std::chrono::system_clock> timestamp = std::chrono::system_clock::now();
+    AP_Bounce b;
+    Json::Value v;
+    v["time"] = std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
+    v["source"] = playerName;
+    v["trap_name"] = trapName;
+    b.data = writer.write(v);
+    b.games = nullptr;
+    b.slots = nullptr;
+    std::vector tags = {std::string("TrapLink")};
+    b.tags = &tags;
+    AP_SendBounce(b);
 }
 
 void ArchipelagoMessenger::SetMapStatus()
