@@ -1,6 +1,7 @@
 #pragma once
 
 #include <thread>
+#include <Archipelago.h>
 #include <chrono>
 #include "../../pch.h"
 #include "../../configuration/options/Options.h"

@@ -7,6 +7,7 @@
 #include "output/characterManager/CharacterManager.h"
 #include "output/itemRepository/ItemRepository.h"
 #include "output/locationRepository/LocationRepository.h"
+#include "output/archipelagoMessenger/ArchipelagoMessenger.h"
 
 extern "C" {
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
@@ -24,7 +25,7 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     CharacterManager& characterManager = CharacterManager::Init(options, settings, gameStatus, reactionManager);
     ItemRepository& itemRepository = ItemRepository::Init(gameStatus);
     LocationRepository& locationRepository = LocationRepository::Init(options, gameStatus);
-    // ArchipelagoMessenger& archipelagoMessenger = ArchipelagoMessenger::Init(options, gameStatus);
+    ArchipelagoMessenger& archipelagoMessenger = ArchipelagoMessenger::Init(options, gameStatus);
     // WorldStateManager& worldStateManager = WorldStateManager::Init(options, settings, gameStatus, archipelagoMessenger);
     // SaveFileManager& saveFileManager = SaveFileManager::Init();
     // MusicManager& musicManager = MusicManager::Init(options, settings, helperFunctions);
