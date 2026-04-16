@@ -12,10 +12,11 @@
 #include "output/saveFileManager/SaveFileManager.h"
 #include "output/musicManager/MusicManager.h"
 
+#include "application/randomizer/Randomizer.h"
+#include "application/link/Link.h"
+
 extern "C" {
-__declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
-{
-    
+__declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions) {
     //Configuration
 
     Settings& settings = Settings::Init(path, helperFunctions);
@@ -32,8 +33,13 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     WorldStateManager& worldStateManager = WorldStateManager::Init(options, settings, gameStatus, archipelagoMessenger);
     SaveFileManager& saveFileManager = SaveFileManager::Init();
     MusicManager& musicManager = MusicManager::Init(options, settings, helperFunctions);
-}
 
+    //Randomizer
+    Randomizer& randomizer = Randomizer::Init(options, settings, gameStatus, displayManager, characterManager,
+                                              worldStateManager, itemRepository, locationRepository,
+                                              archipelagoMessenger, saveFileManager, musicManager, reactionManager);
+    Link& link = Link::Init(options, settings, displayManager, characterManager, itemRepository, archipelagoMessenger);
+}
 // Simple OnFrame test
 __declspec(dllexport) void __cdecl OnFrame()
 {

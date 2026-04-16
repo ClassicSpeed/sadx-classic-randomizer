@@ -122,6 +122,8 @@ add_library(sadx-ap-randomizer-core OBJECT
         src/output/worldStateManager/adventureFieldEntranceManager/AdventureFieldEntranceManager.cpp
         src/output/worldStateManager/adventureFieldEntranceManager/AdventureFieldEntranceMap.cpp
         src/output/worldStateManager/adventureFieldEntranceManager/mapManager/MapManager.cpp
+        src/application/randomizer/Randomizer.cpp
+        src/application/link/Link.cpp
         src/output/displayManager/DisplayManager.cpp)
 add_dependencies(sadx-ap-randomizer-core sadx-ap-randomizer-configuration)
 target_compile_features(sadx-ap-randomizer-core PRIVATE cxx_std_17)
