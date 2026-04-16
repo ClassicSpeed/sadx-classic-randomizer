@@ -1007,6 +1007,7 @@ static inline void CameraCollisitonCheckAdj(NJS_POINT3* src, NJS_POINT3* dst)
 		call CameraCollisitonCheckAdjPtr
 	}
 }
+#endif
 
 // NJD_CONTROL_3D functions
 VoidFunc(SaveControl3D, 0x4395C0); // Backs up NJD_CONTROL_3D flags
@@ -1078,6 +1079,7 @@ FunctionPointer(void, DrawObjectClipMesh, (NJS_OBJECT* object, LATE flgs, float 
 
 // void __usercall(NJS_ACTION* action@<eax>, float frame, LATE flgs, float clpScl, void* drwMdlFnc)
 static const void* const DrawActionPtr = (void*)0x4053D0;
+#ifdef _MSC_VER
 static inline void DrawAction(NJS_ACTION* action, float frame, LATE flgs, float clpScl, void* drwMdlFnc)
 {
 	__asm
@@ -1091,9 +1093,11 @@ static inline void DrawAction(NJS_ACTION* action, float frame, LATE flgs, float 
 		add esp, 16
 	}
 }
+#endif
 
 // void __usercall(obj *object@<edi>, NJS_MOTION *motion@<eax>, float frame, LATE flgs, float clpScl, void *drwMdlFnc)
 static const void* const DrawMotionPtr = (void*)0x4052F0;
+#ifdef _MSC_VER
 static inline void DrawMotion(NJS_OBJECT* object, NJS_MOTION* motion, float frame, LATE flgs, float clpScl, void* drwMdlFnc)
 {
 	__asm
@@ -1108,9 +1112,11 @@ static inline void DrawMotion(NJS_OBJECT* object, NJS_MOTION* motion, float fram
 		add esp, 16
 	}
 }
+#endif
 
 // void __usercall(obj *object, NJS_MOTION_LINK *motionlink@<eax>, float frame, LATE flgs, float clpScl, void *drwMdlFnc)
 static const void* const DrawMotionLinkPtr = (void*)0x4069A0;
+#ifdef _MSC_VER
 static inline void DrawMotionLink(NJS_OBJECT* object, NJS_MOTION_LINK* motionlink, float frame, LATE flgs, float clpScl, void* drwMdlFnc)
 {
 	__asm
@@ -1125,9 +1131,11 @@ static inline void DrawMotionLink(NJS_OBJECT* object, NJS_MOTION_LINK* motionlin
 		add esp, 20
 	}
 }
+#endif
 
 // void __usercall(obj *object, NJS_MOTION *motion@<eax>, NJS_MOTION *shape@<edi>, float frame, LATE flgs, float clpScl, void *drawModel)
 static const void* const DrawShapeMotionPtr = (void*)0x405EF0;
+#ifdef _MSC_VER
 static inline void DrawShapeMotion(NJS_OBJECT* object, NJS_MOTION* motion, NJS_MOTION* shape, float frame, LATE flgs, float clpScl, void* drawModel)
 {
 	__asm

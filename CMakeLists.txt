@@ -117,6 +117,11 @@ add_library(sadx-ap-randomizer-core OBJECT
         src/output/archipelagoMessenger/ArchipelagoMessenger.cpp
         src/output/saveFileManager/SaveFileManager.cpp
         src/output/musicManager/MusicManager.cpp
+        src/output/worldStateManager/WorldStateManager.cpp
+        src/output/worldStateManager/setObjectManager/SetObjectManager.cpp
+        src/output/worldStateManager/adventureFieldEntranceManager/AdventureFieldEntranceManager.cpp
+        src/output/worldStateManager/adventureFieldEntranceManager/AdventureFieldEntranceMap.cpp
+        src/output/worldStateManager/adventureFieldEntranceManager/mapManager/MapManager.cpp
         src/output/displayManager/DisplayManager.cpp)
 add_dependencies(sadx-ap-randomizer-core sadx-ap-randomizer-configuration)
 target_compile_features(sadx-ap-randomizer-core PRIVATE cxx_std_17)
