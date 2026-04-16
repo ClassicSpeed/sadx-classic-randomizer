@@ -8,6 +8,8 @@
 #include "output/itemRepository/ItemRepository.h"
 #include "output/locationRepository/LocationRepository.h"
 #include "output/archipelagoMessenger/ArchipelagoMessenger.h"
+#include "output/saveFileManager/SaveFileManager.h"
+#include "output/musicManager/MusicManager.h"
 
 extern "C" {
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions)
@@ -27,8 +29,8 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     LocationRepository& locationRepository = LocationRepository::Init(options, gameStatus);
     ArchipelagoMessenger& archipelagoMessenger = ArchipelagoMessenger::Init(options, gameStatus);
     // WorldStateManager& worldStateManager = WorldStateManager::Init(options, settings, gameStatus, archipelagoMessenger);
-    // SaveFileManager& saveFileManager = SaveFileManager::Init();
-    // MusicManager& musicManager = MusicManager::Init(options, settings, helperFunctions);
+    SaveFileManager& saveFileManager = SaveFileManager::Init();
+    MusicManager& musicManager = MusicManager::Init(options, settings, helperFunctions);
 }
 
 // Simple OnFrame test
