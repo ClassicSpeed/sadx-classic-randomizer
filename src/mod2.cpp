@@ -15,6 +15,12 @@
 #include "application/randomizer/Randomizer.h"
 #include "application/link/Link.h"
 
+
+#include "input/cheatsManager/CheatsManager.h"
+#include "input/archipelago/ArchipelagoManager.h"
+#include "input/eventDetector/EventDetector.h"
+#include "input/characterLoading//CharacterLoadingDetector.h"
+
 extern "C" {
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions) {
     //Configuration
@@ -39,6 +45,12 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
                                               worldStateManager, itemRepository, locationRepository,
                                               archipelagoMessenger, saveFileManager, musicManager, reactionManager);
     Link& link = Link::Init(options, settings, displayManager, characterManager, itemRepository, archipelagoMessenger);
+
+    // Input Handlers
+    CheatsManager& cheatsManager = CheatsManager::Init(settings);
+    ArchipelagoManager& archipelagoManager = ArchipelagoManager::Init(options, settings, gameStatus, randomizer, link);
+    EventDetector& eventDetector = EventDetector::Init(options, settings, randomizer, link);
+    CharacterLoadingDetector& characterLoadingDetector = CharacterLoadingDetector::Init(randomizer, settings);
 }
 // Simple OnFrame test
 __declspec(dllexport) void __cdecl OnFrame()

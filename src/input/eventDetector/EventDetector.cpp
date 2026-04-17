@@ -1,5 +1,4 @@
 #include "EventDetector.h"
-#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
 
 UsercallFuncVoid(PlayCharacterDeathSound_t, (task * tp, int pid), (tp, pid), 0x446AF0, rEAX, stack4);
 
