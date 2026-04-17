@@ -15,13 +15,13 @@
 #include "application/randomizer/Randomizer.h"
 #include "application/link/Link.h"
 
-
 #include "input/cheatsManager/CheatsManager.h"
 #include "input/archipelago/ArchipelagoManager.h"
 #include "input/eventDetector/EventDetector.h"
 #include "input/characterLoading//CharacterLoadingDetector.h"
 
 extern "C" {
+std::vector<IOnFrame*> onFrameObjects;
 __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions& helperFunctions) {
     //Configuration
 
@@ -51,12 +51,20 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     ArchipelagoManager& archipelagoManager = ArchipelagoManager::Init(options, settings, gameStatus, randomizer, link);
     EventDetector& eventDetector = EventDetector::Init(options, settings, randomizer, link);
     CharacterLoadingDetector& characterLoadingDetector = CharacterLoadingDetector::Init(randomizer, settings);
+
+
+    onFrameObjects = {
+        &saveFileManager, &archipelagoManager, &displayManager, &worldStateManager,
+        &eventDetector, &characterLoadingDetector, &link, &characterManager
+    };
+
+    helperFunctions.RegisterCommonObjectPVM(EntranceSign);
 }
 // Simple OnFrame test
 __declspec(dllexport) void __cdecl OnFrame()
 {
-    Rings = 12345;
-    DisplayDebugString(NJM_LOCATION(2, 1), "Testing");
+    for (const auto manager : onFrameObjects)
+        manager->OnFrame();
 }
 
 __declspec(dllexport) ModInfo SADXModInfo = {ModLoaderVer};
