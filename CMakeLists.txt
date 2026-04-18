@@ -18,15 +18,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_definitions(WIN32 _WINDOWS _USRDLL UNICODE _UNICODE)
 add_compile_options(-ffunction-sections -fdata-sections -fpermissive)
 
-
-
 # APCpp
 # Build APCpp from its own CMakeLists and consume it as a static dependency.
 set(APCPP_BUILD_SHARED OFF CACHE BOOL "Build APCpp as a static library" FORCE)
 set(BUNDLED_JSONCPP ON CACHE BOOL "" FORCE)
-if(MINGW)
+if (MINGW)
     set(IXWEBSOCKET_SYSTEM_CERT_STORE OFF CACHE BOOL "Disable Windows certificate store" FORCE)
-endif()
+endif ()
 add_subdirectory(lib/APCpp EXCLUDE_FROM_ALL)
 
 # SADX Mod Loader
@@ -38,27 +36,17 @@ target_include_directories(mod-loader-common SYSTEM PRIVATE
         ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible)
 
 # SADX Randomizer
-file(GLOB_RECURSE RANDOMIZER_SOURCES CONFIGURE_DEPENDS
-        ${CMAKE_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE RANDOMIZER_SOURCES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/src/*.cpp)
 add_library(sadx-ap-randomizer SHARED ${RANDOMIZER_SOURCES})
 
-target_include_directories(sadx-ap-randomizer PRIVATE
-        ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(sadx-ap-randomizer PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 target_include_directories(sadx-ap-randomizer SYSTEM PRIVATE
         ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible/ModLoaderCommon
         ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible)
 
-target_link_libraries(sadx-ap-randomizer PRIVATE
-        mod-loader-common
-        APCpp)
+target_link_libraries(sadx-ap-randomizer PRIVATE mod-loader-common APCpp)
 
-target_link_options(sadx-ap-randomizer PRIVATE
-        -static
-        -static-libgcc
-        -static-libstdc++
-        -Wl,--gc-sections)
+target_link_options(sadx-ap-randomizer PRIVATE -static-libgcc -static-libstdc++ -Wl,--gc-sections)
 
-set_target_properties(sadx-ap-randomizer PROPERTIES
-        PREFIX ""
-        OUTPUT_NAME "sadx-classic-randomizer")
+set_target_properties(sadx-ap-randomizer PROPERTIES PREFIX "" OUTPUT_NAME "sadx-classic-randomizer")
