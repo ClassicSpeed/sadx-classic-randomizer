@@ -67,72 +67,62 @@ file(GLOB_RECURSE CONFIGURATION_SOURCES CONFIGURE_DEPENDS
 set(COMMON_INCLUDE_DIRS
         ${CMAKE_SOURCE_DIR}/src
         ${CONFIGURATION_DIR}
-        ${CMAKE_SOURCE_DIR}/lib/windows-header-fix
         ${CMAKE_SOURCE_DIR}/lib/APCpp
         ${CMAKE_SOURCE_DIR}/lib/APCpp/IXWebSocket
-        ${CMAKE_SOURCE_DIR}/lib/APCpp/jsoncpp/include)
+        ${CMAKE_SOURCE_DIR}/lib/APCpp/jsoncpp/include
+        ${CMAKE_SOURCE_DIR}/lib/windows-header-fix)
 
 set(MOD_LOADER_INCLUDE_DIRS
         ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible/ModLoaderCommon
         ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible)
 
 set(COMMON_COMPILE_DEFINITIONS WIN32 _WINDOWS _USRDLL UNICODE _UNICODE)
+set(COMMON_SECTION_COMPILE_OPTIONS -ffunction-sections -fdata-sections)
+
+function(apply_common_target_settings target)
+    target_compile_features(${target} PRIVATE cxx_std_17)
+    target_include_directories(${target} PRIVATE ${COMMON_INCLUDE_DIRS})
+    target_include_directories(${target} SYSTEM PRIVATE ${MOD_LOADER_INCLUDE_DIRS})
+    target_compile_definitions(${target} PRIVATE ${COMMON_COMPILE_DEFINITIONS})
+endfunction()
 
 # ModLoader Common
 add_library(mod-loader-common STATIC
         lib/sadx-mod-loader-linux-compatible/ModLoaderCommon/IniFile.cpp
         lib/sadx-mod-loader-linux-compatible/ModLoaderCommon/TextConv.cpp)
-target_compile_features(mod-loader-common PRIVATE cxx_std_17)
-target_include_directories(mod-loader-common PRIVATE ${COMMON_INCLUDE_DIRS})
-target_include_directories(mod-loader-common SYSTEM PRIVATE ${MOD_LOADER_INCLUDE_DIRS})
-target_compile_definitions(mod-loader-common PRIVATE ${COMMON_COMPILE_DEFINITIONS})
+apply_common_target_settings(mod-loader-common)
 
 
 # SADX AP Configurations
 add_library(sadx-ap-randomizer-configuration OBJECT ${CONFIGURATION_SOURCES})
-target_compile_features(sadx-ap-randomizer-configuration PRIVATE cxx_std_17)
-target_include_directories(sadx-ap-randomizer-configuration PRIVATE ${COMMON_INCLUDE_DIRS})
-target_include_directories(sadx-ap-randomizer-configuration SYSTEM PRIVATE ${MOD_LOADER_INCLUDE_DIRS})
-target_compile_definitions(sadx-ap-randomizer-configuration PRIVATE ${COMMON_COMPILE_DEFINITIONS})
+apply_common_target_settings(sadx-ap-randomizer-configuration)
 
 target_compile_options(sadx-ap-randomizer-configuration PRIVATE
-        -ffunction-sections -fdata-sections)
+        ${COMMON_SECTION_COMPILE_OPTIONS})
 
+file(GLOB_RECURSE RANDOMIZER_SOURCES CONFIGURE_DEPENDS
+        ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
-add_library(sadx-ap-randomizer SHARED
-        $<TARGET_OBJECTS:sadx-ap-randomizer-configuration>
-        src/mod.cpp
+# src/configuration is compiled via sadx-ap-randomizer-configuration.
+list(FILTER RANDOMIZER_SOURCES EXCLUDE REGEX "^${CONFIGURATION_DIR}/")
+
+set(APCPP_SOURCES
         lib/APCpp/Archipelago.cpp
         lib/APCpp/Archipelago_DataStorageSim.cpp
-        lib/APCpp/Archipelago_Gifting.cpp
-        src/output/reactionManager/ReactionManager.cpp
-        src/output/characterManager/CharacterManager.cpp
-        src/output/itemRepository/ItemRepository.cpp
-        src/output/locationRepository/LocationRepository.cpp
-        src/output/archipelagoMessenger/ArchipelagoMessenger.cpp
-        src/output/saveFileManager/SaveFileManager.cpp
-        src/output/musicManager/MusicManager.cpp
-        src/output/worldStateManager/WorldStateManager.cpp
-        src/output/worldStateManager/setObjectManager/SetObjectManager.cpp
-        src/output/worldStateManager/adventureFieldEntranceManager/AdventureFieldEntranceManager.cpp
-        src/output/worldStateManager/adventureFieldEntranceManager/AdventureFieldEntranceMap.cpp
-        src/output/worldStateManager/adventureFieldEntranceManager/mapManager/MapManager.cpp
-        src/application/randomizer/Randomizer.cpp
-        src/application/link/Link.cpp
-        src/input/cheatsManager/CheatsManager.cpp
-        src/input/archipelago/ArchipelagoManager.cpp
-        src/input/eventDetector/EventDetector.cpp
-        src/input/characterLoading/CharacterLoadingDetector.cpp
-        src/output/displayManager/DisplayManager.cpp)
+        lib/APCpp/Archipelago_Gifting.cpp)
 
-target_compile_features(sadx-ap-randomizer PRIVATE cxx_std_17)
-target_include_directories(sadx-ap-randomizer PRIVATE ${COMMON_INCLUDE_DIRS})
-target_include_directories(sadx-ap-randomizer SYSTEM PRIVATE ${MOD_LOADER_INCLUDE_DIRS})
-target_compile_definitions(sadx-ap-randomizer PRIVATE ${COMMON_COMPILE_DEFINITIONS})
-target_compile_options(sadx-ap-randomizer PRIVATE -fpermissive)
+add_library(sadx-ap-randomizer SHARED
+        $<TARGET_OBJECTS:sadx-ap-randomizer-configuration>)
+
+target_sources(sadx-ap-randomizer PRIVATE
+        ${APCPP_SOURCES}
+        ${RANDOMIZER_SOURCES})
+
+apply_common_target_settings(sadx-ap-randomizer)
 
 target_compile_options(sadx-ap-randomizer PRIVATE
-        -ffunction-sections -fdata-sections)
+        -fpermissive
+        ${COMMON_SECTION_COMPILE_OPTIONS})
 
 
 target_link_libraries(sadx-ap-randomizer PRIVATE
