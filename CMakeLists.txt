@@ -14,8 +14,6 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
 project(sadx-ap-randomizer LANGUAGES CXX)
 
-option(SADX_SIZE_OPTIMIZED_RELEASE "Enable size-oriented flags for Release/MinSizeRel builds" ON)
-
 # Pull APCpp dependency targets (ixwebsocket/jsoncpp/mbedtls/zlib),
 # but compile Archipelago sources directly into this project's DLL.
 set(BUNDLED_JSONCPP ON CACHE BOOL "" FORCE)
@@ -97,11 +95,8 @@ target_include_directories(sadx-ap-randomizer-configuration PRIVATE ${COMMON_INC
 target_include_directories(sadx-ap-randomizer-configuration SYSTEM PRIVATE ${MOD_LOADER_INCLUDE_DIRS})
 target_compile_definitions(sadx-ap-randomizer-configuration PRIVATE ${COMMON_COMPILE_DEFINITIONS})
 
-if(SADX_SIZE_OPTIMIZED_RELEASE)
-    target_compile_options(sadx-ap-randomizer-configuration PRIVATE
-            $<$<CONFIG:Release>:-ffunction-sections -fdata-sections>
-            $<$<CONFIG:MinSizeRel>:-ffunction-sections -fdata-sections>)
-endif()
+target_compile_options(sadx-ap-randomizer-configuration PRIVATE
+        -ffunction-sections -fdata-sections)
 
 
 add_library(sadx-ap-randomizer SHARED
@@ -136,11 +131,8 @@ target_include_directories(sadx-ap-randomizer SYSTEM PRIVATE ${MOD_LOADER_INCLUD
 target_compile_definitions(sadx-ap-randomizer PRIVATE ${COMMON_COMPILE_DEFINITIONS})
 target_compile_options(sadx-ap-randomizer PRIVATE -fpermissive)
 
-if(SADX_SIZE_OPTIMIZED_RELEASE)
-    target_compile_options(sadx-ap-randomizer PRIVATE
-            $<$<CONFIG:Release>:-ffunction-sections -fdata-sections>
-            $<$<CONFIG:MinSizeRel>:-ffunction-sections -fdata-sections>)
-endif()
+target_compile_options(sadx-ap-randomizer PRIVATE
+        -ffunction-sections -fdata-sections)
 
 
 target_link_libraries(sadx-ap-randomizer PRIVATE
@@ -157,15 +149,10 @@ target_link_libraries(sadx-ap-randomizer PRIVATE
         bcrypt
         crypt32)
 
-if(SADX_SIZE_OPTIMIZED_RELEASE)
-    target_link_options(sadx-ap-randomizer PRIVATE
-            -static
-            -static-libgcc
-            -static-libstdc++
-            $<$<CONFIG:Release>:-Wl,--gc-sections -s>
-            $<$<CONFIG:MinSizeRel>:-Wl,--gc-sections -s>)
-else()
-    target_link_options(sadx-ap-randomizer PRIVATE -static -static-libgcc -static-libstdc++)
-endif()
+target_link_options(sadx-ap-randomizer PRIVATE
+        -static
+        -static-libgcc
+        -static-libstdc++
+        -Wl,--gc-sections)
 
 set_target_properties(sadx-ap-randomizer PROPERTIES PREFIX "" OUTPUT_NAME "sadx-classic-randomizer")
