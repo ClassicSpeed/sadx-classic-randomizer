@@ -104,8 +104,8 @@ if(SADX_SIZE_OPTIMIZED_RELEASE)
 endif()
 
 
-# SADX AP Randomizer Core
-add_library(sadx-ap-randomizer-core OBJECT
+add_library(sadx-ap-randomizer SHARED
+        $<TARGET_OBJECTS:sadx-ap-randomizer-configuration>
         src/mod.cpp
         lib/APCpp/Archipelago.cpp
         lib/APCpp/Archipelago_DataStorageSim.cpp
@@ -129,22 +129,19 @@ add_library(sadx-ap-randomizer-core OBJECT
         src/input/eventDetector/EventDetector.cpp
         src/input/characterLoading/CharacterLoadingDetector.cpp
         src/output/displayManager/DisplayManager.cpp)
-add_dependencies(sadx-ap-randomizer-core sadx-ap-randomizer-configuration)
-target_compile_features(sadx-ap-randomizer-core PRIVATE cxx_std_17)
-target_include_directories(sadx-ap-randomizer-core PRIVATE ${COMMON_INCLUDE_DIRS})
-target_include_directories(sadx-ap-randomizer-core SYSTEM PRIVATE ${MOD_LOADER_INCLUDE_DIRS})
-target_compile_definitions(sadx-ap-randomizer-core PRIVATE ${COMMON_COMPILE_DEFINITIONS})
-target_compile_options(sadx-ap-randomizer-core PRIVATE -fpermissive)
+
+target_compile_features(sadx-ap-randomizer PRIVATE cxx_std_17)
+target_include_directories(sadx-ap-randomizer PRIVATE ${COMMON_INCLUDE_DIRS})
+target_include_directories(sadx-ap-randomizer SYSTEM PRIVATE ${MOD_LOADER_INCLUDE_DIRS})
+target_compile_definitions(sadx-ap-randomizer PRIVATE ${COMMON_COMPILE_DEFINITIONS})
+target_compile_options(sadx-ap-randomizer PRIVATE -fpermissive)
 
 if(SADX_SIZE_OPTIMIZED_RELEASE)
-    target_compile_options(sadx-ap-randomizer-core PRIVATE
+    target_compile_options(sadx-ap-randomizer PRIVATE
             $<$<CONFIG:Release>:-ffunction-sections -fdata-sections>
             $<$<CONFIG:MinSizeRel>:-ffunction-sections -fdata-sections>)
 endif()
 
-add_library(sadx-ap-randomizer SHARED
-        $<TARGET_OBJECTS:sadx-ap-randomizer-configuration>
-        $<TARGET_OBJECTS:sadx-ap-randomizer-core>)
 
 target_link_libraries(sadx-ap-randomizer PRIVATE
         mod-loader-common
