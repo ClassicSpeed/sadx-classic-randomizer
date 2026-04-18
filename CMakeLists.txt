@@ -106,7 +106,7 @@ endif()
 
 # SADX AP Randomizer Core
 add_library(sadx-ap-randomizer-core OBJECT
-        src/mod2.cpp
+        src/mod.cpp
         lib/APCpp/Archipelago.cpp
         lib/APCpp/Archipelago_DataStorageSim.cpp
         lib/APCpp/Archipelago_Gifting.cpp

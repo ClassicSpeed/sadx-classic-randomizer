@@ -1,17 +1,24 @@
-#include "pch.h"
+#include <pch.h>
+#include "settings/Settings.h"
+#include "options/Options.h"
+#include "gameStatus/GameStatus.h"
+#include "output/reactionManager/ReactionManager.h"
+#include "output/displayManager/DisplayManager.h"
+#include "output/characterManager/CharacterManager.h"
+#include "output/itemRepository/ItemRepository.h"
+#include "output/locationRepository/LocationRepository.h"
+#include "output/archipelagoMessenger/ArchipelagoMessenger.h"
+#include "output/worldStateManager/WorldStateManager.h"
+#include "output/saveFileManager/SaveFileManager.h"
+#include "output/musicManager/MusicManager.h"
 
 #include "application/randomizer/Randomizer.h"
 #include "application/link/Link.h"
-#include "configuration/gameStatus/GameStatus.h"
-#include "input/archipelago/ArchipelagoManager.h"
+
 #include "input/cheatsManager/CheatsManager.h"
+#include "input/archipelago/ArchipelagoManager.h"
 #include "input/eventDetector/EventDetector.h"
-#include "input/characterLoading/CharacterLoadingDetector.h"
-#include "output/archipelagoMessenger/ArchipelagoMessenger.h"
-#include "output/locationRepository/LocationRepository.h"
-#include "output/musicManager/MusicManager.h"
-#include "output/saveFileManager/SaveFileManager.h"
-#include "output/worldStateManager/WorldStateManager.h"
+#include "input/characterLoading//CharacterLoadingDetector.h"
 
 extern "C" {
 std::vector<IOnFrame*> onFrameObjects;
