@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 
+# Cross-compile for 32-bit Windows with MinGW.
 set(CMAKE_SYSTEM_NAME Windows)
 set(CMAKE_SYSTEM_PROCESSOR x86)
-
 set(CMAKE_C_COMPILER i686-w64-mingw32-gcc)
 set(CMAKE_CXX_COMPILER i686-w64-mingw32-g++)
 set(CMAKE_RC_COMPILER i686-w64-mingw32-windres)
@@ -24,6 +24,13 @@ endif()
 
 add_subdirectory(lib/APCpp EXCLUDE_FROM_ALL)
 
+# Use C++17 for this project targets.
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_compile_definitions(WIN32 _WINDOWS _USRDLL UNICODE _UNICODE)
+add_compile_options(-ffunction-sections -fdata-sections)
+
 file(GLOB_RECURSE RANDOMIZER_SOURCES CONFIGURE_DEPENDS
         ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
@@ -33,20 +40,15 @@ add_library(mod-loader-common STATIC
 
 add_library(sadx-ap-randomizer SHARED ${RANDOMIZER_SOURCES})
 
-function(apply_common_target_settings target)
-    target_compile_features(${target} PRIVATE cxx_std_17)
-    target_include_directories(${target} PRIVATE
-            ${CMAKE_SOURCE_DIR}/src
-            ${CMAKE_SOURCE_DIR}/src/configuration)
-    target_include_directories(${target} SYSTEM PRIVATE
-            ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible/ModLoaderCommon
-            ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible)
-    target_compile_definitions(${target} PRIVATE WIN32 _WINDOWS _USRDLL UNICODE _UNICODE)
-    target_compile_options(${target} PRIVATE -ffunction-sections -fdata-sections)
-endfunction()
+target_include_directories(mod-loader-common SYSTEM PRIVATE
+        ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible/ModLoaderCommon
+        ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible)
 
-apply_common_target_settings(mod-loader-common)
-apply_common_target_settings(sadx-ap-randomizer)
+target_include_directories(sadx-ap-randomizer PRIVATE
+        ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(sadx-ap-randomizer SYSTEM PRIVATE
+        ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible/ModLoaderCommon
+        ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible)
 
 target_compile_options(sadx-ap-randomizer PRIVATE -fpermissive)
 

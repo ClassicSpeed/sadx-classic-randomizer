@@ -1,7 +1,7 @@
 #include <pch.h>
-#include "settings/Settings.h"
-#include "options/Options.h"
-#include "gameStatus/GameStatus.h"
+#include "configuration/settings/Settings.h"
+#include "configuration/options/Options.h"
+#include "configuration/gameStatus/GameStatus.h"
 #include "output/reactionManager/ReactionManager.h"
 #include "output/displayManager/DisplayManager.h"
 #include "output/characterManager/CharacterManager.h"
