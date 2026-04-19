@@ -424,7 +424,7 @@ void AdventureFieldEntranceMap::overrideEntranceAct(std::vector<AdventureFieldEn
     }
 }
 
-const std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetEntrances() const
+std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetEntrances()
 {
     if (_gameStatus.isEggCarrierTransformed)
         return _entranceList;
@@ -478,9 +478,9 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetCurrentEntrance(const Leve
 EntranceId AdventureFieldEntranceMap::FindEntranceByLocation(
     const LevelAndActIDs sourceLocation, const LevelAndActIDs destinationLocation)
 {
-    std::vector<AdventureFieldEntrance*> possibleEntrances;
-    std::vector<AdventureFieldEntrance> entranceList = GetEntrances();
-    for (auto& entrance : entranceList)
+    std::vector<const AdventureFieldEntrance*> possibleEntrances;
+    const auto& entranceList = GetEntrances();
+    for (const auto& entrance : entranceList)
     {
         if (entrance.levelAndActId == sourceLocation)
         {
@@ -536,7 +536,7 @@ EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId 
 
 AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const EntranceId entranceId)
 {
-    std::vector<AdventureFieldEntrance> entranceList = GetEntrances();
+    auto& entranceList = GetEntrances();
     for (auto& entrance : entranceList)
     {
         if (entrance.entranceId == entranceId)
