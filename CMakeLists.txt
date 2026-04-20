@@ -50,3 +50,17 @@ target_link_libraries(sadx-ap-randomizer PRIVATE mod-loader-common APCpp)
 target_link_options(sadx-ap-randomizer PRIVATE -static-libgcc -static-libstdc++ -Wl,--gc-sections)
 
 set_target_properties(sadx-ap-randomizer PROPERTIES PREFIX "" OUTPUT_NAME "sadx-classic-randomizer")
+
+if(DEFINED SADX_MODS_DIR AND NOT SADX_MODS_DIR STREQUAL "")
+    message(STATUS "Post-build copy enabled: ${SADX_MODS_DIR}")
+
+    add_custom_command(TARGET sadx-ap-randomizer POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${SADX_MODS_DIR}"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "$<TARGET_FILE:sadx-ap-randomizer>"
+            "${SADX_MODS_DIR}/sadx-classic-randomizer.dll"
+            VERBATIM
+    )
+else()
+    message(STATUS "Post-build copy disabled (set -DSADX_MODS_DIR=... to enable).")
+endif()

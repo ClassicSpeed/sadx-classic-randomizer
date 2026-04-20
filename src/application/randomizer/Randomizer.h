@@ -43,7 +43,7 @@ public:
     void QueueNewChatMessage(std::string information);
     std::vector<CapsuleLocationData> GetCapsules();
     std::vector<EnemyLocationData> GetEnemies();
-    void ResetItems() const;
+    void ResetItems();
     void UpdateLevelEntrances();
     void DisplaySongName(int songId);
     int GetSongForId(int songId);

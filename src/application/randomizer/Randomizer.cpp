@@ -71,22 +71,21 @@ void Randomizer::OnItemReceived(const int64_t itemId)
     }
     else if (item.type == ItemFiller)
     {
-        if (_settings.ignoreTrapsOnConnect && _ignoreTrapTimer > 0)
-        {
+        if (_settings.ignoreTrapsOnConnect && _ignoreTrapTimer > 0) {
             const double timePassed = (std::clock() - this->_ignoreTrapTimer) / static_cast<double>(CLOCKS_PER_SEC);
 
             if (timePassed > _ignoreTrapDuration)
                 _ignoreTrapTimer = -1;
+            else
+                return;
         }
-        else
+        _characterManager.GiveFillerItem(item.fillerType, false);
+        if (_options.trapLinkActive && !IsJunkFiller(item.fillerType))
         {
-            _characterManager.GiveFillerItem(item.fillerType, false);
-            if (_options.trapLinkActive && !IsJunkFiller(item.fillerType))
-            {
-                _archipelagoMessenger.SendTrapLink(item.displayName, _settings.playerName);
-                _displayManager.QueueItemMessage("Linked " + item.displayName + " sent");
-            }
+            _archipelagoMessenger.SendTrapLink(item.displayName, _settings.playerName);
+            _displayManager.QueueItemMessage("Linked " + item.displayName + " sent");
         }
+
     }
 
     _gameStatus.CheckGoalRequirements();
@@ -110,12 +109,13 @@ void Randomizer::OnItemReceived(const int64_t itemId)
     _reactionManager.PlayRandomVoiceForItem(item, itemId);
 }
 
-void Randomizer::ResetItems() const
+void Randomizer::ResetItems()
 {
     _itemRepository.ResetItems();
 
     _locationRepository.UpdateStatus();
     _archipelagoMessenger.UpdateTags();
+    _ignoreTrapTimer = std::clock();
 }
 
 void Randomizer::UpdateLevelEntrances()
@@ -176,7 +176,6 @@ std::vector<EnemyLocationData> Randomizer::GetEnemies()
 
 void Randomizer::OnConnected()
 {
-    _ignoreTrapTimer = std::clock();
     _locationRepository.UpdateStatus();
 
     //Missions
