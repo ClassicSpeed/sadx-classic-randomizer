@@ -984,7 +984,7 @@ void AdventureFieldEntranceManager::OnPastSceneChange(task* tp)
         && IsNearPosition(tp->twp->pos, 223.44F, -2, 1836.12F))
     {
         if (!_instance->IsDoorOpen(PastAltarToPastMain))
-            return FreeTask(tp);
+            tp->twp->pos = {223.44f, -2, 1880};
     }
     _pastSceneChangeHook.Original(tp);
 }

@@ -6,9 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Changed:
 
-- Some connections used to have their loading zone removed when closed. They were readed and the logic was adjusted:
+- Some connections used to have their loading zone removed when closed. They were readded and the logic was adjusted:
     - Sewers to City Hall.
     - Past Main to Past Altar.
+    - Past Altar to Past Main.
 
 ## [v1.2.1] - 2026-??-??
 
