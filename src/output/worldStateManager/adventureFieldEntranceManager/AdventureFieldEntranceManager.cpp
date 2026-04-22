@@ -76,7 +76,6 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _isFinalEggEggmanDoorOpenHook.Hook(OnIsFinalEggEggmanDoorOpen);
     _isMonkeyDoorOpenHook.Hook(OnIsMonkeyDoorOpen);
     _loadMonkeyCageHook.Hook(OnLoadMonkeyCage);
-    _changeSceneCave2Hook.Hook(OnChangeSceneCave2);
     _isLostWorldFrontEntranceOpenHook.Hook(OnIsLostWorldFrontEntranceOpen);
     _isSandHillOpenHook.Hook(OnIsSandHillOpen);
     _loadSceneChangeMrHook.Hook(OnLoadSceneChangeMr);
@@ -1030,18 +1029,6 @@ void AdventureFieldEntranceManager::OnLoadMonkeyCage(task* tp)
             return FreeTask(tp);
     }
     _loadMonkeyCageHook.Original(tp);
-}
-
-void AdventureFieldEntranceManager::OnChangeSceneCave2(task* tp)
-{
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2
-        && IsNearPosition(tp->twp->pos, 56, -100, -13))
-    {
-        if (!_instance->IsDoorOpen(AngelIslandToMrMain))
-            return FreeTask(tp);
-    }
-
-    _changeSceneCave2Hook.Original(tp);
 }
 
 BOOL AdventureFieldEntranceManager::OnIsLostWorldFrontEntranceOpen()

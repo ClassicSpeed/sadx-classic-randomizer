@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
     - Sewers to City Hall.
     - Past Main to Past Altar.
     - Past Altar to Past Main.
+    - Angel Island to MRMain.
 
 ## [v1.2.1] - 2026-??-??
 
