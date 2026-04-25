@@ -6,12 +6,21 @@ All notable changes to this project will be documented in this file.
 
 ### Changed:
 
-- Some connections used to have their loading zone removed when closed. They were readded and the logic was adjusted:
+- Some connections used to have their loading zone removed when closed. They were re-added and the logic was adjusted:
     - Sewers to City Hall.
     - Past Main to Past Altar.
     - Past Altar to Past Main.
     - Angel Island to MRMain.
-    - Ec Inside to Final Egg Tower
+    - Ec Inside to Final Egg Tower.
+    - Final Egg Tower to Jungle.
+    - Final Egg Tower to Jungle.
+    - Final Egg Tower to Ec Inside.
+    - Final Egg Tower to Final Egg.
+    - Final Egg Tower to Final Egg (Alt).
+    - Jungle to Final Egg Tower.
+    - Jungle to Lost World.
+    - Jungle to Lost World (Alt).
+    - Jungle to Sand Hill.
 
 ## [v1.2.1] - 2026-??-??
 

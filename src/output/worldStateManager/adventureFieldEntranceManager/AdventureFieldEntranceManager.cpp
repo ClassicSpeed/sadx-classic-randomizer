@@ -1080,44 +1080,28 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
         }
     }
 
-    //  Final Egg 
+    //  Final Egg
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4)
     {
         if (newScene == 2)
         {
-            if (_instance->IsDoorOpen(FinalEggTowerToFinalEggAlternative))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_FinalEgg3), GET_ACT(LevelAndActIDs_FinalEgg3));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_FinalEgg3), GET_ACT(LevelAndActIDs_FinalEgg3));
         }
         if (newScene == 3)
         {
-            if (_instance->IsDoorOpen(FinalEggTowerToFinalEgg))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_FinalEgg1), GET_ACT(LevelAndActIDs_FinalEgg1));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_FinalEgg1), GET_ACT(LevelAndActIDs_FinalEgg1));
         }
         if (newScene == 4)
         {
-            if (_instance->IsDoorOpen(FinalEggTowerToJungle))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_MysticRuins3), GET_ACT(LevelAndActIDs_MysticRuins3));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_MysticRuins3), GET_ACT(LevelAndActIDs_MysticRuins3));
         }
         if (newScene == 5)
         {
-            if (_instance->IsDoorOpen(FinalEggTowerToEcInside))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_EggCarrierInside2), GET_ACT(LevelAndActIDs_EggCarrierInside2));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_EggCarrierInside2), GET_ACT(LevelAndActIDs_EggCarrierInside2));
         }
     }
 
@@ -1126,39 +1110,23 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
     {
         if (newScene == 5)
         {
-            if (_instance->IsDoorOpen(JungleToFinalEggTower))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_MysticRuins4), GET_ACT(LevelAndActIDs_MysticRuins4));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_MysticRuins4), GET_ACT(LevelAndActIDs_MysticRuins4));
         }
         if (newScene == 6)
         {
-            if (_instance->IsDoorOpen(JungleToLostWorld))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_LostWorld1), GET_ACT(LevelAndActIDs_LostWorld1));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_LostWorld1), GET_ACT(LevelAndActIDs_LostWorld1));
         }
         if (newScene == 7)
         {
-            if (_instance->IsDoorOpen(JungleToLostWorldAlternative))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_LostWorld2), GET_ACT(LevelAndActIDs_LostWorld2));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_LostWorld2), GET_ACT(LevelAndActIDs_LostWorld2));
         }
         if (newScene == 8)
         {
-            if (_instance->IsDoorOpen(JungleToSandHill))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_SandHill), GET_ACT(LevelAndActIDs_SandHill));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_SandHill), GET_ACT(LevelAndActIDs_SandHill));
         }
     }
 
@@ -1329,7 +1297,7 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
         return eggCarrierInsideEggDoorHook.Original(twp);
     }
 
-    // Hedgehog hammer 
+    // Hedgehog hammer
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside3)
     {
         if (twp->smode == 4)
@@ -1392,7 +1360,7 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
 
 int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
 {
-    // EC outside 
+    // EC outside
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
     {
         if (IsNearPosition(twp->pos, 0, 744.5, 1080.7))
