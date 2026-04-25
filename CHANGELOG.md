@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
     - Past Main to Past Altar.
     - Past Altar to Past Main.
     - Angel Island to MRMain.
+    - Ec Inside to Final Egg Tower
 
 ## [v1.2.1] - 2026-??-??
 
