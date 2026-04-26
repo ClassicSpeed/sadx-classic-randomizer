@@ -43,6 +43,9 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     WriteCall((void*)0x592048, (void*)EnablePause);
     WriteCall((void*)0x5920AF, (void*)EnablePause);
 
+    //Re-enable pause after subtitles
+    WriteCall((void*)0x4B7722, (void*)EnablePause);
+
     //Re-enable timer after finishing a mission
     WriteCall((void*)0x592057, (void*)EmptyCall);
     WriteCall((void*)0x592131, (void*)EmptyCall);
