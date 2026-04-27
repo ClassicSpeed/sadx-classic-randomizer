@@ -68,8 +68,8 @@ private:
     inline static FunctionHook<int> _getLureQuantityHook{0x46C870};
     static int OnGetLureQuantity();
 
-    inline static FunctionHook<void> _writeAnalogsHook{0x40F170};
-    static void OnWriteAnalogs();
+    inline static FunctionHook<void> _controlHook{0x40FDC0};
+    static void OnControl();
 
     inline static FunctionHook<void, task*> _freezeTrapDisplayHook{0x4A2240};
     static void OnFreezeTrapDisplay(task* tp);

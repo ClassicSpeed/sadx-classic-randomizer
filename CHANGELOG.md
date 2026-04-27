@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
     - Jungle to Sand Hill.
 - You are now allowed to pause while the game is displaying subtitles.
   - This won't affect the traps that much, but it can help with key items. 
+- Reverse trap now inverts buttons and affects Knuckles' climbing.
 
 ## [v1.2.1] - 2026-??-??
 

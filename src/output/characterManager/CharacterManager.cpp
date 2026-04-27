@@ -14,7 +14,7 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     _giveMagneticBarrierHook.Hook(OnGiveMagneticBarrier);
     _giveInvincibilityHook.Hook(OnGiveInvincibility);
     _getLureQuantityHook.Hook(OnGetLureQuantity);
-    _writeAnalogsHook.Hook(OnWriteAnalogs);
+    _controlHook.Hook(OnControl);
     _freezeTrapDisplayHook.Hook(OnFreezeTrapDisplay);
     _scoreDisplayMainHook.Hook(OnScoreDisplayMain);
     _drawSNumbersHook.Hook(OnDrawSNumbers);
@@ -571,16 +571,66 @@ void CharacterManager::ReverseControls()
 }
 
 
-void CharacterManager::OnWriteAnalogs()
+void CharacterManager::OnControl()
 {
     if (_instance->_reverseControlsEnabled)
     {
+        const Uint32 OldHeldButtons = ControllerPointers[0]->HeldButtons;
+        Uint32 OlPressedButtons = ControllerPointers[0]->PressedButtons;
+
+        Uint32 NewHeldButtons = 0;
+        Uint32 NewPressedButtons = 0;
+
+        if (OldHeldButtons & Buttons_A) NewHeldButtons |= Buttons_B;
+        if (OldHeldButtons & Buttons_B) NewHeldButtons |= Buttons_A;
+
+        if (OldHeldButtons & Buttons_X) NewHeldButtons |= Buttons_Y;
+        if (OldHeldButtons & Buttons_Y) NewHeldButtons |= Buttons_X;
+
+        // Bumpers
+        if (OldHeldButtons & Buttons_Z) NewHeldButtons |= Buttons_C;
+        if (OldHeldButtons & Buttons_C) NewHeldButtons |= Buttons_Z;
+
+        if (OldHeldButtons & Buttons_R) NewHeldButtons |= Buttons_L;
+        if (OldHeldButtons & Buttons_L) NewHeldButtons |= Buttons_R;
+
+        // Pause and Select
+        if (OldHeldButtons & Buttons_Start) NewHeldButtons |= Buttons_D;
+        if (OldHeldButtons & Buttons_D) NewHeldButtons |= Buttons_Start;
+
+        //
+        if (OlPressedButtons & Buttons_A) NewPressedButtons |= Buttons_B;
+        if (OlPressedButtons & Buttons_B) NewPressedButtons |= Buttons_A;
+
+        if (OlPressedButtons & Buttons_X) NewPressedButtons |= Buttons_Y;
+        if (OlPressedButtons & Buttons_Y) NewPressedButtons |= Buttons_X;
+
+        // Bumpers
+        if (OlPressedButtons & Buttons_Z) NewPressedButtons |= Buttons_C;
+        if (OlPressedButtons & Buttons_C) NewPressedButtons |= Buttons_Z;
+
+        if (OlPressedButtons & Buttons_R) NewPressedButtons |= Buttons_L;
+        if (OlPressedButtons & Buttons_L) NewPressedButtons |= Buttons_R;
+
+        // Pause and Select
+        if (OlPressedButtons & Buttons_Start) NewPressedButtons |= Buttons_D;
+        if (OlPressedButtons & Buttons_D) NewPressedButtons |= Buttons_Start;
+
+        ControllerPointers[0]->HeldButtons = NewHeldButtons;
+        ControllerPointers[0]->PressedButtons = NewPressedButtons;
+
         ControllerPointers[0]->LeftStickX = -ControllerPointers[0]->LeftStickX;
         ControllerPointers[0]->LeftStickY = -ControllerPointers[0]->LeftStickY;
         ControllerPointers[0]->RightStickX = -ControllerPointers[0]->RightStickX;
         ControllerPointers[0]->RightStickY = -ControllerPointers[0]->RightStickY;
+
+        const Uint16 leftTrigger = ControllerPointers[0]->LTriggerPressure;
+        const Uint16 rightTrigger = ControllerPointers[0]->RTriggerPressure;
+
+        ControllerPointers[0]->LTriggerPressure = rightTrigger;
+        ControllerPointers[0]->RTriggerPressure = leftTrigger;
     }
-    _writeAnalogsHook.Original();
+    _controlHook.Original();
 }
 
 void CharacterManager::OnFreezeTrapDisplay(task* tp)
