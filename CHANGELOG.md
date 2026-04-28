@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.2.2 pre-release 1] - 2026-??-??
 
+
+### Added:
+- You can now exit Sky Chase to the Adventure Field.
+
 ### Changed:
 
 - Some connections used to have their loading zone removed when closed. They were re-added and the logic was adjusted:

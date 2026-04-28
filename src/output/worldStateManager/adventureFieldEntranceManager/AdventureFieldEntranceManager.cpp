@@ -99,7 +99,14 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _hiddenGateMainHook.Hook(OnHiddenGateMain);
     _isEcTransformedHook.Hook(IsECTransformed);
     //Allows players to return to the adventure field when quitting boss fights
-    WriteData<1>((void*)0x415F46, 0x19); // Change the comparison value from 3 to 9
+    WriteData<1>((void*)0x415F46, 0x19);
+
+    //Allows to return to the adventure field if the level is between 35  and 38
+    WriteData<1>((void*)0x415F57, 0x72);
+    WriteData<1>((void*)0x415F58, 0x3B);
+    WriteData<1>((void*)0x415F5E, 0x87);
+
+    // Change the comparison value from 3 to 9
     WriteData<1>((void*)0x638BF6, 0x09);
     // Change the jump from jz (0x74) to jnz (0x75)
     WriteData<1>((void*)0x638C00, 0x75);

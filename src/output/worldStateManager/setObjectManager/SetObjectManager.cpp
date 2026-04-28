@@ -61,7 +61,7 @@ void SetObjectManager::OnFrame()
             _eggCarrierSunk = true;
     }
 
-    if (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SkyChase2)
+    if (CurrentLevel == LevelIDs_TwinkleCircuit)
         GameMode = GameModes_Adventure_ActionStg;
     else if (GameMode == GameModes_Adventure_Field || GameMode == GameModes_Adventure_ActionStg)
         GameMode = GameModes_Mission;
