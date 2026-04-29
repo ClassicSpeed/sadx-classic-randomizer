@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added:
 - You can now exit Sky Chase to the Adventure Field.
+- A message will be shown when transforming the Egg Carrier.
+  - Removed the setting to show the transformation cutscene.
 
 ### Changed:
 
@@ -29,7 +31,7 @@ All notable changes to this project will be documented in this file.
   - This won't affect the traps that much, but it can help with key items. 
 - Reverse trap now inverts buttons and affects Knuckles' climbing.
 
-## [v1.2.1] - 2026-??-??
+## [v1.2.1] - 2026-04-11
 
 ### Changed:
 

@@ -461,27 +461,9 @@ void AdventureFieldEntranceManager::OnSetStartPosReturnToField()
 void AdventureFieldEntranceManager::OnFrame()
 {
     _mapManager.OnFrame();
-    if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside4)
-    {
-        bool isTransformed = false;
-        if (CurrentCharacter == Characters_Sonic)
-            isTransformed = EventFlagArray[FLAG_SONIC_EC_TRANSFORM];
-        else if (CurrentCharacter == Characters_Tails)
-            isTransformed = EventFlagArray[FLAG_MILES_EC_TRANSFORM];
-        else if (CurrentCharacter == Characters_Knuckles)
-            isTransformed = EventFlagArray[FLAG_KNUCKLES_EC_TRANSFORM];
-        else if (CurrentCharacter == Characters_Amy)
-            isTransformed = EventFlagArray[FLAG_AMY_EC_TRANSFORM];
-        else if (CurrentCharacter == Characters_Gamma)
-            isTransformed = EventFlagArray[FLAG_E102_EC_TRANSFORM];
-        else if (CurrentCharacter == Characters_Big)
-            isTransformed = EventFlagArray[FLAG_BIG_EC_TRANSFORM];
+}
 
-        if (isTransformed != _instance->_gameStatus.isEggCarrierTransformed)
-            _instance->_gameStatus.isEggCarrierTransformed = isTransformed;
-    }
-} // -------- Function hooks for gating the world --------
-
+// -------- Function hooks for gating the world --------
 BOOL AdventureFieldEntranceManager::OnIsBarricadeGone()
 {
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)

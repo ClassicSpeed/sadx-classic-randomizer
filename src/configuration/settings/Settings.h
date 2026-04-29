@@ -218,7 +218,6 @@ public:
     HomingAttackIndicator homingAttackIndicator = HomingAttackIndicatorDisabled;
 
     bool showEntranceIndicators = true;
-    bool eggCarrierTransformationCutscene = true;
     int chaoStatsMultiplier = 1;
 
     bool extendRingCapacity = false;

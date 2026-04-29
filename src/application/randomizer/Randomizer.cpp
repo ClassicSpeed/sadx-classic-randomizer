@@ -250,6 +250,14 @@ void Randomizer::OnSaveFileLoaded()
     _saveFileManager.OnSaveFileLoaded();
 }
 
+void Randomizer::OnEggCarrierTransform()
+{
+    if (_gameStatus.isEggCarrierTransformed)
+        _displayManager.QueueItemMessage("Egg carrier is now transformed!");
+    else
+        _displayManager.QueueItemMessage("Egg carrier is no longer transformed!");
+}
+
 void Randomizer::DisplaySongName(const int songId)
 {
     const auto* song = _musicManager.FindSongById(songId);

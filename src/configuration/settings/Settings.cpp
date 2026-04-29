@@ -109,11 +109,6 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
 
     this->extendRingCapacity = settingsIni->getBool("GameSettings", "ExtendRingCapacity", false);
 
-
-    this->eggCarrierTransformationCutscene = settingsIni->getBool("GameSettings",
-                                                                  "EggCarrierTransformationCutscene", true);
-
-
     this->showEntranceIndicators = settingsIni->getBool("GameSettings",
                                                         "ShowEntranceIndicators", true);
 

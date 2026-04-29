@@ -23,9 +23,9 @@ float GetShadowPos_r(float x, float y, float z, Angle3* rotation)
     return result;
 }
 
-EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& randomizer, Link& link) :
-    _options(options),
-    _settings(settings), _randomizer(randomizer), _link(link)
+EventDetector::EventDetector(Options& options, Settings& settings, Randomizer& randomizer, Link& link,
+                             GameStatus& gameStatus) :
+    _options(options), _settings(settings), _randomizer(randomizer), _link(link), _gameStatus(gameStatus)
 {
     _onLevelEmblemCollectedHook.Hook(OnLevelEmblemCollected);
     _onGenericEmblemCollectedHook.Hook(OnGenericEmblemCollected);
@@ -424,6 +424,30 @@ void EventDetector::OnFrame()
 
     if (DemoPlaying > 0)
         return;
+
+    //Checks for Egg Carrier transformation
+    if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside4)
+    {
+        bool isTransformed = false;
+        if (CurrentCharacter == Characters_Sonic)
+            isTransformed = EventFlagArray[FLAG_SONIC_EC_TRANSFORM];
+        else if (CurrentCharacter == Characters_Tails)
+            isTransformed = EventFlagArray[FLAG_MILES_EC_TRANSFORM];
+        else if (CurrentCharacter == Characters_Knuckles)
+            isTransformed = EventFlagArray[FLAG_KNUCKLES_EC_TRANSFORM];
+        else if (CurrentCharacter == Characters_Amy)
+            isTransformed = EventFlagArray[FLAG_AMY_EC_TRANSFORM];
+        else if (CurrentCharacter == Characters_Gamma)
+            isTransformed = EventFlagArray[FLAG_E102_EC_TRANSFORM];
+        else if (CurrentCharacter == Characters_Big)
+            isTransformed = EventFlagArray[FLAG_BIG_EC_TRANSFORM];
+
+        if (isTransformed != _instance->_gameStatus.isEggCarrierTransformed)
+        {
+            _instance->_gameStatus.isEggCarrierTransformed = isTransformed;
+            _randomizer.OnEggCarrierTransform();
+        }
+    }
 
     //Ignore events given by the mod itself
     if (GameMode != GameModes_Mission)

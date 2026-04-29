@@ -52,10 +52,10 @@ enum IndicatorType
 class EventDetector : public IOnFrame
 {
 public:
-    static EventDetector& Init(Options& options, Settings& settings, Randomizer& randomizer, Link& link)
+    static EventDetector& Init(Options& options, Settings& settings, Randomizer& randomizer, Link& link, GameStatus& gameStatus)
     {
         if (_instance == nullptr)
-            _instance = new EventDetector(options, settings, randomizer, link);
+            _instance = new EventDetector(options, settings, randomizer, link, gameStatus);
         return *_instance;
     }
 
@@ -79,12 +79,13 @@ public:
     int lastShuffledSongId = -1;
 
 private:
-    explicit EventDetector(Options& options, Settings& settings, Randomizer& randomizer, Link& link);
+    explicit EventDetector(Options& options, Settings& settings, Randomizer& randomizer, Link& link, GameStatus& gameStatus);
     inline static EventDetector* _instance = nullptr;
 
     Options& _options;
     Settings& _settings;
     Randomizer& _randomizer;
+    GameStatus& _gameStatus;
     Link& _link;
 
     void CheckCapsule(const EntityData1* entity, CapsuleType capsuleType);

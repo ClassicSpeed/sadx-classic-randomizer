@@ -53,14 +53,6 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _opti
 
 void SetObjectManager::OnFrame()
 {
-    if (this->_settings.eggCarrierTransformationCutscene)
-    {
-        if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
-            _eggCarrierSunk = false;
-        else
-            _eggCarrierSunk = true;
-    }
-
     if (CurrentLevel == LevelIDs_TwinkleCircuit)
         GameMode = GameModes_Adventure_ActionStg;
     else if (GameMode == GameModes_Adventure_Field || GameMode == GameModes_Adventure_ActionStg)
@@ -130,10 +122,6 @@ void SetObjectManager::OnCountSetItemsMaybe()
 
     //Sky Chase Tarjet
     LoadNoNamePVM(&TARGET_TEXLIST);
-
-    if (_instance->_settings.eggCarrierTransformationCutscene
-        && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
-        LoadPVM("EC_SKY", &EC_SKY_TEXLIST);
 
     //Freeze trap
     LoadNoNamePVM(&stx_ice0_TEXLIST);

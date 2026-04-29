@@ -108,8 +108,6 @@ private:
     static bool __cdecl HandleHedgehogHammer();
     static void __cdecl HandleWarp();
 
-
-    inline DataPointer(int16_t, _eggCarrierSunk, 0x3C62394);
 };
 
 inline SETEntry CreateSetEntry(const int16_t objectType, const NJS_VECTOR& position,

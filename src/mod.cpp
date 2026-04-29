@@ -50,7 +50,7 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     // Input Handlers
     CheatsManager& cheatsManager = CheatsManager::Init(settings);
     ArchipelagoManager& archipelagoManager = ArchipelagoManager::Init(options, settings, gameStatus, randomizer, link);
-    EventDetector& eventDetector = EventDetector::Init(options, settings, randomizer, link);
+    EventDetector& eventDetector = EventDetector::Init(options, settings, randomizer, link, gameStatus);
     CharacterLoadingDetector& characterLoadingDetector = CharacterLoadingDetector::Init(randomizer, settings);
 
     onFrameObjects = {
