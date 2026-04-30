@@ -11,6 +11,9 @@ CharacterLoadingDetector::CharacterLoadingDetector(Randomizer& randomizer, Setti
 void CharacterLoadingDetector::OnLoadCharacter()
 {
     _instance->OnCharacterLoaded();
+    if (CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
+        LoadRegObjTextures(1);
+
     _loadCharacterHook.Original();
 }
 

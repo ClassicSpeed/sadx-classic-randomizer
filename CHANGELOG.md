@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.2.2 pre-release 1] - 2026-??-??
 
-
 ### Added:
+
 - You can now exit Sky Chase to the Adventure Field.
 - A message will be shown when transforming the Egg Carrier.
-  - Removed the setting to show the transformation cutscene.
+    - Removed the setting to show the transformation cutscene.
 
 ### Changed:
 
@@ -28,8 +28,12 @@ All notable changes to this project will be documented in this file.
     - Jungle to Lost World (Alt).
     - Jungle to Sand Hill.
 - You are now allowed to pause while the game is displaying subtitles.
-  - This won't affect the traps that much, but it can help with key items. 
+    - This won't affect the traps that much, but it can help with key items.
 - Reverse trap now inverts buttons and affects Knuckles' climbing.
+
+### Fixed:
+
+- Fixed map textures while playing Sky Chase.
 
 ## [v1.2.1] - 2026-04-11
 
