@@ -50,6 +50,11 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     WriteCall((void*)0x592057, (void*)EmptyCall);
     WriteCall((void*)0x592131, (void*)EmptyCall);
     WriteCall((void*)0x59219E, (void*)EmptyCall);
+
+    //Loads Tails in mission mode
+    WriteData<1>((void*)0x41593C, 0x75);
+
+
 }
 
 

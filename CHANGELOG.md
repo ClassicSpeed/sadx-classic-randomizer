@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - You can now exit Sky Chase to the Adventure Field.
 - A message will be shown when transforming the Egg Carrier.
     - Removed the setting to show the transformation cutscene.
+- CPU Tails will now follow Sonic during Action Stages.
 
 ### Changed:
 
