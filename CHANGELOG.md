@@ -31,6 +31,7 @@ All notable changes to this project will be documented in this file.
 - You are now allowed to pause while the game is displaying subtitles.
     - This won't affect the traps that much, but it can help with key items.
 - Reverse trap now inverts buttons and affects Knuckles' climbing.
+- Tails' Ice cap S rank time in expert logic changed from 1:55 to 1:40 .
 
 ### Fixed:
 

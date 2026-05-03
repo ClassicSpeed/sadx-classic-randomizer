@@ -90,7 +90,7 @@ const std::unordered_map<int, std::tuple<int, int, int>> SONIC_TARGET_TIMES = {
 const std::unordered_map<int, std::tuple<int, int, int>> TAILS_TARGET_TIMES = {
     {LevelIDs_WindyValley, std::make_tuple(5400, 3300, 2400)},
     {LevelIDs_Casinopolis, std::make_tuple(3600, 3000, 1800)},
-    {LevelIDs_IceCap, std::make_tuple(7200, 6900, 6900)},
+    {LevelIDs_IceCap, std::make_tuple(7200, 6900, 6000)},
     {LevelIDs_SkyDeck, std::make_tuple(3600, 2700, 2700)},
     {LevelIDs_SpeedHighway, std::make_tuple(7200, 5400, 5400)},
 };
