@@ -36,6 +36,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
 
 - Fixed map textures while playing Sky Chase.
+- Adding filler items in the start inventory no longer causes breaks generation.
 
 ## [v1.2.1] - 2026-04-11
 
