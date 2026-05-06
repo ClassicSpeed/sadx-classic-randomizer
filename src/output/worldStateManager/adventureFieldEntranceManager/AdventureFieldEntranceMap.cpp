@@ -102,7 +102,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
         {JungleToPastMain, LevelAndActIDs_MysticRuins3, 5, PastMainToJungle, 180, {-667, 105.5f, -1181}},
 
         // Final Egg Tower
-        {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 124, 166.5}},
+        {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 124, 156.5}},
         {
             FinalEggTowerToFinalEggAlternative, LevelAndActIDs_MysticRuins4, 1, FinalEggToFinalEggTowerAlternative,
             180,
@@ -110,7 +110,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
         },
         {FinalEggTowerToFinalEgg, LevelAndActIDs_MysticRuins4, 2, FinalEggToFinalEggTower, 115, {175, 135, -25.75}},
         {FinalEggTowerToBetaEggViper, LevelAndActIDs_MysticRuins4, 4, BetaEggViperToFinalEggTower, 225, {0, 16, 0}},
-        {FinalEggTowerToEcInside, LevelAndActIDs_MysticRuins4, 3, EcInsideToFinalEggTower, 180, {0, 15, -175}},
+        {FinalEggTowerToEcInside, LevelAndActIDs_MysticRuins4, 3, EcInsideToFinalEggTower, 180, {0, 15, -165}},
 
 
         // Bridge (Transformed)
