@@ -541,6 +541,17 @@ void MapManager::ShowDoorRequirement(AdventureFieldEntrance adventureFieldEntran
         njPopMatrix(1u);
     }
 }
+void DrawBlockedDoor(void* data)
+{
+
+    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+    SetMaterial(255, 255, 255, 255);
+    NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, blocked_anim};
+    njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    ResetMaterial();
+
+}
 
 void MapManager::ShowBlockedDoor(AdventureFieldEntrance adventureFieldEntrance)
 {
@@ -562,11 +573,7 @@ void MapManager::ShowBlockedDoor(AdventureFieldEntrance adventureFieldEntrance)
     njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
                 adventureFieldEntrance.indicatorPosition.z + offsetZ);
     njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
-    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
-    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
-    SetMaterial(255, 255, 255, 255);
-    NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, blocked_anim};
-    njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    late_SetFunc(DrawBlockedDoor, (void*)0, 100000.0f, LATE_EASY);
     njPopMatrix(1u);
 }
 
