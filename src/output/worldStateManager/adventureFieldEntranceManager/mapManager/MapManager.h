@@ -25,6 +25,7 @@ private:
     void showNumberMap(float posX, float posY, int number);
     void ShowDoorRequirement(AdventureFieldEntrance adventureFieldEntrance);
     void ShowBlockedDoor(AdventureFieldEntrance adventureFieldEntrance);
+    void ShowDoorIcon(NJS_POINT3 position, float angle, NJS_TEXANIM* anim, float offset = 0.02f);
     void ShowDoorName(AdventureFieldEntrance adventureFieldEntrance);
     void ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x, float y, float zBase,
                            float xStep,

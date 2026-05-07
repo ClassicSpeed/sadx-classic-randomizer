@@ -484,73 +484,16 @@ void MapManager::ShowDoorRequirement(AdventureFieldEntrance adventureFieldEntran
             GetEntranceEmblemValue(adventureFieldEntrance.entranceId, oppositeEntranceId);
         if (entranceValue <= 0)
             return;
-        njSetTexture(&entranceTextList);
-        njPushMatrix(0);
-        float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
-        float offsetX = 0.02f * sinf(angleRad);
-        float offsetZ = 0.02f * cosf(angleRad);
+        ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, emblem_lock_anim);
+        ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, line_lock_anim, 0.01f);
 
-        njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX,
-                    adventureFieldEntrance.indicatorPosition.y,
-                    adventureFieldEntrance.indicatorPosition.z + offsetZ);
-        njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
-        njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
-        njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
-        SetMaterial(255, 255, 255, 255);
-        NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, emblem_lock_anim};
-        njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-        njPopMatrix(1u);
-
-
-        njSetTexture(&entranceTextList);
-        njPushMatrix(0);
-        offsetX = 0.01f * sinf(angleRad);
-        offsetZ = 0.01f * cosf(angleRad);
-
-        njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX,
-                    adventureFieldEntrance.indicatorPosition.y,
-                    adventureFieldEntrance.indicatorPosition.z + offsetZ);
-        njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
-        njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
-        njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
-        SetMaterial(255, 255, 255, 255);
-        NJS_SPRITE mySprite2 = {{0}, 1, 1, 0, &entranceTextList, line_lock_anim};
-        njDrawSprite3D(&mySprite2, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-        njPopMatrix(1u);
         ShowNumberDynamic(adventureFieldEntrance, _gameStatus.unlock.currentEmblems, -10, 2, -0.01f, 4, false);
         ShowNumberDynamic(adventureFieldEntrance, entranceValue, 2, -2, -0.04f, 4, true);
     }
     else if (_options.gatingMode == KeyItemGating)
     {
-        njSetTexture(&entranceTextList);
-        njPushMatrix(0);
-        float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
-        float offsetX = 0.02f * sinf(angleRad);
-        float offsetZ = 0.02f * cosf(angleRad);
-
-        njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX,
-                    adventureFieldEntrance.indicatorPosition.y,
-                    adventureFieldEntrance.indicatorPosition.z + offsetZ);
-        njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
-        njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
-        njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
-        SetMaterial(255, 255, 255, 255);
-        NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, lock_anim};
-        njDrawSprite2D_ForcePriority(&mySprite, 0, 1000, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-        njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-        njPopMatrix(1u);
+        ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, lock_anim);
     }
-}
-void DrawBlockedDoor(void* data)
-{
-
-    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
-    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
-    SetMaterial(255, 255, 255, 255);
-    NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, blocked_anim};
-    njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    ResetMaterial();
-
 }
 
 void MapManager::ShowBlockedDoor(AdventureFieldEntrance adventureFieldEntrance)
@@ -564,16 +507,32 @@ void MapManager::ShowBlockedDoor(AdventureFieldEntrance adventureFieldEntrance)
     if (oppositeEntrance == nullptr)
         return;
 
+    ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, blocked_anim);
+}
+
+void LateDrawDoorIcon(void* data)
+{
+    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
+    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+    SetMaterial(255, 255, 255, 255);
+    NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, static_cast<NJS_TEXANIM*>(data)};
+    njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+    ResetMaterial();
+}
+
+
+void MapManager::ShowDoorIcon(NJS_POINT3 position, float angle, NJS_TEXANIM* anim, float offset)
+{
+    float angleRad = angle * (3.14159265f / 180.0f);
+    float offsetX = offset * sinf(angleRad);
+    float offsetZ = offset * cosf(angleRad);
+
     njSetTexture(&entranceTextList);
     njPushMatrix(0);
-    float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
-    float offsetX = 0.02f * sinf(angleRad);
-    float offsetZ = 0.02f * cosf(angleRad);
 
-    njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
-                adventureFieldEntrance.indicatorPosition.z + offsetZ);
-    njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
-    late_SetFunc(DrawBlockedDoor, (void*)0, 100000.0f, LATE_EASY);
+    njTranslate(0, position.x+ offsetX, position.y, position.z+ offsetZ);
+    njRotateY(0, 0x10000 * (angle / 360.0f));
+    late_SetFunc(LateDrawDoorIcon, static_cast<void*>(anim), 100000.0f, LATE_EASY);
     njPopMatrix(1u);
 }
 
@@ -594,22 +553,7 @@ void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
     if (entranceLocationTo != entranceLocationInMap.end())
         return;
 
-
-    njSetTexture(&entranceTextList);
-    njPushMatrix(0);
-    float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
-    float offsetX = 0.02f * sinf(angleRad);
-    float offsetZ = 0.02f * cosf(angleRad);
-
-    njTranslate(0, adventureFieldEntrance.indicatorPosition.x + offsetX, adventureFieldEntrance.indicatorPosition.y,
-                adventureFieldEntrance.indicatorPosition.z + offsetZ);
-    njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
-    njColorBlendingMode(NJD_SOURCE_COLOR, NJD_COLOR_BLENDING_SRCALPHA);
-    njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
-    SetMaterial(255, 255, 255, 255);
-    NJS_SPRITE mySprite = {{0}, 1, 1, 0, &entranceTextList, getInitialsFromEntrance(oppositeEntrance)};
-    njDrawSprite3D(&mySprite, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
-    njPopMatrix(1u);
+    ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, getInitialsFromEntrance(oppositeEntrance));
 }
 
 void MapManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x,
@@ -656,22 +600,22 @@ void MapManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int n
 void MapManager::showNumber(const AdventureFieldEntrance& adventureFieldEntrance, const float posX,
                             const float posY, const int number, const float zOffset)
 {
-    const float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
-    const float offsetX = posX * cosf(angleRad);
-    const float offsetZ = -posX * sinf(angleRad);
+     const float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
+     const float offsetX = posX * cosf(angleRad);
+     const float offsetZ = -posX * sinf(angleRad);
 
-    const float clipOffsetX = zOffset * sinf(angleRad);
-    const float clipOffsetZ = zOffset * cosf(angleRad);
+     const float clipOffsetX = zOffset * sinf(angleRad);
+     const float clipOffsetZ = zOffset * cosf(angleRad);
 
-    njSetTexture(&entranceTextList);
-    njPushMatrix(0);
-    njTranslate(0,
-                adventureFieldEntrance.indicatorPosition.x - offsetX + clipOffsetX,
-                adventureFieldEntrance.indicatorPosition.y + posY,
-                adventureFieldEntrance.indicatorPosition.z - offsetZ + clipOffsetZ);
-    njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
-    SetMaterial(255, 255, 255, 255);
-    NJS_SPRITE numRight = {{0}, 1, 1, 0, &entranceTextList, GetNumberAnim(number)};
-    njDrawSprite3D(&numRight, 0, NJD_SPRITE_ALPHA | NJD_SPRITE_COLOR);
+     njSetTexture(&entranceTextList);
+     njPushMatrix(0);
+
+     njTranslate(0,
+                 adventureFieldEntrance.indicatorPosition.x - offsetX + clipOffsetX,
+                 adventureFieldEntrance.indicatorPosition.y + posY,
+                 adventureFieldEntrance.indicatorPosition.z - offsetZ + clipOffsetZ);
+     njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+    late_SetFunc(LateDrawDoorIcon, static_cast<void*>(GetNumberAnim(number)), 100000.0f, LATE_EASY);
     njPopMatrix(1u);
+
 }

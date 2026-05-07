@@ -38,6 +38,7 @@ All notable changes to this project will be documented in this file.
 
 - Fixed map textures while playing Sky Chase.
 - Adding filler items in the start inventory no longer causes breaks generation.
+- Fixed transparency issues with door indicators when mixed with other transparency effects (doors, water, etc.).
 
 ## [v1.2.1] - 2026-04-11
 
