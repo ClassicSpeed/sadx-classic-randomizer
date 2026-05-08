@@ -33,6 +33,7 @@ All notable changes to this project will be documented in this file.
 - Reverse trap now inverts buttons and affects Knuckles' climbing.
 - Tails' Ice cap S rank time in expert logic changed from 1:55 to 1:40.
 - Moved the door icons in-game for Final Egg Tower's doors to avoid a transparency problem.
+- Improved Upgrades' draw distance.
 
 ### Fixed:
 

@@ -38,8 +38,16 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _opti
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_MRuins[WARP_MYSTIC_RUINS] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
-    ObjList_MRuins[EMBLEM_MYSTIC_RUINS].Distance = 1000000.0f;
+    ObjList_MRuins[EMBLEM_MYSTIC_RUINS].Distance = 10000000.0f;
     ObjList_MRuins[EMBLEM_MYSTIC_RUINS].UseDistance = 1;
+    ObjList_MRuins[UPGRADE_MYSTIC_RUINS].Distance = 10000000.0f;
+    ObjList_MRuins[UPGRADE_MYSTIC_RUINS].UseDistance = 1;
+    ObjList_Past[UPGRADE_PAST].Distance = 10000000.0f;
+    ObjList_Past[UPGRADE_PAST].UseDistance = 1;
+    ObjList_SSquare[UPGRADE_STATION_SQUARE].Distance = 10000000.0f;
+    ObjList_SSquare[UPGRADE_STATION_SQUARE].UseDistance = 1;
+    ObjList_ECarrier3[UPGRADE_EGG_CARRIER_INSIDE].Distance = 10000000.0f;
+    ObjList_ECarrier3[UPGRADE_EGG_CARRIER_INSIDE].UseDistance = 1;
     ObjList_ECarrier0[WARP_EGG_CARRIER_OUTSIDE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_Past[WARP_PAST] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
 

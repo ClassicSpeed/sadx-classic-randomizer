@@ -16,7 +16,11 @@ constexpr int LONG_LADDER_MYSTIC_RUINS = 59;
 constexpr int CAVE_WIND_CHANGE_SCENE_MYSTIC_RUINS = 31;
 constexpr int EMBLEM_MYSTIC_RUINS = 65;
 constexpr int WIND_STONE_MYSTIC_RUINS = 21;
+
 constexpr int UPGRADE_MYSTIC_RUINS = 46;
+constexpr int UPGRADE_PAST = 32;
+constexpr int UPGRADE_STATION_SQUARE = 96;
+constexpr int UPGRADE_EGG_CARRIER_INSIDE = 37;
 
 constexpr int SCENE_CHANGE_STATION_SQUARE = 78;
 constexpr int BEACH_GATE_STATION_SQUARE = 67;
