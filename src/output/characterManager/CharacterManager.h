@@ -89,6 +89,8 @@ private:
 
     static void __cdecl HandleRingLoss();
 
+    static BOOL __cdecl OnSonicChargeSpindashHook(CharObj2 *Data2, EntityData1 *Data1);
+
     void ActivateFiller(FillerType filler);
     void FreezePlayer();
     void IncrementGravity();

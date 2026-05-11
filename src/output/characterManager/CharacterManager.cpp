@@ -1,6 +1,9 @@
 #include "CharacterManager.h"
 
 DataPointer(int, TimerEnabled, 0x912DF0);
+UsercallFunc(BOOL, SonicChargeSpindashHook, (CharObj2 *Data2, EntityData1 *Data1), (Data2,Data1), 0x496EE0, rEAX, rEAX,rEDI);
+
+
 
 CharacterManager::__hudDisplayRingsHook_t CharacterManager::_hudDisplayRingsHook;
 
@@ -20,6 +23,7 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     _drawSNumbersHook.Hook(OnDrawSNumbers);
     _hudDisplayRingsHook.Hook(HandleHudDisplayRings);
     _createAnimalHook.Hook(OnCreateAnimal);
+    SonicChargeSpindashHook.Hook(OnSonicChargeSpindashHook);
 
     //We override the Set0Rings call inside the HurtPlayer function;
     WriteCall(reinterpret_cast<void*>(0x45072D), (void*)HandleRingLoss);
@@ -55,6 +59,10 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     WriteData<1>((void*)0x41593C, 0x75);
 
 
+    //TODO: Only with crystal ring
+    // WriteData<1>((void*)0x0496EFA, 6);
+    WriteData<1>((void*)0x0492F6A, 6);
+    WriteData<1>((void*)0x0492F7A, 64);
 }
 
 
@@ -124,6 +132,27 @@ void CharacterManager::HandleRingLoss()
         break;
     }
     _instance->_lastRingAmount = lastRingAmountBuffer;
+}
+
+BOOL CharacterManager::OnSonicChargeSpindashHook(CharObj2* Data2, EntityData1* Data1)
+{
+    if ((AttackButtons & Controllers[0].PressedButtons) == 0)
+        return 0;
+
+    if (HomingAttackTarget_Sonic_B_Index > 0 && _instance->_gameStatus.unlock.sonicCrystalRingUnlocked)
+    {
+        // Data1->Status &= ~Status_LightDash;
+        Data1->Action = 6;
+        Data2->AnimationThing.Index = 64;
+        Data2->LightdashTime = 10;
+        Data2->LightdashTimer = 0;
+        Data2->Speed.x = 8.0; // 8.0
+        Data1->Status = Data1->Status & ~(Status_Attack | Status_Ball) | Status_Attack;
+        PlaySound(764, 0, 0, 0);
+        return 1;
+    }
+
+    return SonicChargeSpindashHook.Original(Data2, Data1);
 }
 
 
