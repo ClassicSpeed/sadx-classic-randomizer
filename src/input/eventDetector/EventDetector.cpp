@@ -425,6 +425,10 @@ void EventDetector::OnFrame()
     if (DemoPlaying > 0)
         return;
 
+    // Character drowned
+    if (Current_CharObj2->UnderwaterTime > 1850)
+        _instance->_link.OnDeath();
+
     //Checks for Egg Carrier transformation
     if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside4)
     {
