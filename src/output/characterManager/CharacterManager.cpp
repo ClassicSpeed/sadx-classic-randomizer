@@ -2,6 +2,7 @@
 
 DataPointer(int, TimerEnabled, 0x912DF0);
 UsercallFunc(BOOL, SonicChargeSpindashHook, (CharObj2 *Data2, EntityData1 *Data1), (Data2,Data1), 0x496EE0, rEAX, rEAX,rEDI);
+UsercallFunc(BOOL, SonicJumpCancelHook, (EntityData1 *Data1, CharObj2 *Data2 ), (Data1,Data2), 0x492F50, rEAX, rESI,rEDI);
 
 
 
@@ -24,6 +25,7 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     _hudDisplayRingsHook.Hook(HandleHudDisplayRings);
     _createAnimalHook.Hook(OnCreateAnimal);
     SonicChargeSpindashHook.Hook(OnSonicChargeSpindashHook);
+    SonicJumpCancelHook.Hook(OnSonicJumpCancel);
 
     //We override the Set0Rings call inside the HurtPlayer function;
     WriteCall(reinterpret_cast<void*>(0x45072D), (void*)HandleRingLoss);
@@ -57,12 +59,6 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
 
     //Loads Tails in mission mode
     WriteData<1>((void*)0x41593C, 0x75);
-
-
-    //TODO: Only with crystal ring
-    // WriteData<1>((void*)0x0496EFA, 6);
-    WriteData<1>((void*)0x0492F6A, 6);
-    WriteData<1>((void*)0x0492F7A, 64);
 }
 
 
@@ -134,25 +130,36 @@ void CharacterManager::HandleRingLoss()
     _instance->_lastRingAmount = lastRingAmountBuffer;
 }
 
-BOOL CharacterManager::OnSonicChargeSpindashHook(CharObj2* Data2, EntityData1* Data1)
+BOOL CharacterManager::SonicInstaLightDash(EntityData1* data1, CharObj2* data2)
 {
-    if ((AttackButtons & Controllers[0].PressedButtons) == 0)
+    if ((WhistleButtons & Controllers[0].PressedButtons) == 0)
         return 0;
-
     if (HomingAttackTarget_Sonic_B_Index > 0 && _instance->_gameStatus.unlock.sonicCrystalRingUnlocked)
     {
-        // Data1->Status &= ~Status_LightDash;
-        Data1->Action = 6;
-        Data2->AnimationThing.Index = 64;
-        Data2->LightdashTime = 10;
-        Data2->LightdashTimer = 0;
-        Data2->Speed.x = 8.0; // 8.0
-        Data1->Status = Data1->Status & ~(Status_Attack | Status_Ball) | Status_Attack;
+        data1->Action = 6;
+        data2->AnimationThing.Index = 64;
+        data2->LightdashTime = 10;
+        data2->LightdashTimer = 0;
+        data2->Speed.x = 8.0; // 8.0
+        data1->Status = data1->Status & ~(Status_Attack | Status_Ball) | Status_Attack;
         PlaySound(764, 0, 0, 0);
         return 1;
     }
+        return 0;
+}
 
+BOOL CharacterManager::OnSonicChargeSpindashHook(CharObj2* Data2, EntityData1* Data1)
+{
+    if (_instance->SonicInstaLightDash(Data1, Data2))
+        return 1;
     return SonicChargeSpindashHook.Original(Data2, Data1);
+}
+
+BOOL CharacterManager::OnSonicJumpCancel(EntityData1* Data1, CharObj2* Data2)
+{
+    if (_instance->SonicInstaLightDash(Data1, Data2))
+        return 1;
+    return SonicJumpCancelHook.Original(Data1, Data2);
 }
 
 

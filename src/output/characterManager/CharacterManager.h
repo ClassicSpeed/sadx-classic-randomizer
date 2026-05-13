@@ -89,7 +89,9 @@ private:
 
     static void __cdecl HandleRingLoss();
 
+    BOOL SonicInstaLightDash(EntityData1* data1, CharObj2* data2);
     static BOOL __cdecl OnSonicChargeSpindashHook(CharObj2 *Data2, EntityData1 *Data1);
+    static BOOL __cdecl OnSonicJumpCancel(EntityData1 *Data1, CharObj2 *Data2);
 
     void ActivateFiller(FillerType filler);
     void FreezePlayer();
