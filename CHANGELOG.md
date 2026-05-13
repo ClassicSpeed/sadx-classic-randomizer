@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added:
 
+- Added button for instant Light Speed Dash in the mod settings (disabled by default).
+  - Also added an option to require the Crystal Ring for it.
 - You can now exit Sky Chase to the Adventure Field.
 - A message will be shown when transforming the Egg Carrier.
     - Removed the setting to show the transformation cutscene.

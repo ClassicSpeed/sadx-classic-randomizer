@@ -132,6 +132,11 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
     this->homingAttackIndicator = static_cast<HomingAttackIndicator>(settingsIni->getInt(
         "GameSettings", "HomingAttackIndicatorEnabled", 0));
 
+    this->lightSpeedDashButton = static_cast<LightSpeedDashButton>(settingsIni->getInt(
+        "GameSettings", "LightSpeedDashButton", 0));
+    this->instaLightSpeedDashRequiresCrystalRing = settingsIni->getBool(
+        "GameSettings", "InstaLightSpeedDashRequiresCrystalRing", true);
+
     this->mapButton = static_cast<MapButton>(settingsIni->getInt("GameSettings", "MapButton", 0));
     this->showTrackerWithMap = settingsIni->getBool("GameSettings", "ShowTrackerWithMap", false);
 

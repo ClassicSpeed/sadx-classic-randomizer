@@ -132,9 +132,25 @@ void CharacterManager::HandleRingLoss()
 
 BOOL CharacterManager::SonicInstaLightDash(EntityData1* data1, CharObj2* data2)
 {
-    if ((WhistleButtons & Controllers[0].PressedButtons) == 0)
+    if (_settings.lightSpeedDashButton == LightSpeedDashButtonDisabled)
         return 0;
-    if (HomingAttackTarget_Sonic_B_Index > 0 && _instance->_gameStatus.unlock.sonicCrystalRingUnlocked)
+
+    if ((!(ControllerPointers[0]->PressedButtons & Buttons_Y)
+            || _settings.lightSpeedDashButton != LightSpeedDashButtonY)
+        && (!(ControllerPointers[0]->PressedButtons & Buttons_Z)
+            || _settings.lightSpeedDashButton != LightSpeedDashButtonRightBumper)
+        && (!(ControllerPointers[0]->PressedButtons & Buttons_C)
+            || _settings.lightSpeedDashButton != LightSpeedDashButtonLeftBumper))
+        return 0;
+
+
+    if (!_instance->_gameStatus.unlock.sonicLightShoesUnlocked)
+        return 0;
+
+    if (_settings.instaLightSpeedDashRequiresCrystalRing && !_instance->_gameStatus.unlock.sonicCrystalRingUnlocked)
+        return 0;
+
+    if (HomingAttackTarget_Sonic_B_Index > 0)
     {
         data1->Action = 6;
         data2->AnimationThing.Index = 64;

@@ -102,6 +102,13 @@ enum HomingAttackIndicator
     HomingAttackIndicatorEnabledNoSound = 2,
 };
 
+enum LightSpeedDashButton
+{
+    LightSpeedDashButtonDisabled = 0,
+    LightSpeedDashButtonY = 1,
+    LightSpeedDashButtonRightBumper = 2,
+    LightSpeedDashButtonLeftBumper = 3,
+};
 
 enum AdventureFieldDoorOverride
 {
@@ -216,6 +223,8 @@ public:
 
     bool completeMultipleLevelMissions = true;
     HomingAttackIndicator homingAttackIndicator = HomingAttackIndicatorDisabled;
+    LightSpeedDashButton lightSpeedDashButton = LightSpeedDashButtonDisabled;
+    bool instaLightSpeedDashRequiresCrystalRing = true;
 
     bool showEntranceIndicators = true;
     int chaoStatsMultiplier = 1;
