@@ -132,11 +132,15 @@ inline SETEntry CreateSetEntry(const int16_t objectType, const NJS_VECTOR& posit
 const SETEntry FINAL_EGG_SPRING = CreateSetEntry(1, {-52.21f, -3240.81f, -190.0f});
 const SETEntry SEWERS_SPRING = CreateSetEntry(1, {505, -89, 635},
                                               {0, 0, 0}, {0.3f, 0, 51});
+const SETEntry SEWERS_SPRING_AMY = CreateSetEntry(2, {505, -89, 635},
+                                              {0, 0, 0}, {50, 0, 51});
 const SETEntry SEWERS_SPRING_BIG = CreateSetEntry(2, {505, -89, 635},
                                                   {0, 0, 0}, {0.1f, 1.2f, 0});
 const SETEntry EXTRA_SEWERS_SPRING = CreateSetEntry(2, {350, -115, 860},
                                                     {0, 0, 0xE000}, {0, 0, 0});
 
+const SETEntry EXTRA_SEWERS_SPRING_AMY = CreateSetEntry(2, {350, -115, 860},
+                                                    {0, 0, 0xE000}, {120, 0.0000001, 100 });
 const SETEntry ICE_CAP_SCENE_CHANGE_MR = CreateSetEntry(SCENE_CHANGE_MYSTIC_RUINS, {-1450, 95, 360},
                                                         {1, 0, 0}, {20, 5, 0});
 const SETEntry ICE_CAP_LADDER_MR = CreateSetEntry(LONG_LADDER_MYSTIC_RUINS, {-1450, 40, 360},

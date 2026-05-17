@@ -38,6 +38,7 @@ All notable changes to this project will be documented in this file.
 - Moved the door icons in-game for Final Egg Tower's doors to avoid a transparency problem.
 - Improved Upgrades' draw distance.
 - RingLink packets value are now being validated to prevent crashes from malformed packets.
+- Improved Amy's sewer springs to prevent her from clipping through the ceiling.
 
 ### Fixed:
 
