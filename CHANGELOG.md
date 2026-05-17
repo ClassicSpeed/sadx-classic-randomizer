@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - A message will be shown when transforming the Egg Carrier.
     - Removed the setting to show the transformation cutscene.
 - CPU Tails will now follow Sonic during Action Stages.
+- Added small red ribbon under level icons in map to indicate completion.
 
 ### Changed:
 
