@@ -17,4 +17,21 @@ struct BossesStatus
     int gammaBossesCompleted = 0;
 
     int bossesCompleted = 0;
+
+    bool sonicChaos0;
+    bool knucklesChaos2;
+    bool tailsEggWalker;
+    bool sonicEggHornet;
+    bool tailsEggHornet;
+    bool sonicChaos4;
+    bool tailsChaos4;
+    bool knucklesChaos4;
+    bool sonicEggViper;
+    bool gammaBeta;
+    bool sonicChaos6;
+    bool knucklesChaos6;
+    bool bigChaos6;
+    bool gammaBeta2;
+    bool amyZero;
+
 };

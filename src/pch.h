@@ -185,6 +185,7 @@ inline NJS_TEXANIM new_logo_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 42, NJD
 inline NJS_TEXANIM location_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 43, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM blocked_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 44, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 45, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM check_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 46, NJD_SPRITE_COLOR}};
 
 
 // Helper to get the correct number anim

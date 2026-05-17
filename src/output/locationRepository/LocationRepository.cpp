@@ -2287,18 +2287,21 @@ void LocationRepository::UpdateBossesStatus()
     {
         _gameStatus.bosses.sonicBossesCompleted++;
         _gameStatus.bosses.bossesCompleted++;
+        _gameStatus.bosses.sonicChaos0 = true;
     }
     //Chaos 2
     if (_checkData[710].checked)
     {
         _gameStatus.bosses.knucklesBossesCompleted++;
         _gameStatus.bosses.bossesCompleted++;
+        _gameStatus.bosses.knucklesChaos2 = true;
     }
     //Egg Walker
     if (_checkData[720].checked)
     {
         _gameStatus.bosses.tailsBossesCompleted++;
         _gameStatus.bosses.bossesCompleted++;
+        _gameStatus.bosses.tailsEggWalker = true;
     }
     //Egg Hornet 
     if (_options.unifyEggHornet)
@@ -2308,6 +2311,8 @@ void LocationRepository::UpdateBossesStatus()
             _gameStatus.bosses.sonicBossesCompleted++;
             _gameStatus.bosses.tailsBossesCompleted++;
             _gameStatus.bosses.bossesCompleted++;
+            _gameStatus.bosses.sonicEggHornet = true;
+            _gameStatus.bosses.tailsEggHornet = true;
         }
     }
     else
@@ -2316,11 +2321,13 @@ void LocationRepository::UpdateBossesStatus()
         {
             _gameStatus.bosses.sonicBossesCompleted++;
             _gameStatus.bosses.bossesCompleted++;
+            _gameStatus.bosses.sonicEggHornet = true;
         }
         if (_checkData[731].checked)
         {
             _gameStatus.bosses.tailsBossesCompleted++;
             _gameStatus.bosses.bossesCompleted++;
+            _gameStatus.bosses.tailsEggHornet = true;
         }
     }
 
@@ -2333,6 +2340,9 @@ void LocationRepository::UpdateBossesStatus()
             _gameStatus.bosses.tailsBossesCompleted++;
             _gameStatus.bosses.knucklesBossesCompleted++;
             _gameStatus.bosses.bossesCompleted++;
+            _gameStatus.bosses.sonicChaos4 = true;
+            _gameStatus.bosses.tailsChaos4 = true;
+            _gameStatus.bosses.knucklesChaos4 = true;
         }
     }
     else
@@ -2341,16 +2351,19 @@ void LocationRepository::UpdateBossesStatus()
         {
             _gameStatus.bosses.sonicBossesCompleted++;
             _gameStatus.bosses.bossesCompleted++;
+            _gameStatus.bosses.sonicChaos4 = true;
         }
         if (_checkData[741].checked)
         {
             _gameStatus.bosses.tailsBossesCompleted++;
             _gameStatus.bosses.bossesCompleted++;
+            _gameStatus.bosses.tailsChaos4 = true;
         }
         if (_checkData[742].checked)
         {
             _gameStatus.bosses.knucklesBossesCompleted++;
             _gameStatus.bosses.bossesCompleted++;
+            _gameStatus.bosses.knucklesChaos4 = true;
         }
     }
     //Egg Viper
@@ -2358,12 +2371,14 @@ void LocationRepository::UpdateBossesStatus()
     {
         _gameStatus.bosses.sonicBossesCompleted++;
         _gameStatus.bosses.bossesCompleted++;
+        _gameStatus.bosses.sonicEggViper = true;
     }
     //Beta
     if (_checkData[760].checked)
     {
         _gameStatus.bosses.gammaBossesCompleted++;
         _gameStatus.bosses.bossesCompleted++;
+        _gameStatus.bosses.gammaBeta = true;
     }
 
     //Chaos 6 
@@ -2375,6 +2390,9 @@ void LocationRepository::UpdateBossesStatus()
             _gameStatus.bosses.knucklesBossesCompleted++;
             _gameStatus.bosses.bigBossesCompleted++;
             _gameStatus.bosses.bossesCompleted++;
+            _gameStatus.bosses.sonicChaos6 = true;
+            _gameStatus.bosses.knucklesChaos6 = true;
+            _gameStatus.bosses.bigChaos6 = true;
         }
     }
     else
@@ -2383,18 +2401,21 @@ void LocationRepository::UpdateBossesStatus()
         {
             _gameStatus.bosses.sonicBossesCompleted++;
             _gameStatus.bosses.bossesCompleted++;
+            _gameStatus.bosses.sonicChaos6 = true;
         }
 
         if (_checkData[771].checked)
         {
             _gameStatus.bosses.knucklesBossesCompleted++;
             _gameStatus.bosses.bossesCompleted++;
+            _gameStatus.bosses.knucklesChaos6 = true;
         }
 
         if (_checkData[772].checked)
         {
             _gameStatus.bosses.bigBossesCompleted++;
             _gameStatus.bosses.bossesCompleted++;
+            _gameStatus.bosses.bigChaos6 = true;
         }
     }
     //Beta 2
@@ -2402,6 +2423,7 @@ void LocationRepository::UpdateBossesStatus()
     {
         _gameStatus.bosses.gammaBossesCompleted++;
         _gameStatus.bosses.bossesCompleted++;
+        _gameStatus.bosses.gammaBeta2 = true;
     }
 
     //Zero
@@ -2409,6 +2431,7 @@ void LocationRepository::UpdateBossesStatus()
     {
         _gameStatus.bosses.amyBossesCompleted++;
         _gameStatus.bosses.bossesCompleted++;
+        _gameStatus.bosses.amyZero = true;
     }
 }
 

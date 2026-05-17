@@ -320,6 +320,9 @@ void MapManager::DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Floa
     auto point = mapToScreen(entranceX, entranceY);
     NJS_TEXANIM* texanim = getInitialsFromEntrance(entranceTo);
     drawSprite2D(texanim, point.x, point.y);
+    //Draw check if completed
+    if (_gameStatus.IsLevelCompleted(static_cast<LevelIDs>(GET_LEVEL(entranceTo->levelAndActId)), CurrentCharacter))
+        drawSprite2D(check_anim, point.x, point.y);
 }
 
 
