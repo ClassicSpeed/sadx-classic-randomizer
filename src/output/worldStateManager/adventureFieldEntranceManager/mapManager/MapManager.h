@@ -140,10 +140,10 @@ private:
         {BridgeToChaos6ZeroBeta, {404, 628}},
         {BridgeToEcInsideMonorail, {437, 629}},
         // Deck (Transformed) 
-        {DeckToPool, {404, 810}},
+        {DeckToPool, {404, 820}},
         {DeckToCaptainRoom, {404, 760}},
-        {DeckToPrivateRoom, {419, 753}},
-        {DeckToPrivateRoomAlternative, {389, 753}},
+        {DeckToPrivateRoom, {419, 740}},
+        {DeckToPrivateRoomAlternative, {389, 740}},
         {DeckToEcInsideEggLift, {404, 791}},
         // Captain Room
         {CaptainRoomToDeck, {245, 885}},

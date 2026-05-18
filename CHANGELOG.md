@@ -39,6 +39,7 @@ All notable changes to this project will be documented in this file.
 - Improved Upgrades' draw distance.
 - RingLink packets value are now being validated to prevent crashes from malformed packets.
 - Improved Amy's sewer springs to prevent her from clipping through the ceiling.
+- Adjusted the position for some on the Deck entrances in the map to make it easier to read.
 
 ### Fixed:
 
