@@ -2124,8 +2124,8 @@ void LocationRepository::UpdateLevelStatus()
     _gameStatus.levels.bigHotShelter = _checkData[6302].checked;
 
     _gameStatus.levels.gammaFinalEgg = _checkData[5002].checked;
-    _gameStatus.levels.gammaWindyValley = _checkData[5102].checked;
-    _gameStatus.levels.gammaEmeraldCoast = _checkData[5202].checked;
+    _gameStatus.levels.gammaEmeraldCoast = _checkData[5102].checked;
+    _gameStatus.levels.gammaWindyValley = _checkData[5202].checked;
     _gameStatus.levels.gammaRedMountain = _checkData[5302].checked;
     _gameStatus.levels.gammaHotShelter = _checkData[5402].checked;
 
