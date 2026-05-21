@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.2 pre-release 1] - 2026-??-??
+## [v1.2.2 pre-release 1] - 2026-05-21
 
 ### Added:
 
@@ -34,19 +34,19 @@ All notable changes to this project will be documented in this file.
 - You are now allowed to pause while the game is displaying subtitles.
     - This won't affect the traps that much, but it can help with key items.
 - Reverse trap now inverts buttons and affects Knuckles' climbing.
-- Tails' Ice cap S rank time in expert logic changed from 1:55 to 1:40.
+- Tails' Ice Cap S rank time in expert logic changed from 1:55 to 1:40.
 - Moved the door icons in-game for Final Egg Tower's doors to avoid a transparency problem.
 - Improved Upgrades' draw distance.
-- RingLink packets value are now being validated to prevent crashes from malformed packets.
+- RingLink packets' values are now being validated to prevent crashes from malformed packets.
 - Improved Amy's sewer springs to prevent her from clipping through the ceiling.
-- Adjusted the position for some on the Deck entrances in the map to make it easier to read.
+- Adjusted the position for some of the Deck entrances in the map to make it easier to read.
 
 ### Fixed:
 
 - Fixed map textures while playing Sky Chase.
-- Adding filler items in the start inventory no longer causes breaks generation.
+- Adding filler items in the start inventory no longer causes break generation.
 - Fixed transparency issues with door indicators when mixed with other transparency effects (doors, water, etc.).
-- Drowning will now send Death links.
+- Drowning will now send DeathLinks.
 
 ## [v1.2.1] - 2026-04-11
 
