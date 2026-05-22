@@ -2,12 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.2 pre-release 2] - 2026-05-22
+
+### Fixed:
+
+- Fixed crash near the Hot Shelter entrance when playing as Amy or Big.
+
 ## [v1.2.2 pre-release 1] - 2026-05-21
 
 ### Added:
 
 - Added button for instant Light Speed Dash in the mod settings (disabled by default).
-  - Also added an option to require the Crystal Ring for it.
+    - Also added an option to require the Crystal Ring for it.
 - You can now exit Sky Chase to the Adventure Field.
 - A message will be shown when transforming the Egg Carrier.
     - Removed the setting to show the transformation cutscene.

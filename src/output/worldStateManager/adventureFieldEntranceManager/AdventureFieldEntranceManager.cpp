@@ -1227,7 +1227,7 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
                 return false;
 
             if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
-                return IsSwitchPressed(1);
+                return IsSwitchPressed(1) == 1;
             return true;
         }
         // Hedgehog hammer door
@@ -1240,7 +1240,7 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
                 return false;
 
             if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
-                return IsSwitchPressed(0);
+                return IsSwitchPressed(0)== 1;
             return true;
         }
         // Warp/Chao Garden door
