@@ -20,7 +20,6 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
 {
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
     _setNextLevelAndActHook.Hook(OnSetNextLevelAndAct);
-    _setNextLevelAndActChaoGardenHook.Hook(OnSetNextLevelAndActChaoGarden);
     _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
     _movePlayerToStartPointHook.Hook(OnMovePlayerToStartPoint);
     _getEntranceEc.Hook(OnGetEntranceEc);
@@ -160,7 +159,7 @@ bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
     return doorState == DoorOpen || doorState == DoorUnlocked;
 }
 
-void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, Uint8 act)
+void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const int level, int act)
 {
     if (level == LevelIDs_EggCarrierOutside && act == 0 && (LevelEntrance == 6 || LevelEntrance == 7)
         && _instance->_gameStatus.isEggCarrierTransformed)
@@ -211,14 +210,7 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, Uint
     _setNextLevelAndActHook.Original(level, act);
 }
 
-task* AdventureFieldEntranceManager::OnSetNextLevelAndActChaoGarden(Uint8 level, Uint8 act)
-{
-    if (level < LevelIDs_Invalid)
-        OnSetNextLevelAndActCutsceneMode(level, act);
-    return _setNextLevelAndActChaoGardenHook.Original(level, act);
-}
-
-void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, Uint8 act)
+void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const int level, int act)
 {
     if (level == LevelIDs_EggCarrierOutside && act == 0 && (LevelEntrance == 6 || LevelEntrance == 7)
         && _instance->_gameStatus.isEggCarrierTransformed)

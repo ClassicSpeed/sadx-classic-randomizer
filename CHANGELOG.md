@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
 
 - Fixed crash near the Hot Shelter entrance when playing as Amy or Big.
+- Fixed crash when exiting the Chao Garden using the pause menu.
 
 ## [v1.2.2 pre-release 1] - 2026-05-21
 
