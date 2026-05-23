@@ -45,6 +45,9 @@ private:
     inline static FunctionHook<void, int, int> _setNextLevelAndActHook{0x4145B0};
     static void OnSetNextLevelAndAct(int level, int act);
 
+    inline static FunctionHook<task*, int, int> _setNextLevelAndActChaoGardenHook{0x715730};
+    static task* OnSetNextLevelAndActChaoGarden(int level, int act);
+
     inline static FunctionHook<Sint32> _finishedLevelMaybeHook{0x414090};
     static Sint32 OnFinishedLevelMaybe();
 

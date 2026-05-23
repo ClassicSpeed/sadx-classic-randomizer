@@ -20,6 +20,7 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
 {
     _setNextLevelAndActCutsceneModeHook.Hook(OnSetNextLevelAndActCutsceneMode);
     _setNextLevelAndActHook.Hook(OnSetNextLevelAndAct);
+    _setNextLevelAndActChaoGardenHook.Hook(OnSetNextLevelAndActChaoGarden);
     _finishedLevelMaybeHook.Hook(OnFinishedLevelMaybe);
     _movePlayerToStartPointHook.Hook(OnMovePlayerToStartPoint);
     _getEntranceEc.Hook(OnGetEntranceEc);
@@ -208,6 +209,18 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const int level, int ac
         return;
     }
     _setNextLevelAndActHook.Original(level, act);
+}
+
+task* AdventureFieldEntranceManager::OnSetNextLevelAndActChaoGarden(int level, int act)
+{
+    PrintDebug("OnSetNextLevelAndActChaoGarden: level %d, act %d", level, act);
+    if (level > LevelIDs_HedgehogHammer && level < LevelIDs_Invalid)
+    {
+        OnSetNextLevelAndActCutsceneMode(level, act);
+        return NULL;
+
+    }
+    return _setNextLevelAndActChaoGardenHook.Original(level, act);
 }
 
 void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const int level, int act)
