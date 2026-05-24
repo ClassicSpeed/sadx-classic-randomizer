@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
 
 - Fixed wrong spawn points in the Egg Carrier when exiting a Chao garden.
+- Fixed jungle cart sometimes being invisible.
 
 ## [v1.2.2 pre-release 2] - 2026-05-22
 

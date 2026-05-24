@@ -50,8 +50,8 @@ void CharacterLoadingDetector::OnFrame()
     if (_loadCharacterNextFrame == 1)
     {
         _randomizer.OnCharacterLoaded();
-
-
+        //Fix to make the jungle cart load
+        EventFlagArray[FLAG_SONIC_MR_TRUCK] = 1;
         if (_settings.adventureFieldDoorOverride == AdventureFieldDoorOverrideAllOpened)
         {
             for (unsigned int i = 0; i < LevelClearCounts.size(); i++)
