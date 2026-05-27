@@ -8,6 +8,11 @@ All notable changes to this project will be documented in this file.
 
 - Fixed wrong spawn points in the Egg Carrier when exiting a Chao garden.
 - Fixed jungle cart sometimes being invisible.
+- Fixed Tail's Casino to Hotel video clip missing.
+
+### Added:
+
+- Added skip from Jungle to Final Egg Tower for Sonic, Tails, Knuckles and Gamma in expert (DC).
 
 ## [v1.2.2 pre-release 2] - 2026-05-22
 
