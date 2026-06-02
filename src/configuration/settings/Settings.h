@@ -199,6 +199,7 @@ public:
     bool currentCharacterReactToTrap = true;
 
     bool showCommentsSubtitles = true;
+    bool extraSubtitlesModLoaded = false;
 
     std::string songsPath = "mods/SADX_Archipelago/";
     std::string sa2BAdxPath = "../../../../Sonic Adventure 2/resource/gd_PC/ADX/";

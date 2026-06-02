@@ -26,6 +26,12 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
         exit(0);
     }
 
+    if (helperFunctions.Mods->find_by_name("Extra Subtitles"))
+    {
+        extraSubtitlesModLoaded = true;
+    }
+
+
     const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");
     if (!settingsIni)
     {
