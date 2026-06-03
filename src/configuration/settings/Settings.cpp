@@ -27,10 +27,10 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
     }
 
     if (helperFunctions.Mods->find_by_name("Extra Subtitles"))
-    {
         extraSubtitlesModLoaded = true;
-    }
 
+    if (helperFunctions.Mods->find_by_name("Super Sonic"))
+        _superSonicModRunning = true;
 
     const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");
     if (!settingsIni)
@@ -203,7 +203,4 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
     this->adventureFieldDoorOverride = static_cast<AdventureFieldDoorOverride>(settingsIni->getInt(
         "Debug", "AdventureFieldDoorOverride", 0));
 
-
-    if (helperFunctions.Mods->find_by_name("Super Sonic"))
-        _superSonicModRunning = false;
 }
