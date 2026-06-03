@@ -17,6 +17,12 @@ All notable changes to this project will be documented in this file.
 
 - Added skip from Jungle to Final Egg Tower for Sonic, Tails, Knuckles and Gamma in expert (DC).
 
+### Changed:
+
+- Several logic changes.
+- Removed skip that depended on other doors to be open or close from the logic.
+  - The clips are still in the logic sheet, but they won't be in logic.
+
 ## [v1.2.2 pre-release 2] - 2026-05-22
 
 ### Fixed:
