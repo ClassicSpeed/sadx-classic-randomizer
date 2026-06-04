@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 ### Added:
 
 - Added skip from Jungle to Final Egg Tower for Sonic, Tails, Knuckles and Gamma in expert (DC).
+- Sonic's Mission 1 is no longer blacklisted, it requires the Police Pass or the equivalent emblems.
 
 ### Changed:
 
