@@ -426,7 +426,8 @@ void EventDetector::OnFrame()
         return;
 
     // Character drowned
-    if (Current_CharObj2->UnderwaterTime > 1850)
+    if (CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_Past
+        && Current_CharObj2->UnderwaterTime > 1850)
         _instance->_link.OnDeath();
 
     //Checks for Egg Carrier transformation

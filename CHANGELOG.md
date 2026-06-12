@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
   - Reactions won't show subtitles if the Extra Subtitles mod is enabled to avoid double subtitles.
 - Fixed Super Sonic from Kell's mod not unlocking with the Chaos Emeralds.
 - Traps can no longer be activated during demo mode.
+- Fixed Death Link being sent in Sky Chase.
 
 ### Added:
 
