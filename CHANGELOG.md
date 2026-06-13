@@ -19,7 +19,11 @@ All notable changes to this project will be documented in this file.
 ### Added:
 
 - Added skip from Jungle to Final Egg Tower for Sonic, Tails, Knuckles and Gamma in expert (DC).
-- Sonic's Mission 1 is no longer blacklisted, it requires the Police Pass or the equivalent emblems.
+- Sonic's Mission 1 is no longer blacklisted, it requires the Police Pass or TP Ticket.
+  - Also works in emblem gating mode with the corresponding emblem requirements.
+- Chao eggs are re-enabled for Emblem gating.
+- The golden egg now takes into account both the Police Pass Route and the Sewers with TP Ticket.
+  - Similar on how it works with either Hotel Keys or Casino+Station+Shutter keys. Applies to both types of gating.
 
 ### Changed:
 
