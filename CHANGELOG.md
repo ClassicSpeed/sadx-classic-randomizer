@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.2 pre-release 3] - 2026-05-??
+## [v1.2.2 pre-release 3] - 2026-06-14
 
 ### Fixed:
 
@@ -27,7 +27,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed:
 
-- Several logic changes.
+- Several logic changes for expert logic
 - Removed skip that depended on other doors to be open or close from the logic.
   - The clips are still in the logic sheet, but they won't be in logic.
 
