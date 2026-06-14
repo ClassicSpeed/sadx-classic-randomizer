@@ -10,8 +10,8 @@ All notable changes to this project will be documented in this file.
 - Fixed the jungle cart sometimes being invisible.
 - Fixed Tails' Casino to Hotel video clip being missing.
 - Fixed compatibility issues with the Extra Subtitles mod:
-  - Item reactions no longer play in menus when Extra Subtitles is enabled, to avoid crashes.
-  - Reactions no longer show subtitles when Extra Subtitles is enabled, to avoid duplicate subtitles.
+    - Item reactions no longer play in menus when Extra Subtitles is enabled, to avoid crashes.
+    - Reactions no longer show subtitles when Extra Subtitles is enabled, to avoid duplicate subtitles.
 - Fixed Super Sonic from Kell's mod not unlocking with the Chaos Emeralds.
 - Traps can no longer be activated during demo mode.
 - Fixed Death Link being sent in Sky Chase.
@@ -20,16 +20,17 @@ All notable changes to this project will be documented in this file.
 
 - Added a skip from Jungle to Final Egg Tower for Sonic, Tails, Knuckles, and Gamma in Expert (DC).
 - Sonic's Mission 1 is no longer blacklisted, it now requires the Police Pass or TP Ticket.
-  - This also works in Emblem Gating mode with the corresponding emblem requirements.
+    - This also works in Emblem Gating mode with the corresponding emblem requirements.
 - Re-enabled Chao eggs for Emblem Gating.
 - The golden egg now takes into account both the Police Pass route and the Sewers with TP Ticket.
-  - Similar to how it works with either Hotel Keys or Casino + Station + Shutter Keys. Applies to both gating types.
+    - Similar to how it works with either Hotel Keys or Casino + Station + Shutter Keys. Applies to both gating types.
 
 ### Changed:
 
 - Several logic changes for expert logic
 - Removed skips from logic that depended on other doors being open or closed.
-  - The clips are still listed in the logic sheet, but they are no longer in logic.
+    - The clips are still listed in the logic sheet, but they are no longer in logic.
+
 ## [v1.2.2 pre-release 2] - 2026-05-22
 
 ### Fixed:
