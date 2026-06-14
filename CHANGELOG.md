@@ -6,31 +6,30 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed:
 
-- Fixed wrong spawn points in the Egg Carrier when exiting a Chao garden.
-- Fixed jungle cart sometimes being invisible.
-- Fixed Tail's Casino to Hotel video clip missing.
+- Fixed incorrect spawn points in the Egg Carrier when exiting a Chao Garden.
+- Fixed the jungle cart sometimes being invisible.
+- Fixed Tails' Casino to Hotel video clip being missing.
 - Fixed compatibility issues with the Extra Subtitles mod:
-  - Reactions to items won't play in the menu if the Extra Subtitles mod is enabled to avoid crashes.
-  - Reactions won't show subtitles if the Extra Subtitles mod is enabled to avoid double subtitles.
+  - Item reactions no longer play in menus when Extra Subtitles is enabled, to avoid crashes.
+  - Reactions no longer show subtitles when Extra Subtitles is enabled, to avoid duplicate subtitles.
 - Fixed Super Sonic from Kell's mod not unlocking with the Chaos Emeralds.
 - Traps can no longer be activated during demo mode.
 - Fixed Death Link being sent in Sky Chase.
 
 ### Added:
 
-- Added skip from Jungle to Final Egg Tower for Sonic, Tails, Knuckles and Gamma in expert (DC).
-- Sonic's Mission 1 is no longer blacklisted, it requires the Police Pass or TP Ticket.
-  - Also works in emblem gating mode with the corresponding emblem requirements.
-- Chao eggs are re-enabled for Emblem gating.
-- The golden egg now takes into account both the Police Pass Route and the Sewers with TP Ticket.
-  - Similar on how it works with either Hotel Keys or Casino+Station+Shutter keys. Applies to both types of gating.
+- Added a skip from Jungle to Final Egg Tower for Sonic, Tails, Knuckles, and Gamma in Expert (DC).
+- Sonic's Mission 1 is no longer blacklisted, it now requires the Police Pass or TP Ticket.
+  - This also works in Emblem Gating mode with the corresponding emblem requirements.
+- Re-enabled Chao eggs for Emblem Gating.
+- The golden egg now takes into account both the Police Pass route and the Sewers with TP Ticket.
+  - Similar to how it works with either Hotel Keys or Casino + Station + Shutter Keys. Applies to both gating types.
 
 ### Changed:
 
 - Several logic changes for expert logic
-- Removed skip that depended on other doors to be open or close from the logic.
-  - The clips are still in the logic sheet, but they won't be in logic.
-
+- Removed skips from logic that depended on other doors being open or closed.
+  - The clips are still listed in the logic sheet, but they are no longer in logic.
 ## [v1.2.2 pre-release 2] - 2026-05-22
 
 ### Fixed:
