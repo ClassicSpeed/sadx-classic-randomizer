@@ -327,9 +327,6 @@ void CharacterManager::OnFrame()
     if (GameState != MD_GAME_MAIN || !EntityData1Ptrs[0])
         return;
 
-    if (DemoPlaying > 0)
-        return;
-
     //Prevents traps from happening during Sky Deck cannon section
     if ((CurrentCharacter == Characters_Sonic || CurrentCharacter == Characters_Tails) && CurrentLevel ==
         LevelIDs_SkyDeck && TimeSeconds < 4)
