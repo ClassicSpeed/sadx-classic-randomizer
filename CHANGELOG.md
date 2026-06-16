@@ -3,8 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [v1.2.2 pre-release 4] - 2026-06-??
+
 ### Added:
-- Readded traps during demo mode
+
+- Readded traps during demo mode.
+- World is now open (if the all open setting is enabled) during demo mode.
 
 ## [v1.2.2 pre-release 3] - 2026-06-14
 

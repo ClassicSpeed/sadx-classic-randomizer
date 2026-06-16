@@ -102,9 +102,6 @@ void SetObjectManager::OnCountSetItemsMaybe()
 {
     _countSetItemsMaybeHook.Original();
 
-    if (DemoPlaying > 0)
-        return;
-
     for (int i = 0; i < SETTable_Count; ++i)
     {
         const SETObjData* objData = &SETTable[i];
