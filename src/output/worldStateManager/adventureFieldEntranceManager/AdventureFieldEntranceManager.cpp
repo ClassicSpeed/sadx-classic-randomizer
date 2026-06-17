@@ -187,11 +187,8 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const int level, int ac
 
         if (levelActAndId == LevelAndActIDs_HedgehogHammer)
         {
-            AdventureFieldEntrance* currentEntrance = _instance->_adventureFieldEntranceMap.GetCurrentEntrance(
-                currentLevelAndAct, GET_LEVEL_ACT(level, act));
-            _setNextLevelAndActHook.Original(
-                GET_LEVEL(currentEntrance->levelAndActId), GET_ACT(currentEntrance->levelAndActId));
-            SetEntranceNumber(currentEntrance->entranceNumber);
+            _setNextLevelAndActHook.Original(level, act);
+            return;
         }
         else
         {
@@ -252,11 +249,8 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const int l
 
         if (levelActAndId == LevelAndActIDs_HedgehogHammer)
         {
-            AdventureFieldEntrance* currentEntrance = _instance->_adventureFieldEntranceMap.GetCurrentEntrance(
-                currentLevelAndAct, GET_LEVEL_ACT(level, act));
-            _setNextLevelAndActCutsceneModeHook.Original(
-                GET_LEVEL(currentEntrance->levelAndActId), GET_ACT(currentEntrance->levelAndActId));
-            SetEntranceNumber(currentEntrance->entranceNumber);
+            _setNextLevelAndActCutsceneModeHook.Original(level, act);
+            return;
         }
         else
         {

@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - Readded traps during demo mode.
 - World is now open (if the all open setting is enabled) during demo mode.
+- Entering levels that are blocked will no longer send you back, and instead it will let you enter the level.
+    - This won't be taken into account for logic.
 
 ## [v1.2.2 pre-release 3] - 2026-06-14
 
