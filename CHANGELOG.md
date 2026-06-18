@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.2 pre-release 4] - 2026-06-??
+## [v1.2.2] - 2026-06-??
 
 ### Added:
 
