@@ -33,7 +33,7 @@ public:
 
     AdventureFieldEntrance* GetNewConnection(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
     AdventureFieldEntrance* GetCurrentEntrance(LevelAndActIDs sourceLocation, LevelAndActIDs destinationLocation);
-    const std::vector<AdventureFieldEntrance>& GetEntrances() const;
+    std::vector<AdventureFieldEntrance>& GetEntrances();
     const std::vector<AdventureFieldEntrance>& GetStaticEntrances() const;
     EntranceId GetReplacementConnection(EntranceId fromEntranceId);
     AdventureFieldEntrance* FindEntranceById(EntranceId entranceId);

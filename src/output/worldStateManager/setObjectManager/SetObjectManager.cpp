@@ -38,8 +38,16 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _opti
     //We replace the checkpoint for a warp object from the Egg Carrier
     ObjList_SSquare[WARP_STATION_SQUARE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_MRuins[WARP_MYSTIC_RUINS] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
-    ObjList_MRuins[EMBLEM_MYSTIC_RUINS].Distance = 1000000.0f;
+    ObjList_MRuins[EMBLEM_MYSTIC_RUINS].Distance = 10000000.0f;
     ObjList_MRuins[EMBLEM_MYSTIC_RUINS].UseDistance = 1;
+    ObjList_MRuins[UPGRADE_MYSTIC_RUINS].Distance = 10000000.0f;
+    ObjList_MRuins[UPGRADE_MYSTIC_RUINS].UseDistance = 1;
+    ObjList_Past[UPGRADE_PAST].Distance = 10000000.0f;
+    ObjList_Past[UPGRADE_PAST].UseDistance = 1;
+    ObjList_SSquare[UPGRADE_STATION_SQUARE].Distance = 10000000.0f;
+    ObjList_SSquare[UPGRADE_STATION_SQUARE].UseDistance = 1;
+    ObjList_ECarrier3[UPGRADE_EGG_CARRIER_INSIDE].Distance = 10000000.0f;
+    ObjList_ECarrier3[UPGRADE_EGG_CARRIER_INSIDE].UseDistance = 1;
     ObjList_ECarrier0[WARP_EGG_CARRIER_OUTSIDE] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
     ObjList_Past[WARP_PAST] = ObjList_ECarrier3[WARP_EGG_CARRIER_INSIDE];
 
@@ -53,15 +61,7 @@ SetObjectManager::SetObjectManager(Options& options, Settings& settings) : _opti
 
 void SetObjectManager::OnFrame()
 {
-    if (this->_settings.eggCarrierTransformationCutscene)
-    {
-        if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
-            _eggCarrierSunk = false;
-        else
-            _eggCarrierSunk = true;
-    }
-
-    if (CurrentLevel >= LevelIDs_TwinkleCircuit && CurrentLevel <= LevelIDs_SkyChase2)
+    if (CurrentLevel == LevelIDs_TwinkleCircuit)
         GameMode = GameModes_Adventure_ActionStg;
     else if (GameMode == GameModes_Adventure_Field || GameMode == GameModes_Adventure_ActionStg)
         GameMode = GameModes_Mission;
@@ -102,9 +102,6 @@ void SetObjectManager::OnCountSetItemsMaybe()
 {
     _countSetItemsMaybeHook.Original();
 
-    if (DemoPlaying > 0)
-        return;
-
     for (int i = 0; i < SETTable_Count; ++i)
     {
         const SETObjData* objData = &SETTable[i];
@@ -131,10 +128,6 @@ void SetObjectManager::OnCountSetItemsMaybe()
     //Sky Chase Tarjet
     LoadNoNamePVM(&TARGET_TEXLIST);
 
-    if (_instance->_settings.eggCarrierTransformationCutscene
-        && levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside4)
-        LoadPVM("EC_SKY", &EC_SKY_TEXLIST);
-
     //Freeze trap
     LoadNoNamePVM(&stx_ice0_TEXLIST);
 
@@ -142,7 +135,7 @@ void SetObjectManager::OnCountSetItemsMaybe()
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Tails);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Knuckles);
-    AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Amy);
+    AddSetToLevel(SEWERS_SPRING_AMY, LevelAndActIDs_StationSquare3, Characters_Amy);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Gamma);
     AddSetToLevel(SEWERS_SPRING_BIG, LevelAndActIDs_StationSquare3, Characters_Big);
 
@@ -150,7 +143,7 @@ void SetObjectManager::OnCountSetItemsMaybe()
     AddSetToLevel(CITY_HALL_SEWERS_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Amy);
     AddSetToLevel(CITY_HALL_SEWERS_SCENE_CHANGE_SS, LevelAndActIDs_StationSquare1, Characters_Gamma);
 
-    AddSetToLevel(EXTRA_SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Amy);
+    AddSetToLevel(EXTRA_SEWERS_SPRING_AMY, LevelAndActIDs_StationSquare3, Characters_Amy);
     AddSetToLevel(EXTRA_SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Big);
 
     AddSetToLevel(SS_MAIN_BARRICADE_SS, LevelAndActIDs_StationSquare4, Characters_Knuckles);

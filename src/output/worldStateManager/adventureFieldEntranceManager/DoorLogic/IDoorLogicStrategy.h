@@ -1,7 +1,7 @@
 #pragma once
 #include "../AdventureFieldEntranceMap.h"
-#include "../src/configuration/gameStatus/GameStatus.h"
-#include "../src/configuration/options/Options.h"
+#include "../../src/configuration/gameStatus/GameStatus.h"
+#include "../../src/configuration/options/Options.h"
 
 
 enum DoorState

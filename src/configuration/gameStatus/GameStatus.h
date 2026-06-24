@@ -34,6 +34,7 @@ public:
     CapsuleSanity capsuleSanity;
 
     void CheckGoalRequirements();
+    bool IsLevelCompleted(LevelIDs levelId, int character);
     bool lastStoryRequirementsCompleted = false;
     bool isEggCarrierTransformed = false;
 

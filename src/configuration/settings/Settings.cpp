@@ -26,6 +26,12 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
         exit(0);
     }
 
+    if (helperFunctions.Mods->find_by_name("Extra Subtitles"))
+        extraSubtitlesModLoaded = true;
+
+    if (helperFunctions.Mods->find_by_name("Super Sonic"))
+        _superSonicModRunning = true;
+
     const IniFile* settingsIni = new IniFile(std::string(path) + "\\config.ini");
     if (!settingsIni)
     {
@@ -109,11 +115,6 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
 
     this->extendRingCapacity = settingsIni->getBool("GameSettings", "ExtendRingCapacity", false);
 
-
-    this->eggCarrierTransformationCutscene = settingsIni->getBool("GameSettings",
-                                                                  "EggCarrierTransformationCutscene", true);
-
-
     this->showEntranceIndicators = settingsIni->getBool("GameSettings",
                                                         "ShowEntranceIndicators", true);
 
@@ -136,6 +137,11 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
     this->completeMultipleLevelMissions = settingsIni->getBool("GameSettings", "CompleteMultipleLevelMissions", true);
     this->homingAttackIndicator = static_cast<HomingAttackIndicator>(settingsIni->getInt(
         "GameSettings", "HomingAttackIndicatorEnabled", 0));
+
+    this->lightSpeedDashButton = static_cast<LightSpeedDashButton>(settingsIni->getInt(
+        "GameSettings", "LightSpeedDashButton", 0));
+    this->instaLightSpeedDashRequiresCrystalRing = settingsIni->getBool(
+        "GameSettings", "InstaLightSpeedDashRequiresCrystalRing", true);
 
     this->mapButton = static_cast<MapButton>(settingsIni->getInt("GameSettings", "MapButton", 0));
     this->showTrackerWithMap = settingsIni->getBool("GameSettings", "ShowTrackerWithMap", false);
@@ -197,7 +203,4 @@ Settings::Settings(const char* path, const HelperFunctions& helperFunctions)
     this->adventureFieldDoorOverride = static_cast<AdventureFieldDoorOverride>(settingsIni->getInt(
         "Debug", "AdventureFieldDoorOverride", 0));
 
-
-    if (helperFunctions.Mods->find_by_name("Super Sonic"))
-        _superSonicModRunning = false;
 }

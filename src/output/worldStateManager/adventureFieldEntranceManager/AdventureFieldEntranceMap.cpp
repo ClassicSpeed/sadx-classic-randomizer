@@ -102,7 +102,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
         {JungleToPastMain, LevelAndActIDs_MysticRuins3, 5, PastMainToJungle, 180, {-667, 105.5f, -1181}},
 
         // Final Egg Tower
-        {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 124, 166.5}},
+        {FinalEggTowerToJungle, LevelAndActIDs_MysticRuins4, 0, JungleToFinalEggTower, 0.0f, {0, 124, 156.5}},
         {
             FinalEggTowerToFinalEggAlternative, LevelAndActIDs_MysticRuins4, 1, FinalEggToFinalEggTowerAlternative,
             180,
@@ -110,7 +110,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
         },
         {FinalEggTowerToFinalEgg, LevelAndActIDs_MysticRuins4, 2, FinalEggToFinalEggTower, 115, {175, 135, -25.75}},
         {FinalEggTowerToBetaEggViper, LevelAndActIDs_MysticRuins4, 4, BetaEggViperToFinalEggTower, 225, {0, 16, 0}},
-        {FinalEggTowerToEcInside, LevelAndActIDs_MysticRuins4, 3, EcInsideToFinalEggTower, 180, {0, 15, -175}},
+        {FinalEggTowerToEcInside, LevelAndActIDs_MysticRuins4, 3, EcInsideToFinalEggTower, 180, {0, 15, -165}},
 
 
         // Bridge (Transformed)
@@ -424,7 +424,7 @@ void AdventureFieldEntranceMap::overrideEntranceAct(std::vector<AdventureFieldEn
     }
 }
 
-const std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetEntrances() const
+std::vector<AdventureFieldEntrance>& AdventureFieldEntranceMap::GetEntrances()
 {
     if (_gameStatus.isEggCarrierTransformed)
         return _entranceList;
@@ -478,9 +478,9 @@ AdventureFieldEntrance* AdventureFieldEntranceMap::GetCurrentEntrance(const Leve
 EntranceId AdventureFieldEntranceMap::FindEntranceByLocation(
     const LevelAndActIDs sourceLocation, const LevelAndActIDs destinationLocation)
 {
-    std::vector<AdventureFieldEntrance*> possibleEntrances;
-    std::vector<AdventureFieldEntrance> entranceList = GetEntrances();
-    for (auto& entrance : entranceList)
+    std::vector<const AdventureFieldEntrance*> possibleEntrances;
+    const auto& entranceList = GetEntrances();
+    for (const auto& entrance : entranceList)
     {
         if (entrance.levelAndActId == sourceLocation)
         {
@@ -536,7 +536,7 @@ EntranceId AdventureFieldEntranceMap::GetReplacementConnection(const EntranceId 
 
 AdventureFieldEntrance* AdventureFieldEntranceMap::FindEntranceById(const EntranceId entranceId)
 {
-    std::vector<AdventureFieldEntrance> entranceList = GetEntrances();
+    auto& entranceList = GetEntrances();
     for (auto& entrance : entranceList)
     {
         if (entrance.entranceId == entranceId)

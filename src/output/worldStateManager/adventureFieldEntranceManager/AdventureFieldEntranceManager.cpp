@@ -76,7 +76,6 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _isFinalEggEggmanDoorOpenHook.Hook(OnIsFinalEggEggmanDoorOpen);
     _isMonkeyDoorOpenHook.Hook(OnIsMonkeyDoorOpen);
     _loadMonkeyCageHook.Hook(OnLoadMonkeyCage);
-    _changeSceneCave2Hook.Hook(OnChangeSceneCave2);
     _isLostWorldFrontEntranceOpenHook.Hook(OnIsLostWorldFrontEntranceOpen);
     _isSandHillOpenHook.Hook(OnIsSandHillOpen);
     _loadSceneChangeMrHook.Hook(OnLoadSceneChangeMr);
@@ -100,7 +99,14 @@ AdventureFieldEntranceManager::AdventureFieldEntranceManager(Options& options, S
     _hiddenGateMainHook.Hook(OnHiddenGateMain);
     _isEcTransformedHook.Hook(IsECTransformed);
     //Allows players to return to the adventure field when quitting boss fights
-    WriteData<1>((void*)0x415F46, 0x19); // Change the comparison value from 3 to 9
+    WriteData<1>((void*)0x415F46, 0x19);
+
+    //Allows to return to the adventure field if the level is between 35  and 38
+    WriteData<1>((void*)0x415F57, 0x72);
+    WriteData<1>((void*)0x415F58, 0x3B);
+    WriteData<1>((void*)0x415F5E, 0x87);
+
+    // Change the comparison value from 3 to 9
     WriteData<1>((void*)0x638BF6, 0x09);
     // Change the jump from jz (0x74) to jnz (0x75)
     WriteData<1>((void*)0x638C00, 0x75);
@@ -154,7 +160,7 @@ bool AdventureFieldEntranceManager::IsDoorOpen(const EntranceId entranceId)
     return doorState == DoorOpen || doorState == DoorUnlocked;
 }
 
-void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, Uint8 act)
+void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const int level, int act)
 {
     if (level == LevelIDs_EggCarrierOutside && act == 0 && (LevelEntrance == 6 || LevelEntrance == 7)
         && _instance->_gameStatus.isEggCarrierTransformed)
@@ -181,11 +187,8 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, Uint
 
         if (levelActAndId == LevelAndActIDs_HedgehogHammer)
         {
-            AdventureFieldEntrance* currentEntrance = _instance->_adventureFieldEntranceMap.GetCurrentEntrance(
-                currentLevelAndAct, GET_LEVEL_ACT(level, act));
-            _setNextLevelAndActHook.Original(
-                GET_LEVEL(currentEntrance->levelAndActId), GET_ACT(currentEntrance->levelAndActId));
-            SetEntranceNumber(currentEntrance->entranceNumber);
+            _setNextLevelAndActHook.Original(level, act);
+            return;
         }
         else
         {
@@ -205,14 +208,19 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const Uint8 level, Uint
     _setNextLevelAndActHook.Original(level, act);
 }
 
-task* AdventureFieldEntranceManager::OnSetNextLevelAndActChaoGarden(Uint8 level, Uint8 act)
+task* AdventureFieldEntranceManager::OnSetNextLevelAndActChaoGarden(int level, int act)
 {
-    if (level < LevelIDs_Invalid)
+    PrintDebug("OnSetNextLevelAndActChaoGarden: level %d, act %d", level, act);
+    if (level > LevelIDs_HedgehogHammer && level < LevelIDs_Invalid)
+    {
         OnSetNextLevelAndActCutsceneMode(level, act);
+        return NULL;
+
+    }
     return _setNextLevelAndActChaoGardenHook.Original(level, act);
 }
 
-void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8 level, Uint8 act)
+void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const int level, int act)
 {
     if (level == LevelIDs_EggCarrierOutside && act == 0 && (LevelEntrance == 6 || LevelEntrance == 7)
         && _instance->_gameStatus.isEggCarrierTransformed)
@@ -241,11 +249,8 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const Uint8
 
         if (levelActAndId == LevelAndActIDs_HedgehogHammer)
         {
-            AdventureFieldEntrance* currentEntrance = _instance->_adventureFieldEntranceMap.GetCurrentEntrance(
-                currentLevelAndAct, GET_LEVEL_ACT(level, act));
-            _setNextLevelAndActCutsceneModeHook.Original(
-                GET_LEVEL(currentEntrance->levelAndActId), GET_ACT(currentEntrance->levelAndActId));
-            SetEntranceNumber(currentEntrance->entranceNumber);
+            _setNextLevelAndActCutsceneModeHook.Original(level, act);
+            return;
         }
         else
         {
@@ -455,27 +460,9 @@ void AdventureFieldEntranceManager::OnSetStartPosReturnToField()
 void AdventureFieldEntranceManager::OnFrame()
 {
     _mapManager.OnFrame();
-    if (CurrentStageAndAct == LevelAndActIDs_EggCarrierOutside4)
-    {
-        bool isTransformed = false;
-        if (CurrentCharacter == Characters_Sonic)
-            isTransformed = EventFlagArray[FLAG_SONIC_EC_TRANSFORM];
-        else if (CurrentCharacter == Characters_Tails)
-            isTransformed = EventFlagArray[FLAG_MILES_EC_TRANSFORM];
-        else if (CurrentCharacter == Characters_Knuckles)
-            isTransformed = EventFlagArray[FLAG_KNUCKLES_EC_TRANSFORM];
-        else if (CurrentCharacter == Characters_Amy)
-            isTransformed = EventFlagArray[FLAG_AMY_EC_TRANSFORM];
-        else if (CurrentCharacter == Characters_Gamma)
-            isTransformed = EventFlagArray[FLAG_E102_EC_TRANSFORM];
-        else if (CurrentCharacter == Characters_Big)
-            isTransformed = EventFlagArray[FLAG_BIG_EC_TRANSFORM];
+}
 
-        if (isTransformed != _instance->_gameStatus.isEggCarrierTransformed)
-            _instance->_gameStatus.isEggCarrierTransformed = isTransformed;
-    }
-} // -------- Function hooks for gating the world --------
-
+// -------- Function hooks for gating the world --------
 BOOL AdventureFieldEntranceManager::OnIsBarricadeGone()
 {
     if (CurrentStageAndAct == LevelAndActIDs_StationSquare4)
@@ -720,7 +707,7 @@ void AdventureFieldEntranceManager::OnSceneChangeMainStationSquare(task* tp)
         }
         else
         {
-            return;
+            tp->twp->pos = {395, -2.12f, 632.59f};
         }
     }
     _sceneChangeMainStationSquareHook.Original(tp);
@@ -975,16 +962,16 @@ void AdventureFieldEntranceManager::OnPastSceneChange(task* tp)
 {
     // Past Main
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past1
-        && IsNearPosition(tp->twp->pos, 1.907, 13, 1512.719))
+        && IsNearPosition(tp->twp->pos, 1.907F, 13, 1512.719F))
     {
         if (!_instance->IsDoorOpen(PastMainToPastAltar))
-            return FreeTask(tp);
+            tp->twp->pos = {1.907F, 13, 1625};
     }
     else if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_Past2
-        && IsNearPosition(tp->twp->pos, 223.44, -2, 1836.12))
+        && IsNearPosition(tp->twp->pos, 223.44F, -2, 1836.12F))
     {
         if (!_instance->IsDoorOpen(PastAltarToPastMain))
-            return FreeTask(tp);
+            tp->twp->pos = {223.44f, -2, 1880};
     }
     _pastSceneChangeHook.Original(tp);
 }
@@ -1030,18 +1017,6 @@ void AdventureFieldEntranceManager::OnLoadMonkeyCage(task* tp)
             return FreeTask(tp);
     }
     _loadMonkeyCageHook.Original(tp);
-}
-
-void AdventureFieldEntranceManager::OnChangeSceneCave2(task* tp)
-{
-    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins2
-        && IsNearPosition(tp->twp->pos, 56, -100, -13))
-    {
-        if (!_instance->IsDoorOpen(AngelIslandToMrMain))
-            return FreeTask(tp);
-    }
-
-    _changeSceneCave2Hook.Original(tp);
 }
 
 BOOL AdventureFieldEntranceManager::OnIsLostWorldFrontEntranceOpen()
@@ -1093,44 +1068,28 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
         }
     }
 
-    //  Final Egg 
+    //  Final Egg
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_MysticRuins4)
     {
         if (newScene == 2)
         {
-            if (_instance->IsDoorOpen(FinalEggTowerToFinalEggAlternative))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_FinalEgg3), GET_ACT(LevelAndActIDs_FinalEgg3));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_FinalEgg3), GET_ACT(LevelAndActIDs_FinalEgg3));
         }
         if (newScene == 3)
         {
-            if (_instance->IsDoorOpen(FinalEggTowerToFinalEgg))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_FinalEgg1), GET_ACT(LevelAndActIDs_FinalEgg1));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_FinalEgg1), GET_ACT(LevelAndActIDs_FinalEgg1));
         }
         if (newScene == 4)
         {
-            if (_instance->IsDoorOpen(FinalEggTowerToJungle))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_MysticRuins3), GET_ACT(LevelAndActIDs_MysticRuins3));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_MysticRuins3), GET_ACT(LevelAndActIDs_MysticRuins3));
         }
         if (newScene == 5)
         {
-            if (_instance->IsDoorOpen(FinalEggTowerToEcInside))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_EggCarrierInside2), GET_ACT(LevelAndActIDs_EggCarrierInside2));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_EggCarrierInside2), GET_ACT(LevelAndActIDs_EggCarrierInside2));
         }
     }
 
@@ -1139,39 +1098,23 @@ void AdventureFieldEntranceManager::OnSceneChangeMr(const int newScene)
     {
         if (newScene == 5)
         {
-            if (_instance->IsDoorOpen(JungleToFinalEggTower))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_MysticRuins4), GET_ACT(LevelAndActIDs_MysticRuins4));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_MysticRuins4), GET_ACT(LevelAndActIDs_MysticRuins4));
         }
         if (newScene == 6)
         {
-            if (_instance->IsDoorOpen(JungleToLostWorld))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_LostWorld1), GET_ACT(LevelAndActIDs_LostWorld1));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_LostWorld1), GET_ACT(LevelAndActIDs_LostWorld1));
         }
         if (newScene == 7)
         {
-            if (_instance->IsDoorOpen(JungleToLostWorldAlternative))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_LostWorld2), GET_ACT(LevelAndActIDs_LostWorld2));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_LostWorld2), GET_ACT(LevelAndActIDs_LostWorld2));
         }
         if (newScene == 8)
         {
-            if (_instance->IsDoorOpen(JungleToSandHill))
-            {
-                return SetNextLevelAndAct_CutsceneMode(
-                    GET_LEVEL(LevelAndActIDs_SandHill), GET_ACT(LevelAndActIDs_SandHill));
-            }
-            return;
+            return SetNextLevelAndAct_CutsceneMode(
+                GET_LEVEL(LevelAndActIDs_SandHill), GET_ACT(LevelAndActIDs_SandHill));
         }
     }
 
@@ -1283,7 +1226,7 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
                 return false;
 
             if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
-                return IsSwitchPressed(1);
+                return IsSwitchPressed(1) == 1;
             return true;
         }
         // Hedgehog hammer door
@@ -1296,7 +1239,7 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
                 return false;
 
             if (CurrentCharacter == Characters_Amy || CurrentCharacter == Characters_Big)
-                return IsSwitchPressed(0);
+                return IsSwitchPressed(0)== 1;
             return true;
         }
         // Warp/Chao Garden door
@@ -1342,7 +1285,7 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
         return eggCarrierInsideEggDoorHook.Original(twp);
     }
 
-    // Hedgehog hammer 
+    // Hedgehog hammer
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierInside3)
     {
         if (twp->smode == 4)
@@ -1405,7 +1348,7 @@ int AdventureFieldEntranceManager::OnEggCarrierInsideEggDoor(const taskwk* twp)
 
 int AdventureFieldEntranceManager::OnEggCarrierOutsideEggDoor(const taskwk* twp)
 {
-    // EC outside 
+    // EC outside
     if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside1)
     {
         if (IsNearPosition(twp->pos, 0, 744.5, 1080.7))

@@ -2,6 +2,97 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.2] - 2026-06-26
+
+### Added:
+
+- Re-added traps during demo mode.
+- The adventure field is now open during demo mode if the "all open" setting is enabled.
+- Entering blocked levels will no longer send you back, you can now enter the level.
+    - This won't be taken into account for logic.
+
+## [v1.2.2 pre-release 3] - 2026-06-14
+
+### Fixed:
+
+- Fixed incorrect spawn points in the Egg Carrier when exiting a Chao Garden.
+- Fixed the jungle cart sometimes being invisible.
+- Fixed Tails' Casino to Hotel video clip being missing.
+- Fixed compatibility issues with the Extra Subtitles mod:
+    - Item reactions no longer play in menus when Extra Subtitles is enabled, to avoid crashes.
+    - Reactions no longer show subtitles when Extra Subtitles is enabled, to avoid duplicate subtitles.
+- Fixed Super Sonic from Kell's mod not unlocking with the Chaos Emeralds.
+- Traps can no longer be activated during demo mode.
+- Fixed Death Link being sent in Sky Chase.
+
+### Added:
+
+- Added a skip from Jungle to Final Egg Tower for Sonic, Tails, Knuckles, and Gamma in Expert (DC).
+- Sonic's Mission 1 is no longer blacklisted, it now requires the Police Pass or TP Ticket.
+    - This also works in Emblem Gating mode with the corresponding emblem requirements.
+- Re-enabled Chao eggs for Emblem Gating.
+- The golden egg now takes into account both the Police Pass route and the Sewers with TP Ticket.
+    - Similar to how it works with either Hotel Keys or Casino + Station + Shutter Keys. Applies to both gating types.
+
+### Changed:
+
+- Several logic changes for expert logic
+- Removed skips from logic that depended on other doors being open or closed.
+    - The clips are still listed in the logic sheet, but they are no longer in logic.
+
+## [v1.2.2 pre-release 2] - 2026-05-22
+
+### Fixed:
+
+- Fixed crash near the Hot Shelter entrance when playing as Amy or Big.
+- Fixed crash when exiting the Chao Garden using the pause menu.
+
+## [v1.2.2 pre-release 1] - 2026-05-21
+
+### Added:
+
+- Added button for instant Light Speed Dash in the mod settings (disabled by default).
+    - Also added an option to require the Crystal Ring for it.
+- You can now exit Sky Chase to the Adventure Field.
+- A message will be shown when transforming the Egg Carrier.
+    - Removed the setting to show the transformation cutscene.
+- CPU Tails will now follow Sonic during Action Stages.
+- Added small red ribbon under level icons in map to indicate completion.
+
+### Changed:
+
+- Some connections used to have their loading zone removed when closed. They were re-added and the logic was adjusted:
+    - Sewers to City Hall.
+    - Past Main to Past Altar.
+    - Past Altar to Past Main.
+    - Angel Island to MRMain.
+    - Ec Inside to Final Egg Tower.
+    - Final Egg Tower to Jungle.
+    - Final Egg Tower to Jungle.
+    - Final Egg Tower to Ec Inside.
+    - Final Egg Tower to Final Egg.
+    - Final Egg Tower to Final Egg (Alt).
+    - Jungle to Final Egg Tower.
+    - Jungle to Lost World.
+    - Jungle to Lost World (Alt).
+    - Jungle to Sand Hill.
+- You are now allowed to pause while the game is displaying subtitles.
+    - This won't affect the traps that much, but it can help with key items.
+- Reverse trap now inverts buttons and affects Knuckles' climbing.
+- Tails' Ice Cap S rank time in expert logic changed from 1:55 to 1:40.
+- Moved the door icons in-game for Final Egg Tower's doors to avoid a transparency problem.
+- Improved Upgrades' draw distance.
+- RingLink packets' values are now being validated to prevent crashes from malformed packets.
+- Improved Amy's sewer springs to prevent her from clipping through the ceiling.
+- Adjusted the position for some of the Deck entrances in the map to make it easier to read.
+
+### Fixed:
+
+- Fixed map textures while playing Sky Chase.
+- Adding filler items in the start inventory no longer causes break generation.
+- Fixed transparency issues with door indicators when mixed with other transparency effects (doors, water, etc.).
+- Drowning will now send DeathLinks.
+
 ## [v1.2.1] - 2026-04-11
 
 ### Fixed:

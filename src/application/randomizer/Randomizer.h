@@ -43,13 +43,14 @@ public:
     void QueueNewChatMessage(std::string information);
     std::vector<CapsuleLocationData> GetCapsules();
     std::vector<EnemyLocationData> GetEnemies();
-    void ResetItems() const;
+    void ResetItems();
     void UpdateLevelEntrances();
     void DisplaySongName(int songId);
     int GetSongForId(int songId);
     int GetNewSongForId(int songId, int currentSongId);
     void MinorVersionMismatch(const std::string& serverVer, const std::string& modVer);
     void OnSaveFileLoaded();
+    void OnEggCarrierTransform();
 
 private:
     Randomizer(Options& options, Settings& settings, GameStatus& gameStatus, DisplayManager& displayManager,

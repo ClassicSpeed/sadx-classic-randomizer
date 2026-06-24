@@ -39,14 +39,14 @@ private:
 
     bool IsDoorOpen(EntranceId entranceId);
 
-    inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActCutsceneModeHook{0x4145D0};
-    static void OnSetNextLevelAndActCutsceneMode(Uint8 level, Uint8 act);
+    inline static FunctionHook<void, int, int> _setNextLevelAndActCutsceneModeHook{0x4145D0};
+    static void OnSetNextLevelAndActCutsceneMode(int level, int act);
 
-    inline static FunctionHook<void, Uint8, Uint8> _setNextLevelAndActHook{0x4145B0};
-    static void OnSetNextLevelAndAct(Uint8 level, Uint8 act);
+    inline static FunctionHook<void, int, int> _setNextLevelAndActHook{0x4145B0};
+    static void OnSetNextLevelAndAct(int level, int act);
 
-    inline static FunctionHook<task*, Uint8, Uint8> _setNextLevelAndActChaoGardenHook{0x715730};
-    static task* OnSetNextLevelAndActChaoGarden(Uint8 level, Uint8 act);
+    inline static FunctionHook<task*, int, int> _setNextLevelAndActChaoGardenHook{0x715730};
+    static task* OnSetNextLevelAndActChaoGarden(int level, int act);
 
     inline static FunctionHook<Sint32> _finishedLevelMaybeHook{0x414090};
     static Sint32 OnFinishedLevelMaybe();
@@ -207,9 +207,6 @@ private:
 
     inline static FunctionHook<void, task*> _loadMonkeyCageHook{0x540730};
     static void OnLoadMonkeyCage(task* tp);
-
-    inline static FunctionHook<void, task*> _changeSceneCave2Hook{0x536ED0};
-    static void OnChangeSceneCave2(task* tp);
 
     inline static FunctionHook<BOOL> _isLostWorldFrontEntranceOpenHook{0x532E60};
     static BOOL OnIsLostWorldFrontEntranceOpen();

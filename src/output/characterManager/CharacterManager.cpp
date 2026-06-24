@@ -1,6 +1,10 @@
 #include "CharacterManager.h"
 
 DataPointer(int, TimerEnabled, 0x912DF0);
+UsercallFunc(BOOL, SonicChargeSpindashHook, (CharObj2 *Data2, EntityData1 *Data1), (Data2,Data1), 0x496EE0, rEAX, rEAX,rEDI);
+UsercallFunc(BOOL, SonicJumpCancelHook, (EntityData1 *Data1, CharObj2 *Data2 ), (Data1,Data2), 0x492F50, rEAX, rESI,rEDI);
+
+
 
 CharacterManager::__hudDisplayRingsHook_t CharacterManager::_hudDisplayRingsHook;
 
@@ -14,12 +18,14 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     _giveMagneticBarrierHook.Hook(OnGiveMagneticBarrier);
     _giveInvincibilityHook.Hook(OnGiveInvincibility);
     _getLureQuantityHook.Hook(OnGetLureQuantity);
-    _writeAnalogsHook.Hook(OnWriteAnalogs);
+    _controlHook.Hook(OnControl);
     _freezeTrapDisplayHook.Hook(OnFreezeTrapDisplay);
     _scoreDisplayMainHook.Hook(OnScoreDisplayMain);
     _drawSNumbersHook.Hook(OnDrawSNumbers);
     _hudDisplayRingsHook.Hook(HandleHudDisplayRings);
     _createAnimalHook.Hook(OnCreateAnimal);
+    SonicChargeSpindashHook.Hook(OnSonicChargeSpindashHook);
+    SonicJumpCancelHook.Hook(OnSonicJumpCancel);
 
     //We override the Set0Rings call inside the HurtPlayer function;
     WriteCall(reinterpret_cast<void*>(0x45072D), (void*)HandleRingLoss);
@@ -43,10 +49,16 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     WriteCall((void*)0x592048, (void*)EnablePause);
     WriteCall((void*)0x5920AF, (void*)EnablePause);
 
+    //Re-enable pause after subtitles
+    WriteCall((void*)0x4B7722, (void*)EnablePause);
+
     //Re-enable timer after finishing a mission
     WriteCall((void*)0x592057, (void*)EmptyCall);
     WriteCall((void*)0x592131, (void*)EmptyCall);
     WriteCall((void*)0x59219E, (void*)EmptyCall);
+
+    //Loads Tails in mission mode
+    WriteData<1>((void*)0x41593C, 0x75);
 }
 
 
@@ -118,6 +130,54 @@ void CharacterManager::HandleRingLoss()
     _instance->_lastRingAmount = lastRingAmountBuffer;
 }
 
+BOOL CharacterManager::SonicInstaLightDash(EntityData1* data1, CharObj2* data2)
+{
+    if (_settings.lightSpeedDashButton == LightSpeedDashButtonDisabled)
+        return 0;
+
+    if ((!(ControllerPointers[0]->PressedButtons & Buttons_Y)
+            || _settings.lightSpeedDashButton != LightSpeedDashButtonY)
+        && (!(ControllerPointers[0]->PressedButtons & Buttons_Z)
+            || _settings.lightSpeedDashButton != LightSpeedDashButtonRightBumper)
+        && (!(ControllerPointers[0]->PressedButtons & Buttons_C)
+            || _settings.lightSpeedDashButton != LightSpeedDashButtonLeftBumper))
+        return 0;
+
+
+    if (!_instance->_gameStatus.unlock.sonicLightShoesUnlocked)
+        return 0;
+
+    if (_settings.instaLightSpeedDashRequiresCrystalRing && !_instance->_gameStatus.unlock.sonicCrystalRingUnlocked)
+        return 0;
+
+    if (HomingAttackTarget_Sonic_B_Index > 0)
+    {
+        data1->Action = 6;
+        data2->AnimationThing.Index = 64;
+        data2->LightdashTime = 10;
+        data2->LightdashTimer = 0;
+        data2->Speed.x = 8.0; // 8.0
+        data1->Status = data1->Status & ~(Status_Attack | Status_Ball) | Status_Attack;
+        PlaySound(764, 0, 0, 0);
+        return 1;
+    }
+        return 0;
+}
+
+BOOL CharacterManager::OnSonicChargeSpindashHook(CharObj2* Data2, EntityData1* Data1)
+{
+    if (_instance->SonicInstaLightDash(Data1, Data2))
+        return 1;
+    return SonicChargeSpindashHook.Original(Data2, Data1);
+}
+
+BOOL CharacterManager::OnSonicJumpCancel(EntityData1* Data1, CharObj2* Data2)
+{
+    if (_instance->SonicInstaLightDash(Data1, Data2))
+        return 1;
+    return SonicJumpCancelHook.Original(Data1, Data2);
+}
+
 
 void CharacterManager::OnGiveBarrier(const char character)
 {
@@ -164,7 +224,7 @@ void CharacterManager::ProcessRings(const Sint16 amount)
 
     if (amount < 0 && Rings > 0)
     {
-        const Sint16 newRingAmount = max(Rings + amount, 0);
+        const Sint16 newRingAmount = std::max(Rings + amount, 0);
         if (_settings.ringLinkSounds)
             PlaySound(RING_LOSS_SOUND_ID, nullptr, 0, nullptr);
         Rings = newRingAmount;
@@ -568,16 +628,66 @@ void CharacterManager::ReverseControls()
 }
 
 
-void CharacterManager::OnWriteAnalogs()
+void CharacterManager::OnControl()
 {
     if (_instance->_reverseControlsEnabled)
     {
+        const Uint32 OldHeldButtons = ControllerPointers[0]->HeldButtons;
+        Uint32 OlPressedButtons = ControllerPointers[0]->PressedButtons;
+
+        Uint32 NewHeldButtons = 0;
+        Uint32 NewPressedButtons = 0;
+
+        if (OldHeldButtons & Buttons_A) NewHeldButtons |= Buttons_B;
+        if (OldHeldButtons & Buttons_B) NewHeldButtons |= Buttons_A;
+
+        if (OldHeldButtons & Buttons_X) NewHeldButtons |= Buttons_Y;
+        if (OldHeldButtons & Buttons_Y) NewHeldButtons |= Buttons_X;
+
+        // Bumpers
+        if (OldHeldButtons & Buttons_Z) NewHeldButtons |= Buttons_C;
+        if (OldHeldButtons & Buttons_C) NewHeldButtons |= Buttons_Z;
+
+        if (OldHeldButtons & Buttons_R) NewHeldButtons |= Buttons_L;
+        if (OldHeldButtons & Buttons_L) NewHeldButtons |= Buttons_R;
+
+        // Pause and Select
+        if (OldHeldButtons & Buttons_Start) NewHeldButtons |= Buttons_D;
+        if (OldHeldButtons & Buttons_D) NewHeldButtons |= Buttons_Start;
+
+        //
+        if (OlPressedButtons & Buttons_A) NewPressedButtons |= Buttons_B;
+        if (OlPressedButtons & Buttons_B) NewPressedButtons |= Buttons_A;
+
+        if (OlPressedButtons & Buttons_X) NewPressedButtons |= Buttons_Y;
+        if (OlPressedButtons & Buttons_Y) NewPressedButtons |= Buttons_X;
+
+        // Bumpers
+        if (OlPressedButtons & Buttons_Z) NewPressedButtons |= Buttons_C;
+        if (OlPressedButtons & Buttons_C) NewPressedButtons |= Buttons_Z;
+
+        if (OlPressedButtons & Buttons_R) NewPressedButtons |= Buttons_L;
+        if (OlPressedButtons & Buttons_L) NewPressedButtons |= Buttons_R;
+
+        // Pause and Select
+        if (OlPressedButtons & Buttons_Start) NewPressedButtons |= Buttons_D;
+        if (OlPressedButtons & Buttons_D) NewPressedButtons |= Buttons_Start;
+
+        ControllerPointers[0]->HeldButtons = NewHeldButtons;
+        ControllerPointers[0]->PressedButtons = NewPressedButtons;
+
         ControllerPointers[0]->LeftStickX = -ControllerPointers[0]->LeftStickX;
         ControllerPointers[0]->LeftStickY = -ControllerPointers[0]->LeftStickY;
         ControllerPointers[0]->RightStickX = -ControllerPointers[0]->RightStickX;
         ControllerPointers[0]->RightStickY = -ControllerPointers[0]->RightStickY;
+
+        const Uint16 leftTrigger = ControllerPointers[0]->LTriggerPressure;
+        const Uint16 rightTrigger = ControllerPointers[0]->RTriggerPressure;
+
+        ControllerPointers[0]->LTriggerPressure = rightTrigger;
+        ControllerPointers[0]->RTriggerPressure = leftTrigger;
     }
-    _writeAnalogsHook.Original();
+    _controlHook.Original();
 }
 
 void CharacterManager::OnFreezeTrapDisplay(task* tp)

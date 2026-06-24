@@ -9,7 +9,7 @@
 
 #define SADX_AP_VERSION_MAJOR 1
 #define SADX_AP_VERSION_MINOR 2
-#define SADX_AP_VERSION_PATCH 1
+#define SADX_AP_VERSION_PATCH 2
 
 #define MISSION_S  3
 #define MISSION_C  2
@@ -28,19 +28,19 @@
 
 // Pre-compiled headers
 #include "framework.h"
-#include "../lib/sadx-mod-loader/SADXModLoader/include/SADXModLoader.h"
-#include "../lib/sadx-mod-loader/SADXModLoader/include/FunctionHook.h"
-#include "../lib/sadx-mod-loader/mod-loader-common/ModLoaderCommon/IniFile.hpp"
-#include "../lib/sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
-#include <APCpp/Archipelago.h>
-#include <json/json.h>
+#include <algorithm>
+#include <SADXModLoader.h>
+#include <FunctionHook.h>
+#include <UsercallFunctionHandler.h>
+#include <IniFile.hpp>
+#include <Archipelago.h>
 
 
 #define FunctionHookAdd(address, hookFunction) FunctionHook<void> hook_##address(address, [] { hookFunction(); hook_##address.Original();  })
 #define GET_LEVEL(levelAct) ((levelAct) >> 8)
 #define GET_ACT(levelAct) ((levelAct) & 0xFF)
 #define GET_LEVEL_ACT(level, act) (static_cast<LevelAndActIDs>(((level) << 8) | ((act) & 0xFF)))
-#define BYTE1(x, n)   (*((uint8_t*)&(x)+1))
+#define BYTE1(x)   (*((uint8_t*)&(x)+1))
 
 
 const std::unordered_map<int, std::string> CHARACTERS_MAP = {
@@ -90,7 +90,7 @@ const std::unordered_map<int, std::tuple<int, int, int>> SONIC_TARGET_TIMES = {
 const std::unordered_map<int, std::tuple<int, int, int>> TAILS_TARGET_TIMES = {
     {LevelIDs_WindyValley, std::make_tuple(5400, 3300, 2400)},
     {LevelIDs_Casinopolis, std::make_tuple(3600, 3000, 1800)},
-    {LevelIDs_IceCap, std::make_tuple(7200, 6900, 6900)},
+    {LevelIDs_IceCap, std::make_tuple(7200, 6900, 6000)},
     {LevelIDs_SkyDeck, std::make_tuple(3600, 2700, 2700)},
     {LevelIDs_SpeedHighway, std::make_tuple(7200, 5400, 5400)},
 };
@@ -185,6 +185,7 @@ inline NJS_TEXANIM new_logo_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 42, NJD
 inline NJS_TEXANIM location_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 43, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM blocked_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 44, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 45, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM check_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 46, NJD_SPRITE_COLOR}};
 
 
 // Helper to get the correct number anim

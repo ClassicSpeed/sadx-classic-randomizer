@@ -4,3 +4,7 @@
 [submodule "lib/json"]
 	path = lib/json
 	url = https://github.com/open-source-parsers/jsoncpp.git
+[submodule "lib/APCpp"]
+	path = lib/APCpp
+	url = https://github.com/ClassicSpeed/APCpp.git
+	branch = feature-set-tags-and-extra-message-types

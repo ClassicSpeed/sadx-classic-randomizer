@@ -2,7 +2,6 @@
 #include <queue>
 
 #include "../../pch.h"
-#include "sadx-mod-loader/SADXModLoader/include/UsercallFunctionHandler.h"
 #include "../../configuration/options/Options.h"
 #include "../../application/structs/ItemData.h"
 #include "../../application/structs/WeightedRandomSelector.h"
@@ -69,8 +68,8 @@ private:
     inline static FunctionHook<int> _getLureQuantityHook{0x46C870};
     static int OnGetLureQuantity();
 
-    inline static FunctionHook<void> _writeAnalogsHook{0x40F170};
-    static void OnWriteAnalogs();
+    inline static FunctionHook<void> _controlHook{0x40FDC0};
+    static void OnControl();
 
     inline static FunctionHook<void, task*> _freezeTrapDisplayHook{0x4A2240};
     static void OnFreezeTrapDisplay(task* tp);
@@ -89,6 +88,10 @@ private:
     static void __cdecl HandleHudDisplayRings(signed int ringCount, unsigned char digits, NJS_SPRITE* hud);
 
     static void __cdecl HandleRingLoss();
+
+    BOOL SonicInstaLightDash(EntityData1* data1, CharObj2* data2);
+    static BOOL __cdecl OnSonicChargeSpindashHook(CharObj2 *Data2, EntityData1 *Data1);
+    static BOOL __cdecl OnSonicJumpCancel(EntityData1 *Data1, CharObj2 *Data2);
 
     void ActivateFiller(FillerType filler);
     void FreezePlayer();

@@ -1,17 +1,24 @@
-#include "pch.h"
+#include <pch.h>
+#include "configuration/settings/Settings.h"
+#include "configuration/options/Options.h"
+#include "configuration/gameStatus/GameStatus.h"
+#include "output/reactionManager/ReactionManager.h"
+#include "output/displayManager/DisplayManager.h"
+#include "output/characterManager/CharacterManager.h"
+#include "output/itemRepository/ItemRepository.h"
+#include "output/locationRepository/LocationRepository.h"
+#include "output/archipelagoMessenger/ArchipelagoMessenger.h"
+#include "output/worldStateManager/WorldStateManager.h"
+#include "output/saveFileManager/SaveFileManager.h"
+#include "output/musicManager/MusicManager.h"
 
 #include "application/randomizer/Randomizer.h"
 #include "application/link/Link.h"
-#include "configuration/gameStatus/GameStatus.h"
-#include "input/archipelago/ArchipelagoManager.h"
+
 #include "input/cheatsManager/CheatsManager.h"
+#include "input/archipelago/ArchipelagoManager.h"
 #include "input/eventDetector/EventDetector.h"
-#include "input/characterLoading/CharacterLoadingDetector.h"
-#include "output/archipelagoMessenger/ArchipelagoMessenger.h"
-#include "output/locationRepository/LocationRepository.h"
-#include "output/musicManager/MusicManager.h"
-#include "output/saveFileManager/SaveFileManager.h"
-#include "output/worldStateManager/WorldStateManager.h"
+#include "input/characterLoading//CharacterLoadingDetector.h"
 
 extern "C" {
 std::vector<IOnFrame*> onFrameObjects;
@@ -43,7 +50,7 @@ __declspec(dllexport) void __cdecl Init(const char* path, const HelperFunctions&
     // Input Handlers
     CheatsManager& cheatsManager = CheatsManager::Init(settings);
     ArchipelagoManager& archipelagoManager = ArchipelagoManager::Init(options, settings, gameStatus, randomizer, link);
-    EventDetector& eventDetector = EventDetector::Init(options, settings, randomizer, link);
+    EventDetector& eventDetector = EventDetector::Init(options, settings, randomizer, link, gameStatus);
     CharacterLoadingDetector& characterLoadingDetector = CharacterLoadingDetector::Init(randomizer, settings);
 
     onFrameObjects = {

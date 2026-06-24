@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <vector>
 #include <filesystem>
+#include <json/json.h>
 #include "../../configuration/options/Options.h"
 #include "../../configuration/settings/Settings.h"
 

@@ -11,6 +11,9 @@ ReactionManager::ReactionManager(Settings& settings, GameStatus& gameStatus): _s
 
 void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t itemId) const
 {
+    if (_settings.extraSubtitlesModLoaded && GameMode == GameModes_Menu)
+        return;
+
     WeightedRandomSelector selector;
     if (item.type == ItemCharacter)
     {
@@ -514,7 +517,7 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
     {
         const int voice = selector.getRandomNumber();
         PlayVoice(voice);
-        if (_settings.showCommentsSubtitles)
+        if (_settings.showCommentsSubtitles && !_settings.extraSubtitlesModLoaded)
         {
             auto it = _commentMap.find(voice);
             if (it != _commentMap.end() && GameMode != GameModes_Menu)
@@ -529,6 +532,8 @@ void ReactionManager::PlayRandomVoiceForItem(const ItemData& item, const int64_t
 
 void ReactionManager::PlayRandomTrapVoice(const FillerType filler)
 {
+    if (_settings.extraSubtitlesModLoaded && GameMode == GameModes_Menu)
+        return;
     WeightedRandomSelector selector;
     selector.addNumber(174, 1); //Get a load of this!
     if (_settings.eggmanCommentOnTrap)
@@ -742,7 +747,7 @@ void ReactionManager::PlayRandomTrapVoice(const FillerType filler)
     {
         const int voice = selector.getRandomNumber();
         PlayVoice(voice);
-        if (_settings.showCommentsSubtitles)
+        if (_settings.showCommentsSubtitles && !_settings.extraSubtitlesModLoaded)
         {
             auto it = _trapCommentMap.find(voice);
             if (it != _trapCommentMap.end() && GameMode != GameModes_Menu)

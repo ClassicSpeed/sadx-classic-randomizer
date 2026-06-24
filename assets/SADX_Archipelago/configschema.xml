@@ -87,6 +87,12 @@
             <Property name="HomingAttackIndicatorEnabled" type="HomingAttackIndex" defaultvalue="0" display="Enable Homing Attack Indicator">
                 <HelpText>Adds an indicator for the homing attack, like in modern Sonic games.</HelpText>
             </Property>
+            <Property name="LightSpeedDashButton" type="LightSpeedDashButtonIndex" defaultvalue="0" display="Button for Light Speed Dash">
+                <HelpText>Changes the button used for an instant Light Speed Dash. Requires the Light Speed Shoes</HelpText>
+            </Property>
+            <Property name="InstaLightSpeedDashRequiresCrystalRing" type="bool" defaultvalue="True" display="Instant Light Speed Dash Requires Crystal Ring">
+                <HelpText>Require having the Crystal Ring to perform an instant Light Speed Dash.</HelpText>
+            </Property>
             <Property name="MapButton" type="MapButtonIndex" defaultvalue="0" display="Select Map Button">
                 <HelpText>Change the button used to open the adventure field map.</HelpText>
             </Property>
@@ -96,10 +102,6 @@
             <Property name="CompleteMultipleLevelMissions" type="bool" defaultvalue="True"
                       display="Complete Multiple Level Missions at Once">
                 <HelpText>Collect every level mission check at once (if you beat their requirements).</HelpText>
-            </Property>
-            <Property name="EggCarrierTransformationCutscene" type="bool" defaultvalue="True"
-                      display="Egg Carrier's Transformation Cutscene">
-                <HelpText>Enable Egg Carrier's Transformation Cutscene.</HelpText>
             </Property>
             <Property name="AutoSkipCutscenes" type="bool" defaultvalue="True" display="Auto Skip Cutscenes">
                 <HelpText>Automatically skip every cutscene as soon as it starts.</HelpText>
@@ -352,6 +354,12 @@
             <EnumMember name="0" display="Disabled"/>
             <EnumMember name="1" display="Enabled"/>
             <EnumMember name="2" display="Enabled (No Sound)"/>
+        </Enum>
+        <Enum name="LightSpeedDashButtonIndex">
+            <EnumMember name="0" display="Disabled"/>
+            <EnumMember name="1" display="Y button"/>
+            <EnumMember name="2" display="Right Bumper"/>
+            <EnumMember name="3" display="Left Bumper"/>
         </Enum>
         <Enum name="MapButtonIndex">
             <EnumMember name="0" display="Y button"/>

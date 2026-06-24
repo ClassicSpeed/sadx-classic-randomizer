@@ -25,6 +25,7 @@ private:
     void showNumberMap(float posX, float posY, int number);
     void ShowDoorRequirement(AdventureFieldEntrance adventureFieldEntrance);
     void ShowBlockedDoor(AdventureFieldEntrance adventureFieldEntrance);
+    void ShowDoorIcon(NJS_POINT3 position, float angle, NJS_TEXANIM* anim, float offset = 0.02f);
     void ShowDoorName(AdventureFieldEntrance adventureFieldEntrance);
     void ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x, float y, float zBase,
                            float xStep,
@@ -139,7 +140,7 @@ private:
         {BridgeToChaos6ZeroBeta, {404, 628}},
         {BridgeToEcInsideMonorail, {437, 629}},
         // Deck (Transformed) 
-        {DeckToPool, {404, 810}},
+        {DeckToPool, {404, 820}},
         {DeckToCaptainRoom, {404, 760}},
         {DeckToPrivateRoom, {419, 740}},
         {DeckToPrivateRoomAlternative, {389, 740}},

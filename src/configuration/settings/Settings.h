@@ -102,6 +102,13 @@ enum HomingAttackIndicator
     HomingAttackIndicatorEnabledNoSound = 2,
 };
 
+enum LightSpeedDashButton
+{
+    LightSpeedDashButtonDisabled = 0,
+    LightSpeedDashButtonY = 1,
+    LightSpeedDashButtonRightBumper = 2,
+    LightSpeedDashButtonLeftBumper = 3,
+};
 
 enum AdventureFieldDoorOverride
 {
@@ -192,6 +199,7 @@ public:
     bool currentCharacterReactToTrap = true;
 
     bool showCommentsSubtitles = true;
+    bool extraSubtitlesModLoaded = false;
 
     std::string songsPath = "mods/SADX_Archipelago/";
     std::string sa2BAdxPath = "../../../../Sonic Adventure 2/resource/gd_PC/ADX/";
@@ -216,9 +224,10 @@ public:
 
     bool completeMultipleLevelMissions = true;
     HomingAttackIndicator homingAttackIndicator = HomingAttackIndicatorDisabled;
+    LightSpeedDashButton lightSpeedDashButton = LightSpeedDashButtonDisabled;
+    bool instaLightSpeedDashRequiresCrystalRing = true;
 
     bool showEntranceIndicators = true;
-    bool eggCarrierTransformationCutscene = true;
     int chaoStatsMultiplier = 1;
 
     bool extendRingCapacity = false;

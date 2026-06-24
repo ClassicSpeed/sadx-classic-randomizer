@@ -46,6 +46,7 @@
 Debug
 Release
 Output
+build
 
 # CMake
 cmake-build-*/

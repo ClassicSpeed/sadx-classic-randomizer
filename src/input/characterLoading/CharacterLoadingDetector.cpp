@@ -11,6 +11,9 @@ CharacterLoadingDetector::CharacterLoadingDetector(Randomizer& randomizer, Setti
 void CharacterLoadingDetector::OnLoadCharacter()
 {
     _instance->OnCharacterLoaded();
+    if (CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2)
+        LoadRegObjTextures(1);
+
     _loadCharacterHook.Original();
 }
 
@@ -29,8 +32,6 @@ void CharacterLoadingDetector::OnCharacterSelectScreenLoaded() const
 
 void CharacterLoadingDetector::OnCharacterLoaded()
 {
-    if (DemoPlaying > 0)
-        return;
     //Workaround to load the upgrades after the event flags logic was applied
     _loadCharacterNextFrame = 5;
 }
@@ -47,8 +48,8 @@ void CharacterLoadingDetector::OnFrame()
     if (_loadCharacterNextFrame == 1)
     {
         _randomizer.OnCharacterLoaded();
-
-
+        //Fix to make the jungle cart load
+        EventFlagArray[FLAG_SONIC_MR_TRUCK] = 1;
         if (_settings.adventureFieldDoorOverride == AdventureFieldDoorOverrideAllOpened)
         {
             for (unsigned int i = 0; i < LevelClearCounts.size(); i++)

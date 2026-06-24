@@ -142,6 +142,8 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
                 break;
 
             const int amount = bounceData["amount"].asInt();
+            if (amount < std::numeric_limits<int>::min() || amount > std::numeric_limits<int>::max())
+                return;
 
             _instance->_link.ProcessRings(amount);
             break;
@@ -156,6 +158,8 @@ void ArchipelagoManager::HandleBouncedPacket(AP_Bounce bouncePacket)
                 break;
 
             const int amount = bounceData["amount"].asInt();
+            if (amount < std::numeric_limits<int>::min() || amount > std::numeric_limits<int>::max())
+                return;
 
             _instance->_link.ProcessRings(amount);
             break;
