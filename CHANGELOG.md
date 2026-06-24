@@ -95,9 +95,32 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.2.1] - 2026-04-11
 
+### Fixed:
+
+- Fixed logic problem with requirements with multiple SADX players.
+
+## [v1.2.1 pre-release 4] - 2026-04-06
+
 ### Changed:
 
-- Water Tank is now always drained, ignoring the Egg Carrier transformation state.
+- Added springs to reach the Captain Room door from the Egg Carrier Deck.
+    - These connections are now in logic for all characters in every logic level.
+- Adjusted the positions of the two Private Room entrances on the Egg Carrier Deck map for clarity.
+
+### Fixed:
+
+- Fixed logic issues when starting with the Egg Carrier untransformed.
+
+## [v1.2.1 pre-release 3] - 2026-04-04
+
+### Changed:
+
+- Water Tank is now always drained regardless of the Egg Carrier's transformation state.
+
+### Fixed:
+
+- Fixed starting character option being ignored.
+- Fixed incorrect logic for emblem requirements around the Egg Carrier.
 
 ## [v1.2.1 pre-release 2] - 2026-03-29
 
