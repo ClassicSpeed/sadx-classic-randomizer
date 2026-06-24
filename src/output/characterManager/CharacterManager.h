@@ -1,5 +1,7 @@
 #pragma once
 #include <queue>
+#include <random>
+
 
 #include "../../pch.h"
 #include "../../configuration/options/Options.h"
@@ -73,6 +75,7 @@ private:
 
     inline static FunctionHook<void, task*> _freezeTrapDisplayHook{0x4A2240};
     static void OnFreezeTrapDisplay(task* tp);
+    void WashtubPlayer();
 
     inline static FunctionHook<void, task*> _scoreDisplayMainHook{0x42BCC0};
     static void OnScoreDisplayMain(task* tp);

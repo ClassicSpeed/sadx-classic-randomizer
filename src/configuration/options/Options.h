@@ -432,6 +432,7 @@ public:
     void SetBuyonTrapWeight(int newBuyonTrapWeight);
     void SetReverseTrapWeight(int newReverseTrapWeight);
     void SetGravityTrapWeight(int newGravityTrapWeight);
+    void SetWashtubTrapWeight(int newWashtubTrapWeight);
     void SetReverseControlTrapDuration(int reverseControlTrapDuration);
     void SetTrapsOnAdventureFields(int newTrapsOnAdventureFields);
     void SetTrapsOnBossFights(int newTrapsOnBossFights);
@@ -533,6 +534,7 @@ public:
     int buyonTrapWeight = 2;
     int reverseTrapWeight = 2;
     int gravityTrapWeight = 2;
+    int washtubTrapWeight = 2;
 
 
     float reverseControlsDuration = 7.0f;
