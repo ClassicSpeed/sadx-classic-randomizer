@@ -2,13 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.2] - 2026-06-??
+## [v1.2.2] - 2026-06-26
 
 ### Added:
 
-- Readded traps during demo mode.
-- World is now open (if the all open setting is enabled) during demo mode.
-- Entering levels that are blocked will no longer send you back, and instead it will let you enter the level.
+- Re-added traps during demo mode.
+- The adventure field is now open during demo mode if the "all open" setting is enabled.
+- Entering blocked levels will no longer send you back, you can now enter the level.
     - This won't be taken into account for logic.
 
 ## [v1.2.2 pre-release 3] - 2026-06-14
