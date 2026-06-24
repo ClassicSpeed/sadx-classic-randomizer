@@ -29,6 +29,7 @@ enum FillerType
     BuyonTrap,
     GravityTrap,
     ReverseTrap,
+    WashtubTrap,
     NoFiller,
 };
 

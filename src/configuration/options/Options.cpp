@@ -355,6 +355,11 @@ void Options::SetGravityTrapWeight(const int newGravityTrapWeight)
     this->gravityTrapWeight = newGravityTrapWeight;
 }
 
+void Options::SetWashtubTrapWeight(const int newWashtubTrapWeight)
+{
+    this->washtubTrapWeight = newWashtubTrapWeight;
+}
+
 void Options::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
 {
     this->reverseControlsDuration = static_cast<float>(reverseControlTrapDuration);
@@ -683,6 +688,8 @@ bool Options::IsTrapEnabled(const FillerType filler) const
     if (filler == ReverseTrap && reverseTrapWeight > 0)
         return true;
     if (filler == GravityTrap && gravityTrapWeight > 0)
+        return true;
+    if (filler == WashtubTrap && washtubTrapWeight > 0)
         return true;
 
     return false;

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.3.0] - 2026-??-??
+
+### Added:
+
+- Washtub trap: the player will freeze in place and a washtub will fall on their head.
+
 ## [v1.2.2b] - 2026-07-??
 
 ### Fixed:

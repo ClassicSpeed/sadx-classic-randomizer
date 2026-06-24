@@ -344,6 +344,7 @@ void ArchipelagoManager::Connect()
     AP_REGISTER_INT_CALLBACK("BuyonTrapWeight", _options.SetBuyonTrapWeight);
     AP_REGISTER_INT_CALLBACK("ReverseTrapWeight", _options.SetReverseTrapWeight);
     AP_REGISTER_INT_CALLBACK("GravityTrapWeight", _options.SetGravityTrapWeight);
+    AP_REGISTER_INT_CALLBACK("WashtubTrapWeight", _options.SetWashtubTrapWeight);
 
     AP_REGISTER_INT_CALLBACK("ReverseControlTrapDuration", _options.SetReverseControlTrapDuration);
     AP_REGISTER_INT_CALLBACK("TrapsOnAdventureFields", _options.SetTrapsOnAdventureFields);

@@ -70,6 +70,7 @@ ItemRepository::ItemRepository(GameStatus& gameStatus) : _gameStatus(gameStatus)
         {103, ItemData::FillerItem("Buyon Trap", BuyonTrap)},
         {104, ItemData::FillerItem("Reverse Trap", ReverseTrap)},
         {105, ItemData::FillerItem("Gravity Trap", GravityTrap)},
+        {106, ItemData::FillerItem("Washtub Trap", WashtubTrap)},
 
 
         {120, ItemData::KeyItem({}, "Wind Stone")},
@@ -209,6 +210,7 @@ std::map<std::string, FillerType> itemNameToFillerId = {
     {"Buyon Trap", BuyonTrap},
     {"Reverse Trap", ReverseTrap},
     {"Gravity Trap", GravityTrap},
+    {"Washtub Trap", WashtubTrap},
     //Extra
     {"Reversal Trap", ReverseTrap},
     {"Confusion Trap", ReverseTrap},

@@ -1,9 +1,10 @@
 #include "CharacterManager.h"
 
 DataPointer(int, TimerEnabled, 0x912DF0);
-UsercallFunc(BOOL, SonicChargeSpindashHook, (CharObj2 *Data2, EntityData1 *Data1), (Data2,Data1), 0x496EE0, rEAX, rEAX,rEDI);
-UsercallFunc(BOOL, SonicJumpCancelHook, (EntityData1 *Data1, CharObj2 *Data2 ), (Data1,Data2), 0x492F50, rEAX, rESI,rEDI);
-
+UsercallFunc(BOOL, SonicChargeSpindashHook, (CharObj2 *Data2, EntityData1 *Data1), (Data2,Data1), 0x496EE0, rEAX, rEAX,
+             rEDI);
+UsercallFunc(BOOL, SonicJumpCancelHook, (EntityData1 *Data1, CharObj2 *Data2 ), (Data1,Data2), 0x492F50, rEAX, rESI,
+             rEDI);
 
 
 CharacterManager::__hudDisplayRingsHook_t CharacterManager::_hudDisplayRingsHook;
@@ -161,7 +162,7 @@ BOOL CharacterManager::SonicInstaLightDash(EntityData1* data1, CharObj2* data2)
         PlaySound(764, 0, 0, 0);
         return 1;
     }
-        return 0;
+    return 0;
 }
 
 BOOL CharacterManager::OnSonicChargeSpindashHook(CharObj2* Data2, EntityData1* Data1)
@@ -288,6 +289,47 @@ void CharacterManager::GiveFillerItem(const FillerType filler, const bool priori
     else
         _remainingFiller.push_back(filler);
 }
+
+void __cdecl CustomWashtubMain(task* obj)
+{
+    bool deleteTask = false;
+    if (obj->ctp->twp->mode == 21)
+        deleteTask = true;
+    obj->ctp->exec(obj->ctp);
+    if (deleteTask)
+    {
+        ForcePlayerAction(0, 24);
+        FreeTask(obj);
+    }
+};
+
+TaskFunc(ObjectTaraiA, 0x52C630);
+TaskFunc(ObjectTaraiB, 0x52C660);
+TaskFunc(ObjectTaraiC, 0x52C690);
+
+void __cdecl CustomWashtubInit(task* obj)
+{
+    ForcePlayerAction(0, 12);
+    obj->exec = CustomWashtubMain;
+
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    std::discrete_distribution<int> dist({60, 30, 10});
+
+    int choice = dist(gen);
+
+    switch (choice)
+    {
+    case 0: CreateChildTask(LoadObj_Data1 | LoadObj_Data2, ObjectTaraiA, obj);
+        break;
+    case 1: CreateChildTask(LoadObj_Data1 | LoadObj_Data2, ObjectTaraiB, obj);
+        break;
+    case 2: CreateChildTask(LoadObj_Data1 | LoadObj_Data2, ObjectTaraiC, obj);
+        break;
+    }
+};
 
 void CharacterManager::OnFrame()
 {
@@ -487,6 +529,12 @@ void CharacterManager::ActivateFiller(const FillerType filler)
 
     case GravityTrap:
         this->IncrementGravity();
+        DisablePause();
+        _reactionManager.PlayRandomTrapVoice(filler);
+        break;
+
+    case WashtubTrap:
+        this->WashtubPlayer();
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
@@ -701,6 +749,11 @@ void CharacterManager::OnFreezeTrapDisplay(task* tp)
     _freezeTrapDisplayHook.Original(tp);
 }
 
+void CharacterManager::WashtubPlayer()
+{
+    CreateElementalTask(LoadObj_Data1, 3, CustomWashtubInit);
+}
+
 // We temporally set the game mode to trick the result screen into showing its full version
 void CharacterManager::OnScoreDisplayMain(task* tp)
 {
@@ -713,6 +766,8 @@ void CharacterManager::OnScoreDisplayMain(task* tp)
     _scoreDisplayMainHook.Original(tp);
     GameMode = bufferGameMode;
 }
+
+
 
 void CharacterManager::HandleHudDisplayRings(const signed int ringCount, const unsigned char digits, NJS_SPRITE* hud)
 {
