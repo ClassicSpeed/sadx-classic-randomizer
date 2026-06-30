@@ -345,6 +345,14 @@ void ArchipelagoManager::Connect()
     AP_REGISTER_INT_CALLBACK("ReverseTrapWeight", _options.SetReverseTrapWeight);
     AP_REGISTER_INT_CALLBACK("GravityTrapWeight", _options.SetGravityTrapWeight);
     AP_REGISTER_INT_CALLBACK("WashtubTrapWeight", _options.SetWashtubTrapWeight);
+    AP_REGISTER_INT_CALLBACK("SnowboardTrapWeight", _options.SetSnowboardTrapWeight);
+    AP_REGISTER_INT_CALLBACK("SpikeBallTrapWeight", _options.SetSpikeBallTrapWeight);
+    AP_REGISTER_INT_CALLBACK("CartTrapWeight", _options.SetCartTrapWeight);
+    AP_REGISTER_INT_CALLBACK("BurgerManTrapWeight", _options.SetBurgerManTrapWeight);
+    AP_REGISTER_INT_CALLBACK("WalkThroughWallsTrapWeight", _options.SetWalkThroughWallsTrapWeight);
+    AP_REGISTER_INT_CALLBACK("UpsideDownTrapWeight", _options.SetUpsideDownTrapWeight);
+    AP_REGISTER_INT_CALLBACK("MirrorTrapWeight", _options.SetMirrorTrapWeight);
+    AP_REGISTER_INT_CALLBACK("DecoupleCameraTrapWeight", _options.SetDecoupleCameraTrapWeight);
 
     AP_REGISTER_INT_CALLBACK("ReverseControlTrapDuration", _options.SetReverseControlTrapDuration);
     AP_REGISTER_INT_CALLBACK("TrapsOnAdventureFields", _options.SetTrapsOnAdventureFields);

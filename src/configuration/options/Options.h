@@ -433,6 +433,14 @@ public:
     void SetReverseTrapWeight(int newReverseTrapWeight);
     void SetGravityTrapWeight(int newGravityTrapWeight);
     void SetWashtubTrapWeight(int newWashtubTrapWeight);
+    void SetSnowboardTrapWeight(int newSnowboardTrapWeight);
+    void SetSpikeBallTrapWeight(int newSpikeBallTrapWeight);
+    void SetCartTrapWeight(int newCartTrapWeight);
+    void SetBurgerManTrapWeight(int newBurgerManTrapWeight);
+    void SetWalkThroughWallsTrapWeight(int newWalkThroughWallsTrapWeight);
+    void SetUpsideDownTrapWeight(int newUpsideDownTrapWeight);
+    void SetMirrorTrapWeight(int newMirrorTrapWeight);
+    void SetDecoupleCameraTrapWeight(int newDecoupleCameraTrapWeight);
     void SetReverseControlTrapDuration(int reverseControlTrapDuration);
     void SetTrapsOnAdventureFields(int newTrapsOnAdventureFields);
     void SetTrapsOnBossFights(int newTrapsOnBossFights);
@@ -535,6 +543,14 @@ public:
     int reverseTrapWeight = 2;
     int gravityTrapWeight = 2;
     int washtubTrapWeight = 2;
+    int snowboardTrapWeight = 2;
+    int spikeBallTrapWeight = 2;
+    int cartTrapWeight = 2;
+    int burgerManTrapWeight = 2;
+    int walkThroughWallsTrapWeight = 2;
+    int upsideDownTrapWeight = 2;
+    int mirrorTrapWeight = 2;
+    int decoupleCameraTrapWeight = 2;
 
 
     float reverseControlsDuration = 7.0f;

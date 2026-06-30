@@ -23,6 +23,10 @@ enum FillerType
     Shield,
     MagneticShield,
     ExtraLife,
+    Checkpoint,
+    Bomb,
+    Extra10Seconds,
+
     IceTrap,
     SpringTrap,
     PoliceTrap,
@@ -30,6 +34,15 @@ enum FillerType
     GravityTrap,
     ReverseTrap,
     WashtubTrap,
+    SnowboardTrap,
+    SpikeBallTrap,
+    CartTrap,
+    BurgerManTrap,
+    WalkThroughWallsTrap,
+    UpsideDownTrap,
+    MirrorTrap,
+    DecoupleCameraTrap,
+
     NoFiller,
 };
 
@@ -43,6 +56,10 @@ inline bool IsJunkFiller(const FillerType fillerType)
     case Shield:
     case MagneticShield:
     case ExtraLife:
+    case Checkpoint:
+    case Bomb:
+    case Extra10Seconds:
+
     case NoFiller:
         return true;
     default:
