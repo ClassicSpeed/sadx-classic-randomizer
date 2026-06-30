@@ -507,7 +507,11 @@ void CharacterManager::ActivateFiller(const FillerType filler)
         BombPowerup(EntityData1Ptrs[0]);
         break;
     case Extra10Seconds:
-        //TODO: Implement
+        if (CurrentCharacter == Characters_Gamma)
+            AddSeconds(10);
+        else if (TimeSeconds >= 10 || TimeMinutes > 0)
+            AddSeconds(-10);
+        PlaySound(4, 0, 0, 0);
         break;
     case IceTrap:
         this->FreezePlayer();
