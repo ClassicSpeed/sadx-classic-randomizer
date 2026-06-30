@@ -101,6 +101,7 @@ private:
     void IncrementGravity();
     void ReverseControls();
     void SpawnSpring();
+    static void SpawnCheckpoint();
     void SpawnEnemies(void (*enemyFunc)(task* tp));
 
     int _lastRingAmount = 0;
