@@ -360,6 +360,44 @@ void Options::SetWashtubTrapWeight(const int newWashtubTrapWeight)
     this->washtubTrapWeight = newWashtubTrapWeight;
 }
 
+void Options::SetSnowboardTrapWeight(const int newSnowboardTrapWeight)
+{
+    this->snowboardTrapWeight = newSnowboardTrapWeight;
+}
+
+void Options::SetSpikeBallTrapWeight(const int newSpikeBallTrapWeight)
+{
+    this->spikeBallTrapWeight = newSpikeBallTrapWeight;
+}
+
+void Options::SetCartTrapWeight(const int newCartTrapWeight)
+{
+    this->cartTrapWeight = newCartTrapWeight;
+}
+
+void Options::SetBurgerManTrapWeight(const int newBurgerManTrapWeight)
+{
+    this->burgerManTrapWeight = newBurgerManTrapWeight;
+}
+
+void Options::SetWalkThroughWallsTrapWeight(const int newWalkThroughWallsTrapWeight)
+{
+    this->walkThroughWallsTrapWeight = newWalkThroughWallsTrapWeight;
+}
+
+void Options::SetUpsideDownTrapWeight(const int newUpsideDownTrapWeight)
+{
+    this->upsideDownTrapWeight = newUpsideDownTrapWeight;
+}
+void Options::SetMirrorTrapWeight(const int newMirrorTrapWeight)
+{
+    this->mirrorTrapWeight = newMirrorTrapWeight;
+}
+void Options::SetDecoupleCameraTrapWeight(const int newDecoupleCameraTrapWeight)
+{
+    this->decoupleCameraTrapWeight = newDecoupleCameraTrapWeight;
+}
+
 void Options::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
 {
     this->reverseControlsDuration = static_cast<float>(reverseControlTrapDuration);
@@ -690,6 +728,16 @@ bool Options::IsTrapEnabled(const FillerType filler) const
     if (filler == GravityTrap && gravityTrapWeight > 0)
         return true;
     if (filler == WashtubTrap && washtubTrapWeight > 0)
+        return true;
+    if (filler == SnowboardTrap && snowboardTrapWeight > 0)
+        return true;
+    if (filler == SpikeBallTrap && spikeBallTrapWeight > 0)
+        return true;
+    if (filler == CartTrap && cartTrapWeight > 0)
+        return true;
+    if (filler == UpsideDownTrap && upsideDownTrapWeight > 0)
+        return true;
+    if (filler == MirrorTrap && mirrorTrapWeight > 0)
         return true;
 
     return false;

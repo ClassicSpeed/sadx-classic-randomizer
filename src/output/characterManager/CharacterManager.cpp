@@ -500,6 +500,15 @@ void CharacterManager::ActivateFiller(const FillerType filler)
         }
         PlaySound(11, 0, 0, 0);
         break;
+    case Checkpoint:
+        //TODO: Implement
+        break;
+    case Bomb:
+        //TODO: Implement
+        break;
+    case Extra10Seconds:
+        //TODO: Implement
+        break;
     case IceTrap:
         this->FreezePlayer();
         DisablePause();
@@ -535,6 +544,46 @@ void CharacterManager::ActivateFiller(const FillerType filler)
 
     case WashtubTrap:
         this->WashtubPlayer();
+        DisablePause();
+        _reactionManager.PlayRandomTrapVoice(filler);
+        break;
+    case SnowboardTrap:
+        //TODO: Implement
+        DisablePause();
+        _reactionManager.PlayRandomTrapVoice(filler);
+        break;
+    case SpikeBallTrap:
+        //TODO: Implement
+        DisablePause();
+        _reactionManager.PlayRandomTrapVoice(filler);
+        break;
+    case CartTrap:
+        //TODO: Implement
+        DisablePause();
+        _reactionManager.PlayRandomTrapVoice(filler);
+        break;
+    case BurgerManTrap:
+        //TODO: Implement
+        DisablePause();
+        _reactionManager.PlayRandomTrapVoice(filler);
+        break;
+    case WalkThroughWallsTrap:
+        //TODO: Implement
+        DisablePause();
+        _reactionManager.PlayRandomTrapVoice(filler);
+        break;
+    case UpsideDownTrap:
+        //TODO: Implement
+        DisablePause();
+        _reactionManager.PlayRandomTrapVoice(filler);
+        break;
+    case MirrorTrap:
+        //TODO: Implement
+        DisablePause();
+        _reactionManager.PlayRandomTrapVoice(filler);
+        break;
+    case DecoupleCameraTrap:
+        //TODO: Implement
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
@@ -766,7 +815,6 @@ void CharacterManager::OnScoreDisplayMain(task* tp)
     _scoreDisplayMainHook.Original(tp);
     GameMode = bufferGameMode;
 }
-
 
 
 void CharacterManager::HandleHudDisplayRings(const signed int ringCount, const unsigned char digits, NJS_SPRITE* hud)
