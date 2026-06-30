@@ -504,7 +504,7 @@ void CharacterManager::ActivateFiller(const FillerType filler)
         SpawnCheckpoint();
         break;
     case Bomb:
-        //TODO: Implement
+        BombPowerup(EntityData1Ptrs[0]);
         break;
     case Extra10Seconds:
         //TODO: Implement
