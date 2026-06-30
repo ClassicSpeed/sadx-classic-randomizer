@@ -127,7 +127,6 @@ void SetObjectManager::OnCountSetItemsMaybe()
 
     //Washtub
     LoadPVM("EC_TARAI", &EC_TARAI_TEXLIST);
-    LoadSoundList(36);
 
     //Sky Chase Tarjet
     LoadNoNamePVM(&TARGET_TEXLIST);
