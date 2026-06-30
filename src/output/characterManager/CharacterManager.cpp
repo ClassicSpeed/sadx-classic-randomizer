@@ -501,7 +501,7 @@ void CharacterManager::ActivateFiller(const FillerType filler)
         PlaySound(11, 0, 0, 0);
         break;
     case Checkpoint:
-        //TODO: Implement
+        SpawnCheckpoint();
         break;
     case Bomb:
         //TODO: Implement
@@ -615,6 +615,15 @@ void CharacterManager::SpawnSpring()
     _springTask->twp->scl.y = 6;
     _springTask->twp->scl.z = 1;
 }
+
+void CharacterManager::SpawnCheckpoint()
+{
+    task* checkpointTask = CreateElementalTask((LoadObj)15, 6, ObjectSavePoint);
+    checkpointTask->ocp = new OBJ_CONDITION;
+    checkpointTask->twp->pos = playertwp[0]->pos;
+    checkpointTask->twp->ang = playertwp[0]->ang;
+}
+
 
 
 void CharacterManager::SpawnEnemies(void (*enemyFunc)(task* tp))
