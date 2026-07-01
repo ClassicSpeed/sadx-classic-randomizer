@@ -75,7 +75,6 @@ private:
 
     inline static FunctionHook<void, task*> _freezeTrapDisplayHook{0x4A2240};
     static void OnFreezeTrapDisplay(task* tp);
-    void WashtubPlayer();
 
     inline static FunctionHook<void, task*> _scoreDisplayMainHook{0x42BCC0};
     static void OnScoreDisplayMain(task* tp);
@@ -103,6 +102,15 @@ private:
     void SpawnSpring();
     static void SpawnCheckpoint();
     void SpawnEnemies(void (*enemyFunc)(task* tp));
+    static void WashtubPlayer();
+    void SpawnSnowboard();
+    void SpawnSpikeBall();
+    void SpawnCart();
+    void SpawnBurgerMan();
+    void AllowPlayerToWalkThroughWalls();
+    void EnableUpsideDownCamera();
+    void EnableMirroredCamera();
+    void DecoupleCamera();
 
     int _lastRingAmount = 0;
     bool _reverseControlsEnabled = false;
@@ -123,4 +131,7 @@ private:
     std::clock_t _gravityTimer = -1;
 
     std::clock_t _reverseControlsTimer = -1;
+
+    float _decoupleDuration = 7.0f;
+    std::clock_t _decoupleTimer = -1;
 };
