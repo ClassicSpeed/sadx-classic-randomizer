@@ -418,6 +418,28 @@ void CharacterManager::OnFrame()
         }
     }
 
+
+    if (_gravityTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_gravityTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _gravityDuration)
+        {
+            Gravity.y = -1;
+            _gravityTimer = -1;
+        }
+    }
+
+    if (_decoupleTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_decoupleTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _decoupleDuration)
+        {
+            // Reset camera
+            Camera_Data1->Action = 2;
+            _decoupleTimer = -1;
+        }
+    }
+
     if (_remainingFiller.empty() || _fillerTimer > 0)
         return;
 
@@ -547,47 +569,47 @@ void CharacterManager::ActivateFiller(const FillerType filler)
         break;
 
     case WashtubTrap:
-        this->WashtubPlayer();
+        WashtubPlayer();
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
     case SnowboardTrap:
-        //TODO: Implement
+        this->SpawnSnowboard();
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
     case SpikeBallTrap:
-        //TODO: Implement
+        this->SpawnSpikeBall();
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
     case CartTrap:
-        //TODO: Implement
+        this->SpawnCart();
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
     case BurgerManTrap:
-        //TODO: Implement
+        this->SpawnBurgerMan();
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
     case WalkThroughWallsTrap:
-        //TODO: Implement
+        this->AllowPlayerToWalkThroughWalls();
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
     case UpsideDownTrap:
-        //TODO: Implement
+        this->EnableUpsideDownCamera();
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
     case MirrorTrap:
-        //TODO: Implement
+        this->EnableMirroredCamera();
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
     case DecoupleCameraTrap:
-        //TODO: Implement
+        this->DecoupleCamera();
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
@@ -627,7 +649,6 @@ void CharacterManager::SpawnCheckpoint()
     checkpointTask->twp->pos = playertwp[0]->pos;
     checkpointTask->twp->ang = playertwp[0]->ang;
 }
-
 
 
 void CharacterManager::SpawnEnemies(void (*enemyFunc)(task* tp))
@@ -815,6 +836,48 @@ void CharacterManager::WashtubPlayer()
 {
     CreateElementalTask(LoadObj_Data1, 3, CustomWashtubInit);
 }
+
+void CharacterManager::SpawnSnowboard()
+{
+}
+
+void CharacterManager::SpawnSpikeBall()
+{
+    //TODO: Implement
+}
+
+void CharacterManager::SpawnCart()
+{
+    //TODO: Implement
+}
+
+void CharacterManager::SpawnBurgerMan()
+{
+    //TODO: Implement
+}
+
+void CharacterManager::AllowPlayerToWalkThroughWalls()
+{
+    //TODO: Implement
+}
+
+void CharacterManager::EnableUpsideDownCamera()
+{
+    //TODO: Implement
+}
+
+void CharacterManager::EnableMirroredCamera()
+{
+    //TODO: Implement
+}
+
+void CharacterManager::DecoupleCamera()
+{
+    //Decouple camera from player
+    camera_twp->mode = 3;
+    _decoupleTimer = std::clock();
+}
+
 
 // We temporally set the game mode to trick the result screen into showing its full version
 void CharacterManager::OnScoreDisplayMain(task* tp)
