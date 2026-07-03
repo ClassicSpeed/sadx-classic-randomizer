@@ -34,6 +34,7 @@ enum FillerType
     GravityTrap,
     ReverseTrap,
     WashtubTrap,
+    SpeedPadTrap,
     SnowboardTrap,
     SpikeBallTrap,
     CartTrap,

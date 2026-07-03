@@ -82,6 +82,7 @@ ItemRepository::ItemRepository(GameStatus& gameStatus) : _gameStatus(gameStatus)
         {112, ItemData::FillerItem("Upside Down Trap", UpsideDownTrap)},
         {113, ItemData::FillerItem("Mirror Trap", MirrorTrap)},
         {114, ItemData::FillerItem("Decouple Camera Trap", DecoupleCameraTrap)},
+        {115, ItemData::FillerItem("Speed Pad Trap", SpeedPadTrap)},
 
         {120, ItemData::KeyItem({}, "Wind Stone")},
         {121, ItemData::KeyItem({}, "Station Front Key")},

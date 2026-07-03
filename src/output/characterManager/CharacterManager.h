@@ -111,6 +111,7 @@ private:
     void EnableUpsideDownCamera();
     void EnableMirroredCamera();
     void DecoupleCamera();
+    void SpawnSpeedPad();
 
     int _lastRingAmount = 0;
     bool _reverseControlsEnabled = false;
@@ -134,4 +135,8 @@ private:
 
     float _decoupleDuration = 7.0f;
     std::clock_t _decoupleTimer = -1;
+
+    task* _speedPadTask = nullptr;
+    float _speedPadDuration = 2.0f;
+    std::clock_t _speedPadTimer = -1;
 };

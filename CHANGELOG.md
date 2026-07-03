@@ -6,7 +6,12 @@ All notable changes to this project will be documented in this file.
 
 ### Added:
 
+- Checkpoint filler item: spawns a functional checkpoint where the player is standing.
+- Bomb filler items: kills all the enemies near the player.
+- Extra 10 seconds filler item: removes 10 seconds from the level timer (or add them for Gamma).
 - Washtub trap: the player will freeze in place and a washtub will fall on their head.
+- Speed Pad Trap: spawns a speed pad below the player in a random direction.
+- Decouple Camera Trap: decouples the camera from the player for 7 seconds.
 
 ## [v1.2.2b] - 2026-07-??
 

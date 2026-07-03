@@ -441,6 +441,7 @@ public:
     void SetUpsideDownTrapWeight(int newUpsideDownTrapWeight);
     void SetMirrorTrapWeight(int newMirrorTrapWeight);
     void SetDecoupleCameraTrapWeight(int newDecoupleCameraTrapWeight);
+    void SetSpeedPadTrapWeight(int newSpeedPadTrapWeight);
     void SetReverseControlTrapDuration(int reverseControlTrapDuration);
     void SetTrapsOnAdventureFields(int newTrapsOnAdventureFields);
     void SetTrapsOnBossFights(int newTrapsOnBossFights);
@@ -551,6 +552,7 @@ public:
     int upsideDownTrapWeight = 2;
     int mirrorTrapWeight = 2;
     int decoupleCameraTrapWeight = 2;
+    int speedPadTrapWeight = 2;
 
 
     float reverseControlsDuration = 7.0f;
