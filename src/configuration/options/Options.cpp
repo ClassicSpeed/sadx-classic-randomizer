@@ -397,6 +397,11 @@ void Options::SetDecoupleCameraTrapWeight(const int newDecoupleCameraTrapWeight)
 {
     this->decoupleCameraTrapWeight = newDecoupleCameraTrapWeight;
 }
+void Options::SetSpeedPadTrapWeight(const int newSpeedPadTrapWeight)
+{
+    this->speedPadTrapWeight = newSpeedPadTrapWeight;
+}
+
 
 void Options::SetReverseControlTrapDuration(const int reverseControlTrapDuration)
 {
@@ -728,6 +733,8 @@ bool Options::IsTrapEnabled(const FillerType filler) const
     if (filler == GravityTrap && gravityTrapWeight > 0)
         return true;
     if (filler == WashtubTrap && washtubTrapWeight > 0)
+        return true;
+    if (filler == SpeedPadTrap && speedPadTrapWeight > 0)
         return true;
     if (filler == SnowboardTrap && snowboardTrapWeight > 0)
         return true;

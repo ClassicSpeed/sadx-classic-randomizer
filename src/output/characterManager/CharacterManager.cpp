@@ -418,6 +418,17 @@ void CharacterManager::OnFrame()
         }
     }
 
+    if (_speedPadTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_speedPadTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _speedPadDuration)
+        {
+            FreeTask(_speedPadTask);
+            _speedPadTask = nullptr;
+            _speedPadTimer = -1;
+        }
+    }
+
 
     if (_gravityTimer > 0)
     {
@@ -567,9 +578,13 @@ void CharacterManager::ActivateFiller(const FillerType filler)
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
-
     case WashtubTrap:
         WashtubPlayer();
+        DisablePause();
+        _reactionManager.PlayRandomTrapVoice(filler);
+        break;
+    case SpeedPadTrap:
+        SpawnSpeedPad();
         DisablePause();
         _reactionManager.PlayRandomTrapVoice(filler);
         break;
@@ -837,8 +852,19 @@ void CharacterManager::WashtubPlayer()
     CreateElementalTask(LoadObj_Data1, 3, CustomWashtubInit);
 }
 
+void CharacterManager::SpawnSpeedPad()
+{
+    _speedPadTimer = std::clock();
+    NullifyVelocity(EntityData2Ptrs[0], Current_CharObj2);
+    _speedPadTask = CreateElementalTask(LoadObj_Data1, 3, ObjectAxelPanel);
+    _speedPadTask->twp->pos = playertwp[0]->pos;
+    _speedPadTask->twp->scl.x = 30;
+    _speedPadTask->twp->ang.y = rand() % 0x10000;
+}
+
 void CharacterManager::SpawnSnowboard()
 {
+    //TODO: Implement
 }
 
 void CharacterManager::SpawnSpikeBall()

@@ -353,6 +353,7 @@ void ArchipelagoManager::Connect()
     AP_REGISTER_INT_CALLBACK("UpsideDownTrapWeight", _options.SetUpsideDownTrapWeight);
     AP_REGISTER_INT_CALLBACK("MirrorTrapWeight", _options.SetMirrorTrapWeight);
     AP_REGISTER_INT_CALLBACK("DecoupleCameraTrapWeight", _options.SetDecoupleCameraTrapWeight);
+    AP_REGISTER_INT_CALLBACK("SpeedPadTrapWeight", _options.SetSpeedPadTrapWeight);
 
     AP_REGISTER_INT_CALLBACK("ReverseControlTrapDuration", _options.SetReverseControlTrapDuration);
     AP_REGISTER_INT_CALLBACK("TrapsOnAdventureFields", _options.SetTrapsOnAdventureFields);
