@@ -877,9 +877,12 @@ void CharacterManager::SpawnCart()
     //TODO: Implement
 }
 
+TaskFunc(ObjectBurgerShopStatue, 0x630780);
 void CharacterManager::SpawnBurgerMan()
 {
-    //TODO: Implement
+    task* burgerManTask = CreateElementalTask(LoadObj_Data2|LoadObj_Data1, 3, ObjectBurgerShopStatue);
+    burgerManTask->ocp = new OBJ_CONDITION;
+    burgerManTask->twp->pos = playertwp[0]->pos;
 }
 
 void CharacterManager::AllowPlayerToWalkThroughWalls()
