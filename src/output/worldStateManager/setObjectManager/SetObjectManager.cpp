@@ -134,6 +134,9 @@ void SetObjectManager::OnCountSetItemsMaybe()
     //Freeze trap
     LoadNoNamePVM(&stx_ice0_TEXLIST);
 
+    //Load BurgerMan
+    LoadPVM("SS_PEOPLE", ADV00_TEXLISTS[6]);
+
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Tails);
