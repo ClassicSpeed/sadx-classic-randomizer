@@ -6,8 +6,8 @@ Sonic Adventure DX Randomizer, compatible with archipelago
 
 ## Important links
 
-- [Introductions for installation](https://github.com/ClassicSpeed/Archipelago/blob/sadx_initial_version/worlds/sadx/docs/setup_en.md)
-- [APWorld repository](https://github.com/ClassicSpeed/Archipelago/tree/sadx_initial_version/worlds/sadx)
+- [Introductions for installation](https://github.com/ClassicSpeed/Archipelago/blob/sadx_main/worlds/sadx/docs/setup_en.md)
+- [APWorld repository](https://github.com/ClassicSpeed/Archipelago/tree/sadx_main/worlds/sadx)
 - [Randomizer Logic (Google Sheet)](https://docs.google.com/spreadsheets/d/1CfBZ_pLGm3YTWwEwBLbk67e4iSrOE5vbcu0UkFej0pY/edit?usp=sharing)
 - [Discord Thread for SADX Randomizer](https://discord.com/channels/731205301247803413/1183347590981505075)
 

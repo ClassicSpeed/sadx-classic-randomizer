@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed:
 
--Removed Drowning deathlink since it was sending deathlinks incorrectly.
+- Removed Drowning deathlink since it was sending deathlinks incorrectly.
+- Updated incorrect links in guides.
 
 ## [v1.2.2] - 2026-06-26
 
