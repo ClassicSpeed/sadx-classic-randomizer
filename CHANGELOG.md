@@ -2,12 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.2b] - 2026-07-??
+## [v1.2.2b] - 2026-07-20
 
 ### Fixed:
 
 - Removed Drowning deathlink since it was sending deathlinks incorrectly.
 - Updated incorrect links in guides.
+- Fixed Chao garden not saving progress.
 
 ## [v1.2.2] - 2026-06-26
 
