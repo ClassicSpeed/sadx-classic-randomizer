@@ -212,11 +212,7 @@ task* AdventureFieldEntranceManager::OnSetNextLevelAndActChaoGarden(int level, i
 {
     PrintDebug("OnSetNextLevelAndActChaoGarden: level %d, act %d", level, act);
     if (level > LevelIDs_HedgehogHammer && level < LevelIDs_Invalid)
-    {
         OnSetNextLevelAndActCutsceneMode(level, act);
-        return NULL;
-
-    }
     return _setNextLevelAndActChaoGardenHook.Original(level, act);
 }
 
