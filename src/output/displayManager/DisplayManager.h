@@ -112,4 +112,5 @@ private:
     int _greenEmeraldColor = 0xDD00FF00;
     int _yellowEmeraldColor = 0xDDFFFF00;
     int _blueEmeraldColor = 0xDD0000FF;
+    int _missingEmeraldColor = 0x66AAAAAA;
 };

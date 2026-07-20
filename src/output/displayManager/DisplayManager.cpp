@@ -569,31 +569,19 @@ void DisplayManager::DisplayItemsUnlocked()
         buffer.append("Emeralds: ");
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
-        SetDebugFontColor(
-            _gameStatus.unlock.whiteEmerald ? _whiteEmeraldColor : _whiteEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.whiteEmerald ? _whiteEmeraldColor : _missingEmeraldColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "          W");
-        SetDebugFontColor(_gameStatus.unlock.redEmerald
-                              ? _redEmeraldColor
-                              : _redEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.redEmerald ? _redEmeraldColor : _missingEmeraldColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "           R");
-        SetDebugFontColor(_gameStatus.unlock.cyanEmerald
-                              ? _cyanEmeraldColor
-                              : _cyanEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.cyanEmerald ? _cyanEmeraldColor : _missingEmeraldColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "            C");
-        SetDebugFontColor(_gameStatus.unlock.purpleEmerald
-                              ? _purpleEmeraldColor
-                              : _purpleEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.purpleEmerald ? _purpleEmeraldColor : _missingEmeraldColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "             P");
-        SetDebugFontColor(
-            _gameStatus.unlock.greenEmerald ? _greenEmeraldColor : _greenEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.greenEmerald ? _greenEmeraldColor : _missingEmeraldColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "              G");
-        SetDebugFontColor(_gameStatus.unlock.yellowEmerald
-                              ? _yellowEmeraldColor
-                              : _yellowEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.yellowEmerald ? _yellowEmeraldColor : _missingEmeraldColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "               Y");
-        SetDebugFontColor(_gameStatus.unlock.blueEmerald
-                              ? _blueEmeraldColor
-                              : _blueEmeraldColor & 0x00FFFFFF | 0x66000000);
+        SetDebugFontColor(_gameStatus.unlock.blueEmerald ? _blueEmeraldColor : _missingEmeraldColor);
         DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), "                B");
     }
 

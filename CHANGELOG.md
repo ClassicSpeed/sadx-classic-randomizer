@@ -2,12 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.2b] - 2026-07-??
+## [v1.2.2b] - 2026-07-20
 
 ### Fixed:
-
-- Removed Drowning deathlink since it was sending deathlinks incorrectly.
-- Updated incorrect links in guides.
+- Removed Drowning Deathlink since it was sending Deathlinks incorrectly.
+- Fixed incorrect links in game guides.
+- Fixed Chao Garden not saving progress.
+- Improved Chaos Emeralds color in the in-game tracker.
 
 ## [v1.2.2] - 2026-06-26
 
