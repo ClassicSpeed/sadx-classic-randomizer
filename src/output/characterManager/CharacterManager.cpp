@@ -450,6 +450,21 @@ void CharacterManager::OnFrame()
             _decoupleTimer = -1;
         }
     }
+    if (_walkThroughWallsTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_walkThroughWallsTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _walkThroughWallsDuration)
+        {
+            // Reset walk through walls
+            WriteData((int*)0x00444C1D, (int)0xFF37EEE8);
+            WriteData((int*)0x00444C21, (int)0x10C483FF);
+            WriteData((int*)0x0044A66B, (int)0xFFA430E8);
+            WriteData((int*)0x0044A66F, (int)0x14C483FF);
+            WriteData((int*)0x007887D9, (int)0x00D042E8);
+            WriteData((int*)0x007887DD, (int)0x74C08500);
+            _walkThroughWallsTimer = -1;
+        }
+    }
 
     if (_remainingFiller.empty() || _fillerTimer > 0)
         return;
@@ -887,7 +902,13 @@ void CharacterManager::SpawnBurgerMan()
 
 void CharacterManager::AllowPlayerToWalkThroughWalls()
 {
-    //TODO: Implement
+    WriteData((int*)0x00444C1D, (int)0x90909090);
+    WriteData((int*)0x00444C21, (int)0x10C48390);
+    WriteData((int*)0x0044A66B, (int)0x90909090);
+    WriteData((int*)0x0044A66F, (int)0x14C48390);
+    WriteData((int*)0x007887D9, (int)0x90909090);
+    WriteData((int*)0x007887DD, (int)0x74C08590);
+    _walkThroughWallsTimer = std::clock();
 }
 
 void CharacterManager::EnableUpsideDownCamera()

@@ -139,4 +139,7 @@ private:
     task* _speedPadTask = nullptr;
     float _speedPadDuration = 2.0f;
     std::clock_t _speedPadTimer = -1;
+
+    float _walkThroughWallsDuration = 7.0f;
+    std::clock_t _walkThroughWallsTimer = -1;
 };
