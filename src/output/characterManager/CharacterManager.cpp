@@ -5,7 +5,19 @@ UsercallFunc(BOOL, SonicChargeSpindashHook, (CharObj2 *Data2, EntityData1 *Data1
              rEDI);
 UsercallFunc(BOOL, SonicJumpCancelHook, (EntityData1 *Data1, CharObj2 *Data2 ), (Data1,Data2), 0x492F50, rEAX, rESI,
              rEDI);
+ObjectMaster* snowboard;
 
+ObjectMaster* LoadSnowboardObject(LoadObj flags, char index, ObjectFuncPtr loadSub)
+{
+    return snowboard = LoadObject(flags, index, loadSub);
+}
+
+void __cdecl Snowboard_Delete_r(ObjectMaster* obj)
+{
+    njReleaseTexture((NJS_TEXLIST*)obj->Data1->LoopData);
+    if (obj == snowboard)
+        snowboard = nullptr;
+}
 
 CharacterManager::__hudDisplayRingsHook_t CharacterManager::_hudDisplayRingsHook;
 
@@ -60,6 +72,14 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
 
     //Loads Tails in mission mode
     WriteData<1>((void*)0x41593C, 0x75);
+
+
+    WriteCall((void*)0x4E9423, LoadSnowboardObject); //fix for snowboard texture
+    WriteCall((void*)0x4E967E, LoadSnowboardObject); //fix for snowboard texture
+    WriteCall((void*)0x4E9698, LoadSnowboardObject); //fix for snowboard texture
+    WriteCall((void*)0x597B34, LoadSnowboardObject); //fix for snowboard texture
+    WriteCall((void*)0x597B46, LoadSnowboardObject); //fix for snowboard texture
+    WriteJump(Snowboard_Delete, Snowboard_Delete_r); //fix for snowboard texture delete
 }
 
 
@@ -335,6 +355,13 @@ void CharacterManager::OnFrame()
 {
     if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
         return;
+
+    for (const auto& button : PressedButtons)
+
+        if (button & WhistleButtons && Current_CharObj2 != nullptr)
+        {
+            ActivateFiller(SnowboardTrap);
+        }
     if (_fillerTimer > 0)
     {
         const double timePassed = (std::clock() - this->_fillerTimer) / static_cast<double>(CLOCKS_PER_SEC);
@@ -463,6 +490,18 @@ void CharacterManager::OnFrame()
             WriteData((int*)0x007887D9, (int)0x00D042E8);
             WriteData((int*)0x007887DD, (int)0x74C08500);
             _walkThroughWallsTimer = -1;
+        }
+    }
+
+    if (_snowboardTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_snowboardTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _snowboardDuration)
+        {
+            // Reset snowboard
+            playertwp[0]->mode = 1;
+            IsSnowboarding = false;
+            _snowboardTimer = -1;
         }
     }
 
@@ -879,7 +918,61 @@ void CharacterManager::SpawnSpeedPad()
 
 void CharacterManager::SpawnSnowboard()
 {
-    //TODO: Implement
+    if (CurrentCharacter != Characters_Sonic && CurrentCharacter != Characters_Tails)
+        return FreezePlayer();
+    if (!IsSnowboarding)
+    {
+        IsSnowboarding = true;
+        _snowboardTimer = std::clock();
+
+        if (GameMode == GameModes_Menu || CurrentLevel == LevelIDs_SkyChase1 || CurrentLevel == LevelIDs_SkyChase2 || !
+            GetCharacterObject(0)) //Credits to MainMemory for the Code, https://github.com/MainMemory/SADXBoardSpawner
+            return;
+
+        ObjectMaster* obj = GetCharacterObject(0);
+        switch (obj->Data1->CharID)
+        {
+        case Characters_Sonic:
+            if (obj->Data1->Action >= 62 && obj->Data1->Action <= 68)
+                ForcePlayerAction(0, 24);
+            else
+            {
+                ForcePlayerAction(0, 44);
+                if (!snowboard)
+                    snowboard = LoadObject((LoadObj)(LoadObj_Data1 | LoadObj_Data2), 2, Snowboard_Sonic_Load);
+            }
+            break;
+        case Characters_Tails:
+            if (obj->Data1->Action >= 48 && obj->Data1->Action <= 54)
+            {
+                ForcePlayerAction(0, 24);
+                ((EntityData2*)obj->Data2)->CharacterData->PhysicsData.CollisionSize = PhysicsArray[Characters_Tails].
+                    CollisionSize;
+                ((EntityData2*)obj->Data2)->CharacterData->PhysicsData.YOff = PhysicsArray[Characters_Tails].YOff;
+                ((EntityData2*)obj->Data2)->CharacterData->PhysicsData.JumpSpeed = PhysicsArray[Characters_Tails].
+                    JumpSpeed;
+            }
+            else
+            {
+                ForcePlayerAction(0, 44);
+                if (!snowboard)
+                    snowboard = LoadObject((LoadObj)(LoadObj_Data1 | LoadObj_Data2), 2, Snowboard_Tails_Load);
+            }
+            break;
+        }
+        if (!snowboard)
+            switch (obj->Data1->CharID)
+            {
+            case Characters_Sonic:
+                if (obj->Data1->Action >= 62 && obj->Data1->Action <= 68)
+                    snowboard = LoadObject((LoadObj)(LoadObj_Data1 | LoadObj_Data2), 2, Snowboard_Sonic_Load);
+                break;
+            case Characters_Tails:
+                if (obj->Data1->Action >= 48 && obj->Data1->Action <= 54)
+                    snowboard = LoadObject((LoadObj)(LoadObj_Data1 | LoadObj_Data2), 2, Snowboard_Tails_Load);
+                break;
+            } //Credits to MainMemory for the Code, https://github.com/MainMemory/SADXBoardSpawner
+    }
 }
 
 void CharacterManager::SpawnSpikeBall()
@@ -893,9 +986,10 @@ void CharacterManager::SpawnCart()
 }
 
 TaskFunc(ObjectBurgerShopStatue, 0x630780);
+
 void CharacterManager::SpawnBurgerMan()
 {
-    task* burgerManTask = CreateElementalTask(LoadObj_Data2|LoadObj_Data1, 3, ObjectBurgerShopStatue);
+    task* burgerManTask = CreateElementalTask(LoadObj_Data2 | LoadObj_Data1, 3, ObjectBurgerShopStatue);
     burgerManTask->ocp = new OBJ_CONDITION;
     burgerManTask->twp->pos = playertwp[0]->pos;
 }

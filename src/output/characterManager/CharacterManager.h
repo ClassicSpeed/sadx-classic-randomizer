@@ -142,4 +142,8 @@ private:
 
     float _walkThroughWallsDuration = 7.0f;
     std::clock_t _walkThroughWallsTimer = -1;
+
+    bool IsSnowboarding = false;
+    float _snowboardDuration = 10.0f;
+    std::clock_t _snowboardTimer = -1;
 };
