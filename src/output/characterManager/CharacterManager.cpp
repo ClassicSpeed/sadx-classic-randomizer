@@ -360,7 +360,7 @@ void CharacterManager::OnFrame()
 
         if (button & WhistleButtons && Current_CharObj2 != nullptr)
         {
-            ActivateFiller(SnowboardTrap);
+            ActivateFiller(UpsideDownTrap);
         }
     if (_fillerTimer > 0)
     {
@@ -502,6 +502,39 @@ void CharacterManager::OnFrame()
             playertwp[0]->mode = 1;
             IsSnowboarding = false;
             _snowboardTimer = -1;
+        }
+    }
+
+    if (_upsideDownCameraTimer > 0)
+    {
+        EnableFreeCamera(0);//Force AutoCam
+        WriteData((int*)0x03B2C68C, (int)0x8000); //force upside down
+        const double timePassed = (std::clock() - this->_upsideDownCameraTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _upsideDownCameraDuration)
+        {
+            // Reset upside down camera
+		    WriteData((int*)0x03B2C68C, (int)0);
+            //resets camera ASM
+            WriteData((int*)0x0046261B, (int)0x002C42C7); //Reset Nopped ASM
+            WriteData((int*)0x0046261F, (int)0x83000000); //Reset Nopped ASM
+            WriteData((int*)0x0046620A, (int)0x8B2C4889); //Reset Nopped ASM
+            WriteData((int*)0x004372DD, (int)0xC68C3589); //Reset Nopped ASM
+            WriteData((int*)0x004372E1, (int)0x05C703B2); //Reset Nopped ASM
+            WriteData((int*)0x00465E83, (int)0xD92C4A89); //Reset Nopped ASM
+            WriteData((int*)0x00465EDA, (int)0xA1909090); //Reset Nopped ASM
+            WriteData((int*)0x00468299, (int)0xE82C6989); //Reset Nopped ASM
+            _upsideDownCameraTimer = -1;
+        }
+    }
+
+    if (_mirroredCameraTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_mirroredCameraTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _mirroredCameraDuration)
+        {
+            // Reset mirrored camera
+            Camera_Data1->Action = 2;
+            _mirroredCameraTimer = -1;
         }
     }
 
@@ -996,18 +1029,19 @@ void CharacterManager::SpawnBurgerMan()
 
 void CharacterManager::AllowPlayerToWalkThroughWalls()
 {
-    WriteData((int*)0x00444C1D, (int)0x90909090);
-    WriteData((int*)0x00444C21, (int)0x10C48390);
-    WriteData((int*)0x0044A66B, (int)0x90909090);
-    WriteData((int*)0x0044A66F, (int)0x14C48390);
-    WriteData((int*)0x007887D9, (int)0x90909090);
-    WriteData((int*)0x007887DD, (int)0x74C08590);
     _walkThroughWallsTimer = std::clock();
 }
 
 void CharacterManager::EnableUpsideDownCamera()
 {
-    //TODO: Implement
+    _upsideDownCameraTimer = std::clock();
+    WriteData<7>((int*)0x0046261B, 0x90); //nops ASM
+    WriteData<3>((int*)0x0046620A, 0x90); //nops ASM
+    WriteData<6>((int*)0x004372DD, 0x90); //nops ASM
+    WriteData<3>((int*)0x00465E83, 0x90); //nops ASM
+    WriteData<3>((int*)0x00465EDA, 0x90); //nops ASM
+    WriteData<3>((int*)0x00468299, 0x90); //nops ASM
+    return;
 }
 
 void CharacterManager::EnableMirroredCamera()

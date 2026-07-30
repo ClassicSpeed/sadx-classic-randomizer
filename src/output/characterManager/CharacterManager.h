@@ -146,4 +146,11 @@ private:
     bool IsSnowboarding = false;
     float _snowboardDuration = 10.0f;
     std::clock_t _snowboardTimer = -1;
+
+
+    float _upsideDownCameraDuration = 7.0f;
+    std::clock_t _upsideDownCameraTimer = -1;
+
+    float _mirroredCameraDuration = 7.0f;
+    std::clock_t _mirroredCameraTimer = -1;
 };
