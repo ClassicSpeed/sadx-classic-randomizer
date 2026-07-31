@@ -1011,23 +1011,12 @@ void CharacterManager::SpawnSnowboard()
 void CharacterManager::SpawnSpikeBall()
 {
     int number = rand() % 2;
-    task* spike;
-    spike = (task*)LoadObject((LoadObj)6, 3, SwingSpikeBall_Load);
+    task* spike = CreateElementalTask((LoadObj)6, 3, ObjectIronBall);
     spike->twp->ang.y = rand() % 80 + 1000;
     spike->twp->scl.x = rand() % 5 + 10 * 2.5;
     spike->twp->pos = playertwp[0]->pos;
     spike->twp->pos.y += 2;
     spike->twp->pos.x += 80;
-    if (number)
-    {
-        task* spike;
-        spike = (task*)LoadObject((LoadObj)6, 3, SwingSpikeBall_Load);
-        spike->twp->ang.y = rand() % 80 + 1000;
-        spike->twp->scl.x = rand() % 5 + 10 * 2.5;
-        spike->twp->pos = playertwp[0]->pos;
-        spike->twp->pos.y += 2;
-        spike->twp->pos.x += rand() % 10 + 1 * 9;
-    }
 }
 
 void CharacterManager::SpawnCart()
