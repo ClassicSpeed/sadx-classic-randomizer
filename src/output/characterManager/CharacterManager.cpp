@@ -360,7 +360,7 @@ void CharacterManager::OnFrame()
 
         if (button & WhistleButtons && Current_CharObj2 != nullptr)
         {
-            ActivateFiller(UpsideDownTrap);
+            ActivateFiller(SpikeBallTrap);
         }
     if (_fillerTimer > 0)
     {
@@ -1010,7 +1010,24 @@ void CharacterManager::SpawnSnowboard()
 
 void CharacterManager::SpawnSpikeBall()
 {
-    //TODO: Implement
+    int number = rand() % 2;
+    task* spike;
+    spike = (task*)LoadObject((LoadObj)6, 3, SwingSpikeBall_Load);
+    spike->twp->ang.y = rand() % 80 + 1000;
+    spike->twp->scl.x = rand() % 5 + 10 * 2.5;
+    spike->twp->pos = playertwp[0]->pos;
+    spike->twp->pos.y += 2;
+    spike->twp->pos.x += 80;
+    if (number)
+    {
+        task* spike;
+        spike = (task*)LoadObject((LoadObj)6, 3, SwingSpikeBall_Load);
+        spike->twp->ang.y = rand() % 80 + 1000;
+        spike->twp->scl.x = rand() % 5 + 10 * 2.5;
+        spike->twp->pos = playertwp[0]->pos;
+        spike->twp->pos.y += 2;
+        spike->twp->pos.x += rand() % 10 + 1 * 9;
+    }
 }
 
 void CharacterManager::SpawnCart()
