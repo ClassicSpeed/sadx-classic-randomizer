@@ -360,7 +360,7 @@ void CharacterManager::OnFrame()
 
         if (button & WhistleButtons && Current_CharObj2 != nullptr)
         {
-            ActivateFiller(SpikeBallTrap);
+            ActivateFiller(MirrorTrap);
         }
     if (_fillerTimer > 0)
     {
@@ -507,13 +507,13 @@ void CharacterManager::OnFrame()
 
     if (_upsideDownCameraTimer > 0)
     {
-        EnableFreeCamera(0);//Force AutoCam
+        EnableFreeCamera(0); //Force AutoCam
         WriteData((int*)0x03B2C68C, (int)0x8000); //force upside down
         const double timePassed = (std::clock() - this->_upsideDownCameraTimer) / static_cast<double>(CLOCKS_PER_SEC);
         if (timePassed > _upsideDownCameraDuration)
         {
             // Reset upside down camera
-		    WriteData((int*)0x03B2C68C, (int)0);
+            WriteData((int*)0x03B2C68C, (int)0);
             //resets camera ASM
             WriteData((int*)0x0046261B, (int)0x002C42C7); //Reset Nopped ASM
             WriteData((int*)0x0046261F, (int)0x83000000); //Reset Nopped ASM
@@ -533,7 +533,8 @@ void CharacterManager::OnFrame()
         if (timePassed > _mirroredCameraDuration)
         {
             // Reset mirrored camera
-            Camera_Data1->Action = 2;
+            BaseTransformationMatrix.m[0][0] *= -1.0f;
+            TransformAndViewportInvalid = true;
             _mirroredCameraTimer = -1;
         }
     }
@@ -1052,7 +1053,9 @@ void CharacterManager::EnableUpsideDownCamera()
 
 void CharacterManager::EnableMirroredCamera()
 {
-    //TODO: Implement
+    BaseTransformationMatrix.m[0][0] *= -1.0f;
+    TransformAndViewportInvalid = true;
+    _mirroredCameraTimer = std::clock();
 }
 
 void CharacterManager::DecoupleCamera()
