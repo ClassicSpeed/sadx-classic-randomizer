@@ -153,4 +153,9 @@ private:
 
     float _mirroredCameraDuration = 7.0f;
     std::clock_t _mirroredCameraTimer = -1;
+
+
+    float _cartDuration = 10.0f;
+    std::clock_t _cartTimer = -1;
+
 };

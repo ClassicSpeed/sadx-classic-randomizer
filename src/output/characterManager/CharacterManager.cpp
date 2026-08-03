@@ -18,6 +18,92 @@ void __cdecl Snowboard_Delete_r(ObjectMaster* obj)
     if (obj == snowboard)
         snowboard = nullptr;
 }
+ObjectMaster* _cartTask = nullptr;
+// Trampoline* LevelItem_Delete_t;
+DataPointer(char, FlagAutoPilotCart, 0x3D08E00);
+FunctionPointer(void, RemovePlayerFromObject, (unsigned __int8 playerID, float speedX, float speedY, float speedZ), 0x441820);
+VoidFunc(CameraReleasEvent, 0x436140);
+ObjectFunc(UpdateSetDataAndDelete, 0x46C150);
+enum CartColor
+{
+    BlackColor, BlueColor, GreenColor, LightBlueColor, OrangeColor, PurpleColor, RedColor
+};
+
+int AmyCartImprovement()
+{
+    if (CurrentCharacter == Characters_Amy) //trick the game to make it think we are playing Sonic.
+        return Characters_Sonic;
+    else
+        return CurrentCharacter;
+}
+
+void Delete_Cart_r(ObjectMaster* obj)
+{
+    // ObjectFunc(origin, LevelItem_Delete_t->Target());
+    if (_cartTask)
+    {
+        if (obj == _cartTask)
+        {
+            if (obj->SETData.SETData)
+            {
+                if (obj->SETData.SETData->SETEntry)
+                    obj->SETData.SETData->SETEntry = nullptr;
+                obj->SETData.SETData->SETEntry = nullptr;
+            }
+            CheckThingButThenDeleteObject(_cartTask);
+            _cartTask = nullptr;
+        }
+    }
+    FlagAutoPilotCart = 0;
+    // origin(obj);
+}
+
+void DeleteCartAndExitPlayer()
+{
+    FlagAutoPilotCart = 0;
+    if (_cartTask != nullptr)
+        UpdateSetDataAndDelete(_cartTask);
+    else
+    {
+        return;
+    }
+    _cartTask = nullptr;
+    RemovePlayerFromObject(0, 0.0, 1.0, 0.0);
+    CameraReleasEvent();
+}
+
+void LoadRemoveCart(ObjectMaster* obj)
+{
+    EntityData1* P1 = EntityData1Ptrs[0];
+    EntityData1* data = obj->Data1;
+    if (!P1 || CurrentCharacter <= Characters_Tails)
+        return;
+    if (data->Action == 0)
+    {
+        if (CurrentLevel == LevelIDs_SandHill)
+        {
+            if (P1->Position.z <= -15150)
+            {
+                DeleteCartAndExitPlayer();
+                CheckThingButThenDeleteObject(obj);
+            }
+        }
+    }
+}
+
+void LoadRemoveCartIceCap()
+{
+    EntityData1* P1 = EntityData1Ptrs[0];
+    if (!P1)
+        return;
+    if (P1->CharID == Characters_Sonic || P1->CharID == Characters_Tails)
+    {
+        ForcePlayerAction(0, 0x18);
+        return;
+    }
+    DeleteCartAndExitPlayer();
+    return;
+}
 
 CharacterManager::__hudDisplayRingsHook_t CharacterManager::_hudDisplayRingsHook;
 
@@ -80,6 +166,12 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     WriteCall((void*)0x597B34, LoadSnowboardObject); //fix for snowboard texture
     WriteCall((void*)0x597B46, LoadSnowboardObject); //fix for snowboard texture
     WriteJump(Snowboard_Delete, Snowboard_Delete_r); //fix for snowboard texture delete
+
+    //Init Cart
+    WriteCall((void*)0x79ab84, AmyCartImprovement);
+    WriteCall((void*)0x79aa78, AmyCartImprovement);
+    WriteCall((void*)0x7979b9, AmyCartImprovement);
+    // LevelItem_Delete_t = new Trampoline((int)LevelItem_Delete, (int)LevelItem_Delete + 0x5, Delete_Cart_r);
 }
 
 
@@ -279,6 +371,10 @@ RingDifference CharacterManager::GetRingDifference()
         return ringDifference;
     }
 
+    WriteCall((void*)0x79ab84, AmyCartImprovement);
+    WriteCall((void*)0x79aa78, AmyCartImprovement);
+    WriteCall((void*)0x7979b9, AmyCartImprovement);
+    // LevelItem_Delete_t = new Trampoline((int)LevelItem_Delete, (int)LevelItem_Delete + 0x5, Delete_Cart_r);
     if (GameMode == GameModes_Mission && TimerEnabled == 0
         && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_E101R)
     {
@@ -360,7 +456,7 @@ void CharacterManager::OnFrame()
 
         if (button & WhistleButtons && Current_CharObj2 != nullptr)
         {
-            ActivateFiller(MirrorTrap);
+            ActivateFiller(CartTrap);
         }
     if (_fillerTimer > 0)
     {
@@ -536,6 +632,17 @@ void CharacterManager::OnFrame()
             BaseTransformationMatrix.m[0][0] *= -1.0f;
             TransformAndViewportInvalid = true;
             _mirroredCameraTimer = -1;
+        }
+    }
+    if (_cartTimer > 0)
+    {
+        const double timePassed = (std::clock() - this->_cartTimer) / static_cast<double>(CLOCKS_PER_SEC);
+        if (timePassed > _cartDuration)
+        {
+            DeleteCartAndExitPlayer();
+            WriteData<1>((void*)0x798306, 0x85); //Jump auto in the cart
+            WriteData<1>((void*)0x7983c4, 0x7C); //Jump auto in the cart
+            _cartTimer = -1;
         }
     }
 
@@ -1022,7 +1129,88 @@ void CharacterManager::SpawnSpikeBall()
 
 void CharacterManager::SpawnCart()
 {
-    //TODO: Implement
+    _cartTimer = std::clock();
+    ObjectMaster* play1 = GetCharacterObject(0);
+    if (CurrentLevel == LevelIDs_TwinkleCircuit)
+        return;
+    if (CurrentLevel == LevelIDs_IceCap && CurrentAct == 2)
+    {
+        if (CurrentCharacter <= Characters_Tails)
+        {
+            return;
+        }
+        else
+        {
+            SetCameraMode(0);
+        }
+    }
+    if (OBJ_SHAREOBJ_TEXLIST.textures->texaddr)
+    {
+        if (!_cartTask)
+        {
+            _cartTask = LoadObject((LoadObj)15, 3, Cart_Main);
+        }
+        if (_cartTask)
+        {
+            _cartTask->Data1->Scale.y = 1; //Cart will spawn empty.
+            _cartTask->Data1->Scale.z = 0;
+            switch (CurrentCharacter) //Set Color and Size depending on character
+            {
+            case Characters_Gamma:
+                _cartTask->Data1->Scale.x = 3;
+                _cartTask->Data1->Scale.z = 2;
+                break;
+            case Characters_Big:
+                _cartTask->Data1->Scale.x = GreenColor;
+                _cartTask->Data1->Scale.z = 1;
+                break;
+            case Characters_Tails:
+                _cartTask->Data1->Scale.x = OrangeColor;
+                break;
+            case Characters_Knuckles:
+                _cartTask->Data1->Scale.x = RedColor;
+                break;
+            case Characters_Amy:
+                _cartTask->Data1->Scale.x = PurpleColor;
+                break;
+            default:
+                _cartTask->Data1->Scale.x = BlueColor;
+                break;
+            }
+            switch (CurrentLevel)
+            {
+            case LevelIDs_SandHill:
+                _cartTask->Data1->Position = play1->Data1->Position;
+                _cartTask->Data1->Rotation.y = 30300;
+                break;
+            default:
+                _cartTask->Data1->Position = play1->Data1->Position;
+                break;
+            }
+            _cartTask->field_30 = 59731468;
+            _cartTask->Data1->Unknown = 10;
+            _cartTask->DeleteSub = LevelItem_Delete; //TEST
+            //SetData is not initialized even if it's in the list, so we need to manually assign the cart to it.
+            SETObjData* cartSETData = new SETObjData();
+            _cartTask->SETData.SETData = cartSETData;
+            //Set the data used in Twinkle Park/Twinkle Circuit (should fixes bug hopefully.)
+            _cartTask->SETData.SETData->LoadCount = 1;
+            _cartTask->SETData.SETData->f1 = 0;
+            _cartTask->SETData.SETData->Flags = 32767;
+            _cartTask->SETData.SETData->Distance = 4000100.00;
+            SETEntry* cartSETEntry = new SETEntry();
+            _cartTask->SETData.SETData->SETEntry = cartSETEntry;
+            _cartTask->SETData.SETData->SETEntry->ObjectType = 15;
+            _cartTask->SETData.SETData->SETEntry->YRotation = -9841;
+            _cartTask->SETData.SETData->SETEntry->Properties.x = 1.00000000;
+            _cartTask->SETData.SETData->SETEntry->Properties.y = 1.00000000;
+            _cartTask->SETData.SETData->SETEntry->Properties.z = 0.000000000;
+            _cartTimer = 1000;
+            _walkThroughWallsTimer = std::clock();
+            WriteData<1>((void*)0x798306, 0x84); //Jump auto in the cart
+            WriteData<1>((void*)0x7983c4, 0x7F); //Jump auto in the cart
+        }
+    }
 }
 
 TaskFunc(ObjectBurgerShopStatue, 0x630780);

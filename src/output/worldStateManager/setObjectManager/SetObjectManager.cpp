@@ -137,6 +137,9 @@ void SetObjectManager::OnCountSetItemsMaybe()
     //Load BurgerMan
     LoadPVM("SS_PEOPLE", ADV00_TEXLISTS[6]);
 
+    //Load Cart
+    LoadPVM("OBJ_SHAREOBJ", &OBJ_SHAREOBJ_TEXLIST);
+
     AddSetToLevel(FINAL_EGG_SPRING, LevelAndActIDs_FinalEgg3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Sonic);
     AddSetToLevel(SEWERS_SPRING, LevelAndActIDs_StationSquare3, Characters_Tails);
