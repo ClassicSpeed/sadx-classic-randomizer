@@ -30,9 +30,11 @@ add_subdirectory(lib/APCpp EXCLUDE_FROM_ALL)
 # SADX Mod Loader
 add_library(mod-loader-common STATIC
         lib/sadx-mod-loader-linux-compatible/ModLoaderCommon/IniFile.cpp
-        lib/sadx-mod-loader-linux-compatible/ModLoaderCommon/TextConv.cpp)
+        lib/sadx-mod-loader-linux-compatible/ModLoaderCommon/TextConv.cpp
+        lib/sadx-mod-loader-linux-compatible/libmodutils/Trampoline.cpp)
 target_include_directories(mod-loader-common SYSTEM PRIVATE
         ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible/ModLoaderCommon
+        ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible/libmodutils
         ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible)
 
 # SADX Randomizer
@@ -43,6 +45,7 @@ target_include_directories(sadx-ap-randomizer PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 target_include_directories(sadx-ap-randomizer SYSTEM PRIVATE
         ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible/ModLoaderCommon
+        ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible/libmodutils
         ${CMAKE_SOURCE_DIR}/lib/sadx-mod-loader-linux-compatible)
 
 target_link_libraries(sadx-ap-randomizer PRIVATE mod-loader-common APCpp)

@@ -19,7 +19,8 @@ void __cdecl Snowboard_Delete_r(ObjectMaster* obj)
         snowboard = nullptr;
 }
 ObjectMaster* _cartTask = nullptr;
-// Trampoline* LevelItem_Delete_t;
+#include "../lib/sadx-mod-loader-linux-compatible/libmodutils/Trampoline.h"
+Trampoline* LevelItem_Delete_t;
 DataPointer(char, FlagAutoPilotCart, 0x3D08E00);
 FunctionPointer(void, RemovePlayerFromObject, (unsigned __int8 playerID, float speedX, float speedY, float speedZ), 0x441820);
 VoidFunc(CameraReleasEvent, 0x436140);
@@ -39,7 +40,7 @@ int AmyCartImprovement()
 
 void Delete_Cart_r(ObjectMaster* obj)
 {
-    // ObjectFunc(origin, LevelItem_Delete_t->Target());
+    ObjectFunc(origin, LevelItem_Delete_t->Target());
     if (_cartTask)
     {
         if (obj == _cartTask)
@@ -55,7 +56,7 @@ void Delete_Cart_r(ObjectMaster* obj)
         }
     }
     FlagAutoPilotCart = 0;
-    // origin(obj);
+    origin(obj);
 }
 
 void DeleteCartAndExitPlayer()
@@ -171,7 +172,7 @@ CharacterManager::CharacterManager(Options& options, Settings& settings, GameSta
     WriteCall((void*)0x79ab84, AmyCartImprovement);
     WriteCall((void*)0x79aa78, AmyCartImprovement);
     WriteCall((void*)0x7979b9, AmyCartImprovement);
-    // LevelItem_Delete_t = new Trampoline((int)LevelItem_Delete, (int)LevelItem_Delete + 0x5, Delete_Cart_r);
+    LevelItem_Delete_t = new Trampoline((int)LevelItem_Delete, (int)LevelItem_Delete + 0x5, Delete_Cart_r,true);
 }
 
 
@@ -371,10 +372,6 @@ RingDifference CharacterManager::GetRingDifference()
         return ringDifference;
     }
 
-    WriteCall((void*)0x79ab84, AmyCartImprovement);
-    WriteCall((void*)0x79aa78, AmyCartImprovement);
-    WriteCall((void*)0x7979b9, AmyCartImprovement);
-    // LevelItem_Delete_t = new Trampoline((int)LevelItem_Delete, (int)LevelItem_Delete + 0x5, Delete_Cart_r);
     if (GameMode == GameModes_Mission && TimerEnabled == 0
         && CurrentLevel >= LevelIDs_EmeraldCoast && CurrentLevel <= LevelIDs_E101R)
     {
