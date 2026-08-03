@@ -1182,6 +1182,7 @@ void CharacterManager::SpawnCart()
                 break;
             default:
                 _cartTask->Data1->Position = play1->Data1->Position;
+                _cartTask->Data1->Rotation.y = -play1->Data1->Rotation.y+0x4000;
                 break;
             }
             _cartTask->field_30 = 59731468;
@@ -1202,7 +1203,6 @@ void CharacterManager::SpawnCart()
             _cartTask->SETData.SETData->SETEntry->Properties.x = 1.00000000;
             _cartTask->SETData.SETData->SETEntry->Properties.y = 1.00000000;
             _cartTask->SETData.SETData->SETEntry->Properties.z = 0.000000000;
-            _cartTimer = 1000;
             _walkThroughWallsTimer = std::clock();
             WriteData<1>((void*)0x798306, 0x84); //Jump auto in the cart
             WriteData<1>((void*)0x7983c4, 0x7F); //Jump auto in the cart
