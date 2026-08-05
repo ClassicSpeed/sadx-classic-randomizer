@@ -43,7 +43,7 @@ void Options::EggCarrierStartsTransformed(const int newEggCarrierStartsTransform
 
 void Options::LogicLevel(const int logicLevel)
 {
-    if (logicLevel > 1)
+    if (logicLevel > 2)
         this->expertMode = true;
     else
         this->expertMode = false;

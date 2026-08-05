@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added:
 
+- Added Easy logic level (previously called Normal).
+  - Now normal logic is hard logic without some hard jumps and hard logic now includes clipping.
 - Checkpoint filler item: spawns a functional checkpoint where the player is standing.
 - Bomb filler items: kills all the enemies near the player.
 - Extra 10 seconds filler item: removes 10 seconds from the level timer (or add them for Gamma).
