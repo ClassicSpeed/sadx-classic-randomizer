@@ -67,7 +67,7 @@ private:
     void DisplayGoalStatus();
     std::string GetMissionBTarget(bool showTarget);
     std::string GetMissionATarget(bool showTarget);
-    std::string GetMissionSTarget(bool showTarget, bool expertMode);
+    std::string GetMissionSTarget(bool showTarget);
     void DisplayItemsUnlocked();
 
 

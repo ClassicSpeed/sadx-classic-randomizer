@@ -398,38 +398,51 @@ std::string DisplayManager::GetMissionATarget(const bool showTarget)
         return "(" + std::string(formattedTime.length() - 2, ' ') + ")";
 }
 
-std::string DisplayManager::GetMissionSTarget(const bool showTarget, const bool expertMode)
+std::string DisplayManager::GetMissionSTarget(const bool showTarget)
 {
     int targetTime = 0;
+
+    const bool expertMode = _options.expertMode;
+    const bool expertModePlus = _options.expertModePlus;
 
     switch (CurrentCharacter)
     {
     case Characters_Sonic:
-        if (expertMode)
+        if (expertModePlus)
+            targetTime = std::get<TIME_S_RANK_EXPERT_PLUS>(SONIC_TARGET_TIMES.at(CurrentLevel));
+        else if (expertMode)
             targetTime = std::get<TIME_S_RANK_EXPERT>(SONIC_TARGET_TIMES.at(CurrentLevel));
         else
             targetTime = std::get<TIME_S_RANK>(SONIC_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Tails:
-        if (expertMode)
+        if (expertModePlus)
+            targetTime = std::get<TIME_S_RANK_EXPERT_PLUS>(TAILS_TARGET_TIMES.at(CurrentLevel));
+        else if (expertMode)
             targetTime = std::get<TIME_S_RANK_EXPERT>(TAILS_TARGET_TIMES.at(CurrentLevel));
         else
             targetTime = std::get<TIME_S_RANK>(TAILS_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Knuckles:
-        if (expertMode)
+        if (expertModePlus)
+            targetTime = std::get<TIME_S_RANK_EXPERT_PLUS>(KNUCKLES_TARGET_TIMES.at(CurrentLevel));
+        else if (expertMode)
             targetTime = std::get<TIME_S_RANK_EXPERT>(KNUCKLES_TARGET_TIMES.at(CurrentLevel));
         else
             targetTime = std::get<TIME_S_RANK>(KNUCKLES_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Amy:
-        if (expertMode)
+        if (expertModePlus)
+            targetTime = std::get<TIME_S_RANK_EXPERT_PLUS>(AMY_TARGET_TIMES.at(CurrentLevel));
+        else if (expertMode)
             targetTime = std::get<TIME_S_RANK_EXPERT>(AMY_TARGET_TIMES.at(CurrentLevel));
         else
             targetTime = std::get<TIME_S_RANK>(AMY_TARGET_TIMES.at(CurrentLevel));
         break;
     case Characters_Gamma:
-        if (expertMode)
+        if (expertModePlus)
+            targetTime = std::get<TIME_S_RANK_EXPERT_PLUS>(GAMMA_TARGET_TIMES.at(CurrentLevel));
+        else if (expertMode)
             targetTime = std::get<TIME_S_RANK_EXPERT>(GAMMA_TARGET_TIMES.at(CurrentLevel));
         else
             targetTime = std::get<TIME_S_RANK>(GAMMA_TARGET_TIMES.at(CurrentLevel));
@@ -653,8 +666,8 @@ void DisplayManager::DisplayItemsUnlocked()
                                   : "  " + this->GetMissionATarget(true));
             if (missionsEnabled > 3)
                 buffer.append(GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
-                                  ? " S" + this->GetMissionSTarget(true, _options.expertMode)
-                                  : "  " + this->GetMissionSTarget(true, _options.expertMode));
+                                  ? " S" + this->GetMissionSTarget(true)
+                                  : "  " + this->GetMissionSTarget(true));
 
             DisplayDebugString(NJM_LOCATION(2, this->_startLine + this->_displayCount+displayOffset), buffer.c_str());
 
@@ -674,8 +687,8 @@ void DisplayManager::DisplayItemsUnlocked()
                                   : "- " + this->GetMissionATarget(false));
             if (missionsEnabled > 3)
                 buffer.append(!GetLevelEmblemCollected(&SaveFile, CurrentCharacter, CurrentLevel, MISSION_A)
-                                  ? "-S" + this->GetMissionSTarget(false, _options.expertMode)
-                                  : "- " + this->GetMissionSTarget(false, _options.expertMode));
+                                  ? "-S" + this->GetMissionSTarget(false)
+                                  : "- " + this->GetMissionSTarget(false));
             buffer.append("]");
 
             SetDebugFontColor(currentColor & 0x00FFFFFF | 0x66000000);

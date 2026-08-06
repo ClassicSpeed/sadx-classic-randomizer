@@ -72,49 +72,50 @@ const std::unordered_map<int, std::string> LEVELS_MAP = {
 #define TIME_A_RANK 0
 #define TIME_S_RANK 1
 #define TIME_S_RANK_EXPERT 2
+#define TIME_S_RANK_EXPERT_PLUS 3
 
-const std::unordered_map<int, std::tuple<int, int, int>> SONIC_TARGET_TIMES = {
-    {LevelIDs_EmeraldCoast, std::make_tuple(7200, 6300, 6300)},
-    {LevelIDs_WindyValley, std::make_tuple(10800, 7800, 7200)},
-    {LevelIDs_Casinopolis, std::make_tuple(18000, 16200, 3600)},
-    {LevelIDs_IceCap, std::make_tuple(14400, 9900, 1800)},
-    {LevelIDs_TwinklePark, std::make_tuple(10800, 8400, 7200)},
-    {LevelIDs_SpeedHighway, std::make_tuple(9000, 7200, 7200)},
-    {LevelIDs_RedMountain, std::make_tuple(10800, 9000, 6300)},
-    {LevelIDs_SkyDeck, std::make_tuple(18000, 9000, 7200)},
-    {LevelIDs_LostWorld, std::make_tuple(16200, 9900, 9900)},
-    {LevelIDs_FinalEgg, std::make_tuple(16200, 11700, 7800)},
+const std::unordered_map<int, std::tuple<int, int, int, int>> SONIC_TARGET_TIMES = {
+    {LevelIDs_EmeraldCoast, std::make_tuple(7200, 6300, 6300, 6300)},
+    {LevelIDs_WindyValley, std::make_tuple(10800, 7800, 7200, 7200)},
+    {LevelIDs_Casinopolis, std::make_tuple(18000, 16200, 3600, 3600)},
+    {LevelIDs_IceCap, std::make_tuple(14400, 9900, 1800, 1800)},
+    {LevelIDs_TwinklePark, std::make_tuple(10800, 8400, 7200, 7200)},
+    {LevelIDs_SpeedHighway, std::make_tuple(9000, 7200, 7200, 7200)},
+    {LevelIDs_RedMountain, std::make_tuple(10800, 9000, 6300, 6300)},
+    {LevelIDs_SkyDeck, std::make_tuple(18000, 9000, 7200, 7200)},
+    {LevelIDs_LostWorld, std::make_tuple(16200, 9900, 9900, 9900)},
+    {LevelIDs_FinalEgg, std::make_tuple(16200, 11700, 7800, 7800)},
 };
 
 
-const std::unordered_map<int, std::tuple<int, int, int>> TAILS_TARGET_TIMES = {
-    {LevelIDs_WindyValley, std::make_tuple(5400, 3300, 2400)},
-    {LevelIDs_Casinopolis, std::make_tuple(3600, 3000, 1800)},
-    {LevelIDs_IceCap, std::make_tuple(7200, 6900, 6000)},
-    {LevelIDs_SkyDeck, std::make_tuple(3600, 2700, 2700)},
-    {LevelIDs_SpeedHighway, std::make_tuple(7200, 5400, 5400)},
+const std::unordered_map<int, std::tuple<int, int, int, int>> TAILS_TARGET_TIMES = {
+    {LevelIDs_WindyValley, std::make_tuple(5400, 3300, 2400, 2400)},
+    {LevelIDs_Casinopolis, std::make_tuple(3600, 3000, 1800, 1800)},
+    {LevelIDs_IceCap, std::make_tuple(7200, 6900, 6600, 6000)},
+    {LevelIDs_SkyDeck, std::make_tuple(3600, 2700, 2700, 2700)},
+    {LevelIDs_SpeedHighway, std::make_tuple(7200, 5400, 5400, 5400)},
 };
 
-const std::unordered_map<int, std::tuple<int, int, int>> KNUCKLES_TARGET_TIMES = {
-    {LevelIDs_SpeedHighway, std::make_tuple(3600, 2700, 2700)},
-    {LevelIDs_Casinopolis, std::make_tuple(3600, 2700, 2700)},
-    {LevelIDs_RedMountain, std::make_tuple(3600, 2700, 2700)},
-    {LevelIDs_LostWorld, std::make_tuple(3600, 2700, 2700)},
-    {LevelIDs_SkyDeck, std::make_tuple(7200, 2700, 2700)},
+const std::unordered_map<int, std::tuple<int, int, int, int>> KNUCKLES_TARGET_TIMES = {
+    {LevelIDs_SpeedHighway, std::make_tuple(3600, 2700, 2700, 2700)},
+    {LevelIDs_Casinopolis, std::make_tuple(3600, 2700, 2700, 2700)},
+    {LevelIDs_RedMountain, std::make_tuple(3600, 2700, 2700, 2700)},
+    {LevelIDs_LostWorld, std::make_tuple(3600, 2700, 2700, 2700)},
+    {LevelIDs_SkyDeck, std::make_tuple(7200, 2700, 2700, 2700)},
 };
 
-const std::unordered_map<int, std::tuple<int, int, int>> AMY_TARGET_TIMES = {
-    {LevelIDs_TwinklePark, std::make_tuple(7200, 5400, 5400)},
-    {LevelIDs_HotShelter, std::make_tuple(23400, 12600, 9900)},
-    {LevelIDs_FinalEgg, std::make_tuple(9000, 6300, 6300)},
+const std::unordered_map<int, std::tuple<int, int, int, int>> AMY_TARGET_TIMES = {
+    {LevelIDs_TwinklePark, std::make_tuple(7200, 5400, 5400, 5400)},
+    {LevelIDs_HotShelter, std::make_tuple(23400, 12600, 10800, 9900)},
+    {LevelIDs_FinalEgg, std::make_tuple(9000, 6300, 6300, 6300)},
 };
 
-const std::unordered_map<int, std::tuple<int, int, int>> GAMMA_TARGET_TIMES = {
-    {LevelIDs_FinalEgg, std::make_tuple(9000, 11700, 11700)},
-    {LevelIDs_EmeraldCoast, std::make_tuple(10800, 11700, 11700)},
-    {LevelIDs_WindyValley, std::make_tuple(10800, 20700, 20700)},
-    {LevelIDs_RedMountain, std::make_tuple(10800, 12600, 12600)},
-    {LevelIDs_HotShelter, std::make_tuple(7200, 10800, 10800)},
+const std::unordered_map<int, std::tuple<int, int, int, int>> GAMMA_TARGET_TIMES = {
+    {LevelIDs_FinalEgg, std::make_tuple(9000, 11700, 11700, 11700)},
+    {LevelIDs_EmeraldCoast, std::make_tuple(10800, 11700, 11700, 11700)},
+    {LevelIDs_WindyValley, std::make_tuple(10800, 20700, 20700, 20700)},
+    {LevelIDs_RedMountain, std::make_tuple(10800, 12600, 12600, 12600)},
+    {LevelIDs_HotShelter, std::make_tuple(7200, 10800, 10800, 10800)},
 };
 
 // Checks if the given position is within 'tolerance' units of the target position

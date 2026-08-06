@@ -570,6 +570,7 @@ public:
     int skyChaseChecks = 1;
     std::vector<int> missionBlacklist = {};
     bool expertMode = false;
+    bool expertModePlus = false;
 
     GatingMode gatingMode = EmblemGating;
     std::map<int, int> entranceEmblemValueMap = {};

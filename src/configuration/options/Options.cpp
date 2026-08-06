@@ -43,10 +43,11 @@ void Options::EggCarrierStartsTransformed(const int newEggCarrierStartsTransform
 
 void Options::LogicLevel(const int logicLevel)
 {
-    if (logicLevel > 2)
+    if (logicLevel >= 3)
         this->expertMode = true;
-    else
-        this->expertMode = false;
+
+    if (logicLevel >= 5)
+        this->expertModePlus = true;
 }
 
 void Options::SetGatingMode(const int gatingMode)

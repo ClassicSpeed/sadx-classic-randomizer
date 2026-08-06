@@ -142,28 +142,38 @@ bool ManualMissionACheck(const int character, const int level)
     return false;
 }
 
-bool ManualMissionSCheck(const int character, const int level, const bool expertMode)
+bool ManualMissionSCheck(const int character, const int level, const bool expertMode, const bool expertModePlus)
 {
     const int time = TimeFrames + 60 * (TimeSeconds + 60 * TimeMinutes);
     switch (character)
     {
     case Characters_Sonic:
+        if (expertModePlus)
+            return time <= std::get<TIME_S_RANK_EXPERT_PLUS>(SONIC_TARGET_TIMES.at(level));
         if (expertMode)
             return time <= std::get<TIME_S_RANK_EXPERT>(SONIC_TARGET_TIMES.at(level));
         return time <= std::get<TIME_S_RANK>(SONIC_TARGET_TIMES.at(level));
     case Characters_Tails:
+        if (expertModePlus)
+            return time <= std::get<TIME_S_RANK_EXPERT_PLUS>(TAILS_TARGET_TIMES.at(level));
         if (expertMode)
             return time <= std::get<TIME_S_RANK_EXPERT>(TAILS_TARGET_TIMES.at(level));
         return time <= std::get<TIME_S_RANK>(TAILS_TARGET_TIMES.at(level));
     case Characters_Knuckles:
+        if (expertModePlus)
+            return time <= std::get<TIME_S_RANK_EXPERT_PLUS>(KNUCKLES_TARGET_TIMES.at(level));
         if (expertMode)
             return time <= std::get<TIME_S_RANK_EXPERT>(KNUCKLES_TARGET_TIMES.at(level));
         return time <= std::get<TIME_S_RANK>(KNUCKLES_TARGET_TIMES.at(level));
     case Characters_Amy:
+        if (expertModePlus)
+            return time <= std::get<TIME_S_RANK_EXPERT_PLUS>(AMY_TARGET_TIMES.at(level));
         if (expertMode)
             return time <= std::get<TIME_S_RANK_EXPERT>(AMY_TARGET_TIMES.at(level));
         return time <= std::get<TIME_S_RANK>(AMY_TARGET_TIMES.at(level));
     case Characters_Gamma:
+        if (expertModePlus)
+            return time > std::get<TIME_S_RANK_EXPERT_PLUS>(GAMMA_TARGET_TIMES.at(level));
         if (expertMode)
             return time > std::get<TIME_S_RANK_EXPERT>(GAMMA_TARGET_TIMES.at(level));
         return time > std::get<TIME_S_RANK>(GAMMA_TARGET_TIMES.at(level));
@@ -215,7 +225,7 @@ bool EventDetector::HandleCheckMissionRequirements(const int mission, const int 
             }
         }
 
-        if (ManualMissionSCheck(character, level, _instance->_options.expertMode))
+        if (ManualMissionSCheck(character, level, _instance->_options.expertMode, _instance->_options.expertModePlus))
         {
             _instance->OnLevelEmblem(character, level, MISSION_S);
         }

@@ -6,8 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added:
 
-- Added Easy logic level (previously called Normal).
-  - Now normal logic is hard logic without some hard jumps and hard logic now includes clipping.
+- Added Easy logic level (same as the current Normal logic).
+  - Normal logic is now Hard logic without some of the harder jumps, and Hard logic now includes clipping.
+- Added slightly easier Expert logic S-rank times for Tails' Ice Cap (1:40) and Amy's Hot Shelter (3:00).
+  - The original times are now used for Expert+ logic.
 - Checkpoint filler item: spawns a functional checkpoint where the player is standing.
 - Bomb filler items: kills all the enemies near the player.
 - Extra 10 seconds filler item: removes 10 seconds from the level timer (or add them for Gamma).
