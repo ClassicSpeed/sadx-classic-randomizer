@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Speed Pad Trap: spawns a speed pad below the player in a random direction.
 - Decouple Camera Trap: decouples the camera from the player for 7 seconds.
 - BurgerMan Trap: spawns a BurgerMan in the player's position.
+- Map lines now show the color of the connected area.
 
 ## [v1.2.2b] - 2026-07-20
 

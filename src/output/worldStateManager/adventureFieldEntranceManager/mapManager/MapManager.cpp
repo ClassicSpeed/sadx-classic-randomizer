@@ -127,8 +127,7 @@ void MapManager::DrawConnectionsInMap(const AdventureFieldEntrance& adventureFie
         DrawLevelInitialsInMap(entranceTo, entranceLocationFrom->second.x, entranceLocationFrom->second.y);
     }
     else
-        MakeConnection(entranceLocationFrom->second.x, entranceLocationFrom->second.y, entranceLocationTo->second.x,
-                       entranceLocationTo->second.y);
+        MakeConnection(entranceLocationFrom->second, entranceLocationTo->second);
 }
 
 NJS_TEXANIM* MapManager::getInitialsFromEntrance(AdventureFieldEntrance* entranceTo)
@@ -387,14 +386,14 @@ void MapManager::showNumberMap(const float posX, const float posY, const int num
     drawSprite2D(GetNumberAnim(number), posX, posY, 1100000, 3);
 }
 
-void MapManager::MakeConnection(float x1, float y1, float x2, float y2)
+void MapManager::MakeConnection(const MapPoint& point1, const MapPoint& point2)
 {
-    DrawEntrancePoint(x1, y1);
-    DrawEntrancePoint(x2, y2);
-    DrawLine(x1, y1, x2, y2);
+    DrawLine(point1.x, point1.y, point2.color, point2.x, point2.y, point1.color);
+    DrawEntrancePoint(point1.x, point1.y);
+    DrawEntrancePoint(point2.x, point2.y);
 }
 
-void MapManager::DrawLine(float x1, float y1, float x2, float y2)
+void MapManager::DrawLine(float x1, float y1, Uint32 color1, float x2, float y2, Uint32 color2)
 {
     const auto p1 = mapToScreen(x1, y1);
     const auto p2 = mapToScreen(x2, y2);
@@ -417,8 +416,8 @@ void MapManager::DrawLine(float x1, float y1, float x2, float y2)
     NJS_POINT2 points[] = {
         {_nj_screen_.cx - (p1.x + ox), _nj_screen_.cy - (p1.y + oy)},
         {_nj_screen_.cx - (p1.x - ox), _nj_screen_.cy - (p1.y - oy)},
-        {_nj_screen_.cx - (p2.x - ox), _nj_screen_.cy - (p2.y - oy)},
         {_nj_screen_.cx - (p2.x + ox), _nj_screen_.cy - (p2.y + oy)},
+        {_nj_screen_.cx - (p2.x - ox), _nj_screen_.cy - (p2.y - oy)},
     };
 
     NJS_COLOR linecol[4];
@@ -429,14 +428,12 @@ void MapManager::DrawLine(float x1, float y1, float x2, float y2)
     linep2.tex = NULL;
     linep2.num = 4;
 
-    const Uint32 color = 0x99ffe78c; // Light yellow color
+    linep2.col[0].color = color1;
+    linep2.col[1].color = color1;
+    linep2.col[2].color = color2;
+    linep2.col[3].color = color2;
 
-    linep2.col[0].color = color;
-    linep2.col[1].color = color;
-    linep2.col[2].color = color;
-    linep2.col[3].color = color;
-
-    Draw2DLinesMaybe_Queue(&linep2, 4, 62041.496f, NJD_FILL | NJD_TRANSPARENT, QueuedModelFlagsB_SomeTextureThing);
+    Draw2DLinesMaybe_Queue(&linep2, 4, 22348, NJD_FILL | NJD_TRANSPARENT, QueuedModelFlagsB_SomeTextureThing);
 }
 
 void MapManager::DrawEntrancePoint(float x, float y)
@@ -488,7 +485,8 @@ void MapManager::ShowDoorRequirement(AdventureFieldEntrance adventureFieldEntran
         if (entranceValue <= 0)
             return;
         ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, emblem_lock_anim);
-        ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, line_lock_anim, 0.01f);
+        ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, line_lock_anim,
+                     0.01f);
 
         ShowNumberDynamic(adventureFieldEntrance, _gameStatus.unlock.currentEmblems, -10, 2, -0.01f, 4, false);
         ShowNumberDynamic(adventureFieldEntrance, entranceValue, 2, -2, -0.04f, 4, true);
@@ -533,7 +531,7 @@ void MapManager::ShowDoorIcon(NJS_POINT3 position, float angle, NJS_TEXANIM* ani
     njSetTexture(&entranceTextList);
     njPushMatrix(0);
 
-    njTranslate(0, position.x+ offsetX, position.y, position.z+ offsetZ);
+    njTranslate(0, position.x + offsetX, position.y, position.z + offsetZ);
     njRotateY(0, 0x10000 * (angle / 360.0f));
     late_SetFunc(LateDrawDoorIcon, static_cast<void*>(anim), 100000.0f, LATE_EASY);
     njPopMatrix(1u);
@@ -556,7 +554,8 @@ void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
     if (entranceLocationTo != entranceLocationInMap.end())
         return;
 
-    ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, getInitialsFromEntrance(oppositeEntrance));
+    ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle,
+                 getInitialsFromEntrance(oppositeEntrance));
 }
 
 void MapManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x,
@@ -603,22 +602,21 @@ void MapManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int n
 void MapManager::showNumber(const AdventureFieldEntrance& adventureFieldEntrance, const float posX,
                             const float posY, const int number, const float zOffset)
 {
-     const float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
-     const float offsetX = posX * cosf(angleRad);
-     const float offsetZ = -posX * sinf(angleRad);
+    const float angleRad = adventureFieldEntrance.indicatorAngle * (3.14159265f / 180.0f);
+    const float offsetX = posX * cosf(angleRad);
+    const float offsetZ = -posX * sinf(angleRad);
 
-     const float clipOffsetX = zOffset * sinf(angleRad);
-     const float clipOffsetZ = zOffset * cosf(angleRad);
+    const float clipOffsetX = zOffset * sinf(angleRad);
+    const float clipOffsetZ = zOffset * cosf(angleRad);
 
-     njSetTexture(&entranceTextList);
-     njPushMatrix(0);
+    njSetTexture(&entranceTextList);
+    njPushMatrix(0);
 
-     njTranslate(0,
-                 adventureFieldEntrance.indicatorPosition.x - offsetX + clipOffsetX,
-                 adventureFieldEntrance.indicatorPosition.y + posY,
-                 adventureFieldEntrance.indicatorPosition.z - offsetZ + clipOffsetZ);
-     njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
+    njTranslate(0,
+                adventureFieldEntrance.indicatorPosition.x - offsetX + clipOffsetX,
+                adventureFieldEntrance.indicatorPosition.y + posY,
+                adventureFieldEntrance.indicatorPosition.z - offsetZ + clipOffsetZ);
+    njRotateY(0, 0x10000 * (adventureFieldEntrance.indicatorAngle / 360.0f));
     late_SetFunc(LateDrawDoorIcon, static_cast<void*>(GetNumberAnim(number)), 100000.0f, LATE_EASY);
     njPopMatrix(1u);
-
 }
