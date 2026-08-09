@@ -200,7 +200,7 @@ int Options::GetEntranceEmblemValue(const int entranceId, const int oppositeEntr
 
 void Options::SetEntranceRandomizer(const int enableEntranceRandomizer)
 {
-    this->entranceRandomizer = enableEntranceRandomizer;
+    this->entranceRandomizer = static_cast<EntranceRandomization>(enableEntranceRandomizer);
 }
 
 void Options::SetDeathLink(const int newDeathLinkActive)

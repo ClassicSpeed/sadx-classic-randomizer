@@ -132,11 +132,84 @@ void MapManager::DrawConnectionsInMap(const AdventureFieldEntrance& adventureFie
 
 NJS_TEXANIM* MapManager::getInitialsFromEntrance(AdventureFieldEntrance* entranceTo)
 {
-    if (!_gameStatus.map.IsEntranceVisited(entranceTo->entranceId) && _options.entranceRandomizer != 0)
+    if (!_gameStatus.map.IsEntranceVisited(entranceTo->entranceId) && _options.entranceRandomizer !=
+        NoEntranceRandomization)
         return question_mark_anim;
 
     LevelAndActIDs levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(entranceTo->levelAndActId);
     LevelIDs level = static_cast<LevelIDs>(GET_LEVEL(levelActAndId));
+    switch (level)
+    {
+    case LevelIDs_EmeraldCoast:
+        return emerald_coast_map_anim;
+    case LevelIDs_WindyValley:
+        return windy_valley_map_anim;
+    case LevelIDs_TwinklePark:
+        return twinkle_park_map_anim;
+    case LevelIDs_SpeedHighway:
+        return speed_highway_map_anim;
+    case LevelIDs_RedMountain:
+        return red_mountain_map_anim;
+    case LevelIDs_SkyDeck:
+        return sky_deck_map_anim;
+    case LevelIDs_LostWorld:
+        return lost_world_map_anim;
+    case LevelIDs_IceCap:
+        return ice_cap_map_anim;
+    case LevelIDs_Casinopolis:
+        return casinopolis_map_anim;
+    case LevelIDs_FinalEgg:
+        return final_egg_map_anim;
+    case LevelIDs_HotShelter:
+        return hot_shelter_map_anim;
+    case LevelIDs_Chaos0:
+        return chaos_0_map_anim;
+    case LevelIDs_Chaos2:
+        return chaos_2_map_anim;
+    case LevelIDs_Chaos4:
+        return chaos_4_map_anim;
+    case LevelIDs_Chaos6:
+        return chaos_6_map_anim;
+    case LevelIDs_EggHornet:
+        return egg_hornet_map_anim;
+    case LevelIDs_EggWalker:
+        return egg_walker_map_anim;
+    case LevelIDs_EggViper:
+        return egg_viper_map_anim;
+    case LevelIDs_Zero:
+        return zero_map_anim;
+    case LevelIDs_E101:
+        return beta_1_map_anim;
+    case LevelIDs_E101R:
+        return beta_2_map_anim;
+    case LevelIDs_TwinkleCircuit:
+        return twinkle_circuit_map_anim;
+    case LevelIDs_SkyChase1:
+        return sky_chase_1_map_anim;
+    case LevelIDs_SkyChase2:
+        return sky_chase_2_map_anim;
+    case LevelIDs_SandHill:
+        return sand_hill_map_anim;
+    case LevelIDs_SSGarden:
+        return ss_garden_map_anim;
+    case LevelIDs_ECGarden:
+        return ec_garden_map_anim;
+    case LevelIDs_MRGarden:
+        return mr_garden_map_anim;
+    default:
+        return line_lock_anim;
+    }
+}
+
+NJS_TEXANIM* MapManager::getFullNameFromEntrance(AdventureFieldEntrance* entranceTo)
+{
+    if (!_gameStatus.map.IsEntranceVisited(entranceTo->entranceId) && _options.entranceRandomizer !=
+        NoEntranceRandomization)
+        return question_mark_anim;
+
+    LevelAndActIDs levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(entranceTo->levelAndActId);
+    LevelIDs level = static_cast<LevelIDs>(GET_LEVEL(levelActAndId));
+    //TODO: Full implementation
     switch (level)
     {
     case LevelIDs_EmeraldCoast:
@@ -537,9 +610,36 @@ void MapManager::ShowDoorIcon(NJS_POINT3 position, float angle, NJS_TEXANIM* ani
     njPopMatrix(1u);
 }
 
+bool MapManager::ShouldShowName(LevelAndActIDs levelAndActId)
+{
+    if (_options.entranceRandomizer == NoEntranceRandomization)
+        return false;
+
+    bool isStage = levelAndActId >= LevelAndActIDs_EmeraldCoast1 && levelAndActId <= LevelAndActIDs_HotShelter4;
+    bool isBoss = (levelAndActId >= LevelAndActIDs_Chaos0 && levelAndActId <= LevelAndActIDs_E101R) ||
+        (levelAndActId >= LevelAndActIDs_TwinkleCircuit1 && levelAndActId <= LevelAndActIDs_SandHill);
+    bool isChaoGarden = levelAndActId == LevelAndActIDs_SSGarden ||
+        levelAndActId == LevelAndActIDs_ECGarden ||
+        levelAndActId == LevelAndActIDs_MRGarden;
+
+    switch (_options.entranceRandomizer)
+    {
+    case StagesRandomized:
+        return isStage;
+    case StagesBossesRandomized:
+        return isStage || isBoss;
+    case StagesBossesChaoRandomized:
+        return isStage || isBoss || isChaoGarden;
+    case EverythingRandomized:
+        return true;
+    default:
+        return false;
+    }
+}
+
 void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
 {
-    if (_options.entranceRandomizer == 0)
+    if (_options.entranceRandomizer == NoEntranceRandomization)
         return;
 
     // We get the level on the other side of the door
@@ -549,13 +649,11 @@ void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
     if (oppositeEntrance == nullptr)
         return;
 
-    //If the connetion is not on the map, is a level and we show it.
-    auto entranceLocationTo = entranceLocationInMap.find(oppositeEntranceId);
-    if (entranceLocationTo != entranceLocationInMap.end())
+    if (!this->ShouldShowName(oppositeEntrance->levelAndActId))
         return;
 
     ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle,
-                 getInitialsFromEntrance(oppositeEntrance));
+                 getFullNameFromEntrance(oppositeEntrance));
 }
 
 void MapManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x,

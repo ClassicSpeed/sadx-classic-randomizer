@@ -142,6 +142,15 @@ enum GatingMode
 };
 
 
+enum EntranceRandomization
+{
+    NoEntranceRandomization = 0,
+    StagesRandomized,
+    StagesBossesRandomized,
+    StagesBossesChaoRandomized,
+    EverythingRandomized,
+}
+
 enum EntranceId
 {
     // City Hall
@@ -484,7 +493,7 @@ public:
 
     bool missionModeEnabled = false;
     bool autoStartMissions = false;
-    int entranceRandomizer = 0;
+    EntranceRandomization entranceRandomizer = NoEntranceRandomization;
 
 
     Area sonicStartingArea = InvalidArea;

@@ -32,6 +32,7 @@ private:
     void ShowDoorRequirement(AdventureFieldEntrance adventureFieldEntrance);
     void ShowBlockedDoor(AdventureFieldEntrance adventureFieldEntrance);
     void ShowDoorIcon(NJS_POINT3 position, float angle, NJS_TEXANIM* anim, float offset = 0.02f);
+    bool ShouldShowName(LevelAndActIDs levelAndActId);
     void ShowDoorName(AdventureFieldEntrance adventureFieldEntrance);
     void ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x, float y, float zBase,
                            float xStep,
@@ -46,6 +47,7 @@ private:
     void DrawPlayerLocation();
     void DrawEntrancesInMap(AdventureFieldEntrance adventureFieldEntrance, bool isStatic);
     NJS_TEXANIM* getInitialsFromEntrance(AdventureFieldEntrance* entranceTo);
+    NJS_TEXANIM* getFullNameFromEntrance(AdventureFieldEntrance* entranceTo);
     void DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Float entranceX, Float entranceY);
     void DrawConnectionsInMap(const AdventureFieldEntrance& adventureFieldEntrance);
     void ShowNumberDynamicMap(int number, float x, float y);
