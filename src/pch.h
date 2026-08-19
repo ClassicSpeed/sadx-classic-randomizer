@@ -187,6 +187,22 @@ inline NJS_TEXANIM location_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 43, NJD
 inline NJS_TEXANIM blocked_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 44, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM lock_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 45, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM check_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 46, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM station_square_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 47, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM mystic_ruins_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 48, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM egg_carrier_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 49, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM past_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 50, NJD_SPRITE_COLOR}};
+
+inline NJS_TEXANIM boss_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 51, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM sublevel_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 52, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM sonic_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 53, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM tails_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 54, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM knuckles_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 55, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM amy_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 56, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM gamma_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 57, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM big_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 58, NJD_SPRITE_COLOR}};
+
+inline NJS_TEXANIM city_hall_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 59, NJD_SPRITE_COLOR}};
+// inline NJS_TEXANIM hedgehog_hammer_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 52, NJD_SPRITE_COLOR}};
 
 
 // Helper to get the correct number anim

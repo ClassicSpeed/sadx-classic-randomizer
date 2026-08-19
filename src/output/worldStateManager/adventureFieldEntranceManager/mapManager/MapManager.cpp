@@ -201,78 +201,6 @@ NJS_TEXANIM* MapManager::getInitialsFromEntrance(AdventureFieldEntrance* entranc
     }
 }
 
-NJS_TEXANIM* MapManager::getFullNameFromEntrance(AdventureFieldEntrance* entranceTo)
-{
-    if (!_gameStatus.map.IsEntranceVisited(entranceTo->entranceId) && _options.entranceRandomizer !=
-        NoEntranceRandomization)
-        return question_mark_anim;
-
-    LevelAndActIDs levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(entranceTo->levelAndActId);
-    LevelIDs level = static_cast<LevelIDs>(GET_LEVEL(levelActAndId));
-    //TODO: Full implementation
-    switch (level)
-    {
-    case LevelIDs_EmeraldCoast:
-        return emerald_coast_map_anim;
-    case LevelIDs_WindyValley:
-        return windy_valley_map_anim;
-    case LevelIDs_TwinklePark:
-        return twinkle_park_map_anim;
-    case LevelIDs_SpeedHighway:
-        return speed_highway_map_anim;
-    case LevelIDs_RedMountain:
-        return red_mountain_map_anim;
-    case LevelIDs_SkyDeck:
-        return sky_deck_map_anim;
-    case LevelIDs_LostWorld:
-        return lost_world_map_anim;
-    case LevelIDs_IceCap:
-        return ice_cap_map_anim;
-    case LevelIDs_Casinopolis:
-        return casinopolis_map_anim;
-    case LevelIDs_FinalEgg:
-        return final_egg_map_anim;
-    case LevelIDs_HotShelter:
-        return hot_shelter_map_anim;
-    case LevelIDs_Chaos0:
-        return chaos_0_map_anim;
-    case LevelIDs_Chaos2:
-        return chaos_2_map_anim;
-    case LevelIDs_Chaos4:
-        return chaos_4_map_anim;
-    case LevelIDs_Chaos6:
-        return chaos_6_map_anim;
-    case LevelIDs_EggHornet:
-        return egg_hornet_map_anim;
-    case LevelIDs_EggWalker:
-        return egg_walker_map_anim;
-    case LevelIDs_EggViper:
-        return egg_viper_map_anim;
-    case LevelIDs_Zero:
-        return zero_map_anim;
-    case LevelIDs_E101:
-        return beta_1_map_anim;
-    case LevelIDs_E101R:
-        return beta_2_map_anim;
-    case LevelIDs_TwinkleCircuit:
-        return twinkle_circuit_map_anim;
-    case LevelIDs_SkyChase1:
-        return sky_chase_1_map_anim;
-    case LevelIDs_SkyChase2:
-        return sky_chase_2_map_anim;
-    case LevelIDs_SandHill:
-        return sand_hill_map_anim;
-    case LevelIDs_SSGarden:
-        return ss_garden_map_anim;
-    case LevelIDs_ECGarden:
-        return ec_garden_map_anim;
-    case LevelIDs_MRGarden:
-        return mr_garden_map_anim;
-    default:
-        return line_lock_anim;
-    }
-}
-
 
 void MapManager::DrawPlayerLocation()
 {
@@ -639,8 +567,8 @@ bool MapManager::ShouldShowName(LevelAndActIDs levelAndActId)
 
 void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
 {
-    if (_options.entranceRandomizer == NoEntranceRandomization)
-        return;
+    // if (_options.entranceRandomizer == NoEntranceRandomization)
+    //     return;
 
     // We get the level on the other side of the door
     const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
@@ -649,12 +577,166 @@ void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
     if (oppositeEntrance == nullptr)
         return;
 
-    if (!this->ShouldShowName(oppositeEntrance->levelAndActId))
-        return;
+    //TODO: uncomment
+    // if (!this->ShouldShowName(oppositeEntrance->levelAndActId))
+    //     return;
 
-    ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle,
-                 getFullNameFromEntrance(oppositeEntrance));
+
+    LevelAndActIDs levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(
+        oppositeEntrance->levelAndActId);
+    auto level = static_cast<LevelIDs>(GET_LEVEL(levelActAndId));
+
+    NJS_TEXANIM* background_anim = getNameBackground(level);
+    if (background_anim != nullptr)
+        ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, background_anim);
+
+
+    auto fullName_anim = getFullNameFromEntrance(level);
+    if (fullName_anim != nullptr)
+        ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle,
+                     fullName_anim, 0.01f);
 }
+
+NJS_TEXANIM* MapManager::getNameBackground(LevelIDs level)
+{
+    switch (level)
+    {
+    case LevelIDs_HedgehogHammer:
+    case LevelIDs_EmeraldCoast:
+    case LevelIDs_WindyValley:
+    case LevelIDs_TwinklePark:
+    case LevelIDs_SpeedHighway:
+    case LevelIDs_RedMountain:
+    case LevelIDs_SkyDeck:
+    case LevelIDs_LostWorld:
+    case LevelIDs_IceCap:
+    case LevelIDs_Casinopolis:
+    case LevelIDs_FinalEgg:
+    case LevelIDs_HotShelter:
+        switch (CurrentCharacter)
+        {
+        case Characters_Sonic:
+            return sonic_background_anim;
+        case Characters_Tails:
+            return tails_background_anim;
+        case Characters_Knuckles:
+            return knuckles_background_anim;
+        case Characters_Amy:
+            return amy_background_anim;
+        case Characters_Gamma:
+            return gamma_background_anim;
+        case Characters_Big:
+            return big_background_anim;
+        default:
+            return nullptr;
+        }
+    case LevelIDs_Chaos0:
+    case LevelIDs_Chaos2:
+    case LevelIDs_Chaos4:
+    case LevelIDs_Chaos6:
+    case LevelIDs_PerfectChaos:
+    case LevelIDs_EggHornet:
+    case LevelIDs_EggWalker:
+    case LevelIDs_EggViper:
+    case LevelIDs_Zero:
+    case LevelIDs_E101:
+    case LevelIDs_E101R:
+        return boss_background_anim;
+    case LevelIDs_TwinkleCircuit:
+    case LevelIDs_SkyChase1:
+    case LevelIDs_SkyChase2:
+    case LevelIDs_SandHill:
+        return sublevel_background_anim;
+    case LevelIDs_StationSquare:
+    case LevelIDs_SSGarden:
+        return station_square_background_anim;
+    case LevelIDs_MysticRuins:
+    case LevelIDs_MRGarden:
+        return mystic_ruins_background_anim;
+    case LevelIDs_EggCarrierOutside:
+    case LevelIDs_EggCarrierInside:
+    case LevelIDs_ECGarden:
+        return egg_carrier_background_anim;
+    case LevelIDs_Past:
+        return past_background_anim;
+    default:
+        return nullptr;
+    }
+}
+
+
+NJS_TEXANIM* MapManager::getFullNameFromEntrance(LevelIDs level)
+{
+    // TODO: check how to implement
+    // if (!_gameStatus.map.IsEntranceVisited(entranceTo->entranceId) && _options.entranceRandomizer !=
+    //     NoEntranceRandomization)
+    //     // return question_mark_anim;
+    //     return city_hall_full_map_anim;
+
+    switch (level)
+    {
+    /*case LevelIDs_EmeraldCoast:
+        return emerald_coast_map_anim;
+    case LevelIDs_WindyValley:
+        return windy_valley_map_anim;
+    case LevelIDs_TwinklePark:
+        return twinkle_park_map_anim;
+    case LevelIDs_SpeedHighway:
+        return speed_highway_map_anim;
+    case LevelIDs_RedMountain:
+        return red_mountain_map_anim;
+    case LevelIDs_SkyDeck:
+        return sky_deck_map_anim;
+    case LevelIDs_LostWorld:
+        return lost_world_map_anim;
+    case LevelIDs_IceCap:
+        return ice_cap_map_anim;
+    case LevelIDs_Casinopolis:
+        return casinopolis_map_anim;
+    case LevelIDs_FinalEgg:
+        return final_egg_map_anim;
+    case LevelIDs_HotShelter:
+        return hot_shelter_map_anim;
+    case LevelIDs_Chaos0:
+        return chaos_0_map_anim;
+    case LevelIDs_Chaos2:
+        return chaos_2_map_anim;
+    case LevelIDs_Chaos4:
+        return chaos_4_map_anim;
+    case LevelIDs_Chaos6:
+        return chaos_6_map_anim;
+    case LevelIDs_EggHornet:
+        return egg_hornet_map_anim;
+    case LevelIDs_EggWalker:
+        return egg_walker_map_anim;
+    case LevelIDs_EggViper:
+        return egg_viper_map_anim;
+    case LevelIDs_Zero:
+        return zero_map_anim;
+    case LevelIDs_E101:
+        return beta_1_map_anim;
+    case LevelIDs_E101R:
+        return beta_2_map_anim;
+    case LevelIDs_TwinkleCircuit:
+        return twinkle_circuit_map_anim;
+    case LevelIDs_SkyChase1:
+        return sky_chase_1_map_anim;
+    case LevelIDs_SkyChase2:
+        return sky_chase_2_map_anim;
+    case LevelIDs_SandHill:
+        return sand_hill_map_anim;
+    case LevelIDs_SSGarden:
+        return ss_garden_map_anim;
+    case LevelIDs_ECGarden:
+        return ec_garden_map_anim;
+    case LevelIDs_MRGarden:
+        return mr_garden_map_anim;*/
+    default:
+        // return nullptr;
+        return city_hall_full_map_anim;
+    }
+}
+
 
 void MapManager::ShowNumberDynamic(const AdventureFieldEntrance& entrance, int number, float x,
                                    float y, float zBase, float xStep, bool leftJustify)

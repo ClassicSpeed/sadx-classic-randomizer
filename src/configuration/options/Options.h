@@ -149,7 +149,7 @@ enum EntranceRandomization
     StagesBossesRandomized,
     StagesBossesChaoRandomized,
     EverythingRandomized,
-}
+};
 
 enum EntranceId
 {
