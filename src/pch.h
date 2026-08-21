@@ -202,6 +202,14 @@ inline NJS_TEXANIM gamma_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 57,
 inline NJS_TEXANIM big_background_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 58, NJD_SPRITE_COLOR}};
 
 inline NJS_TEXANIM city_hall_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 59, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM station_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 60, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM casino_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 61, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM sewers_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 62, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM ss_main_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 63, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM hotel_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 64, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM ss_pool_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 65, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM tp_tunnel_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 66, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM tp_lobby_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 67, NJD_SPRITE_COLOR}};
 // inline NJS_TEXANIM hedgehog_hammer_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 52, NJD_SPRITE_COLOR}};
 
 

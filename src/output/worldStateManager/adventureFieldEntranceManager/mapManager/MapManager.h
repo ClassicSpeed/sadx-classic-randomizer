@@ -48,7 +48,7 @@ private:
     void DrawEntrancesInMap(AdventureFieldEntrance adventureFieldEntrance, bool isStatic);
     NJS_TEXANIM* getInitialsFromEntrance(AdventureFieldEntrance* entranceTo);
     NJS_TEXANIM* getNameBackground(LevelIDs level);
-    NJS_TEXANIM* getFullNameFromEntrance(LevelIDs level);
+    NJS_TEXANIM* getFullNameFromEntrance(LevelAndActIDs levelAndAct, EntranceId entranceId);
     void DrawLevelInitialsInMap(AdventureFieldEntrance* entranceTo, Float entranceX, Float entranceY);
     void DrawConnectionsInMap(const AdventureFieldEntrance& adventureFieldEntrance);
     void ShowNumberDynamicMap(int number, float x, float y);

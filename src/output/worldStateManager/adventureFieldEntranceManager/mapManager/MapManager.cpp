@@ -65,23 +65,31 @@ void MapManager::OnFrame()
         currentLevelAndAct = LevelAndActIDs_MRGarden;
     }
 
-    for (const auto& entranceList : {
-             _adventureFieldEntranceMap.GetEntrances(), _adventureFieldEntranceMap.GetStaticEntrances()
-         })
+    // Dynamic entrances: show name
+    for (const auto& entrance : _adventureFieldEntranceMap.GetEntrances())
     {
-        for (const auto& entrance : entranceList)
-        {
-            if (currentLevelAndAct != entrance.levelAndActId)
-                continue;
+        if (currentLevelAndAct != entrance.levelAndActId)
+            continue;
 
-            DoorState doorState = _doorLogicStrategy->GetDoorState(entrance.entranceId);
-            if (doorState == DoorLocked)
-                ShowDoorRequirement(entrance);
-            else if (doorState == DoorBlocked)
-                ShowBlockedDoor(entrance);
-            else
-                ShowDoorName(entrance);
-        }
+        DoorState doorState = _doorLogicStrategy->GetDoorState(entrance.entranceId);
+        if (doorState == DoorLocked)
+            ShowDoorRequirement(entrance);
+        else if (doorState == DoorBlocked)
+            ShowBlockedDoor(entrance);
+        else
+            ShowDoorName(entrance);
+    }
+
+    for (const auto& entrance : _adventureFieldEntranceMap.GetStaticEntrances())
+    {
+        if (currentLevelAndAct != entrance.levelAndActId)
+            continue;
+
+        DoorState doorState = _doorLogicStrategy->GetDoorState(entrance.entranceId);
+        if (doorState == DoorLocked)
+            ShowDoorRequirement(entrance);
+        else if (doorState == DoorBlocked)
+            ShowBlockedDoor(entrance);
     }
 }
 
@@ -591,7 +599,7 @@ void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
         ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, background_anim);
 
 
-    auto fullName_anim = getFullNameFromEntrance(level);
+    auto fullName_anim = getFullNameFromEntrance(levelActAndId, oppositeEntrance->entranceId);
     if (fullName_anim != nullptr)
         ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle,
                      fullName_anim, 0.01f);
@@ -665,7 +673,7 @@ NJS_TEXANIM* MapManager::getNameBackground(LevelIDs level)
 }
 
 
-NJS_TEXANIM* MapManager::getFullNameFromEntrance(LevelIDs level)
+NJS_TEXANIM* MapManager::getFullNameFromEntrance(LevelAndActIDs levelAndAct, EntranceId entranceId)
 {
     // TODO: check how to implement
     // if (!_gameStatus.map.IsEntranceVisited(entranceTo->entranceId) && _options.entranceRandomizer !=
@@ -673,8 +681,26 @@ NJS_TEXANIM* MapManager::getFullNameFromEntrance(LevelIDs level)
     //     // return question_mark_anim;
     //     return city_hall_full_map_anim;
 
-    switch (level)
+    switch (levelAndAct)
     {
+    case LevelAndActIDs_StationSquare1:
+        return city_hall_full_map_anim;
+    case LevelAndActIDs_StationSquare2:
+        if (entranceId == CasinoToHotel || entranceId == CasinoToEggWalker || entranceId == CasinoToCasinopolis)
+            return casino_full_map_anim;
+        return station_full_map_anim;
+    case LevelAndActIDs_StationSquare3:
+        return sewers_full_map_anim;
+    case LevelAndActIDs_StationSquare4:
+        if (entranceId == TwinkleParkTunnelToTwinkleParkLobby || entranceId == TwinkleParkTunnelToSewers)
+            return tp_tunnel_full_map_anim;
+        return ss_main_full_map_anim;
+    case LevelAndActIDs_StationSquare5:
+        if (entranceId == HotelPoolToEmeraldCoast)
+            return ss_pool_full_map_anim;
+        return hotel_full_map_anim;
+    case LevelAndActIDs_StationSquare6:
+        return tp_lobby_full_map_anim;
     /*case LevelIDs_EmeraldCoast:
         return emerald_coast_map_anim;
     case LevelIDs_WindyValley:
@@ -733,7 +759,7 @@ NJS_TEXANIM* MapManager::getFullNameFromEntrance(LevelIDs level)
         return mr_garden_map_anim;*/
     default:
         // return nullptr;
-        return city_hall_full_map_anim;
+        return question_mark_anim;
     }
 }
 
