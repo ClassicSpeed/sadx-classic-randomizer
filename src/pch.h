@@ -210,7 +210,15 @@ inline NJS_TEXANIM hotel_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 64, N
 inline NJS_TEXANIM ss_pool_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 65, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM tp_tunnel_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 66, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM tp_lobby_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 67, NJD_SPRITE_COLOR}};
-// inline NJS_TEXANIM hedgehog_hammer_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 52, NJD_SPRITE_COLOR}};
+
+inline NJS_TEXANIM mr_main_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 68, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM angel_island_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 69, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM ice_cave_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 70, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM past_altar_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 71, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM past_main_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 72, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM jungle_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 73, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM final_egg_tower_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 74, NJD_SPRITE_COLOR}};
+
 
 
 // Helper to get the correct number anim

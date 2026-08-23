@@ -701,6 +701,21 @@ NJS_TEXANIM* MapManager::getFullNameFromEntrance(LevelAndActIDs levelAndAct, Ent
         return hotel_full_map_anim;
     case LevelAndActIDs_StationSquare6:
         return tp_lobby_full_map_anim;
+    case LevelAndActIDs_MysticRuins1:
+        return mr_main_full_map_anim;
+    case LevelAndActIDs_MysticRuins2:
+        if (entranceId == IceCapToIceCave)
+            return ice_cave_full_map_anim;
+        return angel_island_full_map_anim;
+    case LevelAndActIDs_MysticRuins3:
+        return jungle_full_map_anim;
+    case LevelAndActIDs_MysticRuins4:
+        return final_egg_tower_full_map_anim;
+    case LevelAndActIDs_Past1:
+        return past_main_full_map_anim;
+    case LevelAndActIDs_Past2:
+    case LevelAndActIDs_Past3:
+        return past_altar_full_map_anim;
     /*case LevelIDs_EmeraldCoast:
         return emerald_coast_map_anim;
     case LevelIDs_WindyValley:
