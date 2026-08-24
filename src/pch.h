@@ -219,6 +219,18 @@ inline NJS_TEXANIM past_main_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 7
 inline NJS_TEXANIM jungle_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 73, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM final_egg_tower_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 74, NJD_SPRITE_COLOR}};
 
+inline NJS_TEXANIM ec_outside_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 75, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM ec_bridge_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 76, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM ec_deck_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 77, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM captain_room_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 78, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM private_room_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 79, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM ec_pool_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 80, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM arsenal_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 81, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM ec_inside_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 82, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM hedgehog_hammer_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 83, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM prison_hall_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 84, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM water_tank_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 85, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM warp_hall_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 86, NJD_SPRITE_COLOR}};
 
 
 // Helper to get the correct number anim

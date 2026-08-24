@@ -716,6 +716,31 @@ NJS_TEXANIM* MapManager::getFullNameFromEntrance(LevelAndActIDs levelAndAct, Ent
     case LevelAndActIDs_Past2:
     case LevelAndActIDs_Past3:
         return past_altar_full_map_anim;
+    case LevelAndActIDs_EggCarrierOutside1:
+        return ec_outside_full_map_anim;
+    case LevelAndActIDs_EggCarrierOutside2:
+        return ec_bridge_full_map_anim;
+    case LevelAndActIDs_EggCarrierOutside3:
+        return ec_deck_full_map_anim;
+    case LevelAndActIDs_EggCarrierOutside4:
+        return captain_room_full_map_anim;
+    case LevelAndActIDs_EggCarrierOutside5:
+        return private_room_full_map_anim;
+    case LevelAndActIDs_EggCarrierOutside6:
+        return ec_pool_full_map_anim;
+    case LevelAndActIDs_EggCarrierInside1:
+        return arsenal_full_map_anim;
+    case LevelAndActIDs_EggCarrierInside2:
+        return ec_inside_full_map_anim;
+    case LevelAndActIDs_EggCarrierInside3:
+        return hedgehog_hammer_full_map_anim;
+    case LevelAndActIDs_EggCarrierInside4:
+        return prison_hall_full_map_anim;
+    case LevelAndActIDs_EggCarrierInside5:
+        return water_tank_full_map_anim;
+    case LevelAndActIDs_EggCarrierInside6:
+        return warp_hall_full_map_anim;
+        //TODO: Fix inside to outside monorail
     /*case LevelIDs_EmeraldCoast:
         return emerald_coast_map_anim;
     case LevelIDs_WindyValley:

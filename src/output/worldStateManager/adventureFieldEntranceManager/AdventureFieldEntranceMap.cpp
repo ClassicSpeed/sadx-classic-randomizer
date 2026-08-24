@@ -133,7 +133,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
 
 
         // Deck (Transformed)
-        {DeckToEcInsideEggLift, LevelAndActIDs_EggCarrierOutside3, 0, EcInsideToDeckEggLift, 0.0f, {0, 1540, 3462}},
+        {DeckToEcInsideEggLift, LevelAndActIDs_EggCarrierOutside3, 0, EcInsideToDeckEggLift, 0.0f, {0, 1550, 3462}},
         {DeckToPool, LevelAndActIDs_EggCarrierOutside3, 1, PoolToDeck, 0.0f, {0, 1551.5897f, 3566.501f}},
         {DeckToCaptainRoom, LevelAndActIDs_EggCarrierOutside3, 4, CaptainRoomToDeck, 180, {0, 1725, 2923}},
         {DeckToPrivateRoom, LevelAndActIDs_EggCarrierOutside3, 2, PrivateRoomToDeck, 244.37f, {79.65f, 1535, 2875.8f}},
@@ -143,7 +143,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
         },
 
         // Captain Room
-        {CaptainRoomToDeck, LevelAndActIDs_EggCarrierOutside4, 0, DeckToCaptainRoom, 90, {0, 1725, 2923}},
+        {CaptainRoomToDeck, LevelAndActIDs_EggCarrierOutside4, 0, DeckToCaptainRoom, 90, {34.5, 113, 0}},
         {CaptainRoomToPrivateRoom, LevelAndActIDs_EggCarrierOutside4, 0, PrivateRoomToCaptainRoom, 0, {-80, 113, 0}},
 
         // Private Room
@@ -350,7 +350,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
         {MrMainToBridge, LevelAndActIDs_MysticRuins1, 7, BridgeToMrMain, 147.5f, {-70, -385, 1264}},
         {
             DeckToEcInsideEggLift, LevelAndActIDs_EggCarrierOutside1, 3, EcInsideToDeckEggLift, 0.0f,
-            {0, 750, 970}
+            {0, 760, 970}
         },
         {
             BridgeToEcInsideMonorail, LevelAndActIDs_EggCarrierOutside1, 5, EcInsideToBridgeMonorail, 270,
@@ -375,9 +375,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
 
         {PoolToDeck, LevelAndActIDs_EggCarrierOutside6, 0, DeckToPool, 270, {4.5, 25, 25}},
 
-        {EcInsideToDeckEggLift, LevelAndActIDs_EggCarrierInside2, 7, DeckToEcInsideEggLift, 180, {0, 65, -330.25f}},
-        {EcInsideToBridgeMonorail, LevelAndActIDs_EggCarrierInside2, 0, BridgeToEcInsideMonorail, 90, {60, 22, 0}},
-        {EcInsideToBridgeMonorail, LevelAndActIDs_EggCarrierInside2, 0, BridgeToEcInsideMonorail, 90, {60, 22, -80}},
+        {EcInsideToDeckEggLift, LevelAndActIDs_EggCarrierInside2, 7, DeckToEcInsideEggLift, 180, {0, 65, -330.25f}}
 
     };
 
