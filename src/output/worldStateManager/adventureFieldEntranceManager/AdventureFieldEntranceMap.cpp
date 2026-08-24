@@ -403,19 +403,28 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
     };
 }
 
-void AdventureFieldEntranceMap::overrideEntranceAct(std::vector<AdventureFieldEntrance>& list,
-                                                    const std::initializer_list<AdventureFieldEntrance> overrides)
+void AdventureFieldEntranceMap::overrideEntranceAct(
+    std::vector<AdventureFieldEntrance>& list,
+    const std::initializer_list<AdventureFieldEntrance> overrides)
 {
+    std::vector<bool> overridden(list.size(), false);
+
     for (const auto& o : overrides)
     {
-        for (auto& e : list)
+        for (size_t i = 0; i < list.size(); ++i)
         {
-            if (e.entranceId == o.entranceId && e.connectsTo == o.connectsTo)
+            auto& e = list[i];
+
+            if (!overridden[i] &&
+                e.entranceId == o.entranceId &&
+                e.connectsTo == o.connectsTo)
             {
                 e.levelAndActId = o.levelAndActId;
                 e.entranceNumber = o.entranceNumber;
                 e.indicatorAngle = o.indicatorAngle;
                 e.indicatorPosition = o.indicatorPosition;
+
+                overridden[i] = true;
                 break;
             }
         }
