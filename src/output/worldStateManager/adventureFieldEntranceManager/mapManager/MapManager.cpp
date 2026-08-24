@@ -602,7 +602,7 @@ void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
     auto fullName_anim = getFullNameFromEntrance(levelActAndId, oppositeEntrance->entranceId);
     if (fullName_anim != nullptr)
         ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle,
-                     fullName_anim, 0.01f);
+                     fullName_anim, -0.2);
 }
 
 NJS_TEXANIM* MapManager::getNameBackground(LevelIDs level)
@@ -740,7 +740,6 @@ NJS_TEXANIM* MapManager::getFullNameFromEntrance(LevelAndActIDs levelAndAct, Ent
         return water_tank_full_map_anim;
     case LevelAndActIDs_EggCarrierInside6:
         return warp_hall_full_map_anim;
-        //TODO: Fix inside to outside monorail
     /*case LevelIDs_EmeraldCoast:
         return emerald_coast_map_anim;
     case LevelIDs_WindyValley:
