@@ -202,7 +202,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
         // SS Chao Garden
         {SsChaoGardenToHotel, LevelAndActIDs_SSGarden, 0, HotelToSsChaoGarden, 0, {-0.03f, 15, 234.52f}},
         // Mr Chao Garden
-        {MrChaoGardenToMrMain, LevelAndActIDs_MRGarden, 0, MrMainToMrChaoGarden, 90, {-18.19F, 30, -170}},
+        {MrChaoGardenToMrMain, LevelAndActIDs_MRGarden, 0, MrMainToMrChaoGarden, 270, {-18.19F, 30, -170}},
         // Ec ChaoGarden
         {EcChaoGardenToWarpHall, LevelAndActIDs_ECGarden, 0, WarpHallToEcChaoGarden, 0.0f, {-288.75f, 20, -99.12f}},
 
