@@ -7,9 +7,9 @@ All notable changes to this project will be documented in this file.
 ### Added:
 
 - Added Easy logic level (same as the current Normal logic).
-  - Normal logic is now Hard logic without some of the harder jumps, and Hard logic now includes clipping.
+    - Normal logic is now Hard logic without some of the harder jumps, and Hard logic now includes clipping.
 - Added slightly easier Expert logic S-rank times for Tails' Ice Cap (1:40) and Amy's Hot Shelter (3:00).
-  - The original times are now used for Expert+ logic.
+    - The original times are now used for Expert+ logic.
 - Checkpoint filler item: spawns a functional checkpoint where the player is standing.
 - Bomb filler items: kills all the enemies near the player.
 - Extra 10 seconds filler item: removes 10 seconds from the level timer (or add them for Gamma).
@@ -19,10 +19,13 @@ All notable changes to this project will be documented in this file.
 - Decouple Camera Trap: decouples the camera from the player for 7 seconds.
 - BurgerMan Trap: spawns a BurgerMan in the player's position.
 - Map lines now show the color of the connected area.
+- New signs on each door showing the full name of the level or area it leads to with a background depending on the type.
+    - Only shows for randomized entrances and shows a question mark before visiting it.
 
 ## [v1.2.2b] - 2026-07-20
 
 ### Fixed:
+
 - Removed Drowning Deathlink since it was sending Deathlinks incorrectly.
 - Fixed incorrect links in game guides.
 - Fixed Chao Garden not saving progress.

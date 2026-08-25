@@ -575,8 +575,8 @@ bool MapManager::ShouldShowName(LevelAndActIDs levelAndActId)
 
 void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
 {
-    // if (_options.entranceRandomizer == NoEntranceRandomization)
-    //     return;
+    if (_options.entranceRandomizer == NoEntranceRandomization)
+        return;
 
     // We get the level on the other side of the door
     const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
@@ -585,24 +585,34 @@ void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
     if (oppositeEntrance == nullptr)
         return;
 
-    //TODO: uncomment
-    // if (!this->ShouldShowName(oppositeEntrance->levelAndActId))
-    //     return;
+     if (!this->ShouldShowName(oppositeEntrance->levelAndActId))
+         return;
 
 
     LevelAndActIDs levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(
         oppositeEntrance->levelAndActId);
     auto level = static_cast<LevelIDs>(GET_LEVEL(levelActAndId));
 
-    NJS_TEXANIM* background_anim = getNameBackground(level);
-    if (background_anim != nullptr)
-        ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle, background_anim);
 
-
-    auto fullName_anim = getFullNameFromEntrance(levelActAndId, oppositeEntrance->entranceId);
-    if (fullName_anim != nullptr)
+    if (!_gameStatus.map.IsEntranceVisited(adventureFieldEntrance.entranceId) && !_gameStatus.map.IsEntranceVisited(
+        oppositeEntrance->entranceId))
+    {
         ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle,
-                     fullName_anim, -0.2);
+                     question_mark_anim, -0.2);
+    }
+    else
+    {
+        NJS_TEXANIM* background_anim = getNameBackground(level);
+        if (background_anim != nullptr)
+            ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle,
+                         background_anim);
+
+
+        auto fullName_anim = getFullNameFromEntrance(levelActAndId, oppositeEntrance->entranceId);
+        if (fullName_anim != nullptr)
+            ShowDoorIcon(adventureFieldEntrance.indicatorPosition, adventureFieldEntrance.indicatorAngle,
+                         fullName_anim, -0.2);
+    }
 }
 
 NJS_TEXANIM* MapManager::getNameBackground(LevelIDs level)
@@ -675,12 +685,6 @@ NJS_TEXANIM* MapManager::getNameBackground(LevelIDs level)
 
 NJS_TEXANIM* MapManager::getFullNameFromEntrance(LevelAndActIDs levelAndAct, EntranceId entranceId)
 {
-    // TODO: check how to implement
-    // if (!_gameStatus.map.IsEntranceVisited(entranceTo->entranceId) && _options.entranceRandomizer !=
-    //     NoEntranceRandomization)
-    //     // return question_mark_anim;
-    //     return city_hall_full_map_anim;
-
     switch (levelAndAct)
     {
     case LevelAndActIDs_StationSquare1:
