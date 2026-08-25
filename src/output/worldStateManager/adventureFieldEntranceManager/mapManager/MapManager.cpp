@@ -542,7 +542,7 @@ void MapManager::ShowDoorIcon(NJS_POINT3 position, float angle, NJS_TEXANIM* ani
 
     njTranslate(0, position.x + offsetX, position.y, position.z + offsetZ);
     njRotateY(0, 0x10000 * (angle / 360.0f));
-    late_SetFunc(LateDrawDoorIcon, static_cast<void*>(anim), 100000.0f, LATE_EASY);
+    late_SetFunc(LateDrawDoorIcon, static_cast<void*>(anim), 10000.0f, LATE_EASY);
     njPopMatrix(1u);
 }
 
@@ -575,8 +575,8 @@ bool MapManager::ShouldShowName(LevelAndActIDs levelAndActId)
 
 void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
 {
-    if (_options.entranceRandomizer == NoEntranceRandomization)
-        return;
+    // if (_options.entranceRandomizer == NoEntranceRandomization)
+    //     return;
 
     // We get the level on the other side of the door
     const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
@@ -585,8 +585,8 @@ void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
     if (oppositeEntrance == nullptr)
         return;
 
-     if (!this->ShouldShowName(oppositeEntrance->levelAndActId))
-         return;
+     // if (!this->ShouldShowName(oppositeEntrance->levelAndActId))
+     //     return;
 
 
     LevelAndActIDs levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(
