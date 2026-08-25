@@ -232,6 +232,35 @@ inline NJS_TEXANIM prison_hall_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0,
 inline NJS_TEXANIM water_tank_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 85, NJD_SPRITE_COLOR}};
 inline NJS_TEXANIM warp_hall_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 86, NJD_SPRITE_COLOR}};
 
+inline NJS_TEXANIM chao_garden_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 87, NJD_SPRITE_COLOR}};
+
+inline NJS_TEXANIM emerald_coast_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 88, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM windy_valley_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 89, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM casinopolis_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 90, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM ice_cap_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 91, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM twinkle_park_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 92, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM speed_highway_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 93, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM red_mountain_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 94, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM sky_deck_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 95, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM lost_world_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 96, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM final_egg_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 97, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM hot_shelter_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 98, NJD_SPRITE_COLOR}};
+
+inline NJS_TEXANIM chaos_0_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 99, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM egg_walker_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 100, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM chaos_2_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 101, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM twinkle_circuit_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 102, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM chaos_4_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 103, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM egg_hornet_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 104, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM sky_chase_1_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 105, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM sand_hill_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 106, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM beta_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 107, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM egg_viper_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 108, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM sky_chase_2_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 109, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM chaos_6_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 110, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM zero_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 111, NJD_SPRITE_COLOR}};
+inline NJS_TEXANIM beta_mk2_full_map_anim[] = {{18, 18, 9, 9, 255, 255, 0, 0, 112, NJD_SPRITE_COLOR}};
+
 
 // Helper to get the correct number anim
 inline NJS_TEXANIM* GetNumberAnim(int num)
