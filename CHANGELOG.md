@@ -20,7 +20,9 @@ All notable changes to this project will be documented in this file.
 - BurgerMan Trap: spawns a BurgerMan in the player's position.
 - Map lines now show the color of the connected area.
 - New signs on each door showing the full name of the level or area it leads to with a background depending on the type.
-    - Only shows for randomized entrances and shows a question mark before visiting it.
+    - Only shows for randomized entrances, and it now shows a question mark before visiting it.
+- Entrance randomization now has an extra option that includes Chao gardens.
+    - Using the Stages and Bosses options now includes the Chao eggs checks.
 
 ## [v1.2.2b] - 2026-07-20
 

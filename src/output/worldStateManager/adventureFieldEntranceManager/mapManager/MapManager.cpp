@@ -575,8 +575,8 @@ bool MapManager::ShouldShowName(LevelAndActIDs levelAndActId)
 
 void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
 {
-    // if (_options.entranceRandomizer == NoEntranceRandomization)
-    //     return;
+    if (_options.entranceRandomizer == NoEntranceRandomization)
+        return;
 
     // We get the level on the other side of the door
     const auto oppositeEntranceId = _adventureFieldEntranceMap.GetReplacementConnection(
@@ -585,8 +585,8 @@ void MapManager::ShowDoorName(AdventureFieldEntrance adventureFieldEntrance)
     if (oppositeEntrance == nullptr)
         return;
 
-     // if (!this->ShouldShowName(oppositeEntrance->levelAndActId))
-     //     return;
+     if (!this->ShouldShowName(oppositeEntrance->levelAndActId))
+         return;
 
 
     LevelAndActIDs levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(
