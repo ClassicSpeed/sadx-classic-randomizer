@@ -778,12 +778,6 @@ void AdventureFieldEntranceMap::UpdateRandomEntrances()
         const EntranceId targetKey = static_cast<EntranceId>(pair.first);
         const EntranceId sourceKey = static_cast<EntranceId>(pair.second);
 
-        auto itTarget = _entranceOriginalConnections.find(targetKey);
-        if (itTarget == _entranceOriginalConnections.end()) continue;
-
-        auto itSource = backup.find(sourceKey);
-        if (itSource == backup.end()) continue;
-
-        itTarget->second = itSource->second;
+        _entranceOriginalConnections[targetKey] = sourceKey;
     }
 }
