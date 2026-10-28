@@ -71,7 +71,6 @@ private:
 
         {TwinkleParkTunnelToTwinkleParkLobby, TwinkleParkLobbyToTwinkleParkTunnel},
 
-        // {SsMainToEcOutside, BridgeToSsMain},
         {SsMainToSpeedHighway, SpeedHighwayToSsMain},
         {HotelPoolToEmeraldCoast, EmeraldCoastToHotelPool},
 
@@ -79,7 +78,6 @@ private:
         {HotelToChaos2, Chaos2ToHotel},
         {TwinkleParkLobbyToTwinklePark, TwinkleParkToTwinkleParkLobby},
         {TwinkleParkLobbyToTwinkleCircuit, TwinkleCircuitToTwinkleParkLobby},
-        // {MrMainToEcOutside, EcOutsideToMrMain},
         {MrMainToAngelIsland, AngelIslandToMrMain},
         {MrMainToWindyValley, WindyValleyToMrMain},
         {MrMainToJungle, JungleToMrMain},
@@ -100,12 +98,6 @@ private:
         {FinalEggTowerToFinalEggAlternative, FinalEggToFinalEggTowerAlternative},
         {FinalEggTowerToBetaEggViper, BetaEggViperToFinalEggTower},
         {FinalEggTowerToEcInside, EcInsideToFinalEggTower},
-        // {EcOutsideToSkyChase2, SkyChase2ToEcOutside},
-        // {EcOutsideToChaos6ZeroBeta, Chaos6ZeroBetaToEcOutside},
-        // {EcOutsideToEcInsideMonorail, EcInsideToEcOutsideMonorail},
-        // {EcOutsideToEcInsideEggLift, EcInsideToEcOutsideEggLift},
-        // {EcOutsideToCaptainRoom, CaptainRoomToEcOutside},
-        // {EcOutsideToPool, PoolToEcOutside},
         {BridgeToSsMain, SsMainToBridge},
         {BridgeToMrMain, MrMainToBridge},
         {BridgeToSkyDeck, SkyDeckToBridge},

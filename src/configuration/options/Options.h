@@ -179,7 +179,6 @@ enum EntranceId
     SsMainToStation,
     SsMainToCityHall,
     SsMainToTwinkleParkTunnel,
-    SsMainToEcOutside,
     SsMainToBridge,
     SsMainToSpeedHighway,
 
@@ -206,7 +205,6 @@ enum EntranceId
 
     // MRMain
     MrMainToStation,
-    MrMainToEcOutside,
     MrMainToBridge,
     MrMainToAngelIsland,
     MrMainToWindyValley,
@@ -249,17 +247,6 @@ enum EntranceId
     FinalEggTowerToBetaEggViper,
     FinalEggTowerToEcInside,
 
-
-    // Egg Carrier Outside (Untransformed)
-    EcOutsideToSsMain,
-    EcOutsideToMrMain,
-    EcOutsideToSkyChase2,
-    EcOutsideToChaos6ZeroBeta,
-    EcOutsideToEcInsideMonorail,
-    EcOutsideToEcInsideEggLift,
-    EcOutsideToCaptainRoom,
-    EcOutsideToPool,
-
     // Bridge (Transformed) 
     BridgeToSsMain,
     BridgeToMrMain,
@@ -276,7 +263,6 @@ enum EntranceId
     DeckToEcInsideEggLift,
 
     // Captain Room
-    CaptainRoomToEcOutside,
     CaptainRoomToDeck,
     CaptainRoomToPrivateRoom,
 
@@ -286,7 +272,6 @@ enum EntranceId
     PrivateRoomToDeckAlternative,
 
     // Pool
-    PoolToEcOutside,
     PoolToDeck,
     PoolToSkyDeck,
 
@@ -294,8 +279,6 @@ enum EntranceId
     ArsenalToEcInside,
 
     // Egg Carrier Inside
-    EcInsideToEcOutsideEggLift,
-    EcInsideToEcOutsideMonorail,
     EcInsideToDeckEggLift,
     EcInsideToBridgeMonorail,
     EcInsideToHotShelter,
@@ -395,7 +378,6 @@ public:
     void GoalRequiresMissions(int newGoalRequiresMissions);
     void GoalRequiresBosses(int newGoalRequiresBosses);
     void GoalRequiresChaoRaces(int newGoalRequiresChaoRaces);
-    void EggCarrierStartsTransformed(int newEggCarrierStartsTransformed);
     void LogicLevel(int logicLevel);
     void SetGatingMode(int gatingMode);
     void EmblemsForPerfectChaos(int newEmblemGoal);
@@ -583,7 +565,7 @@ public:
 
     GatingMode gatingMode = EmblemGating;
     std::map<int, int> entranceEmblemValueMap = {};
-    int eggCarrierStartsTransformed = false;
+    int eggCarrierStartsTransformed = true;
 
 private:
     explicit Options(Settings& settings);

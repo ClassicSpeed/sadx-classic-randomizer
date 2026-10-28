@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.3.0] - 2026-??-??
 
+### Changed:
+
+- Removed "Start egg carrier transformed" option. It will always start transformed now.
+
 ### Added:
 
 - Added Easy logic level (same as the current Normal logic).
@@ -754,7 +758,7 @@ All notable changes to this project will be documented in this file.
 - Everyone can now transform the Egg Carrier.
 - The mountain door near the Master Emerald shrine won't be closed anymore.
 - Tails' workshop runway will open if Sky Chase is enabled.
-    - After getting the check(s) from Act 1, the runway will close.
+    - After getting the check (s) from Act 1, the runway will close.
 - Separated Ring Link and Hard Ring Link packets. Perfect Chaos/end-of-level updates are treated as "hard" updates,
   meaning only players with Hard Ring Link enabled will be affected by them.
 

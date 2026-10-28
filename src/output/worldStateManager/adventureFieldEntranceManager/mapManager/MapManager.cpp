@@ -140,12 +140,12 @@ void MapManager::DrawConnectionsInMap(const AdventureFieldEntrance& adventureFie
 
 NJS_TEXANIM* MapManager::getInitialsFromEntrance(AdventureFieldEntrance* entranceTo)
 {
-    if (!_gameStatus.map.IsEntranceVisited(entranceTo->entranceId) && _options.entranceRandomizer !=
-        NoEntranceRandomization)
-        return question_mark_anim;
-
     LevelAndActIDs levelActAndId = _instance->_adventureFieldEntranceMap.CalculateCorrectAct(entranceTo->levelAndActId);
     LevelIDs level = static_cast<LevelIDs>(GET_LEVEL(levelActAndId));
+
+    if (!_gameStatus.map.IsEntranceVisited(entranceTo->entranceId) && ShouldShowName(levelActAndId))
+        return question_mark_anim;
+
     switch (level)
     {
     case LevelIDs_EmeraldCoast:
