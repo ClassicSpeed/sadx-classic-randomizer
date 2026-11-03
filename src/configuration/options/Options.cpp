@@ -78,7 +78,6 @@ void Options::MissionModeChecks(const int newMissionModeEnabled)
 
 void Options::MissionBlackList(const std::map<int, int>& newMissionBlacklist)
 {
-
     if (newMissionBlacklist.empty())
         return;
     std::vector<int> blacklistedMissions;
@@ -386,14 +385,17 @@ void Options::SetUpsideDownTrapWeight(const int newUpsideDownTrapWeight)
 {
     this->upsideDownTrapWeight = newUpsideDownTrapWeight;
 }
+
 void Options::SetMirrorTrapWeight(const int newMirrorTrapWeight)
 {
     this->mirrorTrapWeight = newMirrorTrapWeight;
 }
+
 void Options::SetDecoupleCameraTrapWeight(const int newDecoupleCameraTrapWeight)
 {
     this->decoupleCameraTrapWeight = newDecoupleCameraTrapWeight;
 }
+
 void Options::SetSpeedPadTrapWeight(const int newSpeedPadTrapWeight)
 {
     this->speedPadTrapWeight = newSpeedPadTrapWeight;

@@ -449,12 +449,6 @@ void CharacterManager::OnFrame()
     if (Current_CharObj2 == nullptr || EntityData1Ptrs[0] == nullptr)
         return;
 
-    for (const auto& button : PressedButtons)
-
-        if (button & WhistleButtons && Current_CharObj2 != nullptr)
-        {
-            ActivateFiller(CartTrap);
-        }
     if (_fillerTimer > 0)
     {
         const double timePassed = (std::clock() - this->_fillerTimer) / static_cast<double>(CLOCKS_PER_SEC);

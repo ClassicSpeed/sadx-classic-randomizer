@@ -43,9 +43,8 @@ public:
     }
 
 
-    bool IsEntranceVisited(EntranceId id) const
+    bool IsEntranceVisited(const EntranceId id) const
     {
-        const size_t idx = static_cast<size_t>(id);
-        return (idx < EntranceCount) ? entranceVisited.test(idx) : false;
+        return id < EntranceCount ? entranceVisited.test(id) : false;
     }
 };

@@ -24,7 +24,7 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {-43, 153, 1142}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {4.6f, 153, 1116.4f}},
         {StationToMrMain, LevelAndActIDs_StationSquare2, 3, MrMainToStation, 206, {76.5f, 153, 1080.7f}},
-        {CasinoToEggWalker, LevelAndActIDs_StationSquare2, 4, EggWalkerToCasino, 0, {-400, 13, 955}},
+        {CasinoToEggWalker, LevelAndActIDs_StationSquare2, 4, EggWalkerToCasino, 180, {-400, 13, 955}},
 
         // Sewers
         {SewersToTwinkleParkTunnel, LevelAndActIDs_StationSquare3, 1, TwinkleParkTunnelToSewers, 0, {395, -87, 1323}},
@@ -773,17 +773,9 @@ void AdventureFieldEntranceMap::UpdateRandomEntrances()
     // keep a backup of original values to avoid chaining updates
     auto backup = _entranceOriginalConnections;
 
-    for (const auto& pair : _options.levelEntrancesMap)
+    _entranceOriginalConnections.clear();
+    for (const auto& [from, to] : _options.levelEntrancesMap)
     {
-        const EntranceId targetKey = static_cast<EntranceId>(pair.first);
-        const EntranceId sourceKey = static_cast<EntranceId>(pair.second);
-
-        auto itTarget = _entranceOriginalConnections.find(targetKey);
-        if (itTarget == _entranceOriginalConnections.end()) continue;
-
-        auto itSource = backup.find(sourceKey);
-        if (itSource == backup.end()) continue;
-
-        itTarget->second = itSource->second;
+        _entranceOriginalConnections[static_cast<EntranceId>(from)] = static_cast<EntranceId>(to);
     }
 }

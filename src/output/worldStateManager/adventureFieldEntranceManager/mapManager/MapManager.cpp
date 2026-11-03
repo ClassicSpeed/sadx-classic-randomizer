@@ -135,7 +135,13 @@ void MapManager::DrawConnectionsInMap(const AdventureFieldEntrance& adventureFie
         DrawLevelInitialsInMap(entranceTo, entranceLocationFrom->second.x, entranceLocationFrom->second.y);
     }
     else
-        MakeConnection(entranceLocationFrom->second, entranceLocationTo->second);
+        if (_gameStatus.map.IsEntranceVisited(adventureFieldEntrance.entranceId))
+            MakeConnection(entranceLocationFrom->second, entranceLocationTo->second);
+        else
+        {
+            auto entranceTo = _instance->_adventureFieldEntranceMap.FindEntranceById(entranceToId);
+            DrawLevelInitialsInMap(entranceTo, entranceLocationFrom->second.x, entranceLocationFrom->second.y);
+        }
 }
 
 NJS_TEXANIM* MapManager::getInitialsFromEntrance(AdventureFieldEntrance* entranceTo)
