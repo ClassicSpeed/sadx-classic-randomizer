@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changed:
 
 - Removed "Start egg carrier transformed" option. It will always start transformed now.
+- You will now always spawn in an area connected to a beatable level.
 
 ### Added:
 

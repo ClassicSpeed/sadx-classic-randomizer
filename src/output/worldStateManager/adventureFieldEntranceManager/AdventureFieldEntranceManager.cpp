@@ -1515,6 +1515,8 @@ BOOL AdventureFieldEntranceManager::OnIsOutsideEggLiftEnabled()
 
 BOOL AdventureFieldEntranceManager::OnIsInsideEggLiftEnabled()
 {
+    if (levelact(CurrentLevel, CurrentAct) == LevelAndActIDs_EggCarrierOutside3)
+        return _instance->IsDoorOpen(DeckToEcInsideEggLift);
     return _instance->IsDoorOpen(EcInsideToDeckEggLift);
 }
 
