@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Removed "Start egg carrier transformed" option. It will always start transformed now.
 - You will now always spawn in an area connected to a beatable level.
+- Now levels and bosses will be gated by emblems too. 
 
 ### Added:
 
