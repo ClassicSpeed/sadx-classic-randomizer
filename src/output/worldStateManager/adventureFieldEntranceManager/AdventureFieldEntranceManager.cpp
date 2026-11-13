@@ -201,7 +201,8 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndAct(const int level, int ac
             || GET_LEVEL(currentLevelAndAct) >= LevelIDs_TwinkleCircuit && GET_LEVEL(currentLevelAndAct) <=
             LevelIDs_SandHill)
             return;
-        _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
+        const EntranceId usedEntranceId = _instance->_adventureFieldEntranceMap.GetReplacementConnection(newEntrance->entranceId);
+        _instance->_gameStatus.map.SetEntrancesVisited(newEntrance->entranceId, usedEntranceId, true);
         _instance->_archipelagoMessenger.SetMapStatus();
         return;
     }
@@ -259,7 +260,8 @@ void AdventureFieldEntranceManager::OnSetNextLevelAndActCutsceneMode(const int l
             || GET_LEVEL(currentLevelAndAct) >= LevelIDs_TwinkleCircuit && GET_LEVEL(currentLevelAndAct) <=
             LevelIDs_SandHill)
             return;
-        _instance->_gameStatus.map.SetEntranceVisited(newEntrance->entranceId, true);
+        const EntranceId usedEntranceId = _instance->_adventureFieldEntranceMap.GetReplacementConnection(newEntrance->entranceId);
+        _instance->_gameStatus.map.SetEntrancesVisited(newEntrance->entranceId, usedEntranceId, true);
         _instance->_archipelagoMessenger.SetMapStatus();
         return;
     }

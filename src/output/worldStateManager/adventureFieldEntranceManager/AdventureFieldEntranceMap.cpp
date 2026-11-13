@@ -92,9 +92,9 @@ AdventureFieldEntranceMap::AdventureFieldEntranceMap(Options& options, GameStatu
 
         // Jungle
         {JungleToMrMain, LevelAndActIDs_MysticRuins3, 0, MrMainToJungle, 317.36f, {-1143, 379, 422}},
-        {JungleToLostWorld, LevelAndActIDs_MysticRuins3, 2, LostWorldToJungle, 180, {-516, 100, -994}},
+        {JungleToLostWorld, LevelAndActIDs_MysticRuins3, 1, LostWorldToJungle, 180, {-516, 100, -994}},
         {
-            JungleToLostWorldAlternative, LevelAndActIDs_MysticRuins3, 1, LostWorldToJungleAlternative, 0,
+            JungleToLostWorldAlternative, LevelAndActIDs_MysticRuins3, 2, LostWorldToJungleAlternative, 0,
             {-516, 103, -1327}
         },
         {JungleToFinalEggTower, LevelAndActIDs_MysticRuins3, 4, FinalEggTowerToJungle, 180, {71, 17, -1687.5}},

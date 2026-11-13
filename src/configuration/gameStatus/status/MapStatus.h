@@ -41,6 +41,11 @@ public:
             entranceVisited.set(pidx, visited);
         }
     }
+    void SetEntrancesVisited(EntranceId id,EntranceId id2, bool visited)
+    {
+        this->SetEntranceVisited(id, visited);
+        this->SetEntranceVisited(id2, visited);
+    }
 
 
     bool IsEntranceVisited(const EntranceId id) const
